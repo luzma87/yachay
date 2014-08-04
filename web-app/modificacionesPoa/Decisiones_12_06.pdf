@@ -1,0 +1,21 @@
+def op1 = 0
+def op2 = 0
+def op3 = 0
+100000.times{
+def random = new Random()
+def num = random.nextFloat()
+if(num<0.3333)
+op1++
+else
+if(num<0.6666)
+op2++
+else
+op3++
+}
+
+if(op1>op2 && op1>op3)
+println "manana!!!"
+if(op2>op1 && op2>op3)
+println "viernes !!!!!!"
+if(op3>op1 && op3>op2)
+println "sabado !!!!!!!"

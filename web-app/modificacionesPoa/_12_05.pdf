@@ -1,0 +1,73 @@
+                                     Table "public.prsn"
+  Column  |          Type          |                        Modifiers                        
+----------+------------------------+---------------------------------------------------------
+ prsn__id | integer                | not null default nextval('prsn_prsn__id_seq'::regclass)
+ raza__id | integer                | 
+ inst__id | integer                | 
+ unad__id | integer                | 
+ grpo__id | integer                | 
+ grdo__id | integer                | 
+ nvel__id | integer                | 
+ rolp__id | integer                | 
+ rrmu__id | integer                | 
+ prsncdla | character varying(10)  | 
+ prsnnmbr | character varying(31)  | 
+ prsnap01 | character varying(31)  | 
+ prspap02 | character varying(31)  | 
+ prsnmail | character varying(63)  | 
+ prsnfcna | date                   | 
+ prsnsexo | character(1)           | 
+ prsnecnc | character(1)           | 
+ prsnecmg | character(1)           | 
+ prsndscp | character(1)           | 
+ prsncnds | character varying(15)  | 
+ prsndire | character varying(127) | 
+ prsntfdm | character varying(9)   | 
+ prsntfcl | character varying(9)   | 
+ prsnfcrg | date                   | 
+ prsnfcha | date                   | 
+ prsnetdo | character(1)           | 
+ prsnnbpt | character varying(63)  | 
+ prsnmisn | character varying(511) | 
+ prsnexad | smallint               | 
+ prsnexin | smallint               | 
+ prsn_pin | character varying(255) | 
+Indexes:
+    "pk_prsn" PRIMARY KEY, btree (prsn__id)
+Foreign-key constraints:
+    "fk34a3dd3ac63854" FOREIGN KEY (inst__id) REFERENCES inst(inst__id)
+    "fk34a3dd65f41924" FOREIGN KEY (unad__id) REFERENCES uath(uath__id)
+    "fk34a3dd7afdee03" FOREIGN KEY (rolp__id) REFERENCES rolp(rolp__id)
+    "fk34a3dd89b95616" FOREIGN KEY (nvel__id) REFERENCES nvel(nvel__id)
+    "fk34a3dddd0ec0bc" FOREIGN KEY (grdo__id) REFERENCES grdo(grdo__id)
+    "fk34a3dde7efb3bd" FOREIGN KEY (raza__id) REFERENCES raza(raza__id)
+    "fk34a3ddf18934b8" FOREIGN KEY (grpo__id) REFERENCES grpo(grpo__id)
+    "prsnfk01" FOREIGN KEY (prsn__id) REFERENCES parr(parr__id) ON UPDATE RESTRICT ON DELETE RESTRICT
+    "prsnfk02" FOREIGN KEY (unad__id) REFERENCES uath(uath__id) ON UPDATE RESTRICT ON DELETE RESTRICT
+    "prsnfk03" FOREIGN KEY (inst__id) REFERENCES inst(inst__id) ON UPDATE RESTRICT ON DELETE RESTRICT
+    "prsnfk04" FOREIGN KEY (raza__id) REFERENCES raza(raza__id) ON UPDATE RESTRICT ON DELETE RESTRICT
+    "prsnfk05" FOREIGN KEY (grpo__id) REFERENCES grpo(grpo__id) ON UPDATE RESTRICT ON DELETE RESTRICT
+    "prsnfk06" FOREIGN KEY (rolp__id) REFERENCES rolp(rolp__id) ON UPDATE RESTRICT ON DELETE RESTRICT
+    "prsnfk07" FOREIGN KEY (nvel__id) REFERENCES nvel(nvel__id) ON UPDATE RESTRICT ON DELETE RESTRICT
+    "prsnfk08" FOREIGN KEY (grdo__id) REFERENCES grdo(grdo__id) ON UPDATE RESTRICT ON DELETE RESTRICT
+    "prsnpk09" FOREIGN KEY (rrmu__id) REFERENCES rrmu(rrmu__id) ON UPDATE RESTRICT ON DELETE RESTRICT
+Referenced by:
+    TABLE "actv" CONSTRAINT "actvfk01" FOREIGN KEY (prsn__id) REFERENCES prsn(prsn__id) ON UPDATE RESTRICT ON DELETE RESTRICT
+    TABLE "cntr" CONSTRAINT "cntrfk02" FOREIGN KEY (prsn__id) REFERENCES prsn(prsn__id) ON UPDATE RESTRICT ON DELETE RESTRICT
+    TABLE "crso" CONSTRAINT "crsofk01" FOREIGN KEY (prsn__id) REFERENCES prsn(prsn__id) ON UPDATE RESTRICT ON DELETE RESTRICT
+    TABLE "dtpb" CONSTRAINT "dtpbfk03" FOREIGN KEY (prsn__id) REFERENCES prsn(prsn__id) ON UPDATE RESTRICT ON DELETE RESTRICT
+    TABLE "ecin" CONSTRAINT "ecinfk01" FOREIGN KEY (prsn__id) REFERENCES prsn(prsn__id) ON UPDATE RESTRICT ON DELETE RESTRICT
+    TABLE "edfr" CONSTRAINT "edfrfk01" FOREIGN KEY (prsn__id) REFERENCES prsn(prsn__id) ON UPDATE RESTRICT ON DELETE RESTRICT
+    TABLE "expr" CONSTRAINT "exprfk01" FOREIGN KEY (prsn__id) REFERENCES prsn(prsn__id) ON UPDATE RESTRICT ON DELETE RESTRICT
+    TABLE "cntr" CONSTRAINT "fk2eac29eb6b9bae" FOREIGN KEY (prsn__id) REFERENCES prsn(prsn__id)
+    TABLE "crso" CONSTRAINT "fk2ebb0beb6b9bae" FOREIGN KEY (prsn__id) REFERENCES prsn(prsn__id)
+    TABLE "dtpb" CONSTRAINT "fk2f3682e329d618" FOREIGN KEY (prns__id) REFERENCES prsn(prsn__id)
+    TABLE "dtpb" CONSTRAINT "fk2f3682eb6b9bae" FOREIGN KEY (prsn__id) REFERENCES prsn(prsn__id)
+    TABLE "ecin" CONSTRAINT "fk2f6a43eb6b9bae" FOREIGN KEY (prsn__id) REFERENCES prsn(prsn__id)
+    TABLE "edfr" CONSTRAINT "fk2f6dabeb6b9bae" FOREIGN KEY (prsn__id) REFERENCES prsn(prsn__id)
+    TABLE "expr" CONSTRAINT "fk2fb9f5eb6b9bae" FOREIGN KEY (prsn__id) REFERENCES prsn(prsn__id)
+    TABLE "preg" CONSTRAINT "fk34a224eb6b9bae" FOREIGN KEY (prsn__id) REFERENCES prsn(prsn__id)
+    TABLE "leng" CONSTRAINT "lengfk01" FOREIGN KEY (prsn__id) REFERENCES prsn(prsn__id) ON UPDATE RESTRICT ON DELETE RESTRICT
+    TABLE "preg" CONSTRAINT "pregfk01" FOREIGN KEY (prsn__id) REFERENCES prsn(prsn__id) ON UPDATE RESTRICT ON DELETE RESTRICT
+    TABLE "prgr" CONSTRAINT "prgrfk01" FOREIGN KEY (prsn__id) REFERENCES prsn(prsn__id) ON UPDATE RESTRICT ON DELETE RESTRICT
+

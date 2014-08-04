@@ -1,0 +1,42 @@
+@pv@ 1 @db.counters@ @upgrade@ @1@ 
+@ex@ 8465 1330451749
+@rv@ 1 @db.counters@ @upgrade@ @2@ 
+@ex@ 8465 1330451749
+@rv@ 1 @db.counters@ @upgrade@ @3@ 
+@ex@ 8465 1330451749
+@rv@ 1 @db.counters@ @upgrade@ @4@ 
+@ex@ 8465 1330451749
+@rv@ 1 @db.counters@ @upgrade@ @5@ 
+@pv@ 1 @db.depot@ @depot@ 0 @@ @depot/...@ 
+@pv@ 5 @db.domain@ @depot@ 100 @@ @@ @@ @@ @@ 1330451749 1330451749 0 @Default depot@ @@ 
+@ex@ 8465 1330451749
+@rv@ 1 @db.counters@ @upgrade@ @6@ 
+@ex@ 8465 1330451749
+@rv@ 1 @db.counters@ @upgrade@ @7@ 
+@ex@ 8465 1330451749
+@rv@ 1 @db.counters@ @upgrade@ @8@ 
+@ex@ 8465 1330451749
+@rv@ 1 @db.counters@ @upgrade@ @9@ 
+@rv@ 1 @db.counters@ @upgrade@ @10@ 
+@ex@ 8465 1330451749
+@rv@ 1 @db.counters@ @upgrade@ @11@ 
+@rv@ 1 @db.counters@ @upgrade@ @12@ 
+@ex@ 8465 1330451749
+@rv@ 1 @db.counters@ @upgrade@ @13@ 
+@rv@ 1 @db.counters@ @upgrade@ @14@ 
+@rv@ 1 @db.counters@ @upgrade@ @15@ 
+@ex@ 8465 1330451749
+@rv@ 1 @db.counters@ @upgrade@ @16@ 
+@ex@ 8465 1330451749
+@rv@ 1 @db.counters@ @upgrade@ @17@ 
+@rv@ 1 @db.counters@ @upgrade@ @18@ 
+@ex@ 8465 1330451749
+@rv@ 1 @db.counters@ @upgrade@ @19@ 
+@ex@ 8465 1330451749
+@rv@ 1 @db.counters@ @upgrade@ @20@ 
+@rv@ 1 @db.counters@ @upgrade@ @21@ 
+@rv@ 1 @db.counters@ @upgrade@ @22@ 
+@rv@ 1 @db.counters@ @upgrade@ @23@ 
+@ex@ 8465 1330451749
+@nx@ 7 1330451749 @31@ 0 0 0 0 0 @1666@ @.@ @@ @@ @@ 
+@ex@ 8465 1330451749
