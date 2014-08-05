@@ -987,14 +987,14 @@ class EntidadController extends app.seguridad.Shield {
             orgInversion = orgInversion.replaceAll(",", "\\.")
             presupuestoUnidad.originalInversion = orgInversion.toDouble()
 
-            orgCorriente = orgCorriente.replaceAll("\\.", "")
-            orgCorriente = orgCorriente.replaceAll(",", "\\.")
-            presupuestoUnidad.originalCorrientes = orgCorriente.toDouble()
+//            orgCorriente = orgCorriente.replaceAll("\\.", "")
+  //          orgCorriente = orgCorriente.replaceAll(",", "\\.")
+            presupuestoUnidad.originalCorrientes = 0
 
-            presupuestoUnidad.objetivoGobiernoResultado = ObjetivoGobiernoResultado.get(params.objetivoGobiernoResultado.id)
-            presupuestoUnidad.politica = Politica.get(params.politica.id)
-            presupuestoUnidad.ejeProgramatico = EjeProgramatico.get(params.ejeProgramatico.id)
-            presupuestoUnidad.objetivoEstrategico = ObjetivoEstrategicoProyecto.get(params.objetivoEstrategico.id)
+//            presupuestoUnidad.objetivoGobiernoResultado = ObjetivoGobiernoResultado.get(params.objetivoGobiernoResultado.id)
+  //          presupuestoUnidad.politica = Politica.get(params.politica.id)
+    //        presupuestoUnidad.ejeProgramatico = EjeProgramatico.get(params.ejeProgramatico.id)
+      //      presupuestoUnidad.objetivoEstrategico = ObjetivoEstrategicoProyecto.get(params.objetivoEstrategico.id)
 
             println "\n\nGPR"
             println presupuestoUnidad.objetivoGobiernoResultado
