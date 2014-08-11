@@ -464,7 +464,7 @@
                 <div style="width: 1040px;float: left; margin-top: 5px;">
                     <div class="sectionHeader ui-widget-header ui-corner-all" title="Mostrar"
                          data-object="buenVivir">
-                        Buen Vivir
+                        Plan Nacional de Desarrollo (buen vivir)
                         <span class="ui-icon ui-icon-triangle-1-s" style="float: right;"></span>
                     </div>
                     <table width="1040px" class="ui-widget-content ui-corner-bottom ui-helper-hidden" id="buenVivir">
@@ -505,7 +505,7 @@
 
                 <div style="width: 1040px;float: left; margin-top: 5px;">
                     <div class="sectionHeader ui-widget-header ui-corner-all" title="Mostrar" data-object="politicasAS">
-                        Pol&iacute;ticas de agenda social
+                        Pol&iacute;ticas de agenda sectorial (social)
                         <span class="ui-icon ui-icon-triangle-1-s" style="float: right;"></span>
                     </div>
                     <table width="1040px" class="ui-widget-content ui-corner-bottom ui-helper-hidden" id="politicasAS">
