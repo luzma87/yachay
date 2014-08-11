@@ -1,5 +1,6 @@
 package app
 
+import app.yachai.Categoria
 import sun.security.x509.AVA
 import jxl.WorkbookSettings
 import jxl.write.WritableWorkbook
@@ -79,34 +80,7 @@ class MarcoLogicoController extends app.seguridad.Shield {
         if (proyecto.aprobado == "a") {
             response.sendError(403)
         } else {
-            def fin = MarcoLogico.findByProyectoAndTipoElemento(proyecto, TipoElemento.findByDescripcion("Fin"))
-            def indicadores
-            def medios = []
-            def sup
-            def indiProps
-            def mediosProp = []
-            def supProp
-            if (proyecto) {
-                fin = MarcoLogico.findByProyectoAndTipoElemento(proyecto, TipoElemento.findByDescripcion("Fin"))
-                if (fin) {
-                    indicadores = Indicador.findAllByMarcoLogico(fin)
-                    sup = Supuesto.findAllByMarcoLogico(fin)
-                }
-                indicadores.each {
-                    medios += MedioVerificacion.findAllByIndicador(it)
-                }
-
-            }
-            def proposito = MarcoLogico.findByProyectoAndTipoElemento(proyecto, TipoElemento.findByDescripcion("Proposito"))
-            if (proposito) {
-                indiProps = Indicador.findAllByMarcoLogico(proposito)
-                indiProps.each {
-                    mediosProp += MedioVerificacion.findAllByIndicador(it)
-                }
-                supProp = Supuesto.findAllByMarcoLogico(proposito)
-            }
-
-            [fin: fin, indicadores: indicadores, medios: medios, sup: sup, proyecto: proyecto, proposito: proposito, indiProps: indiProps, mediosProp: mediosProp, supProp: supProp]
+            redirect(action: "componentes",id: proyecto.id)
         }
 
     }
@@ -213,7 +187,7 @@ class MarcoLogicoController extends app.seguridad.Shield {
     }
 
     def guardarDatosMarco = {
-        println "gdm " + params
+        //println "gdm " + params
         def proyecto = Proyecto.get(params.proyecto)
         def ml = MarcoLogico.findByProyectoAndTipoElemento(proyecto, TipoElemento.findByDescripcion(params.tipo))
         if (ml) {
@@ -237,7 +211,7 @@ class MarcoLogicoController extends app.seguridad.Shield {
     }
 
     def guardarDatosIndMedSup = {
-        println "gdims " + params
+        //println "gdims " + params
         switch (params.tipo) {
         /*Inidicadores*/ case "1":
             def indicador
@@ -412,7 +386,8 @@ class MarcoLogicoController extends app.seguridad.Shield {
 
 
     def actividadesComponente = {
-        println "actividades " + params
+       // println "actividades " + params
+
         def componente = MarcoLogico.get(params.id)
         def proyecto = componente.proyecto
         if (proyecto.aprobado == "a") {
@@ -438,6 +413,23 @@ class MarcoLogicoController extends app.seguridad.Shield {
             [componente: componente, actividades: actividades, totComp: totComp, totFin: totFin, totOtros: totOtros]
         }
 
+    }
+
+    def guardarDatos = {
+        //println "guardar datos!! "+params
+        def act = MarcoLogico.get(params.act)
+        act.responsable = UnidadEjecutora.get(params.resp)
+        if(params.act!="-1")
+        act.categoria = Categoria.get(params.cat)
+        act.fechaInicio = new Date().parse("dd-MM-yyyy",params.inicio)
+        act.fechaFin = new Date().parse("dd-MM-yyyy",params.fin)
+        act.aporte = params.aporte.toDouble()
+        if(act.save(flush: true))
+            render "ok"
+        else{
+            render "error"
+            println "error save act  "+act.errors
+        }
     }
 
     def guadarDatosActividades = {

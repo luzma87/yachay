@@ -17,7 +17,7 @@
 
         <style type="text/css">
         .cmp {
-            width      : 225px;
+            width      : 700px;
             margin     : 5px;
             min-height : 215px;
             /*border: 1px solid black;*/
@@ -61,6 +61,7 @@
             width         : 90%;
             margin        : 5%;
             margin-top    : 2px;
+            margin-bottom: 10px;
             height        : 30px;
             line-height   : 30px;
             text-align    : center;
@@ -83,10 +84,11 @@
         }
 
         .texto {
-            width      : 90%;
+            width      : 100%;
             min-height : 115px;
             margin     : 5%;
             cursor     : pointer;
+            padding: 10px;
         }
 
         textarea {
@@ -97,9 +99,9 @@
         }
 
         .agregado {
-            width      : 90%;
+            width      : 95%;
             margin     : 1.5%;
-            padding    : 4px;
+            padding    : 10px;
             min-height : 20px;
             word-wrap  : break-word;
         }
@@ -134,12 +136,12 @@
                                 Proyecto
                             </g:link>
                         </li>
-                        <li>
-                            <g:link class="bc" controller="marcoLogico" action="showMarco"
-                                    id="${proyecto.id}">
-                                Marco L&oacute;gico
-                            </g:link>
-                        </li>
+                        %{--<li>--}%
+                            %{--<g:link class="bc" controller="marcoLogico" action="showMarco"--}%
+                                    %{--id="${proyecto.id}">--}%
+                                %{--Marco L&oacute;gico--}%
+                            %{--</g:link>--}%
+                        %{--</li>--}%
                         <li>
                             Componentes
                         </li>
@@ -161,8 +163,6 @@
                             <div>
                                 <div style="float: right;display: block;width: 90%;height: 35px">
                                     <a href="${createLink(action: 'actividadesComponente')}/${comp.id}" style="float: right" class="link">Agregar/Editar Actividades</a>
-                                    %{--<a href="${createLink(action: 'ingresoMetas')}/${comp.id}" class="link">Ver metas</a>--}%
-
                                 </div>
 
                                 <div class="matriz ui-corner-all campo cmp datos " ml="1" div="rn_${k}"
@@ -177,85 +177,9 @@
                                     </div>
 
                                 </div>
-                                %{--inicio de indicadores--}%
-                                <div class="matriz ui-corner-all campo cmpDoble " id="div_indi_medios_fin">
-                                    <div class="filaMedio" style="min-height: 25px;margin-top: 0px">
-                                        <div class="titulo">Indicadores</div>
-                                    </div>
 
-                                    <div class="filaMedio" style="min-height: 25px;margin-top: 0px">
-                                        <div class="titulo">Medios de Verificacion</div>
-                                    </div>
-                                    <g:set var="band" value="0"></g:set>
-                                    <g:each in="${Indicador.findAllByMarcoLogico(comp)}" var="indicador" status="i">
-                                        <g:set var="band" value="1"></g:set>
-                                        <div class="matriz ui-corner-all  fila " id="ind"
-                                             style="${(i == 0) ? 'margin-top:-10px;' : ''}">
-                                            <div class="filaMedio izq ">
-                                                <div class="texto agregado ui-corner-all fin varios  " pref="ic_"
-                                                     id="ic_${indicador.id}" ml="${comp.id}" tipo="2"
-                                                     div="ic_${indicador.id}"
-                                                     identificador="${indicador.id}" indicador="${comp.id}">
-                                                    ${indicador?.descripcion}
-                                                </div>
-                                            </div>
 
-                                            <div class="filaMedio der">
-                                                <g:each in="${app.MedioVerificacion.findAllByIndicador(indicador)}"
-                                                        var="med">
-                                                    <div class="texto agregado ui-corner-all md fin varios" pref="mc_"
-                                                         id="mc_${med.id}" ml="${comp.id}" tipo="3" div="mc_${med.id}"
-                                                         indicador="${indicador.id}"
-                                                         identificador="${med.id}">${med.descripcion}</div>
-                                                </g:each>
-                                                <div class=" texto agregado ui-corner-all md fin varios edicion"
-                                                     pref="mc_"
-                                                     id="mc_00${i + 1}${k}" ml="${comp.id}" div="mc_00${i + 1}${k}"
-                                                     tipo="3"
-                                                     indicador="${indicador.id}" identificador="0">Agregar</div>
-                                            </div>
-                                        </div>
-                                    </g:each>
 
-                                    <div class="matriz ui-corner-all  fila " id="ind"
-                                         style="${(band.toInteger() == 0) ? 'margin-top:-10px;' : ''}">
-                                        <div class="filaMedio izq ">
-                                            <div class="texto agregado ui-corner-all fin varios edicion  " pref="ic_"
-                                                 id="ic_00${k}"
-                                                 ml="${comp.id}" div="ic_00${k}" tipo="2" identificador="0"
-                                                 indicador="${comp?.id}">
-                                                Agregar
-                                            </div>
-                                        </div>
-
-                                        <div class="filaMedio der">
-                                            <div class=" texto agregado ui-corner-all md fin varios edicion" pref="mc_"
-                                                 id="mc_00${k}" ml="${comp.id}" div="mc_00${k}" indicador="0" tipo="3"
-                                                 identificador="0">Agregar</div>
-                                        </div>
-                                    </div>
-
-                                </div>%{--Fin de indicadores--}%
-                                <div class="matriz ui-corner-all campo cmp">
-                                    <div class="titulo">Supuestos</div>
-
-                                    <div class="texto" style=" min-height: 115px;" id="supuestos">
-                                        <g:each in="${Supuesto.findAllByMarcoLogico(comp)}" var="su">
-                                            <div class="agregado ui-corner-all fin varios" id="sc_${su.id}"
-                                                 ml="${comp.id}"
-                                                 div="sc_${su.id}" identificador="${su.id}" tipo="4"
-                                                 indicador="${comp?.id}">${su.descripcion}</div>
-                                        </g:each>
-                                        <div class="agregado ui-corner-all md fin varios editar edicion" id="sc_00${k}"
-                                             ml="${comp.id}" div="sc_00${k}" identificador="0" tipo="4"
-                                             indicador="${comp?.id}">Agregar</div>
-                                    </div>
-                                </div>
-                                <div style="float: right;display: block;width: 90%;height: 35px">
-
-                                    <a href="${createLink(action: 'ingresoMetas')}/${comp.id}" class="link" style="float: right">Agregar/Editar Metas</a>
-
-                                </div>
                             </div>
                             <g:set var="k" value="${k+1}"/>
                         </g:if>
@@ -273,38 +197,7 @@
                             </div>
 
                         </div>
-                        %{--inicio de indicadores--}%
-                        <div class="matriz ui-corner-all campo cmpDoble " id="div_indi_medios">
-                            <div class="filaMedio" style="min-height: 25px;margin-top: 0px">
-                                <div class="titulo">Indicadores</div>
-                            </div>
 
-                            <div class="filaMedio" style="min-height: 25px;margin-top: 0px">
-                                <div class="titulo">Medios de Verificacion</div>
-                            </div>
-                            <g:set var="band" value="0"></g:set>
-                            <div class="matriz ui-corner-all  fila " id="ind"
-                                 style="${(band.toInteger() == 0) ? 'margin-top:-10px;' : ''}">
-                                <div class="filaMedio izq ">
-                                    <div class="texto agregado ui-corner-all fin varios edicion  ">
-                                        Agregar
-                                    </div>
-                                </div>
-
-                                <div class="filaMedio der">
-                                    <div class=" texto agregado ui-corner-all md fin varios edicion">Agregar</div>
-                                </div>
-                            </div>
-
-                        </div>%{--Fin de indicadores--}%
-                        <div class="matriz ui-corner-all campo cmp">
-                            <div class="titulo">Supuestos</div>
-
-                            <div class="texto" style=" min-height: 115px;">
-
-                                <div class="agregado ui-corner-all md fin varios editar edicion">Agregar</div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -314,7 +207,7 @@
                 <input type="hidden" id="div">
                 <input type="hidden" id="iden">
 
-                <div class="texto" style="min-height: 270px">
+                <div class="texto" style="min-height: 270px;width: 90%">
                     <textarea name="mdo" id="txt_datos" style="min-height: 270px"></textarea>
                 </div>
             </div>
@@ -331,7 +224,7 @@
                 %{--</div>--}%
                 %{--<a href="#"  id="btnAgregar">Agregar</a>--}%
                 %{--</div>--}%
-                <div class="texto" style="min-height: 270px">
+                <div class="texto" style="min-height: 270px;width: 80%;">
                     <textarea name="txt_varios" id="txt_varios" style="min-height: 270px"></textarea>
                 </div>
 
@@ -480,7 +373,7 @@
             });
 
             $("#dlg_datos").dialog({
-                width:300,
+                width:550,
                 height:440,
                 position:"center",
                 modal:true,
@@ -509,23 +402,28 @@
                     },
                     "Aceptar":function() {
                         if ($("#txt_datos").val() != "" && $("#txt_datos").val() != " ") {
-                            $.ajax({
-                                type: "POST",
-                                url: "${createLink(action:'guadarDatosComponentes')}",
-                                data: {
-                                    tipo:$("#ml").val(),
-                                    datos:$("#txt_datos").val(),
-                                    proyecto:$("#proyecto").val(),
-                                    id: $("#iden").val()
-                                },
-                                success: function(msg) {
-                                    if (msg != "no") {
-                                        window.location.reload(true)
-                                    } else {
-                                        alert("algo salio mal")
+                            if($("#txt_datos").val().length>1024){
+                                $.ajax({
+                                    type: "POST",
+                                    url: "${createLink(action:'guadarDatosComponentes')}",
+                                    data: {
+                                        tipo:$("#ml").val(),
+                                        datos:$("#txt_datos").val(),
+                                        proyecto:$("#proyecto").val(),
+                                        id: $("#iden").val()
+                                    },
+                                    success: function(msg) {
+                                        if (msg != "no") {
+                                            window.location.reload(true)
+                                        } else {
+                                            //alert("algo salio mal")
+                                        }
                                     }
-                                }
-                            });
+                                });
+                            }else{
+                                alert("La descripción del componente no puede tener mas de 1024 datos")
+                            }
+
 
                         }
 

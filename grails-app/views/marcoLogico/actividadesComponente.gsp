@@ -65,9 +65,9 @@
         height        : 30px;
         line-height   : 30px;
         text-align    : center;
-        font-family   : fantasy;
         font-style    : italic;
         border-bottom : 1px solid black;
+        font-weight: bold;
 
     }
 
@@ -88,6 +88,7 @@
         min-height : 115px;
         margin     : 5%;
         cursor     : pointer;
+
     }
 
     textarea {
@@ -104,10 +105,15 @@
         padding    : 4px;
         min-height : 20px;
         word-wrap  : break-word;
+        padding: 10px;
+    }
+
+    .noDialog{
+
     }
 
     .fin {
-        background : rgba(145, 192, 95, 0.2)
+        background : #d7d7d7;
     }
 
     .proposito {
@@ -134,12 +140,6 @@
                 <g:link class="bc" controller="proyecto" action="show"
                         id="${componente.proyecto.id}">
                     Proyecto
-                </g:link>
-            </li>
-            <li>
-                <g:link class="bc" controller="marcoLogico" action="showMarco"
-                        id="${componente.proyecto.id}">
-                    Marco L&oacute;gico
                 </g:link>
             </li>
             <li>
@@ -170,21 +170,21 @@
 <div class="dialog" title="ACTIVIDADES DEL COMPONENTE: ${componente.objeto}">
     <input type="hidden" id="edicion" value="1">
     <input type="hidden" id="componente" value="${componente.id}">
-    <div style="width: 90%;height: 30px;border:1px solid #A6C9E2;margin-bottom: 5px;line-height: 25px;padding-top: 5px;font-size: 11px;" class="ui-corner-all">
-        <div style="width: 110px;height: 25px;;float: left;margin-left: 5px;text-align: right;font-weight: bolder;margin-right: 5px;">
+    <div style="width: 99%;height: 30px;border:1px solid #A6C9E2;margin-bottom: 5px;line-height: 25px;padding-top: 5px;font-size: 10px;" class="ui-corner-all">
+        <div style="width: 130px;height: 25px;float: left;margin-left: 5px;text-align: right;font-weight: bolder;margin-right: 5px;">
             Total componente:
         </div>
         <div id="total_componente" style="width: 100px;height: 25px;;float: left">
             <g:formatNumber number="${totComp}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"  ></g:formatNumber>
         </div>
         <div style="width: 150px;height: 25px;;float: left;margin-left: 5px;text-align: right;font-weight: bold;margin-right: 5px;">
-            Total otros componentes:
+            T. otros componentes:
         </div>
         <div id="total_otros" style="width: 100px;height: 25px;;float: left">
             <g:formatNumber number="${totOtros}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"  ></g:formatNumber>
         </div>
-        <div style="width: 110px;height: 25px;;float: left;text-align: right;font-weight: bold;margin-right: 5px;">
-            Total financiamento:
+        <div style="width: 110px;height: 25px;float: left;text-align: right;font-weight: bold;margin-right: 5px;">
+            T. financiamento:
         </div>
         <div id="total_finan" style="width: 100px;height: 25px;float: left">
             <g:formatNumber number="${totFin}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"  ></g:formatNumber>
@@ -200,23 +200,25 @@
 
     <div id="accordion" style="width:1030px">
         <g:each in="${actividades}" var="act" status="k">
-
-            <h3><a href="#">Actividad ${k + 1} : ${(act?.objeto.length() > 40) ? act?.objeto.substring(0, 40) + "..." : act.objeto}</a>
+            <h3>
+                <a href="#">Actividad ${k + 1} : ${(act?.objeto.length() > 40) ? act?.objeto.substring(0, 40) + "..." : act.objeto}</a>
             </h3>
-
-
             <div>
-
-
+                <div style="width: 98%;height: 35px;">
+                    <span style="font-weight: bold;font-style: italic">Responsable:</span>
+                    <g:select from="${app.UnidadEjecutora.list([sort:'nombre'])}" name="responsable" optionKey="id" optionValue="nombre" class="responsable ui-corner-all"
+                              id="resp_${act.id}" value="${act.responsable?.id}" ></g:select>
+                    <div style="width: 150px;height: 100%;float: right">
+                        <a href="#" act="${act.id}" class="ui-corner-all guardarAct">Guardar cambios</a>
+                    </div>
+                </div>
                 <div class="matriz ui-corner-all campo cmp datos " ml="1" div="rn_${k}"
                      identificador="${act?.id}" style="margin-left: -10px;" tipo="1">
                     <div class="titulo">Actividad</div>
-
                     <div class="texto agregado ui-corner-all fin" ml="1" style="min-height: 115px;"
                          id="rn_${k}" identificador="${act?.id}" tipo="1">
                         ${act?.objeto}
                     </div>
-
                 </div>
                 %{--monto--}%
                 <div class="matriz ui-corner-all campo cmp  ">
@@ -228,45 +230,47 @@
                         %{--${act?.monto}--}%
                         <g:formatNumber number="${act.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"  ></g:formatNumber>
                     </div>
+                    <div class="titulo" title="Aporte de contribución al complimiento del componente">Aporte de contribucion(%)</div>
+                    <div class="  ui-corner-all   " ml="6" style="margin-top: 0px;border: none" pref="fcin_" id="fcin_${act?.id}" div="fcin_${act?.id}"  tipo="6">
+                        <input  type="number" style="width: 50%;height: 25px;line-height: 25px;margin-left: 50px;text-align: right" class=" field ui-widget-content ui-corner-all number digits" id="aporte_${act.id}" title="Aporte de contribución al complimiento del componente" value="${act.aporte?.round(2)}">
+                    </div>
 
                 </div>
                 %{--fin monto--}%
-                %{--indicadores--}%
                 <div class="matriz ui-corner-all campo cmp  ">
-                    <div class="titulo">Indicadores</div>
-                    <g:each in="${Indicador.findAllByMarcoLogico(act)}" var="indicador" status="i">
-                        <div class="texto agregado ui-corner-all fin varios  " pref="ic_"
-                             id="ic_${indicador.id}" ml="${act.id}" tipo="2" div="ic_${indicador.id}"
-                             identificador="${indicador.id}" indicador="${act.id}">
-                            ${indicador?.descripcion}
-                        </div>
-                    </g:each>
-                    <div class="texto agregado ui-corner-all fin varios edicion  " pref="ic_" id="ic_00${k}"
-                         ml="${act.id}" div="ic_00${k}" tipo="2" identificador="0" indicador="${act?.id}">
-                        Agregar
-                    </div>
+                    <div class="titulo">Fechas </div>
+                    <fieldset class="  ui-corner-all   " ml="6" style="margin-top: 0px;border: none" pref="fcin_" id="fcin_${act?.id}" div="fcin_${act?.id}"  tipo="6">
+                        <legend style="font-size: 10px;">Incio</legend>
+                        <g:textField class="datepicker field ui-widget-content ui-corner-all fechaInicio"
+                                     name="fechaInicioPlanificada"
+                                     style="width: 90%"
+                                     title="Fecha de inicio de la actividad"
+                                     value="${act.fechaInicio?.format('dd-MM-yyyy')}"
+                                     id="fechaIncio_${act.id}" autocomplete="off"
+                        />
+                    </fieldset>
+                    <fieldset class="  ui-corner-all   " ml="7" style="margin-top: 0px;border: none" pref="fcfn_" id="fcfn_${act?.id}" div="fcfn_${act?.id}"  tipo="7">
+                        <legend style="font-size: 10px;">Fin</legend>
+                        <g:textField class="datepicker field ui-widget-content ui-corner-all fechaFin"
+                                     name="fechaInicioPlanificada"
+                                     style="width: 90%"
+                                     title="Fecha de finalización de la actividad"
+                                     value="${act.fechaFin?.format('dd-MM-yyyy')}"
+                                     id="fechaFin_${act.id}" autocomplete="off"
+                        />
+                    </fieldset>
+
                 </div>
-                %{--fin indicadores--}%
-
-                <div class="matriz ui-corner-all campo cmp">
-                    <div class="titulo">Supuestos</div>
-
-                    <div class="texto" style=" min-height: 115px;" id="supuestos">
-                        <g:each in="${Supuesto.findAllByMarcoLogico(act)}" var="su">
-                            <div class="agregado ui-corner-all fin varios" id="sc_${su.id}" ml="${act.id}"
-                                 div="sc_${su.id}" identificador="${su.id}" tipo="4"
-                                 indicador="${act?.id}">${su.descripcion}</div>
-                        </g:each>
-                        <div class="agregado ui-corner-all md fin varios editar edicion" id="sc_00${k}"
-                             ml="${act.id}" div="sc_00${k}" identificador="0" tipo="4"
-                             indicador="${act?.id}">Agregar</div>
+                <div class="matriz ui-corner-all campo cmp  ">
+                    <div class="titulo">Categoría </div>
+                    <div class="  ui-corner-all   " ml="6" style="margin-top: 0px;border: none" pref="fcin_" id="fcin_${act?.id}" div="fcin_${act?.id}"  tipo="6">
+                        <g:select from="${app.yachai.Categoria.list()}" name="categoria" id="categoria_${act.id}" optionKey="id" noSelection="['-1':'Ninguna']"
+                                  optionValue="descripcion" value="${act.categoria?.id}" style="width: 100%" class="ui-corner-all field ui-widget-content"></g:select>
                     </div>
+
+
                 </div>
-                %{--<div style="float: right;display: block;width: 90%;height: 35px">--}%
 
-                    %{--<a href="${createLink(action: 'ingresoMetas')}/${act.id}" class="link" style="float: right">Agregar/Editar Metas</a>--}%
-
-                %{--</div>--}%
             </div>
         </g:each>
     %{--fin del each--}%
@@ -294,24 +298,7 @@
 
             </div>
             %{--fin monto--}%
-            %{--indicadores--}%
-            <div class="matriz ui-corner-all campo cmp datos " ml="5" div="mn_${k}"
-                 identificador="${act?.id}" style="margin-left: -10px;" tipo="2">
-                <div class="titulo">Indicadores</div>
 
-                <div class="texto agregado ui-corner-all fin varios edicion  ">
-                    Agregar
-                </div>
-            </div>
-            %{--fin indicadores--}%
-            <div class="matriz ui-corner-all campo cmp">
-                <div class="titulo">Supuestos</div>
-
-                <div class="texto" style=" min-height: 115px;">
-
-                    <div class="agregado ui-corner-all md fin varios editar edicion">Agregar</div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -450,8 +437,102 @@
 
 
     $(".link").button()
-    $(".back").button({icons:{primary:'ui-icon-arrowreturnthick-1-w'}});
+    $(".guardarAct").button().click(function(){
+        var act = $(this).attr("act")
+        var resp = $("#resp_"+act).val()
+        var cat = $("#categoria_"+act).val()
+        var aporte = $("#aporte_"+act).val()
+        var inicio = $("#fechaIncio_"+act).val()
+        var fin = $("#fechaFin_"+act).val()
+        var msg =""
 
+        if(inicio.length<1){
+            msg+="Ingrese la Fecha de inicio de la actividad"
+        }
+        if(fin.length<1){
+            msg+="<br>Ingrese la Fecha de finalización de la actividad"
+        }
+        if(isNaN(aporte)){
+            msg+="<br>Ingrese el porcentaje de aporte de la actividad. Debe ser un numero positivo."
+        }else{
+            aporte = parseFloat(aporte)
+            if(aporte>100){
+                msg+="<br>El aporte no puede ser mayor que 100."
+            }
+            if(aporte<0){
+                msg+="<br>El aporte debe ser un número positivo."
+            }
+        }
+
+
+        if(msg!=""){
+            $.box({
+                title:"Error",
+                text:msg,
+                dialog: {
+                    resizable: false,
+                    buttons  : {
+                        "Cerrar":function(){
+
+                        }
+                    }
+                }
+            });
+        }else{
+            $.ajax({
+                type: "POST",
+                url: "${createLink(controller: "marcoLogico", action:'guardarDatos')}",
+                data: {
+                    act:act,
+                    resp:resp,
+                    cat:cat,
+                    aporte:aporte,
+                    inicio:inicio,
+                    fin:fin
+                },
+                success: function(msg) {
+                    if (msg == "ok") {
+                        $.box({
+                            title:"Aviso",
+                            text:"Datos guardados",
+                            dialog: {
+                                resizable: false,
+                                buttons  : {
+                                    "Cerrar":function(){
+
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    });
+    $(".back").button({icons:{primary:'ui-icon-arrowreturnthick-1-w'}});
+    $('.datepicker').datepicker({
+        changeMonth:true,
+        changeYear:true,
+        dateFormat:'dd-mm-yy',
+
+        onClose:function (dateText, inst) {
+            var date = $(this).datepicker('getDate');
+            var day, month, year;
+            if (date != null) {
+                day = date.getDate();
+                month = parseInt(date.getMonth()) + 1;
+                year = date.getFullYear();
+            } else {
+                day = '';
+                month = '';
+                year = '';
+            }
+            var id = $(this).attr('id');
+            $('#' + id + '_day').val(day);
+            $('#' + id + '_month').val(month);
+            $('#' + id + '_year').val(year);
+        }
+    });
     $("#breadCrumb").jBreadCrumb({
         beginingElementsToLeaveOpen: 10
     });

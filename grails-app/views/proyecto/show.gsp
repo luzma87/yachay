@@ -521,23 +521,23 @@
                     </table>
                 </div>
 
-                <div style="width: 1040px;float: left; margin-top: 5px;">
-                    <div class="sectionHeader ui-widget-header ui-corner-all" title="Mostrar" data-object="politicas">
-                        Pol&iacute;ticas
-                        <span class="ui-icon ui-icon-triangle-1-s" style="float: right;"></span>
-                    </div>
-                    <table width="1040px" class="ui-widget-content ui-corner-bottom ui-helper-hidden" id="politicas">
-                        <tbody>
-                            <g:each in="${politicas}" status="i" var="pol">
-                                <tr class="${i % 2 == 0 ? 'even' : 'odd'}">
-                                    <td>
-                                        ${pol.politica.descripcion}
-                                    </td>
-                                </tr>
-                            </g:each>
-                        </tbody>
-                    </table>
-                </div>
+                %{--<div style="width: 1040px;float: left; margin-top: 5px;">--}%
+                    %{--<div class="sectionHeader ui-widget-header ui-corner-all" title="Mostrar" data-object="politicas">--}%
+                        %{--Pol&iacute;ticas--}%
+                        %{--<span class="ui-icon ui-icon-triangle-1-s" style="float: right;"></span>--}%
+                    %{--</div>--}%
+                    %{--<table width="1040px" class="ui-widget-content ui-corner-bottom ui-helper-hidden" id="politicas">--}%
+                        %{--<tbody>--}%
+                            %{--<g:each in="${politicas}" status="i" var="pol">--}%
+                                %{--<tr class="${i % 2 == 0 ? 'even' : 'odd'}">--}%
+                                    %{--<td>--}%
+                                        %{--${pol.politica.descripcion}--}%
+                                    %{--</td>--}%
+                                %{--</tr>--}%
+                            %{--</g:each>--}%
+                        %{--</tbody>--}%
+                    %{--</table>--}%
+                %{--</div>--}%
 
                 <div style="width: 1040px;float: left; margin-top: 5px;">
                     <div class="sectionHeader ui-widget-header ui-corner-all" title="Mostrar"
@@ -620,58 +620,58 @@
                     </table>
                 </div>
 
-                <div style="width: 1040px;float: left; margin-top: 5px;">
-                    <div class="sectionHeader ui-widget-header ui-corner-all" title="Mostrar" data-object="entidades">
-                        Entidades participantes
-                        <span class="ui-icon ui-icon-triangle-1-s" style="float: right;"></span>
-                    </div>
-                    <table class="ui-widget-content ui-corner-bottom ui-helper-hidden" width="100%"
-                           style="font-size: 13px;"
-                           id="entidades">
-                        <thead>
-                            <tr>
-                                <th class="head ui-corner-tl">Unidad ejecutora</th>
-                                <th class="head">Tipo participaci&oacute;n</th>
-                                <th class="head">Monto</th>
-                                <th class="head ui-corner-tr">Rol</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <g:if test="${entidades.size() == 0}">
-                                <tr>
-                                    <td colspan="4"
-                                        class="ui-state-active ui-corner-bottom"
-                                        style="font-weight: bold; padding: 5px; font-size: larger; text-align: center;">
-                                        No se encontraron Entidades de Proyecto para este proyecto
-                                    </td>
-                                </tr>
-                            </g:if>
-                            <g:else>
-                                <g:each in="${entidades}" var="elem" status="i">
-                                    <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                                        <td>
-                                            ${elem.unidad}
-                                        </td>
+                %{--<div style="width: 1040px;float: left; margin-top: 5px;">--}%
+                    %{--<div class="sectionHeader ui-widget-header ui-corner-all" title="Mostrar" data-object="entidades">--}%
+                        %{--Entidades participantes--}%
+                        %{--<span class="ui-icon ui-icon-triangle-1-s" style="float: right;"></span>--}%
+                    %{--</div>--}%
+                    %{--<table class="ui-widget-content ui-corner-bottom ui-helper-hidden" width="100%"--}%
+                           %{--style="font-size: 13px;"--}%
+                           %{--id="entidades">--}%
+                        %{--<thead>--}%
+                            %{--<tr>--}%
+                                %{--<th class="head ui-corner-tl">Unidad ejecutora</th>--}%
+                                %{--<th class="head">Tipo participaci&oacute;n</th>--}%
+                                %{--<th class="head">Monto</th>--}%
+                                %{--<th class="head ui-corner-tr">Rol</th>--}%
+                            %{--</tr>--}%
+                        %{--</thead>--}%
+                        %{--<tbody>--}%
+                            %{--<g:if test="${entidades.size() == 0}">--}%
+                                %{--<tr>--}%
+                                    %{--<td colspan="4"--}%
+                                        %{--class="ui-state-active ui-corner-bottom"--}%
+                                        %{--style="font-weight: bold; padding: 5px; font-size: larger; text-align: center;">--}%
+                                        %{--No se encontraron Entidades de Proyecto para este proyecto--}%
+                                    %{--</td>--}%
+                                %{--</tr>--}%
+                            %{--</g:if>--}%
+                            %{--<g:else>--}%
+                                %{--<g:each in="${entidades}" var="elem" status="i">--}%
+                                    %{--<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">--}%
+                                        %{--<td>--}%
+                                            %{--${elem.unidad}--}%
+                                        %{--</td>--}%
 
-                                        <td>
-                                            ${elem.tipoPartisipacion}
-                                        </td>
+                                        %{--<td>--}%
+                                            %{--${elem.tipoPartisipacion}--}%
+                                        %{--</td>--}%
 
-                                        <td>
-                                            <g:formatNumber number="${elem.monto}"
-                                                            format="###,##0"
-                                                            minFractionDigits="2" maxFractionDigits="2"/>
-                                        </td>
+                                        %{--<td>--}%
+                                            %{--<g:formatNumber number="${elem.monto}"--}%
+                                                            %{--format="###,##0"--}%
+                                                            %{--minFractionDigits="2" maxFractionDigits="2"/>--}%
+                                        %{--</td>--}%
 
-                                        <td>
-                                            ${elem.rol}
-                                        </td>
-                                    </tr>
-                                </g:each>
-                            </g:else>
-                        </tbody>
-                    </table>
-                </div>
+                                        %{--<td>--}%
+                                            %{--${elem.rol}--}%
+                                        %{--</td>--}%
+                                    %{--</tr>--}%
+                                %{--</g:each>--}%
+                            %{--</g:else>--}%
+                        %{--</tbody>--}%
+                    %{--</table>--}%
+                %{--</div>--}%
 
             </div> <!-- body -->
         </div> <!-- dialog -->

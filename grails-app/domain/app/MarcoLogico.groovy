@@ -1,4 +1,7 @@
 package app
+
+import app.yachai.Categoria
+
 class MarcoLogico implements Serializable {
     Proyecto proyecto
     TipoElemento tipoElemento
@@ -8,6 +11,11 @@ class MarcoLogico implements Serializable {
     double monto
     MarcoLogico padreMod
     int estado = 0 /* 0 -> activo por facilidad en la base de datos  1-> modificado*/
+    Categoria categoria;
+    Date fechaInicio
+    Date fechaFin
+    UnidadEjecutora responsable
+    double aporte = 0;
     static auditable=[ignore:[]]
     static mapping = {
         table 'mrlg'
@@ -25,6 +33,11 @@ class MarcoLogico implements Serializable {
             monto column: 'mrlgmnto'
             estado column: 'mrlgetdo'
             padreMod column: 'mrlgpdmd'
+            categoria column: 'ctgr__id'
+            fechaInicio column: 'mrlgfcin'
+            fechaFin column: 'mrlgfcfn'
+            responsable column: 'unej__id'
+            aporte column: 'mrlgaprt'
         }
     }
     static constraints = {
@@ -36,6 +49,10 @@ class MarcoLogico implements Serializable {
         monto( blank:true, nullable:true ,attributes:[mensaje:'Monto o valor planificado, se aplica sólo en actividades'])
         estado(nullable: false,blank: false)
         padreMod(nullable: true,blank: true)
+        categoria(nullable: true,blank:true)
+        responsable(nullable: true,blank:true)
+        fechaFin(nullable: true,blank:true)
+        fechaInicio(nullable: true,blank:true)
     }
     String toString(){
         if(this.objeto.length()<40)
