@@ -49,6 +49,10 @@
 
         <script type="text/javascript" src="${resource(dir: 'js/jquery/js', file: 'jquery.ui.datepicker-es.js')}"></script>
 
+        <script type="text/javascript" src="${resource(dir: 'js/jquery/plugins/box/js', file: 'jquery.luz.box.js')}"></script>
+        <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/box/css', file: 'jquery.luz.box.css')}"/>
+
+
         <g:layoutHead/>
         <g:javascript library="application"/>
     </head>

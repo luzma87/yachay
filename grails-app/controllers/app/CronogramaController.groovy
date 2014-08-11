@@ -174,7 +174,7 @@ class CronogramaController extends app.seguridad.Shield{
     }
 
     def calcularAsignaciones = {
-        println "calc asg "+params
+        //println "calc asg "+params
         def proyecto = Proyecto.get(params.proyecto)
         def anio=Anio.get(params.anio)
         def cn = dbConnectionService.getConnection()

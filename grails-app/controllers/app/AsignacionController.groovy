@@ -57,7 +57,7 @@ class AsignacionController extends app.seguridad.Shield {
 
 
     def asignacionProyectov2 = {
-        println "params " + params
+//        println "params " + params
         def proyecto = Proyecto.get(params.id)
         def asignaciones = []
         def actual
@@ -85,8 +85,12 @@ class AsignacionController extends app.seguridad.Shield {
         Asignacion.findAllByUnidadAndMarcoLogicoIsNotNull(proyecto.unidadEjecutora).each{
             totalUnidad = totalUnidad+it.getValorReal()
         }
-        maxInv=PresupuestoUnidad.findByAnioAndUnidad(actual,proyecto.unidadEjecutora)?.maxInversion
-
+//        maxInv=PresupuestoUnidad.findByAnioAndUnidad(actual,proyecto.unidadEjecutora)?.maxInversion
+        def unidad = UnidadEjecutora.findByPadreIsNull()
+        maxInv=PresupuestoUnidad.findByAnioAndUnidad(actual,unidad)?.maxInversion
+        println "unidad "+indad+"  presp "+maxInv
+        if(!maxInv)
+            maxInv=0
         [asignaciones: asignaciones, actual: actual, proyecto: proyecto,total: total,totalUnidad: totalUnidad,maxInv:maxInv]
 
 
@@ -459,10 +463,11 @@ class AsignacionController extends app.seguridad.Shield {
             }
 
             def maxUnidad
+            def un = UnidadEjecutora.findByPadreIsNull()
             def max
-            if (PresupuestoUnidad.findByUnidadAndAnio(unidad, actual)) {
-                max = PresupuestoUnidad.findByUnidadAndAnio(unidad, actual)
-                maxUnidad =max.maxCorrientes
+            if (PresupuestoUnidad.findByUnidadAndAnio(un, actual)) {
+                max = PresupuestoUnidad.findByUnidadAndAnio(un, actual)
+                maxUnidad =max.maxInversion
             } else {
                 maxUnidad = 0
             }
@@ -544,8 +549,8 @@ class AsignacionController extends app.seguridad.Shield {
 
 
     def eliminarAsignacion = {
-        println "params elim asignacion"
-        println params
+//        println "params elim asignacion"
+//        println params
 
         if (params.id) {
             def band = true
@@ -671,101 +676,101 @@ class AsignacionController extends app.seguridad.Shield {
                 }
 
                 if (band) {
-                    println "1"
-                    def origen = PresupuestoUnidad.findByAnioAndUnidad(anio,unidad)
-                    if (!origen){
-                        origen=new PresupuestoUnidad()
-                        origen.anio=anio
-                        origen.unidad=unidad
-                        origen.maxCorrientes=0
-                        origen.maxInversion=total
-                        kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
-                    }
-                    if (total>=origen.maxInversion){
-                        println "total mas que origen"
-                        if(padre){
-                            println "con padre"
-                            if(padre?.unidad?.id?.toInteger()!=unidad.id.toInteger()){
-                                println "con padre -- diferente"
-
-                                def destino = PresupuestoUnidad.findByAnioAndUnidad(anio,padre.unidad)
-                                if (origen.maxInversion>0){
-                                    def mod = new ModificacionTechos()
-                                    mod.desde=origen
-                                    mod.recibe=destino
-                                    mod.valor=valor
-                                    mod.usuario=session.usuario
-                                    mod.fecha=new Date()
-                                    mod.tipo=3
-                                    kerberosService.saveObject(mod,ModificacionTechos,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
-                                    origen.maxInversion-=valor
-                                    destino.maxInversion+=valor
-                                    kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
-                                    kerberosService.saveObject(destino,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
-                                }else{
-                                    def val = 0
-                                    Asignacion.findAll("from Asignacion where unidad=${unidad.id} and anio=${anio.id} and marcoLogico is not null").each{am->
-                                        val+=am.getValorReal()
-                                    }
-                                    origen.maxInversion=val
-                                    kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion-calculado","asignacion",session)
-                                    destino.maxInversion+=valor
-                                    kerberosService.saveObject(destino,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
-                                }
-                            }else{
-                                println "con padre -- igual"
-
-                                if (origen?.maxInversion>0){
-                                    println "con padre -- igual > 0"
-                                    def mod = new ModificacionTechos()
-                                    mod.desde=origen
-                                    mod.recibe=null
-                                    mod.valor=valor
-                                    mod.usuario=session.usuario
-                                    mod.fecha=new Date()
-                                    mod.tipo=3
-                                    kerberosService.saveObject(mod,ModificacionTechos,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
-                                    origen.maxInversion-=valor
-                                    kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
-                                }else{
-                                    println "con padre -- max inv nada "
-                                    def val = 0
-                                    Asignacion.findAll("from Asignacion where unidad=${unidad.id} and anio=${anio.id} and marcoLogico is not null").each{am->
-                                        val+=am.getValorReal()
-                                    }
-                                    origen.maxInversion=val
-                                    kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion-calculado","asignacion",session)
-                                }
-                            }
-
-                        }else{
-                            println "sin padre"
-
-                            if (origen?.maxInversion>0){
-                                println "sin padre > 0"
-                                def mod = new ModificacionTechos()
-                                mod.desde=origen
-                                mod.recibe=null
-                                mod.valor=valor
-                                mod.usuario=session.usuario
-                                mod.fecha=new Date()
-                                mod.tipo=3
-                                kerberosService.saveObject(mod,ModificacionTechos,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
-                                origen.maxInversion-=valor
-                                kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
-                            }else{
-                                println "sin padre error"
-                                def val = 0
-                                Asignacion.findAll("from Asignacion where unidad=${unidad.id} and anio=${anio.id} and marcoLogico is not null").each{am->
-                                    val+=am.getValorReal()
-                                }
-                                origen.maxInversion=val
-                                kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion-calculado","asignacion",session)
-                            }
-                        }
-                    } else{
-                        println "total menos que origen"
-                    }
+//                    println "1"
+//                    def origen = PresupuestoUnidad.findByAnioAndUnidad(anio,unidad)
+//                    if (!origen){
+//                        origen=new PresupuestoUnidad()
+//                        origen.anio=anio
+//                        origen.unidad=unidad
+//                        origen.maxCorrientes=0
+//                        origen.maxInversion=total
+//                        kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+//                    }
+//                    if (total>=origen.maxInversion){
+//                        println "total mas que origen"
+//                        if(padre){
+//                            println "con padre"
+//                            if(padre?.unidad?.id?.toInteger()!=unidad.id.toInteger()){
+//                                println "con padre -- diferente"
+//
+//                                def destino = PresupuestoUnidad.findByAnioAndUnidad(anio,padre.unidad)
+//                                if (origen.maxInversion>0){
+//                                    def mod = new ModificacionTechos()
+//                                    mod.desde=origen
+//                                    mod.recibe=destino
+//                                    mod.valor=valor
+//                                    mod.usuario=session.usuario
+//                                    mod.fecha=new Date()
+//                                    mod.tipo=3
+//                                    kerberosService.saveObject(mod,ModificacionTechos,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+//                                    origen.maxInversion-=valor
+//                                    destino.maxInversion+=valor
+//                                    kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+//                                    kerberosService.saveObject(destino,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+//                                }else{
+//                                    def val = 0
+//                                    Asignacion.findAll("from Asignacion where unidad=${unidad.id} and anio=${anio.id} and marcoLogico is not null").each{am->
+//                                        val+=am.getValorReal()
+//                                    }
+//                                    origen.maxInversion=val
+//                                    kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion-calculado","asignacion",session)
+//                                    destino.maxInversion+=valor
+//                                    kerberosService.saveObject(destino,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+//                                }
+//                            }else{
+//                                println "con padre -- igual"
+//
+//                                if (origen?.maxInversion>0){
+//                                    println "con padre -- igual > 0"
+//                                    def mod = new ModificacionTechos()
+//                                    mod.desde=origen
+//                                    mod.recibe=null
+//                                    mod.valor=valor
+//                                    mod.usuario=session.usuario
+//                                    mod.fecha=new Date()
+//                                    mod.tipo=3
+//                                    kerberosService.saveObject(mod,ModificacionTechos,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+//                                    origen.maxInversion-=valor
+//                                    kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+//                                }else{
+//                                    println "con padre -- max inv nada "
+//                                    def val = 0
+//                                    Asignacion.findAll("from Asignacion where unidad=${unidad.id} and anio=${anio.id} and marcoLogico is not null").each{am->
+//                                        val+=am.getValorReal()
+//                                    }
+//                                    origen.maxInversion=val
+//                                    kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion-calculado","asignacion",session)
+//                                }
+//                            }
+//
+//                        }else{
+//                            println "sin padre"
+//
+//                            if (origen?.maxInversion>0){
+//                                println "sin padre > 0"
+//                                def mod = new ModificacionTechos()
+//                                mod.desde=origen
+//                                mod.recibe=null
+//                                mod.valor=valor
+//                                mod.usuario=session.usuario
+//                                mod.fecha=new Date()
+//                                mod.tipo=3
+//                                kerberosService.saveObject(mod,ModificacionTechos,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+//                                origen.maxInversion-=valor
+//                                kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+//                            }else{
+//                                println "sin padre error"
+//                                def val = 0
+//                                Asignacion.findAll("from Asignacion where unidad=${unidad.id} and anio=${anio.id} and marcoLogico is not null").each{am->
+//                                    val+=am.getValorReal()
+//                                }
+//                                origen.maxInversion=val
+//                                kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion-calculado","asignacion",session)
+//                            }
+//                        }
+//                    } else{
+//                        println "total menos que origen"
+//                    }
 
 
                     render("OK")
@@ -922,7 +927,8 @@ class AsignacionController extends app.seguridad.Shield {
         def unidad = UnidadEjecutora.get(params.id)
         def asgProy = Asignacion.findAll("from Asignacion where unidad=${unidad.id} and marcoLogico is not null and anio=${actual.id} order by id")
         def asgCor = Asignacion.findAll("from Asignacion where unidad=${unidad.id} and actividad is not null and anio=${actual.id} and marcoLogico is null order by id")
-        def max = PresupuestoUnidad.findByUnidadAndAnio(unidad,actual)
+        def un = UnidadEjecutora.findByPadreIsNull()
+        def max = PresupuestoUnidad.findByUnidadAndAnio(un,actual)
         def meses = []
         12.times {meses.add(it + 1)}
         [unidad: unidad, corrientes: asgCor, inversiones: asgProy, actual: actual, meses: meses,max: max]
@@ -1365,7 +1371,8 @@ class AsignacionController extends app.seguridad.Shield {
         asg.each {
             totCorrientes+=it.planificado
         }
-        def max = PresupuestoUnidad.findByUnidadAndAnio(unidad,actual)
+        def un = UnidadEjecutora.findByPadreIsNull()
+        def max = PresupuestoUnidad.findByUnidadAndAnio(un,actual)
         [unidad:unidad,asg :asg,max: max,actual: actual,totCorrientes:totCorrientes]
 
     }
@@ -1379,7 +1386,8 @@ class AsignacionController extends app.seguridad.Shield {
         def pass = params.ssap
         println "claves "+ session.usuario.autorizacion+ " "+params.ssap.encodeAsMD5()
         if (session.usuario.autorizacion == params.ssap.encodeAsMD5()){
-            def max = PresupuestoUnidad.findByUnidadAndAnio(unidad,anio)
+            def un = UnidadEjecutora.findByPadreIsNull()
+            def max = PresupuestoUnidad.findByUnidadAndAnio(un,anio)
             if (max){
                 max.aprobadoCorrientes=1
                 max = kerberosService.saveObject(max,PresupuestoUnidad,session.perfil,session.usuario,"AsignacionController","aprobarAsgCorrientes",session)
@@ -1490,7 +1498,8 @@ class AsignacionController extends app.seguridad.Shield {
         Asignacion.findAll("from Asignacion where anio=${actual.id} and unidad=${unidad.id} and marcoLogico is not null").each{
             totalUnidad+= it.getValorReal()
         }
-        def maxUnidad = PresupuestoUnidad.findByAnioAndUnidad(actual,unidad)
+        def un= UnidadEjecutora.findByPadreIsNull()
+        def maxUnidad = PresupuestoUnidad.findByAnioAndUnidad(actual,un)
         if (maxUnidad)
             maxUnidad=maxUnidad.maxInversion
         else
