@@ -160,6 +160,8 @@
                 var tipoNode = node.attr("rel");
                 var tipoParent = parent.attr("rel");
 
+                var esPrimerNivel = node.hasClass("noParent");
+
                 var submenu;
 
                 switch (tipoNode) {
@@ -174,8 +176,7 @@
                     "remove" : false,
                     "rename" : false,
                     "ccp"    : false
-                } //items
-
+                }; //items
 
                 if (tipoNode != "usro") {
                     items.nuevo = {
@@ -208,54 +209,56 @@
                             });
                         }
                     }; //nuevo hijo
-                    items.presupuesto = {
-                        "label"            : "Presupuesto entidad",
-                        "_disabled"        : false, // clicking the item won't do a thing
-                        "_class"           : "class", // class is applied to the item LI node
-                        "separator_before" : false, // Insert a separator before the item
-                        "separator_after"  : false, // Insert a separator after the item
-                        "icon"             : icons.presupuestoUnidad,
-                        // The function to execute upon a click
-                        "action"           : function (obj) {
-                            var tipo = $(obj).attr("rel");
-                            var str = $(obj).attr("id");
-                            var parts = str.split("_");
-                            var id = parts[1];
-                            var url = "${createLink(action: 'presupuestoFromTree')}";
+                    if (esPrimerNivel) {
+                        items.presupuesto = {
+                            "label"            : "Presupuesto entidad",
+                            "_disabled"        : false, // clicking the item won't do a thing
+                            "_class"           : "class", // class is applied to the item LI node
+                            "separator_before" : false, // Insert a separator before the item
+                            "separator_after"  : false, // Insert a separator after the item
+                            "icon"             : icons.presupuestoUnidad,
+                            // The function to execute upon a click
+                            "action"           : function (obj) {
+                                var tipo = $(obj).attr("rel");
+                                var str = $(obj).attr("id");
+                                var parts = str.split("_");
+                                var id = parts[1];
+                                var url = "${createLink(action: 'presupuestoFromTree')}";
 
-                            $.ajax({
-                                "type"    : "POST",
-                                "url"     : url,
-                                "data"    : {
-                                    "tipo" : "create",
-                                    "id"   : id
-                                },
-                                "success" : function (msg) {
-                                    $("#dlg_editar").dialog("option", "title", "Presupuesto Entidad");
-                                    $("#dlg_editar").html(msg);
-                                    $("#dlg_editar").dialog("open");
-                                }
-                            });
-                        }
-                    }; //presupuesto entidad
-                    items.Modpresupuesto = {
-                        "label"            : "Modificar presupuesto",
-                        "_disabled"        : false, // clicking the item won't do a thing
-                        "_class"           : "class", // class is applied to the item LI node
-                        "separator_before" : false, // Insert a separator before the item
-                        "separator_after"  : false, // Insert a separator after the item
-                        "icon"             : icons.presupuestoUnidad,
-                        // The function to execute upon a click
-                        "action"           : function (obj) {
-                            var tipo = $(obj).attr("rel");
-                            var str = $(obj).attr("id");
-                            var parts = str.split("_");
-                            var id = parts[1];
-                            var url = "${createLink(action: 'modTechos',controller: 'modificacion')}/"+id;
-                            location.href = url;
+                                $.ajax({
+                                    "type"    : "POST",
+                                    "url"     : url,
+                                    "data"    : {
+                                        "tipo" : "create",
+                                        "id"   : id
+                                    },
+                                    "success" : function (msg) {
+                                        $("#dlg_editar").dialog("option", "title", "Presupuesto Entidad");
+                                        $("#dlg_editar").html(msg);
+                                        $("#dlg_editar").dialog("open");
+                                    }
+                                });
+                            }
+                        }; //presupuesto entidad
+                        items.Modpresupuesto = {
+                            "label"            : "Modificar presupuesto",
+                            "_disabled"        : false, // clicking the item won't do a thing
+                            "_class"           : "class", // class is applied to the item LI node
+                            "separator_before" : false, // Insert a separator before the item
+                            "separator_after"  : false, // Insert a separator after the item
+                            "icon"             : icons.presupuestoUnidad,
+                            // The function to execute upon a click
+                            "action"           : function (obj) {
+                                var tipo = $(obj).attr("rel");
+                                var str = $(obj).attr("id");
+                                var parts = str.split("_");
+                                var id = parts[1];
+                                var url = "${createLink(action: 'modTechos',controller: 'modificacion')}/" + id;
+                                location.href = url;
 
-                        }
-                    };
+                            }
+                        };
+                    }
                     items.documentos = {
                         "label"            : "Documentos entidad",
                         "_disabled"        : false, // clicking the item won't do a thing
@@ -419,7 +422,7 @@
                                     // All below are optional
                                     "_disabled"        : false, // clicking the item won't do a thing
                                     "_class"           : "class", // class is applied to the item LI node
-                                    "separator_before" : false, // Insert a separator before the item
+                                    "separator_before" : true, // Insert a separator before the item
                                     "separator_after"  : false, // Insert a separator after the item
                                     // false or string - if does not contain `/` - used as classname
                                     "icon"             : icons.remove
@@ -463,47 +466,47 @@
                         "icon"             : icons.edit
                     }; //editar
 
-                %{--items.eliminar = {--}%
-                %{--// The item label--}%
-                %{--"label": "Eliminar",--}%
-                %{--// The function to execute upon a click--}%
-                %{--"action": function (obj) {--}%
-                %{--var tipo = $(obj).attr("rel");--}%
-                %{--var str = "Está seguro de querer eliminar este usuario?\nEsta acción no se puede deshacer.";--}%
+                    %{--items.eliminar = {--}%
+                    %{--// The item label--}%
+                    %{--"label": "Eliminar",--}%
+                    %{--// The function to execute upon a click--}%
+                    %{--"action": function (obj) {--}%
+                    %{--var tipo = $(obj).attr("rel");--}%
+                    %{--var str = "Está seguro de querer eliminar este usuario?\nEsta acción no se puede deshacer.";--}%
 
-                %{--if (confirm(str)) {--}%
-                %{--var str = $(obj).attr("id");--}%
-                %{--var parts = str.split("_");--}%
-                %{--var id = parts[1];--}%
+                    %{--if (confirm(str)) {--}%
+                    %{--var str = $(obj).attr("id");--}%
+                    %{--var parts = str.split("_");--}%
+                    %{--var id = parts[1];--}%
 
-                %{--var url = "${createLink(action: 'deleteUserFromTree')}";--}%
-                %{--$.ajax({--}%
-                %{--"type": "POST",--}%
-                %{--"url": url,--}%
-                %{--"data": {--}%
-                %{--tipo: tipo,--}%
-                %{--id: id--}%
-                %{--},--}%
-                %{--"success": function(msg) {--}%
-                %{--if (msg == "OK") {--}%
-                %{--$("#infoCont").html("");--}%
-                %{--$("#infoTitle").html("");--}%
-                %{--initTree();--}%
-                %{--} else {--}%
-                %{--alert(msg);--}%
-                %{--}--}%
-                %{--}--}%
-                %{--});--}%
-                %{--}--}%
-                %{--},--}%
-                %{--// All below are optional--}%
-                %{--"_disabled": false,        // clicking the item won't do a thing--}%
-                %{--"_class": "class",    // class is applied to the item LI node--}%
-                %{--"separator_before": false,    // Insert a separator before the item--}%
-                %{--"separator_after": false,        // Insert a separator after the item--}%
-                %{--// false or string - if does not contain `/` - used as classname--}%
-                %{--"icon": icons.remove--}%
-                %{--}; //eliminar--}%
+                    %{--var url = "${createLink(action: 'deleteUserFromTree')}";--}%
+                    %{--$.ajax({--}%
+                    %{--"type": "POST",--}%
+                    %{--"url": url,--}%
+                    %{--"data": {--}%
+                    %{--tipo: tipo,--}%
+                    %{--id: id--}%
+                    %{--},--}%
+                    %{--"success": function(msg) {--}%
+                    %{--if (msg == "OK") {--}%
+                    %{--$("#infoCont").html("");--}%
+                    %{--$("#infoTitle").html("");--}%
+                    %{--initTree();--}%
+                    %{--} else {--}%
+                    %{--alert(msg);--}%
+                    %{--}--}%
+                    %{--}--}%
+                    %{--});--}%
+                    %{--}--}%
+                    %{--},--}%
+                    %{--// All below are optional--}%
+                    %{--"_disabled": false,        // clicking the item won't do a thing--}%
+                    %{--"_class": "class",    // class is applied to the item LI node--}%
+                    %{--"separator_before": false,    // Insert a separator before the item--}%
+                    %{--"separator_after": false,        // Insert a separator after the item--}%
+                    %{--// false or string - if does not contain `/` - used as classname--}%
+                    %{--"icon": icons.remove--}%
+                    %{--}; //eliminar--}%
                 } //usro
                 return items;
             } //createContextmenu
@@ -577,7 +580,7 @@
                     }
                 })//js tree
                         .bind("select_node.jstree", function (event, data) {
-//                            //console.log("AQUIIIIIIIIIIIIII");
+//                            console.log("AQUIIIIIIIIIIIIII");
                             // `data.rslt.obj` is the jquery extended node that was clicked
 //                        //console.log(data.rslt.obj);
 //                        //console.log(data.rslt.obj.attr("id"));
@@ -592,7 +595,9 @@
 //                            $("#tree").jstree("toggle_node", obj);
 
 //                            alert(data.rslt.obj.attr("id"));
-                            $("#tree").jstree("toggle_node", data.rslt.obj);
+
+                            //DESCOMENTAR LA SIGUIENTE LINEA SI QUEREN Q EL CLICK AL NODO LO ABRA
+//                            $("#tree").jstree("toggle_node", data.rslt.obj);
 
 //                            $("#tree").jstree("select_node", data.rslt.obj);
 //                            $("#tree").jstree("toggle_node", data.rslt.obj);

@@ -72,6 +72,7 @@ class EntidadController extends app.seguridad.Shield {
     }
 
     String makeBasicTree(tipo, id) {
+//        println tipo + "       " + id
         String tree = "", clase = "", rel, clUs = ""
         def unej1, usros = [], proys = []
         switch (tipo) {
@@ -79,7 +80,6 @@ class EntidadController extends app.seguridad.Shield {
             case "padre_nu":
 //                unej1 = UnidadEjecutora.findAllByTipoInstitucion(TipoInstitucion.findByCodigo(1))
                 unej1 = UnidadEjecutora.findAllByPadreIsNull([sort: 'orden'])
-                println unej1
                 break;
             case "unej": //cargo las unidades ejecutoras a partir de un padre
                 def padre = UnidadEjecutora.get(id)
@@ -107,6 +107,10 @@ class EntidadController extends app.seguridad.Shield {
 
             if (uss.size() > 0) {
                 clUs += " hasUsers "
+            }
+
+            if (!unej.padre) {
+                clase += " noParent "
             }
 
             tree += "<li id='unej_" + unej.id + "' class='unej " + clase + " " + clUs + "' rel='" + rel + "'>"
@@ -231,7 +235,9 @@ class EntidadController extends app.seguridad.Shield {
         usuarios.each { u ->
             def m = [:]
             m.key = u.id
-            m.value = u.persona.nombre.toLowerCase().split(' ').collect { it.capitalize() }.join(' ') + " " + u.persona.apellido.toLowerCase().split(' ').collect { it.capitalize() }.join(' ')
+            m.value = u.persona.nombre.toLowerCase().split(' ').collect {
+                it.capitalize()
+            }.join(' ') + " " + u.persona.apellido.toLowerCase().split(' ').collect { it.capitalize() }.join(' ')
             ls.add(m)
         }
 
@@ -550,9 +556,9 @@ class EntidadController extends app.seguridad.Shield {
         return [unidad: unidad, responsableProyectoInstanceList: responsableProyectoInstanceList, responsableProyectoInstanceTotal: responsableProyectoInstanceTotal]
     }
 
-    def arbol = { }
+    def arbol = {}
 
-    def arbol_asg = { }
+    def arbol_asg = {}
 
     def arbol_ = {
         return [tree: makeTree()]
@@ -621,8 +627,7 @@ class EntidadController extends app.seguridad.Shield {
         if (!documentoInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'documento.label', default: 'Documento'), params.id])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
 
             def title = g.message(code: "documento.show", default: "Show Documento")
 
@@ -687,7 +692,7 @@ class EntidadController extends app.seguridad.Shield {
                     "N": "[Ñ]",
                     "C": "[Ç]",
 
-                    "": "[\\!@#\\\$%\\^&*()-='\"\\/<>:;\\.,\\?]",
+                    "" : "[\\!@#\\\$%\\^&*()-='\"\\/<>:;\\.,\\?]",
 
                     "_": "[\\s]"
             ]
@@ -858,6 +863,9 @@ class EntidadController extends app.seguridad.Shield {
     }
 
     def saveFromTree = {
+
+        println "Save from tree " + params
+
         if (params.esUsuario == "1") {
 //            println "save usro " + params
             def err
@@ -955,16 +963,16 @@ class EntidadController extends app.seguridad.Shield {
             def presupuestoUnidad = new PresupuestoUnidad()
             def anio = Anio.get(params.anio.id)
             def inversion = params.maxInversion
-            def corriente = params.maxCorrientes
+//            def corriente = params.maxCorrientes
             def orgInversion = params.originalInversion
-            def orgCorriente = params.originalCorrientes
+//            def orgCorriente = params.originalCorrientes
 
             if (!inversion) {
                 inversion = "0"
             }
-            if (!corriente) {
-                corriente = "0"
-            }
+//            if (!corriente) {
+//                corriente = "0"
+//            }
 
             if (params.presId) {
                 presupuestoUnidad = PresupuestoUnidad.get(params.presId)
@@ -978,23 +986,22 @@ class EntidadController extends app.seguridad.Shield {
 
             presupuestoUnidad.maxInversion = inversion.toDouble()
 
-
-            corriente = corriente.replaceAll("\\.", "")
-            corriente = corriente.replaceAll(",", "\\.")
-            presupuestoUnidad.maxCorrientes = corriente.toDouble()
+//            corriente = corriente.replaceAll("\\.", "")
+//            corriente = corriente.replaceAll(",", "\\.")
+//            presupuestoUnidad.maxCorrientes = corriente.toDouble()
 
             orgInversion = orgInversion.replaceAll("\\.", "")
             orgInversion = orgInversion.replaceAll(",", "\\.")
             presupuestoUnidad.originalInversion = orgInversion.toDouble()
 
 //            orgCorriente = orgCorriente.replaceAll("\\.", "")
-  //          orgCorriente = orgCorriente.replaceAll(",", "\\.")
-            presupuestoUnidad.originalCorrientes = 0
+//            orgCorriente = orgCorriente.replaceAll(",", "\\.")
+//            presupuestoUnidad.originalCorrientes = orgCorriente.toDouble()
 
 //            presupuestoUnidad.objetivoGobiernoResultado = ObjetivoGobiernoResultado.get(params.objetivoGobiernoResultado.id)
-  //          presupuestoUnidad.politica = Politica.get(params.politica.id)
-    //        presupuestoUnidad.ejeProgramatico = EjeProgramatico.get(params.ejeProgramatico.id)
-      //      presupuestoUnidad.objetivoEstrategico = ObjetivoEstrategicoProyecto.get(params.objetivoEstrategico.id)
+//            presupuestoUnidad.politica = Politica.get(params.politica.id)
+//            presupuestoUnidad.ejeProgramatico = EjeProgramatico.get(params.ejeProgramatico.id)
+//            presupuestoUnidad.objetivoEstrategico = ObjetivoEstrategicoProyecto.get(params.objetivoEstrategico.id)
 
             println "\n\nGPR"
             println presupuestoUnidad.objetivoGobiernoResultado
@@ -1317,12 +1324,10 @@ class EntidadController extends app.seguridad.Shield {
                 if (!entidadInstance.hasErrors() && entidadInstance.save(flush: true)) {
                     flash.message = "${message(code: 'default.updated.message', args: [message(code: 'entidad.label', default: 'Entidad'), entidadInstance.id])}"
                     redirect(action: "show", id: entidadInstance.id)
-                }
-                else {
+                } else {
                     render(view: "form", model: [entidadInstance: entidadInstance, title: title, source: "edit"])
                 }
-            }
-            else {
+            } else {
                 flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'entidad.label', default: 'Entidad'), params.id])}"
                 redirect(action: "list")
             }
@@ -1332,8 +1337,7 @@ class EntidadController extends app.seguridad.Shield {
             if (entidadInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.created.message', args: [message(code: 'entidad.label', default: 'Entidad'), entidadInstance.id])}"
                 redirect(action: "show", id: entidadInstance.id)
-            }
-            else {
+            } else {
                 render(view: "form", model: [entidadInstance: entidadInstance, title: title, source: "create"])
             }
         }
@@ -1355,12 +1359,10 @@ class EntidadController extends app.seguridad.Shield {
             if (!entidadInstance.hasErrors() && entidadInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'entidad.label', default: 'Entidad'), entidadInstance.id])}"
                 redirect(action: "show", id: entidadInstance.id)
-            }
-            else {
+            } else {
                 render(view: "edit", model: [entidadInstance: entidadInstance])
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'entidad.label', default: 'Entidad'), params.id])}"
             redirect(action: "list")
         }
@@ -1371,8 +1373,7 @@ class EntidadController extends app.seguridad.Shield {
         if (!entidadInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'entidad.label', default: 'Entidad'), params.id])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
 
             def title = g.message(code: "default.show.label", args: ["Entidad"], default: "Show Entidad")
 
@@ -1397,8 +1398,7 @@ class EntidadController extends app.seguridad.Shield {
                 flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'entidad.label', default: 'Entidad'), params.id])}"
                 redirect(action: "show", id: params.id)
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'entidad.label', default: 'Entidad'), params.id])}"
             redirect(action: "list")
         }
