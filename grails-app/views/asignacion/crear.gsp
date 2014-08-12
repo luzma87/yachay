@@ -74,7 +74,7 @@
             <g:if test="${dist}">
                 <td class=" mandatory" valign="middle">
                     <g:textField class="field number required ui-widget-content ui-corner-all" name="valor"
-                                 title="Planificado" id="vlor"
+                                 title="Planificado" id="vlor" style="text-align: right;padding-right: 10px;"
                                  value='${formatNumber(number:dist.getValorReal(),format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}'/>
                 </td>
             </g:if>
@@ -82,12 +82,12 @@
                 <td class=" mandatory" valign="middle">
                     <g:if test="${asignacionInstance.reubicada=='S'}">
                         <g:textField class="field number required ui-widget-content ui-corner-all" name="valor"
-                                     title="Planificado" id="vlor"
+                                     title="Planificado" id="vlor" style="text-align:right;padding-right: 10px;"
                                      value='${formatNumber(number:asignacionInstance.getValorReal(),format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}'/>
                     </g:if>
                     <g:else>
                         <g:textField class="field number required ui-widget-content ui-corner-all" name="valor"
-                                     title="Planificado" id="vlor"
+                                     title="Planificado" id="vlor" style="text-align:right;padding-right: 10px;"
                                      value='${formatNumber(number:asignacionInstance.planificado,format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}'/>
                     </g:else>
                 </td>

@@ -126,7 +126,7 @@
     %{--<g:set var="totOtrosAnios" value="0"></g:set>--}%
         <tr>
 
-            <td class="colGrande" style="background: ${colores[indice.toInteger()]};width: 220px;" title="${act.objeto}">
+            <td class="colGrande" style="background: ${colores[indice.toInteger()]};width: 220px;font-weight: bold" title="${act.responsable} - ${act.objeto}">
                 ${(act.objeto.length() > 100) ? act.objeto.substring(0, 100) + "..." : act.objeto}
             </td>
             <g:set var="tot" value="0"></g:set>

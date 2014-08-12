@@ -11,15 +11,13 @@ class CertificacionController  extends app.seguridad.Shield{
         def usuario = session.usuario
         def band =false
         def unidad
-
-
-
         if(params.tipo!="arbol"){
             unidad=usuario.unidad
         }else{
 
             unidad=UnidadEjecutora.get(params.id)
-            if (usuario.id.toInteger() == 3 || usuario.unidad.id == 85) {
+            /*ruth*/
+            if (usuario.id.toInteger() == 3) {
                 band = true
             } else {
 
@@ -48,15 +46,16 @@ class CertificacionController  extends app.seguridad.Shield{
             actual = Anio.get(params.anio)
         else
             actual = Anio.findByAnio(new Date().format("yyyy"))
-        def corrientes = Asignacion.findAll("from Asignacion  where marcoLogico is null and anio=${actual.id} and unidad=${unidad.id} order by id")
+
         def inversion = Asignacion.findAll("from Asignacion  where marcoLogico is not null and anio=${actual.id} and unidad=${unidad.id} order by id")
-        [unidad:unidad,actual:actual,corrientes:corrientes,inversion:inversion]
+        [unidad:unidad,actual:actual,inversion:inversion]
     }
 
     def listaCertificados = {
         def usuario = Usro.get(session.usuario.id)
         def band = false
-        if(usuario.id.toInteger() == 3 || usuario.unidad.id==85)
+        /*ruth*/
+        if(usuario.id.toInteger() == 3)
             band = true
         if (band){
             def unidad=UnidadEjecutora.get(params.id)
