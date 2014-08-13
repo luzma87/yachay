@@ -22,6 +22,8 @@
         <div id="" class="toolbar ui-widget-header ui-corner-all">
             <span class="menuButton"><g:link class="create btn"
                                              action="nuevoProyecto">Nuevo Proyecto</g:link></span>
+            <span class="menuButton"><g:link class="create btn"
+                                         action="cargarExcel">Cargar Excel</g:link></span>
         </div>
 
         <div class="body">
@@ -64,7 +66,7 @@
                                               title="${message(code: 'proyecto.nombre.label', default: 'Nombre')}"
                                               class="ui-state-default"/>
                             <th class="ui-state-default" style="width: 90px;">Unidad Ejecutora</th>
-                            <th class="ui-state-default">Cobertura</th>
+                            %{--<th class="ui-state-default">Cobertura</th>--}%
                             <th class="ui-state-default">Monto</th>
                             <g:sortableColumn property="fechaRegistro"
                                               title="${message(code: 'proyecto.fechaRegistro.label', default: 'Fecha')}"
@@ -88,7 +90,7 @@
                                     <g:link action="show"
                                             id="${proyectoInstance.id}">${proyectoInstance.nombre}</g:link></div></td>
                                 <td>${proyectoInstance.unidadEjecutora}</td>
-                                <td>${proyectoInstance.cobertura}</td>
+                                %{--<td>${proyectoInstance.cobertura}</td>--}%
                                 <td align="right"><g:formatNumber number="${proyectoInstance.monto?.toDouble()}"
                                                                   format="###,##0"
                                                                   minFractionDigits="2" maxFractionDigits="2"/></td>

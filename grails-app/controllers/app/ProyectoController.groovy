@@ -1,6 +1,7 @@
 package app
 
 import app.seguridad.Usro
+import jxl.*
 
 class ProyectoController extends app.seguridad.Shield {
 
@@ -2122,6 +2123,127 @@ response.outputStream << file.newInputStream()
         salir {
             redirect(controller: "proyecto", action: "show", id: flow.proyecto.id)
         } //show
+    }
+
+    def cargarExcel = {
+
+    }
+
+    def subirExcel = {
+
+
+        def path = servletContext.getRealPath("/") + "excel/"
+        new File(path).mkdirs()
+        def f = request.getFile('file')
+
+        Workbook workbook = Workbook.getWorkbook(f.inputStream)
+        Sheet sheet = workbook.getSheet(0)
+
+//        println("columnas: " + sheet.getColumns())
+//        println("3 " + sheet.getColumn(3))
+
+        //izq=columnas  der=filas
+        def top = []
+
+
+
+        for(int r = 1; r < sheet.rows; r++ ){
+
+            top += sheet.getCell(2, r).contents
+
+        }
+
+        println("celda" + top)
+
+//        def rows
+//        rows = f.getPhysicalNumberOfRows();
+//
+//        println("rows " + rows)
+
+        def ext
+
+        if(f && !f.empty){
+            def nombre = f.getOriginalFilename()
+            def parts = nombre.split("\\.")
+            nombre = ""
+            parts.eachWithIndex{obj, i->
+                if(i < parts.size() -1){
+                    nombre += obj
+                }else{
+                    ext = obj
+                }
+            }
+
+            def reps = [
+                    "a": "[àáâãäåæ]",
+                    "e": "[èéêë]",
+                    "i": "[ìíîï]",
+                    "o": "[òóôõöø]",
+                    "u": "[ùúûü]",
+
+                    "A": "[ÀÁÂÃÄÅÆ]",
+                    "E": "[ÈÉÊË]",
+                    "I": "[ÌÍÎÏ]",
+                    "O": "[ÒÓÔÕÖØ]",
+                    "U": "[ÙÚÛÜ]",
+
+                    "n": "[ñ]",
+                    "c": "[ç]",
+
+                    "N": "[Ñ]",
+                    "C": "[Ç]",
+
+                    "": "[\\!@#\\\$%\\^&*()-='\"\\/<>:;\\.,\\?]",
+
+                    "_": "[\\s]"
+            ]
+            reps.each { k, v ->
+                nombre = (nombre.trim()).replaceAll(v, k)
+            }
+
+            nombre = nombre + "." + ext
+
+            def pathFile = path + File.separatorChar + nombre
+            def src = new File(pathFile)
+
+
+//            println("path " + pathFile )
+
+            if(ext == 'xls'){
+                if(src.exists()){
+                    flash.message = 'Ya existe un archivo con ese nombre. Por favor cambielo o elimine el otro archivo primero.'
+                    flash.estado = "error"
+                    flash.icon = "alert"
+                    redirect(action: 'cargarExcel')
+                    return
+                }else{
+                    f.transferTo(new File(pathFile))
+                    println("Guardado!!")
+                    flash.message = 'Archivo cargado existosamente.'
+                    flash.estado = "error"
+                    flash.icon = "alert"
+                    redirect(action: 'cargarExcel')
+                    return
+                }
+            }else{
+                flash.message = 'El archivo a cargar debe ser del tipo EXCEL con extensión XLS.'
+                flash.estado = "error"
+                flash.icon = "alert"
+                redirect(action: 'cargarExcel')
+                return
+            }
+
+
+
+        }
+        else{
+            flash.message = 'No se ha seleccionado ningun archivo para cargar'
+            flash.estado = "error"
+            flash.icon = "alert"
+            redirect(action: 'cargarExcel')
+            return
+        }
+
     }
 
 }
