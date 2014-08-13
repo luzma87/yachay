@@ -355,7 +355,7 @@
         </div>
         <input type="hidden" class="prsp" value="nan" id="prsp2">
         <input type="text" id="prsp_desc2" desc="desc2" style="width: 120px;border: 1px solid black" class="buscar ui-corner-all">
-        <a href="#" id="reset_prsp2">Reset</a>
+        <a href="#" id="reset_prsp2">Borrar</a>
         <div id="desc2" style="width: 340px;margin-left: 110px;font-size: 10px;"></div>
 
     </div>
