@@ -3,12 +3,12 @@ package app
 import app.alertas.Alerta
 
 
-class InicioController extends app.seguridad.Shield{
+class InicioController extends app.seguridad.Shield {
 
 
-    def getValorReal(aa){
-        if(aa.reubicada=="S"){
-            if (aa.planificado==0)
+    def getValorReal(aa) {
+        if (aa.reubicada == "S") {
+            if (aa.planificado == 0)
                 return aa.planificado
 //            println "ASIGNACION aa --> "+aa.id+" val "+aa.planificado
             def dist = DistribucionAsignacion.findAllByAsignacion(aa)
@@ -16,13 +16,13 @@ class InicioController extends app.seguridad.Shield{
 //            def valor = getValorSinModificacion(aa)
             def valor = aa.planificado
 //            println "valor inicial "+valor
-            Asignacion.findAllByPadreAndUnidadNotEqual(aa,aa.marcoLogico.proyecto.unidadEjecutora,[sort: "id"]).each {hd->
+            Asignacion.findAllByPadreAndUnidadNotEqual(aa, aa.marcoLogico.proyecto.unidadEjecutora, [sort: "id"]).each { hd ->
 //                println "hijo directo ------------------>  "+hd.id+" sumando "+hd.planificado
-                valor+=getValorHijo(hd)
+                valor += getValorHijo(hd)
             }
 //            println "valor hijos "+valor
 //            def vs = getValorSinModificacion(aa)
-            def vs=0
+            def vs = 0
             def mas = ModificacionAsignacion.findAllByDesde(aa)
             def menos = ModificacionAsignacion.findAllByRecibe(aa)
 
@@ -30,9 +30,9 @@ class InicioController extends app.seguridad.Shield{
 //                println "asignacion ${aa.id} tienen modificaciones 1 ${it.id}"
 
 
-                if(it.recibe?.padre?.id==it.desde.id){
+                if (it.recibe?.padre?.id == it.desde.id) {
 //                    println "sumo"
-                    vs+=it.valor
+                    vs += it.valor
                 }
 //                else
 //                    println "no sumo"
@@ -50,42 +50,42 @@ class InicioController extends app.seguridad.Shield{
 //            println "valor de la original sin mods "+vs
 //
 //            println "valor total "+(valor+vs)
-            valor+=vs
+            valor += vs
             dist.each {
-                println "restando distribucion "+it.id+" -->  "+it.valor
-                valor=valor-it.valor
+                println "restando distribucion " + it.id + " -->  " + it.valor
+                valor = valor - it.valor
             }
 //            println "valor "+valor
 //            println "-------------------------------"
 
-            if (valor>aa.planificado)
-                valor=aa.planificado
-            if (valor<0)
-                valor=0
+            if (valor > aa.planificado)
+                valor = aa.planificado
+            if (valor < 0)
+                valor = 0
 
             return valor
-        }else{
+        } else {
             return aa.planificado
         }
 
     }
 
-    def getValorHijo(asg){
+    def getValorHijo(asg) {
         // println "get valor hijo "+asg.id
         def hijos = Asignacion.findAllByPadre(asg)
         //println "hijos "+hijos
-        def val=0
+        def val = 0
         hijos.each {
             val += getValorHijo(it)
         }
         // println "return "+(val+asg.planificado)
-        val = val+getValorSinModificacion(asg)
+        val = val + getValorSinModificacion(asg)
 //        println "valor hijo "+asg.id+"  --> "+val
 //        println ""
         return val
     }
 
-    def getValorSinModificacion(asg){
+    def getValorSinModificacion(asg) {
 
         def valor = asg.planificado
         def mas = ModificacionAsignacion.findAllByDesde(asg)
@@ -95,9 +95,9 @@ class InicioController extends app.seguridad.Shield{
 //            println "asignacion ${asg.id} tienen modificaciones 1 ${it.id}"
 
 
-            if(it.recibe?.padre?.id!=it.desde.id){
+            if (it.recibe?.padre?.id != it.desde.id) {
                 println "sumo"
-                valor+=it.valor
+                valor += it.valor
             }
 //
 //            }else
@@ -108,13 +108,12 @@ class InicioController extends app.seguridad.Shield{
         menos.each {
 //            println "asignacion ${asg.id} tienen modificaciones 2 ${it.id}"
 
-            if(it.recibe?.padre?.id!=it.desde.id && it.desde?.padre?.id!=it.recibe.id){
-                valor-=it.valor
+            if (it.recibe?.padre?.id != it.desde.id && it.desde?.padre?.id != it.recibe.id) {
+                valor -= it.valor
             }
 //                println "resto"
 //            }else
 //                println "no sumo"
-
 
 
         }
@@ -129,8 +128,8 @@ class InicioController extends app.seguridad.Shield{
 
     def index = {
 
-        if(!session.unidad){
-            redirect(controller:"login",action: "logout")
+        if (!session.unidad) {
+            redirect(controller: "login", action: "logout")
         }
 //
 //        def aa = Asignacion.get(4469)
@@ -152,26 +151,22 @@ class InicioController extends app.seguridad.Shield{
 //        }
 
 
-
-
-
-
     }
 
     def mostrarAlertas = {
         //ejemplo de como mandar alertas
         //kerberosService.generarAlerta(session.usuario,finix.seguridad.Usro.get(48),"que eres pal burro","proceso","show",8)
         //        println "alertas "+alertas
-        def alertas = app.alertas.Alerta.findAllByUsroAndFec_recibido(session.usuario,null,[sort:"fec_envio"])
-        return [alertas:alertas]
+        def alertas = Alerta.findAllByUsroAndFec_recibido(session.usuario, null, [sort: "fec_envio"])
+        return [alertas: alertas]
     }
 
     def showAlerta = {
-        def alerta = app.alertas.Alerta.get(params.id)
-        alerta.fec_recibido=new Date()
-        alerta.save(flush:true)
-        params.id=alerta.id_remoto
-        redirect(controller:alerta.controlador,action:alerta.accion,params:params)
+        def alerta = Alerta.get(params.id)
+        alerta.fec_recibido = new Date()
+        alerta.save(flush: true)
+        params.id = alerta.id_remoto
+        redirect(controller: alerta.controlador, action: alerta.accion, params: params)
     }
 
     def parametros = {
@@ -180,15 +175,15 @@ class InicioController extends app.seguridad.Shield{
 
     def verificarSession = {
         println "verificando session "
-        if(session.usuario && session.perfil)
+        if (session.usuario && session.perfil)
             render "ok"
         else
             render "no"
     }
 
     def cambiarColor = {
-        println "cambiar color "+params
-        session.color=params.color
+        println "cambiar color " + params
+        session.color = params.color
         render "ok"
     }
 

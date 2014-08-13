@@ -1,6 +1,8 @@
 package app
 
+import app.alertas.Alerta
 import app.seguridad.Prfl
+import app.seguridad.Sesn
 import app.seguridad.Usro
 import app.yachai.Categoria
 
@@ -99,6 +101,35 @@ class SolicitudController extends app.seguridad.Shield {
         solicitud.properties = params
         if (!solicitud.save(flush: true)) {
             flash.message = "<h5>Ha ocurrido un error al crear la solicitud</h5>" + renderErrors(bean: solicitud)
+        } else {
+            def perfilGAF = Prfl.findByCodigo("GAF")
+            def perfilGJ = Prfl.findByCodigo("GJ")
+            def perfilGDP = Prfl.findByCodigo("GDP")
+
+            def usuariosGAF = Sesn.findAllByPerfil(perfilGAF).usuario
+            def usuariosGJ = Sesn.findAllByPerfil(perfilGJ).usuario
+            def usuariosGDP = Sesn.findAllByPerfil(perfilGDP).usuario
+
+            def from = Usro.get(session.usuario.id)
+            def envio = new Date()
+            def mensaje = from.persona.nombre + " " + from.persona.apellido + " ha ${params.id ? 'modificado' : 'creado'} una solicitud"
+            def controlador = "solicitud"
+            def action = "revision"
+            def idRemoto = solicitud.id
+
+            (usuariosGAF + usuariosGJ + usuariosGDP).each { usu ->
+                def alerta = new Alerta()
+                alerta.from = from
+                alerta.usro = usu
+                alerta.fec_envio = envio
+                alerta.mensaje = mensaje
+                alerta.controlador = controlador
+                alerta.accion = action
+                alerta.id_remoto = idRemoto
+                if (!alerta.save(flush: true)) {
+                    println "error alerta: " + alerta.errors
+                }
+            }
         }
         redirect(action: 'show', id: solicitud.id)
     }
