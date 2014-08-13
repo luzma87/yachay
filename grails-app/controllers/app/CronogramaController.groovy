@@ -8,8 +8,8 @@ class CronogramaController extends app.seguridad.Shield{
     def dbConnectionService
 
     def nuevoCronograma = {
-        println "nuevo cronograma "+params
-        def colores= ["#DD7B42","#FFAB48","#FFE7AD","#A7C9AE","#888A63"]
+        //println "nuevo cronograma "+params
+        def colores= ["rgba(221,123,66,0.7)","#FFAB48","#FFE7AD","#A7C9AE","#888A63"]
         def proyecto = Proyecto.get(params.id)
         def componentes = MarcoLogico.findAll("from MarcoLogico where proyecto=${proyecto.id} and tipoElemento=2 and estado=0 order by id")
         def anio
@@ -26,7 +26,7 @@ class CronogramaController extends app.seguridad.Shield{
             fuentes.add(it.fuente)
             totAnios.put(it.fuente.id,it.monto)
         }
-        println "anio "+anio+" total anios "+totAnios
+        //println "anio "+anio+" total anios "+totAnios
         [proyecto:proyecto,componentes:componentes,anio:anio,fuentes:fuentes,colores:colores,totAnios:totAnios]
 
     }
@@ -225,12 +225,13 @@ class CronogramaController extends app.seguridad.Shield{
             cn.eachRow(sql.toString()){row->
                 //println "row "+row
                 def asg = new Asignacion()
-                asg.marcoLogico=MarcoLogico.get(row.mrlg)
+                def marco = MarcoLogico.get(row.mrlg)
+                asg.marcoLogico=marco
                 asg.anio=anio
                 asg.presupuesto=Presupuesto.get(row.prsp)
                 asg.fuente=Fuente.get(row.fuente)
                 asg.planificado=row.sum
-                asg.unidad=proyecto.unidadEjecutora
+                asg.unidad=marco.responsable
                 asg = kerberosService.saveObject(asg,Asignacion,session.perfil,session.usuario,"calcularAsignaciones","cronograma",session)
                 def maxNum = 1
                 def band =true

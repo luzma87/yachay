@@ -24,56 +24,7 @@
     <body>
         <g:link class="btn_arbol" controller="entidad" action="arbol_asg" style="margin: 10px;">Unidades ejecutoras</g:link>
         <div id="tabs" style="width: 950px;">
-%{--
-            <ul>
-                <li><a href="#tabs-1">Corrientes</a></li>
-                <li><a href="#tabs-2">Inversión</a></li>
-            </ul>
---}%
-
             <div id="tabs-1">
-                <g:if test="${corrientes}">
-
-                    <div>
-                        <span style="font-weight: bold;">Buscar</span>
-                        <input type="search" id="txt_Corrientes" class="search ui-widget-content ui-corner-all"/>
-                        <span style="font-weight: bold;">en</span>
-                        <select id="sel_Corrientes" class="sel ui-widget-content ui-corner-all">
-                            <option value="programa actividad partida">Cualquiera</option>
-                            <option value="programa">Programa</option>
-                            <option value="actividad">Actividad</option>
-                            <option value="partida">Partida</option>
-                        </select>
-                    </div>
-
-                    <table>
-                        <thead>
-                            <th>Programa</th>
-                            <th>Actividad</th>
-                            <th>Partida</th>
-                            <th>Monto</th>
-                            <th>Solicitar AVAL</th>
-                        </thead>
-                        <tbody>
-                            <g:each in="${corrientes}" var="asg">
-                                <tr class="Corrientes">
-                                    <td class="programaCorrientes">${asg.programa}</td>
-                                    <td class="actividadCorrientes">${asg.actividad}</td>
-                                    <td class="partidaCorrientes">${asg.presupuesto}</td>
-                                    <td><g:formatNumber number="${asg.planificado}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-                                    <td style="text-align: center"><a href="#" class=" btn_sol cor" id="${asg.id}" monto="${asg.planificado}">Solicitar</a>
-                                    </td>
-                                </tr>
-                            </g:each>
-                        </tbody>
-                    </table>
-                </g:if>
-                <g:else>
-                    La unidad ejecutora seleccionada no tiene asignaciones corrientes para el año ${actual}.
-                </g:else>
-            </div>
-
-            <div id="tabs-2">
                 <g:if test="${inversion}">
                     <table>
                         <thead>

@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="layout" content="main"/>
-    <title>Asignaciones del proyecto: ${proyecto}</title>
+    <title>Asignaciones de la unidad ${unidad} del proyecto: ${proyecto}</title>
 
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}"
           type="text/css"/>
@@ -25,7 +25,7 @@
     <g:link class="btn" controller="asignacion" action="programacionAsignacionesInversion" id="${proyecto.id}">Programación</g:link>
     <g:link class="btn" controller="reportes" action="poaInversionesReporteWeb" id="${proyecto.unidadEjecutora.id}" target="_blank">Reporte</g:link>
     <g:link class="btn" controller="cronograma" action="verCronograma" id="${proyecto.id}">Cronograma</g:link>
-    <g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades ejecutoras</g:link>
+    <g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades</g:link>
     <g:link class="btn" controller="asignacion" action="agregarAsignacionInv" id="${proyecto.id}">Agregar asignaciones</g:link>
     &nbsp;&nbsp;&nbsp;<b>Año:</b><g:select from="${app.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
 </div>
@@ -34,7 +34,7 @@
     <table style="width: 1040px;">
         <thead>
         %{--<th>#</th>--}%
-        <th>ID</th>
+        <th style="width: 280px">Reponsable</th>
         <th style="width: 200px">Programa</th>
         <th style="width: 200px">Componente</th>
         <th style="width: 280px">Actividad</th>
@@ -43,7 +43,7 @@
         <th>Fuente</th>
         <th>Presupuesto</th>
         <th></th>
-        <th></th>
+        %{--<th></th>--}%
         </thead>
         <tbody>
         <g:set var="total" value="${0}"></g:set>
@@ -54,7 +54,9 @@
             <tr class="${(i % 2) == 0 ? 'odd' : 'even'}"  style='${(asg.reubicada=='S')?"background: #d5f0d4":""}'>
 
                 %{--<td style="width: 30px;">${i+1}</td>--}%
-                <td>${asg.id}</td>
+                <td>
+                    ${asg.unidad}
+                </td>
                 <td class="prog" style="width: 200px;"
                     title="">
                     ${asg.marcoLogico?.proyecto?.programaPresupuestario.descripcion}
@@ -86,14 +88,15 @@
                         </g:if>
                     </g:if>
                 </td>
-                <td>
-                    <a href="#" id="env_${i}" class="btn_env" asgn="${asg.id}" proy="${proyecto.id}" anio="${actual.id}" valor="${asg.getValorReal()}">Enviar a unidad ejectura</a>
-                </td>
+                %{--<td>--}%
+                    %{--<a href="#" id="env_${i}" class="btn_env" asgn="${asg.id}" proy="${proyecto.id}" anio="${actual.id}" valor="${asg.getValorReal()}">Enviar a unidad ejectura</a>--}%
+                %{--</td>--}%
             </tr>
         </g:each>
         <tr>
-            <td></td>
+
             <td><b>TOTAL</b></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -110,30 +113,21 @@
 
     <div id="ajx_asgn" style="width:520px;"></div>
 
-    <div style="position: absolute;top:5px;right:10px;font-size: 15px;">
+    <div style="position: absolute;top:5px;right:10px;font-size: 10px;">
         <b>Total invertido proyecto actual:</b>
-        <g:formatNumber number="${total.toFloat()}"
-                        format="###,##0"
+        <g:formatNumber number="${total.toFloat()}"                        format="###,##0"
                         minFractionDigits="2" maxFractionDigits="2"/>
     </div>
-
-    <div style="position: absolute;top:25px;right:10px;font-size: 15px;">
-        <b>Total Unidad:</b>
-        <g:formatNumber number="${totalUnidad}"
-                        format="###,##0"
-                        minFractionDigits="2" maxFractionDigits="2"/>
-    </div>
-
-    <div style="position: absolute;top:45px;right:10px;font-size: 15px;">
+    <div style="position: absolute;top:25px;right:10px;font-size: 10px;">
         <b>M&aacute;ximo Inversiones:</b>
         <g:formatNumber number="${maxInv}"
                         format="###,##0"
                         minFractionDigits="2" maxFractionDigits="2"/>
     </div>
 
-    <div style="position: absolute;top:65px;right:10px;font-size: 17px;">
+    <div style="position: absolute;top:45px;right:10px;font-size: 10px;">
         <b>Restante:</b>
-        <g:formatNumber number="${maxInv - totalUnidad}"
+        <g:formatNumber number="${maxInv - total}"
                         format="###,##0"
                         minFractionDigits="2" maxFractionDigits="2"/>
     </div>
@@ -262,7 +256,7 @@
         text:false
     }).click(function () {
                 //alert ("id:" +$(this).attr("asgn"))
-                if (confirm("Dividir esta asignación con otra partida")) {
+
                     $.ajax({
                         type:"POST", url:"${createLink(action:'agregaAsignacion', controller: 'asignacion')}",
                         data:"id=" + $(this).attr("asgn") + "&proy=" + $(this).attr("proy") + "&anio=" + $(this).attr("anio"),
@@ -272,7 +266,7 @@
                         }
                     });
                     $("#ajx_asgn").dialog("open");
-                }
+
             });
 
     $(".btn_borrar").button({

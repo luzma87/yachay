@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="layout" content="main"/>
-    <title>Asignaciones de inversión de la unidad: ${unidad}</title>
+    <title>Asignaciones de inversión de proyecto: ${proyecto} </title>
 
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}"
           type="text/css"/>
@@ -30,8 +30,8 @@
 <body>
 
 <div style="margin-left: 10px;">
-    <g:link class="btn_arbol" controller="asignacion" action="asinacionesInversion" id="${unidad.id}">Asignaciones</g:link>
-    <g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades Ejecutoras</g:link>
+    <g:link class="btn_arbol" controller="asignacion" action="asignacionProyectov2" id="${proyecto.id}">Asignaciones</g:link>
+    %{--<g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades Ejecutoras</g:link>--}%
     &nbsp;&nbsp;&nbsp;<b>Año:</b><g:select from="${app.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
 </div>
 
@@ -77,83 +77,6 @@
         <g:set var="nov" value="${0}"></g:set>
         <g:set var="dic" value="${0}"></g:set>
         <g:set var="asignado" value="0"></g:set>
-
-
-
-
-
-        %{--  distribuciones --}%
-        %{--<g:each in="${dist}" var="asg" status="i">--}%
-            %{--<g:set var="distribucion" value="${app.DistribucionAsignacion.findByAsignacionAndUnidadEjecutora(asg,unidad )}"></g:set>--}%
-            %{--<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">--}%
-                %{--<td colspan="15"><b>Asignación#${i+1} </b>${distribucion}</td>--}%
-            %{--</tr>--}%
-            %{--<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">--}%
-                %{--<g:each in="${meses}" var="mes" status="j">--}%
-                    %{--<g:if test="${ProgramacionAsignacion.findAll('from ProgramacionAsignacion where distribucion = '+distribucion.id+' and mes = '+mes+' and padre is null').size()>0}" >--}%
-                        %{--<g:set var="progra" value="${ProgramacionAsignacion.findAll('from ProgramacionAsignacion where distribucion = '+distribucion.id+' and mes = '+mes+' and padre is null')?.pop()}"></g:set>--}%
-                        %{--<td class="${mes}" style="width: 70px;">--}%
-                            %{--<input type="text" class="${mes} valor asg_cor_${asg.id}" mes="${mes}"  ${(actual.estado!=0)?"disabled":""} value="${g.formatNumber(number:progra?.valor, format:'###,##0', minFractionDigits:'2',maxFractionDigits:'2')}">--}%
-
-                            %{--<g:if test="${mes.toInteger()==1}">--}%
-                                %{--<g:set var="ene" value="${ene.toDouble()+progra?.valor}"></g:set>--}%
-                            %{--</g:if>--}%
-                            %{--<g:if test="${mes.toInteger()==2}">--}%
-                                %{--<g:set var="feb" value="${feb.toDouble()+progra?.valor}"></g:set>--}%
-                            %{--</g:if>--}%
-                            %{--<g:if test="${mes.toInteger()==3}">--}%
-                                %{--<g:set var="mar" value="${mar.toDouble()+progra?.valor}"></g:set>--}%
-                            %{--</g:if>--}%
-                            %{--<g:if test="${mes.toInteger()==4}">--}%
-                                %{--<g:set var="abr" value="${abr.toDouble()+progra?.valor}"></g:set>--}%
-                            %{--</g:if>--}%
-                            %{--<g:if test="${mes.toInteger()==5}">--}%
-                                %{--<g:set var="may" value="${may.toDouble()+progra?.valor}"></g:set>--}%
-                            %{--</g:if>--}%
-                            %{--<g:if test="${mes.toInteger()==6}">--}%
-                                %{--<g:set var="jun" value="${jun.toDouble()+progra?.valor}"></g:set>--}%
-                            %{--</g:if>--}%
-                            %{--<g:if test="${mes.toInteger()==7}">--}%
-                                %{--<g:set var="jul" value="${jul.toDouble()+progra?.valor}"></g:set>--}%
-                            %{--</g:if>--}%
-                            %{--<g:if test="${mes.toInteger()==8}">--}%
-                                %{--<g:set var="ago" value="${ago.toDouble()+progra?.valor}"></g:set>--}%
-                            %{--</g:if>--}%
-                            %{--<g:if test="${mes.toInteger()==9}">--}%
-                                %{--<g:set var="sep" value="${sep.toDouble()+progra?.valor}"></g:set>--}%
-                            %{--</g:if>--}%
-                            %{--<g:if test="${mes.toInteger()==10}">--}%
-                                %{--<g:set var="oct" value="${oct.toDouble()+progra?.valor}"></g:set>--}%
-                            %{--</g:if>--}%
-                            %{--<g:if test="${mes.toInteger()==11}">--}%
-                                %{--<g:set var="nov" value="${nov.toDouble()+progra?.valor}"></g:set>--}%
-                            %{--</g:if>--}%
-                            %{--<g:if test="${mes.toInteger()==12}">--}%
-                                %{--<g:set var="dic" value="${dic.toDouble()+progra?.valor}"></g:set>--}%
-                            %{--</g:if>--}%
-                        %{--</td>--}%
-                    %{--</g:if>--}%
-                    %{--<g:else>--}%
-                        %{--<td class="${mes}" style="width: 70px;">--}%
-                            %{--<input type="text" class="${mes} valor asg_cor_${asg.id}" mes="${mes}"  ${(actual.estado!=0)?"disabled":""} value="0,00">--}%
-                        %{--</td>--}%
-                    %{--</g:else>--}%
-                %{--</g:each>--}%
-
-                %{--<td class="total" id="total_cor_${asg.id}" style="width: 80px;">--}%
-                    %{--${distribucion.getValorReal()}--}%
-                    %{--<g:formatNumber number="${distribucion.getValorReal()}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/>--}%
-                %{--</td>--}%
-                %{--<g:if test="${actual.estado==0}">--}%
-                   %{--<td class=""><a href="#" class="btn guardar ajax" asg="${asg.id}"  tipo="dist"  icono="ico_cor_${i}" max="${distribucion.getValorReal()}" clase="asg_cor_${asg.id}" total="total_cor_${asg.id}">Guardar</a></td>--}%
-                %{--</g:if>--}%
-                %{--<td class="ui-state-active"><span class="" id="ico_cor_${i}" title="Guardado" style="display: none"><span class="ui-icon ui-icon-check"></span></span></td>--}%
-            %{--</tr>--}%
-
-        %{--</g:each>--}%
-        %{-- fin dist--}%
-
-
 
 
         <g:each in="${inversiones}" var="asg" status="i">
@@ -268,7 +191,7 @@
         text:false
     })
     $("#anio_asg").change(function(){
-        location.href="${createLink(controller:'asignacion',action:'programacionInversion')}?id=${unidad.id}&anio="+$(this).val()
+        location.href="${createLink(controller:'asignacion',action:'programacionInversion')}?proyecto=${proyecto.id}&anio="+$(this).val()
     });
 
     $(".guardar").click(function() {
@@ -303,17 +226,7 @@
                     }
                 });
             }else{
-                $.ajax({
-                    type: "POST",
-                    url: "${createLink(action:'guardarProgramacionDistribucion',controller:'asignacion')}",
-                    data: "asignacion="+$(this).attr("asg")+"&datos="+datos+"&unidad=${unidad.id}" ,
-                    success: function(msg) {
-                        if(msg=="ok"){
-                            icono.show("pulsate")
-                            window.location.reload(true)
-                        }
-                    }
-                });
+
             }
         }
 

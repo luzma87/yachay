@@ -60,7 +60,7 @@ class Asignacion implements Serializable {
 
     String toString(){
         if(this.marcoLogico)
-            "<b>Proyecto:</b> ${this.marcoLogico.proyecto.toStringLargo()}<b> Monto:</b>${this.planificado}  <b>Presupuesto:</b>${this.presupuesto}<b>Año</b>:${this.anio}"
+            "<b>Responsable:</b> ${this.unidad}<b> Monto:</b>${this.planificado}  <b>Presupuesto:</b>${this.presupuesto}<b>Año</b>:${this.anio}"
         else
             "<b>Monto:</b>${this.planificado}  <b>Presupuesto:</b>${this.presupuesto}<b>Año</b>:${this.anio}"
     }

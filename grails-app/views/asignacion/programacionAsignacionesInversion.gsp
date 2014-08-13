@@ -31,7 +31,7 @@
 
 <div style="margin-left: 10px;">
     <g:link class="btn_arbol" controller="asignacion" action="asignacionProyectov2" id="${proyecto.id}">Asignaciones</g:link>
-    <g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades Ejecutoras</g:link>
+    %{--<g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades Ejecutoras</g:link>--}%
     &nbsp;&nbsp;&nbsp;<b>Año:</b><g:select from="${app.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
 </div>
 

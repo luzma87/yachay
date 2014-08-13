@@ -72,7 +72,7 @@ class AsignacionController extends app.seguridad.Shield {
         def totalUnidad = 0
         def maxInv = 0
         MarcoLogico.findAll("from MarcoLogico where proyecto = ${proyecto.id} and tipoElemento=3 and estado=0").each {
-            def asig = Asignacion.findAll("from Asignacion where marcoLogico=${it.id} and anio=${actual.id} and unidad=${proyecto.unidadEjecutora.id}  order by id")
+            def asig = Asignacion.findAll("from Asignacion where marcoLogico=${it.id} and anio=${actual.id}   order by id")
             if (asig){
                 asignaciones += asig
                 asig.each{asg->
@@ -80,15 +80,9 @@ class AsignacionController extends app.seguridad.Shield {
                 }
             }
         }
-        asignaciones.sort{it.presupuesto.numero}
-
-        Asignacion.findAllByUnidadAndMarcoLogicoIsNotNull(proyecto.unidadEjecutora).each{
-            totalUnidad = totalUnidad+it.getValorReal()
-        }
-//        maxInv=PresupuestoUnidad.findByAnioAndUnidad(actual,proyecto.unidadEjecutora)?.maxInversion
+        asignaciones.sort{it.unidad.nombre}
         def unidad = UnidadEjecutora.findByPadreIsNull()
         maxInv=PresupuestoUnidad.findByAnioAndUnidad(actual,unidad)?.maxInversion
-        println "unidad "+indad+"  presp "+maxInv
         if(!maxInv)
             maxInv=0
         [asignaciones: asignaciones, actual: actual, proyecto: proyecto,total: total,totalUnidad: totalUnidad,maxInv:maxInv]
@@ -109,6 +103,7 @@ class AsignacionController extends app.seguridad.Shield {
 
     def programacionInversion = {
         def actual
+        def proyecto = Proyecto.get(params.proyecto)
         if (params.anio)
             actual = Anio.get(params.anio)
         else
@@ -116,18 +111,26 @@ class AsignacionController extends app.seguridad.Shield {
         if (!actual)
             actual = Anio.list([sort: 'anio', order: 'desc']).pop()
         //def unidad =UnidadEjecutora.get(params.id)
-        def unidad = UnidadEjecutora.get(params.id)
-        def dist = DistribucionAsignacion.findAllByUnidadEjecutora(unidad)
-        def asg = []
-        dist.each {
-            if(it.asignacion.anio==actual){
-                asg.add(it.asignacion)
-            }
+//        def unidad = UnidadEjecutora.get(params.id)
+        //def dist = DistribucionAsignacion.findAllByUnidadEjecutora(unidad)
+//        def asg = []
+//        dist.each {
+//            if(it.asignacion.anio==actual){
+//                asg.add(it.asignacion)
+//            }
+//        }
+        def asgInv=[]
+        def acts = MarcoLogico.findAll("from MarcoLogico where proyecto=${proyecto.id} and tipoElemento = 3")
+        acts.each {act->
+            def asg = Asignacion.findAllByMarcoLogico(act)
+            if(asg.size()>0)
+                asgInv+=asg
         }
-        def asgInv = Asignacion.findAll("from Asignacion  where marcoLogico is not null and unidad=${unidad.id} " )
+//        def asgInv = Asignacion.findAll("from Asignacion  where marcoLogico is not null and unidad=${unidad.id} " )
+        asgInv.sort{it.unidad}
         def meses = []
         12.times {meses.add(it + 1)}
-        [inversiones: asgInv,dist: asg, actual: actual, meses: meses,unidad: unidad]
+        [inversiones: asgInv,actual: actual, meses: meses,proyecto:proyecto]
     }
 
     def programacionAsignacionesInversion = {
@@ -202,6 +205,41 @@ class AsignacionController extends app.seguridad.Shield {
         println "total "+total
 
         [asgs:asg, proyectos:proyectos, actual: actual, unidad: unidad, asgInv:asgInv]
+
+    }
+    def asinacionesInversionProyecto = {
+
+        def actual
+        if (params.anio)
+            actual = Anio.get(params.anio)
+        else
+            actual = Anio.findByAnio(new Date().format("yyyy"))
+        if (!actual)
+            actual = Anio.list([sort: 'anio', order: 'desc']).pop()
+//        def unidad = UnidadEjecutora.get(params.id)
+        def proyecto = Proyecto.get(params.id)
+        def marcos = MarcoLogico.findAllByProyectoAndTipoElemento(proyecto,TipoElemento.get(3))
+        def a = []
+        def total = 0
+        def asgInv = []
+        marcos.each {marco->
+            def tmp = Asignacion.findAllByMarcoLogico(marco)
+            tmp.each {
+                total+=it.planificado
+                asgInv.add(it)
+            }
+//            if (tmp)
+//                a+=tmp
+        }
+        // println "asgInv "+asgInv.id
+
+        def proyectos = Proyecto.list()
+
+
+
+        println "total "+total
+
+        [proyectos:proyectos, actual: actual, proyecto:proyecto, asgInv:asgInv]
 
     }
 
@@ -794,6 +832,7 @@ class AsignacionController extends app.seguridad.Shield {
         params.planificado = params.planificado.replaceAll("\\.", "")
         params.planificado = params.planificado.replaceAll(",", "\\.")
         params.planificado = params.planificado.toDouble()
+        def marco = MarcoLogico.get(params.marcoLogico.id)
         def band = true
         if (params?.componente?.id == "-1") {
             params.remove("componente.id")
@@ -804,12 +843,15 @@ class AsignacionController extends app.seguridad.Shield {
         if (params.id) {
             asg = Asignacion.get(params.id)
             asg.properties = params
+            asg.unidad=marco.responsable
+//            asg.unidadId=marco.responsable.id
             if (!band) {
                 asg.componente = null
             }
         } else {
             asg = new Asignacion(params)
-
+            asg.unidad=marco.responsable
+//            asg.unidadId=marco.responsable.id
         }
 //        def asignaciones = Asignacion.findAllByMarcoLogicoAndAnio(asg.marcoLogico,asg.anio)
         //        println "asignaciones "+asignaciones
@@ -1086,7 +1128,7 @@ class AsignacionController extends app.seguridad.Shield {
     }
 
     def agregaAsignacion = {
-        println "parametros agregaAsignacion:" + params
+        //println "parametros agregaAsignacion:" + params
         def listaFuentes = Financiamiento.findAllByProyectoAndAnio(Proyecto.get(params.proy), Anio.get(params.anio)).fuente
         def asgnInstance = Asignacion.get(params.id)
         def dist = null
@@ -1488,16 +1530,21 @@ class AsignacionController extends app.seguridad.Shield {
             acts = MarcoLogico.findAllByMarcoLogico(cmp)
 
         def asgn = []
+        def totalUnidad=0
         acts.each {
-            def a =  Asignacion.findAllByMarcoLogicoAndUnidad(it,unidad)
-            if (a.size()>0)
-                asgn+=a
+            def a =  Asignacion.findAllByMarcoLogico(it)
+            a.each {asignacion->
+                asgn.add(asignacion)
+                totalUnidad+= asignacion.getValorReal()
+            }
+
+
         }
 
-        def totalUnidad=0
-        Asignacion.findAll("from Asignacion where anio=${actual.id} and unidad=${unidad.id} and marcoLogico is not null").each{
-            totalUnidad+= it.getValorReal()
-        }
+
+//        Asignacion.findAll("from Asignacion where anio=${actual.id} and unidad=${unidad.id} and marcoLogico is not null").each{
+//            totalUnidad+= it.getValorReal()
+//        }
         def un= UnidadEjecutora.findByPadreIsNull()
         def maxUnidad = PresupuestoUnidad.findByAnioAndUnidad(actual,un)
         if (maxUnidad)

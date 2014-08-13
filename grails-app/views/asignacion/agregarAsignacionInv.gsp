@@ -28,7 +28,8 @@
 
 <div style="margin-left: 10px;">
 
-    <g:link class="btn" controller="asignacion" action="programacionInversion" params="[id:unidad.id,anio:actual.id]">Programación</g:link>
+    <g:link class="btn" controller="asignacion" action="programacionInversion" params="[proyecto:proy.id,anio:actual.id]">Programación</g:link>
+    %{--<g:link class="btn" controller="asignacion" action="programacionInversion" params="[id:unidad.id,anio:actual.id]">Programación</g:link>--}%
     <div style="margin-top: 15px;">
 
         <table width="600">
@@ -67,14 +68,13 @@
         Ingreso de datos
     </legend>
 
-            <table style="width: 1060px;">
+            <table style="width: 1000px;">
                 <thead>
                 <th style="width: 300px">Actividad</th>
-                <th style="width: 50px;">Partida</th>
+                <th style="width: 60px;">Partida</th>
                 <th style="width: 190px">Desc. Presupuestaria</th>
                 <th style="width: 150px;">Fuente</th>
                 <th style="width: 50px;">Presupuesto</th>
-                <th style="width: 50px;">Meta/Indicador</th>
                 <th style="width: 50px;"></th>
                 </thead>
                 <tbody>
@@ -88,17 +88,17 @@
                     <td class="prsp">
                         <input type="hidden" class="prsp" value="" id="prsp_id">
 
-                        <input type="text" id="prsp_num" class="buscar" style="width: 50px;color:black">
+                        <input type="text" id="prsp_num" class="buscar ui-corner-all" style="width: 60px;color:black">
                     </td>
 
                     <td class="desc" id="desc" style="width: 200"></td>
 
                     <td class="fuente">
-                        <g:select from="${fuentes}" id="fuente" optionKey="id" optionValue="descripcion" name="fuente" class="fuente" style="width: 160px;"/>
+                        <g:select from="${fuentes}" id="fuente" optionKey="id" optionValue="descripcion" name="fuente" class="fuente ui-corner-all" style="width: 160px;"/>
                     </td>
 
                     <td class="valor">
-                        <input type="text" style="width: 70px;color:black" class="valor" id="valor_txt" value="0">
+                        <input type="text" style="width: 70px;color:black;text-align: right;padding-right: 5px" class="valor ui-corner-all" id="valor_txt" value="0">
 
                     </td>
 
@@ -120,7 +120,7 @@
     <g:set var="total" value="0"></g:set>
     <table style="width: 100%; margin-bottom: 10px;">
         <thead>
-        <th style="width: 40px;">ID</th>
+        %{--<th style="width: 40px;">ID</th>--}%
         <th style="width: 220px">Programa</th>
         <th style="width: 120px">Componente</th>
         <th style="width: 240px">Actividad</th>
@@ -135,9 +135,9 @@
         <tbody>
         <g:each in="${asgn}" var="asg" status="i">
             <tr class="${(i % 2) == 0 ? 'odd' : 'even'}" id="det_${i}">
-                <td>
-                   ${asg.id}
-                </td>
+                %{--<td>--}%
+                   %{--${asg.id}--}%
+                %{--</td>--}%
                 <td class="programa">
                     ${asg.marcoLogico.proyecto.programaPresupuestario}
                 </td>
@@ -457,7 +457,7 @@
                 $.ajax({
                     type:"POST",
                     url:"${createLink(action:'guardarAsignacion',controller:'asignacion')}",
-                    data:"anio.id=" + anio + "&fuente.id=" + fuente +  "&planificado=" + valor + "&presupuesto.id=" + prsp + "&unidad.id=${unidad.id}" + "&marcoLogico.id=" + actividad + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),
+                    data:"anio.id=" + anio + "&fuente.id=" + fuente +  "&planificado=" + valor + "&presupuesto.id=" + prsp + "&marcoLogico.id=" + actividad + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),
                     success:function (msg) {
                         if (msg * 1 >= 0) {
                             location.reload(true);
