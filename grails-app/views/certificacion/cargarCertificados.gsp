@@ -8,13 +8,13 @@
     <tbody>
     <g:set var="total" value="${0}"></g:set>
     <g:if test="${aprobados}">
-        <tr><td colspan="3"><b>Aprobados</b></td></tr>
+
         <g:each in="${aprobados}" var="cer">
             <g:set var="total" value="${total.toDouble()+cer.monto}"></g:set>
           <tr>
               <td>Aprobado</td>
               <td>${cer.fechaRevision.format("dd/MM/yyyy")}</td>
-              <td><g:formatNumber number="${cer.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+              <td style="text-align: right"><g:formatNumber number="${cer.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
               <td><a href="#" class="desc" cer="${cer.id}">PDF</a></td>
           </tr>  
         </g:each>
@@ -26,23 +26,23 @@
         </tr>
     </g:if>
     <g:if test="${solicitados}">
-        <tr><td colspan="3"><b>Solicitados</b></td></tr>
+
         <g:each in="${solicitados}" var="cer">
             <g:set var="total" value="${total.toDouble()+cer.monto}"></g:set>
             <tr>
                 <td>Solicitado</td>
                 <td>${cer?.fechaRevision?.format("dd/MM/yyyy")}</td>
-                <td><g:formatNumber number="${cer.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+                <td style="text-align: right"><g:formatNumber number="${cer.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
             </tr>
         </g:each>
     </g:if>
     <g:if test="${negados}">
-        <tr><td colspan="3"><b>Negados</b></td></tr>
+
         <g:each in="${negados}" var="cer">
             <tr>
                 <td>Negado</td>
                 <td>${cer.fechaRevision.format("dd/MM/yyyy")}</td>
-                <td><g:formatNumber number="${cer.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+                <td style="text-align: right"><g:formatNumber number="${cer.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
             </tr>
         </g:each>
     </g:if>

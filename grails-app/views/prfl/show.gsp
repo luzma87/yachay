@@ -80,6 +80,20 @@
 
                 <div class="prop">
                     <label>
+                        <g:message code="prfl.codigo.label"
+                                   default="Codigo"/>
+                    </label>
+
+                    <div class="campo">
+
+                        ${fieldValue(bean: prflInstance, field: "codigo")}
+
+                    </div> <!-- campo -->
+                </div> <!-- prop -->
+
+
+                <div class="prop">
+                    <label>
                         <g:message code="prfl.observaciones.label"
                                    default="Observaciones"/>
                     </label>

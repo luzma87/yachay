@@ -1,21 +1,50 @@
 package app
 
+import app.alertas.Alerta
+import app.seguridad.Prfl
+import app.seguridad.Sesn
 import app.seguridad.Usro
 import app.yachai.Categoria
 
 class SolicitudController extends app.seguridad.Shield {
 
-    def index = {}
+    def index = {
+        redirect(action: 'list')
+    }
+
+    def list = {
+        def title = g.message(code: "default.list.label", args: ["Solicitud"], default: "Solicitud List")
+//        <g:message code="default.list.label" args="[entityName]" />
+
+        params.max = Math.min(params.max ? params.int('max') : 25, 100)
+
+        [solicitudInstanceList: Solicitud.list(params), solicitudInstanceTotal: Solicitud.count(), title: title, params: params]
+    }
 
     def show = {
         def solicitud = Solicitud.get(params.id)
         if (!solicitud) {
-            flash.message = "No se encontró la solicitud"
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'solicitud.label', default: 'Solicitud'), params.id])}"
+            redirect(action: "list")
+        } else {
+            def title = g.message(code: "default.show.label", args: ["Solicitud"], default: "Show Solicitud")
+            [solicitud: solicitud, title: title]
         }
-        return [solicitud: solicitud]
     }
 
     def save = {
+        println params
+
+        def usuario = Usro.get(session.usuario.id)
+        def unidadEjecutora = usuario.unidad
+
+        def solicitud = new Solicitud()
+        if (params.id) {
+            solicitud = Solicitud.get(params.id.toLong())
+        } else {
+            solicitud.unidadEjecutora = unidadEjecutora
+        }
+
         /* upload del PDF */
         def path = servletContext.getRealPath("/") + "pdf/solicitud/"
         new File(path).mkdirs()
@@ -25,6 +54,13 @@ class SolicitudController extends app.seguridad.Shield {
         ]
         def nombre = ""
         if (f && !f.empty) {
+            if (solicitud.pathPdfTdr) {
+                //si ya existe un archivo para esta solicitud lo elimino
+                def oldFile = new File(path + solicitud.pathPdfTdr)
+                if (oldFile.exists()) {
+                    oldFile.delete()
+                }
+            }
             def fileName = f.getOriginalFilename() //nombre original del archivo
             def ext
 
@@ -53,6 +89,7 @@ class SolicitudController extends app.seguridad.Shield {
                 }
                 try {
                     f.transferTo(new File(pathFile)) // guarda el archivo subido al nuevo path
+                    params.pathPdfTdr = nombre
                     //println pathFile
                 } catch (e) {
                     println "????????\n" + e + "\n???????????"
@@ -60,21 +97,39 @@ class SolicitudController extends app.seguridad.Shield {
             }
         }
         /* fin del upload */
-
-        def usuario = Usro.get(session.usuario.id)
-        def unidadEjecutora = usuario.unidad
-
-        def solicitud = new Solicitud()
-        if (params.id) {
-            solicitud = Solicitud.get(params.id.toLong())
-        } else {
-            solicitud.unidadEjecutora = unidadEjecutora
-        }
         params.fecha = new Date().parse("dd-MM-yyyy", params.fecha)
-        params.pathPdfTdr = nombre
         solicitud.properties = params
         if (!solicitud.save(flush: true)) {
             flash.message = "<h5>Ha ocurrido un error al crear la solicitud</h5>" + renderErrors(bean: solicitud)
+        } else {
+            def perfilGAF = Prfl.findByCodigo("GAF")
+            def perfilGJ = Prfl.findByCodigo("GJ")
+            def perfilGDP = Prfl.findByCodigo("GDP")
+
+            def usuariosGAF = Sesn.findAllByPerfil(perfilGAF).usuario
+            def usuariosGJ = Sesn.findAllByPerfil(perfilGJ).usuario
+            def usuariosGDP = Sesn.findAllByPerfil(perfilGDP).usuario
+
+            def from = Usro.get(session.usuario.id)
+            def envio = new Date()
+            def mensaje = from.persona.nombre + " " + from.persona.apellido + " ha ${params.id ? 'modificado' : 'creado'} una solicitud"
+            def controlador = "solicitud"
+            def action = "revision"
+            def idRemoto = solicitud.id
+
+            (usuariosGAF + usuariosGJ + usuariosGDP).each { usu ->
+                def alerta = new Alerta()
+                alerta.from = from
+                alerta.usro = usu
+                alerta.fec_envio = envio
+                alerta.mensaje = mensaje
+                alerta.controlador = controlador
+                alerta.accion = action
+                alerta.id_remoto = idRemoto
+                if (!alerta.save(flush: true)) {
+                    println "error alerta: " + alerta.errors
+                }
+            }
         }
         redirect(action: 'show', id: solicitud.id)
     }
@@ -220,13 +275,60 @@ class SolicitudController extends app.seguridad.Shield {
         def usuario = Usro.get(session.usuario.id)
         def unidadEjecutora = usuario.unidad
         def solicitud = new Solicitud()
+        def title = "Nueva"
         if (params.id) {
             solicitud = solicitud.get(params.id)
+            title = "Modificar"
             if (!solicitud) {
                 flash.message = "No se encontró la solicitud"
                 solicitud = new Solicitud()
             }
         }
-        return [unidadRequirente: unidadEjecutora, solicitud: solicitud]
+        title += " solicitud"
+        return [unidadRequirente: unidadEjecutora, solicitud: solicitud, title: title]
+    }
+
+    def revision = {
+        def perfil = Prfl.get(session.perfil.id)
+        def solicitud = Solicitud.get(params.id)
+        if (!solicitud) {
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'solicitud.label', default: 'Solicitud'), params.id])}"
+            redirect(action: "list")
+        } else {
+            def title = "Revisar solicitud"
+            def debugGaf = false
+            def debugGj = false
+            def debugGdp = false
+            [solicitud: solicitud, title: title, perfil: perfil, debug: [gaf: debugGaf, gdp: debugGdp, gj: debugGj]]
+        }
+    }
+
+    def saveRevision = {
+        def solicitud = Solicitud.get(params.id)
+        if (solicitud) {
+            if (params.observacionesJuridica) {
+                solicitud.observacionesJuridica = params.observacionesJuridica
+            }
+            if (params.observacionesAdministrativaFinanciera) {
+                solicitud.observacionesAdministrativaFinanciera = params.observacionesAdministrativaFinanciera
+            }
+            if (params.observacionesDireccionProyectos) {
+                solicitud.observacionesDireccionProyectos = params.observacionesDireccionProyectos
+            }
+            if (params.gj == "on") {
+                solicitud.revisadoJuridica = new Date()
+            }
+            if (params.gaf == "on") {
+                solicitud.revisadoAdministrativaFinanciera = new Date()
+            }
+            if (params.gdp == "on") {
+                solicitud.revisadoDireccionProyectos = new Date()
+            }
+            if (!solicitud.save(flush: true)) {
+                println "error al guardar revision: " + solicitud.errors
+                flash.message = "Ha ocurrido un error al guardar su revisión."
+            }
+        }
+        redirect(action: "revision", id: solicitud.id)
     }
 }

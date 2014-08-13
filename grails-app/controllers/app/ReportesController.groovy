@@ -117,7 +117,7 @@ class ReportesController {
 
     def certificacion = {
 
-        //println "certiificacion aaaa " + params
+        println "certiificacion aaaa " + params
         def cer = Certificacion.get(params.id)
         if (params.solicitud) {
             cer.memorandoSolicitud = params.solicitud

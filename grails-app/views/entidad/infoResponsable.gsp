@@ -145,7 +145,7 @@ td {
             </td>
 
             <td class="" valign="middle">
-                ${usuario?.cargoPersonal?.id}
+                ${usuario?.cargoPersonal?.descripcion}
             </td>
 
         </tr>

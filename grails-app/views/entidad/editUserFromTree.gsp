@@ -132,7 +132,7 @@
                     %{--class="field ui-widget-content ui-corner-all"--}%
                     %{--value="${usuario.persona?.discapacitado}"/>--}%
 
-                    <g:radioGroup name="persona.discapacitado" labels="['No','Sí']" values="[0,1]"
+                    <g:radioGroup name="persona.discapacitado" labels="['No', 'Sí']" values="[0, 1]"
                                   value="${usuario.persona?.discapacitado}">
                         ${it.label} ${it.radio}&nbsp;&nbsp;&nbsp;
                     </g:radioGroup>
@@ -270,7 +270,7 @@
                 <td class="" valign="middle">
                     <g:select class="field ui-widget-content ui-corner-all" name="usuario.unidad.id"
                               title="${Usro.constraints.unidad.attributes.mensaje}" style="width: 200px;"
-                              from="${app.UnidadEjecutora.list([sort:'nombre'])}" optionKey="id" value="${unidad?.id}"/>
+                              from="${app.UnidadEjecutora.list([sort: 'nombre'])}" optionKey="id" value="${unidad?.id}"/>
                 </td>
 
                 <td class="label " valign="middle">
@@ -312,13 +312,13 @@
                 </td>
 
                 <td class="indicator">
-                    <span class="indicator"></span>
+                    <span class="indicator mandatory">*</span>
                 </td>
 
                 <td class="" valign="middle">
                     <g:passwordField name="usuario.usroPassword" id="usroPassword"
                                      title="${Usro.constraints.usroPassword.attributes.mensaje}"
-                                     class="field ui-widget-content ui-corner-all" minLenght="1" maxLenght="64"
+                                     class="field required ui-widget-content ui-corner-all" minLenght="1" maxLenght="64"
                                      value="${(usuario.usroPassword && usuario.usroPassword?.trim() != '') ? '****' : ''}"/>
                 </td>
 
@@ -352,7 +352,7 @@
                     %{--<g:textField class="field number required ui-widget-content ui-corner-all" name="usuario.usroActivo"--}%
                     %{--title="${Usro.constraints.usroActivo.attributes.mensaje}"--}%
                     %{--id="usroActivo" value="${fieldValue(bean: usuario, field: 'usroActivo')}"/>--}%
-                    <g:radioGroup name="usuario.usroActivo" labels="['No','Sí']" values="[0,1]"
+                    <g:radioGroup name="usuario.usroActivo" labels="['No', 'Sí']" values="[0, 1]"
                                   value="${usuario?.usroActivo}">
                         ${it.label} ${it.radio}&nbsp;&nbsp;&nbsp;
                     </g:radioGroup>
@@ -366,14 +366,14 @@
                     <g:message code="usro.autorizacion.label" default="Autorización"/>
                 </td>
 
-                <td class="indicator">
-                    <span class="indicator"></span>
+                <td class="indicator mandatory">
+                    <span class="indicator">*</span>
                 </td>
 
                 <td class="" valign="middle">
                     <g:passwordField name="usuario.autorizacion" id="autorizacion"
                                      title="${Usro.constraints.autorizacion.attributes.mensaje}"
-                                     class="field ui-widget-content ui-corner-all" minLenght="1"
+                                     class="field required ui-widget-content ui-corner-all" minLenght="1"
                                      maxLenght="255"
                                      value="${(usuario.autorizacion && usuario.autorizacion?.trim() != '') ? '****' : ''}"/>
                 </td>
@@ -469,76 +469,76 @@
     $(function () {
 
         $(".del").button({
-            icons:{
-                primary:"ui-icon-trash"
+            icons : {
+                primary : "ui-icon-trash"
             },
-            text:false
+            text  : false
         }).click(function () {
-                    $(this).parent().parent().remove();
-                    var ids = $("#perfiles_remove").val();
-                    var id = $(this).attr("id");
-                    if (ids == "") {
-                        ids += ","
-                    }
-                    ids += id + ","
-                    $("#perfiles_remove").val(ids);
-                    return false;
-                });
+            $(this).parent().parent().remove();
+            var ids = $("#perfiles_remove").val();
+            var id = $(this).attr("id");
+            if (ids == "") {
+                ids += ","
+            }
+            ids += id + ","
+            $("#perfiles_remove").val(ids);
+            return false;
+        });
 
         $("#btn_agregarPerfil").button({
-            icons:{
-                primary:"ui-icon-plusthick"
+            icons : {
+                primary : "ui-icon-plusthick"
             },
-            text:false
+            text  : false
         }).click(function () {
-                    var id = $("#perfiles").val();
-                    var txt = $("#perfiles option:selected").text();
+            var id = $("#perfiles").val();
+            var txt = $("#perfiles option:selected").text();
 
-                    var td = $("#td_perfiles div:icontains('" + txt + "')");
-                    if (td.length == 0) {
+            var td = $("#td_perfiles div:icontains('" + txt + "')");
+            if (td.length == 0) {
 
-                        var ids = $("#perfiles_add").val();
-                        if (ids == "") {
-                            ids += ","
-                        }
-                        ids += id + ","
-                        $("#perfiles_add").val(ids);
+                var ids = $("#perfiles_add").val();
+                if (ids == "") {
+                    ids += ","
+                }
+                ids += id + ","
+                $("#perfiles_add").val(ids);
 
-                        var row = $('<div class="row">');
-                        var divPer = $('<div class="perfil">');
-                        var divBtn = $('<div class="boton">');
+                var row = $('<div class="row">');
+                var divPer = $('<div class="perfil">');
+                var divBtn = $('<div class="boton">');
 
-                        var btn = $('<a href="#">Eliminar</a>');
-                        divPer.append(txt);
-                        divBtn.append(btn);
-                        row.append(divPer);
-                        row.append(divBtn);
+                var btn = $('<a href="#">Eliminar</a>');
+                divPer.append(txt);
+                divBtn.append(btn);
+                row.append(divPer);
+                row.append(divBtn);
 
-                        $("#td_perfiles").append(row);
+                $("#td_perfiles").append(row);
 
-                        btn.button({
-                            icons:{
-                                primary:"ui-icon-trash"
-                            },
-                            text:false
-                        }).click(function () {
-                                    $(this).parent().parent().remove();
-                                    var ids = $("#perfiles_add").val();
-                                    ids = str_replace(id + ",", '', ids);
-                                    $("#perfiles_add").val(ids);
-                                    return false;
-                                });
-
-                    }
+                btn.button({
+                    icons : {
+                        primary : "ui-icon-trash"
+                    },
+                    text  : false
+                }).click(function () {
+                    $(this).parent().parent().remove();
+                    var ids = $("#perfiles_add").val();
+                    ids = str_replace(id + ",", '', ids);
+                    $("#perfiles_add").val(ids);
                     return false;
                 });
 
+            }
+            return false;
+        });
+
         $('#fechaNacimiento').datepicker({
-            changeMonth:true,
-            changeYear:true,
-            dateFormat:'dd/mm/yy',
-            yearRange:'-80:+05',
-            onClose:function (dateText, inst) {
+            changeMonth : true,
+            changeYear  : true,
+            dateFormat  : 'dd/mm/yy',
+            yearRange   : '-80:+05',
+            onClose     : function (dateText, inst) {
                 var date = $(this).datepicker('getDate');
                 var day, month, year;
                 if (date != null) {
@@ -558,10 +558,10 @@
         });
 
         $('#fechaPass').datepicker({
-            changeMonth:true,
-            changeYear:true,
-            dateFormat:'dd-mm-yy',
-            onClose:function (dateText, inst) {
+            changeMonth : true,
+            changeYear  : true,
+            dateFormat  : 'dd-mm-yy',
+            onClose     : function (dateText, inst) {
                 var date = $(this).datepicker('getDate');
                 var day, month, year;
                 if (date != null) {
@@ -590,40 +590,40 @@
                 .removeAttr('title');
         $('<div />').qtip(
                 {
-                    content:' ', // Can use any content here :)
-                    position:{
-                        target:'event' // Use the triggering element as the positioning target
+                    content  : ' ', // Can use any content here :)
+                    position : {
+                        target : 'event' // Use the triggering element as the positioning target
                     },
-                    show:{
-                        target:elems,
-                        event:'click mouseenter focus'
+                    show     : {
+                        target : elems,
+                        event  : 'click mouseenter focus'
                     },
-                    hide:{
-                        delay:0,
-                        leave:false,
-                        target:elems
+                    hide     : {
+                        delay  : 0,
+                        leave  : false,
+                        target : elems
                     },
-                    events:{
-                        show:function (event, api) {
+                    events   : {
+                        show : function (event, api) {
                             // Update the content of the tooltip on each show
                             var target = $(event.originalEvent.target);
                             api.set('content.text', target.attr('title'));
                         }
                     },
-                    style:{
-                        classes:'ui-tooltip-rounded ui-tooltip-cream'
+                    style    : {
+                        classes : 'ui-tooltip-rounded ui-tooltip-cream'
                     }
                 });
         // fin del codigo para los tooltips
 
         // Validacion del formulario
         myForm.validate({
-            errorClass:"errormessage",
-            onkeyup:false,
-            errorElement:"em",
-            errorClass:'error',
-            validClass:'valid',
-            errorPlacement:function (error, element) {
+            errorClass     : "errormessage",
+            onkeyup        : false,
+            errorElement   : "em",
+            errorClass     : 'error',
+            validClass     : 'valid',
+            errorPlacement : function (error, element) {
                 // Set positioning based on the elements position in the form
                 var elem = $(element),
                         corners = ['right center', 'left center'],
@@ -633,20 +633,20 @@
                 if (!error.is(':empty')) {
                     // Apply the tooltip only if it isn't valid
                     elem.filter(':not(.valid)').qtip({
-                        overwrite:false,
-                        content:error,
-                        position:{
-                            my:corners[ flipIt ? 0 : 1 ],
-                            at:corners[ flipIt ? 1 : 0 ],
-                            viewport:$(window)
+                        overwrite : false,
+                        content   : error,
+                        position  : {
+                            my       : corners[ flipIt ? 0 : 1 ],
+                            at       : corners[ flipIt ? 1 : 0 ],
+                            viewport : $(window)
                         },
-                        show:{
-                            event:false,
-                            ready:true
+                        show      : {
+                            event : false,
+                            ready : true
                         },
-                        hide:false,
-                        style:{
-                            classes:'ui-tooltip-rounded ui-tooltip-red' // Make it red... the classic error colour!
+                        hide      : false,
+                        style     : {
+                            classes : 'ui-tooltip-rounded ui-tooltip-red' // Make it red... the classic error colour!
                         }
                     })
 
@@ -659,21 +659,20 @@
                     elem.qtip('destroy');
                 }
             },
-            success:$.noop // Odd workaround for errorPlacement not firing!
+            success        : $.noop // Odd workaround for errorPlacement not firing!
         })
         ;
         //fin de la validacion del formulario
 
-
         $(".button").button();
-        $(".home").button("option", "icons", {primary:'ui-icon-home'});
-        $(".list").button("option", "icons", {primary:'ui-icon-clipboard'});
-        $(".show").button("option", "icons", {primary:'ui-icon-bullet'});
-        $(".save").button("option", "icons", {primary:'ui-icon-disk'}).click(function () {
+        $(".home").button("option", "icons", {primary : 'ui-icon-home'});
+        $(".list").button("option", "icons", {primary : 'ui-icon-clipboard'});
+        $(".show").button("option", "icons", {primary : 'ui-icon-bullet'});
+        $(".save").button("option", "icons", {primary : 'ui-icon-disk'}).click(function () {
             myForm.submit();
             return false;
         });
-        $(".delete").button("option", "icons", {primary:'ui-icon-trash'}).click(function () {
+        $(".delete").button("option", "icons", {primary : 'ui-icon-trash'}).click(function () {
             if (confirm("${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}")) {
                 return true;
             }

@@ -37,9 +37,10 @@
                         <thead>
                         <th>Fecha</th>
                         <th style="width: 140px;">Solicitante</th>
-                        <th style="width: 350px;">Concepto</th>
+                        <th style="">Concepto</th>
                         <th>Partida</th>
                         <th>Memorando</th>
+                        <th>Actividad</th>
                         <th>Monto</th>
                         <th>Acción</th>
                         </thead>
@@ -48,9 +49,10 @@
                             <tr>
                                 <td>${cer.fecha.format("dd/MM/yyyy")}</td>
                                 <td style="width: 160px;">${cer.usuario.persona.nombre+" "+cer.usuario.persona.apellido}</td>
-                                <td style="width: 180px;">${cer.concepto}</td>
+                                <td style="">${cer.concepto}</td>
                                 <td style="text-align: center">${cer.asignacion.presupuesto.numero}</td>
                                 <td style="text-align: center">${cer.memorandoSolicitud}</td>
+                                <td style="text-align: center"><a href="#" class="verAct inv" id="ver_${cer.id}" iden="${cer.id}">Ver</a></td>
                                 <td style="text-align: right"><g:formatNumber number="${cer.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
                                 <td style="text-align: center">
                                     <a href="#" class="aprobar inv" id="apr_${cer.id}" monto="${cer.monto}" cer="${cer.id}" memo="${cer.memorandoSolicitud}">Aprobar</a>
@@ -77,7 +79,7 @@
                         <thead>
                         <th>Fecha</th>
                         <th style="width: 140px;">Solicitante</th>
-                        <th style="width: 350px;">Concepto</th>
+                        <th style="width: 200px;">Concepto</th>
                         <th>Partida</th>
                         <th>Memorando</th>
                         <th>Monto</th>
@@ -88,7 +90,7 @@
                             <tr>
                                 <td>${cer.fecha.format("dd/MM/yyyy")}</td>
                                 <td style="width: 160px;">${cer.usuario.persona.nombre+" "+cer.usuario.persona.apellido}</td>
-                                <td style="width: 180px;">${cer.concepto}</td>
+                                <td style="width: 200px;">${cer.concepto}</td>
                                 <td style="text-align: center">${cer.asignacion.presupuesto.numero}</td>
                                 <td style="text-align: center">${cer.memorandoSolicitud}</td>
                                 <td style="text-align: right"><g:formatNumber number="${cer.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
@@ -122,12 +124,15 @@
         <input type="hidden" id="memorando" name="memo">
         <input type="hidden" id="usu" name="usu" value="${session.usuario}">
 
-        Número de aval: <input type="text" style="width: 150px" id="acuerdo" value="00941">  </br>
-        Memorando No: <input type="text" style="width: 150px;margin-left: 23px" id="memorandoCertificado" >  </br></br>
-        Para descargar el formulario de clic <a href="#"  id="descarga" style="margin-bottom: 15px;">Aquí</a> </br>
+        Número de aval: <input type="text" style="width: 150px;margin-left: 20px;text-align: right;padding: 5px" id="numero" value="" class="ui-corner-all ui-widget-content">  </br></br>
+        %{--Memorando No: <input type="text" style="width: 150px;margin-left: 25px" id="memorandoCertificado"  class="ui-corner-all ui-widget-content">  </br></br>--}%
+        Ingrese el número del aval y descargue el formulario con un clic <a href="#"  id="descarga" style="margin-bottom: 15px;">Aquí</a> </br>
         Después de llenar y firmar el documento del Aval súbalo al sistema. </br> </br>
-        <input type="file" id="archivo" name="archivo">
+        <b>Documento firmado:</b><input type="file" id="archivo" name="archivo" style="display: inline-block">
     </g:form>
+</div>
+<div id="verActividad">
+<div id="contenidoAct"></div>
 </div>
 <div id="negar">
     <input type="hidden" id="cerNeg">
@@ -137,6 +142,18 @@
 <script>
     $(function() {
         $("#tabs").tabs()
+        $(".verAct").button().click(function(){
+            $.ajax({
+                type    : "POST", url : "${createLink(action:'verActividad', controller: 'certificacion')}",
+                data    : "id=" + $(this).attr("iden"),
+                success : function (msg) {
+                    $("#contenidoAct").html(msg)
+                    $("#verActividad").dialog("open")
+
+                }
+            });
+
+        });
 
         $(".aprobar").button({icons:{ primary:"ui-icon-check"},text:false}).click(function(){
             $("#cerAprob").val($(this).attr("cer"))
@@ -149,21 +166,47 @@
         });
 
         $("#descarga").button().click(function () {
-            var acuerdo = $("#acuerdo").val()
-            if(acuerdo==""){
-                alert("Ingrese el número del acuerdo ministerial ")
-            }
-            var url = "${createLink(controller: 'reportes', action: 'certificacion')}/?id="+$("#cerAprob").val()+"Wacuerdo="+acuerdo+"Wmemo="+$("#memorandoCertificado").val()+"Wusu=${session.usuario.id}";
-            location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url+"&filename=certificacion_"+$("#memorandoCertificado").val()+".pdf"
-        });
+            var numero = $("#numero").val()
+            if(numero==""){
+                $.box({
+                    title:"Error",
+                    text:"Ingrese un número de aval",
+                    dialog: {
+                        resizable: false,
+                        buttons  : {
+                            "Cerrar":function(){
 
+                            }
+                        }
+                    }
+                });
+            }
+            var url = "${createLink(controller: 'reportes', action: 'certificacion')}/?id="+$("#cerAprob").val()+"Wnumero="+numero+"Wusu=${session.usuario.id}";
+            console.log(url)
+            location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url+"&filename=certificacion_"+numero+".pdf"
+        });
+        $("#verActividad").dialog({
+            autoOpen:false,
+            resizable:false,
+            title:'Actividad',
+            modal:true,
+            draggable:true,
+            width:500,
+            height:450,
+            position:'center',
+            buttons:{
+                "Cerrar":function () {
+                    $("#verActividad").dialog("close")
+                }
+            }
+        });
         $("#aprobar").dialog({
             autoOpen:false,
             resizable:false,
             title:'Aprobar Aval',
             modal:true,
             draggable:true,
-            width:400,
+            width:540,
             height:350,
             position:'center',
             open:function (event, ui) {

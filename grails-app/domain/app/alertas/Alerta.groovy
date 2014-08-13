@@ -1,9 +1,11 @@
 package app.alertas
 
+import app.seguridad.Usro
+
 class Alerta implements Serializable{
 
-    app.seguridad.Usro from
-    app.seguridad.Usro usro
+    Usro from
+    Usro usro
     Date fec_envio
     Date fec_recibido
     String mensaje

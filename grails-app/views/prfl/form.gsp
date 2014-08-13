@@ -84,6 +84,19 @@
                         </div>
                     </div>
 
+                    <div class="prop ${hasErrors(bean: prflInstance, field: 'codigo', 'error')}">
+                        <label for="nombre">
+                            <g:message code="prfl.codigo.label" default="Código"/>
+
+                        </label>
+
+                        <div class="campo">
+                            <g:textField name="codigo" id="codigo" title="${Prfl.constraints.codigo.attributes.mensaje}"
+                                         class="field ui-widget-content ui-corner-all"
+                                         value="${prflInstance?.codigo}"/>
+                        </div>
+                    </div>
+
                     <div class="prop ${hasErrors(bean: prflInstance, field: 'observaciones', 'error')}">
                         <label for="observaciones">
                             <g:message code="prfl.observaciones.label" default="Observaciones"/>
