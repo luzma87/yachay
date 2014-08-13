@@ -294,6 +294,7 @@
 
                     </tr>
 
+%{--
                     <tr>
                         <td class="label" valign="middle">
                             <g:message code="proyecto.ejeProgramatico.label"
@@ -329,6 +330,7 @@
                         </td>
 
                     </tr>
+--}%
 
                     <tr>
                         <td class="label " valign="middle">
@@ -368,6 +370,7 @@
                         </td>
                     </tr>
 
+%{--
                     <tr>
                         <td class="label " valign="middle">
                             Lineamiento Senplades
@@ -384,7 +387,9 @@
                                       noSelection="['null': '']"/>
                         </td>
                     </tr>
+--}%
 
+%{--
                     <tr>
                         <td class="label" valign="middle">
                             Poblaci&oacute;n Objetivo
@@ -403,6 +408,7 @@
                                         style="width: 900px;" value="${proyecto?.poblacionObjetivo}"/>
                         </td> <!-- campo -->
                     </tr>
+--}%
 
                     <tr>
                         <td class="label" valign="middle">
