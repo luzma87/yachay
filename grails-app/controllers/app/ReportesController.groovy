@@ -126,12 +126,14 @@ class ReportesController {
         def anio = Anio.findByAnio(new Date().format("yyyy"))
         //println "mes "+cer.fecha.format("MM").toInteger()
         def mes = Mes.findByNumero(cer.fecha.format("MM").toInteger())
+        def anterior = null
+        anterior=Certificacion.findByAsignacionAndFechaLessThan(cer.asignacion,new Date().parse("dd-MM-yyyy HH:mm","01-01-${anio} 00:00"))
         mes = mes?.descripcion
-        cer.acuerdo = params.acuerdo
+        cer.acuerdo = params.numero
         cer.memorandoCertificado = params.memo
         cer.save(flush: true)
 
-        [cer: cer, anio: anio, mes: mes, usuario: user]
+        [cer: cer, anio: anio, mes: mes, usuario: user,anterior:anterior]
 
     }
 

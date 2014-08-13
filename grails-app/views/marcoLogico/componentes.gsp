@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="layout" content="main"/>
-        <title>Marco logico: Componentes</title>
+        <title>Proyecto: ${proyecto}</title>
 
         <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}"
               type="text/css"/>
@@ -402,7 +402,8 @@
                     },
                     "Aceptar":function() {
                         if ($("#txt_datos").val() != "" && $("#txt_datos").val() != " ") {
-                            if($("#txt_datos").val().length>1024){
+
+                            if($("#txt_datos").val().trim().length<1024){
                                 $.ajax({
                                     type: "POST",
                                     url: "${createLink(action:'guadarDatosComponentes')}",
