@@ -95,7 +95,7 @@
             </p>
         </div>
 
-        <g:uploadForm action="save" method="post" name="frmSolicitud">
+        <g:uploadForm action="save" method="post" name="frmSolicitud" id="${solicitud.id}">
             <table width="100%">
                 <tr>
                     <td class="label">Unidad requirente</td>
@@ -181,7 +181,7 @@
                 <tr>
                     <td class="label">Archivo (pdf)</td>
                     <td colspan="7">
-                        <input type="file" name="pdf" class="required"/>
+                        <input type="file" name="pdf" class="${solicitud.pathPdfTdr ? '' : 'required'}"/>
                         <g:if test="${solicitud.pathPdfTdr}">
                             <br/>
                             Archivo actual:

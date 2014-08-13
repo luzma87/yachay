@@ -31,6 +31,18 @@ class SolicitudController extends app.seguridad.Shield {
     }
 
     def save = {
+        println params
+
+        def usuario = Usro.get(session.usuario.id)
+        def unidadEjecutora = usuario.unidad
+
+        def solicitud = new Solicitud()
+        if (params.id) {
+            solicitud = Solicitud.get(params.id.toLong())
+        } else {
+            solicitud.unidadEjecutora = unidadEjecutora
+        }
+
         /* upload del PDF */
         def path = servletContext.getRealPath("/") + "pdf/solicitud/"
         new File(path).mkdirs()
@@ -40,6 +52,13 @@ class SolicitudController extends app.seguridad.Shield {
         ]
         def nombre = ""
         if (f && !f.empty) {
+            if (solicitud.pathPdfTdr) {
+                //si ya existe un archivo para esta solicitud lo elimino
+                def oldFile = new File(path + solicitud.pathPdfTdr)
+                if (oldFile.exists()) {
+                    oldFile.delete()
+                }
+            }
             def fileName = f.getOriginalFilename() //nombre original del archivo
             def ext
 
@@ -68,6 +87,7 @@ class SolicitudController extends app.seguridad.Shield {
                 }
                 try {
                     f.transferTo(new File(pathFile)) // guarda el archivo subido al nuevo path
+                    params.pathPdfTdr = nombre
                     //println pathFile
                 } catch (e) {
                     println "????????\n" + e + "\n???????????"
@@ -75,18 +95,7 @@ class SolicitudController extends app.seguridad.Shield {
             }
         }
         /* fin del upload */
-
-        def usuario = Usro.get(session.usuario.id)
-        def unidadEjecutora = usuario.unidad
-
-        def solicitud = new Solicitud()
-        if (params.id) {
-            solicitud = Solicitud.get(params.id.toLong())
-        } else {
-            solicitud.unidadEjecutora = unidadEjecutora
-        }
         params.fecha = new Date().parse("dd-MM-yyyy", params.fecha)
-        params.pathPdfTdr = nombre
         solicitud.properties = params
         if (!solicitud.save(flush: true)) {
             flash.message = "<h5>Ha ocurrido un error al crear la solicitud</h5>" + renderErrors(bean: solicitud)
