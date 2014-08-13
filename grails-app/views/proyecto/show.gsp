@@ -90,6 +90,7 @@
 
                 <div id="items-menuProyecto" class="hidden">
                     <ul id="ul-menuProyecto">
+%{--
                         <li>
                             <g:link class="button semplades fg-button" action="verIndicadoresSenplades"
                                     id="${proyectoInstance.id}">
@@ -105,6 +106,7 @@
                                 Entidades participantes
                             </g:link>
                         </li>
+--}%
 
                         <li>
                             <g:link class="button financiamiento fg-button" action="verFinanciamiento"
@@ -121,6 +123,7 @@
                             </g:link>
                         </li>
 
+%{--
                         <li>
                             <a href="#" class="button responsable fg-button" function="showResponsable">
                                 <span class="ui-icon ui-icon-person"></span>
@@ -128,6 +131,7 @@
                             </a>
 
                         </li>
+--}%
                         %{--
                                                 <li>
                                                     <g:link controller="asignacion" action="asignacionProyecto" id="${proyectoInstance.id}"
@@ -224,9 +228,11 @@
                     P.A.C.
                 </g:link>
 
+%{--
                 <a href="#" class="button estado">
                     Estado
                 </a>
+--}%
 
                 <g:if test="${proyectoInstance.aprobado=='a'}">
                     <g:link class="button list" action="solicitarModificacion" controller="modificacionProyecto"
