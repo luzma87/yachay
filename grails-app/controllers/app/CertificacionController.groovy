@@ -48,7 +48,23 @@ class CertificacionController  extends app.seguridad.Shield{
             actual = Anio.findByAnio(new Date().format("yyyy"))
 
         def inversion = Asignacion.findAll("from Asignacion  where marcoLogico is not null and anio=${actual.id} and unidad=${unidad.id} order by id")
-        [unidad:unidad,actual:actual,inversion:inversion]
+        def now = new Date()
+        [unidad:unidad,actual:actual,inversion:inversion,now:now]
+    }
+
+    def solicitarAval = {
+        def asg = Asignacion.get(params.asg)
+        def now = new Date()
+        if(asg.marcoLogico.fechaInicio<now){
+            response.sendError(403)
+        }
+        def avales = Certificacion.findAllByAsignacion(asg)
+        def disponible = asg.valorReal
+        avales.each {
+            disponible-=it.monto
+        }
+        [asg:asg, disponible:disponible]
+
     }
 
     def listaCertificados = {
@@ -102,18 +118,76 @@ class CertificacionController  extends app.seguridad.Shield{
     def guardarSolicitud = {
         println "solicitud "+params
         /*TODO enviar alertas*/
-        def asg=Asignacion.get(params.asgn)
-        def monto = params.monto
-        monto = monto.toDouble()
-        def concepto = params.concepto
-        def cer = new Certificacion()
-        cer.usuario=session.usuario
-        cer.concepto=concepto
-        cer.monto=monto
-        cer.asignacion=asg
-        cer.memorandoSolicitud=params.memorando
-        cer = kerberosService.saveObject(cer,Certificacion,session.perfil,session.usuario,"guardarSolicitud","certificacion",session)
-        render "Solicitud enviada"
+
+        def path = servletContext.getRealPath("/") + "pdf/solicitudAval/"
+        new File(path).mkdirs()
+        def f = request.getFile('file')
+        def okContents = [
+                'application/pdf': 'pdf',
+        ]
+        def nombre = ""
+        def pathFile
+        if (f && !f.empty) {
+            def fileName = f.getOriginalFilename() //nombre original del archivo
+            def ext
+
+            def parts = fileName.split("\\.")
+            fileName = ""
+            parts.eachWithIndex { obj, i ->
+                if (i < parts.size() - 1) {
+                    fileName += obj
+                }
+            }
+            if (okContents.containsKey(f.getContentType())) {
+                ext = okContents[f.getContentType()]
+                fileName = fileName.size() < 40 ? fileName : fileName[0..39]
+                fileName = fileName.tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
+
+                nombre = fileName + "." + ext
+                pathFile = path + nombre
+                def fn = fileName
+                def src = new File(pathFile)
+                def i = 1
+                while (src.exists()) {
+                    nombre = fn + "_" + i + "." + ext
+                    pathFile = path + nombre
+                    src = new File(pathFile)
+                    i++
+                }
+                try {
+                    f.transferTo(new File(pathFile)) // guarda el archivo subido al nuevo path
+                    def asg=Asignacion.get(params.asgn)
+                    def monto = params.monto
+                    monto = monto.toDouble()
+                    def concepto = params.concepto
+                    def cer = new Certificacion()
+                    cer.usuario=session.usuario
+                    cer.concepto=concepto
+                    cer.monto=monto
+                    cer.asignacion=asg
+                    cer.memorandoSolicitud=params.memorando
+                    cer.pathSolicitud=pathFile
+                    cer = kerberosService.saveObject(cer,Certificacion,session.perfil,session.usuario,"guardarSolicitud","certificacion",session)
+                    flash.message="Solicitud enviada"
+                    redirect(action: 'solicitarCertificacion',params: [asg: params.asgn])
+                    //println pathFile
+                } catch (e) {
+                    println "????????\n" + e + "\n???????????"
+                }
+            }else{
+                flash.message="Error: Seleccione un archivo valido. Solo se aceptan archivos ,pdf"
+                redirect(action: 'solicitarAval',params: [asg: params.asgn])
+            }
+
+        }else{
+            flash.message="Error: Seleccione un archivo valido"
+            redirect(action: 'solicitarAval',params: [asg: params.asgn])
+        }
+        /* fin del upload */
+
+
+
+
 
     }
 
@@ -134,30 +208,19 @@ class CertificacionController  extends app.seguridad.Shield{
         }
     }
 
+    def verActividad ={
+        def cert = Certificacion.get(params.id)
+        def act = cert.asignacion.marcoLogico
+        [act:act,asg:cert.asignacion]
+    }
+
     def listaSolicitudes = {
 
         def band = false
         def usuario = Usro.get(session.usuario.id)
+        /*Todo Aqui validar quien puede*/
+        band = true
 
-        if(usuario.id.toInteger() == 3 || usuario.unidad.id==85)
-            band = true
-        else{
-
-            def resp = ResponsableProyecto.findAllByUnidadAndTipo(usuario.unidad,TipoResponsable.findByCodigo("I"))
-            // println "resp "+resp
-            def r =[]
-            def ahora = new Date()
-            resp.each {
-                if(it.desde.before(ahora) && it.hasta.after(ahora))
-                    r.add(it)
-            }
-            r.each {rp->
-                //println "r -> "+rp
-                if(rp.responsable.id.toInteger()==session.usuario.id.toInteger())
-                    band=true
-
-            }
-        }
 
         if(!band){
             response.sendError(403)

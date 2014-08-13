@@ -11,6 +11,7 @@ class Certificacion {
     String observaciones
     String memorandoSolicitud
     String memorandoCertificado
+    String pathSolicitud
     String acuerdo
     String archivo
     int estado =0 /* 0 -> solicitado   1-> aprobadp  2-> negado*/
@@ -36,6 +37,7 @@ class Certificacion {
             memorandoCertificado column: 'crtfmecr'
             acuerdo column: 'crtfacue'
             archivo column: 'crtfarch'
+            pathSolicitud column: 'crtfsolc'
         }
     }
     static constraints = {
@@ -44,13 +46,14 @@ class Certificacion {
         fecha(blank:false,nullable: false)
         fechaRevision(blank:true,nullable: true)
         monto(blank:false,nullable: false)
-        concepto(blank:false,nullable: false,size: 1..255)
+        concepto(blank:false,nullable: false,size: 1..1024)
         observaciones(blank:true,nullable: true,size: 1..255)
         estado(blank: false, nullable: false)
         memorandoSolicitud(blank: false,nullable: false,size: 1..40)
         memorandoCertificado(blank: true,nullable: true,size: 1..40)
         acuerdo(blank: true,nullable: true,size: 1..40)
         archivo(blank: true,nullable: true,size: 1..500)
+        pathSolicitud(blank: true,nullable: true,size: 1..500)
     }
 
     String toString(){
