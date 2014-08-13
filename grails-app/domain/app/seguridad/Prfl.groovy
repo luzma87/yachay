@@ -3,35 +3,38 @@ package app.seguridad
 import java.io.Serializable;
 
 
-class Prfl implements Serializable{
+class Prfl implements Serializable {
     String nombre
     String descripcion
-    Prfl   padre
+    Prfl padre
     String observaciones
-    static auditable=[ignore:[]]
-    
-    static hasMany = [permisos: Prms, perfiles: Prfl ]
-    
-	
+    String codigo
+    static auditable = [ignore: []]
+
+    static hasMany = [permisos: Prms, perfiles: Prfl]
+
+
     static mapping = {
         table 'prfl'
-        cache usage:'read-write'
+        cache usage: 'read-write'
         version false
         id generator: 'identity'
-        sort  nombre: "asc"
+        sort nombre: "asc"
         columns {
             id column: 'prfl__id'
             nombre column: 'prflnmbr'
             descripcion column: 'prfldscr'
             padre column: 'prflpdre'
             observaciones column: 'prflobsr'
+            codigo column: 'prflcdgo'
         }
     }
-	
+
     static constraints = {
-       
+        codigo(blank: true, nullable: true)
     }
-    String toString(){
+
+    String toString() {
         return "${this.nombre}"
     }
 }

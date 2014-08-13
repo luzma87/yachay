@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="layout" content="main"/>
-        <title>Ingreso de solicitud</title>
+        <title>${title}</title>
 
         <script type="text/javascript" src="${resource(dir: 'js/jquery/plugins', file: 'jquery.meio.mask.js')}"></script>
 
@@ -191,8 +191,12 @@
                 </tr>
 
                 <tr>
-                    <td colspan="7"></td>
-                    <td style="text-align: right;">
+                    <td colspan="8" style="text-align: right;">
+                        <g:if test="${solicitud.id}">
+                            <g:link action="show" id="${solicitud.id}" class="button">
+                                Cancelar
+                            </g:link>
+                        </g:if>
                         <a href="#" id="btnSave">Guardar</a>
                     </td>
                 </tr>
@@ -336,7 +340,7 @@
 
             $(function () {
                 var myForm = $("#frmSolicitud");
-
+                $(".button").button();
                 $("#btnSave").button({
                     icons : {
                         primary : "ui-icon-disk"

@@ -1,18 +1,33 @@
 package app
 
+import app.seguridad.Prfl
 import app.seguridad.Usro
 import app.yachai.Categoria
 
 class SolicitudController extends app.seguridad.Shield {
 
-    def index = {}
+    def index = {
+        redirect(action: 'list')
+    }
+
+    def list = {
+        def title = g.message(code: "default.list.label", args: ["Solicitud"], default: "Solicitud List")
+//        <g:message code="default.list.label" args="[entityName]" />
+
+        params.max = Math.min(params.max ? params.int('max') : 25, 100)
+
+        [solicitudInstanceList: Solicitud.list(params), solicitudInstanceTotal: Solicitud.count(), title: title, params: params]
+    }
 
     def show = {
         def solicitud = Solicitud.get(params.id)
         if (!solicitud) {
-            flash.message = "No se encontró la solicitud"
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'solicitud.label', default: 'Solicitud'), params.id])}"
+            redirect(action: "list")
+        } else {
+            def title = g.message(code: "default.show.label", args: ["Solicitud"], default: "Show Solicitud")
+            [solicitud: solicitud, title: title]
         }
-        return [solicitud: solicitud]
     }
 
     def save = {
@@ -220,13 +235,60 @@ class SolicitudController extends app.seguridad.Shield {
         def usuario = Usro.get(session.usuario.id)
         def unidadEjecutora = usuario.unidad
         def solicitud = new Solicitud()
+        def title = "Nueva"
         if (params.id) {
             solicitud = solicitud.get(params.id)
+            title = "Modificar"
             if (!solicitud) {
                 flash.message = "No se encontró la solicitud"
                 solicitud = new Solicitud()
             }
         }
-        return [unidadRequirente: unidadEjecutora, solicitud: solicitud]
+        title += " solicitud"
+        return [unidadRequirente: unidadEjecutora, solicitud: solicitud, title: title]
+    }
+
+    def revision = {
+        def perfil = Prfl.get(session.perfil.id)
+        def solicitud = Solicitud.get(params.id)
+        if (!solicitud) {
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'solicitud.label', default: 'Solicitud'), params.id])}"
+            redirect(action: "list")
+        } else {
+            def title = "Revisar solicitud"
+            def debugGaf = false
+            def debugGj = false
+            def debugGdp = false
+            [solicitud: solicitud, title: title, perfil: perfil, debug: [gaf: debugGaf, gdp: debugGdp, gj: debugGj]]
+        }
+    }
+
+    def saveRevision = {
+        def solicitud = Solicitud.get(params.id)
+        if (solicitud) {
+            if (params.observacionesJuridica) {
+                solicitud.observacionesJuridica = params.observacionesJuridica
+            }
+            if (params.observacionesAdministrativaFinanciera) {
+                solicitud.observacionesAdministrativaFinanciera = params.observacionesAdministrativaFinanciera
+            }
+            if (params.observacionesDireccionProyectos) {
+                solicitud.observacionesDireccionProyectos = params.observacionesDireccionProyectos
+            }
+            if (params.gj == "on") {
+                solicitud.revisadoJuridica = new Date()
+            }
+            if (params.gaf == "on") {
+                solicitud.revisadoAdministrativaFinanciera = new Date()
+            }
+            if (params.gdp == "on") {
+                solicitud.revisadoDireccionProyectos = new Date()
+            }
+            if (!solicitud.save(flush: true)) {
+                println "error al guardar revision: " + solicitud.errors
+                flash.message = "Ha ocurrido un error al guardar su revisión."
+            }
+        }
+        redirect(action: "revision", id: solicitud.id)
     }
 }
