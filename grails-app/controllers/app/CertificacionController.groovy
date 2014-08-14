@@ -106,6 +106,27 @@ class CertificacionController  extends app.seguridad.Shield{
     }
 
 
+    def certificados = {
+        def unidad = session.usuario.unidad
+        def certificados = []
+        def anio
+        def actual
+        if (params.anio)
+            actual = Anio.get(params.anio)
+        else
+            actual = Anio.findByAnio(new Date().format("yyyy"))
+        def asgs = Asignacion.findAll("from Asignacion  where anio=${actual.id} and unidad=${unidad.id} order by id")
+        asgs.each {
+            def cer = Certificacion.findAllByAsignacion(it)
+            if(cer){
+                certificados+=cer
+            }
+        }
+        certificados.sort{it.estado}
+        [certificados:certificados,actual: actual,unidad: unidad]
+
+    }
+
     def cargarCertificados = {
         def asgn = Asignacion.get(params.id)
         def aprobados = Certificacion.findAllByAsignacionAndEstado(asgn,1)
@@ -166,7 +187,7 @@ class CertificacionController  extends app.seguridad.Shield{
                     cer.monto=monto
                     cer.asignacion=asg
                     cer.memorandoSolicitud=params.memorando
-                    cer.pathSolicitud=pathFile
+                    cer.pathSolicitud=nombre
                     cer = kerberosService.saveObject(cer,Certificacion,session.perfil,session.usuario,"guardarSolicitud","certificacion",session)
                     flash.message="Solicitud enviada"
                     redirect(action: 'solicitarCertificacion',params: [asg: params.asgn])
@@ -234,14 +255,23 @@ class CertificacionController  extends app.seguridad.Shield{
             def msn = params.msn
             params.msn=""
             def mapa = [:]
+            def mapaAnulacion = [:]
             def certificaciones = Certificacion.findAllByEstado(0)
-
+            def certsAnulacion =Certificacion.findAll("from Certificacion where estado=1 and pathSolicitudAnulacion is not null and pathSolicitudAnulacion!='' and fechaRevisionAnulacion is null")
             certificaciones.each {
                 def unidad = it.asignacion.unidad.nombre
                 if(mapa[unidad]){
                     mapa[unidad].add(it)
                 }else{
                     mapa.put(unidad,[it])
+                }
+            }
+            certsAnulacion.each {
+                def unidad = it.asignacion.unidad.nombre
+                if(mapaAnulacion[unidad]){
+                    mapaAnulacion[unidad].add(it)
+                }else{
+                    mapaAnulacion.put(unidad,[it])
                 }
             }
             def mapa2 = [:]
@@ -256,7 +286,8 @@ class CertificacionController  extends app.seguridad.Shield{
 
                 }
             }
-            [mapa:mapa, msn: msn,mapa2:mapa2,actual: actual]
+
+            [mapa:mapa, msn: msn,mapa2:mapa2,actual: actual,mapaAnulacion:mapaAnulacion]
         }
     }
 
@@ -329,25 +360,9 @@ class CertificacionController  extends app.seguridad.Shield{
                 def band = false
                 def usuario = Usro.get(session.usuario.id)
                 def cer = Certificacion.get(params.id)
-                if(usuario.id.toInteger() == 3 || usuario.unidad.id==85)
-                    band = true
-                else{
+                /*Todo aqui validar quien puede*/
+                band = true
 
-                    def resp = ResponsableProyecto.findAllByUnidadAndTipo(cer.asignacion.unidad,TipoResponsable.findByCodigo("I"))
-                    // println "resp "+resp
-                    def r =[]
-                    def ahora = new Date()
-                    resp.each {
-                        if(it.desde.before(ahora) && it.hasta.after(ahora))
-                            r.add(it)
-                    }
-                    r.each {rp->
-                        //println "r -> "+rp
-                        if(rp.responsable.id.toInteger()==session.usuario.id.toInteger())
-                            band=true
-
-                    }
-                }
                 if(band){
 
                     f.transferTo(new File(pathFile))
@@ -377,25 +392,9 @@ class CertificacionController  extends app.seguridad.Shield{
         def band = false
         def usuario = Usro.get(session.usuario.id)
         def cer = Certificacion.get(params.id)
-        if(usuario.id.toInteger() == 3 || usuario.unidad.id==85)
-            band = true
-        else{
+        /*todo aqui validar quien puede*/
+        band = true
 
-            def resp = ResponsableProyecto.findAllByUnidadAndTipo(cer.asignacion.unidad,TipoResponsable.findByCodigo("I"))
-            // println "resp "+resp
-            def r =[]
-            def ahora = new Date()
-            resp.each {
-                if(it.desde.before(ahora) && it.hasta.after(ahora))
-                    r.add(it)
-            }
-            r.each {rp->
-                //println "r -> "+rp
-                if(rp.responsable.id.toInteger()==session.usuario.id.toInteger())
-                    band=true
-
-            }
-        }
         if(band){
 
             cer.estado=2
@@ -412,9 +411,125 @@ class CertificacionController  extends app.seguridad.Shield{
 
     }
 
+    def saveSolicitudAnulacion = {
+        println "saveSolicitudAnulacion  "+params
+        def path = servletContext.getRealPath("/") + "certificaciones/"
+        new File(path).mkdirs()
+        def f = request.getFile('file')
+        if (f && !f.empty) {
+            def fileName = f.getOriginalFilename()
+            def ext
+
+            def parts = fileName.split("\\.")
+            fileName = ""
+            parts.eachWithIndex { obj, i ->
+                if (i < parts.size() - 1) {
+                    fileName += obj
+                } else {
+                    ext = obj
+                }
+            }
+            def reps = [
+                    "a": "[àáâãäåæ]",
+                    "e": "[èéêë]",
+                    "i": "[ìíîï]",
+                    "o": "[òóôõöø]",
+                    "u": "[ùúûü]",
+
+                    "A": "[ÀÁÂÃÄÅÆ]",
+                    "E": "[ÈÉÊË]",
+                    "I": "[ÌÍÎÏ]",
+                    "O": "[ÒÓÔÕÖØ]",
+                    "U": "[ÙÚÛÜ]",
+
+                    "n": "[ñ]",
+                    "c": "[ç]",
+
+                    "N": "[Ñ]",
+                    "C": "[Ç]",
+
+                    "": "[\\!@\\\$%\\^&*()='\"\\/<>:;\\.,\\?]",
+
+                    "_": "[\\s]"
+            ]
+
+            reps.each { k, v ->
+                fileName = (fileName.trim()).replaceAll(v, k)
+            }
+
+            fileName = fileName+"_"+new Date().format("mm_ss")+"." + "pdf"
+
+            def pathFile = path + File.separatorChar + fileName
+            def src = new File(pathFile)
+            def msn
+
+            if (src.exists()) {
+                def cer = Certificacion.get(params.id)
+                msn="Ya existe un archivo con ese nombre. Por favor cámbielo."
+                if (params.tipo)
+                    redirect(action: 'editarCertificacion',params: [id:cer.id,unidad: cer.asignacion.unidad,msn: msn])
+                else
+                    redirect(action: 'listaSolicitudes',params: [msn:msn])
+
+
+            } else {
+                def band = false
+                def usuario = Usro.get(session.usuario.id)
+                def cer = Certificacion.get(params.id)
+                /*Todo aqui validar quien puede*/
+                band = true
+
+                if(band){
+
+                    f.transferTo(new File(pathFile))
+                    cer.pathSolicitudAnulacion=fileName
+                    cer.conceptoAnulacion = params.conceptoAnulacion
+                    cer=kerberosService.saveObject(cer,Certificacion,session.perfil,session.usuario,"aprobarCertificacion","certificacion",session)
+                    redirect(action: "certificados")
+                }else{
+                    msn="Usted no tiene permisos para aprobar esta solicitud"
+                    if (params.tipo)
+                        redirect(action: "listaCertificados",params: [cer:cer,id: cer.asignacion.unidad.id])
+                    else
+                        redirect(action: 'listaSolicitudes',params: [msn:msn])
+                }
+            }
+        }
+
+    }
+
     def descargaDocumento = {
         def cer = Certificacion.get(params.id)
         def path = servletContext.getRealPath("/") + "certificaciones/" + cer.archivo
+
+        def src = new File(path)
+        if (src.exists()) {
+            response.setContentType("application/octet-stream")
+            response.setHeader("Content-disposition", "attachment;filename=${src.getName()}")
+
+            response.outputStream << src.newInputStream()
+        } else {
+            render "archivo no encontrado"
+        }
+    }
+    def descargaSolicitud = {
+        def cer = Certificacion.get(params.id)
+        println "path solicitud "+cer.pathSolicitud
+        def path = servletContext.getRealPath("/") + "pdf/solicitudAval/" + cer.pathSolicitud
+
+        def src = new File(path)
+        if (src.exists()) {
+            response.setContentType("application/octet-stream")
+            response.setHeader("Content-disposition", "attachment;filename=${src.getName()}")
+
+            response.outputStream << src.newInputStream()
+        } else {
+            render "archivo no encontrado"
+        }
+    }
+    def descargaSolicitudAnulacion = {
+        def cer = Certificacion.get(params.id)
+        def path = servletContext.getRealPath("/") + "certificaciones/" + cer.pathSolicitudAnulacion
 
         def src = new File(path)
         if (src.exists()) {

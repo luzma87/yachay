@@ -33,8 +33,6 @@ class SolicitudController extends app.seguridad.Shield {
     }
 
     def save = {
-        println params
-
         def usuario = Usro.get(session.usuario.id)
         def unidadEjecutora = usuario.unidad
 
@@ -169,6 +167,8 @@ class SolicitudController extends app.seguridad.Shield {
             def str = act.objeto
             if (!tieneAsignacion) {
                 str += " (*)"
+                act.tieneAsignacion = 'N'
+                act.save(flush: true)
             }
             actividades.add([id: id, objeto: str])
         }
@@ -222,6 +222,7 @@ class SolicitudController extends app.seguridad.Shield {
         actividad.fechaFin = fechaFin
         actividad.responsable = unidadEjecutora
         actividad.aporte = params.aporte.toDouble()
+        actividad.tieneAsignacion = "N"
         if (!actividad.save(flush: true)) {
             println "Error al guardar actividad: " + actividad.errors
         }
@@ -329,6 +330,6 @@ class SolicitudController extends app.seguridad.Shield {
                 flash.message = "Ha ocurrido un error al guardar su revisión."
             }
         }
-        redirect(action: "revision", id: solicitud.id)
+        redirect(action: "show", id: solicitud.id)
     }
 }

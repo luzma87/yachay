@@ -1,11 +1,18 @@
 package app
 
 class Certificacion {
-    
+
     app.seguridad.Usro usuario
     Asignacion asignacion
     Date fecha =  new Date()
     Date fechaRevision
+    Date fechaAnulacion
+    Date fechaRevisionAnulacion
+    Date fechaLiberacion
+    String conceptoAnulacion
+    String pathSolicitudAnulacion
+    String pathLiberacion
+    String numeroContrato
     double  monto
     String concepto
     String observaciones
@@ -14,8 +21,8 @@ class Certificacion {
     String pathSolicitud
     String acuerdo
     String archivo
-    int estado =0 /* 0 -> solicitado   1-> aprobadp  2-> negado*/
-    
+    int estado =0 /* 0 -> solicitado   1-> aprobadp  2-> negado 3-> anulado  4-> liberado */
+
     static auditable=[ignore:[]]
     static mapping = {
         table 'crtf'
@@ -38,6 +45,13 @@ class Certificacion {
             acuerdo column: 'crtfacue'
             archivo column: 'crtfarch'
             pathSolicitud column: 'crtfsolc'
+            fechaAnulacion column: 'crtffcan'
+            fechaLiberacion column: 'crtffclb'
+            conceptoAnulacion column: 'crtfcpan'
+            pathSolicitudAnulacion column: 'crtfphsa'
+            pathLiberacion column: 'ctrfptlb'
+            numeroContrato column: 'crtfnmct'
+            fechaRevisionAnulacion column: 'crtffcra'
         }
     }
     static constraints = {
@@ -54,6 +68,14 @@ class Certificacion {
         acuerdo(blank: true,nullable: true,size: 1..40)
         archivo(blank: true,nullable: true,size: 1..500)
         pathSolicitud(blank: true,nullable: true,size: 1..500)
+        pathSolicitud (blank:true,nullable: true,size: 1..500)
+        fechaAnulacion (blank:true,nullable: true)
+        fechaLiberacion (blank:true,nullable: true)
+        conceptoAnulacion (blank:true,nullable: true,size: 1..1024)
+        pathSolicitudAnulacion (blank:true,nullable: true,size: 1..500)
+        pathLiberacion (blank:true,nullable: true,size: 1..500)
+        numeroContrato (blank:true,nullable: true,size: 1..20)
+        fechaRevisionAnulacion (blank:true,nullable: true)
     }
 
     String toString(){

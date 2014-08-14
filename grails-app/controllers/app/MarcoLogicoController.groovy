@@ -442,7 +442,12 @@ class MarcoLogicoController extends app.seguridad.Shield {
                     actividad = MarcoLogico.get(params.id)
                     actividad.objeto = params.datos
                 } else {
-                    actividad = new MarcoLogico([proyecto: componente.proyecto, tipoElemento: TipoElemento.findByDescripcion("Actividad"), objeto: params.datos, marcoLogico: componente])
+                    def maxNum = MarcoLogico.list([sort:"numero",order: "desc",max: 1])?.pop()?.numero
+                    if(maxNum)
+                        maxNum=maxNum+1
+                    else
+                        maxNum=1
+                    actividad = new MarcoLogico([proyecto: componente.proyecto, tipoElemento: TipoElemento.findByDescripcion("Actividad"), objeto: params.datos, marcoLogico: componente,numero:maxNum])
                 }
                 actividad = kerberosService.saveObject(actividad, MarcoLogico, session.perfil, session.usuario, "guadarDatosActividades", "marcoLogico", session)
                 println " actividad " + actividad.errors.getErrorCount()

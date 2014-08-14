@@ -22,7 +22,7 @@
 
             <td>Total</td>
             <td></td>
-            <td><g:formatNumber number="${total}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+            <td style="text-align: right"><g:formatNumber number="${total}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
         </tr>
     </g:if>
     <g:if test="${solicitados}">

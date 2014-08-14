@@ -49,6 +49,7 @@ td {
 
         </tr>
 
+%{--
         <tr>
 
             <td class="label " valign="middle">
@@ -68,6 +69,7 @@ td {
             </td>
 
         </tr>
+--}%
 
         <tr>
 
@@ -99,6 +101,7 @@ td {
                 ${usuario.persona?.mail}
             </td>
 
+%{--
             <td class="label " valign="middle">
                 <g:message code="persona.fax.label" default="Fax"/>
             </td>
@@ -106,9 +109,11 @@ td {
             <td class="" valign="middle">
                 ${usuario.persona?.fax}
             </td>
+--}%
 
         </tr>
 
+%{--
         <tr>
 
             <td class="label " valign="middle">
@@ -120,6 +125,7 @@ td {
             </td>
 
         </tr>
+--}%
 
     </tbody>
 </table>
