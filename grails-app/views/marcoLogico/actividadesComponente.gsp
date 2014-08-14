@@ -201,7 +201,7 @@
     <div id="accordion" style="width:1030px">
         <g:each in="${actividades}" var="act" status="k">
             <h3>
-                <a href="#">Actividad ${k + 1} : ${(act?.objeto.length() > 40) ? act?.objeto.substring(0, 40) + "..." : act.objeto}</a>
+                <a href="#">Actividad ${act.numero} : ${(act?.objeto.length() > 40) ? act?.objeto.substring(0, 40) + "..." : act.objeto}</a>
             </h3>
             <div>
                 <div style="width: 98%;height: 35px;">

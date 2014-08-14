@@ -18,6 +18,7 @@ class MarcoLogico implements Serializable {
     double aporte = 0;
     String tieneAsignacion = "S" //'S' - > esta en el POA (asignacion), 'N' -> no esta
     static auditable = [ignore: []]
+    int numero = 0;
     static mapping = {
         table 'mrlg'
         cache usage: 'read-write', include: 'non-lazy'
@@ -40,6 +41,7 @@ class MarcoLogico implements Serializable {
             responsable column: 'unej__id'
             aporte column: 'mrlgaprt'
             tieneAsignacion column: 'mrlgtnas'
+            numero column: 'mrlgnmro'
         }
     }
     static constraints = {
