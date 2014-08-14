@@ -7,7 +7,7 @@
     <table width="100%">
         <tbody>
             <tr class="prop">
-                <td class="label">Padre:</td>
+                <td class="label">Depende de:</td>
 
                 <td class="indicator">
                     &nbsp;
@@ -20,7 +20,8 @@
                     <g:select from="${UnidadEjecutora.list(sort:'nombre')}" optionKey="id"
                               optionValue="nombre" class="field ui-widget-content ui-corner-all"
                               title="${UnidadEjecutora.constraints.padre.attributes.mensaje}"
-                              value="${padre?.id}" name="unidad.padre.id" noSelection="${['null':'Ninguno']}"/>
+                              value="${padre?.id}" name="unidad.padre.id" noSelection="${['null':'Ninguno']}"
+                    style="width:560px;"/>
 
                 </td>
             </tr>
@@ -32,8 +33,8 @@
                     &nbsp;
                 </td>
 
-                <td colspan="4" style="font-size: larger; font-weight: bolder;">
-                    <g:textField name="unidad.orden" value="${unidad?.orden}"/>
+                <td style="font-size: larger; font-weight: bolder;">
+                    <g:textField name="unidad.orden" value="${unidad?.orden}" style="width:80px;"/>
                 </td>
             </tr>
 
@@ -54,7 +55,7 @@
                               value="${unidad?.tipoInstitucion?.id}" name="unidad.tipoInstitucion.id"/>
                 </td> <!-- campo -->
 
-                <td class="label">C&oacute;digo de Unidad</td>
+                <td class="label">C&oacute;digo</td>
 
                 <td class="indicator">
                     &nbsp;
@@ -74,12 +75,13 @@
                     <span class="indicator">*</span>
                 </td>
 
-                <td class="mandatory">
+                <td class="mandatory" colspan="4">
                     <g:textField value="${unidad?.nombre}" name="unidad.nombre"
-                                 class="field required ui-widget-content ui-corner-all" maxlength="63" style="width: 300px;"
+                                 class="field required ui-widget-content ui-corner-all" maxlength="127" style="width: 500px;"
                                  title="${UnidadEjecutora.constraints.nombre.attributes.mensaje}"/>
                 </td> <!-- campo -->
 
+%{--
                 <td class="label">Sigla</td>
 
                 <td class="indicator">
@@ -91,6 +93,7 @@
                                  class="field ui-widget-content ui-corner-all" maxlength="7" style="width: 80px;"
                                  title="${UnidadEjecutora.constraints.sigla.attributes.mensaje}"/>
                 </td> <!-- campo -->
+--}%
             </tr>
 
             <tr class="prop">

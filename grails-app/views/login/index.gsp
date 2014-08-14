@@ -37,16 +37,17 @@
         %{--<div class="esquinas" style="width: 800px;height: 500px; margin: auto;margin-top:100px;background: #EDF8F3; border:medium solid #25416F;">--}%
             <div style="text-align: center; font-size: 42px; font-style: italic; font-family: 'Times New Roman'; padding-top: 10px;">Sistema de Planificación Institucional</div>
 
-            <div style="margin-left: 30px;margin-top: 20px;float: left;width: 400px; height: 400px; font-size: 14px;text-align: justify" class="ui-corner-all">
-                <ul><li><b>Manejo de proyectos</b>: Marco lógico, metas, indicadores, cronograma de inversión, fuentes de financiamiento,
-                programación de inversiones plurianual</li>
-                    <li><b>Formulación del POA</b> de inversiones, manejo de actividades, metas, indicadores,
-                    programación de inversión, programa presupuestario complatible con el Olympo</li>
-                    <li><b>Formulación del PAC inicial</b> programación de compras públicas por cuatrimestres</li>
-                    <li><b>Cruce de información financiera</b> para determianr la ejecución presupuestaria</li>
-                    <li><b>Ejecución de POA y PAI</b>, control de avales, modificaciones, reformas y reprogramación del POA</li>
-                    <li><b>Administración de avales</b> emisión, seguimiento y liquidación</li>
-                    <li><b>Reportes inteligentes</b> indicadores, POA, seguimiento y evaluación del POA.
+            <div style="margin-left: 30px;margin-top: 20px;float: left;width: 420px; height: 400px; font-size: 14px;text-align: justify" class="ui-corner-all">
+                <ul><li><b>Manejo de proyectos</b>: marco lógico, metas, indicadores, cronograma de inversión, fuentes
+                    de financiamiento, programación de inversiones plurianual.</li>
+                    <li><b>Formulación del Plan Operativo Anual - POA de inversión</b>: manejo de actividades, metas,
+                    indicadores, programación de inversión, programa presupuestario compatible con el Sistema Financiero
+                    Institucional.</li>
+                    <li><b>Formulación del Plan Anual de Contrataciones - PAC inicial</b>: programación de compras públicas por cuatrimestres.</li>
+                    <li><b>Cruce de información financiera</b> para determinar la ejecución presupuestaria.</li>
+                    <li><b>Ejecución del POA y del Plan Anual de Inversión - PAI</b>, control de avales, modificaciones, reformas y reprogramación del POA.</li>
+                    <li><b>Administración de avales</b>: emisión, seguimiento y liquidación.</li>
+                    <li><b>Reportes inteligentes</b> de indicadores, POA, seguimiento y evaluación del POA.
                     </li></ul>
                 %{--<img src="${resource(dir: 'images', file: 'logo_app2.jpg')}" alt="Finix - Plan" >--}%
             </div>

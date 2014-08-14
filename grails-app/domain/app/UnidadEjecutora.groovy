@@ -55,7 +55,7 @@ class UnidadEjecutora implements Serializable {
         fechaFin(blank: true, nullable: true, attributes: [mensaje: 'Fecha de cierre o final'])
         padre(blank: true, nullable: true, attributes: [mensaje: 'Unidad Ejecutora padre'])
 
-        nombre(size: 1..63, blank: false, attributes: [mensaje: 'Nombre de la entidad o ministerio'])
+        nombre(size: 1..127, blank: false, attributes: [mensaje: 'Nombre de la entidad o ministerio'])
         direccion(size: 1..127, blank: true, nullable: true, attributes: [mensaje: 'Dirección de la entidad o ministerio'])
         sigla(size: 1..7, blank: true, nullable: true, attributes: [mensaje: 'Sigla identificativa'])
         objetivo(size: 1..1023, blank: true, nullable: true, attributes: [mensaje: 'Objetivo institucional o de la entidad'])

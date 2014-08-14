@@ -110,7 +110,7 @@
                 <td class=" mandatory" valign="middle">
                     <g:select class="required requiredCmb ui-widget-content ui-corner-all" name="persona.sexo"
                               title="${Persona.constraints.sexo.attributes.mensaje}"
-                              id="sexo" style="width: 200px;"
+                              id="sexo" style="width: 40px;"
                               from="${new Persona().constraints.sexo.inList}" value="${usuario.persona?.sexo}"
                               valueMessagePrefix="persona.sexo"/>
                 </td>
@@ -119,6 +119,7 @@
 
             <tr class="prop ${hasErrors(bean: usuario.persona, field: 'discapacitado', 'error')} ${hasErrors(bean: usuario.persona, field: 'fechaNacimiento', 'error')}">
 
+%{--
                 <td class="label " valign="middle">
                     <g:message code="persona.discapacitado.label" default="Discapacitado"/>
                 </td>
@@ -128,9 +129,15 @@
                 </td>
 
                 <td class="" valign="middle">
-                    %{--<g:checkBox name="persona.discapacitado" id="discapacitado" title="${Persona.constraints.discapacitado.attributes.mensaje}"--}%
-                    %{--class="field ui-widget-content ui-corner-all"--}%
-                    %{--value="${usuario.persona?.discapacitado}"/>--}%
+                    --}%
+%{--<g:checkBox name="persona.discapacitado" id="discapacitado" title="${Persona.constraints.discapacitado.attributes.mensaje}"--}%%{--
+
+                    --}%
+%{--class="field ui-widget-content ui-corner-all"--}%%{--
+
+                    --}%
+%{--value="${usuario.persona?.discapacitado}"/>--}%%{--
+
 
                     <g:radioGroup name="persona.discapacitado" labels="['No', 'Sí']" values="[0, 1]"
                                   value="${usuario.persona?.discapacitado}">
@@ -138,7 +145,9 @@
                     </g:radioGroup>
 
                 </td>
+--}%
 
+%{--
                 <td class="label " valign="middle">
                     <g:message code="persona.fechaNacimiento.label" default="Fecha Nacimiento"/>
                 </td>
@@ -148,7 +157,9 @@
                 </td>
 
                 <td class="" valign="middle">
-                    %{--<input type="hidden" value="date.struct" name="persona.fechaNacimiento">--}%
+                    --}%
+%{--<input type="hidden" value="date.struct" name="persona.fechaNacimiento">--}%%{--
+
                     <input type="hidden" name="persona.fechaNacimiento_day" id="fechaNacimiento_day"
                            value="${usuario.persona?.fechaNacimiento?.format('dd')}">
 
@@ -161,6 +172,7 @@
                                  title="${Persona.constraints.fechaNacimiento.attributes.mensaje}" id="fechaNacimiento"
                                  value="${usuario.persona?.fechaNacimiento?.format('dd/MM/yyyy')}"/>
                 </td>
+--}%
 
             </tr>
 
@@ -214,6 +226,7 @@
                                  minLenght="1" maxLenght="40" value="${usuario.persona?.mail}"/>
                 </td>
 
+%{--
                 <td class="label " valign="middle">
                     <g:message code="persona.fax.label" default="Fax"/>
                 </td>
@@ -228,9 +241,11 @@
                                  minLenght="1"
                                  maxLenght="40" value="${usuario.persona?.fax}"/>
                 </td>
+--}%
 
             </tr>
 
+%{--
             <tr class="prop ${hasErrors(bean: usuario.persona, field: 'observaciones', 'error')}">
 
                 <td class="label " valign="middle">
@@ -245,10 +260,11 @@
                     <g:textArea name="persona.observaciones" id="observaciones"
                                 title="${Persona.constraints.observaciones.attributes.mensaje}"
                                 class="ui-widget-content ui-corner-all" minLenght="1" maxLenght="127"
-                                value="${usuario.persona?.observaciones}" rows="2" cols="81"/>
+                                value="${usuario.persona?.observaciones}" rows="1" cols="81" style="width:580px;"/>
                 </td>
 
             </tr>
+--}%
 
         </tbody>
     </table>
@@ -337,7 +353,7 @@
                 <td class=" mandatory" valign="middle">
                     <g:textField name="usuario.sigla" id="sigla" title="${Usro.constraints.sigla.attributes.mensaje}"
                                  class="field required ui-widget-content ui-corner-all"
-                                 minLenght="1" maxLenght="8" value="${usuario?.sigla}"/>
+                                 minLenght="1" maxLenght="8" value="${usuario?.sigla}" style="width:80px;"/>
                 </td>
 
                 <td class="label  mandatory" valign="middle">
@@ -417,7 +433,7 @@
                     <g:textArea name="usuario.observaciones" id="observaciones"
                                 title="${Usro.constraints.observaciones.attributes.mensaje}"
                                 class="ui-widget-content ui-corner-all" minLenght="1" maxLenght="255"
-                                value="${usuario?.observaciones}" cols="81" rows="2"/>
+                                value="${usuario?.observaciones}" cols="81" rows="1" style="width:580px;"/>
                 </td>
 
             </tr>
