@@ -279,6 +279,10 @@ class SolicitudController extends app.seguridad.Shield {
         def title = "Nueva"
         if (params.id) {
             solicitud = solicitud.get(params.id)
+            if (solicitud.estado == 'A') {
+                redirect(action: "show", id: solicitud.id)
+                return
+            }
             title = "Modificar"
             if (!solicitud) {
                 flash.message = "No se encontró la solicitud"
@@ -297,10 +301,7 @@ class SolicitudController extends app.seguridad.Shield {
             redirect(action: "list")
         } else {
             def title = "Revisar solicitud"
-            def debugGaf = false
-            def debugGj = false
-            def debugGdp = false
-            [solicitud: solicitud, title: title, perfil: perfil, debug: [gaf: debugGaf, gdp: debugGdp, gj: debugGj]]
+            [solicitud: solicitud, title: title, perfil: perfil]
         }
     }
 
@@ -331,5 +332,42 @@ class SolicitudController extends app.seguridad.Shield {
             }
         }
         redirect(action: "show", id: solicitud.id)
+    }
+
+    def aprobacion = {
+        def solicitud = Solicitud.get(params.id.toLong())
+        def perfil = Prfl.get(session.perfil.id)
+        def title = "Aprobar solicitud"
+        if (!(solicitud.revisadoJuridica && solicitud.revisadoAdministrativaFinanciera && solicitud.revisadoDireccionProyectos)) {
+            redirect(action: "show", id: solicitud.id)
+            return
+        }
+        Aprobacion aprobacion = new Aprobacion()
+        if (solicitud) {
+            aprobacion = Aprobacion.findBySolicitud(solicitud)
+            if (!aprobacion) {
+                aprobacion = new Aprobacion()
+            }
+        }
+
+        return [solicitud: solicitud, perfil: perfil, title: title, aprobacion: aprobacion]
+    }
+
+    def saveAprobacion = {
+        def aprobacion = new Aprobacion()
+        if (params.id) {
+            aprobacion = Aprobacion.get(params.id.toLong())
+        }
+        params.fecha = new Date()
+        aprobacion.properties = params
+        if (aprobacion.save(flush: true)) {
+            aprobacion.solicitud.estado = "A"
+            if (!aprobacion.solicitud.save(flush: true)) {
+                println "error al cambiar de estado la solicitud: " + aprobacion.solicitud.errors
+            }
+        } else {
+            println "error al guardar aprobacion: " + aprobacion.errors
+        }
+        redirect(action: "show", id: aprobacion.solicitudId)
     }
 }

@@ -179,7 +179,7 @@
                 </tr>
 
                 <tr>
-                    <td class="label">Archivo (pdf)</td>
+                    <td class="label">PDF T.D.R.</td>
                     <td colspan="7">
                         <input type="file" name="pdf" class="${solicitud.pathPdfTdr ? '' : 'required'}"/>
                         <g:if test="${solicitud.pathPdfTdr}">

@@ -21,6 +21,9 @@ class Solicitud {
     FormaPago formaPago
     Integer plazoEjecucion
 
+    String estado = "P" // P->pendiente, se puede modificar y revisar
+    // A->ya se hizo la reunion de aprobacion, ya no se pueden modificar los datos ni las fechas/observaciones de revision
+
     static auditable = [ignore: []]
     static mapping = {
         table 'slct'
@@ -49,6 +52,8 @@ class Solicitud {
             objetoContrato type: 'text'
             formaPago column: 'frpg__id'
             plazoEjecucion column: 'slctplej'
+
+            estado column: 'slctetdo'
         }
     }
 
@@ -61,5 +66,7 @@ class Solicitud {
         observacionesJuridica(blank: true, nullable: true, maxSize: 1023)
         observacionesDireccionProyectos(blank: true, nullable: true, maxSize: 1023)
         pathPdfTdr(blank: true, nullable: true, maxSize: 255)
+
+        estado(blank: true, nullable: true, inList: ["P", "A"])
     }
 }
