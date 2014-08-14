@@ -30,7 +30,10 @@
                 <g:link class="button create" action="ingreso">
                     Nueva solicitud
                 </g:link>
-                <a href="#" id="btnSave" class="button" style="float: right;">Guardar</a>
+                <g:if test="${perfil.codigo == 'GAF' || perfil.codigo == 'GJ' || perfil.codigo == 'GDP'}">
+                    <a href="#" id="btnSave" class="button" style="float: right;">Guardar</a>
+                </g:if>
+                <a href="#" id="btnPrint" class="button" style="float: right;">Imprimir</a>
             </div> <!-- toolbar -->
 
             <div class="body">
@@ -249,6 +252,12 @@
 
                 $("#btnSave").button("option", "icons", {primary : 'ui-icon-disk'}).click(function () {
                     $("#frmRevision").submit();
+                });
+                $("#btnPrint").button("option", "icons", {primary : 'ui-icon-print'}).click(function () {
+                    var url = "${createLink(controller: 'reporteSolicitud', action: 'imprimirSolicitud')}/?id=${solicitud.id}";
+//                    console.log(url);
+                    location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename=solicitud.pdf"
+                    return false;
                 });
                 $(".list").button("option", "icons", {primary : 'ui-icon-clipboard'});
                 $(".create").button("option", "icons", {primary : 'ui-icon-document'});

@@ -124,6 +124,69 @@
                                             </td>
                                         </tr>
                                     </table>
+
+                                    <table width="100%" class="ui-widget-content ui-corner-all">
+                                        <thead>
+                                            <tr>
+                                                <td colspan="3" class="ui-widget ui-widget-header ui-corner-all" style="padding: 3px;">
+                                                    Gerencia Administrativa Financiera
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <td style="width: 98px;" class="label">Observaciones</td>
+                                            <td style="width: 785px;">
+                                                ${solicitud.observacionesAdministrativaFinanciera ?: '- Sin observaciones-'}
+                                            </td>
+                                            <td style="width: 127px;">
+                                                ${solicitud.revisadoAdministrativaFinanciera ?
+                                                        'Revisado el ' + solicitud.revisadoAdministrativaFinanciera.format('dd-MM-yyyy') :
+                                                        'No revisado'}
+                                            </td>
+                                        </tbody>
+                                    </table>
+
+                                    <table width="100%" class="ui-widget-content ui-corner-all">
+                                        <thead>
+                                            <tr>
+                                                <td colspan="3" class="ui-widget ui-widget-header ui-corner-all" style="padding: 3px;">
+                                                    Gerencia Jurídica
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <td style="width: 98px;" class="label">Observaciones</td>
+                                            <td style="width: 785px;">
+                                                ${solicitud.observacionesJuridica ?: '- Sin observaciones-'}
+                                            </td>
+                                            <td style="width: 127px;">
+                                                ${solicitud.revisadoJuridica ?
+                                                        'Revisado el ' + solicitud.revisadoJuridica.format('dd-MM-yyyy') :
+                                                        'No revisado'}
+                                            </td>
+                                        </tbody>
+                                    </table>
+
+                                    <table width="100%" class="ui-widget-content ui-corner-all">
+                                        <thead>
+                                            <tr>
+                                                <td colspan="3" class="ui-widget ui-widget-header ui-corner-all" style="padding: 3px;">
+                                                    Gerencia de Dirección de Proyectos
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <td class="label" style="width: 98px;">Observaciones</td>
+                                            <td style="width: 785px;">
+                                                ${solicitud.observacionesDireccionProyectos ?: '- Sin observaciones-'}
+                                            </td>
+                                            <td style="width: 127px;">
+                                                ${solicitud.revisadoDireccionProyectos ?
+                                                        'Revisado el ' + solicitud.revisadoDireccionProyectos.format('dd-MM-yyyy') :
+                                                        'No revisado'}
+                                            </td>
+                                        </tbody>
+                                    </table>
                                 </g:if>
                             </td>
                         </tr>

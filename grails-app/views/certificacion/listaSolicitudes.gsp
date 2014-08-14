@@ -182,7 +182,7 @@
                 });
             }
             var url = "${createLink(controller: 'reportes', action: 'certificacion')}/?id="+$("#cerAprob").val()+"Wnumero="+numero+"Wusu=${session.usuario.id}";
-            console.log(url)
+//            console.log(url)
             location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url+"&filename=certificacion_"+numero+".pdf"
         });
         $("#verActividad").dialog({
