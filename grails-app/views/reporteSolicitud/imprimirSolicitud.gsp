@@ -89,6 +89,7 @@
         <div class="hoja">
             <slc:headerReporte title="Solicitud de contratación"/>
             <slc:infoReporte solicitud="${solicitud}"/>
+            <slc:firmasReporte firmas="${firmas}"/>
         </div>
     </body>
 </html>

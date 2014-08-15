@@ -41,6 +41,7 @@ class SolicitudController extends app.seguridad.Shield {
             solicitud = Solicitud.get(params.id.toLong())
         } else {
             solicitud.unidadEjecutora = unidadEjecutora
+            solicitud.usuario = usuario
         }
 
         /* upload del PDF */

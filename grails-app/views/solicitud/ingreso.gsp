@@ -408,8 +408,8 @@
                 $('.datepicker').datepicker({
                     changeMonth : true,
                     changeYear  : true,
-                    dateFormat  : 'dd-mm-yy',
-                    maxDate     : "+0"
+                    dateFormat  : 'dd-mm-yy'
+//                    maxDate     : "+0"
                 });
 
                 $("#montoSolicitado").setMask('decimal');

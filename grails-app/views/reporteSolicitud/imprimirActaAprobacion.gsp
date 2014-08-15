@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
-        <title>Imprimir solicitud</title>
+        <title>Imprimir acta</title>
         <style type="text/css">
         @page {
             size   : 21cm 29.7cm;  /*width height */
@@ -89,6 +89,7 @@
         <div class="hoja">
             <slc:headerReporte title="Acta de aprobación"/>
             <slc:infoReporte solicitud="${solicitud}"/>
+            <slc:firmasReporte firmas="${firmas}"/>
         </div>
     </body>
 </html>

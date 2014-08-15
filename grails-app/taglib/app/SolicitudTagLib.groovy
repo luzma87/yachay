@@ -1,6 +1,7 @@
 package app
 
 import app.seguridad.Prfl
+import app.seguridad.Usro
 
 class SolicitudTagLib {
     static namespace = 'slc'
@@ -305,7 +306,7 @@ class SolicitudTagLib {
         def title = attrs.title ?: ""
 
         def logoPath = resource(dir: 'images', file: 'logo.jpg')
-        def rowspan = 4
+        def rowspan = 2
         def w = 65
         if (title != "") {
             rowspan += 1
@@ -320,12 +321,12 @@ class SolicitudTagLib {
         html += "<tr>"
         html += "<td class='ttl'>YACHAY EP</td>"
         html += "</tr>"
-        html += "<tr>"
-        html += "<td class='ttl'>GERENCIA DE PLANIFICACIÓN</td>"
-        html += "</tr>"
-        html += "<tr>"
-        html += "<td class='ttl'>DIRECCIÓN DE PLANIFICACIÓN</td>"
-        html += "</tr>"
+//        html += "<tr>"
+//        html += "<td class='ttl'>GERENCIA DE PLANIFICACIÓN</td>"
+//        html += "</tr>"
+//        html += "<tr>"
+//        html += "<td class='ttl'>DIRECCIÓN DE PLANIFICACIÓN</td>"
+//        html += "</tr>"
         if (title != "") {
             html += "<tr>"
             html += "<td class='ttl'>${title}</td>"
@@ -367,6 +368,13 @@ class SolicitudTagLib {
             html += '<td class="label">Actividad</td>'
             html += '<td colspan="5">'
             html += solicitud.actividad?.objeto
+            html += '</td>'
+            html += '</tr>'
+
+            html += '<tr>'
+            html += '<td class="label">Núm. POA</td>'
+            html += '<td colspan="5">'
+            html += solicitud.actividad?.numero
             html += '</td>'
             html += '</tr>'
 
@@ -526,6 +534,26 @@ class SolicitudTagLib {
             html += '</td>'
             html += '</tr>'
             html += '</table>'
+        }
+        out << html
+    }
+
+    def firmasReporte = { attrs ->
+        def firmas = attrs.firmas
+        def html = ''
+        if (firmas.size() > 0) {
+
+            def w = 100 / firmas.size()
+            html = "<table width='100%' style='margin-top:2cm;' cellspacing='20' >"
+            html += "<tr>"
+            firmas.each { firma ->
+                html += "<td width='${w}%' style='border-top: solid 1px black; text-align:center;'>"
+                html += firma.usuario.persona.nombre + " " + firma.usuario.persona.apellido
+                html += "<br/>" + firma.cargo
+                html += "</td>"
+            }
+            html += "</tr>"
+            html += "</table>"
         }
         out << html
     }

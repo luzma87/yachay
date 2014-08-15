@@ -1,6 +1,8 @@
 package app
+
 class CargoPersonal implements Serializable {
     String descripcion
+    String codigo
     static auditable = [ignore: []]
     static mapping = {
         table 'cgpr'
@@ -11,10 +13,12 @@ class CargoPersonal implements Serializable {
         columns {
             id column: 'cgpr__id'
             descripcion column: 'cgprdscr'
+            codigo column: 'cgprcdgo'
         }
     }
     static constraints = {
         descripcion(matches: /^[a-zA-Z0-9ñÑ .,áéíóúÁÉÍÚÓüÜ#_-]+$/, size: 1..63, blank: false, attributes: ["mensaje": "Descripción del cargo del personal"])
+        codigo(blank: true, nullable: true, maxSize: 4)
     }
 
     String toString() {

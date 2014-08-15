@@ -16,7 +16,7 @@
         <div class="dialog">
 
             <div class="toolbar ui-widget-header ui-corner-all">
-                <g:link class="button create" action="create">
+                <g:link class="button create" action="ingreso">
                     Nueva solicitud
                 </g:link>
             </div> <!-- toolbar -->
