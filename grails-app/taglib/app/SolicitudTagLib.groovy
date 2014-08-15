@@ -39,6 +39,11 @@ class SolicitudTagLib {
             html += '<td class="label">Actividad</td>'
             html += '<td colspan="3" id="tdActividad">'
             html += solicitud.actividad?.objeto
+            def anio = Anio.findByAnio(new Date().format('yyyy'))
+            def tieneAsignacion = Asignacion.countByMarcoLogicoAndAnio(solicitud.actividad, anio) > 0
+            if (!tieneAsignacion) {
+                html += "<br/>* La actividad no se encuentra en el POA *"
+            }
             html += '</td>'
             html += '</tr>'
 
@@ -368,6 +373,11 @@ class SolicitudTagLib {
             html += '<td class="label">Actividad</td>'
             html += '<td colspan="5">'
             html += solicitud.actividad?.objeto
+            def anio = Anio.findByAnio(new Date().format('yyyy'))
+            def tieneAsignacion = Asignacion.countByMarcoLogicoAndAnio(solicitud.actividad, anio) > 0
+            if (!tieneAsignacion) {
+                html += "<br/>* La actividad no se encuentra en el POA *"
+            }
             html += '</td>'
             html += '</tr>'
 
