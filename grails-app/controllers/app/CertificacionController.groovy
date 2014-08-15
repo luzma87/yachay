@@ -7,7 +7,7 @@ class CertificacionController  extends app.seguridad.Shield{
     def kerberosService
 
     def solicitarCertificacion = {
-        println "params soollciitar "+params
+//        println "params soollciitar "+params
         def usuario = session.usuario
         def band =false
         def unidad
@@ -58,7 +58,8 @@ class CertificacionController  extends app.seguridad.Shield{
         if(asg.marcoLogico.fechaInicio<now){
             response.sendError(403)
         }
-        def avales = Certificacion.findAllByAsignacion(asg)
+        def estados = [0,1]
+        def avales = Certificacion.findAllByAsignacionAndEstadoInList(asg,estados)
         def disponible = asg.valorReal
         avales.each {
             disponible-=it.monto
@@ -137,7 +138,7 @@ class CertificacionController  extends app.seguridad.Shield{
     }
 
     def guardarSolicitud = {
-        println "solicitud "+params
+//        println "solicitud "+params
         /*TODO enviar alertas*/
 
         def path = servletContext.getRealPath("/") + "pdf/solicitudAval/"
@@ -279,7 +280,6 @@ class CertificacionController  extends app.seguridad.Shield{
             certificaciones.each {
                 def unidad = it.asignacion.unidad.nombre
                 if(mapa2[unidad]){
-
                     mapa2[unidad].add(it)
                 }else{
                     mapa2.put(unidad,[it])
@@ -389,6 +389,7 @@ class CertificacionController  extends app.seguridad.Shield{
 
     def negarCertificacion = {
         /*TODO enviar alertas*/
+        //println "nergar cert "+params
         def band = false
         def usuario = Usro.get(session.usuario.id)
         def cer = Certificacion.get(params.id)
@@ -411,8 +412,116 @@ class CertificacionController  extends app.seguridad.Shield{
 
     }
 
+    def negarAnulacion = {
+       // println "negarAnulacion "+params
+        def band = false
+        def usuario = Usro.get(session.usuario.id)
+        def cer = Certificacion.get(params.id)
+        /*todo aqui validar quien puede*/
+        band = true
+
+        if(band){
+
+            cer.estado=1
+            cer.fechaRevisionAnulacion=new Date()
+            cer=kerberosService.saveObject(cer,Certificacion,session.perfil,session.usuario,"negarCertificacion","certificacion",session)
+           // println "save?  "+cer.errors
+            def msn="Solciitud negada"
+            render "ok"
+
+        }else{
+            render("no")
+
+        }
+    }
+
+    def anularAval = {
+        def path = servletContext.getRealPath("/") + "certificaciones/"
+        new File(path).mkdirs()
+        def f = request.getFile('file')
+        if (f && !f.empty) {
+            def fileName = f.getOriginalFilename()
+            def ext
+
+            def parts = fileName.split("\\.")
+            fileName = ""
+            parts.eachWithIndex { obj, i ->
+                if (i < parts.size() - 1) {
+                    fileName += obj
+                } else {
+                    ext = obj
+                }
+            }
+            def reps = [
+                    "a": "[àáâãäåæ]",
+                    "e": "[èéêë]",
+                    "i": "[ìíîï]",
+                    "o": "[òóôõöø]",
+                    "u": "[ùúûü]",
+
+                    "A": "[ÀÁÂÃÄÅÆ]",
+                    "E": "[ÈÉÊË]",
+                    "I": "[ÌÍÎÏ]",
+                    "O": "[ÒÓÔÕÖØ]",
+                    "U": "[ÙÚÛÜ]",
+
+                    "n": "[ñ]",
+                    "c": "[ç]",
+
+                    "N": "[Ñ]",
+                    "C": "[Ç]",
+
+                    "": "[\\!@\\\$%\\^&*()='\"\\/<>:;\\.,\\?]",
+
+                    "_": "[\\s]"
+            ]
+
+            reps.each { k, v ->
+                fileName = (fileName.trim()).replaceAll(v, k)
+            }
+
+            fileName = fileName+"_"+new Date().format("mm_ss")+"." + "pdf"
+
+            def pathFile = path + File.separatorChar + fileName
+            def src = new File(pathFile)
+            def msn
+
+            if (src.exists()) {
+                def cer = Certificacion.get(params.id)
+                msn="Ya existe un archivo con ese nombre. Por favor cámbielo."
+                if (params.tipo)
+                    redirect(action: 'editarCertificacion',params: [id:cer.id,unidad: cer.asignacion.unidad,msn: msn])
+                else
+                    redirect(action: 'listaSolicitudes',params: [msn:msn])
+
+
+            } else {
+                def band = false
+                def usuario = Usro.get(session.usuario.id)
+                def cer = Certificacion.get(params.id)
+                /*Todo aqui validar quien puede*/
+                band = true
+
+                if(band){
+                    f.transferTo(new File(pathFile))
+                    cer.pathLiberacion=fileName
+                    cer.estado=3;
+                    cer.fechaRevisionAnulacion=new Date();
+                    cer=kerberosService.saveObject(cer,Certificacion,session.perfil,session.usuario,"aprobarCertificacion","certificacion",session)
+                    redirect(action: "listaSolicitudes")
+                }else{
+                    msn="Usted no tiene permisos para aprobar esta solicitud"
+                    if (params.tipo)
+                        redirect(action: "listaCertificados",params: [cer:cer,id: cer.asignacion.unidad.id])
+                    else
+                        redirect(action: 'listaSolicitudes',params: [msn:msn])
+                }
+            }
+        }
+    }
+
     def saveSolicitudAnulacion = {
-        println "saveSolicitudAnulacion  "+params
+       // println "saveSolicitudAnulacion  "+params
         def path = servletContext.getRealPath("/") + "certificaciones/"
         new File(path).mkdirs()
         def f = request.getFile('file')
@@ -484,6 +593,7 @@ class CertificacionController  extends app.seguridad.Shield{
                     f.transferTo(new File(pathFile))
                     cer.pathSolicitudAnulacion=fileName
                     cer.conceptoAnulacion = params.conceptoAnulacion
+                    cer.fechaRevisionAnulacion=null;
                     cer=kerberosService.saveObject(cer,Certificacion,session.perfil,session.usuario,"aprobarCertificacion","certificacion",session)
                     redirect(action: "certificados")
                 }else{
@@ -514,7 +624,7 @@ class CertificacionController  extends app.seguridad.Shield{
     }
     def descargaSolicitud = {
         def cer = Certificacion.get(params.id)
-        println "path solicitud "+cer.pathSolicitud
+//        println "path solicitud "+cer.pathSolicitud
         def path = servletContext.getRealPath("/") + "pdf/solicitudAval/" + cer.pathSolicitud
 
         def src = new File(path)
