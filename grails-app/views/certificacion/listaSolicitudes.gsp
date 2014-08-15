@@ -106,8 +106,8 @@
                                 <td style="text-align: center"><a href="#" class="verSolAnu inv" id="ver_${cer.id}" iden="${cer.id}">Ver</a></td>
                                 <td style="text-align: right"><g:formatNumber number="${cer.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
                                 <td style="text-align: center">
-                                    <a href="#" class="aprobar inv" id="apr_${cer.id}" monto="${cer.monto}" cer="${cer.id}" memo="${cer.memorandoSolicitud}">Aprobar</a>
-                                    <a href="#" class="negar inv" id="neg_${cer.id}" monto="${cer.monto}" cer="${cer.id}">Negar</a>
+                                    <a href="#" class="aprobarAnulacion inv" id="apr_${cer.id}" monto="${cer.monto}" cer="${cer.id}" numero="${cer.acuerdo}">Aprobar</a>
+                                    <a href="#" class="negarAnulacion inv" id="neg_${cer.id}" monto="${cer.monto}" cer="${cer.id}">Negar</a>
                                 </td>
                             </tr>
                         </g:each>
@@ -131,6 +131,7 @@
                         <th>Fecha</th>
                         <th style="width: 140px;">Solicitante</th>
                         <th style="width: 200px;">Concepto</th>
+                        <th>Tipo</th>
                         <th>Partida</th>
                         <th>Memorando</th>
                         <th>Monto</th>
@@ -142,19 +143,30 @@
                                 <td>${cer.fecha.format("dd/MM/yyyy")}</td>
                                 <td style="width: 160px;">${cer.usuario.persona.nombre+" "+cer.usuario.persona.apellido}</td>
                                 <td style="width: 200px;">${cer.concepto}</td>
+                                <td style="font-weight: bold">${(cer.fechaRevisionAnulacion)?"Anulación":"Aprobación"}</td>
                                 <td style="text-align: center">${cer.asignacion.presupuesto.numero}</td>
                                 <td style="text-align: center">${cer.memorandoSolicitud}</td>
                                 <td style="text-align: right"><g:formatNumber number="${cer.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
                                 <g:if test="${cer.estado==1}">
-                                    <td  style="text-align: center;background: #d6eba9" >
-                                        Aprobado
+                                    <td  style="text-align: center;background: ${cer.fechaRevisionAnulacion?'#eba597':'#d6eba9'}" >
+                                        <g:if test="${cer.fechaRevisionAnulacion}">
+                                            Negado
+                                        </g:if><g:else>
+                                            Aprobado
+                                        </g:else>
+
                                     </td>
                                 </g:if>
-                                <g:else>
+                                <g:if test="${cer.estado==2}">
                                     <td  style="text-align: center;background: #eba597" >
                                         Negado
                                     </td>
-                                </g:else>
+                                </g:if>
+                                <g:if test="${cer.estado==3}">
+                                    <td  style="text-align: center;background: #eba597" >
+                                        Anulado
+                                    </td>
+                                </g:if>
                             </tr>
                         </g:each>
                         </tbody>
@@ -182,12 +194,25 @@
         <b>Documento firmado:</b><input type="file" id="archivo" name="archivo" style="display: inline-block">
     </g:form>
 </div>
+
+<div id="anular">
+    <g:form action="anularAval" class="frmAnular" enctype="multipart/form-data">
+        <input type="hidden" id="cerAnular" name="id">
+        <input type="hidden" id="usu" name="usu" value="${session.usuario}">
+        Esta apunto de anular el aval No. <span style="font-weight: bold" id="numAval"></span><br>
+        <b>Documento de respaldo:</b><input type="file" id="archivo" name="archivo" style="display: inline-block">
+    </g:form>
+</div>
 <div id="verActividad">
     <div id="contenidoAct"></div>
 </div>
 <div id="negar">
     <input type="hidden" id="cerNeg">
     Esta seguro que desea negar esta solicitud de certificación?
+</div>
+<div id="negarAnulacion">
+    <input type="hidden" id="cerNegAnulacion">
+    Esta seguro que desea negar esta solicitud de anulación?
 </div>
 
 <script>
@@ -211,9 +236,18 @@
             $("#memorando").val($(this).attr("memo"))
             $("#aprobar").dialog("open")
         });
+        $(".aprobarAnulacion").button({icons:{ primary:"ui-icon-check"},text:false}).click(function(){
+            $("#cerAnular").val($(this).attr("cer"))
+            $("#numAval").html($(this).attr("numero"))
+            $("#anular").dialog("open")
+        });
         $(".negar").button({icons:{ primary:"ui-icon-close"},text:false}).click(function(){
             $("#cerNeg").val($(this).attr("cer"))
             $("#negar").dialog("open")
+        });
+        $(".negarAnulacion").button({icons:{ primary:"ui-icon-close"},text:false}).click(function(){
+            $("#cerNegAnulacion").val($(this).attr("cer"))
+            $("#negarAnulacion").dialog("open")
         });
         $(".verSol").button().click(function () {
             location.href = "${createLink(controller:'certificacion',action:'descargaSolicitud')}/"+$(this).attr("iden")
@@ -276,6 +310,26 @@
                 }
             }
         });
+        $("#anular").dialog({
+            autoOpen:false,
+            resizable:false,
+            title:'Anular Aval',
+            modal:true,
+            draggable:true,
+            width:540,
+            height:350,
+            position:'center',
+            open:function (event, ui) {
+                $(".ui-dialog-titlebar-close").hide();
+            },
+            buttons:{
+                "Cerrar":function () {
+                    $("#aprobar").dialog("close")
+                },"Anular":function(){
+                    $(".frmAnular").submit()
+                }
+            }
+        });
         $("#negar").dialog({
             autoOpen:false,
             resizable:false,
@@ -295,6 +349,36 @@
                     $.ajax({
                         type:"POST", url:"${createLink(action:'negarCertificacion', controller: 'certificacion')}",
                         data:"id=" + $("#cerNeg").val(),
+                        success:function (msg) {
+                            if(msg!="no")
+                                location.href = "${createLink(controller:'certificacion',action:'listaSolicitudes')}"
+                            else
+                                location.href = "${createLink(controller:'certificacion',action:'listaSolicitudes')}/?msn=Usted no tiene los permisos para negar esta solicitud"
+
+                        }
+                    });
+                }
+            }
+        });
+        $("#negarAnulacion").dialog({
+            autoOpen:false,
+            resizable:false,
+            title:'Negar solicitud',
+            modal:true,
+            draggable:true,
+            width:400,
+            height:150,
+            position:'center',
+            open:function (event, ui) {
+                $(".ui-dialog-titlebar-close").hide();
+            },
+            buttons:{
+                "Cancelar":function () {
+                    $("#negar").dialog("close")
+                },"Negar":function(){
+                    $.ajax({
+                        type:"POST", url:"${createLink(action:'negarAnulacion', controller: 'certificacion')}",
+                        data:"id=" + $("#cerNegAnulacion").val(),
                         success:function (msg) {
                             if(msg!="no")
                                 location.href = "${createLink(controller:'certificacion',action:'listaSolicitudes')}"

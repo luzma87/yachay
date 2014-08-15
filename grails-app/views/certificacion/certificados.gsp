@@ -94,12 +94,14 @@
                 <td  style="text-align: center;background: #d6eba9" >
                     Aprobado
                     <g:if test="${cer.pathSolicitudAnulacion!='' && cer.pathSolicitudAnulacion!=null}">
-                        <br><b>Con solicitud de anulación</b>
+                        <g:if test="${!cer.fechaRevisionAnulacion}">
+                            <br><b>Con solicitud de anulación</b>
+                        </g:if>
                     </g:if>
                 </td>
                 <td>
                     <a href="#" class="btn verCert" iden="${cer.id}">Ver certificado</a>
-                    <g:if test="${cer.pathSolicitudAnulacion==null}">
+                    <g:if test="${cer.pathSolicitudAnulacion==null || cer.fechaRevisionAnulacion!=null }">
                         <a href="#" class="btn solAnulacion" iden="${cer.id}">Solicitar anulación</a>
                     </g:if>
 

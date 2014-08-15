@@ -375,9 +375,9 @@ class KerberosService {
                 old.discard()
                 old.finalize()
                 old = null
-                println "antes del save " + nuevo.id
+//                println "antes del save " + nuevo.id
                 if (nuevo.save(flush: true)) {
-                    println "si GRABO "
+                   // println "si GRABO "
                     session.flush()
                     def cn = dbConnectionService.getConnection()
                     listAudt.each {
