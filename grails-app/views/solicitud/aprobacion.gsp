@@ -1,26 +1,31 @@
 <%--
   Created by IntelliJ IDEA.
   User: luz
-  Date: 12/08/14
-  Time: 01:25 PM
+  Date: 14/08/14
+  Time: 12:54 PM
 --%>
 
-<%@ page import="app.Proyecto" contentType="text/html;charset=UTF-8" %>
+<%@ page import="app.Asignacion; app.Anio; app.Fuente; app.Financiamiento; app.TipoAprobacion" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+        <script type="text/javascript" src="${resource(dir: 'js/jquery/plugins/select', file: 'jquery.ui.selectmenu.js')}"></script>
+        <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/select', file: 'jquery.ui.selectmenu.css')}"/>
+
         <meta name="layout" content="main"/>
-        <title>Revisar solicitud</title>
+        <title>Aprobar solicitud</title>
 
         <style type="text/css">
         textarea {
-            width : 780px;
+            width : 910px;
         }
         </style>
-
     </head>
 
     <body>
+
+        <g:set var="puedeEditar" value="${perfil.codigo == 'GT' || perfil.codigo == 'GP'}"/>
 
         <div class="dialog" title="${title}">
             <div id="" class="toolbar ui-widget-header ui-corner-all">
@@ -30,7 +35,7 @@
                 <g:link class="button create" action="ingreso">
                     Nueva solicitud
                 </g:link>
-                <g:if test="${perfil.codigo == 'GAF' || perfil.codigo == 'GJ' || perfil.codigo == 'GDP'}">
+                <g:if test="${puedeEditar}">
                     <a href="#" id="btnSave" class="button" style="float: right;">Guardar</a>
                 </g:if>
                 <a href="#" id="btnPrint" class="button" style="float: right;">Imprimir</a>
@@ -41,23 +46,28 @@
                     <div class="message ui-state-highlight ui-corner-all">${flash.message}</div>
                 </g:if>
 
-                <g:form action="saveRevision" name="frmRevision" id="${solicitud.id}">
-                    <slc:showSolicitud solicitud="${solicitud}" editable="true" perfil="${perfil}"/>
+                <g:form action="saveAprobacion" name="frmAprobacion" id="${aprobacion.id}">
+                    <g:hiddenField name="solicitud.id" value="${solicitud.id}"/>
+                    <slc:showSolicitud solicitud="${solicitud}" perfil="${perfil}" aprobacion="true"/>
                 </g:form>
             </div> <!-- body -->
         </div> <!-- dialog -->
 
         <script type="text/javascript">
             $(function () {
+
+                $("#tipoAprobacion").selectmenu({width : 210});
+                $("#fuente").selectmenu({width : 387});
+
                 $(".button").button();
 
                 $("#btnSave").button("option", "icons", {primary : 'ui-icon-disk'}).click(function () {
-                    $("#frmRevision").submit();
+                    $("#frmAprobacion").submit();
                 });
                 $("#btnPrint").button("option", "icons", {primary : 'ui-icon-print'}).click(function () {
-                    var url = "${createLink(controller: 'reporteSolicitud', action: 'imprimirSolicitud')}/?id=${solicitud.id}";
+                    var url = "${createLink(controller: 'reporteSolicitud', action: 'imprimirActaAprobacion')}/?id=${solicitud.id}";
 //                    console.log(url);
-                    location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename=solicitud.pdf";
+                    location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename=acta_aprobacion.pdf";
                     return false;
                 });
                 $(".list").button("option", "icons", {primary : 'ui-icon-clipboard'});
@@ -66,5 +76,6 @@
 
             });
         </script>
+
     </body>
 </html>

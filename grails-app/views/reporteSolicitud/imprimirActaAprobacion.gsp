@@ -87,7 +87,7 @@
 
     <body>
         <div class="hoja">
-            <slc:headerReporte title="Solicitud de contratación"/>
+            <slc:headerReporte title="Acta de aprobación"/>
             <slc:infoReporte solicitud="${solicitud}"/>
         </div>
     </body>

@@ -42,151 +42,7 @@
                         <tr>
                             <td>
                                 <g:if test="${solicitud}">
-                                    <table style="width: 1030px;">
-                                        <tr>
-                                            <td class="label">Unidad requirente</td>
-                                            <td colspan="3">
-                                                ${solicitud.unidadEjecutora?.nombre}
-                                            </td>
-
-                                            <td class="label">Proyecto</td>
-                                            <td colspan="3">
-                                                ${solicitud.actividad?.proyecto?.nombre}
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="label">Componente</td>
-                                            <td colspan="3" id="tdComponente">
-                                                ${solicitud.actividad?.marcoLogico?.objeto}
-                                            </td>
-
-                                            <td class="label">Actividad</td>
-                                            <td colspan="3" id="tdActividad">
-                                                ${solicitud.actividad?.objeto}
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="label">Nombre del proceso</td>
-                                            <td colspan="3">
-                                                ${solicitud.nombreProceso}
-                                            </td>
-
-                                            <td class="label">Forma de pago</td>
-                                            <td>
-                                                ${solicitud.formaPago?.descripcion}
-                                            </td>
-
-                                            <td class="label">Plazo de ejecución</td>
-                                            <td>
-                                                ${solicitud.plazoEjecucion} días
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="label">Fecha</td>
-                                            <td colspan="3">
-                                                ${solicitud.fecha?.format("dd-MM-yyyy")}
-                                            </td>
-
-                                            <td class="label">Monto solicitado</td>
-                                            <td>
-                                                <g:formatNumber number="${solicitud.montoSolicitado}" type="currency"/>
-                                            </td>
-
-                                            <td class="label">Modalidad de contratación</td>
-                                            <td>
-                                                ${solicitud.tipoContrato?.descripcion}
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="label">Objeto del contrato</td>
-                                            <td colspan="7">
-                                                ${solicitud.objetoContrato}
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="label">Observaciones</td>
-                                            <td colspan="7">
-                                                ${solicitud.observaciones}
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="label">Archivo (pdf)</td>
-                                            <td colspan="7">
-                                                <g:link action="downloadFile" id="${solicitud.id}">
-                                                    ${solicitud.pathPdfTdr}
-                                                </g:link>
-                                            </td>
-                                        </tr>
-                                    </table>
-
-                                    <table width="100%" class="ui-widget-content ui-corner-all">
-                                        <thead>
-                                            <tr>
-                                                <td colspan="3" class="ui-widget ui-widget-header ui-corner-all" style="padding: 3px;">
-                                                    Gerencia Administrativa Financiera
-                                                </td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <td style="width: 98px;" class="label">Observaciones</td>
-                                            <td style="width: 785px;">
-                                                ${solicitud.observacionesAdministrativaFinanciera ?: '- Sin observaciones-'}
-                                            </td>
-                                            <td style="width: 127px;">
-                                                ${solicitud.revisadoAdministrativaFinanciera ?
-                                                        'Revisado el ' + solicitud.revisadoAdministrativaFinanciera.format('dd-MM-yyyy') :
-                                                        'No revisado'}
-                                            </td>
-                                        </tbody>
-                                    </table>
-
-                                    <table width="100%" class="ui-widget-content ui-corner-all">
-                                        <thead>
-                                            <tr>
-                                                <td colspan="3" class="ui-widget ui-widget-header ui-corner-all" style="padding: 3px;">
-                                                    Gerencia Jurídica
-                                                </td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <td style="width: 98px;" class="label">Observaciones</td>
-                                            <td style="width: 785px;">
-                                                ${solicitud.observacionesJuridica ?: '- Sin observaciones-'}
-                                            </td>
-                                            <td style="width: 127px;">
-                                                ${solicitud.revisadoJuridica ?
-                                                        'Revisado el ' + solicitud.revisadoJuridica.format('dd-MM-yyyy') :
-                                                        'No revisado'}
-                                            </td>
-                                        </tbody>
-                                    </table>
-
-                                    <table width="100%" class="ui-widget-content ui-corner-all">
-                                        <thead>
-                                            <tr>
-                                                <td colspan="3" class="ui-widget ui-widget-header ui-corner-all" style="padding: 3px;">
-                                                    Gerencia de Dirección de Proyectos
-                                                </td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <td class="label" style="width: 98px;">Observaciones</td>
-                                            <td style="width: 785px;">
-                                                ${solicitud.observacionesDireccionProyectos ?: '- Sin observaciones-'}
-                                            </td>
-                                            <td style="width: 127px;">
-                                                ${solicitud.revisadoDireccionProyectos ?
-                                                        'Revisado el ' + solicitud.revisadoDireccionProyectos.format('dd-MM-yyyy') :
-                                                        'No revisado'}
-                                            </td>
-                                        </tbody>
-                                    </table>
+                                    <slc:showSolicitud solicitud="${solicitud}"/>
                                 </g:if>
                             </td>
                         </tr>
@@ -194,12 +50,31 @@
                     <tfoot>
                         <tr>
                             <td colspan="4" class="buttons" style="text-align: right;">
-                                <g:link class="button edit" action="ingreso" id="${solicitud?.id}">
-                                    <g:message code="default.button.update.label" default="Edit"/>
-                                </g:link>
-                                <g:link class="button revision" action="revision" id="${solicitud?.id}">
-                                    Revisar
-                                </g:link>
+                                <g:if test="${solicitud.estado == 'P'}">
+                                    <g:link class="button edit" action="ingreso" id="${solicitud?.id}">
+                                        <g:message code="default.button.update.label" default="Edit"/>
+                                    </g:link>
+
+                                    <g:link class="button revision" action="revision" id="${solicitud?.id}">
+                                        Revisar
+                                    </g:link>
+
+                                    <g:if test="${solicitud.revisadoAdministrativaFinanciera &&
+                                            solicitud.revisadoDireccionProyectos &&
+                                            solicitud.revisadoJuridica}">
+                                        <g:link class="button aprobacion" action="aprobacion" id="${solicitud?.id}">
+                                            Reunión de aprobación
+                                        </g:link>
+                                    </g:if>
+                                </g:if>
+                                <g:elseif test="${solicitud.estado == 'A'}">
+                                    <g:link class="button aprobacion" action="aprobacion" id="${solicitud?.id}">
+                                        Ver/Modificar aprobación
+                                    </g:link>
+                                    <g:link class="button aprobacion" action="aprobacion" id="${solicitud?.id}">
+                                        Archivar acta
+                                    </g:link>
+                                </g:elseif>
                                 %{--<g:link class="button delete" action="delete" id="${politicaInstance?.id}">--}%
                                 %{--<g:message code="default.button.delete.label" default="Delete"/>--}%
                                 %{--</g:link>--}%
