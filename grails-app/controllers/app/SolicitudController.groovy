@@ -272,6 +272,49 @@ class SolicitudController extends app.seguridad.Shield {
         }
     }
 
+    def downloadActa = {
+        def aprobacion = Aprobacion.get(params.id.toLong())
+        def path = servletContext.getRealPath("/") + "pdf/actasAprobacion/" + aprobacion.pathPdf
+        def tipo = aprobacion.pathPdf.split("\\.")
+        tipo = tipo[1]
+//            println "tipo " + tipo
+        switch (tipo) {
+            case "jpeg":
+            case "gif":
+            case "jpg":
+            case "bmp":
+            case "png":
+                tipo = "application/image"
+                break;
+            case "pdf":
+                tipo = "application/pdf"
+                break;
+            case "doc":
+            case "docx":
+            case "odt":
+                tipo = "application/msword"
+                break;
+            case "xls":
+            case "xlsx":
+                tipo = "application/vnd.ms-excel"
+                break;
+            default:
+                tipo = "application/pdf"
+                break;
+        }
+        try {
+            def file = new File(path)
+            def b = file.getBytes()
+            response.setContentType(tipo)
+            response.setHeader("Content-disposition", "attachment; filename=" + (aprobacion.pathPdf))
+            response.setContentLength(b.length)
+            response.getOutputStream().write(b)
+        } catch (e) {
+            println "error en download"
+            response.sendError(404)
+        }
+    }
+
     def ingreso = {
         def usuario = Usro.get(session.usuario.id)
         def unidadEjecutora = usuario.unidad
@@ -367,6 +410,67 @@ class SolicitudController extends app.seguridad.Shield {
             }
         } else {
             println "error al guardar aprobacion: " + aprobacion.errors
+        }
+        redirect(action: "show", id: aprobacion.solicitudId)
+    }
+
+    def uploadActa = {
+        def aprobacion = Aprobacion.get(params.id.toLong())
+
+        /* upload del PDF */
+        def path = servletContext.getRealPath("/") + "pdf/actasAprobacion/"
+        new File(path).mkdirs()
+        def f = request.getFile('pdf')
+        def okContents = [
+                'application/pdf': 'pdf',
+        ]
+        def nombre = ""
+        if (f && !f.empty) {
+            if (aprobacion.pathPdf) {
+                //si ya existe un archivo para esta aprobacion lo elimino
+                def oldFile = new File(path + aprobacion.pathPdf)
+                if (oldFile.exists()) {
+                    oldFile.delete()
+                }
+            }
+            def fileName = f.getOriginalFilename() //nombre original del archivo
+            def ext
+
+            def parts = fileName.split("\\.")
+            fileName = ""
+            parts.eachWithIndex { obj, i ->
+                if (i < parts.size() - 1) {
+                    fileName += obj
+                }
+            }
+            if (okContents.containsKey(f.getContentType())) {
+                ext = okContents[f.getContentType()]
+                fileName = fileName.size() < 40 ? fileName : fileName[0..39]
+                fileName = fileName.tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
+
+                nombre = fileName + "." + ext
+                def pathFile = path + nombre
+                def fn = fileName
+                def src = new File(pathFile)
+                def i = 1
+                while (src.exists()) {
+                    nombre = fn + "_" + i + "." + ext
+                    pathFile = path + nombre
+                    src = new File(pathFile)
+                    i++
+                }
+                try {
+                    f.transferTo(new File(pathFile)) // guarda el archivo subido al nuevo path
+                    aprobacion.pathPdf = nombre
+                    //println pathFile
+                } catch (e) {
+                    println "????????\n" + e + "\n???????????"
+                }
+            }
+        }
+        /* fin del upload */
+        if (!aprobacion.save(flush: true)) {
+            println aprobacion.errors
         }
         redirect(action: "show", id: aprobacion.solicitudId)
     }
