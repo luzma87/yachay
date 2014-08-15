@@ -234,7 +234,7 @@ class SolicitudTagLib {
         if (attrs.editable == "true" || attrs.editable == true || attrs.editable == 1 || attrs.editable == "1") {
             editable = true
         }
-        if (editable && !(perfil.codigo == "GT" || perfil.codigo == "GP")) {
+        if (editable && !(/*perfil.codigo == "GT" ||*/ perfil.codigo == "GP")) {
             editable = false
         }
 

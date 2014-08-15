@@ -36,7 +36,7 @@
 
     <body>
 
-        <g:set var="puedeEditar" value="${perfil.codigo == 'GT' || perfil.codigo == 'GP'}"/>
+        <g:set var="puedeEditar" value="${perfil.codigo == 'GP'}"/>
 
         <div class="dialog" title="${title}">
             <div id="" class="toolbar ui-widget-header ui-corner-all">
