@@ -13,12 +13,23 @@
         <script type="text/javascript" src="${resource(dir: 'js/jquery/plugins/select', file: 'jquery.ui.selectmenu.js')}"></script>
         <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/select', file: 'jquery.ui.selectmenu.css')}"/>
 
+        <script type="text/javascript"
+                src="${resource(dir: 'js/jquery/plugins/validation', file: 'jquery.validate.min.js')}"></script>
+        <script type="text/javascript"
+                src="${resource(dir: 'js/jquery/plugins/validation', file: 'additional-methods.js')}"></script>
+        <script type="text/javascript"
+                src="${resource(dir: 'js/jquery/plugins/validation', file: 'messages_es.js')}"></script>
+
         <meta name="layout" content="main"/>
         <title>Aprobar solicitud</title>
 
         <style type="text/css">
         textarea {
             width : 910px;
+        }
+
+        label {
+            width : auto;
         }
         </style>
     </head>
@@ -38,6 +49,9 @@
                 <g:if test="${puedeEditar}">
                     <a href="#" id="btnSave" class="button" style="float: right;">Guardar</a>
                 </g:if>
+                <a href="#" class="button upload" id="uploadActa" style="float: right;">
+                    Archivar acta
+                </a>
                 <a href="#" id="btnPrint" class="button" style="float: right;">Imprimir</a>
             </div> <!-- toolbar -->
 
@@ -53,8 +67,53 @@
             </div> <!-- body -->
         </div> <!-- dialog -->
 
+
+        <div id="dialog" title="Seleccione un archivo PDF" class="ui-helper-hidden">
+            <p>
+                <g:uploadForm id="${aprobacion.id}" name="frmPdf" action="uploadActa">
+                    <input type="file" name="pdf" class="required"/>
+                    <g:if test="${aprobacion.pathPdf}">
+                        <br/>Archivo cargado: ${aprobacion.pathPdf}
+                    </g:if>
+                </g:uploadForm>
+            </p>
+        </div>
+
         <script type="text/javascript">
             $(function () {
+
+                $("#dialog").dialog({
+                    autoOpen  : false,
+                    modal     : true,
+                    resizable : false,
+                    buttons   : {
+                        "Cancelar"      : function () {
+                            $(this).dialog("close");
+                        },
+                        "Subir archivo" : function () {
+                            $("#frmPdf").submit();
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+
+                $("#frmPdf").validate({
+                    rules    : {
+                        pdf : {
+                            accept : "pdf"
+                        }
+                    },
+                    messages : {
+                        pdf : {
+                            accept : "Por favor seleccione un archivo PDF"
+                        }
+                    }
+                });
+
+                $("#uploadActa").click(function () {
+                    $("#dialog").dialog("open");
+                    return false;
+                });
 
                 $("#tipoAprobacion").selectmenu({width : 210});
                 $("#fuente").selectmenu({width : 387});

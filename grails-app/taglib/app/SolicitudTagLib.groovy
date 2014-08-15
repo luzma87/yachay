@@ -90,9 +90,9 @@ class SolicitudTagLib {
             html += '</tr>'
 
             html += '<tr>'
-            html += '<td class="label">Archivo (pdf)</td>'
+            html += '<td class="label">Archivo TDR (pdf)</td>'
             html += '<td colspan="7">'
-            html += g.link(action: "downloadFile", id: solicitud.id) { solicitud.pathPdfTdr }
+            html += g.link(controller: 'solicitud', action: "downloadFile", id: solicitud.id) { solicitud.pathPdfTdr }
             html += '</td>'
             html += '</tr>'
             html += '</table>'
@@ -285,6 +285,16 @@ class SolicitudTagLib {
             }
             html += '</td>'
             html += '</tr>'
+            if (aprobacion.pathPdf) {
+                html += '<tr>'
+                html += '<td class="label">Archivo (pdf)</td>'
+                html += '<td colspan="4">'
+                html += g.link(controller: 'solicitud', action: "downloadActa", id: aprobacion.id) {
+                    aprobacion.pathPdf
+                }
+                html += '</td>'
+                html += '</tr>'
+            }
             html += '</table>'
         }
         out << html

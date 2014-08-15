@@ -71,13 +71,10 @@
                                     <g:link class="button aprobacion" action="aprobacion" id="${solicitud?.id}">
                                         Ver/Modificar aprobación
                                     </g:link>
-                                    <g:link class="button aprobacion" action="aprobacion" id="${solicitud?.id}">
-                                        Archivar acta
-                                    </g:link>
                                 </g:elseif>
-                                %{--<g:link class="button delete" action="delete" id="${politicaInstance?.id}">--}%
-                                %{--<g:message code="default.button.delete.label" default="Delete"/>--}%
-                                %{--</g:link>--}%
+                            %{--<g:link class="button delete" action="delete" id="${politicaInstance?.id}">--}%
+                            %{--<g:message code="default.button.delete.label" default="Delete"/>--}%
+                            %{--</g:link>--}%
                             </td>
                         </tr>
                     </tfoot>
