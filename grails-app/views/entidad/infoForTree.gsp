@@ -52,11 +52,13 @@
                 </td> <!-- campo -->
             </tr>
 
+%{--
             <tr class="prop">
                 <td class="label">Sigla</td>
 
                 <td class="campo">${unidad?.sigla}</td> <!-- campo -->
             </tr>
+--}%
 
             <tr class="prop">
                 <td class="label">Misión</td>
@@ -86,11 +88,13 @@
                 <td class="campo">${unidad?.email}</td> <!-- campo -->
             </tr>
 
+%{--
             <tr class="prop">
                 <td class="label">Provincia</td>
 
                 <td class="campo">${unidad?.provincia?.nombre}</td> <!-- campo -->
             </tr>
+--}%
 
             <tr class="prop">
                 <td class="label">Fecha Inicio</td>

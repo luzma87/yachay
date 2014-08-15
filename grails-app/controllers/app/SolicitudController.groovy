@@ -197,7 +197,9 @@ class SolicitudController extends app.seguridad.Shield {
 
     def getDatosActividad = {
         def actividad = MarcoLogico.get(params.id.toLong())
-        render actividad.objeto + "||" + actividad.monto
+        def anio = Anio.findByAnio(new Date().format("yyyy"))
+        def asignaciones = Asignacion.countByMarcoLogicoAndAnio(actividad, anio)
+        render actividad.objeto + "||" + actividad.monto +"||"+asignaciones
     }
 
     def newActividad_ajax = {
@@ -212,6 +214,9 @@ class SolicitudController extends app.seguridad.Shield {
         def fechaInicio = new Date().parse("dd-MM-yyyy", params.fechaIni)
         def fechaFin = new Date().parse("dd-MM-yyyy", params.fechaFin)
 
+        params.monto = params.monto.replaceAll("\\.","")
+        params.monto= params.monto.replaceAll(",",".")
+
         actividad.proyecto = proyecto
         actividad.tipoElemento = tipoActividad
         actividad.marcoLogico = componente
@@ -222,7 +227,7 @@ class SolicitudController extends app.seguridad.Shield {
         actividad.fechaInicio = fechaInicio
         actividad.fechaFin = fechaFin
         actividad.responsable = unidadEjecutora
-        actividad.aporte = params.aporte.toDouble()
+//        actividad.aporte = params.aporte.toDouble()
         actividad.tieneAsignacion = "N"
         if (!actividad.save(flush: true)) {
             println "Error al guardar actividad: " + actividad.errors
@@ -317,6 +322,7 @@ class SolicitudController extends app.seguridad.Shield {
     }
 
     def ingreso = {
+        if(session.perfil.codigo == "RQ") {
         def usuario = Usro.get(session.usuario.id)
         def unidadEjecutora = usuario.unidad
         def solicitud = new Solicitud()
@@ -335,6 +341,14 @@ class SolicitudController extends app.seguridad.Shield {
         }
         title += " solicitud"
         return [unidadRequirente: unidadEjecutora, solicitud: solicitud, title: title]
+        }
+        else {
+            if(params.id) {
+                redirect(action: "show", id:params.id)
+            } else {
+                redirect(action:"list")
+            }
+        }
     }
 
     def revision = {

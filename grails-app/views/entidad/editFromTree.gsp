@@ -162,6 +162,7 @@
                                  title="${UnidadEjecutora.constraints.email.attributes.mensaje}"/>
                 </td> <!-- campo -->
 
+%{--
                 <td class="label">Provincia</td>
 
                 <td class="indicator">
@@ -174,6 +175,7 @@
                               noSelection="${['null':'Ninguna']}" class="field ui-widget-content ui-corner-all"
                               title="${UnidadEjecutora.constraints.provincia.attributes.mensaje}"/>
                 </td> <!-- campo -->
+--}%
             </tr>
 
             <tr class="prop">

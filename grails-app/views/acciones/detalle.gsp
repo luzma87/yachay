@@ -6,7 +6,7 @@
         <div class="ui-corner-all"
              style="height: 480px;overflow: auto; margin-bottom: 5px; margin-left: -20px; background-color: #efeff8;
              border-style: solid; border-color: #AAA; border-width: 1px; ">
-            <table border="0" cellpadding="0" width="800px">
+            <table border="0" cellpadding="0" width="900px">
                 <thead style="color: #101010; background-color: #69b0e3">
                 <tr>
                     <g:each in="${titulos}" var="tt">

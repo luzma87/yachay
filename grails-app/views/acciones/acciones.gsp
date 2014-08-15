@@ -38,7 +38,7 @@
             </div>
         </div>
         <br>
-    <div id="ajx" style="width:820px; padding-left: 20px; height: 520px;"></div>
+    <div id="ajx" style="width:910px; padding-left: 20px; height: 520px;"></div>
 
 </div>
 

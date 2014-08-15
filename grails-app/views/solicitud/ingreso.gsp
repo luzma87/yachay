@@ -91,8 +91,12 @@
             </p>
 
             <p>
-                Puede también crear una nueva activada que será ingresada al POA una vez que guarde la solicitud.
+                Puede también crear una nueva actividad.
             </p>
+        </div>
+
+        <div class="ui-widget-content ui-state-error ui-corner-all ui-helper-hidden" id="divPoa" style="padding:5px; margin-bottom: 10px;">
+            <p>La actividad seleccionada no se encuentra en el POA</p>
         </div>
 
         <g:uploadForm action="save" method="post" name="frmSolicitud" id="${solicitud.id}">
@@ -246,12 +250,14 @@
                                 <g:textField name="fechaFin" class="required datepicker nuevaActividad ui-widget-content ui-corner-all"/>
                             </td>
                         </tr>
+%{--
                         <tr>
                             <td class="label">Aporte</td>
                             <td>
                                 <g:textField name="nuevoAporte" class="required number2 nuevaActividad ui-widget-content ui-corner-all"/>
                             </td>
                         </tr>
+--}%
                     </table>
                 </form>
             </div>
@@ -314,6 +320,11 @@
                             $("#montoSolicitado").val(number_format(parts[1], 2, '.', ''))
                                     .attr("max2", number_format(parts[1], 2, '.', ''))
                                     .setMask('decimal');
+                            if(parts[2] == "0") {
+                                $("#divPoa").show();
+                            } else {
+                                $("#divPoa").hide();
+                            }
                         }
                     });
                 }

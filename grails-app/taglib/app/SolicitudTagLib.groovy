@@ -42,7 +42,8 @@ class SolicitudTagLib {
             def anio = Anio.findByAnio(new Date().format('yyyy'))
             def tieneAsignacion = Asignacion.countByMarcoLogicoAndAnio(solicitud.actividad, anio) > 0
             if (!tieneAsignacion) {
-                html += "<br/>* La actividad no se encuentra en el POA *"
+                html += "<div class='ui-widget-content ui-corner-all ui-state-error' style='padding:5px;'> " +
+                        "La actividad no se encuentra en el POA </div>"
             }
             html += '</td>'
             html += '</tr>'
