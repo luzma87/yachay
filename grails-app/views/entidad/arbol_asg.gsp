@@ -207,7 +207,7 @@
                             }
 
                             items.solicitudes = {
-                                label              : "Solicitar certificación",
+                                label              : "Solicitar Aval",
                                 "action"           : function (obj) {
                                     location.href = "${createLink(controller: 'certificacion', action:'solicitarCertificacion')}/?id=" + idNode + "&tipo=arbol";
                                 },
@@ -237,7 +237,7 @@
                             if (idNode == "${session.unidad?.id}" || "${session.perfil?.id}" == 1) {
 
                                 items.certificados = {
-                                    label              : "Ver certicados aprobados",
+                                    label              : "Ver avales aprobados",
                                     "action"           : function (obj) {
                                         location.href = "${createLink(controller: 'certificacion', action:'listaCertificados')}/" + idNode;
                                     },

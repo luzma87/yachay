@@ -81,6 +81,7 @@
     </head>
 
     <body>
+%{--
         <div class="">
             <p>
                 Seleccione un proyecto para cargar sus componentes, seleccione un componente para cargar sus actividades.
@@ -94,6 +95,7 @@
                 Puede también crear una nueva actividad.
             </p>
         </div>
+--}%
 
         <div class="ui-widget-content ui-state-error ui-corner-all ui-helper-hidden" id="divPoa" style="padding:5px; margin-bottom: 10px;">
             <p>La actividad seleccionada no se encuentra en el POA</p>
@@ -106,9 +108,12 @@
                     <td colspan="3">
                         ${unidadRequirente.nombre}
                     </td>
+                </tr>
+
+                <tr>
 
                     <td class="label">Proyecto</td>
-                    <td colspan="3">
+                    <td colspan="6">
                         <g:select from="${Proyecto.list()}" name="proyecto.id" id="selProyecto" class="requiredCmb ui-widget-content ui-corner-all"
                                   optionKey="id" optionValue="nombre" value="${solicitud.actividad?.proyectoId}"/>
                     </td>
@@ -116,26 +121,31 @@
 
                 <tr>
                     <td class="label">Componente</td>
-                    <td colspan="3" id="tdComponente">
+                    <td colspan="6" id="tdComponente">
                         %{--<g:select from="${Componente.list()}" name="componente.id" id="selComponente" class="ui-widget-content ui-corner-all"/>--}%
                     </td>
+                </tr>
+
+                <tr>
 
                     <td class="label">Actividad</td>
-                    <td colspan="3" id="tdActividad">
+                    <td colspan="6" id="tdActividad">
                         %{--<g:select from="${Actividad.list()}" name="proyecto.id" id="selActividad" class="ui-widget-content ui-corner-all"/>--}%
                     </td>
                 </tr>
 
                 <tr>
                     <td class="label">Nombre del proceso</td>
-                    <td colspan="3">
+                    <td colspan="6">
                         <g:textField class="required field wide ui-widget-content ui-corner-all"
-                                     name="nombreProceso" title="Nombre del proceso" value="${solicitud.nombreProceso}"/>
+                                     name="nombreProceso" title="Nombre del proceso" value="${solicitud.nombreProceso}" style="width:960px;"/>
                     </td>
+                </tr>
 
+                <tr>
                     <td class="label">Forma de pago</td>
                     <td>
-                        <g:select name="formaPago.id" id="selFormaPago" from="${FormaPago.list()}"
+                        <g:select name="formaPago.id" id="selFormaPago" from="${FormaPago.list([sort: 'descripcion'])}"
                                   optionKey="id" optionValue="descripcion" class="requiredCmb" value="${solicitud.formaPagoId}"/>
                     </td>
 
@@ -148,7 +158,7 @@
 
                 <tr>
                     <td class="label">Fecha</td>
-                    <td colspan="3">
+                    <td colspan="1">
                         <g:textField class="required datepicker field wide short ui-widget-content ui-corner-all"
                                      name="fecha" title="Fecha" autocomplete="off" value="${solicitud.fecha?.format('dd-MM-yyyy')}"/>
                     </td>
@@ -207,7 +217,7 @@
             </table>
         </g:uploadForm>
 
-        <div id="dlgActividad" title="Crear actividad">
+        <div id="dlgActividad" title="Crear una Actividad">
             <div id="dlgActividadContent">
                 <form id="frmNuevaActividad">
                     <table>
@@ -229,13 +239,14 @@
                         <tr>
                             <td class="label">Actividad</td>
                             <td>
-                                <g:textField name="nuevaActividad" class="required nuevaActividad ui-widget-content ui-corner-all"/>
+                                %{--<g:textField name="nuevaActividad" class="required nuevaActividad ui-widget-content ui-corner-all"/>--}%
+                                <g:textArea name="nuevaActividad" rows="4" cols="34" class="required ui-widget-content ui-corner-all"/>
                             </td>
                         </tr>
                         <tr>
                             <td class="label">Monto</td>
                             <td>
-                                <g:textField name="nuevoMonto" class="required number2 nuevaActividad ui-widget-content ui-corner-all"/>
+                                <g:textField name="nuevoMonto" class="required number2 ui-widget-content ui-corner-all" />
                             </td>
                         </tr>
                         <tr>
@@ -265,9 +276,9 @@
 
         <script type="text/javascript">
 
-            var widthProyecto = 425;
-            var widthComponente = 385;
-            var widthActividad = 395;
+            var widthProyecto = 900;
+            var widthComponente = 900;
+            var widthActividad = 900;
 
             function loadComponentes() {
                 $.ajax({
@@ -337,7 +348,7 @@
                 $("#proyectoLabel").text(proySt);
                 $("#componenteLabel").text(compSt);
 
-                $("#dlgActividad").dialog('option', 'title', 'Crear actividad').dialog('open');
+                $("#dlgActividad").dialog('option', 'title', 'Crea nueva Actividad').dialog('open');
             }
 
             function resetActividadForm() {
