@@ -81,6 +81,7 @@
         </div>
 --}%
 
+%{--
         <div id="texto_count"
              style="width: 160px;height: 30px;position: absolute;top:3px;left: 910px;font-size: 11px;line-height: 15px;">Tiempo aproximado hasta que termine su sesión</div>
 
@@ -88,6 +89,7 @@
 
         <div id="countdown2"
              style="width: 70px;height: 30px;position: absolute;top:3px;left: 1015px;border: none;display: none"></div>
+--}%
 
         <div class="ui-dialog ui-widget ui-widget-content ui-corner-all"
              style="height: 740px;  width: 1100px; margin-left:10px; position: absolute; left: 20px; top:37px;overflow-y: hidden">

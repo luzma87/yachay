@@ -77,9 +77,11 @@ td {
                 <g:message code="persona.direccion.label" default="Dirección"/>
             </td>
 
-            <td class="" valign="middle">
+            <td class="" valign="middle" colspan="3">
                 ${usuario.persona?.direccion}
             </td>
+        <tr>
+        </tr>
 
             <td class="label " valign="middle">
                 <g:message code="persona.telefono.label" default="Teléfono"/>
@@ -140,11 +142,13 @@ td {
                 <g:message code="usro.unidad.label" default="Unidad"/>
             </td>
 
-            <td class="" valign="middle">
+            <td class="" valign="middle" colspan="3">
                 <g:link class="linkArbol" tipo="unidad_${usuario.unidad.id}">
                     ${usuario?.unidad?.nombre}
                 </g:link>
             </td>
+    <tr>
+    </tr>
 
             <td class="label " valign="middle">
                 <g:message code="usro.cargoPersonal.label" default="Cargo Personal"/>
@@ -218,7 +222,7 @@ td {
             </td>
         </tr>
         <tr>
-            <td>
+            <td colspan="2">
                 <ul style="margin-top: 5px; margin-bottom: 5px; padding-left: 20px;">
                     <g:each in="${perfiles}" var="perfil">
                         <li>

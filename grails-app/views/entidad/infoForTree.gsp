@@ -118,9 +118,9 @@
                 </td> <!-- campo -->
             </tr>
 
+            <g:if test="${presupuestos.size() > 0}">    %{--Se muestra prespuestos solo si existe--}%
             <tr class="prop" style="max-height: 200px;">
                 <td class="label">Presupuesto</td>
-
                 <td class="campo" style="">
                     <div style="${maxPre} overflow-y: auto;">
                         <table border="1" cellpadding="2" style="border-collapse: collapse; border-color: #aaa;" width="100%">
@@ -191,7 +191,7 @@
                     </div>
                 </td> <!-- campo -->
             </tr>
-
+            </g:if>
         </tbody>
     </table>
 
