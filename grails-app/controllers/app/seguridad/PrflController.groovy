@@ -13,7 +13,7 @@ class PrflController {
     }
 
     def modulos = {
-       println "recibe de parametros: ${params.id}"
+//       println "recibe de parametros: ${params.id}"
        def prflInstance = Prfl.get(params.id)
        if (!prflInstance) {
          flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'prfl.label', default: 'Perfil'), params.id])}"
@@ -28,7 +28,7 @@ class PrflController {
 
   def verMenu = {
     def prfl = params.prfl.toInteger()
-    println "verMenu: ---------parametros: ${params}"
+//    println "verMenu: ---------parametros: ${params}"
     render(g.generarMenuPreview( perfil: prfl))
     //render(g.generarMenu( perfil: "${prfl}" ))
   }
@@ -68,14 +68,14 @@ class PrflController {
     }
 
     def editMdlo = {
-      println "------editMdlo: " + params
+//      println "------editMdlo: " + params
       def mdloInstance = Modulo.get(params.id)
       //println mdloInstance
       render(view: 'creaMdlo', model: ['mdloInstance': mdloInstance])
     }
 
   def grabaMdlo = {
-    println "+++++parametros: ${params}"
+//    println "+++++parametros: ${params}"
     if (!params.id) {
       def mdloInstance = new Modulo()
       params.controllerName = controllerName
@@ -88,13 +88,13 @@ class PrflController {
         render("El módulo ${params.nombre} ha sido grabado en el sistema")
       }
     } else {
-      println "<<< Update >>> : ${params.id}"
+//      println "<<< Update >>> : ${params.id}"
       def mdloInstance = Modulo.get(params.id)
       params.controllerName = controllerName
       params.actionName = "UpdateMdlo"
       mdloInstance = kerberosService.save(params, Modulo, session.perfil, session.usuario)
       if (mdloInstance.properties.errors.getErrorCount() > 0) {
-        println "---- save ${mdloInstance}"
+//        println "---- save ${mdloInstance}"
         render("El módulo no se ha podido actualizar")
       } else {
         render("ok")
@@ -103,7 +103,7 @@ class PrflController {
   }
 
     def borraMdlo = {
-      println "------borrarMdlo: " + params
+//      println "------borrarMdlo: " + params
       params.controllerName = controllerName
       params.actionName = "delete"
       kerberosService.delete(params, Modulo, session.perfil, session.usuario)
@@ -117,7 +117,7 @@ class PrflController {
     }
 
     def grabaPrfl = {
-      println "+++++parametros: ${params}"
+//      println "+++++parametros: ${params}"
       if (!params.id) {
         def prflInstance = new Prfl()
         params.controllerName = controllerName
@@ -138,13 +138,13 @@ class PrflController {
           render("El perfil ${params.nmbr} ha sido grabado en el sistema")
         }
       } else {
-        println "<<< Update >>> : ${params.id}"
+//        println "<<< Update >>> : ${params.id}"
         def prflInstance = Prfl.get(params.id)
         params.controllerName = controllerName
         params.actionName = "Update"
         prflInstance = kerberosService.save(params, Prfl, session.perfil, session.usuario)
         if (prflInstance.properties.errors.getErrorCount() > 0) {
-          println "---- save ${prflInstance}"
+//          println "---- save ${prflInstance}"
           render("El perfil no ha podido actualizar")
         } else {
           render("ok")
@@ -153,13 +153,13 @@ class PrflController {
     }
 
     def editPrfl = {
-      println "------editPrfl: " + params
+//      println "------editPrfl: " + params
       def prflInstance = Prfl.get(params.id)
       render(view: 'crear', model: ['prflInstance': prflInstance])
     }
 
     def borraPrfl = {
-      println "------editPrfl: " + params
+//      println "------editPrfl: " + params
       params.controllerName = controllerName
       params.actionName = "delete"
       kerberosService.delete(params, Prfl, session.perfil, session.usuario)
@@ -189,10 +189,10 @@ class PrflController {
               "from accn where mdlo__id = " + modulo + " and  " +
               "accn__id in (${ids})) and prfl__id = ${prfl}"
 
-      println "grabar SQL: ${tx}"
+//      println "grabar SQL: ${tx}"
       cn.eachRow(tx) { d ->
         params.id = d.prms__id
-        println "parametro para borrar: $params"
+//        println "parametro para borrar: $params"
         kerberosService.delete(params, Prms, session.perfil, session.usuario)
       }
       //println "-------------borrado de permisos----------"
@@ -219,7 +219,7 @@ class PrflController {
         try {
           cn.execute(tx1)
           insertaKerveros(prfl.toInteger(), session.usuario, session.perfil)
-          println "insertando.... ${tx1}"
+//          println "insertando.... ${tx1}"
         }
         catch (Exception ex) {
           println ex.getMessage()

@@ -62,7 +62,7 @@
                     <g:textField name="persona.cedula" id="cedula"
                                  title="${Persona.constraints.cedula.attributes.mensaje}"
                                  class="field required ui-widget-content ui-corner-all"
-                                 minLenght="1" maxLenght="13" value="${usuario.persona?.cedula}"/>
+                                 minLenght="1" maxLenght="10" value="${usuario.persona?.cedula}"/>
                 </td>
 
                 <td class="label  mandatory" valign="middle">
