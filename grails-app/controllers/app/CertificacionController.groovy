@@ -413,7 +413,7 @@ class CertificacionController  extends app.seguridad.Shield{
     }
 
     def negarAnulacion = {
-       // println "negarAnulacion "+params
+        // println "negarAnulacion "+params
         def band = false
         def usuario = Usro.get(session.usuario.id)
         def cer = Certificacion.get(params.id)
@@ -425,7 +425,7 @@ class CertificacionController  extends app.seguridad.Shield{
             cer.estado=1
             cer.fechaRevisionAnulacion=new Date()
             cer=kerberosService.saveObject(cer,Certificacion,session.perfil,session.usuario,"negarCertificacion","certificacion",session)
-           // println "save?  "+cer.errors
+            // println "save?  "+cer.errors
             def msn="Solciitud negada"
             render "ok"
 
@@ -436,9 +436,10 @@ class CertificacionController  extends app.seguridad.Shield{
     }
 
     def anularAval = {
+        println "anular aval "+params
         def path = servletContext.getRealPath("/") + "certificaciones/"
         new File(path).mkdirs()
-        def f = request.getFile('file')
+        def f = request.getFile('archivo')
         if (f && !f.empty) {
             def fileName = f.getOriginalFilename()
             def ext
@@ -489,10 +490,8 @@ class CertificacionController  extends app.seguridad.Shield{
             if (src.exists()) {
                 def cer = Certificacion.get(params.id)
                 msn="Ya existe un archivo con ese nombre. Por favor cámbielo."
-                if (params.tipo)
-                    redirect(action: 'editarCertificacion',params: [id:cer.id,unidad: cer.asignacion.unidad,msn: msn])
-                else
-                    redirect(action: 'listaSolicitudes',params: [msn:msn])
+
+                redirect(action: 'listaSolicitudes',params: [msn:msn])
 
 
             } else {
@@ -517,11 +516,13 @@ class CertificacionController  extends app.seguridad.Shield{
                         redirect(action: 'listaSolicitudes',params: [msn:msn])
                 }
             }
+        }else{
+            println "es empty??"
         }
     }
 
     def saveSolicitudAnulacion = {
-       // println "saveSolicitudAnulacion  "+params
+        // println "saveSolicitudAnulacion  "+params
         def path = servletContext.getRealPath("/") + "certificaciones/"
         new File(path).mkdirs()
         def f = request.getFile('file')

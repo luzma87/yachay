@@ -324,7 +324,7 @@
             },
             buttons:{
                 "Cerrar":function () {
-                    $("#aprobar").dialog("close")
+                    $("#anular").dialog("close")
                 },"Anular":function(){
                     $(".frmAnular").submit()
                 }
