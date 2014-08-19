@@ -44,7 +44,7 @@ class AnioController   extends app.seguridad.Shield{
                     temp.add(d.cont)
             }
 
-            cn.eachRow("select count(asgn__id) as cont,sum(asgnplan) as suma from asgn where unej__id=${it.id} and anio__id = ${anio.id} and actv__id is not null "){d->
+            cn.eachRow("select count(asgn__id) as cont,sum(asgnplan) as suma from asgn where unej__id=${it.id} and anio__id = ${anio.id} "){d->
                 if(d.suma==null)
                     temp.add(0)
                 else
@@ -54,7 +54,7 @@ class AnioController   extends app.seguridad.Shield{
                 else
                     temp.add(d.cont)
             }
-            cn.eachRow("select count(obra__id) as cont,sum(obracntd*obracsto) as suma from obra,asgn where asgn.asgn__id=obra.asgn__id and   asgn.unej__id=${it.id} and asgn.anio__id = ${anio.id} and asgn.actv__id is not null "){d->
+            cn.eachRow("select count(obra__id) as cont,sum(obracntd*obracsto) as suma from obra,asgn where asgn.asgn__id=obra.asgn__id and   asgn.unej__id=${it.id} and asgn.anio__id = ${anio.id}  "){d->
                 if(d.suma==null)
                     temp.add(0)
                 else
@@ -66,7 +66,7 @@ class AnioController   extends app.seguridad.Shield{
             }
             temp.add(it.id)
             if((temp[0]+temp[2]+temp[4]+temp[6])>0)
-                datos.put(it.nombre+"5"+it.id,temp)
+                datos.put(it.nombre,temp)
             temp=[]
 
         }
@@ -79,14 +79,12 @@ class AnioController   extends app.seguridad.Shield{
     def aprobarAnio = {
         if (request.method == 'POST') {
             println "params " + params
-            if (session.usuario.autorizacion == params.ssap.encodeAsMD5()) {
-                def anio = Anio.get(params.anio)
-                anio.estado=1
-                kerberosService.saveObject(anio, Anio, session.perfil, session.usuario, "aprobarAnio", "anio", session)
-                render "ok"
-            } else {
-                render "no"
-            }
+
+            def anio = Anio.get(params.anio)
+            anio.estado=1
+            kerberosService.saveObject(anio, Anio, session.perfil, session.usuario, "aprobarAnio", "anio", session)
+            render "ok"
+
         } else {
             redirect(controller: "shield", action: "ataques")
         }
