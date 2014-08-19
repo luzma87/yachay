@@ -435,6 +435,96 @@ class CertificacionController  extends app.seguridad.Shield{
         }
     }
 
+
+    def liberarAval = {
+        println "libear aval "+params
+        def path = servletContext.getRealPath("/") + "certificaciones/"
+        new File(path).mkdirs()
+        def f = request.getFile('archivo')
+        if (f && !f.empty) {
+            def fileName = f.getOriginalFilename()
+            def ext
+
+            def parts = fileName.split("\\.")
+            fileName = ""
+            parts.eachWithIndex { obj, i ->
+                if (i < parts.size() - 1) {
+                    fileName += obj
+                } else {
+                    ext = obj
+                }
+            }
+            def reps = [
+                    "a": "[àáâãäåæ]",
+                    "e": "[èéêë]",
+                    "i": "[ìíîï]",
+                    "o": "[òóôõöø]",
+                    "u": "[ùúûü]",
+
+                    "A": "[ÀÁÂÃÄÅÆ]",
+                    "E": "[ÈÉÊË]",
+                    "I": "[ÌÍÎÏ]",
+                    "O": "[ÒÓÔÕÖØ]",
+                    "U": "[ÙÚÛÜ]",
+
+                    "n": "[ñ]",
+                    "c": "[ç]",
+
+                    "N": "[Ñ]",
+                    "C": "[Ç]",
+
+                    "": "[\\!@\\\$%\\^&*()='\"\\/<>:;\\.,\\?]",
+
+                    "_": "[\\s]"
+            ]
+
+            reps.each { k, v ->
+                fileName = (fileName.trim()).replaceAll(v, k)
+            }
+
+            fileName = fileName+"_"+new Date().format("mm_ss")+"." + "pdf"
+
+            def pathFile = path + File.separatorChar + fileName
+            def src = new File(pathFile)
+            def msn
+
+            if (src.exists()) {
+                def cer = Certificacion.get(params.id)
+                msn="Ya existe un archivo con ese nombre. Por favor cámbielo."
+
+                redirect(action: 'listaSolicitudes',params: [msn:msn])
+
+
+            } else {
+                def band = false
+                def usuario = Usro.get(session.usuario.id)
+                def cer = Certificacion.get(params.id)
+                /*Todo aqui validar quien puede*/
+                band = true
+
+                if(band){
+                    f.transferTo(new File(pathFile))
+                    cer.pathLiberacion=fileName
+                    cer.estado=4;
+                    cer.fechaLiberacion=new Date();
+                    def monto = params.montoLiberacion.toDouble()
+                    cer.montoLiberacion=monto
+                    cer.monto=cer.monto-monto
+                    cer=kerberosService.saveObject(cer,Certificacion,session.perfil,session.usuario,"aprobarCertificacion","certificacion",session)
+                    redirect(action: "listaSolicitudes")
+                }else{
+                    msn="Usted no tiene permisos para aprobar esta solicitud"
+                    if (params.tipo)
+                        redirect(action: "listaCertificados",params: [cer:cer,id: cer.asignacion.unidad.id])
+                    else
+                        redirect(action: 'listaSolicitudes',params: [msn:msn])
+                }
+            }
+        }else{
+            println "es empty??"
+        }
+    }
+
     def anularAval = {
         println "anular aval "+params
         def path = servletContext.getRealPath("/") + "certificaciones/"
@@ -503,7 +593,7 @@ class CertificacionController  extends app.seguridad.Shield{
 
                 if(band){
                     f.transferTo(new File(pathFile))
-                    cer.pathLiberacion=fileName
+                    cer.pathAnulacion=fileName
                     cer.estado=3;
                     cer.fechaRevisionAnulacion=new Date();
                     cer=kerberosService.saveObject(cer,Certificacion,session.perfil,session.usuario,"aprobarCertificacion","certificacion",session)
