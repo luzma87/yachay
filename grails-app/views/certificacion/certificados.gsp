@@ -119,6 +119,18 @@
                 </td>
                 <td></td>
             </g:if>
+            <g:if test="${cer.estado==3}">
+                <td  style="text-align: center;background: #eba597" >
+                    Anulado
+                </td>
+                <td></td>
+            </g:if>
+            <g:if test="${cer.estado==4}">
+                <td  style="text-align: center;;background: #d6eba9" >
+                    Liberado
+                </td>
+                <td></td>
+            </g:if>
         </tr>
     </g:each>
     </tbody>
