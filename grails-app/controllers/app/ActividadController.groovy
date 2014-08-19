@@ -24,14 +24,14 @@ class ActividadController {
         if (params.source == "create") {
             actividadInstance = new Actividad()
             actividadInstance.properties = params
-            title ="Crear Actividad de gasto corriente"
+            title = "Crear Actividad de gasto corriente"
         } else if (params.source == "edit") {
             actividadInstance = Actividad.get(params.id)
             if (!actividadInstance) {
                 flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'actividad.label', default: 'Actividad'), params.id])}"
                 redirect(action: "list")
             }
-            title ="Editar Actividad de gasto corriente"
+            title = "Editar Actividad de gasto corriente"
         }
 
         return [actividadInstance: actividadInstance, title: title, source: params.source]
@@ -52,12 +52,10 @@ class ActividadController {
                 if (!actividadInstance.hasErrors() && actividadInstance.save(flush: true)) {
                     flash.message = "${message(code: 'default.updated.message', args: [message(code: 'actividad.label', default: 'Actividad'), actividadInstance.id])}"
                     redirect(action: "show", id: actividadInstance.id)
-                }
-                else {
+                } else {
                     render(view: "form", model: [actividadInstance: actividadInstance, title: title, source: "edit"])
                 }
-            }
-            else {
+            } else {
                 flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'actividad.label', default: 'Actividad'), params.id])}"
                 redirect(action: "list")
             }
@@ -67,8 +65,7 @@ class ActividadController {
             if (actividadInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.created.message', args: [message(code: 'actividad.label', default: 'Actividad'), actividadInstance.id])}"
                 redirect(action: "show", id: actividadInstance.id)
-            }
-            else {
+            } else {
                 render(view: "form", model: [actividadInstance: actividadInstance, title: title, source: "create"])
             }
         }
@@ -90,12 +87,10 @@ class ActividadController {
             if (!actividadInstance.hasErrors() && actividadInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'actividad.label', default: 'Actividad'), actividadInstance.id])}"
                 redirect(action: "show", id: actividadInstance.id)
-            }
-            else {
+            } else {
                 render(view: "edit", model: [actividadInstance: actividadInstance])
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'actividad.label', default: 'Actividad'), params.id])}"
             redirect(action: "list")
         }
@@ -106,8 +101,7 @@ class ActividadController {
         if (!actividadInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'actividad.label', default: 'Actividad'), params.id])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
 
             def title = g.message(code: "default.show.label", args: ["Actividad"], default: "Show Actividad")
 
@@ -132,8 +126,7 @@ class ActividadController {
                 flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'actividad.label', default: 'Actividad'), params.id])}"
                 redirect(action: "show", id: params.id)
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'actividad.label', default: 'Actividad'), params.id])}"
             redirect(action: "list")
         }
