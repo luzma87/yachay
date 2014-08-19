@@ -429,7 +429,7 @@ class MarcoLogicoController extends app.seguridad.Shield {
             resp.properties = act.properties
             resp.marcoLogicoOriginal = act
             if (!resp.save(flush: true)) {
-                println "error al hacer el repaldo:: " + resp.errors
+                println "error al hacer el respaldo:: " + resp.errors
             } else {
                 println ">>>> respaldo de marco logico ${act.id}: ${resp.id}"
             }

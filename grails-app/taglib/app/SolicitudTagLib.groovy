@@ -56,7 +56,7 @@ class SolicitudTagLib {
 
             html += '<td class="label">Forma de pago</td>'
             html += '<td>'
-            html += (solicitud.formaPago?.descripcion ?: "")
+            html += (solicitud.formaPago ?: "")
             html += '</td>'
 
             html += '<td class="label">Plazo de ejecución</td>'
@@ -89,12 +89,12 @@ class SolicitudTagLib {
             html += '</td>'
             html += '</tr>'
 
-            html += '<tr>'
-            html += '<td class="label">Observaciones</td>'
-            html += '<td colspan="7">'
-            html += (solicitud.observaciones ?: "")
-            html += '</td>'
-            html += '</tr>'
+//            html += '<tr>'
+//            html += '<td class="label">Observaciones</td>'
+//            html += '<td colspan="7">'
+//            html += (solicitud.observaciones ?: "")
+//            html += '</td>'
+//            html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Archivo TDR (pdf)</td>'
@@ -120,117 +120,138 @@ class SolicitudTagLib {
         if (solicitud.estado != "P") {
             editable = false
         }
+
+        def editableGAF = editable && perfil.codigo == "GAF"
+        def editableGJ = editable && perfil.codigo == "GJ"
+        def editableGDP = editable && perfil.codigo == "GDP"
+
+        def js = ""
         def html = "No se encontró la solicitud a mostrar"
         if (solicitud) {
-            html = '<table width="100%" class="ui-widget-content ui-corner-all">'
+            html = "<style>"
+            html += ".collapsible {" +
+                    "cursor: pointer;" +
+                    "}"
+            html += "</style>"
+            html += '<table width="100%" class="ui-widget-content ui-corner-all">'
             html += '<thead>'
             html += '<tr>'
-            html += '<td colspan="3" class="ui-widget ui-widget-header ui-corner-all" style="padding: 3px;">'
+            html += '<td colspan="3" class="collapsible collapsed ui-widget ui-widget-header ui-corner-all" style="padding: 3px;" title="Click para ver las observaciones">'
             html += 'Gerencia Administrativa Financiera'
-            html += '</td>'
-            html += '</tr>'
-            html += '</thead>'
-            html += '<tbody>'
-            html += '<td style="width: 98px;" class="label">Observaciones</td>'
-            html += '<td style="width: 785px;">'
-            if (!editable) {
-                html += (solicitud.observacionesAdministrativaFinanciera ?: '- Sin observaciones-')
-            } else {
-                if (perfil.codigo == "GAF") {
-                    html += g.textArea(name: "observacionesAdministrativaFinanciera", "class": "ui-widget-content ui-corner-all",
-                            rows: "5", cols: "5", value: solicitud.observacionesAdministrativaFinanciera)
-                }
-            }
-            html += '</td>'
-            html += '<td style="width: 127px;">'
-            if (!editable) {
-                html += (solicitud.revisadoAdministrativaFinanciera ?
+            if (!editableGAF) {
+                html += " (" + (solicitud.revisadoAdministrativaFinanciera ?
                         'Revisado el ' + solicitud.revisadoAdministrativaFinanciera.format('dd-MM-yyyy') :
-                        'No revisado')
-            } else {
-                if (perfil.codigo == "GAF") {
-                    html += '<label class="label" for="gaf">Revisado'
-                    html += '<input type="checkbox" name="gaf" id="gaf" ' + (solicitud.revisadoAdministrativaFinanciera ? 'checked' : '') + '/>'
-                    html += '</label>'
-                }
+                        'No revisado') + ")"
             }
-            html += '</td>'
-            html += '</tbody>'
-            html += '</table>'
-
-            html += '<table width="100%" class="ui-widget-content ui-corner-all">'
-            html += '<thead>'
-            html += '<tr>'
-            html += '<td colspan="3" class="ui-widget ui-widget-header ui-corner-all" style="padding: 3px;">'
-            html += 'Gerencia Jurídica'
             html += '</td>'
             html += '</tr>'
             html += '</thead>'
             html += '<tbody>'
             html += '<td style="width: 98px;" class="label">Observaciones</td>'
-            html += '<td style="width: 785px;">'
-            if (!editable) {
-                html += (solicitud.observacionesJuridica ?: '- Sin observaciones-')
+            if (!editableGAF) {
+                html += '<td>'
+                html += (solicitud.observacionesAdministrativaFinanciera ?: '- Sin observaciones-')
+                html += '</td>'
             } else {
-                if (perfil.codigo == "GJ") {
-                    html += g.textArea(name: "observacionesJuridica", "class": "ui-widget-content ui-corner-all",
-                            rows: "5", cols: "5", value: solicitud.observacionesJuridica)
-                }
+                html += '<td style="width: 785px;">'
+                html += g.textArea(name: "observacionesAdministrativaFinanciera", "class": "ui-widget-content ui-corner-all",
+                        rows: "5", cols: "5", value: solicitud.observacionesAdministrativaFinanciera)
+                html += '</td>'
             }
-            html += '</td>'
-            html += '<td style="width: 127px;">'
-            if (!editable) {
-                html += (solicitud.revisadoJuridica ?
-                        'Revisado el ' + solicitud.revisadoJuridica.format('dd-MM-yyyy') :
-                        'No revisado')
-            } else {
-                if (perfil.codigo == "GJ") {
-                    html += '<label class="label" for="gj">Revisado'
-                    html += '<input type="checkbox" name="gj" id="gj" ' + (solicitud.revisadoJuridica ? 'checked' : '') + '/>'
-                    html += '</label>'
-                }
+            if (editableGAF) {
+                html += '<td style="width: 127px;">'
+                html += '<label class="label" for="gaf">Revisado'
+                html += '<input type="checkbox" name="gaf" id="gaf" ' + (solicitud.revisadoAdministrativaFinanciera ? 'checked' : '') + '/>'
+                html += '</label>'
+                html += '</td>'
             }
-            html += '</td>'
             html += '</tbody>'
             html += '</table>'
 
             html += '<table width="100%" class="ui-widget-content ui-corner-all">'
             html += '<thead>'
             html += '<tr>'
-            html += '<td colspan="3" class="ui-widget ui-widget-header ui-corner-all" style="padding: 3px;">'
+            html += '<td colspan="3" class="collapsible collapsed ui-widget ui-widget-header ui-corner-all" style="padding: 3px;" title="Click para ver las observaciones">'
+            html += 'Gerencia Jurídica'
+            if (!editableGJ) {
+                html += " (" + (solicitud.revisadoJuridica ?
+                        'Revisado el ' + solicitud.revisadoJuridica.format('dd-MM-yyyy') :
+                        'No revisado') + ")"
+            }
+            html += '</td>'
+            html += '</tr>'
+            html += '</thead>'
+            html += '<tbody>'
+            html += '<td style="width: 98px;" class="label">Observaciones</td>'
+            if (!editableGJ) {
+                html += '<td>'
+                html += (solicitud.observacionesJuridica ?: '- Sin observaciones-')
+                html += '</td>'
+            } else {
+                html += '<td style="width: 785px;">'
+                html += g.textArea(name: "observacionesJuridica", "class": "ui-widget-content ui-corner-all",
+                        rows: "5", cols: "5", value: solicitud.observacionesJuridica)
+                html += '</td>'
+            }
+            if (editableGJ) {
+                html += '<td style="width: 127px;">'
+                html += '<label class="label" for="gj">Revisado'
+                html += '<input type="checkbox" name="gj" id="gj" ' + (solicitud.revisadoJuridica ? 'checked' : '') + '/>'
+                html += '</label>'
+                html += '</td>'
+            }
+            html += '</tbody>'
+            html += '</table>'
+
+            html += '<table width="100%" class="ui-widget-content ui-corner-all">'
+            html += '<thead>'
+            html += '<tr>'
+            html += '<td colspan="3" class="collapsible collapsed ui-widget ui-widget-header ui-corner-all" style="padding: 3px;" title="Click para ver las observaciones">'
             html += 'Gerencia de Dirección de Proyectos'
+            if (!editableGDP) {
+                html += " (" + (solicitud.revisadoDireccionProyectos ?
+                        'Revisado el ' + solicitud.revisadoDireccionProyectos.format('dd-MM-yyyy') :
+                        'No revisado') + ")"
+            }
             html += '</td>'
             html += '</tr>'
             html += '</thead>'
             html += '<tbody>'
             html += '<td class="label" style="width: 98px;">Observaciones</td>'
-            html += '<td style="width: 785px;">'
-            if (!editable) {
+            if (!editableGDP) {
+                html += '<td>'
                 html += (solicitud.observacionesDireccionProyectos ?: '- Sin observaciones-')
+                html += '</td>'
             } else {
-                if (perfil.codigo == "GDP") {
-                    html += g.textArea(name: "observacionesDireccionProyectos", "class": "ui-widget-content ui-corner-all",
-                            rows: "5", cols: "5", value: solicitud.observacionesDireccionProyectos)
-                }
+                html += '<td style="width: 785px;">'
+                html += g.textArea(name: "observacionesDireccionProyectos", "class": "ui-widget-content ui-corner-all",
+                        rows: "5", cols: "5", value: solicitud.observacionesDireccionProyectos)
+                html += '</td>'
             }
-            html += '</td>'
-            html += '<td style="width: 127px;">'
-            if (!editable) {
-                html += (solicitud.revisadoDireccionProyectos ?
-                        'Revisado el ' + solicitud.revisadoDireccionProyectos.format('dd-MM-yyyy') :
-                        'No revisado')
-            } else {
-                if (perfil.codigo == "GDP") {
-                    html += '<label class="label" for="gdp">Revisado'
-                    html += '<input type="checkbox" name="gdp" id="gdp" ' + (solicitud.revisadoDireccionProyectos ? 'checked' : '') + '/>'
-                    html += '</label>'
-                }
+            if (editableGDP) {
+                html += '<td style="width: 127px;">'
+                html += '<label class="label" for="gdp">Revisado'
+                html += '<input type="checkbox" name="gdp" id="gdp" ' + (solicitud.revisadoDireccionProyectos ? 'checked' : '') + '/>'
+                html += '</label>'
+                html += '</td>'
             }
-            html += '</td>'
             html += '</tbody>'
             html += '</table>'
+
+            js = "<script type='text/javascript'>"
+            js += '$(".collapsed").each(function () {\n' +
+                    '   var $c = $(this);\n' +
+                    '   var $tbody = $c.parents("thead").siblings("tbody");\n' +
+                    '   $tbody.hide();\n' +
+                    '});'
+            js+='$(".collapsible").click(function() {' +
+                    '   var $c = $(this);\n' +
+                    '   var $tbody = $c.parents("thead").siblings("tbody");\n' +
+                    '   $tbody.toggle();\n' +
+                    '});'
+            js += "</script>"
         }
-        out << html
+        out << html + js
     }
 
     def aprobaciones = { attrs ->
@@ -399,7 +420,7 @@ class SolicitudTagLib {
             html += '<tr>'
             html += '<td class="label">Forma de pago</td>'
             html += '<td>'
-            html += (solicitud.formaPago?.descripcion ?: "")
+            html += (solicitud.formaPago ?: "")
             html += '</td>'
             html += '</tr>'
 
@@ -438,12 +459,12 @@ class SolicitudTagLib {
             html += '</td>'
             html += '</tr>'
 
-            html += '<tr>'
-            html += '<td class="label">Observaciones</td>'
-            html += '<td colspan="7">'
-            html += (solicitud.observaciones ?: "")
-            html += '</td>'
-            html += '</tr>'
+//            html += '<tr>'
+//            html += '<td class="label">Observaciones</td>'
+//            html += '<td colspan="7">'
+//            html += (solicitud.observaciones ?: "")
+//            html += '</td>'
+//            html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Archivo (pdf)</td>'
