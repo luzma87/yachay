@@ -9,6 +9,7 @@ class Asignacion implements Serializable {
     Componente componente
     double planificado
     double redistribucion=0
+    double priorizado=0
     UnidadEjecutora unidad
     String reubicada = "N"
     ProgramaPresupuestario programa
@@ -39,6 +40,7 @@ class Asignacion implements Serializable {
             padre    column: 'asgnpdre'
             meta column: 'asgnmeta'
             indicador column: 'asgnindi'
+            priorizado column: 'asgnprio'
         }
     }
     static constraints = {
