@@ -110,7 +110,7 @@
                     <tr class="prop ${hasErrors(bean: proyecto, field: 'unidadEjecutora', 'error')}">
 
                         <td class="label " valign="middle">
-                            U. Ejecutora
+                            Ejecutor
                         </td>
 
                         <td class="indicator mandatory">

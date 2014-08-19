@@ -1,7 +1,10 @@
 package app
 
+import app.seguridad.Usro
+
 class Solicitud {
 
+    Usro usuario
     UnidadEjecutora unidadEjecutora
     MarcoLogico actividad
     Date fecha
@@ -33,6 +36,7 @@ class Solicitud {
         version false
         columns {
             id column: 'slct__id'
+            usuario column: 'usro__id'
             unidadEjecutora column: 'unej__id'
             actividad column: 'mrlg__id'
             fecha column: 'slctfcha'

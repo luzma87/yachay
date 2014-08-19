@@ -13,7 +13,7 @@
 <div style="width: 1020px; margin-bottom:5px; margin-top:10px; padding: 4px;" class="ui-corner-all ui-widget-content">
     <span id="tipo" style="text-align: right; padding-left: 6px;">
         Tipo de acción
-        <g:each var="tp" in="${app.seguridad.Tpac.list([sort:id])}" status="i">
+        <g:each var="tp" in="${app.seguridad.Tpac.list([sort:'id'])}" status="i">
             <input class="rd_tipo" type="radio" id="tpac${i}" name="tpac" value="${tp.id}" ${(tp.id == 1) ? 'checked' : ''}/><label
                 for="tpac${i}">${tp.tipo}</label>
         </g:each>
@@ -38,7 +38,7 @@
             </div>
         </div>
         <br>
-    <div id="ajx" style="width:820px; padding-left: 20px; height: 520px;"></div>
+    <div id="ajx" style="width:910px; padding-left: 20px; height: 520px;"></div>
 
 </div>
 

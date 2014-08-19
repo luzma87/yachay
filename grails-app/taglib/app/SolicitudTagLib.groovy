@@ -1,6 +1,7 @@
 package app
 
 import app.seguridad.Prfl
+import app.seguridad.Usro
 
 class SolicitudTagLib {
     static namespace = 'slc'
@@ -20,36 +21,42 @@ class SolicitudTagLib {
             html += '<tr>'
             html += '<td class="label">Unidad requirente</td>'
             html += '<td colspan="3">'
-            html += solicitud.unidadEjecutora?.nombre
+            html += (solicitud.unidadEjecutora?.nombre ?: "")
             html += '</td>'
 
             html += '<td class="label">Proyecto</td>'
             html += '<td colspan="3">'
-            html += solicitud.actividad?.proyecto?.nombre
+            html += (solicitud.actividad?.proyecto?.nombre ?: "")
             html += '</td>'
             html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Componente</td>'
             html += '<td colspan="3" id="tdComponente">'
-            html += solicitud.actividad?.marcoLogico?.objeto
+            html += (solicitud.actividad?.marcoLogico?.objeto ?: "")
             html += '</td>'
 
             html += '<td class="label">Actividad</td>'
             html += '<td colspan="3" id="tdActividad">'
             html += solicitud.actividad?.objeto
+            def anio = Anio.findByAnio(new Date().format('yyyy'))
+            def tieneAsignacion = Asignacion.countByMarcoLogicoAndAnio(solicitud.actividad, anio) > 0
+            if (!tieneAsignacion) {
+                html += "<div class='ui-widget-content ui-corner-all ui-state-error' style='padding:5px;'> " +
+                        "La actividad no se encuentra en el POA </div>"
+            }
             html += '</td>'
             html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Nombre del proceso</td>'
             html += '<td colspan="3">'
-            html += solicitud.nombreProceso
+            html += (solicitud.nombreProceso ?: "")
             html += '</td>'
 
             html += '<td class="label">Forma de pago</td>'
             html += '<td>'
-            html += solicitud.formaPago?.descripcion
+            html += (solicitud.formaPago?.descripcion ?: "")
             html += '</td>'
 
             html += '<td class="label">Plazo de ejecución</td>'
@@ -71,28 +78,28 @@ class SolicitudTagLib {
 
             html += '<td class="label">Modalidad de contratación</td>'
             html += '<td>'
-            html += solicitud.tipoContrato?.descripcion
+            html += (solicitud.tipoContrato?.descripcion ?: "")
             html += '</td>'
             html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Objeto del contrato</td>'
             html += '<td colspan="7">'
-            html += solicitud.objetoContrato
+            html += (solicitud.objetoContrato ?: "")
             html += '</td>'
             html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Observaciones</td>'
             html += '<td colspan="7">'
-            html += solicitud.observaciones
+            html += (solicitud.observaciones ?: "")
             html += '</td>'
             html += '</tr>'
 
             html += '<tr>'
-            html += '<td class="label">Archivo (pdf)</td>'
+            html += '<td class="label">Archivo TDR (pdf)</td>'
             html += '<td colspan="7">'
-            html += g.link(action: "downloadFile", id: solicitud.id) { solicitud.pathPdfTdr }
+            html += g.link(controller: 'solicitud', action: "downloadFile", id: solicitud.id) { solicitud.pathPdfTdr }
             html += '</td>'
             html += '</tr>'
             html += '</table>'
@@ -233,7 +240,7 @@ class SolicitudTagLib {
         if (attrs.editable == "true" || attrs.editable == true || attrs.editable == 1 || attrs.editable == "1") {
             editable = true
         }
-        if (editable && !(perfil.codigo == "GT" || perfil.codigo == "GP")) {
+        if (editable && !(/*perfil.codigo == "GT" ||*/ perfil.codigo == "GP")) {
             editable = false
         }
 
@@ -285,6 +292,16 @@ class SolicitudTagLib {
             }
             html += '</td>'
             html += '</tr>'
+            if (aprobacion.pathPdf) {
+                html += '<tr>'
+                html += '<td class="label">Archivo (pdf)</td>'
+                html += '<td colspan="4">'
+                html += g.link(controller: 'solicitud', action: "downloadActa", id: aprobacion.id) {
+                    aprobacion.pathPdf
+                }
+                html += '</td>'
+                html += '</tr>'
+            }
             html += '</table>'
         }
         out << html
@@ -295,7 +312,7 @@ class SolicitudTagLib {
         def title = attrs.title ?: ""
 
         def logoPath = resource(dir: 'images', file: 'logo.jpg')
-        def rowspan = 4
+        def rowspan = 2
         def w = 65
         if (title != "") {
             rowspan += 1
@@ -310,12 +327,12 @@ class SolicitudTagLib {
         html += "<tr>"
         html += "<td class='ttl'>YACHAY EP</td>"
         html += "</tr>"
-        html += "<tr>"
-        html += "<td class='ttl'>GERENCIA DE PLANIFICACIÓN</td>"
-        html += "</tr>"
-        html += "<tr>"
-        html += "<td class='ttl'>DIRECCIÓN DE PLANIFICACIÓN</td>"
-        html += "</tr>"
+//        html += "<tr>"
+//        html += "<td class='ttl'>GERENCIA DE PLANIFICACIÓN</td>"
+//        html += "</tr>"
+//        html += "<tr>"
+//        html += "<td class='ttl'>DIRECCIÓN DE PLANIFICACIÓN</td>"
+//        html += "</tr>"
         if (title != "") {
             html += "<tr>"
             html += "<td class='ttl'>${title}</td>"
@@ -335,21 +352,21 @@ class SolicitudTagLib {
             html += '<tr>'
             html += '<td class="label">Unidad requirente</td>'
             html += '<td colspan="5">'
-            html += solicitud.unidadEjecutora?.nombre
+            html += (solicitud.unidadEjecutora?.nombre ?: "")
             html += '</td>'
             html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Proyecto</td>'
             html += '<td colspan="5">'
-            html += solicitud.actividad?.proyecto?.nombre
+            html += (solicitud.actividad?.proyecto?.nombre ?: "")
             html += '</td>'
             html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Componente</td>'
             html += '<td colspan="5">'
-            html += solicitud.actividad?.marcoLogico?.objeto
+            html += (solicitud.actividad?.marcoLogico?.objeto ?: "")
             html += '</td>'
             html += '</tr>'
 
@@ -357,20 +374,32 @@ class SolicitudTagLib {
             html += '<td class="label">Actividad</td>'
             html += '<td colspan="5">'
             html += solicitud.actividad?.objeto
+            def anio = Anio.findByAnio(new Date().format('yyyy'))
+            def tieneAsignacion = Asignacion.countByMarcoLogicoAndAnio(solicitud.actividad, anio) > 0
+            if (!tieneAsignacion) {
+                html += "<br/>* La actividad no se encuentra en el POA *"
+            }
+            html += '</td>'
+            html += '</tr>'
+
+            html += '<tr>'
+            html += '<td class="label">Núm. POA</td>'
+            html += '<td colspan="5">'
+            html += (solicitud.actividad?.numero ?: "")
             html += '</td>'
             html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Nombre del proceso</td>'
             html += '<td colspan="5">'
-            html += solicitud.nombreProceso
+            html += (solicitud.nombreProceso ?: "")
             html += '</td>'
             html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Forma de pago</td>'
             html += '<td>'
-            html += solicitud.formaPago?.descripcion
+            html += (solicitud.formaPago?.descripcion ?: "")
             html += '</td>'
             html += '</tr>'
 
@@ -398,21 +427,21 @@ class SolicitudTagLib {
             html += '<tr>'
             html += '<td class="label">Modalidad de contratación</td>'
             html += '<td colspan="3">'
-            html += solicitud.tipoContrato?.descripcion
+            html += (solicitud.tipoContrato?.descripcion ?: "")
             html += '</td>'
             html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Objeto del contrato</td>'
             html += '<td colspan="7">'
-            html += solicitud.objetoContrato
+            html += (solicitud.objetoContrato ?: "")
             html += '</td>'
             html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Observaciones</td>'
             html += '<td colspan="7">'
-            html += solicitud.observaciones
+            html += (solicitud.observaciones ?: "")
             html += '</td>'
             html += '</tr>'
 
@@ -500,22 +529,42 @@ class SolicitudTagLib {
             html += '<tr>'
             html += '<td class="label">Aprobación</td>'
             html += '<td>'
-            html += aprobacion.tipoAprobacion?.descripcion
+            html += (aprobacion.tipoAprobacion?.descripcion ?: "")
             html += '</td>'
             html += '</tr>'
             html += '<tr>'
             html += '<td class="label">Fondos</td>'
             html += '<td>'
-            html += aprobacion.fuente?.descripcion
+            html += (aprobacion.fuente?.descripcion ?: "")
             html += '</td>'
             html += '</tr>'
             html += '<tr>'
             html += '<td class="label">Observaciones</td>'
             html += '<td>'
-            html += aprobacion.observaciones
+            html += (aprobacion.observaciones ?: "")
             html += '</td>'
             html += '</tr>'
             html += '</table>'
+        }
+        out << html
+    }
+
+    def firmasReporte = { attrs ->
+        def firmas = attrs.firmas
+        def html = ''
+        if (firmas.size() > 0) {
+
+            def w = 100 / firmas.size()
+            html = "<table width='100%' style='margin-top:2cm;' cellspacing='20' >"
+            html += "<tr>"
+            firmas.each { firma ->
+                html += "<td width='${w}%' style='border-top: solid 1px black; text-align:center;'>"
+                html += firma.usuario.persona.nombre + " " + firma.usuario.persona.apellido
+                html += "<br/>" + firma.cargo
+                html += "</td>"
+            }
+            html += "</tr>"
+            html += "</table>"
         }
         out << html
     }

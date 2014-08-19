@@ -324,7 +324,7 @@
 
                                 <td class="labelshow">
                                     <g:message code="proyecto.codigoEsigef.label"
-                                               default="Código eSIGEF"/>
+                                               default="Código"/>
                                 </td>
 
                                 <td class="">

@@ -360,7 +360,7 @@ class EntidadController extends app.seguridad.Shield {
 
 
     def saveResponsable_ = {
-        println "SAVE RESPONSABLE " + params
+//        println "SAVE RESPONSABLE " + params
 
 //        params.each {
         //            println it
@@ -755,8 +755,8 @@ class EntidadController extends app.seguridad.Shield {
         redirect(action: "docsFromTree", params: [id: unidad.id])
     }
     def docsFromTreeDelete = {
-        println "DELETE DOC"
-        println params
+//        println "DELETE DOC"
+//        println params
         def unidad = UnidadEjecutora.get(params.unidad)
         def entidad = "APP"
         def path = servletContext.getRealPath("/") + "archivos/" + entidad
@@ -864,7 +864,7 @@ class EntidadController extends app.seguridad.Shield {
 
     def saveFromTree = {
 
-        println "Save from tree " + params
+//        println "Save from tree " + params
 
         if (params.esUsuario == "1") {
 //            println "save usro " + params
@@ -955,9 +955,9 @@ class EntidadController extends app.seguridad.Shield {
             }
         } //save usuario
         else if (params.esUsuario == "2") {
-            println "GUARDA PRESUPUESTO ENTIDAD "
-            println params
-            println ""
+//            println "GUARDA PRESUPUESTO ENTIDAD "
+//            println params
+//            println ""
             def unidad = UnidadEjecutora.get(params.unidad)
 
             def presupuestoUnidad = new PresupuestoUnidad()
@@ -1003,9 +1003,9 @@ class EntidadController extends app.seguridad.Shield {
 //            presupuestoUnidad.ejeProgramatico = EjeProgramatico.get(params.ejeProgramatico.id)
 //            presupuestoUnidad.objetivoEstrategico = ObjetivoEstrategicoProyecto.get(params.objetivoEstrategico.id)
 
-            println "\n\nGPR"
-            println presupuestoUnidad.objetivoGobiernoResultado
-            println "\n\n"
+//            println "\n\nGPR"
+//            println presupuestoUnidad.objetivoGobiernoResultado
+//            println "\n\n"
 
             presupuestoUnidad = kerberosService.saveObject(presupuestoUnidad, PresupuestoUnidad, session.perfil, session.usuario, actionName, controllerName, session)
             if ((presupuestoUnidad.errors.getErrorCount() == 0)) {

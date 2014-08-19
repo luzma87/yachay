@@ -41,6 +41,7 @@ class SolicitudController extends app.seguridad.Shield {
             solicitud = Solicitud.get(params.id.toLong())
         } else {
             solicitud.unidadEjecutora = unidadEjecutora
+            solicitud.usuario = usuario
         }
 
         /* upload del PDF */
@@ -196,7 +197,9 @@ class SolicitudController extends app.seguridad.Shield {
 
     def getDatosActividad = {
         def actividad = MarcoLogico.get(params.id.toLong())
-        render actividad.objeto + "||" + actividad.monto
+        def anio = Anio.findByAnio(new Date().format("yyyy"))
+        def asignaciones = Asignacion.countByMarcoLogicoAndAnio(actividad, anio)
+        render actividad.objeto + "||" + actividad.monto +"||"+asignaciones
     }
 
     def newActividad_ajax = {
@@ -211,6 +214,9 @@ class SolicitudController extends app.seguridad.Shield {
         def fechaInicio = new Date().parse("dd-MM-yyyy", params.fechaIni)
         def fechaFin = new Date().parse("dd-MM-yyyy", params.fechaFin)
 
+        params.monto = params.monto.replaceAll("\\.","")
+        params.monto= params.monto.replaceAll(",",".")
+
         actividad.proyecto = proyecto
         actividad.tipoElemento = tipoActividad
         actividad.marcoLogico = componente
@@ -221,7 +227,7 @@ class SolicitudController extends app.seguridad.Shield {
         actividad.fechaInicio = fechaInicio
         actividad.fechaFin = fechaFin
         actividad.responsable = unidadEjecutora
-        actividad.aporte = params.aporte.toDouble()
+//        actividad.aporte = params.aporte.toDouble()
         actividad.tieneAsignacion = "N"
         if (!actividad.save(flush: true)) {
             println "Error al guardar actividad: " + actividad.errors
@@ -272,7 +278,51 @@ class SolicitudController extends app.seguridad.Shield {
         }
     }
 
+    def downloadActa = {
+        def aprobacion = Aprobacion.get(params.id.toLong())
+        def path = servletContext.getRealPath("/") + "pdf/actasAprobacion/" + aprobacion.pathPdf
+        def tipo = aprobacion.pathPdf.split("\\.")
+        tipo = tipo[1]
+//            println "tipo " + tipo
+        switch (tipo) {
+            case "jpeg":
+            case "gif":
+            case "jpg":
+            case "bmp":
+            case "png":
+                tipo = "application/image"
+                break;
+            case "pdf":
+                tipo = "application/pdf"
+                break;
+            case "doc":
+            case "docx":
+            case "odt":
+                tipo = "application/msword"
+                break;
+            case "xls":
+            case "xlsx":
+                tipo = "application/vnd.ms-excel"
+                break;
+            default:
+                tipo = "application/pdf"
+                break;
+        }
+        try {
+            def file = new File(path)
+            def b = file.getBytes()
+            response.setContentType(tipo)
+            response.setHeader("Content-disposition", "attachment; filename=" + (aprobacion.pathPdf))
+            response.setContentLength(b.length)
+            response.getOutputStream().write(b)
+        } catch (e) {
+            println "error en download"
+            response.sendError(404)
+        }
+    }
+
     def ingreso = {
+        if(session.perfil.codigo == "RQ") {
         def usuario = Usro.get(session.usuario.id)
         def unidadEjecutora = usuario.unidad
         def solicitud = new Solicitud()
@@ -291,6 +341,14 @@ class SolicitudController extends app.seguridad.Shield {
         }
         title += " solicitud"
         return [unidadRequirente: unidadEjecutora, solicitud: solicitud, title: title]
+        }
+        else {
+            if(params.id) {
+                redirect(action: "show", id:params.id)
+            } else {
+                redirect(action:"list")
+            }
+        }
     }
 
     def revision = {
@@ -367,6 +425,67 @@ class SolicitudController extends app.seguridad.Shield {
             }
         } else {
             println "error al guardar aprobacion: " + aprobacion.errors
+        }
+        redirect(action: "show", id: aprobacion.solicitudId)
+    }
+
+    def uploadActa = {
+        def aprobacion = Aprobacion.get(params.id.toLong())
+
+        /* upload del PDF */
+        def path = servletContext.getRealPath("/") + "pdf/actasAprobacion/"
+        new File(path).mkdirs()
+        def f = request.getFile('pdf')
+        def okContents = [
+                'application/pdf': 'pdf',
+        ]
+        def nombre = ""
+        if (f && !f.empty) {
+            if (aprobacion.pathPdf) {
+                //si ya existe un archivo para esta aprobacion lo elimino
+                def oldFile = new File(path + aprobacion.pathPdf)
+                if (oldFile.exists()) {
+                    oldFile.delete()
+                }
+            }
+            def fileName = f.getOriginalFilename() //nombre original del archivo
+            def ext
+
+            def parts = fileName.split("\\.")
+            fileName = ""
+            parts.eachWithIndex { obj, i ->
+                if (i < parts.size() - 1) {
+                    fileName += obj
+                }
+            }
+            if (okContents.containsKey(f.getContentType())) {
+                ext = okContents[f.getContentType()]
+                fileName = fileName.size() < 40 ? fileName : fileName[0..39]
+                fileName = fileName.tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
+
+                nombre = fileName + "." + ext
+                def pathFile = path + nombre
+                def fn = fileName
+                def src = new File(pathFile)
+                def i = 1
+                while (src.exists()) {
+                    nombre = fn + "_" + i + "." + ext
+                    pathFile = path + nombre
+                    src = new File(pathFile)
+                    i++
+                }
+                try {
+                    f.transferTo(new File(pathFile)) // guarda el archivo subido al nuevo path
+                    aprobacion.pathPdf = nombre
+                    //println pathFile
+                } catch (e) {
+                    println "????????\n" + e + "\n???????????"
+                }
+            }
+        }
+        /* fin del upload */
+        if (!aprobacion.save(flush: true)) {
+            println aprobacion.errors
         }
         redirect(action: "show", id: aprobacion.solicitudId)
     }
