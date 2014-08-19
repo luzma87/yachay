@@ -114,7 +114,7 @@ class KerberosService {
                     def cn = dbConnectionService.getConnection()
                     listAudt.each {
                         try {
-                            println "sql " + it
+//                            println "sql " + it
                             if (!cn.execute(it)) {
                                 band = false
                                 //aqui se deberia hacer algo
@@ -227,7 +227,7 @@ class KerberosService {
 //                println "+++++++++++++++++++++++++++++++++="
                 sql = """insert into audt (audt__id,usro__id,prfl__id,audtaccn,audtctrl,reg_id,audttbla,audtcmpo,audtoldv,audtnewv,audtfcha,audtoprc)
                                 values (default,${usuario.id},${perfil.id},'${params.actionName}','${params.controllerName}',
-                                           ${old.id.toInteger()},'${dominio.getName()}','${it.key}','${anterior}',' BORRADO ','${new Date().format("yyyy/MM/dd hh:mm:ss")}','DELETE') """
+                                ${old.id.toInteger()},'${dominio.getName()}','${it.key}','${anterior}',' BORRADO ','${new Date().format("yyyy/MM/dd hh:mm:ss")}','DELETE') """
 
                 listAudt.add(sql)
                 sql = null

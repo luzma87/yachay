@@ -21,19 +21,19 @@ class SolicitudTagLib {
             html += '<tr>'
             html += '<td class="label">Unidad requirente</td>'
             html += '<td colspan="3">'
-            html += solicitud.unidadEjecutora?.nombre
+            html += (solicitud.unidadEjecutora?.nombre ?: "")
             html += '</td>'
 
             html += '<td class="label">Proyecto</td>'
             html += '<td colspan="3">'
-            html += solicitud.actividad?.proyecto?.nombre
+            html += (solicitud.actividad?.proyecto?.nombre ?: "")
             html += '</td>'
             html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Componente</td>'
             html += '<td colspan="3" id="tdComponente">'
-            html += solicitud.actividad?.marcoLogico?.objeto
+            html += (solicitud.actividad?.marcoLogico?.objeto ?: "")
             html += '</td>'
 
             html += '<td class="label">Actividad</td>'
@@ -51,12 +51,12 @@ class SolicitudTagLib {
             html += '<tr>'
             html += '<td class="label">Nombre del proceso</td>'
             html += '<td colspan="3">'
-            html += solicitud.nombreProceso
+            html += (solicitud.nombreProceso ?: "")
             html += '</td>'
 
             html += '<td class="label">Forma de pago</td>'
             html += '<td>'
-            html += solicitud.formaPago?.descripcion
+            html += (solicitud.formaPago?.descripcion ?: "")
             html += '</td>'
 
             html += '<td class="label">Plazo de ejecución</td>'
@@ -78,21 +78,21 @@ class SolicitudTagLib {
 
             html += '<td class="label">Modalidad de contratación</td>'
             html += '<td>'
-            html += solicitud.tipoContrato?.descripcion
+            html += (solicitud.tipoContrato?.descripcion ?: "")
             html += '</td>'
             html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Objeto del contrato</td>'
             html += '<td colspan="7">'
-            html += solicitud.objetoContrato
+            html += (solicitud.objetoContrato ?: "")
             html += '</td>'
             html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Observaciones</td>'
             html += '<td colspan="7">'
-            html += solicitud.observaciones
+            html += (solicitud.observaciones ?: "")
             html += '</td>'
             html += '</tr>'
 
@@ -352,21 +352,21 @@ class SolicitudTagLib {
             html += '<tr>'
             html += '<td class="label">Unidad requirente</td>'
             html += '<td colspan="5">'
-            html += solicitud.unidadEjecutora?.nombre
+            html += (solicitud.unidadEjecutora?.nombre ?: "")
             html += '</td>'
             html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Proyecto</td>'
             html += '<td colspan="5">'
-            html += solicitud.actividad?.proyecto?.nombre
+            html += (solicitud.actividad?.proyecto?.nombre ?: "")
             html += '</td>'
             html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Componente</td>'
             html += '<td colspan="5">'
-            html += solicitud.actividad?.marcoLogico?.objeto
+            html += (solicitud.actividad?.marcoLogico?.objeto ?: "")
             html += '</td>'
             html += '</tr>'
 
@@ -385,21 +385,21 @@ class SolicitudTagLib {
             html += '<tr>'
             html += '<td class="label">Núm. POA</td>'
             html += '<td colspan="5">'
-            html += solicitud.actividad?.numero
+            html += (solicitud.actividad?.numero ?: "")
             html += '</td>'
             html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Nombre del proceso</td>'
             html += '<td colspan="5">'
-            html += solicitud.nombreProceso
+            html += (solicitud.nombreProceso ?: "")
             html += '</td>'
             html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Forma de pago</td>'
             html += '<td>'
-            html += solicitud.formaPago?.descripcion
+            html += (solicitud.formaPago?.descripcion ?: "")
             html += '</td>'
             html += '</tr>'
 
@@ -427,21 +427,21 @@ class SolicitudTagLib {
             html += '<tr>'
             html += '<td class="label">Modalidad de contratación</td>'
             html += '<td colspan="3">'
-            html += solicitud.tipoContrato?.descripcion
+            html += (solicitud.tipoContrato?.descripcion ?: "")
             html += '</td>'
             html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Objeto del contrato</td>'
             html += '<td colspan="7">'
-            html += solicitud.objetoContrato
+            html += (solicitud.objetoContrato ?: "")
             html += '</td>'
             html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Observaciones</td>'
             html += '<td colspan="7">'
-            html += solicitud.observaciones
+            html += (solicitud.observaciones ?: "")
             html += '</td>'
             html += '</tr>'
 
@@ -529,19 +529,19 @@ class SolicitudTagLib {
             html += '<tr>'
             html += '<td class="label">Aprobación</td>'
             html += '<td>'
-            html += aprobacion.tipoAprobacion?.descripcion
+            html += (aprobacion.tipoAprobacion?.descripcion ?: "")
             html += '</td>'
             html += '</tr>'
             html += '<tr>'
             html += '<td class="label">Fondos</td>'
             html += '<td>'
-            html += aprobacion.fuente?.descripcion
+            html += (aprobacion.fuente?.descripcion ?: "")
             html += '</td>'
             html += '</tr>'
             html += '<tr>'
             html += '<td class="label">Observaciones</td>'
             html += '<td>'
-            html += aprobacion.observaciones
+            html += (aprobacion.observaciones ?: "")
             html += '</td>'
             html += '</tr>'
             html += '</table>'

@@ -33,7 +33,7 @@ td {
 
         <tr>
             <td class="label " valign="middle">
-                C&oacute;digo eSIGEF
+                C&oacute;digo
             </td>
             <td class="" valign="middle">
                 ${proyecto.codigoEsigef}
@@ -53,10 +53,10 @@ td {
 
         <tr>
             <td class="label " valign="middle">
-                Programa presupuestario
+                Descripción
             </td>
             <td class="" valign="middle">
-                ${proyecto.programaPresupuestario.descripcion}
+                ${proyecto.descripcion}
             </td>
         </tr>
 
