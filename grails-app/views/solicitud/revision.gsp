@@ -41,9 +41,9 @@
                     <div class="message ui-state-highlight ui-corner-all">${flash.message}</div>
                 </g:if>
 
-                <g:form action="saveRevision" name="frmRevision" id="${solicitud.id}">
+                <g:uploadForm action="saveRevision" name="frmRevision" id="${solicitud.id}">
                     <slc:showSolicitud solicitud="${solicitud}" editable="true" perfil="${perfil}"/>
-                </g:form>
+                </g:uploadForm>
             </div> <!-- body -->
         </div> <!-- dialog -->
 
