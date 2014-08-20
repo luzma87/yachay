@@ -8,6 +8,21 @@ import app.yachai.Categoria
 
 class SolicitudController extends app.seguridad.Shield {
 
+//    String pathBaseArchivos = servletContext.getRealPath("/") + "archivos/"
+//    String pathActas = pathBaseArchivos + "actasAprobacion/"
+//    String pathSolicitud = pathBaseArchivos + "solicitud/"
+//    String pathTdr = pathSolicitud + "tdr/"
+//    String pathOfertas = pathSolicitud + "ofertas/"
+//    String pathCostos = pathSolicitud + "analisisCostos/"
+
+    String pathBaseArchivos = servletContext.getRealPath("/") + "solicitudes/"
+    String pathActas = "actaAprobacion/"
+    String pathTdr = "tdr/"
+    String pathOfertas = "ofertas/"
+    String pathComparativo = "cuadroComparativo/"
+    String pathCostos = "analisisCostos/"
+
+
     def index = {
         redirect(action: 'list')
     }
@@ -19,6 +34,18 @@ class SolicitudController extends app.seguridad.Shield {
         params.max = Math.min(params.max ? params.int('max') : 25, 100)
 
         [solicitudInstanceList: Solicitud.list(params), solicitudInstanceTotal: Solicitud.count(), title: title, params: params]
+    }
+
+    def listAprobacion = {
+        def title = g.message(code: "default.list.label", args: ["Solicitud"], default: "Solicitud List")
+//        <g:message code="default.list.label" args="[entityName]" />
+
+        params.max = Math.min(params.max ? params.int('max') : 25, 100)
+
+        def list = Solicitud.findAllByIncluirReunion("S", params)
+        def count = Solicitud.countByIncluirReunion("S")
+
+        [solicitudInstanceList: list, solicitudInstanceTotal: count, title: title, params: params]
     }
 
     def show = {
@@ -41,11 +68,19 @@ class SolicitudController extends app.seguridad.Shield {
             solicitud = Solicitud.get(params.id.toLong())
         } else {
             solicitud.unidadEjecutora = unidadEjecutora
+        }
+        if (!solicitud.usuario) {
             solicitud.usuario = usuario
+        }
+        params.fecha = new Date().parse("dd-MM-yyyy", params.fecha)
+        solicitud.properties = params
+        if (!solicitud.save(flush: true)) {
+            println "error save1 solicitud " + solicitud.errors
         }
 
         /* upload del PDF */
-        def path = servletContext.getRealPath("/") + "pdf/solicitud/"
+//        def path = servletContext.getRealPath("/") + "pdf/solicitud/"
+        def path = pathBaseArchivos + "${solicitud.id}/" + pathTdr
         new File(path).mkdirs()
         def f = request.getFile('pdf')
         def okContents = [
@@ -68,39 +103,41 @@ class SolicitudController extends app.seguridad.Shield {
             parts.eachWithIndex { obj, i ->
                 if (i < parts.size() - 1) {
                     fileName += obj
+                } else {
+                    ext = obj
                 }
             }
-            if (okContents.containsKey(f.getContentType())) {
-                ext = okContents[f.getContentType()]
-                fileName = fileName.size() < 40 ? fileName : fileName[0..39]
-                fileName = fileName.tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
+//            if (okContents.containsKey(f.getContentType())) {
+//                ext = okContents[f.getContentType()]
+            fileName = fileName.size() < 40 ? fileName : fileName[0..39]
+            fileName = fileName.tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
 
-                nombre = fileName + "." + ext
-                def pathFile = path + nombre
-                def fn = fileName
-                def src = new File(pathFile)
-                def i = 1
-                while (src.exists()) {
-                    nombre = fn + "_" + i + "." + ext
-                    pathFile = path + nombre
-                    src = new File(pathFile)
-                    i++
-                }
-                try {
-                    f.transferTo(new File(pathFile)) // guarda el archivo subido al nuevo path
-                    params.pathPdfTdr = nombre
-                    //println pathFile
-                } catch (e) {
-                    println "????????\n" + e + "\n???????????"
-                }
+            nombre = fileName + "." + ext
+            def pathFile = path + nombre
+            def fn = fileName
+            def src = new File(pathFile)
+            def i = 1
+            while (src.exists()) {
+                nombre = fn + "_" + i + "." + ext
+                pathFile = path + nombre
+                src = new File(pathFile)
+                i++
             }
+            try {
+                f.transferTo(new File(pathFile)) // guarda el archivo subido al nuevo path
+                params.pathPdfTdr = nombre
+                //println pathFile
+            } catch (e) {
+                println "????????\n" + e + "\n???????????"
+            }
+//            }
         }
+        solicitud.pathPdfTdr = params.pathPdfTdr
         /* fin del upload */
-        params.fecha = new Date().parse("dd-MM-yyyy", params.fecha)
-        solicitud.properties = params
         if (!solicitud.save(flush: true)) {
             flash.message = "<h5>Ha ocurrido un error al crear la solicitud</h5>" + renderErrors(bean: solicitud)
         } else {
+            println solicitud.formaPago
             def perfilGAF = Prfl.findByCodigo("GAF")
             def perfilGJ = Prfl.findByCodigo("GJ")
             def perfilGDP = Prfl.findByCodigo("GDP")
@@ -131,6 +168,19 @@ class SolicitudController extends app.seguridad.Shield {
             }
         }
         redirect(action: 'show', id: solicitud.id)
+    }
+
+    def incluirReunion = {
+        def solicitud = Solicitud.get(params.id)
+        if (solicitud.incluirReunion != "S") {
+            solicitud.incluirReunion = "S"
+        } else {
+            solicitud.incluirReunion = "N"
+        }
+        if (!solicitud.save(flush: true)) {
+            println "error al incluir/excluir reunion " + solicitud.errors
+        }
+        redirect(action: "show", id: solicitud.id)
     }
 
     def getComponentesByProyecto = {
@@ -199,7 +249,7 @@ class SolicitudController extends app.seguridad.Shield {
         def actividad = MarcoLogico.get(params.id.toLong())
         def anio = Anio.findByAnio(new Date().format("yyyy"))
         def asignaciones = Asignacion.countByMarcoLogicoAndAnio(actividad, anio)
-        render actividad.objeto + "||" + actividad.monto +"||"+asignaciones
+        render actividad.objeto + "||" + actividad.monto + "||" + asignaciones
     }
 
     def newActividad_ajax = {
@@ -214,8 +264,8 @@ class SolicitudController extends app.seguridad.Shield {
         def fechaInicio = new Date().parse("dd-MM-yyyy", params.fechaIni)
         def fechaFin = new Date().parse("dd-MM-yyyy", params.fechaFin)
 
-        params.monto = params.monto.replaceAll("\\.","")
-        params.monto= params.monto.replaceAll(",",".")
+        params.monto = params.monto.replaceAll("\\.", "")
+        params.monto = params.monto.replaceAll(",", ".")
 
         actividad.proyecto = proyecto
         actividad.tipoElemento = tipoActividad
@@ -237,7 +287,8 @@ class SolicitudController extends app.seguridad.Shield {
 
     def downloadFile = {
         def solicitud = Solicitud.get(params.id.toLong())
-        def path = servletContext.getRealPath("/") + "pdf/solicitud/" + solicitud.pathPdfTdr
+//        def path = servletContext.getRealPath("/") + "pdf/solicitud/" + solicitud.pathPdfTdr
+        def path = pathBaseArchivos + "${solicitud.id}/" + pathTdr + solicitud.pathPdfTdr
         def tipo = solicitud.pathPdfTdr.split("\\.")
         tipo = tipo[1]
 //            println "tipo " + tipo
@@ -280,7 +331,8 @@ class SolicitudController extends app.seguridad.Shield {
 
     def downloadActa = {
         def aprobacion = Aprobacion.get(params.id.toLong())
-        def path = servletContext.getRealPath("/") + "pdf/actasAprobacion/" + aprobacion.pathPdf
+//        def path = servletContext.getRealPath("/") + "pdf/actasAprobacion/" + aprobacion.pathPdf
+        def path = pathBaseArchivos + "${aprobacion.solicitud.id}/" + pathActas + aprobacion.pathPdf
         def tipo = aprobacion.pathPdf.split("\\.")
         tipo = tipo[1]
 //            println "tipo " + tipo
@@ -322,31 +374,30 @@ class SolicitudController extends app.seguridad.Shield {
     }
 
     def ingreso = {
-        if(session.perfil.codigo == "RQ") {
-        def usuario = Usro.get(session.usuario.id)
-        def unidadEjecutora = usuario.unidad
-        def solicitud = new Solicitud()
-        def title = "Nueva"
-        if (params.id) {
-            solicitud = solicitud.get(params.id)
-            if (solicitud.estado == 'A') {
-                redirect(action: "show", id: solicitud.id)
-                return
+        if (session.perfil.codigo == "RQ") {
+            def usuario = Usro.get(session.usuario.id)
+            def unidadEjecutora = usuario.unidad
+            def solicitud = new Solicitud()
+            def title = "Nueva"
+            if (params.id) {
+                solicitud = solicitud.get(params.id)
+                if (solicitud.estado == 'A') {
+                    redirect(action: "show", id: solicitud.id)
+                    return
+                }
+                title = "Modificar"
+                if (!solicitud) {
+                    flash.message = "No se encontró la solicitud"
+                    solicitud = new Solicitud()
+                }
             }
-            title = "Modificar"
-            if (!solicitud) {
-                flash.message = "No se encontró la solicitud"
-                solicitud = new Solicitud()
-            }
-        }
-        title += " solicitud"
-        return [unidadRequirente: unidadEjecutora, solicitud: solicitud, title: title]
-        }
-        else {
-            if(params.id) {
-                redirect(action: "show", id:params.id)
+            title += " solicitud"
+            return [unidadRequirente: unidadEjecutora, solicitud: solicitud, title: title]
+        } else {
+            if (params.id) {
+                redirect(action: "show", id: params.id)
             } else {
-                redirect(action:"list")
+                redirect(action: "list")
             }
         }
     }
@@ -433,7 +484,8 @@ class SolicitudController extends app.seguridad.Shield {
         def aprobacion = Aprobacion.get(params.id.toLong())
 
         /* upload del PDF */
-        def path = servletContext.getRealPath("/") + "pdf/actasAprobacion/"
+//        def path = servletContext.getRealPath("/") + "pdf/actasAprobacion/"
+        def path = pathBaseArchivos + "${aprobacion.solicitud.id}/" + pathActas
         new File(path).mkdirs()
         def f = request.getFile('pdf')
         def okContents = [

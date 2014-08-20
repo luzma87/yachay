@@ -94,6 +94,16 @@ class EntidadController extends app.seguridad.Shield {
         }
 
         tree += "<ul type='unej'>"
+
+        usros.each { usro ->
+            clase = ""
+            rel = "usro"
+
+            tree += "<li id='usro_" + usro.id + "' class='usro " + clase + "' rel='" + rel + "'>"
+            tree += "<a href='#' id='link_usro_" + usro.id + "' class='label_arbol'>" + usro.persona.nombre + " " + usro.persona.apellido + "</a>"
+            tree += "</li>"
+        }
+
         unej1.each { unej ->
             def hijos = UnidadEjecutora.findAllByPadre(unej)
             def uss = []
@@ -115,15 +125,6 @@ class EntidadController extends app.seguridad.Shield {
 
             tree += "<li id='unej_" + unej.id + "' class='unej " + clase + " " + clUs + "' rel='" + rel + "'>"
             tree += "<a href='#' id='link_unej_" + unej.id + "' class='label_arbol'>" + unej.nombre + "</a>"
-            tree += "</li>"
-        }
-
-        usros.each { usro ->
-            clase = ""
-            rel = "usro"
-
-            tree += "<li id='usro_" + usro.id + "' class='usro " + clase + "' rel='" + rel + "'>"
-            tree += "<a href='#' id='link_usro_" + usro.id + "' class='label_arbol'>" + usro.persona.nombre + " " + usro.persona.apellido + "</a>"
             tree += "</li>"
         }
         proys.each { proy ->
