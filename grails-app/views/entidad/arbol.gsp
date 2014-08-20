@@ -516,7 +516,7 @@
                     "plugins"     : ["themes", "html_data", "ui", "hotkeys", "cookies", "types", "contextmenu", "json_data", "search"/*, "crrm", "wholerow"*/],
                     open_parents  : false,
                     "html_data"   : {
-                        "data" : "<ul type='padre'><li id='padre_' class='padre jstree-closed' rel='padre'><a href='#' class='label_arbol'>Entidades</a></ul>",
+                        "data" : "<ul type='padre'><li id='padre_' class='padre jstree-closed' rel='padre'><a href='#' class='label_arbol'>Estructura institucional</a></ul>",
                         "ajax" : {
                             "url"   : "${createLink(action: 'loadTreePart')}",
                             "data"  : function (n) {

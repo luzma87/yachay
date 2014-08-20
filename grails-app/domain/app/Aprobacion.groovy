@@ -1,16 +1,5 @@
 package app
 
-/*
- aprb__id | integer                 | not null default nextval('aprb_aprb__id_seq'::regclass)
- slct__id | integer                 |
- tpap__id | integer                 |
- fnte__id | integer                 |
- aprbfcha | date                    |
- aprbobsr | character varying(1023) |
- aprb_pdf | character varying(255)  |
-
- */
-
 class Aprobacion {
 
     Solicitud solicitud

@@ -136,6 +136,7 @@
                         <th>Memorando</th>
                         <th>Monto</th>
                         <th>Estado</th>
+                        <th></th>
                         </thead>
                         <tbody>
                         <g:each in="${m.value}" var="cer">
@@ -143,7 +144,18 @@
                                 <td>${cer.fecha.format("dd/MM/yyyy")}</td>
                                 <td style="width: 160px;">${cer.usuario.persona.nombre+" "+cer.usuario.persona.apellido}</td>
                                 <td style="width: 200px;">${cer.concepto}</td>
-                                <td style="font-weight: bold">${(cer.fechaRevisionAnulacion)?"Anulación":"Aprobación"}</td>
+                                <g:if test="${cer.fechaLiberacion}">
+                                    <td style="font-weight: bold">Liberación</td>
+                                </g:if>
+                                <g:elseif test="${cer.fechaRevisionAnulacion}">
+                                    <td style="font-weight: bold">
+                                    Anulación
+                                    </td>
+                                </g:elseif>
+                                <g:else>
+                                    <td style="font-weight: bold">Aprobación</td>
+                                </g:else>
+
                                 <td style="text-align: center">${cer.asignacion.presupuesto.numero}</td>
                                 <td style="text-align: center">${cer.memorandoSolicitud}</td>
                                 <td style="text-align: right"><g:formatNumber number="${cer.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
@@ -156,16 +168,27 @@
                                         </g:else>
 
                                     </td>
+                                    <td>
+                                        <a href="#" class="lib" cer="${cer.id}" max="${cer.monto}">Liberar</a>
+                                    </td>
                                 </g:if>
                                 <g:if test="${cer.estado==2}">
                                     <td  style="text-align: center;background: #eba597" >
                                         Negado
                                     </td>
+                                    <td></td>
                                 </g:if>
                                 <g:if test="${cer.estado==3}">
                                     <td  style="text-align: center;background: #eba597" >
                                         Anulado
                                     </td>
+                                    <td></td>
+                                </g:if>
+                                <g:if test="${cer.estado==4}">
+                                    <td  style="text-align: center;background: #d6eba9" >
+                                        Liberado
+                                    </td>
+                                    <td></td>
                                 </g:if>
                             </tr>
                         </g:each>
@@ -203,6 +226,16 @@
         <b>Documento de respaldo:</b><input type="file" id="archivo" name="archivo" style="display: inline-block">
     </g:form>
 </div>
+<div id="liberar">
+    <g:form action="liberarAval" class="frmLiberar" enctype="multipart/form-data">
+        <input type="hidden" id="cerLib" name="id">
+        <input type="hidden" id="max" name="max">
+        <input type="hidden" id="usu" name="usu" value="${session.usuario}">
+        <div style="width: 150px;display: inline-block"><b>Monto: </b></div><input type="text" name="montoLiberacion" class="ui-corner-all ui-widget-content" > Monto certificado: <span id="maxSpan"> </span><br>
+        <div style="width: 150px;display: inline-block"><b>No. Contrato</b></div><input type="text" name="numeroContrato" class="ui-corner-all ui-widget-content"  ><br><br>
+        <div style="width: 150px;display: inline-block;font-weight: bold">Documento de respaldo:</div><input type="file" id="archivo" name="archivo" style="display: inline-block">
+    </g:form>
+</div>
 <div id="verActividad">
     <div id="contenidoAct"></div>
 </div>
@@ -230,7 +263,12 @@
             });
 
         });
-
+        $(".lib").button({icons:{ primary:"ui-icon-pencil"},text:false}).click(function(){
+            $("#cerLib").val($(this).attr("cer"))
+            $("#max").val($(this).attr("max"))
+            $("#maxSpan").html($(this).attr("max"))
+            $("#liberar").dialog("open")
+        });
         $(".aprobar").button({icons:{ primary:"ui-icon-check"},text:false}).click(function(){
             $("#cerAprob").val($(this).attr("cer"))
             $("#memorando").val($(this).attr("memo"))
@@ -310,6 +348,28 @@
                 }
             }
         });
+
+        $("#liberar").dialog({
+            autoOpen:false,
+            resizable:false,
+            title:'Liberar Aval',
+            modal:true,
+            draggable:true,
+            width:540,
+            height:350,
+            position:'center',
+            open:function (event, ui) {
+                $(".ui-dialog-titlebar-close").hide();
+            },
+            buttons:{
+                "Cerrar":function () {
+                    $("#liberar").dialog("close")
+                },"Liberar":function(){
+                    $(".frmLiberar").submit()
+                }
+            }
+        });
+
         $("#anular").dialog({
             autoOpen:false,
             resizable:false,

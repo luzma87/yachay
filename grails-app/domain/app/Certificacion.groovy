@@ -12,8 +12,10 @@ class Certificacion {
     String conceptoAnulacion
     String pathSolicitudAnulacion
     String pathLiberacion
+    String pathAnulacion
     String numeroContrato
-    double  monto
+    double montoLiberacion=0
+    double monto
     String concepto
     String observaciones
     String memorandoSolicitud
@@ -37,6 +39,7 @@ class Certificacion {
             fecha column: 'crtffcha'
             fechaRevision column: 'crtffcrv'
             monto column: 'crtfmnto'
+            montoLiberacion column: 'crtfmnlb'
             concepto column: 'crtfcnct'
             observaciones column: 'crtfobsr'
             estado column: 'crtfetdo'
@@ -50,6 +53,7 @@ class Certificacion {
             conceptoAnulacion column: 'crtfcpan'
             pathSolicitudAnulacion column: 'crtfphsa'
             pathLiberacion column: 'ctrfptlb'
+            pathLiberacion column: 'ctrfptnl'
             numeroContrato column: 'crtfnmct'
             fechaRevisionAnulacion column: 'crtffcra'
         }
@@ -67,8 +71,8 @@ class Certificacion {
         memorandoCertificado(blank: true,nullable: true,size: 1..40)
         acuerdo(blank: true,nullable: true,size: 1..40)
         archivo(blank: true,nullable: true,size: 1..500)
-        pathSolicitud(blank: true,nullable: true,size: 1..500)
         pathSolicitud (blank:true,nullable: true,size: 1..500)
+        pathAnulacion (blank:true,nullable: true,size: 1..500)
         fechaAnulacion (blank:true,nullable: true)
         fechaLiberacion (blank:true,nullable: true)
         conceptoAnulacion (blank:true,nullable: true,size: 1..1024)

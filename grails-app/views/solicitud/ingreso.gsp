@@ -81,21 +81,21 @@
     </head>
 
     <body>
-%{--
-        <div class="">
-            <p>
-                Seleccione un proyecto para cargar sus componentes, seleccione un componente para cargar sus actividades.
-            </p>
+        %{--
+                <div class="">
+                    <p>
+                        Seleccione un proyecto para cargar sus componentes, seleccione un componente para cargar sus actividades.
+                    </p>
 
-            <p>
-                Las actividades marcadas con un <strong>(*)</strong> no se encuentran en el POA y serán automáticamente ingresadas.
-            </p>
+                    <p>
+                        Las actividades marcadas con un <strong>(*)</strong> no se encuentran en el POA y serán automáticamente ingresadas.
+                    </p>
 
-            <p>
-                Puede también crear una nueva actividad.
-            </p>
-        </div>
---}%
+                    <p>
+                        Puede también crear una nueva actividad.
+                    </p>
+                </div>
+        --}%
 
         <div class="ui-widget-content ui-state-error ui-corner-all ui-helper-hidden" id="divPoa" style="padding:5px; margin-bottom: 10px;">
             <p>La actividad seleccionada no se encuentra en el POA</p>
@@ -103,6 +103,23 @@
 
         <g:uploadForm action="save" method="post" name="frmSolicitud" id="${solicitud.id}">
             <table width="100%">
+                <g:if test="${solicitud.id}">
+                    <tr>
+                        <td colspan="4" style="padding-bottom: 15px; font-size: larger; font-weight: bold;">
+                            <g:if test="${solicitud.incluirReunion == 'S'}">
+                                Se incluirá en la próxima reunión de aprobación
+
+                                <a href="#" class="button" id="btnIncluir" data-tipo="N">No incluir</a>
+                            </g:if>
+                            <g:else>
+                                No se incluirá en la próxima reunión de aprobación
+
+                                <a href="#" class="button" id="btnIncluir" data-tipo="S">Incluir</a>
+                            </g:else>
+                        </td>
+                    </tr>
+                </g:if>
+
                 <tr>
                     <td class="label">Unidad requirente</td>
                     <td colspan="3">
@@ -145,8 +162,8 @@
                 <tr>
                     <td class="label">Forma de pago</td>
                     <td>
-                        <g:select name="formaPago.id" id="selFormaPago" from="${FormaPago.list([sort: 'descripcion'])}"
-                                  optionKey="id" optionValue="descripcion" class="requiredCmb" value="${solicitud.formaPagoId}"/>
+                        <g:textField class="required wide field ui-widget-content ui-corner-all"
+                                     name="formaPago" title="Forma de pago" value="${solicitud.formaPago}"/>
                     </td>
 
                     <td class="label">Plazo de ejecución</td>
@@ -184,16 +201,16 @@
                     </td>
                 </tr>
 
-                <tr>
-                    <td class="label">Observaciones</td>
-                    <td colspan="7">
-                        <g:textArea name="observaciones" rows="4" cols="115" class="ta ui-widget-content ui-corner-all"
-                                    value="${solicitud.observaciones}"/>
-                    </td>
-                </tr>
+                %{--<tr>--}%
+                    %{--<td class="label">Observaciones</td>--}%
+                    %{--<td colspan="7">--}%
+                        %{--<g:textArea name="observaciones" rows="4" cols="115" class="ta ui-widget-content ui-corner-all"--}%
+                                    %{--value="${solicitud.observaciones}"/>--}%
+                    %{--</td>--}%
+                %{--</tr>--}%
 
                 <tr>
-                    <td class="label">PDF T.D.R.</td>
+                    <td class="label">T.D.R.</td>
                     <td colspan="7">
                         <input type="file" name="pdf" class="${solicitud.pathPdfTdr ? '' : 'required'}"/>
                         <g:if test="${solicitud.pathPdfTdr}">
@@ -203,6 +220,18 @@
                         </g:if>
                     </td>
                 </tr>
+
+                %{--<tr>--}%
+                %{--<td class="label">Oferta 1</td>--}%
+                %{--<td colspan="7">--}%
+                %{--<input type="file" name="pdf" />--}%
+                %{--<g:if test="${solicitud.pathPdfTdr}">--}%
+                %{--<br/>--}%
+                %{--Archivo actual:--}%
+                %{--${solicitud.pathPdfTdr}--}%
+                %{--</g:if>--}%
+                %{--</td>--}%
+                %{--</tr>--}%
 
                 <tr>
                     <td colspan="8" style="text-align: right;">
@@ -246,7 +275,7 @@
                         <tr>
                             <td class="label">Monto</td>
                             <td>
-                                <g:textField name="nuevoMonto" class="required number2 ui-widget-content ui-corner-all" />
+                                <g:textField name="nuevoMonto" class="required number2 ui-widget-content ui-corner-all"/>
                             </td>
                         </tr>
                         <tr>
@@ -261,14 +290,14 @@
                                 <g:textField name="fechaFin" class="required datepicker nuevaActividad ui-widget-content ui-corner-all"/>
                             </td>
                         </tr>
-%{--
-                        <tr>
-                            <td class="label">Aporte</td>
-                            <td>
-                                <g:textField name="nuevoAporte" class="required number2 nuevaActividad ui-widget-content ui-corner-all"/>
-                            </td>
-                        </tr>
---}%
+                        %{--
+                                                <tr>
+                                                    <td class="label">Aporte</td>
+                                                    <td>
+                                                        <g:textField name="nuevoAporte" class="required number2 nuevaActividad ui-widget-content ui-corner-all"/>
+                                                    </td>
+                                                </tr>
+                        --}%
                     </table>
                 </form>
             </div>
@@ -331,7 +360,7 @@
                             $("#montoSolicitado").val(number_format(parts[1], 2, '.', ''))
                                     .attr("max2", number_format(parts[1], 2, '.', ''))
                                     .setMask('decimal');
-                            if(parts[2] == "0") {
+                            if (parts[2] == "0") {
                                 $("#divPoa").show();
                             } else {
                                 $("#divPoa").hide();
@@ -369,6 +398,34 @@
                     }
                 }).click(function () {
                     myForm.submit();
+                    return false;
+                });
+
+                $("#btnIncluir").click(function () {
+                    var txt = "¿Está seguro de querer ";
+                    if ($(this).data("tipo") == "S") {
+                        txt += "incluir esta solicitud en la próxima reunión de aprobación?";
+                    } else {
+                        txt += "quitar esta solicitud de la próxima reunión de aprobación?";
+                    }
+                    $.box({
+                        imageClass : "box_info",
+                        text       : txt,
+                        title      : "Confirmación",
+                        iconClose  : false,
+                        dialog     : {
+                            resizable     : false,
+                            draggable     : false,
+                            closeOnEscape : false,
+                            buttons       : {
+                                "Aceptar"  : function () {
+                                    location.href = "${createLink(action:'incluirReunion')}/${solicitud.id}"
+                                },
+                                "Cancelar" : function () {
+                                }
+                            }
+                        }
+                    });
                     return false;
                 });
 
@@ -480,16 +537,6 @@
                     errorElement   : "em",
                     errorClass     : 'error',
                     validClass     : 'valid',
-                    rules          : {
-                        pdf : {
-                            accept : "pdf"
-                        }
-                    },
-                    messages       : {
-                        pdf : {
-                            accept : "Por favor seleccione un archivo PDF"
-                        }
-                    },
                     errorPlacement : function (error, element) {
                         // Set positioning based on the elements position in the form
                         var elem = $(element),

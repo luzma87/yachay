@@ -283,6 +283,15 @@ class AsignacionController extends app.seguridad.Shield {
 
     }
 
+    def guardarPrio = {
+        println "params "+params
+        def asg = Asignacion.get(params.id)
+        def monto = params.prio.toDouble()
+        asg.priorizado=monto
+        asg.save(flush: true)
+        render "ok"
+    }
+
     def asignacionesCorrientes = {
 
         def unidad = UnidadEjecutora.get(params.id)
@@ -924,6 +933,36 @@ class AsignacionController extends app.seguridad.Shield {
             return 0
         }
     }
+    def guardarPrasPrio(asg) {
+        if (asg) {
+            def total = asg.priorizado
+            def valor = (total / 12).toFloat().round(2)
+            def residuo = 0
+            if (valor * 12 != total) {
+                residuo = (total.toDouble() - valor.toDouble() * 12).toFloat().round(2)
+            }
+            println "total " + total + " valor " + valor + " res " + residuo
+//            println "calc "+ (valor.toDouble()*12)
+//            println "calc 2 "+ (total-valor*12).toFloat().round(2)
+
+            12.times {
+                def mes = Mes.get(it + 1)
+                ProgramacionAsignacion.findByAsignacionAndMes(asg, mes)?.delete(flush: true)
+                def programacion = new ProgramacionAsignacion()
+                programacion.asignacion = asg
+                programacion.mes = mes
+                if (it < 11) {
+                    programacion.valor = valor
+                } else {
+                    programacion.valor = valor + residuo
+                }
+                programacion = kerberosService.saveObject(programacion, ProgramacionAsignacion, session.perfil, session.usuario, "guardarAsignacion", "asignacion", session)
+            }
+            return asg.id
+        } else {
+            return 0
+        }
+    }
 
     def guardarPras(asg,unidad) {
         println "guardar pras! mod inv"
@@ -1136,6 +1175,14 @@ class AsignacionController extends app.seguridad.Shield {
             dist=DistribucionAsignacion.get(params.dist)
         render(view: 'crear', model: ['asignacionInstance': asgnInstance, 'fuentes': listaFuentes,'dist':dist])
     }
+
+    def agregaAsignacionPrio = {
+        def listaFuentes = Financiamiento.findAllByProyectoAndAnio(Proyecto.get(params.proy), Anio.get(params.anio)).fuente
+        def asgnInstance = Asignacion.get(params.id)
+
+       return ['asignacionInstance': asgnInstance, 'fuentes': listaFuentes]
+    }
+
     def agregaAsignacionMod = {
         println "parametros agregaAsignacion mod:" + params
         def fuentes = Fuente.list([sort: 'descripcion'])
@@ -1187,6 +1234,58 @@ class AsignacionController extends app.seguridad.Shield {
                 if (nueva.errors.getErrorCount() == 0) {
                     println "crea la progrmaación de " + nueva.id
                     resultado += guardarPras(nueva)
+                } else {
+                    resultado = 0
+                }
+            }
+            render(nueva.id)
+        }
+
+    }
+
+    def creaHijoPrio = {
+        println "parametros creaHijo:" + params
+        if (params.id){
+            def nueva = new Asignacion()
+            def valor = params.valor.toFloat()
+            def asgn = Asignacion.get(params.id)
+            def fnte = Fuente.get(params.fuente)
+            def prsp = Presupuesto.get(params.partida)
+            def resultado = 0
+            // debe borrar el registro actual de pras y crear uno nuevo con los nuevos valores
+            ProgramacionAsignacion.findAllByAsignacion(Asignacion.get(params.id)).each {
+                //println "proceso la asignación ${it}"
+                def p = [id: it.id, controllerName: 'asignacion', actionName: 'creaHijo']
+                //println "parametros de borrado: " + p
+                kerberosService.delete(p, ProgramacionAsignacion, session.perfil, session.usuario)
+            }
+            asgn.priorizado -= valor
+            asgn = kerberosService.saveObject(asgn, Asignacion, session.perfil, session.usuario, "agregaAsignacionPrio", "asignacion", session)
+            if (asgn.errors.getErrorCount() == 0) {
+                resultado += guardarPras(asgn)
+            } else {
+                resultado = 0
+            }
+            if (resultado) {
+                nueva.marcoLogico=asgn.marcoLogico
+                nueva.programa=asgn.programa
+                nueva.actividad=asgn.actividad
+                nueva.anio=asgn.anio
+                nueva.indicador=asgn.indicador
+                nueva.meta=asgn.meta
+                nueva.componente=asgn.componente
+                nueva.padre = asgn
+                nueva.fuente = fnte
+                nueva.presupuesto = prsp
+                nueva.planificado = valor
+                nueva.priorizado=valor
+                nueva.unidad=asgn.unidad
+
+//            println "pone padre: ${nueva.padre}  ${nueva.unidad}"
+                nueva = kerberosService.saveObject(nueva, Asignacion, session.perfil, session.usuario, "agregaAsignacion", "asignacion", session)
+                if (nueva.errors.getErrorCount() == 0) {
+                    println "crea la progrmaación de " + nueva.id
+                    resultado += guardarPrasPrio(nueva)
                 } else {
                     resultado = 0
                 }
@@ -1391,6 +1490,33 @@ class AsignacionController extends app.seguridad.Shield {
             }
             if (pdre.errors.getErrorCount() == 0) {
                 guardarPras(pdre)
+            }
+            render("ok")
+        }else{
+            render("Error")
+        }
+    }
+    def borrarAsignacionPrio = {
+        println "parametros borrarAsignacion:" + params
+        def asgn = Asignacion.get(params.id)
+        def pdre = Asignacion.get(asgn.padre.id)
+        def p = [:]
+        // debe borrar el registro actual de pras y crear uno nuevo con los nuevos valores
+        ProgramacionAsignacion.findAllByAsignacion(asgn).each {
+            p = [id: it.id, controllerName: 'asignacion', actionName: 'borrarAsignacion']
+            kerberosService.delete(p, ProgramacionAsignacion, session.perfil, session.usuario)
+        }
+        p = [id: asgn.id, controllerName: 'asignacion', actionName: 'borrarAsignacion']
+        def del = kerberosService.delete(p, Asignacion, session.perfil, session.usuario)
+        if (del){
+            pdre.priorizado += asgn.priorizado
+            pdre = kerberosService.saveObject(pdre, Asignacion, session.perfil, session.usuario, "agregaAsignacion", "asignacion", session)
+            ProgramacionAsignacion.findAllByAsignacion(pdre).each {
+                p = [id: it.id, controllerName: 'asignacion', actionName: 'borrarAsignacion']
+                kerberosService.delete(p, ProgramacionAsignacion, session.perfil, session.usuario)
+            }
+            if (pdre.errors.getErrorCount() == 0) {
+                guardarPrasPrio(pdre)
             }
             render("ok")
         }else{

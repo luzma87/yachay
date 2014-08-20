@@ -21,11 +21,24 @@ class Solicitud {
     TipoContrato tipoContrato
     String nombreProceso
     String objetoContrato
-    FormaPago formaPago
+    String formaPago
     Integer plazoEjecucion
 
     String estado = "P" // P->pendiente, se puede modificar y revisar
     // A->ya se hizo la reunion de aprobacion, ya no se pueden modificar los datos ni las fechas/observaciones de revision
+
+    String pathOferta1
+    String pathOferta2
+    String pathOferta3
+
+    String pathCuadroComparativo
+    String pathAnalisisCostos
+
+    String incluirReunion
+
+    String pathRevisionGAF
+    String pathRevisionGJ
+    String pathRevisionGDP
 
     static auditable = [ignore: []]
     static mapping = {
@@ -54,10 +67,23 @@ class Solicitud {
             nombreProceso column: 'slctnmpr'
             objetoContrato column: 'slctobcn'
             objetoContrato type: 'text'
-            formaPago column: 'frpg__id'
+            formaPago column: 'slctfrpg'
             plazoEjecucion column: 'slctplej'
 
             estado column: 'slctetdo'
+
+            pathOferta1 column: 'slctpto1'
+            pathOferta2 column: 'slctpto2'
+            pathOferta3 column: 'slctpto3'
+
+            pathCuadroComparativo column: 'slctptcc'
+            pathAnalisisCostos column: 'slctptac'
+
+            incluirReunion column: 'slctinrn'
+
+            pathRevisionGAF column: 'slctptr1'
+            pathRevisionGJ column: 'slctptr2'
+            pathRevisionGDP column: 'slctptr3'
         }
     }
 
@@ -72,5 +98,18 @@ class Solicitud {
         pathPdfTdr(blank: true, nullable: true, maxSize: 255)
 
         estado(blank: true, nullable: true, inList: ["P", "A"])
+
+        pathOferta1(blank: true, nullable: true)
+        pathOferta2(blank: true, nullable: true)
+        pathOferta3(blank: true, nullable: true)
+
+        pathCuadroComparativo(blank: true, nullable: true)
+        pathAnalisisCostos(blank: true, nullable: true)
+
+        incluirReunion(blank: true, nullable: true)
+
+        pathRevisionGAF(blank: true, nullable: true)
+        pathRevisionGJ(blank: true, nullable: true)
+        pathRevisionGDP(blank: true, nullable: true)
     }
 }

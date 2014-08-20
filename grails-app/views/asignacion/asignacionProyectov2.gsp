@@ -18,10 +18,10 @@
 
 <body>
 <div style="margin-left: 10px;">
-    <g:if test="${actual.estado!=0}">
-        <g:link class="btn" controller="modificacionProyecto" action="solicitarModificacionUnidad"
-                params="${[unidad:proyecto.unidadEjecutora.id,anio:actual.id]}">Solicitar modificación</g:link>
-    </g:if>
+    %{--<g:if test="${actual.estado!=0}">--}%
+    %{--<g:link class="btn" controller="modificacionProyecto" action="solicitarModificacionUnidad"--}%
+    %{--params="${[unidad:proyecto.unidadEjecutora.id,anio:actual.id]}">Solicitar modificación</g:link>--}%
+    %{--</g:if>--}%
     <g:link class="btn" controller="asignacion" action="programacionAsignacionesInversion" id="${proyecto.id}">Programación</g:link>
     <g:link class="btn" controller="reportes" action="poaInversionesReporteWeb" id="${proyecto.unidadEjecutora.id}" target="_blank">Reporte</g:link>
     <g:link class="btn" controller="cronograma" action="verCronograma" id="${proyecto.id}">Cronograma</g:link>
@@ -34,51 +34,62 @@
     <table style="width: 1040px;">
         <thead>
         %{--<th>#</th>--}%
-        <th style="width: 280px">Reponsable</th>
+
         <th style="width: 200px">Programa</th>
+        <th style="width: 200px">Proyecto</th>
         <th style="width: 200px">Componente</th>
         <th style="width: 280px">Actividad</th>
+        <th style="width: 280px">Reponsable</th>
         <th style="width: 60px;">Partida</th>
-        <th style="width: 200px">Desc. Presupuestaria</th>
-        <th>Fuente</th>
         <th>Presupuesto</th>
+        <g:if test="${actual.estado==1}">
+            <th>Priorizado</th>
+        </g:if>
         <th></th>
-        %{--<th></th>--}%
         </thead>
         <tbody>
         <g:set var="total" value="${0}"></g:set>
         <g:each in="${asignaciones}" var="asg" status="i">
             <g:if test="${asg.planificado>0}">
-                <g:set var="total" value="${total.toDouble()+asg.getValorReal()}"></g:set>
+                <g:if test="${actual.estado==0}">
+                    <g:set var="total" value="${total.toDouble()+asg.getValorReal()}"></g:set>
+                </g:if>
+                <g:else>
+                    <g:set var="total" value="${total.toDouble()+asg.priorizado}"></g:set>
+                </g:else>
             </g:if>
             <tr class="${(i % 2) == 0 ? 'odd' : 'even'}"  style='${(asg.reubicada=='S')?"background: #d5f0d4":""}'>
-
-                %{--<td style="width: 30px;">${i+1}</td>--}%
-                <td>
-                    ${asg.unidad}
-                </td>
                 <td class="prog" style="width: 200px;"
                     title="">
                     ${asg.marcoLogico?.proyecto?.programaPresupuestario.descripcion}
                 </td>
+                <td class="dscr" style="width: 200px;">
+                    ${asg.marcoLogico.proyecto}
+                </td>
                 <td class="dscr" style="width: 200px;"
                     title="${asg.marcoLogico.marcoLogico.toStringCompleto()}">${asg.marcoLogico.marcoLogico}
                 </td>
-                <td class="dscr" style="width: 200px;"
-                    title="${asg.marcoLogico.toStringCompleto()}">${asg.marcoLogico}
+                <td class="dscr" style="width: 200px;" title="${asg.marcoLogico.toStringCompleto()}">
+                    ${asg.marcoLogico.numero} - ${asg.marcoLogico}
+                </td>
+                <td>
+                    ${asg.unidad}
                 </td>
                 <td>
                     ${asg.presupuesto.numero}
                 </td>
-                <td>
-                    ${asg.presupuesto.descripcion}
-                </td>
-                <td>${asg.fuente}</td>
                 <td class="valor" style="text-align: right">
                     <g:formatNumber number="${asg.getValorReal()}" format="###,##0" minFractionDigits="2"
                                     maxFractionDigits="2"/>
                 </td>
-
+                <g:if test="${actual.estado==1}">
+                    <td class="valor" style="text-align: right">
+                        <div style="width: 150px">
+                            <input type="text" style="width: 100px;text-align: right;display: inline-block" id="prio_${asg.id}" value="${asg.priorizado}">
+                            <a href="#" style="width: 30px;display: inline-block" class="savePrio" iden="${asg.id}">Guardar</a>
+                        </div>
+                    </td>
+                </g:if>
                 <td class="agr">
                     <g:if test="${actual.estado==0}">
                         <a href="#" class="btn_agregar" asgn="${asg.id}" proy="${proyecto.id}"
@@ -87,9 +98,15 @@
                             <a href="#" class="btn_borrar" asgn="${asg.id}">Eliminar la Asignación</a>
                         </g:if>
                     </g:if>
+                    <g:else>
+                        <a href="#" class="btn_agregar_prio" asgn="${asg.id}" proy="${proyecto.id}" anio="${actual.id}">Dividir en dos partidas</a>
+                        <g:if test="${asg.padre != null}">
+                            <a href="#" class="btn_borrar_prio" asgn="${asg.id}">Eliminar la Asignación</a>
+                        </g:if>
+                    </g:else>
                 </td>
                 %{--<td>--}%
-                    %{--<a href="#" id="env_${i}" class="btn_env" asgn="${asg.id}" proy="${proyecto.id}" anio="${actual.id}" valor="${asg.getValorReal()}">Enviar a unidad ejectura</a>--}%
+                %{--<a href="#" id="env_${i}" class="btn_env" asgn="${asg.id}" proy="${proyecto.id}" anio="${actual.id}" valor="${asg.getValorReal()}">Enviar a unidad ejectura</a>--}%
                 %{--</td>--}%
             </tr>
         </g:each>
@@ -112,6 +129,7 @@
     </table>
 
     <div id="ajx_asgn" style="width:520px;"></div>
+    <div id="ajx_asgn_prio" style="width:520px;"></div>
 
     <div style="position: absolute;top:5px;right:10px;font-size: 10px;">
         <b>Total invertido proyecto actual:</b>
@@ -165,7 +183,33 @@
         beginingElementsToLeaveOpen:10
     });
 
+    $(".savePrio").button({icons:{ primary:"ui-icon-disk"},text:false}).click(function(){
+        var id = $(this).attr("iden")
+        var monto =$("#prio_"+id).val()
+        $.ajax({
+            type:"POST", url:"${createLink(action:'guardarPrio', controller: 'asignacion')}",
+            data:"id="+id+"&prio="+monto,
+            success:function (msg) {
+                if(msg=="ok"){
+                    $.box({
+                        title:"Guardar",
+                        text:"Datos guardados",
+                        dialog: {
+                            resizable: false,
+                            buttons  : {
+                                "Cerrar":function(){
 
+                                }
+                            }
+                        }
+                    });
+                    location.reload(true)
+                }
+
+            }
+        });
+
+    });
 
     $("#load").dialog({
         width:100,
@@ -226,25 +270,25 @@
         },
         text:false
     }).click(function(){
-                $("#monto_env").val("0,00")
-                $("#env_id").val($(this).attr("asgn"))
-                $("#cmb_env").val($(this).attr("env"))
-                $("#env_btn").val($(this).attr("id"))
-                $("#max").val($(this).attr("valor"))
-                //console.log("max 1" +$("#max").val())
-                $.ajax({
-                    type:"POST", url:"${createLink(action:'enviarUnidad', controller: 'asignacion')}",
-                    data:"id=" + $("#env_id").val(),
-                    success:function (msg) {
-                        $("#dlg_env").dialog("open")
-                        $("#detalle").html(msg).show("slide")
-                        $("#lbl_max").html(number_format($("#max").val()*1, 2, ",", "."))
-                        //console.log("dis 1 " +$("#dist").val()*1)
+        $("#monto_env").val("0,00")
+        $("#env_id").val($(this).attr("asgn"))
+        $("#cmb_env").val($(this).attr("env"))
+        $("#env_btn").val($(this).attr("id"))
+        $("#max").val($(this).attr("valor"))
+        //console.log("max 1" +$("#max").val())
+        $.ajax({
+            type:"POST", url:"${createLink(action:'enviarUnidad', controller: 'asignacion')}",
+            data:"id=" + $("#env_id").val(),
+            success:function (msg) {
+                $("#dlg_env").dialog("open")
+                $("#detalle").html(msg).show("slide")
+                $("#lbl_max").html(number_format($("#max").val()*1, 2, ",", "."))
+                //console.log("dis 1 " +$("#dist").val()*1)
 
-                    }
-                });
+            }
+        });
 
-            });
+    });
 
     $("#anio_asg").change(function () {
         location.href = "${createLink(controller:'asignacion',action:'asignacionProyectov2')}?id=${proyecto.id}&anio=" + $(this).val()
@@ -255,19 +299,36 @@
         },
         text:false
     }).click(function () {
-                //alert ("id:" +$(this).attr("asgn"))
+        //alert ("id:" +$(this).attr("asgn"))
 
-                    $.ajax({
-                        type:"POST", url:"${createLink(action:'agregaAsignacion', controller: 'asignacion')}",
-                        data:"id=" + $(this).attr("asgn") + "&proy=" + $(this).attr("proy") + "&anio=" + $(this).attr("anio"),
-                        success:function (msg) {
-                            $("#ajx_asgn").dialog("option", "title", "Dividir la asignación para ..")
-                            $("#ajx_asgn").html(msg).show("puff", 100)
-                        }
-                    });
-                    $("#ajx_asgn").dialog("open");
+        $.ajax({
+            type:"POST", url:"${createLink(action:'agregaAsignacion', controller: 'asignacion')}",
+            data:"id=" + $(this).attr("asgn") + "&proy=" + $(this).attr("proy") + "&anio=" + $(this).attr("anio"),
+            success:function (msg) {
+                $("#ajx_asgn").dialog("option", "title", "Dividir la asignación para ..")
+                $("#ajx_asgn").html(msg).show("puff", 100)
+            }
+        });
+        $("#ajx_asgn").dialog("open");
 
-            });
+    });
+    $(".btn_agregar_prio").button({
+        icons:{
+            primary:"ui-icon-carat-2-n-s"
+        },
+        text:false
+    }).click(function () {
+        $.ajax({
+            type:"POST", url:"${createLink(action:'agregaAsignacionPrio', controller: 'asignacion')}",
+            data:"id=" + $(this).attr("asgn") + "&proy=" + $(this).attr("proy") + "&anio=" + $(this).attr("anio"),
+            success:function (msg) {
+                $("#ajx_asgn_prio").dialog("option", "title", "Dividir la asignación para ..")
+                $("#ajx_asgn_prio").html(msg).show("puff", 100)
+            }
+        });
+        $("#ajx_asgn_prio").dialog("open");
+
+    });
 
     $(".btn_borrar").button({
         icons:{
@@ -275,26 +336,52 @@
         },
         text:false
     }).click(function () {
-                $("#load").dialog("open")
-                if (confirm("Eliminar esta asignación: \n Su valor se sumará a su asignación original y\n la programación deberá revisarse. La asignación no se eliminara si tiene distribuciones derivadas")) {
+        $("#load").dialog("open")
+        if (confirm("Eliminar esta asignación: \n Su valor se sumará a su asignación original y\n la programación deberá revisarse. La asignación no se eliminara si tiene distribuciones derivadas")) {
 
-                    $.ajax({
-                        type:"POST", url:"${createLink(action:'borrarAsignacion', controller: 'asignacion')}",
-                        data:"id=" + $(this).attr("asgn"),
-                        success:function (msg) {
-                            if(msg=="ok")
-                                location.reload(true);
-                            else{
-                                $("#load").dialog("close")
-                                alert("Error al eliminar la asignación. Asegurese que no tenga distribuciones ni asignaciones hijas")
-                            }
+            $.ajax({
+                type:"POST", url:"${createLink(action:'borrarAsignacion', controller: 'asignacion')}",
+                data:"id=" + $(this).attr("asgn"),
+                success:function (msg) {
+                    if(msg=="ok")
+                        location.reload(true);
+                    else{
+                        $("#load").dialog("close")
+                        alert("Error al eliminar la asignación. Asegurese que no tenga distribuciones ni asignaciones hijas")
+                    }
 
-                        }
-                    });
-                }else{
-                    $("#load").dialog("close")
                 }
             });
+        }else{
+            $("#load").dialog("close")
+        }
+    });
+    $(".btn_borrar_prio").button({
+        icons:{
+            primary:"ui-icon-trash"
+        },
+        text:false
+    }).click(function () {
+        $("#load").dialog("open")
+        if (confirm("Eliminar esta asignación: \n Su valor se sumará a su asignación original y\n la programación deberá revisarse. La asignación no se eliminara si tiene distribuciones derivadas")) {
+
+            $.ajax({
+                type:"POST", url:"${createLink(action:'borrarAsignacionPrio', controller: 'asignacion')}",
+                data:"id=" + $(this).attr("asgn"),
+                success:function (msg) {
+                    if(msg=="ok")
+                        location.reload(true);
+                    else{
+                        $("#load").dialog("close")
+                        alert("Error al eliminar la asignación. Asegurese que no tenga distribuciones ni asignaciones hijas")
+                    }
+
+                }
+            });
+        }else{
+            $("#load").dialog("close")
+        }
+    });
 
 
     $("#dlg_env").dialog({
@@ -345,6 +432,48 @@
                     $(this).dialog("close");
                     $.ajax({
                         type:"POST", url:"${createLink(action:'creaHijo', controller: 'asignacion')}",
+                        data:"id=" + asgn + "&fuente=" + fuente + "&partida=" + partida + "&valor=" + valor,
+                        success:function (msg) {
+                            //alert("se ha creado la asignación: " + msg)
+                            location.reload(true);
+
+                        }
+                    });
+                }
+            },
+            "Cancelar":function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+    $("#ajx_asgn_prio").dialog({
+        autoOpen:false,
+        resizable:false,
+        title:'Crear un Perfil',
+        modal:true,
+        draggable:true,
+        width:480,
+        height:300,
+        position:'center',
+        open:function (event, ui) {
+            $(".ui-dialog-titlebar-close").hide();
+        },
+        buttons:{
+            "Grabar":function () {
+                var asgn = $('#padre').val()
+                var mxmo = parseFloat($('#maximo').val());
+                var valor = str_replace(".", "", $('#vlor').val());
+                valor = str_replace(",", ".", valor);
+                valor = parseFloat(valor);
+                //alert("Valores: maximo " + mxmo + " valor: " + valor);
+                if (valor >= mxmo) {
+                    alert("La nueva asignación debe ser menor a " + mxmo);
+                } else {
+                    var partida = $('#prsp2').val()
+                    var fuente = $('#fuente').val();
+                    $(this).dialog("close");
+                    $.ajax({
+                        type:"POST", url:"${createLink(action:'creaHijoPrio', controller: 'asignacion')}",
                         data:"id=" + asgn + "&fuente=" + fuente + "&partida=" + partida + "&valor=" + valor,
                         success:function (msg) {
                             //alert("se ha creado la asignación: " + msg)

@@ -14,7 +14,7 @@ class MarcoLogicoController extends app.seguridad.Shield {
 
     def kerberosService
 
-    def index = { }
+    def index = {}
 
     def nuevoMarco = {
         println "nuevo marco " + params
@@ -80,7 +80,7 @@ class MarcoLogicoController extends app.seguridad.Shield {
         if (proyecto.aprobado == "a") {
             response.sendError(403)
         } else {
-            redirect(action: "componentes",id: proyecto.id)
+            redirect(action: "componentes", id: proyecto.id)
         }
 
     }
@@ -98,7 +98,7 @@ class MarcoLogicoController extends app.seguridad.Shield {
                 if (control < 1) {
                     def indicadores = Indicador.findAllByMarcoLogico(ml)
                     indicadores.each {
-                        MedioVerificacion.findAllByIndicador(it).each {m ->
+                        MedioVerificacion.findAllByIndicador(it).each { m ->
                             params.id = m.id
                             kerberosService.delete(params, MedioVerificacion, session.perfil, session.usuario)
                         }
@@ -131,7 +131,7 @@ class MarcoLogicoController extends app.seguridad.Shield {
             switch (params.tipo) {
             /*Inidicadores*/ case "1":
                 def indicador = Indicador.get(params.id)
-                MedioVerificacion.findAllByIndicador(indicador).each {m ->
+                MedioVerificacion.findAllByIndicador(indicador).each { m ->
                     params.id = m.id
                     kerberosService.delete(params, MedioVerificacion, session.perfil, session.usuario)
                 }
@@ -161,7 +161,7 @@ class MarcoLogicoController extends app.seguridad.Shield {
             switch (params.tipo) {
             /*Inidicadores*/ case "2":
                 def indicador = Indicador.get(params.id)
-                MedioVerificacion.findAllByIndicador(indicador).each {m ->
+                MedioVerificacion.findAllByIndicador(indicador).each { m ->
                     params.id = m.id
                     kerberosService.delete(params, MedioVerificacion, session.perfil, session.usuario)
                 }
@@ -386,7 +386,7 @@ class MarcoLogicoController extends app.seguridad.Shield {
 
 
     def actividadesComponente = {
-       // println "actividades " + params
+        // println "actividades " + params
 
         def componente = MarcoLogico.get(params.id)
         def proyecto = componente.proyecto
@@ -405,7 +405,7 @@ class MarcoLogicoController extends app.seguridad.Shield {
             }
             MarcoLogico.findAll("from MarcoLogico where tipoElemento = 2 and proyecto= ${proyecto.id} and estado=0 order by id").each {
                 if (it.id.toLong() != componente.id.toLong()) {
-                    MarcoLogico.findAllByMarcoLogicoAndEstado(it, 0, [sort: "id"]).each {ac ->
+                    MarcoLogico.findAllByMarcoLogicoAndEstado(it, 0, [sort: "id"]).each { ac ->
                         totOtros += ac.monto
                     }
                 }
@@ -416,19 +416,36 @@ class MarcoLogicoController extends app.seguridad.Shield {
     }
 
     def guardarDatos = {
+        println "SAVE ACTIVIDAD " + params
         //println "guardar datos!! "+params
         def act = MarcoLogico.get(params.act)
+
+        def nuevaFechaInicio = new Date().parse("dd-MM-yyyy", params.inicio)
+        def nuevaFechaFin = new Date().parse("dd-MM-yyyy", params.fin)
+
+        if (act.fechaInicio.format("dd-MM-yyyy") != nuevaFechaInicio.format("dd-MM-yyyy") || act.fechaFin.format("dd-MM-yyyy") != nuevaFechaFin.format("dd-MM-yyyy")) {
+            //hace la copia
+            def resp = new MarcoLogicoRespaldo()
+            resp.properties = act.properties
+            resp.marcoLogicoOriginal = act
+            if (!resp.save(flush: true)) {
+                println "error al hacer el respaldo:: " + resp.errors
+            } else {
+                println ">>>> respaldo de marco logico ${act.id}: ${resp.id}"
+            }
+        }
+
         act.responsable = UnidadEjecutora.get(params.resp)
-        if(params.act!="-1")
-        act.categoria = Categoria.get(params.cat)
-        act.fechaInicio = new Date().parse("dd-MM-yyyy",params.inicio)
-        act.fechaFin = new Date().parse("dd-MM-yyyy",params.fin)
+        if (params.act != "-1")
+            act.categoria = Categoria.get(params.cat)
+        act.fechaInicio = nuevaFechaInicio
+        act.fechaFin = nuevaFechaFin
         act.aporte = params.aporte.toDouble()
-        if(act.save(flush: true))
+        if (act.save(flush: true))
             render "ok"
-        else{
+        else {
             render "error"
-            println "error save act  "+act.errors
+            println "error save act  " + act.errors
         }
     }
 
@@ -442,12 +459,12 @@ class MarcoLogicoController extends app.seguridad.Shield {
                     actividad = MarcoLogico.get(params.id)
                     actividad.objeto = params.datos
                 } else {
-                    def maxNum = MarcoLogico.list([sort:"numero",order: "desc",max: 1])?.pop()?.numero
-                    if(maxNum)
-                        maxNum=maxNum+1
+                    def maxNum = MarcoLogico.list([sort: "numero", order: "desc", max: 1])?.pop()?.numero
+                    if (maxNum)
+                        maxNum = maxNum + 1
                     else
-                        maxNum=1
-                    actividad = new MarcoLogico([proyecto: componente.proyecto, tipoElemento: TipoElemento.findByDescripcion("Actividad"), objeto: params.datos, marcoLogico: componente,numero:maxNum])
+                        maxNum = 1
+                    actividad = new MarcoLogico([proyecto: componente.proyecto, tipoElemento: TipoElemento.findByDescripcion("Actividad"), objeto: params.datos, marcoLogico: componente, numero: maxNum])
                 }
                 actividad = kerberosService.saveObject(actividad, MarcoLogico, session.perfil, session.usuario, "guadarDatosActividades", "marcoLogico", session)
                 println " actividad " + actividad.errors.getErrorCount()
@@ -574,7 +591,6 @@ class MarcoLogicoController extends app.seguridad.Shield {
     }
 
 
-
     def matrizMetas = {
         def anios = Anio.list([sort: 'anio'])
         def componente = MarcoLogico.get(params.id)
@@ -584,23 +600,23 @@ class MarcoLogicoController extends app.seguridad.Shield {
     }
 
     def guardarMetasMatriz = {
-        println "params "+params
+        println "params " + params
         def componente = MarcoLogico.get(params.id)
         def data = params.data.split("%%")
-        println "data "+data
+        println "data " + data
         data.each {
             def parts = it.split("&&")
             def meta = new Meta()
-            meta.marcoLogico=componente
-            meta.anio=Anio.get(parts[0])
-            meta.tipoMeta=TipoMeta.get(parts[1])
+            meta.marcoLogico = componente
+            meta.anio = Anio.get(parts[0])
+            meta.tipoMeta = TipoMeta.get(parts[1])
             meta.indicador = parts[3].toDouble()
-            meta.unidad=Unidad.get(parts[2])
-            meta.parroquia=Parroquia.get(parts[4])
-            kerberosService.saveObject(meta,Meta,session.perfil,session.usuario,"guardarMetasMatriz","marcoLogico",session)
+            meta.unidad = Unidad.get(parts[2])
+            meta.parroquia = Parroquia.get(parts[4])
+            kerberosService.saveObject(meta, Meta, session.perfil, session.usuario, "guardarMetasMatriz", "marcoLogico", session)
 //            anio+"&&"+tipo+"&&"+unidad+"&&"+meta+"&&"+parroquia+"%%"
         }
-        redirect(action: ingresoMetas,id: componente.id)
+        redirect(action: ingresoMetas, id: componente.id)
     }
 
     def mapaMeta = {
@@ -624,10 +640,10 @@ class MarcoLogicoController extends app.seguridad.Shield {
         }
 
         def geo = [
-                "lat": -1.80,
-                "lng": -78.36,
-                "zoom": 7,
-                "diff": 2,
+                "lat"    : -1.80,
+                "lng"    : -78.36,
+                "zoom"   : 7,
+                "diff"   : 2,
                 "minZoom": 7
         ]
         if (meta.latitud != 0 && meta.longitud != 0) {
