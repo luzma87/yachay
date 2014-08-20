@@ -8,9 +8,12 @@ class CronogramaController extends app.seguridad.Shield{
     def dbConnectionService
 
     def nuevoCronograma = {
-        //println "nuevo cronograma "+params
+        println "nuevo cronograma "+params
         def colores= ["rgba(221,123,66,0.7)","#FFAB48","#FFE7AD","#A7C9AE","#888A63"]
         def proyecto = Proyecto.get(params.id)
+        def act = null
+        if(params.act)
+            act=MarcoLogico.get(params.act)
         def componentes = MarcoLogico.findAll("from MarcoLogico where proyecto=${proyecto.id} and tipoElemento=2 and estado=0 order by id")
         def anio
         if(!params.anio)
@@ -27,7 +30,7 @@ class CronogramaController extends app.seguridad.Shield{
             totAnios.put(it.fuente.id,it.monto)
         }
         //println "anio "+anio+" total anios "+totAnios
-        [proyecto:proyecto,componentes:componentes,anio:anio,fuentes:fuentes,colores:colores,totAnios:totAnios]
+        [proyecto:proyecto,componentes:componentes,anio:anio,fuentes:fuentes,colores:colores,totAnios:totAnios,actSel:act]
 
     }
 

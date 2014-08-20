@@ -138,7 +138,7 @@ class CertificacionController  extends app.seguridad.Shield{
     }
 
     def guardarSolicitud = {
-//        println "solicitud "+params
+        println "solicitud "+params
         /*TODO enviar alertas*/
 
         def path = servletContext.getRealPath("/") + "pdf/solicitudAval/"

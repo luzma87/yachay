@@ -207,9 +207,10 @@
                 <div style="width: 98%;height: 35px;">
                     <span style="font-weight: bold;font-style: italic">Responsable:</span>
                     <g:select from="${app.UnidadEjecutora.list([sort:'nombre'])}" name="responsable" optionKey="id" optionValue="nombre" class="responsable ui-corner-all"
-                              id="resp_${act.id}" value="${act.responsable?.id}" ></g:select>
-                    <div style="width: 150px;height: 100%;float: right">
+                              id="resp_${act.id}" value="${act.responsable?.id}" style="width: 350px"></g:select>
+                    <div style="width: 300px;height: 100%;float: right">
                         <a href="#" act="${act.id}" class="ui-corner-all guardarAct">Guardar cambios</a>
+                        <g:link controller="cronograma" action="nuevoCronograma" params="['id':act.proyecto.id,'act':act.id]" class="btn">Cronograma</g:link>
                     </div>
                 </div>
                 <div class="matriz ui-corner-all campo cmp datos " ml="1" div="rn_${k}"
@@ -436,6 +437,7 @@
     //            })
 
 
+    $(".btn").button()
     $(".link").button()
     $(".guardarAct").button().click(function(){
         var act = $(this).attr("act")
