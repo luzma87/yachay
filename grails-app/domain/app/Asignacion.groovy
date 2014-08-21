@@ -67,6 +67,7 @@ class Asignacion implements Serializable {
             "<b>Monto:</b>${this.planificado}  <b>Presupuesto:</b>${this.presupuesto}<b>Año</b>:${this.anio}"
     }
 
+
     def getValorReal(){
         if(this.reubicada=="S"){
             if (this.planificado==0)

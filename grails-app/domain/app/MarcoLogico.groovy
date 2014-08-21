@@ -71,6 +71,8 @@ class MarcoLogico implements Serializable {
         return this.objeto
     }
 
+
+
     double totalMetasAnio(anio) {
 
         def metas = Meta.findAllByMarcoLogicoAndAnio(this, anio)
