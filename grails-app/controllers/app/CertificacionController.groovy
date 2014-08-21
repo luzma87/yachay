@@ -146,6 +146,7 @@ class CertificacionController  extends app.seguridad.Shield{
         def f = request.getFile('file')
         def okContents = [
                 'application/pdf': 'pdf',
+                'application/download': 'pdf'
         ]
         def nombre = ""
         def pathFile
