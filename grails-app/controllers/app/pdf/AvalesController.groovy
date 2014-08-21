@@ -6,6 +6,7 @@ import app.MarcoLogico
 import app.Proceso
 import app.Proyecto
 import app.TipoElemento
+import app.seguridad.Usro
 import app.yachai.Aval
 import app.yachai.EstadoAval
 import app.yachai.ProcesoAsignacion
@@ -249,11 +250,23 @@ class AvalesController {
             redirect(action: 'solicitarAval',params: [asg: params.asgn])
         }
         /* fin del upload */
-
-
-
-
-
     }
+    def descargaSolicitud = {
+        def sol = SolicitudAval.get(params.id)
+//        println "path solicitud "+cer.pathSolicitud
+        def path = servletContext.getRealPath("/") + "pdf/solicitudAval/" + sol.path
+
+        def src = new File(path)
+        if (src.exists()) {
+            response.setContentType("application/octet-stream")
+            response.setHeader("Content-disposition", "attachment;filename=${src.getName()}")
+
+            response.outputStream << src.newInputStream()
+        } else {
+            render "archivo no encontrado"
+        }
+    }
+
+
 
 }

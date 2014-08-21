@@ -41,16 +41,16 @@ class Aval {
     }
 
     static constraints = {
-        proceso(black:false,nullable: false)
-        fechaAprobacion (black:true,nullable: true)
-        fechaLiberacion (black:true,nullable: true)
-        fechaAnulacion   (black:true,nullable: true)
-        estado (black:false,nullable: false)
-        memo(black:true,nullable: true,size: 1..30)
-        path (black:true,nullable: true,size: 1..350)
-        pathLiberacion (black:true,nullable: true,size: 1..350)
-        contrato (black:true,nullable: true,size: 1..30)
-        numero (black:true,nullable: true,size: 1..10)
-        concepto (black:true,nullable: true,size: 1..500)
+        proceso(blank:false,nullable: false)
+        fechaAprobacion (blank:true,nullable: true)
+        fechaLiberacion (blank:true,nullable: true)
+        fechaAnulacion   (blank:true,nullable: true)
+        estado (blank:false,nullable: false)
+        memo(blank:true,nullable: true,size: 1..30)
+        path (blank:true,nullable: true,size: 1..350)
+        pathLiberacion (blank:true,nullable: true,size: 1..350)
+        contrato (blank:true,nullable: true,size: 1..30)
+        numero (blank:true,nullable: true,size: 1..10)
+        concepto (blank:true,nullable: true,size: 1..500)
     }
 }

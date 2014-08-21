@@ -15,6 +15,7 @@ class SolicitudAval {
     Date fecha
     Date fechaRevision
     double monto=0;
+    String observaciones
 
     static mapping = {
         table 'slav'
@@ -35,19 +36,21 @@ class SolicitudAval {
             concepto column: 'slavcpto'
             estado column: 'edav__id'
             usuario column: 'usro__id'
+            observaciones column: 'slavobs'
+            observaciones type: 'text'
         }
     }
 
     static constraints = {
-        concepto (black:true,nullable: true,size: 1..500)
-        proceso(black:false,nullable: false)
-        aval(black:true,nullable: true)
-        fechaRevision (black:true,nullable: true)
-        estado (black:false,nullable: false)
-        path (black:true,nullable: true,size: 1..350)
-        contrato (black:true,nullable: true,size: 1..30)
-        memo (black:true,nullable: true,size: 1..30)
-
+        concepto (blank:true,nullable: true,size: 1..500)
+        proceso(blank:false,nullable: false)
+        aval(blank:true,nullable: true)
+        fechaRevision (blank:true,nullable: true)
+        estado (blank:false,nullable: false)
+        path (blank:true,nullable: true,size: 1..350)
+        contrato (blank:true,nullable: true,size: 1..30)
+        memo (blank:true,nullable: true,size: 1..30)
+        observaciones(blank:true,nullable: true)
 
     }
 }
