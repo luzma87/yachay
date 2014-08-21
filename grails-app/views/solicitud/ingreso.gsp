@@ -102,7 +102,7 @@
         </div>
 
         <g:uploadForm action="save" method="post" name="frmSolicitud" id="${solicitud.id}">
-            <table width="100%">
+            <table width="100%" border="0">
                 <g:if test="${solicitud.id}">
                     <tr>
                         <td colspan="4" style="padding-bottom: 15px; font-size: larger; font-weight: bold;">
@@ -202,17 +202,17 @@
                 </tr>
 
                 %{--<tr>--}%
-                    %{--<td class="label">Observaciones</td>--}%
-                    %{--<td colspan="7">--}%
-                        %{--<g:textArea name="observaciones" rows="4" cols="115" class="ta ui-widget-content ui-corner-all"--}%
-                                    %{--value="${solicitud.observaciones}"/>--}%
-                    %{--</td>--}%
+                %{--<td class="label">Observaciones</td>--}%
+                %{--<td colspan="7">--}%
+                %{--<g:textArea name="observaciones" rows="4" cols="115" class="ta ui-widget-content ui-corner-all"--}%
+                %{--value="${solicitud.observaciones}"/>--}%
+                %{--</td>--}%
                 %{--</tr>--}%
 
                 <tr>
-                    <td class="label">T.D.R.</td>
-                    <td colspan="7">
-                        <input type="file" name="pdf" class="${solicitud.pathPdfTdr ? '' : 'required'}"/>
+                    <td colspan="2" class="label">T.D.R.</td>
+                    <td colspan="6">
+                        <input type="file" name="tdr" class="${solicitud.pathPdfTdr ? '' : 'required'}"/>
                         <g:if test="${solicitud.pathPdfTdr}">
                             <br/>
                             Archivo actual:
@@ -221,17 +221,65 @@
                     </td>
                 </tr>
 
-                %{--<tr>--}%
-                %{--<td class="label">Oferta 1</td>--}%
-                %{--<td colspan="7">--}%
-                %{--<input type="file" name="pdf" />--}%
-                %{--<g:if test="${solicitud.pathPdfTdr}">--}%
-                %{--<br/>--}%
-                %{--Archivo actual:--}%
-                %{--${solicitud.pathPdfTdr}--}%
-                %{--</g:if>--}%
-                %{--</td>--}%
-                %{--</tr>--}%
+                <tr>
+                    <td colspan="2" class="label">Oferta 1</td>
+                    <td colspan="6">
+                        <input type="file" name="oferta1"/>
+                        <g:if test="${solicitud.pathOferta1}">
+                            <br/>
+                            Archivo actual:
+                            ${solicitud.pathOferta1}
+                        </g:if>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" class="label">Oferta 2</td>
+                    <td colspan="6">
+                        <input type="file" name="oferta2"/>
+                        <g:if test="${solicitud.pathOferta2}">
+                            <br/>
+                            Archivo actual:
+                            ${solicitud.pathOferta2}
+                        </g:if>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" class="label">Oferta 3</td>
+                    <td colspan="6">
+                        <input type="file" name="oferta3"/>
+                        <g:if test="${solicitud.pathOferta3}">
+                            <br/>
+                            Archivo actual:
+                            ${solicitud.pathOferta3}
+                        </g:if>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" class="label">Cuadro comparativo</td>
+                    <td colspan="6">
+                        <input type="file" name="comparativo"/>
+                        <g:if test="${solicitud.pathCuadroComparativo}">
+                            <br/>
+                            Archivo actual:
+                            ${solicitud.pathCuadroComparativo}
+                        </g:if>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" class="label">Análisis de costos</td>
+                    <td colspan="6">
+                        <input type="file" name="analisis"/>
+                        <g:if test="${solicitud.pathAnalisisCostos}">
+                            <br/>
+                            Archivo actual:
+                            ${solicitud.pathAnalisisCostos}
+                        </g:if>
+                    </td>
+                </tr>
 
                 <tr>
                     <td colspan="8" style="text-align: right;">

@@ -4,7 +4,7 @@ class Aprobacion {
 
     Solicitud solicitud
     TipoAprobacion tipoAprobacion
-    Fuente fuente
+//    Fuente fuente
     Date fecha
     String observaciones
     String pathPdf
@@ -20,7 +20,7 @@ class Aprobacion {
             id column: 'aprb__id'
             solicitud column: 'slct__id'
             tipoAprobacion column: 'tpap__id'
-            fuente column: 'fnte__id'
+//            fuente column: 'fnte__id'
             fecha column: 'aprbfcha'
             observaciones column: 'aprbobsr'
             pathPdf column: 'aprb_pdf'
