@@ -165,7 +165,7 @@ class SolicitudTagLib {
 
         def editableGAF = editable && perfil.codigo == "GAF"
         def editableGJ = editable && perfil.codigo == "GJ"
-        def editableGDP = editable && perfil.codigo == "GDP"
+//        def editableGDP = editable && perfil.codigo == "GDP"
 
         def js = ""
         def html = "No se encontró la solicitud a mostrar"
@@ -178,7 +178,7 @@ class SolicitudTagLib {
 
             html += revisionFragment(solicitud: solicitud, editable: editableGAF, tipo: "GAF")
             html += revisionFragment(solicitud: solicitud, editable: editableGJ, tipo: "GJ")
-            html += revisionFragment(solicitud: solicitud, editable: editableGDP, tipo: "GDP")
+//            html += revisionFragment(solicitud: solicitud, editable: editableGDP, tipo: "GDP")
 
             js = "<script type='text/javascript'>"
             js += '$(".collapsed").each(function () {\n' +

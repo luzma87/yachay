@@ -5,6 +5,7 @@ import app.CargoPersonal
 import app.Solicitud
 import app.seguridad.Sesn
 import app.seguridad.Usro
+import app.yachai.SolicitudAval
 
 class ReporteSolicitudController {
 
@@ -40,5 +41,11 @@ class ReporteSolicitudController {
         }
 
         return [solicitud: solicitud, aprobacion: aprobacion, firmas: firmas]
+    }
+
+    def imprimirSolicitudAval = {
+        def solicitud = SolicitudAval.get(params.id)
+
+        return [solicitud: solicitud]
     }
 }

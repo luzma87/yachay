@@ -570,7 +570,7 @@ class SolicitudController extends app.seguridad.Shield {
         if (solicitud) {
             uploadFile("revisiongaf", request.getFile('archivogaf'), solicitud)
             uploadFile("revisiongj", request.getFile('archivogj'), solicitud)
-            uploadFile("revisiongdp", request.getFile('archivogdp'), solicitud)
+//            uploadFile("revisiongdp", request.getFile('archivogdp'), solicitud)
 
             if (params.observacionesgj) {
                 solicitud.observacionesJuridica = params.observacionesgj
@@ -578,9 +578,9 @@ class SolicitudController extends app.seguridad.Shield {
             if (params.observacionesgaf) {
                 solicitud.observacionesAdministrativaFinanciera = params.observacionesgaf
             }
-            if (params.observacionesgdp) {
-                solicitud.observacionesDireccionProyectos = params.observacionesgdp
-            }
+//            if (params.observacionesgdp) {
+//                solicitud.observacionesDireccionProyectos = params.observacionesgdp
+//            }
             if (params.gj == "on") {
                 solicitud.revisadoJuridica = new Date()
             } else {
@@ -595,13 +595,13 @@ class SolicitudController extends app.seguridad.Shield {
                     solicitud.revisadoAdministrativaFinanciera = null
                 }
             }
-            if (params.gdp == "on") {
-                solicitud.revisadoDireccionProyectos = new Date()
-            } else {
-                if (params["_gdp"]) {
-                    solicitud.revisadoDireccionProyectos = null
-                }
-            }
+//            if (params.gdp == "on") {
+//                solicitud.revisadoDireccionProyectos = new Date()
+//            } else {
+//                if (params["_gdp"]) {
+//                    solicitud.revisadoDireccionProyectos = null
+//                }
+//            }
 
             if (!solicitud.save(flush: true)) {
                 println "error al guardar revision: " + solicitud.errors
