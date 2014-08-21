@@ -54,7 +54,7 @@
         <g:message code="${flash.message}" args="${flash.args}" default="${flash.defaultMessage}" />
     </div>
 </g:if>
-<g:uploadForm action="guardarSolicitud">
+<g:uploadForm action="guardarSolicitud" controller="avales">
     <input type="hidden" name="proceso" value="${proceso.id}">
     <input type="hidden" name="disp" id="disponible" value="${disponible}">
     <div style="width: 100%;margin-top: 10px;">

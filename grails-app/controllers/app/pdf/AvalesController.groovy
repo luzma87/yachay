@@ -176,7 +176,7 @@ class AvalesController {
     }
 
     def guardarSolicitud = {
-        println "solicitud "+params
+        println "solicitud aval "+params
         /*TODO enviar alertas*/
 
         def path = servletContext.getRealPath("/") + "pdf/solicitudAval/"
@@ -228,10 +228,14 @@ class AvalesController {
                 sol.proceso=proceso
                 sol.usuario=session.usuario
                 sol.monto=monto
+                sol.concepto=concepto
                 sol.memo=momorando
                 sol.path=nombre
+                sol.fecha = new Date();
                 sol.estado=EstadoAval.findByCodigo("E01")
-                sol.save(flush: true)
+                if(!sol.save(flush: true)){
+                    println "eror save "+sol.errors
+                }
                 flash.message="Solicitud enviada"
                 redirect(action: 'avalesProceso',params: [id: params.proceso])
                 //println pathFile

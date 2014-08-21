@@ -17,6 +17,11 @@
 
 </head>
 <body>
+<g:if test="${flash.message}">
+    <div class="message ui-state-highlight ui-corner-all">
+        ${flash.message}
+    </div>
+</g:if>
 <div class="fila">
     <g:link controller="avales" action="listaProcesos" class="btn">Procesos</g:link>
     <g:link controller="avales" action="solicitarAval" class="btn" id="${proceso.id}">Solicitar</g:link>
@@ -73,14 +78,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <g:each in="${avales}" var="p">
+                <g:each in="${solicitudes}" var="p">
                     <tr>
-                        <td>${p.proceso}</td>
+                        <td>${p.proceso.nombre}</td>
                         <td>${p.concepto}</td>
-                        <td style="text-align: right">${p.monto()}</td>
-                        <td style="text-align: right">${p.estado?.descripcion}</td>
+                        <td style="text-align: right">${p.monto}</td>
+                        <td style="">${p.estado?.descripcion}</td>
                         <td style="text-align: center">
-
                         </td>
                         <td style="text-align: center">
 
