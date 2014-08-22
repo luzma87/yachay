@@ -16,6 +16,7 @@ class SolicitudAval {
     Date fechaRevision
     double monto=0;
     String observaciones
+    String numero
 
     static mapping = {
         table 'slav'
@@ -38,6 +39,7 @@ class SolicitudAval {
             usuario column: 'usro__id'
             observaciones column: 'slavobs'
             observaciones type: 'text'
+            numero column: 'slavnmro'
         }
     }
 
@@ -51,6 +53,6 @@ class SolicitudAval {
         contrato (blank:true,nullable: true,size: 1..30)
         memo (blank:true,nullable: true,size: 1..30)
         observaciones(blank:true,nullable: true)
-
+        numero (blank:true,nullable: true,size: 1..30)
     }
 }

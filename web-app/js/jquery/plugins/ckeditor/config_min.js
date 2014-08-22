@@ -10,7 +10,7 @@ CKEDITOR.editorConfig = function(config) {
     config.height = '180px';
 
     config.toolbar = 'Min';
-
+    config.resizable = false;
     config.toolbar_Min =
         [
             { name: 'basicstyles', items : [ 'Bold','Italic','Underline','-','Subscript','Superscript','-','RemoveFormat' ] },

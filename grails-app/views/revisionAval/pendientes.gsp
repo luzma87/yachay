@@ -27,7 +27,7 @@
 </div>
 <div id="tabs" style="width: 1050px;margin-top: 10px;">
     <ul>
-        <li><a href="#solicitudes">Solicitudes</a></li>
+        <li><a href="#solicitudes">Solicitudes pendientes</a></li>
         %{--<li><a href="#solicitudes">Historial</a></li>--}%
     </ul>
     <div id="solicitudes" style="width: 1000px;">

@@ -73,7 +73,7 @@
 
         .numeracion {
             float      : right;
-            background : #bbb;
+            /*background : #bbb;*/
             padding    : 7px;
         }
 
@@ -82,7 +82,7 @@
         }
 
         .tbl th {
-            background  : #bbb;
+            /*background  : #bbb;*/
             font-weight : bold;
             text-align  : left;
             width       : 5cm;
@@ -105,24 +105,24 @@
 
             <div style="width: 100%; height: 1.5cm;">
                 <div class="numeracion">
-                    Numeración:
+                    Numeración: ?????
                 </div>
             </div>
 
             <div class="texto">
                 Con el propósito de ejecutar las actividades programadas en la planificación operativa institucional
-                ${solicitud.proceso.fechaInicio?.format("yyyy")}, la Gerencia de "Área de Fomento Académico e Investigación"
-                solicita emitir el Aval de POA correspondiente a la actividad que se detalla a continuación:
+                ${solicitud.proceso.fechaInicio?.format("yyyy")}, la Gerencia de "${solicitud.usuario.unidad}"
+                solicita emitir el Aval de POA correspondiente al proceso que se detalla a continuación:
             </div>
 
-            <div class="tabla">
+            <div class="tabla" style="margin-top: 10px">
                 <table width="100%" border="1" class="tbl">
                     <tr>
                         <th>
                             Unidad requirente: (Gerencia - Dirección)
                         </th>
                         <td colspan="2">
-                            ?Unidad?
+                            ${solicitud.usuario.unidad}
                         </td>
                     </tr>
 
@@ -134,16 +134,6 @@
                             ${solicitud.proceso.proyecto.nombre}
                         </td>
                     </tr>
-
-                    <tr>
-                        <th>
-                            Componente:
-                        </th>
-                        <td colspan="2">
-                            ?Componente?
-                        </td>
-                    </tr>
-
                     <tr>
                         <th>
                             Nombre del proceso:
@@ -152,81 +142,77 @@
                             ${solicitud.proceso.nombre}
                         </td>
                     </tr>
-
-                    <tr>
-                        <th>
-                            Objeto de la actividad:
-                        </th>
-                        <td colspan="2">
-                            ?objeto actividad?
-                        </td>
-                    </tr>
-
                     <tr>
                         <th>
                             Valor total del proceso:
                         </th>
-                        <td colspan="2" class="bold">
-                            <g:formatNumber number="${solicitud.proceso.monto}" type="currency"/>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>
-                            Actividad:
-                        </th>
                         <td colspan="2">
-                            ?actividad?
+                            $${solicitud.monto}
                         </td>
                     </tr>
+                    <g:each in="${app.yachai.ProcesoAsignacion.findAllByProceso(solicitud.proceso)}" var="pa">
+                        %{--<tr>--}%
+                            %{--<td style="font-weight: bold">Unidad responsable</td>--}%
+                            %{--<td>${pa.asignacion.unidad}</td>--}%
+                        %{--</tr>--}%
 
-                    <tr>
-                        <th>
-                            Partida:
-                        </th>
-                        <td colspan="2">
-                            ?partida?
-                        </td>
-                    </tr>
+                        <tr>
+                            <td style="font-weight: bold">Componente</td>
+                            <td colspan="2">${pa.asignacion.marcoLogico.marcoLogico}</td>
+                        </tr>
+                        %{--<tr>--}%
+                            %{--<td style="font-weight: bold">Número de la actividad</td>--}%
+                            %{--<td>${pa.asignacion.marcoLogico.numero} (${anio})</td>--}%
+                        %{--</tr>--}%
+                        <tr>
+                            <td style="font-weight: bold">Actividad</td>
+                            <td colspan="2">${pa.asignacion.marcoLogico}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold">Partida</td>
+                            <td colspan="2">${pa.asignacion.presupuesto.numero}</td>
+                        </tr>
+                        <tr>
+                            <th>
 
-                    <tr>
-                        <th>
-                            &nbsp;
-                        </th>
-                        <td class="bold">
-                            Total Plurianual
-                        </td>
-                    </tr>
+                            </th>
+                            <td class="bold" colspan="2" style="text-align: center">
+                                Total Plurianual
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Año:
+                            </th>
+                            <td >
+                                ${solicitud.proceso.fechaInicio?.format("yyyy")}
+                            </td>
+                            <td>
+                                $${pa.monto}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Fecha de inicio:
+                            </th>
+                            <td colspan="2">
+                                ${pa.asignacion.marcoLogico.fechaInicio?.format("dd-MM-yyyy")}
+                            </td>
 
-                    <tr>
-                        <th>
-                            Año:
-                        </th>
-                        <td class="bold">
-                            ${solicitud.proceso.fechaInicio?.format("yyyy")}
-                        </td>
-                        <td>
-                            ?Valor?
-                        </td>
-                    </tr>
+                        </tr>
+                        <tr>
+                            <th>
+                                Fecha fin actividad:
+                            </th>
+                            <td colspan="2">
+                                ${pa.asignacion.marcoLogico.fechaFin?.format("dd-MM-yyyy")}
+                            </td>
 
-                    <tr>
-                        <th>
-                            Fecha de inicio:
-                        </th>
-                        <th colspan="2">
-                            <tdn:fechaLetras fecha="${solicitud.proceso.fechaInicio}"/>
-                        </th>
-                    </tr>
+                        </tr>
 
-                    <tr>
-                        <th>
-                            Fecha fin actividad:
-                        </th>
-                        <th colspan="2">
-                            <tdn:fechaLetras fecha="${solicitud.proceso.fechaFin}"/>
-                        </th>
-                    </tr>
+
+                    </g:each>
+
                 </table>
             </div>
 
@@ -236,7 +222,7 @@
                 </p>
 
                 <p>
-                    <strong>FECHA:</strong>
+                    <strong>FECHA: ${solicitud.fecha.format("dd-MM-yyyy")}</strong>
                 </p>
             </div>
 

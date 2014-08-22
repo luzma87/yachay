@@ -267,6 +267,23 @@ class AvalesController {
         }
     }
 
+    def descargaAval = {
+//        println "descar aval "+params
+        def aval = Aval.get(params.id)
+//        println "path "+aval.path
+        def path = servletContext.getRealPath("/") + "avales/" + aval.path
+
+        def src = new File(path)
+        if (src.exists()) {
+            response.setContentType("application/octet-stream")
+            response.setHeader("Content-disposition", "attachment;filename=${src.getName()}")
+
+            response.outputStream << src.newInputStream()
+        } else {
+            render "archivo no encontrado"
+        }
+    }
+
 
 
 }

@@ -38,21 +38,25 @@
                 <tr>
                     <th>Proceso</th>
                     <th>Concepto</th>
+                    <th>Fecha</th>
+                    <th>Número</th>
                     <th>Monto</th>
                     <th>Estado</th>
-                    <th></th>
+                    <th>Aval</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 <g:each in="${avales}" var="p">
                     <tr>
-                        <td>${p.proceso}</td>
+                        <td>${p.proceso.nombre}</td>
                         <td>${p.concepto}</td>
-                        <td style="text-align: right">${p.monto()}</td>
-                        <td style="text-align: right">${p.estado?.descripcion}</td>
+                        <td style="text-align: center">${p.fechaAprobacion?.format("dd-MM-yyyy")}</td>
+                        <td style="text-align: center">${p.numero}</td>
+                        <td style="text-align: right">${p.monto}</td>
+                        <td style="text-align: center" class="${p.estado?.codigo}">${p.estado?.descripcion}</td>
                         <td style="text-align: center">
-
+                            <a href="#" class="imprimiAval" iden="${p.id}">Imprimir</a>
                         </td>
                         <td style="text-align: center">
 
@@ -83,12 +87,12 @@
                         <td>${p.proceso.nombre}</td>
                         <td>${p.concepto}</td>
                         <td style="text-align: right">${p.monto}</td>
-                        <td style="">${p.estado?.descripcion}</td>
+                        <td style="text-align: center" class="${p.estado?.codigo}">${p.estado?.descripcion}</td>
                         <td style="text-align: center">
                             <a href="#" class="btn descRespaldo" iden="${p.id}">Ver</a>
                         </td>
                         <td style="text-align: center">
-                            <a href="#" class="btn">Ver</a>
+                            <a href="#" class="imprimiSolicitud" iden="${p.id}">Imprimir</a>
                         </td>
                     </tr>
                 </g:each>
@@ -101,6 +105,13 @@
 </div>
 <script>
     $(".btn").button()
+    $(".imprimiAval").button({icons:{ primary:"ui-icon-print"},text:false}).click(function(){
+        location.href = "${createLink(controller:'avales',action:'descargaAval')}/"+$(this).attr("iden")
+    })
+    $(".imprimiSolicitud").button({icons:{ primary:"ui-icon-print"},text:false}).click(function(){
+        var url = "${g.createLink(controller: 'reporteSolicitud',action: 'imprimirSolicitudAval')}/?id="+$(this).attr("iden")
+        location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url+"&filename=aval.pdf"
+    })
     $(".descRespaldo").click(function(){
             location.href = "${createLink(controller:'avales',action:'descargaSolicitud')}/"+$(this).attr("iden")
 

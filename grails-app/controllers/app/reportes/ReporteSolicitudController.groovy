@@ -44,8 +44,9 @@ class ReporteSolicitudController {
     }
 
     def imprimirSolicitudAval = {
+        println "impr sol "+params
         def solicitud = SolicitudAval.get(params.id)
-
+        println "solcitud "+solicitud
         return [solicitud: solicitud]
     }
 }
