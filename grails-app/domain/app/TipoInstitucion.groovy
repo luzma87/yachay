@@ -17,8 +17,8 @@ class TipoInstitucion implements Serializable {
         }
     }
     static constraints = {
-        codigo(size: 1..2, blank: false, nullable: false, attributes:[mensaje:'Código del tipo de institución'])
-        descripcion(size: 1..31, blank: true, nullable: true, attributes: [mensaje: 'Descripción del tipo de institución'])
+        codigo(size: 1..2, blank: false, nullable: false, attributes:[mensaje:'Código del área de gestión'])
+        descripcion(size: 1..31, blank: true, nullable: true, attributes: [mensaje: 'Descripción del área de gestión'])
     }
 
     String toString() {

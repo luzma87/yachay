@@ -4,7 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="layout" content="main"/>
         <g:set var="entityName"
-               value="${message(code: 'tipoInstitucion.label', default: 'Tipo de Institución')}"/>
+               value="${message(code: 'tipoInstitucion.label', default: 'Área de Gestión')}"/>
         <title><g:message code="default.show.label" args="[entityName]"/></title>
     </head>
 
@@ -13,9 +13,9 @@
         <div class="dialog" title="${title}">
             <div id="" class="toolbar ui-widget-header ui-corner-all">
                 <g:link class="button list" action="list">
-                    <g:message code="tipoInstitucion.list" default="Lista de Tipos de Institución" />
+                    <g:message code="tipoInstitucion.list" default="Lista de Área de Gestión" />
                 </g:link>
-                <g:link class="button create" action="create">Nuevo Tipo de Institución</g:link>
+                <g:link class="button create" action="create">Nuevo Área de Gestión</g:link>
             </div> <!-- toolbar -->
 
             <div class="body">
@@ -26,7 +26,7 @@
 
                     <fieldset class="ui-corner-all">
                         <legend class="ui-widget ui-widget-header ui-corner-all">
-                            <g:message code="tipoInstitucion.show.legend" default="Datos de Tipo de Institución"/>
+                            <g:message code="tipoInstitucion.show.legend" default="Datos de Área de Gestión"/>
                         </legend>
 
 

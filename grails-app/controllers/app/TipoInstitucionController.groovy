@@ -24,7 +24,7 @@ class TipoInstitucionController {
         if (params.source == "create") {
             tipoInstitucionInstance = new TipoInstitucion()
             tipoInstitucionInstance.properties = params
-            title = g.message(code: "tipoinstitucion.create", default: "Create TipoInstitucion")
+            title = g.message(code: "tipoinstitucion.create", default: "Crear Área de Gestión")
         } else if (params.source == "edit") {
             tipoInstitucionInstance = TipoInstitucion.get(params.id)
             if (!tipoInstitucionInstance) {

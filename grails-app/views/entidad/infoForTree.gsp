@@ -25,7 +25,7 @@
             </tr>
 
             <tr class="prop">
-                <td class="label">Tipo de institución</td>
+                <td class="label">Área de Gestión</td>
 
                 <td class="campo">${unidad?.tipoInstitucion?.descripcion}</td> <!-- campo -->
             </tr>
