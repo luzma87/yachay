@@ -41,7 +41,7 @@
 
             <tr class="prop">
                 <td class="label  mandatory" valign="middle">
-                    Tipo de institución
+                    Área de Gestión
                 </td>
 
                 <td class="indicator mandatory">
@@ -179,7 +179,7 @@
             </tr>
 
             <tr class="prop">
-                <td class="label">Fecha Inicio</td>
+                <td class="label">Fecha de creación</td>
 
                 <td class="indicator">
                     &nbsp;
