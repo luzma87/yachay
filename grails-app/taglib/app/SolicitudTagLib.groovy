@@ -97,11 +97,53 @@ class SolicitudTagLib {
 //            html += '</tr>'
 
             html += '<tr>'
-            html += '<td class="label">Archivo TDR (pdf)</td>'
-            html += '<td colspan="7">'
-            html += g.link(controller: 'solicitud', action: "downloadFile", id: solicitud.id) { solicitud.pathPdfTdr }
+            html += '<td class="label">Archivo TDR</td>'
+            html += '<td colspan="3">'
+            html += g.link(controller: 'solicitud', action: "downloadSolicitud", params: [tipo: "tdr"], id: solicitud.id) {
+                solicitud.pathPdfTdr
+            }
+            html += '</td>'
+
+            html += '<td class="label">Oferta 1</td>'
+            html += '<td colspan="3">'
+            html += g.link(controller: 'solicitud', action: "downloadSolicitud", params: [tipo: "oferta1"], id: solicitud.id) {
+                solicitud.pathOferta1
+            }
             html += '</td>'
             html += '</tr>'
+
+            html += '<tr>'
+            html += '<td class="label">Oferta 2</td>'
+            html += '<td colspan="3">'
+            html += g.link(controller: 'solicitud', action: "downloadSolicitud", params: [tipo: "oferta2"], id: solicitud.id) {
+                solicitud.pathOferta2
+            }
+            html += '</td>'
+
+            html += '<td class="label">Oferta 3</td>'
+            html += '<td colspan="3">'
+            html += g.link(controller: 'solicitud', action: "downloadSolicitud", params: [tipo: "oferta3"], id: solicitud.id) {
+                solicitud.pathOferta3
+            }
+            html += '</td>'
+            html += '</tr>'
+
+            html += '<tr>'
+            html += '<td class="label">Cuadro comparativo</td>'
+            html += '<td colspan="3">'
+            html += g.link(controller: 'solicitud', action: "downloadSolicitud", params: [tipo: "comparativo"], id: solicitud.id) {
+                solicitud.pathCuadroComparativo
+            }
+            html += '</td>'
+
+            html += '<td class="label">Análisis de costos</td>'
+            html += '<td colspan="3">'
+            html += g.link(controller: 'solicitud', action: "downloadSolicitud", params: [tipo: "analisis"], id: solicitud.id) {
+                solicitud.pathAnalisisCostos
+            }
+            html += '</td>'
+            html += '</tr>'
+
             html += '</table>'
 
             html += revisiones(solicitud: solicitud, editable: editable, perfil: perfil)
@@ -123,7 +165,7 @@ class SolicitudTagLib {
 
         def editableGAF = editable && perfil.codigo == "GAF"
         def editableGJ = editable && perfil.codigo == "GJ"
-        def editableGDP = editable && perfil.codigo == "GDP"
+//        def editableGDP = editable && perfil.codigo == "GDP"
 
         def js = ""
         def html = "No se encontró la solicitud a mostrar"
@@ -133,110 +175,10 @@ class SolicitudTagLib {
                     "cursor: pointer;" +
                     "}"
             html += "</style>"
-            html += '<table width="100%" class="ui-widget-content ui-corner-all">'
-            html += '<thead>'
-            html += '<tr>'
-            html += '<td colspan="3" class="collapsible collapsed ui-widget ui-widget-header ui-corner-all" style="padding: 3px;" title="Click para ver las observaciones">'
-            html += 'Gerencia Administrativa Financiera'
-            if (!editableGAF) {
-                html += " (" + (solicitud.revisadoAdministrativaFinanciera ?
-                        'Revisado el ' + solicitud.revisadoAdministrativaFinanciera.format('dd-MM-yyyy') :
-                        'No revisado') + ")"
-            }
-            html += '</td>'
-            html += '</tr>'
-            html += '</thead>'
-            html += '<tbody>'
-            html += '<td style="width: 98px;" class="label">Observaciones</td>'
-            if (!editableGAF) {
-                html += '<td>'
-                html += (solicitud.observacionesAdministrativaFinanciera ?: '- Sin observaciones-')
-                html += '</td>'
-            } else {
-                html += '<td style="width: 785px;">'
-                html += g.textArea(name: "observacionesAdministrativaFinanciera", "class": "ui-widget-content ui-corner-all",
-                        rows: "5", cols: "5", value: solicitud.observacionesAdministrativaFinanciera)
-                html += '</td>'
-            }
-            if (editableGAF) {
-                html += '<td style="width: 127px;">'
-                html += '<label class="label" for="gaf">Revisado'
-                html += '<input type="checkbox" name="gaf" id="gaf" ' + (solicitud.revisadoAdministrativaFinanciera ? 'checked' : '') + '/>'
-                html += '</label>'
-                html += '</td>'
-            }
-            html += '</tbody>'
-            html += '</table>'
 
-            html += '<table width="100%" class="ui-widget-content ui-corner-all">'
-            html += '<thead>'
-            html += '<tr>'
-            html += '<td colspan="3" class="collapsible collapsed ui-widget ui-widget-header ui-corner-all" style="padding: 3px;" title="Click para ver las observaciones">'
-            html += 'Gerencia Jurídica'
-            if (!editableGJ) {
-                html += " (" + (solicitud.revisadoJuridica ?
-                        'Revisado el ' + solicitud.revisadoJuridica.format('dd-MM-yyyy') :
-                        'No revisado') + ")"
-            }
-            html += '</td>'
-            html += '</tr>'
-            html += '</thead>'
-            html += '<tbody>'
-            html += '<td style="width: 98px;" class="label">Observaciones</td>'
-            if (!editableGJ) {
-                html += '<td>'
-                html += (solicitud.observacionesJuridica ?: '- Sin observaciones-')
-                html += '</td>'
-            } else {
-                html += '<td style="width: 785px;">'
-                html += g.textArea(name: "observacionesJuridica", "class": "ui-widget-content ui-corner-all",
-                        rows: "5", cols: "5", value: solicitud.observacionesJuridica)
-                html += '</td>'
-            }
-            if (editableGJ) {
-                html += '<td style="width: 127px;">'
-                html += '<label class="label" for="gj">Revisado'
-                html += '<input type="checkbox" name="gj" id="gj" ' + (solicitud.revisadoJuridica ? 'checked' : '') + '/>'
-                html += '</label>'
-                html += '</td>'
-            }
-            html += '</tbody>'
-            html += '</table>'
-
-            html += '<table width="100%" class="ui-widget-content ui-corner-all">'
-            html += '<thead>'
-            html += '<tr>'
-            html += '<td colspan="3" class="collapsible collapsed ui-widget ui-widget-header ui-corner-all" style="padding: 3px;" title="Click para ver las observaciones">'
-            html += 'Gerencia de Dirección de Proyectos'
-            if (!editableGDP) {
-                html += " (" + (solicitud.revisadoDireccionProyectos ?
-                        'Revisado el ' + solicitud.revisadoDireccionProyectos.format('dd-MM-yyyy') :
-                        'No revisado') + ")"
-            }
-            html += '</td>'
-            html += '</tr>'
-            html += '</thead>'
-            html += '<tbody>'
-            html += '<td class="label" style="width: 98px;">Observaciones</td>'
-            if (!editableGDP) {
-                html += '<td>'
-                html += (solicitud.observacionesDireccionProyectos ?: '- Sin observaciones-')
-                html += '</td>'
-            } else {
-                html += '<td style="width: 785px;">'
-                html += g.textArea(name: "observacionesDireccionProyectos", "class": "ui-widget-content ui-corner-all",
-                        rows: "5", cols: "5", value: solicitud.observacionesDireccionProyectos)
-                html += '</td>'
-            }
-            if (editableGDP) {
-                html += '<td style="width: 127px;">'
-                html += '<label class="label" for="gdp">Revisado'
-                html += '<input type="checkbox" name="gdp" id="gdp" ' + (solicitud.revisadoDireccionProyectos ? 'checked' : '') + '/>'
-                html += '</label>'
-                html += '</td>'
-            }
-            html += '</tbody>'
-            html += '</table>'
+            html += revisionFragment(solicitud: solicitud, editable: editableGAF, tipo: "GAF")
+            html += revisionFragment(solicitud: solicitud, editable: editableGJ, tipo: "GJ")
+//            html += revisionFragment(solicitud: solicitud, editable: editableGDP, tipo: "GDP")
 
             js = "<script type='text/javascript'>"
             js += '$(".collapsed").each(function () {\n' +
@@ -244,7 +186,7 @@ class SolicitudTagLib {
                     '   var $tbody = $c.parents("thead").siblings("tbody");\n' +
                     '   $tbody.hide();\n' +
                     '});'
-            js+='$(".collapsible").click(function() {' +
+            js += '$(".collapsible").click(function() {' +
                     '   var $c = $(this);\n' +
                     '   var $tbody = $c.parents("thead").siblings("tbody");\n' +
                     '   $tbody.toggle();\n' +
@@ -252,6 +194,104 @@ class SolicitudTagLib {
             js += "</script>"
         }
         out << html + js
+    }
+
+    def revisionFragment = { attrs ->
+        Solicitud solicitud = attrs.solicitud
+        def editable = attrs.editable
+
+        def title = "", name = "", revisado = "", observaciones = "", checked = "", archivo = null
+
+        switch (attrs.tipo) {
+            case "GAF":
+                name = "gaf"
+                title = 'Gerencia Administrativa Financiera'
+                revisado = " (" + (solicitud.revisadoAdministrativaFinanciera ?
+                        'Revisado el ' + solicitud.revisadoAdministrativaFinanciera.format('dd-MM-yyyy') :
+                        'No revisado') + ")"
+                observaciones = solicitud.observacionesAdministrativaFinanciera
+                checked = (solicitud.revisadoAdministrativaFinanciera ? true : false)
+                archivo = solicitud.pathRevisionGAF
+                break;
+            case "GJ":
+                name = "gj"
+                title = 'Gerencia Jurídica'
+                revisado = " (" + (solicitud.revisadoJuridica ?
+                        'Revisado el ' + solicitud.revisadoJuridica.format('dd-MM-yyyy') :
+                        'No revisado') + ")"
+                observaciones = solicitud.observacionesJuridica
+                checked = (solicitud.revisadoJuridica ? true : false)
+                archivo = solicitud.pathRevisionGJ
+                break;
+            case "GDP":
+                name = "gdp"
+                title = 'Gerencia de Dirección de Proyectos'
+                revisado = " (" + (solicitud.revisadoDireccionProyectos ?
+                        'Revisado el ' + solicitud.revisadoDireccionProyectos.format('dd-MM-yyyy') :
+                        'No revisado') + ")"
+                observaciones = solicitud.observacionesDireccionProyectos
+                checked = (solicitud.revisadoDireccionProyectos ? true : false)
+                archivo = solicitud.pathRevisionGDP
+                break;
+        }
+
+        def html = ""
+
+        html += '<table width="100%" class="ui-widget-content ui-corner-all">'
+        html += '<thead>'
+        html += '<tr>'
+        html += '<td colspan="3" class="collapsible ' + (editable ? "" : "collapsed") + ' ui-widget ui-widget-header ui-corner-all" style="padding: 3px;" title="Click para ver las observaciones">'
+        html += title
+        if (!editable) {
+            html += revisado
+        }
+        html += '</td>'
+        html += '</tr>'
+        html += '</thead>'
+        html += '<tbody>'
+        html += "<tr>"
+        html += '<td style="width: 98px;" class="label">Observaciones</td>'
+        if (!editable) {
+            html += '<td>'
+            html += (observaciones ?: '- Sin observaciones-')
+            html += '</td>'
+        } else {
+            html += '<td style="width: 785px;">'
+            html += g.textArea(name: "observaciones" + name, "class": "ui-widget-content ui-corner-all",
+                    rows: "5", cols: "5", value: observaciones)
+            html += '</td>'
+        }
+        if (editable) {
+            html += '<td style="width: 127px;">'
+            html += '<label class="label" for="gaf">Revisado'
+            html += g.checkBox(name: name, checked: checked)
+            html += '</label>'
+            html += '</td>'
+        }
+
+        html += "</tr>"
+        html += "<tr>"
+        html += '<td class="label">Archivo</td>'
+        html += '<td>'
+        if (!editable) {
+            html += g.link(controller: "solicitud", action: "downloadSolicitud", params: [tipo: "revision" + name], id: solicitud.id) {
+                archivo
+            }
+        } else {
+            html += "<input type=\"file\" name=\"archivo${name}\"/>"
+            if (archivo) {
+                html += '<br/>'
+                html += 'Archivo actual:'
+                html += archivo
+            }
+        }
+        html += '</td>'
+        html += "</tr>"
+
+        html += '</tbody>'
+        html += '</table>'
+
+        out << html
     }
 
     def aprobaciones = { attrs ->
@@ -286,15 +326,15 @@ class SolicitudTagLib {
                 html += (aprobacion.tipoAprobacion ? aprobacion.tipoAprobacion.descripcion : "-Sin tipo de aprobación-")
             }
             html += '</td>'
-            html += '<td class="label">Fondos</td>'
-            html += '<td>'
-            if (editable) {
-                html += g.select(from: Fuente.list(), name: "fuente.id", id: "fuente",
-                        optionKey: "id", optionValue: "descripcion", value: aprobacion.fuenteId)
-            } else {
-                html += (aprobacion.fuente ? aprobacion.fuente.descripcion : "-Sin fuente de fondos-")
-            }
-            html += '</td>'
+//            html += '<td class="label">Fondos</td>'
+//            html += '<td>'
+//            if (editable) {
+//                html += g.select(from: Fuente.list(), name: "fuente.id", id: "fuente",
+//                        optionKey: "id", optionValue: "descripcion", value: aprobacion.fuenteId)
+//            } else {
+//                html += (aprobacion.fuente ? aprobacion.fuente.descripcion : "-Sin fuente de fondos-")
+//            }
+//            html += '</td>'
             html += '<td>'
             if (tieneArrastre) {
                 html += 'Usa recursos de arrastre'
@@ -315,7 +355,7 @@ class SolicitudTagLib {
             html += '</tr>'
             if (aprobacion.pathPdf) {
                 html += '<tr>'
-                html += '<td class="label">Archivo (pdf)</td>'
+                html += '<td class="label">Archivo</td>'
                 html += '<td colspan="4">'
                 html += g.link(controller: 'solicitud', action: "downloadActa", id: aprobacion.id) {
                     aprobacion.pathPdf
@@ -466,12 +506,12 @@ class SolicitudTagLib {
 //            html += '</td>'
 //            html += '</tr>'
 
-            html += '<tr>'
-            html += '<td class="label">Archivo (pdf)</td>'
-            html += '<td colspan="7">'
-            html += solicitud.pathPdfTdr
-            html += '</td>'
-            html += '</tr>'
+//            html += '<tr>'
+//            html += '<td class="label">Archivo (pdf)</td>'
+//            html += '<td colspan="7">'
+//            html += solicitud.pathPdfTdr
+//            html += '</td>'
+//            html += '</tr>'
             html += '</table>'
         }
         html += revisionesReporte(solicitud: solicitud)
@@ -553,12 +593,12 @@ class SolicitudTagLib {
             html += (aprobacion.tipoAprobacion?.descripcion ?: "")
             html += '</td>'
             html += '</tr>'
-            html += '<tr>'
-            html += '<td class="label">Fondos</td>'
-            html += '<td>'
-            html += (aprobacion.fuente?.descripcion ?: "")
-            html += '</td>'
-            html += '</tr>'
+//            html += '<tr>'
+//            html += '<td class="label">Fondos</td>'
+//            html += '<td>'
+//            html += (aprobacion.fuente?.descripcion ?: "")
+//            html += '</td>'
+//            html += '</tr>'
             html += '<tr>'
             html += '<td class="label">Observaciones</td>'
             html += '<td>'

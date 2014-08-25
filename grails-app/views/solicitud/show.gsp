@@ -68,13 +68,12 @@
                                             <g:message code="default.button.update.label" default="Edit"/>
                                         </g:link>
                                     </g:if>
-                                    <g:if test="${session.perfil.codigo == 'GAF' || session.perfil.codigo == 'GJ' || session.perfil.codigo == 'GDP'}">
+                                    <g:if test="${session.perfil.codigo == 'GAF' || session.perfil.codigo == 'GJ'/* || session.perfil.codigo == 'GDP'*/}">
                                         <g:link class="button revision" action="revision" id="${solicitud?.id}">
                                             Revisar
                                         </g:link>
                                     </g:if>
                                     <g:if test="${solicitud.revisadoAdministrativaFinanciera &&
-                                            solicitud.revisadoDireccionProyectos &&
                                             solicitud.revisadoJuridica}">
                                         <g:if test="${session.perfil.codigo == 'GP'}">
                                             <g:link class="button aprobacion" action="aprobacion" id="${solicitud?.id}">

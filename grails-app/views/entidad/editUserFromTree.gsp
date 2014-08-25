@@ -327,7 +327,7 @@
                     Contrase&ntilde;a
                 </td>
 
-                <td class="indicator">
+                <td class="indicator mandatory">
                     <span class="indicator mandatory">*</span>
                 </td>
 

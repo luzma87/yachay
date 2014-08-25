@@ -23,7 +23,7 @@
         <div class="dialog" title="${title}">
             <div id="" class="toolbar ui-widget-header ui-corner-all">
                 <g:link class="button list" action="list">
-                    <g:message code="tipoInstitucion.list" default="Lista de Tipos de Institución" />
+                    <g:message code="tipoInstitucion.list" default="Lista de Áreas de Gestión" />
                 </g:link>
             </div> <!-- toolbar -->
 
@@ -47,11 +47,11 @@
                             <legend class="ui-widget ui-widget-header ui-corner-all">
                                 <g:if test="${source == 'edit'}">
                                     <g:message code="tipoInstitucion.edit.legend"
-                                               default="Editar Tipo de Institución"/>
+                                               default="Editar Área de Gestión"/>
                                 </g:if>
                                 <g:else>
                                     <g:message code="tipoInstitucion.create.legend"
-                                               default="Ingresar Tipo de Institución"/>
+                                               default="Ingresar Área de Gestión"/>
                                 </g:else>
                             </legend>
 

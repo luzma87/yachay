@@ -1,0 +1,86 @@
+.fila{
+    width: 98%;
+    height: 35px;
+    margin-top: 10px;
+}
+.labelSvt{
+    width: 120px;
+    height: 35px;
+    display: inline-block;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+input{
+    padding: 3px;
+}
+
+.fieldSvt-small{
+    width: 100px;
+    height: 35px;
+    display: inline-block;
+}
+.fieldSvt-medium{
+    width: 200px;
+    height: 35px;
+    display: inline-block;
+}
+.fieldSvt-large{
+    width: 300px;
+    height: 35px;
+    display: inline-block;
+}
+.fieldSvt-xl{
+    width: 400px;
+    height: 35px;
+    display: inline-block;
+}
+.fieldSvt-xxl{
+    width: 500px;
+    height: 35px;
+    display: inline-block;
+}
+.fieldSvt-xxxl{
+    width: 600px;
+    height: 35px;
+    display: inline-block;
+}
+th{
+    background: #5496CC;
+    color: white;
+    border: 1px solid #000000;
+}
+td{
+    border: 1px solid #000000;
+    padding: 5px;
+}
+table{
+    border-collapse: collapse;
+   border-spacing: 0px;
+}
+h3{
+    font-size: 12px;
+    display: inline-block;
+}
+
+/*Estados avales*/
+.E01{
+    background: #51aec6;
+    font-weight: bold;
+}
+.E02{
+    background: #c3d5a6;
+    font-weight: bold;
+}
+.E03{
+    background: #d5a09d;
+    font-weight: bold;
+}
+.E04{
+    background: #d5a09d;
+    font-weight: bold;
+}
+.E05{
+    background: #c3d5a6;
+    font-weight: bold;
+}

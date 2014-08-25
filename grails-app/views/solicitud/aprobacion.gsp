@@ -68,7 +68,7 @@
         </div> <!-- dialog -->
 
 
-        <div id="dialog" title="Seleccione un archivo PDF" class="ui-helper-hidden">
+        <div id="dialog" title="Seleccione un archivo" class="ui-helper-hidden">
             <p>
                 <g:uploadForm id="${aprobacion.id}" name="frmPdf" action="uploadActa">
                     <input type="file" name="pdf" class="required"/>
@@ -98,16 +98,16 @@
                 });
 
                 $("#frmPdf").validate({
-                    rules    : {
-                        pdf : {
-                            accept : "pdf"
-                        }
-                    },
-                    messages : {
-                        pdf : {
-                            accept : "Por favor seleccione un archivo PDF"
-                        }
-                    }
+//                    rules    : {
+//                        pdf : {
+//                            accept : "pdf"
+//                        }
+//                    },
+//                    messages : {
+//                        pdf : {
+//                            accept : "Por favor seleccione un archivo PDF"
+//                        }
+//                    }
                 });
 
                 $("#uploadActa").click(function () {

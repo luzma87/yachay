@@ -20,44 +20,57 @@ class CustomTagLib {
         }
     }
 
+    def fechaLetras = { attrs ->
+        def meses = ["", "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto",
+                     "septiembre", "octubre", "noviembre", "diciembre"]
+        def fecha = attrs.fecha
+        def output = ""
+
+        output += fecha.format("dd") + " de "
+        output += meses[fecha.format("MM").toInteger()]
+        output += " del " + fecha.format("yyyy")
+
+        out << output
+    }
+
     def renderNoSelectionOptionImpl(out, noSelectionKey, noSelectionValue, value) {
         // If a label for the '--Please choose--' first item is supplied, write it out
         out << "<option value=\"${(noSelectionKey == null ? '' : noSelectionKey)}\"${noSelectionKey == value ? ' selected="selected"' : ''}>${noSelectionValue.encodeAsHTML()}</option>"
     }
 
-    def mostrarCampoModificacion = {attrs ->
+    def mostrarCampoModificacion = { attrs ->
         def mod = ModificacionV2.get(attrs.id)
         def campo = attrs.campo
-       // println "mod "+mod+" campo "+campo+" tipo "+mod.tipo
+        // println "mod "+mod+" campo "+campo+" tipo "+mod.tipo
         def valor
-        if (campo=="oldValue")
-            valor=mod.oldValue
+        if (campo == "oldValue")
+            valor = mod.oldValue
         else
-            valor=mod.newValue
+            valor = mod.newValue
 
-        switch (mod.tipo){
+        switch (mod.tipo) {
             case "number":
-                out << g.formatNumber(number:valor, format: '###,##0', maxFractionDigits: 2, minFractionDigits: 2)
+                out << g.formatNumber(number: valor, format: '###,##0', maxFractionDigits: 2, minFractionDigits: 2)
                 break;
             case "string":
                 out << valor
                 break;
             case "date":
-                try{
+                try {
                     out << valor.format("dd/MM/yyyy")
-                }catch(e) {
+                } catch (e) {
                     out << valor
-                    println "error date  "+e
+                    println "error date  " + e
                 }
                 break;
             default:
-                try{
-                   // println "mod tipo "+mod.tipo
-                    def cl = grailsApplication.getArtefact("Domain",mod.tipo)?.getClazz()?.get(valor)
+                try {
+                    // println "mod tipo "+mod.tipo
+                    def cl = grailsApplication.getArtefact("Domain", mod.tipo)?.getClazz()?.get(valor)
                     out << cl.toString()
-                }catch(e) {
+                } catch (e) {
                     out << valor
-                    println "error tipo dominio  "+e
+                    println "error tipo dominio  " + e
                 }
                 break;
         }
@@ -132,12 +145,10 @@ class CustomTagLib {
             attrs.class = attrs.class + " sorted ui-state-highlight " + order
             if (order == "asc") {
                 linkParams.order = "desc"
-            }
-            else {
+            } else {
                 linkParams.order = "asc"
             }
-        }
-        else {
+        } else {
             linkParams.order = defaultOrder
         }
 
@@ -251,7 +262,7 @@ class CustomTagLib {
             // display firststep link when beginstep is not firststep
             if (beginstep > firststep) {
                 linkParams.offset = 0
-                writer << link(linkTagAttrs.clone()) {firststep.toString()}
+                writer << link(linkTagAttrs.clone()) { firststep.toString() }
                 writer << '<span class="step">..</span>'
             }
 
@@ -259,10 +270,9 @@ class CustomTagLib {
             (beginstep..endstep).each { i ->
                 if (currentstep == i) {
                     writer << "<span class=\"currentStep ui-state-highlight\">${i}</span>"
-                }
-                else {
+                } else {
                     linkParams.offset = (i - 1) * max
-                    writer << link(linkTagAttrs.clone()) {i.toString()}
+                    writer << link(linkTagAttrs.clone()) { i.toString() }
                 }
             }
 
@@ -283,7 +293,6 @@ class CustomTagLib {
             }
         }
     } //pagination
-
 
     /**
      * Devuelve un número con formato.

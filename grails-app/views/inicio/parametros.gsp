@@ -160,7 +160,7 @@
                     <g:link  controller="zona" action="arbol">Divisi&oacute;n geogr&aacute;fica del Pa&iacute;s</g:link> en zonas, regiones, provincias, cantones y parroquias.
                 </div><br>
                 <div class="item" texto="tpin">
-                    <g:link  controller="tipoInstitucion" action="list">Tipo de Institución</g:link> que se aplica a las distintas entidades y unidades ejecutoras
+                    <g:link  controller="tipoInstitucion" action="list">Area de Gestión</g:link> que se aplica a las distintas entidades y unidades responsables
                 </div><br>
                 <div class="item" texto="undd">
                     <g:link  controller="unidad" action="list">Unidad de Medida</g:link> Unidad de control o conteo de obras para el plan anual de adquisiciones (PAC) y para fijar las metas.
@@ -385,9 +385,9 @@
     <p>Zonas, regiones, provincias, cantones y parroquias</p>
 </div>
 <div id="tpin" style="display:none">
-    <h1>Tipo de Institución</h1><br>
+    <h1>Area de Gestión</h1><br>
     <p>Se aplica a las distintas entidades, instituciones y dependencias para diferenciarlas como:</p>
-    <p>Direcciones, Programas, Coordinaciones Zonales, Entidades Adscritas, entidades externas, etc.</p>
+    <p>Gerencias, Direcciones, Unidades Operativas, etc.</p>
 </div>
 <div id="pgps" style="display:none">
     <h2>Programa Presupuestario</h2><br>

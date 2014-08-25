@@ -75,9 +75,14 @@
 </div>
 
 <div class="dialog">
-<a href="#" id="calc" class="btn" style="margin: 10px">Generar asignaciones del proyecto</a>
+<g:if test="${!actSel}">
+    <a href="#" id="calc" class="btn" style="margin: 10px">Generar asignaciones del proyecto</a>
+</g:if>
+<g:else>
+    <a href="${g.createLink(controller: 'marcoLogico',action: 'actividadesComponente',id: actSel.marcoLogico.id)}"  class="btn" style="margin: 10px">Regresar</a>
+</g:else>
 <g:link controller="asignacion" action="asignacionProyectov2" id="${proyecto.id}" class="btn">Asignaciones</g:link>
-<table style="width: 1300px;margin-left: -20px" border="1">
+<table style="width: 1300px;margin-left: -20px;margin-top: 10px" border="1">
 <thead style="background: rgba(110, 182, 213,0.2)">
 <tr>
     <th style="width: 220px">&nbsp;</th>
@@ -121,112 +126,225 @@
         </td>
     </tr>
     <g:each in="${app.MarcoLogico.findAllByMarcoLogicoAndEstado(comp,0,[sort:'id'])}" var="act" status="i">
-        <g:set var="monto" value="${act.monto}"></g:set>
-        <g:set var="totComp" value="${totComp.toDouble()+monto}"></g:set>
-    %{--<g:set var="totOtrosAnios" value="0"></g:set>--}%
-        <tr>
+        <g:if test="${!actSel}">
+            <g:set var="monto" value="${act.monto}"></g:set>
+            <g:set var="totComp" value="${totComp.toDouble()+monto}"></g:set>
+        %{--<g:set var="totOtrosAnios" value="0"></g:set>--}%
+            <tr>
 
-            <td class="colGrande" style="background: ${colores[indice.toInteger()]};width: 220px;font-weight: bold" title="${act.responsable} - ${act.objeto}">
-                ${(act.objeto.length() > 100) ? act.objeto.substring(0, 100) + "..." : act.objeto}
-            </td>
-            <g:set var="tot" value="0"></g:set>
-            <g:set var="totAct" value="${monto}"></g:set>
-            <g:each in="${app.Mes.list()}" var="mes" status="k">
-                <g:set var="crga" value='${app.Cronograma.findAllByMarcoLogicoAndMes(act,mes)}'></g:set>
-                <g:if test="${crga.size()>0}">
-                    <g:each in="${crga}" var="c">
-                        <g:if test="${c?.anio==anio && c?.cronograma == null}">
+                <td class="colGrande" style="background: ${colores[indice.toInteger()]};width: 220px;font-weight: bold" title="${act.responsable} - ${act.objeto}">
+                    ${(act.objeto.length() > 100) ? act.objeto.substring(0, 100) + "..." : act.objeto}
+                </td>
+                <g:set var="tot" value="0"></g:set>
+                <g:set var="totAct" value="${monto}"></g:set>
+                <g:each in="${app.Mes.list()}" var="mes" status="k">
+                    <g:set var="crga" value='${app.Cronograma.findAllByMarcoLogicoAndMes(act,mes)}'></g:set>
+                    <g:if test="${crga.size()>0}">
+                        <g:each in="${crga}" var="c">
+                            <g:if test="${c?.anio==anio && c?.cronograma == null}">
 
-                        %{--paso ${" "+c.anio+" "+k+" mes "+mes+" mrlg  "+act.id}   <br>--}%
-                            <g:set var="crg" value='${c}'></g:set>
-                            <g:set var="totCompAsig" value="${totCompAsig.toDouble()+crg.valor+crg.valor2}"></g:set>
-                        </g:if>
-                    %{--<g:else>--}%
-                    %{--<g:if test="${c?.anio!=anio && c?.cronograma == null}">--}%
-                    %{--<g:set var="totOtrosAnios" value="${totOtrosAnios.toDouble()+c.valor+c.valor2}"></g:set>--}%
+                            %{--paso ${" "+c.anio+" "+k+" mes "+mes+" mrlg  "+act.id}   <br>--}%
+                                <g:set var="crg" value='${c}'></g:set>
+                                <g:set var="totCompAsig" value="${totCompAsig.toDouble()+crg.valor+crg.valor2}"></g:set>
+                            </g:if>
+                        %{--<g:else>--}%
+                        %{--<g:if test="${c?.anio!=anio && c?.cronograma == null}">--}%
+                        %{--<g:set var="totOtrosAnios" value="${totOtrosAnios.toDouble()+c.valor+c.valor2}"></g:set>--}%
 
-                    %{--</g:if>--}%
-                    %{--</g:else>--}%
-                    </g:each>
-                    <g:if test="${crg}">
+                        %{--</g:if>--}%
+                        %{--</g:else>--}%
+                        </g:each>
+                        <g:if test="${crg}">
 
-                        <g:set var="tot" value="${tot.toDouble()+crg?.valor+crg?.valor2}"></g:set>
+                            <g:set var="tot" value="${tot.toDouble()+crg?.valor+crg?.valor2}"></g:set>
 
-                        <g:if test="${true}">
-                            <td style="width: 60px">
+                            <g:if test="${true}">
+                                <td style="width: 60px">
 
-                                <input type="text" id="crg_${crg.id}" value='${formatNumber(number:crg.valor+crg.valor2,format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}'
-                                       class="num fa_${crg.fuente.id}" mes="${mes.id} " identificador="${crg.id}"
-                                       actividad="${act.id}" tot="${monto}"
-                                       div="tot_${j}${i}"
-                                       mt="${mes.descripcion}" style="width: 60px"
-                                       prsp_desc="${crg.presupuesto.descripcion}" prsp="${crg.presupuesto.id}" prsp_num="${crg.presupuesto.numero}"
-                                       fuente="${crg.fuente.id}"
-                                       prsp2="${crg.presupuesto2?.id}" prsp_num2="${crg.presupuesto2?.numero}" prsp_desc2="${crg.presupuesto2?.descripcion}"
-                                       valor1="${formatNumber(number:crg.valor,format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}"
-                                       valor2="${formatNumber(number:crg.valor2,format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}" >
+                                    <input type="text" id="crg_${crg.id}" value='${formatNumber(number:crg.valor+crg.valor2,format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}'
+                                           class="num fa_${crg.fuente.id}" mes="${mes.id} " identificador="${crg.id}"
+                                           actividad="${act.id}" tot="${monto}"
+                                           div="tot_${j}${i}"
+                                           mt="${mes.descripcion}" style="width: 60px"
+                                           prsp_desc="${crg.presupuesto.descripcion}" prsp="${crg.presupuesto.id}" prsp_num="${crg.presupuesto.numero}"
+                                           fuente="${crg.fuente.id}"
+                                           prsp2="${crg.presupuesto2?.id}" prsp_num2="${crg.presupuesto2?.numero}" prsp_desc2="${crg.presupuesto2?.descripcion}"
+                                           valor1="${formatNumber(number:crg.valor,format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}"
+                                           valor2="${formatNumber(number:crg.valor2,format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}" >
 
-                            </td>
+                                </td>
+                            </g:if>
+                            <g:else>
+                                <td class="disabled" style="width: 60px">0,00</td>
+                            </g:else>
+                            <g:set var="crg" value="${null}"></g:set>
                         </g:if>
                         <g:else>
-                            <td class="disabled" style="width: 60px">0,00</td>
+                            <g:if test="${monto.toDouble()>0}">
+                                <td style="width: 60px"><input type="text" id="crg_0${j}${i}${k}" value="0,00" class="num"
+                                                               mes="${mes.id} " actividad="${act.id}" identificador="0"
+                                                               tot="${monto}" div="tot_${j}${i}"
+                                                               mt="${mes.descripcion}" style="width: 60px" valor1="0,00" valor2="0,00"></td>
+                            </g:if>
+                            <g:else>
+                                <td class="disabled">0,00</td>
+                            </g:else>
                         </g:else>
-                        <g:set var="crg" value="${null}"></g:set>
                     </g:if>
                     <g:else>
                         <g:if test="${monto.toDouble()>0}">
-                            <td style="width: 60px"><input type="text" id="crg_0${j}${i}${k}" value="0,00" class="num"
-                                                           mes="${mes.id} " actividad="${act.id}" identificador="0"
-                                                           tot="${monto}" div="tot_${j}${i}"
-                                                           mt="${mes.descripcion}" style="width: 60px" valor1="0,00" valor2="0,00"></td>
+                            <td style="width: 60px">
+                                <input type="text" id="crg_0${j}${i}${k}" value="0,00" class="num"
+                                       mes="${mes.id} " actividad="${act.id}" identificador="0"
+                                       tot="${monto}" div="tot_${j}${i}"
+                                       mt="${mes.descripcion}" style="width: 60px" valor1="0,00" valor2="0,00">
+                            </td>
                         </g:if>
                         <g:else>
                             <td class="disabled">0,00</td>
                         </g:else>
                     </g:else>
-                </g:if>
-                <g:else>
-                    <g:if test="${monto.toDouble()>0}">
-                        <td style="width: 60px">
-                            <input type="text" id="crg_0${j}${i}${k}" value="0,00" class="num"
-                                   mes="${mes.id} " actividad="${act.id}" identificador="0"
-                                   tot="${monto}" div="tot_${j}${i}"
-                                   mt="${mes.descripcion}" style="width: 60px" valor1="0,00" valor2="0,00">
-                        </td>
-                    </g:if>
-                    <g:else>
-                        <td class="disabled">0,00</td>
-                    </g:else>
-                </g:else>
-            </g:each>
-        %{--<<----------------<<<<<<<< >>>>>>>>>>>>> <br>--}%
-            <td class="disabled" id="tot_${j}${i}" div="totComp_${j}">
-                <g:formatNumber number="${tot}"
-                                format="###,##0"
-                                minFractionDigits="2" maxFractionDigits="2"/>
-            </td>
-            %{--<td class="disabled otroAnio">--}%
-            %{--<g:formatNumber number="${totOtrosAnios}"--}%
-            %{--format="###,##0"--}%
-            %{--minFractionDigits="2" maxFractionDigits="2"/>--}%
+                </g:each>
+            %{--<<----------------<<<<<<<< >>>>>>>>>>>>> <br>--}%
+                <td class="disabled" id="tot_${j}${i}" div="totComp_${j}">
+                    <g:formatNumber number="${tot}"
+                                    format="###,##0"
+                                    minFractionDigits="2" maxFractionDigits="2"/>
+                </td>
+                %{--<td class="disabled otroAnio">--}%
+                %{--<g:formatNumber number="${totOtrosAnios}"--}%
+                %{--format="###,##0"--}%
+                %{--minFractionDigits="2" maxFractionDigits="2"/>--}%
 
-            %{--</td>--}%
-            %{--<g:set var="totOtroAnioProyecto" value="${totOtroAnioProyecto.toDouble()+totOtrosAnios.toDouble()}"></g:set>--}%
-            %{--<g:set var="totOtroAnioComp" value="${totOtroAnioComp.toDouble()+totOtrosAnios.toDouble()}"></g:set>--}%
-            <td class="disabled" id="tot_${j}${i}a" div="totComp_${j}a">
-                <g:formatNumber number="${totAct.toDouble() - (tot.toDouble()+0)}"
-                                format="###,##0"
-                                minFractionDigits="2" maxFractionDigits="2"/>
+                %{--</td>--}%
+                %{--<g:set var="totOtroAnioProyecto" value="${totOtroAnioProyecto.toDouble()+totOtrosAnios.toDouble()}"></g:set>--}%
+                %{--<g:set var="totOtroAnioComp" value="${totOtroAnioComp.toDouble()+totOtrosAnios.toDouble()}"></g:set>--}%
+                <td class="disabled" id="tot_${j}${i}a" div="totComp_${j}a">
+                    <g:formatNumber number="${totAct.toDouble() - (tot.toDouble()+0)}"
+                                    format="###,##0"
+                                    minFractionDigits="2" maxFractionDigits="2"/>
 
-            </td>
-            <td class="disabled">
-                <g:formatNumber number="${monto}"
-                                format="###,##0"
-                                minFractionDigits="2" maxFractionDigits="2"/>
-                <g:set var="totalMetas" value="${totalMetas.toDouble()+monto}"></g:set>
-            </td>
+                </td>
+                <td class="disabled">
+                    <g:formatNumber number="${monto}"
+                                    format="###,##0"
+                                    minFractionDigits="2" maxFractionDigits="2"/>
+                    <g:set var="totalMetas" value="${totalMetas.toDouble()+monto}"></g:set>
+                </td>
 
-        </tr>
+            </tr>
+        </g:if>
+        <g:else>
+            <g:if test="${actSel.id==act.id}">
+                <g:set var="monto" value="${act.monto}"></g:set>
+                <g:set var="totComp" value="${totComp.toDouble()+monto}"></g:set>
+            %{--<g:set var="totOtrosAnios" value="0"></g:set>--}%
+                <tr>
+
+                    <td class="colGrande" style="background: ${colores[indice.toInteger()]};width: 220px;font-weight: bold" title="${act.responsable} - ${act.objeto}">
+                        ${(act.objeto.length() > 100) ? act.objeto.substring(0, 100) + "..." : act.objeto}
+                    </td>
+                    <g:set var="tot" value="0"></g:set>
+                    <g:set var="totAct" value="${monto}"></g:set>
+                    <g:each in="${app.Mes.list()}" var="mes" status="k">
+                        <g:set var="crga" value='${app.Cronograma.findAllByMarcoLogicoAndMes(act,mes)}'></g:set>
+                        <g:if test="${crga.size()>0}">
+                            <g:each in="${crga}" var="c">
+                                <g:if test="${c?.anio==anio && c?.cronograma == null}">
+
+                                %{--paso ${" "+c.anio+" "+k+" mes "+mes+" mrlg  "+act.id}   <br>--}%
+                                    <g:set var="crg" value='${c}'></g:set>
+                                    <g:set var="totCompAsig" value="${totCompAsig.toDouble()+crg.valor+crg.valor2}"></g:set>
+                                </g:if>
+                            %{--<g:else>--}%
+                            %{--<g:if test="${c?.anio!=anio && c?.cronograma == null}">--}%
+                            %{--<g:set var="totOtrosAnios" value="${totOtrosAnios.toDouble()+c.valor+c.valor2}"></g:set>--}%
+
+                            %{--</g:if>--}%
+                            %{--</g:else>--}%
+                            </g:each>
+                            <g:if test="${crg}">
+
+                                <g:set var="tot" value="${tot.toDouble()+crg?.valor+crg?.valor2}"></g:set>
+
+                                <g:if test="${true}">
+                                    <td style="width: 60px">
+
+                                        <input type="text" id="crg_${crg.id}" value='${formatNumber(number:crg.valor+crg.valor2,format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}'
+                                               class="num fa_${crg.fuente.id}" mes="${mes.id} " identificador="${crg.id}"
+                                               actividad="${act.id}" tot="${monto}"
+                                               div="tot_${j}${i}"
+                                               mt="${mes.descripcion}" style="width: 60px"
+                                               prsp_desc="${crg.presupuesto.descripcion}" prsp="${crg.presupuesto.id}" prsp_num="${crg.presupuesto.numero}"
+                                               fuente="${crg.fuente.id}"
+                                               prsp2="${crg.presupuesto2?.id}" prsp_num2="${crg.presupuesto2?.numero}" prsp_desc2="${crg.presupuesto2?.descripcion}"
+                                               valor1="${formatNumber(number:crg.valor,format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}"
+                                               valor2="${formatNumber(number:crg.valor2,format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}" >
+
+                                    </td>
+                                </g:if>
+                                <g:else>
+                                    <td class="disabled" style="width: 60px">0,00</td>
+                                </g:else>
+                                <g:set var="crg" value="${null}"></g:set>
+                            </g:if>
+                            <g:else>
+                                <g:if test="${monto.toDouble()>0}">
+                                    <td style="width: 60px"><input type="text" id="crg_0${j}${i}${k}" value="0,00" class="num"
+                                                                   mes="${mes.id} " actividad="${act.id}" identificador="0"
+                                                                   tot="${monto}" div="tot_${j}${i}"
+                                                                   mt="${mes.descripcion}" style="width: 60px" valor1="0,00" valor2="0,00"></td>
+                                </g:if>
+                                <g:else>
+                                    <td class="disabled">0,00</td>
+                                </g:else>
+                            </g:else>
+                        </g:if>
+                        <g:else>
+                            <g:if test="${monto.toDouble()>0}">
+                                <td style="width: 60px">
+                                    <input type="text" id="crg_0${j}${i}${k}" value="0,00" class="num"
+                                           mes="${mes.id} " actividad="${act.id}" identificador="0"
+                                           tot="${monto}" div="tot_${j}${i}"
+                                           mt="${mes.descripcion}" style="width: 60px" valor1="0,00" valor2="0,00">
+                                </td>
+                            </g:if>
+                            <g:else>
+                                <td class="disabled">0,00</td>
+                            </g:else>
+                        </g:else>
+                    </g:each>
+                %{--<<----------------<<<<<<<< >>>>>>>>>>>>> <br>--}%
+                    <td class="disabled" id="tot_${j}${i}" div="totComp_${j}">
+                        <g:formatNumber number="${tot}"
+                                        format="###,##0"
+                                        minFractionDigits="2" maxFractionDigits="2"/>
+                    </td>
+                    %{--<td class="disabled otroAnio">--}%
+                    %{--<g:formatNumber number="${totOtrosAnios}"--}%
+                    %{--format="###,##0"--}%
+                    %{--minFractionDigits="2" maxFractionDigits="2"/>--}%
+
+                    %{--</td>--}%
+                    %{--<g:set var="totOtroAnioProyecto" value="${totOtroAnioProyecto.toDouble()+totOtrosAnios.toDouble()}"></g:set>--}%
+                    %{--<g:set var="totOtroAnioComp" value="${totOtroAnioComp.toDouble()+totOtrosAnios.toDouble()}"></g:set>--}%
+                    <td class="disabled" id="tot_${j}${i}a" div="totComp_${j}a">
+                        <g:formatNumber number="${totAct.toDouble() - (tot.toDouble()+0)}"
+                                        format="###,##0"
+                                        minFractionDigits="2" maxFractionDigits="2"/>
+
+                    </td>
+                    <td class="disabled">
+                        <g:formatNumber number="${monto}"
+                                        format="###,##0"
+                                        minFractionDigits="2" maxFractionDigits="2"/>
+                        <g:set var="totalMetas" value="${totalMetas.toDouble()+monto}"></g:set>
+                    </td>
+
+                </tr>
+            </g:if>
+        </g:else>
+
     </g:each>
 %{--<<----------------<<<<<<<< <br>--}%
     <tr>

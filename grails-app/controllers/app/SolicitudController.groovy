@@ -6,22 +6,310 @@ import app.seguridad.Sesn
 import app.seguridad.Usro
 import app.yachai.Categoria
 
+import javax.imageio.ImageIO
+import java.awt.image.BufferedImage
+
+import static java.awt.RenderingHints.KEY_INTERPOLATION
+import static java.awt.RenderingHints.VALUE_INTERPOLATION_BICUBIC
+
 class SolicitudController extends app.seguridad.Shield {
 
-//    String pathBaseArchivos = servletContext.getRealPath("/") + "archivos/"
-//    String pathActas = pathBaseArchivos + "actasAprobacion/"
-//    String pathSolicitud = pathBaseArchivos + "solicitud/"
-//    String pathTdr = pathSolicitud + "tdr/"
-//    String pathOfertas = pathSolicitud + "ofertas/"
-//    String pathCostos = pathSolicitud + "analisisCostos/"
+    def getPathBase() {
+        return servletContext.getRealPath("/") + "solicitudes/"
+    }
 
-    String pathBaseArchivos = servletContext.getRealPath("/") + "solicitudes/"
-    String pathActas = "actaAprobacion/"
-    String pathTdr = "tdr/"
-    String pathOfertas = "ofertas/"
-    String pathComparativo = "cuadroComparativo/"
-    String pathCostos = "analisisCostos/"
+    def resizeImage(f, pathFile) {
+        def imageContent = ['image/png': "png", 'image/jpeg': "jpeg", 'image/jpg': "jpg"]
+        def ext = ""
+        if (imageContent.containsKey(f.getContentType())) {
+            ext = imageContent[f.getContentType()]
+            /* RESIZE */
+            def img = ImageIO.read(new File(pathFile))
 
+            def scale = 0.5
+
+            def minW = 200
+            def minH = 200
+
+            def maxW = minW * 4
+            def maxH = minH * 4
+
+            def w = img.width
+            def h = img.height
+
+            if (w > maxW || h > maxH) {
+                int newW = w * scale
+                int newH = h * scale
+                int r = 1
+                if (w > h) {
+                    r = w / maxW
+                    newW = maxW
+                    newH = h / r
+                } else {
+                    r = h / maxH
+                    newH = maxH
+                    newW = w / r
+                }
+
+                new BufferedImage(newW, newH, img.type).with { j ->
+                    createGraphics().with {
+                        setRenderingHint(KEY_INTERPOLATION, VALUE_INTERPOLATION_BICUBIC)
+                        drawImage(img, 0, 0, newW, newH, null)
+                        dispose()
+                    }
+                    ImageIO.write(j, ext, new File(pathFile))
+                }
+            }
+            /* fin resize */
+        } //si es imagen hace resize para que no exceda 800x800
+    }
+
+    def validateContent(f) {
+        return true
+//        def okContents = [
+//                'image/png'                                                                : "png",
+//                'image/jpeg'                                                               : "jpeg",
+//                'image/jpg'                                                                : "jpg",
+//
+//                'application/pdf'                                                          : 'pdf',
+//
+//                'application/excel'                                                        : 'xls',
+//                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'        : 'xlsx',
+//
+//                'application/mspowerpoint'                                                 : 'pps',
+//                'application/vnd.ms-powerpoint'                                            : 'pps',
+//                'application/powerpoint'                                                   : 'ppt',
+//                'application/x-mspowerpoint'                                               : 'ppt',
+//                'application/vnd.openxmlformats-officedocument.presentationml.slideshow'   : 'ppsx',
+//                'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'pptx',
+//
+//                'application/msword'                                                       : 'doc',
+//                'application/vnd.openxmlformats-officedocument.wordprocessingml.document'  : 'docx',
+//
+//                'application/vnd.oasis.opendocument.text'                                  : 'odt',
+//
+//                'application/vnd.oasis.opendocument.presentation'                          : 'odp',
+//
+//                'application/vnd.oasis.opendocument.spreadsheet'                           : 'ods'
+//        ]
+//        if (okContents.containsKey(f.getContentType())) {
+//            return true
+//        } else {
+//            return false
+//        }
+    }
+
+    def uploadFile(tipo, f, objeto) {
+        String pathBaseArchivos = getPathBase()
+        String archivoTdr = "tdr"
+        String archivoTdrGaf = "tdr_gaf"
+        String archivoTdrGj = "tdr_gj"
+        String archivoTdrGdp = "tdr_gdp"
+        String archivoOferta = "oferta"
+        String archivoComparativo = "cuadroComparativo"
+        String archivoAnalisis = "analisisCostos"
+        String archivoActa = "actaAprobacion"
+
+        def path = ""
+        def pathArchivo = ""
+        def nuevoArchivo = ""
+
+        switch (tipo) {
+            case "tdr":
+                path = pathBaseArchivos + "${objeto.id}/"
+                pathArchivo = objeto.pathPdfTdr
+                nuevoArchivo = archivoTdr
+                break;
+            case "oferta1":
+                path = pathBaseArchivos + "${objeto.id}/"
+                pathArchivo = objeto.pathOferta1
+                nuevoArchivo = archivoOferta + "1"
+                break;
+            case "oferta2":
+                path = pathBaseArchivos + "${objeto.id}/"
+                pathArchivo = objeto.pathOferta2
+                nuevoArchivo = archivoOferta + "2"
+                break;
+            case "oferta3":
+                path = pathBaseArchivos + "${objeto.id}/"
+                pathArchivo = objeto.pathOferta3
+                nuevoArchivo = archivoOferta + "3"
+                break;
+            case "comparativo":
+                path = pathBaseArchivos + "${objeto.id}/"
+                pathArchivo = objeto.pathCuadroComparativo
+                nuevoArchivo = archivoComparativo
+                break;
+            case "analisis":
+                path = pathBaseArchivos + "${objeto.id}/"
+                pathArchivo = objeto.pathAnalisisCostos
+                nuevoArchivo = archivoAnalisis
+                break;
+            case "revisiongaf":
+                path = pathBaseArchivos + "${objeto.id}/"
+                pathArchivo = objeto.pathRevisionGAF
+                nuevoArchivo = archivoTdrGaf
+                break;
+            case "revisiongj":
+                path = pathBaseArchivos + "${objeto.id}/"
+                pathArchivo = objeto.pathRevisionGJ
+                nuevoArchivo = archivoTdrGj
+                break;
+            case "revisiongdp":
+                path = pathBaseArchivos + "${objeto.id}/"
+                pathArchivo = objeto.pathRevisionGDP
+                nuevoArchivo = archivoTdrGdp
+                break;
+            case "acta":
+                path = pathBaseArchivos + "${objeto.id}/"
+                pathArchivo = objeto.pathPdf
+                nuevoArchivo = archivoActa
+                break;
+        }
+
+        /* upload */
+        new File(path).mkdirs()
+        if (f && !f.empty) {
+            if (validateContent(f)) {
+                if (pathArchivo) {
+                    //si ya existe un archivo lo elimino
+                    def oldFile = new File(path + pathArchivo)
+                    if (oldFile.exists()) {
+                        oldFile.delete()
+                    }
+                }
+                def fileName = f.getOriginalFilename() //nombre original del archivo
+                def ext = "pdf"
+
+                def parts = fileName.split("\\.")
+                fileName = ""
+                parts.eachWithIndex { obj, i ->
+                    if (i < parts.size() - 1) {
+                        fileName += obj
+                    } else {
+                        ext = obj
+                    }
+                }
+                def pathFile = path + nuevoArchivo + "." + ext
+                try {
+                    f.transferTo(new File(pathFile)) // guarda el archivo subido al nuevo path
+                } catch (e) {
+                    println "????????\n" + e + "\n???????????"
+                }
+
+                switch (tipo) {
+                    case "tdr":
+                        objeto.pathPdfTdr = nuevoArchivo + "." + ext
+                        break;
+                    case "oferta1":
+                        objeto.pathOferta1 = nuevoArchivo + "." + ext
+                        break;
+                    case "oferta2":
+                        objeto.pathOferta2 = nuevoArchivo + "." + ext
+                        break;
+                    case "oferta3":
+                        objeto.pathOferta3 = nuevoArchivo + "." + ext
+                        break;
+                    case "comparativo":
+                        objeto.pathCuadroComparativo = nuevoArchivo + "." + ext
+                        break;
+                    case "analisis":
+                        objeto.pathAnalisisCostos = nuevoArchivo + "." + ext
+                        break;
+                    case "revisiongaf":
+                        objeto.pathRevisionGAF = nuevoArchivo + "." + ext
+                        break;
+                    case "revisiongj":
+                        objeto.pathRevisionGJ = nuevoArchivo + "." + ext
+                        break;
+                    case "revisiongdp":
+                        objeto.pathRevisionGDP = nuevoArchivo + "." + ext
+                        break;
+                    case "acta":
+                        objeto.pathPdf = nuevoArchivo + "." + ext
+                        break;
+                }
+                if (!objeto.save(flush: true)) {
+                    println "error al guardar objeto (${tipo}): " + objeto.errors
+                }
+            }
+        }
+        /* fin del upload */
+    }
+
+    def downloadFile(tipo, objeto) {
+        def filename = ""
+        String pathBaseArchivos = getPathBase()
+        switch (tipo) {
+            case "tdr":
+                filename = objeto.pathPdfTdr
+                break;
+            case "oferta1":
+                filename = objeto.pathOferta1
+                break;
+            case "oferta2":
+                filename = objeto.pathOferta2
+                break;
+            case "oferta3":
+                filename = objeto.pathOferta3
+                break;
+            case "comparativo":
+                filename = objeto.pathCuadroComparativo
+                break;
+            case "analisis":
+                filename = objeto.pathAnalisisCostos
+                break;
+            case "revisiongaf":
+                filename = objeto.pathRevisionGAF
+                break;
+            case "revisiongj":
+                filename = objeto.pathRevisionGJ
+                break;
+            case "revisiongdp":
+                filename = objeto.pathRevisionGDP
+                break;
+            case "acta":
+                filename = objeto.pathPdf
+                break;
+        }
+        def path = pathBaseArchivos + "${objeto.id}/" + filename
+        def tipoArchivo = filename.split("\\.")
+        switch (tipoArchivo) {
+            case "jpeg":
+            case "gif":
+            case "jpg":
+            case "bmp":
+            case "png":
+                tipoArchivo = "application/image"
+                break;
+            case "pdf":
+                tipoArchivo = "application/pdf"
+                break;
+            case "doc":
+            case "docx":
+            case "odt":
+                tipoArchivo = "application/msword"
+                break;
+            case "xls":
+            case "xlsx":
+                tipoArchivo = "application/vnd.ms-excel"
+                break;
+            default:
+                tipoArchivo = "application/pdf"
+                break;
+        }
+        try {
+            def file = new File(path)
+            def b = file.getBytes()
+            response.setContentType(tipoArchivo)
+            response.setHeader("Content-disposition", "attachment; filename=" + (filename))
+            response.setContentLength(b.length)
+            response.getOutputStream().write(b)
+        } catch (e) {
+            println "error en download"
+            response.sendError(404)
+        }
+    }
 
     def index = {
         redirect(action: 'list')
@@ -78,62 +366,13 @@ class SolicitudController extends app.seguridad.Shield {
             println "error save1 solicitud " + solicitud.errors
         }
 
-        /* upload del PDF */
-//        def path = servletContext.getRealPath("/") + "pdf/solicitud/"
-        def path = pathBaseArchivos + "${solicitud.id}/" + pathTdr
-        new File(path).mkdirs()
-        def f = request.getFile('pdf')
-        def okContents = [
-                'application/pdf': 'pdf',
-        ]
-        def nombre = ""
-        if (f && !f.empty) {
-            if (solicitud.pathPdfTdr) {
-                //si ya existe un archivo para esta solicitud lo elimino
-                def oldFile = new File(path + solicitud.pathPdfTdr)
-                if (oldFile.exists()) {
-                    oldFile.delete()
-                }
-            }
-            def fileName = f.getOriginalFilename() //nombre original del archivo
-            def ext
+        uploadFile("tdr", request.getFile('tdr'), solicitud)
+        uploadFile("oferta1", request.getFile('oferta1'), solicitud)
+        uploadFile("oferta2", request.getFile('oferta2'), solicitud)
+        uploadFile("oferta3", request.getFile('oferta3'), solicitud)
+        uploadFile("comparativo", request.getFile('comparativo'), solicitud)
+        uploadFile("analisis", request.getFile('analisis'), solicitud)
 
-            def parts = fileName.split("\\.")
-            fileName = ""
-            parts.eachWithIndex { obj, i ->
-                if (i < parts.size() - 1) {
-                    fileName += obj
-                } else {
-                    ext = obj
-                }
-            }
-//            if (okContents.containsKey(f.getContentType())) {
-//                ext = okContents[f.getContentType()]
-            fileName = fileName.size() < 40 ? fileName : fileName[0..39]
-            fileName = fileName.tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
-
-            nombre = fileName + "." + ext
-            def pathFile = path + nombre
-            def fn = fileName
-            def src = new File(pathFile)
-            def i = 1
-            while (src.exists()) {
-                nombre = fn + "_" + i + "." + ext
-                pathFile = path + nombre
-                src = new File(pathFile)
-                i++
-            }
-            try {
-                f.transferTo(new File(pathFile)) // guarda el archivo subido al nuevo path
-                params.pathPdfTdr = nombre
-                //println pathFile
-            } catch (e) {
-                println "????????\n" + e + "\n???????????"
-            }
-//            }
-        }
-        solicitud.pathPdfTdr = params.pathPdfTdr
-        /* fin del upload */
         if (!solicitud.save(flush: true)) {
             flash.message = "<h5>Ha ocurrido un error al crear la solicitud</h5>" + renderErrors(bean: solicitud)
         } else {
@@ -285,94 +524,6 @@ class SolicitudController extends app.seguridad.Shield {
         render comboActividades(componente.id, actividad.id, params.width)
     }
 
-    def downloadFile = {
-        def solicitud = Solicitud.get(params.id.toLong())
-//        def path = servletContext.getRealPath("/") + "pdf/solicitud/" + solicitud.pathPdfTdr
-        def path = pathBaseArchivos + "${solicitud.id}/" + pathTdr + solicitud.pathPdfTdr
-        def tipo = solicitud.pathPdfTdr.split("\\.")
-        tipo = tipo[1]
-//            println "tipo " + tipo
-        switch (tipo) {
-            case "jpeg":
-            case "gif":
-            case "jpg":
-            case "bmp":
-            case "png":
-                tipo = "application/image"
-                break;
-            case "pdf":
-                tipo = "application/pdf"
-                break;
-            case "doc":
-            case "docx":
-            case "odt":
-                tipo = "application/msword"
-                break;
-            case "xls":
-            case "xlsx":
-                tipo = "application/vnd.ms-excel"
-                break;
-            default:
-                tipo = "application/pdf"
-                break;
-        }
-        try {
-            def file = new File(path)
-            def b = file.getBytes()
-            response.setContentType(tipo)
-            response.setHeader("Content-disposition", "attachment; filename=" + (solicitud.pathPdfTdr))
-            response.setContentLength(b.length)
-            response.getOutputStream().write(b)
-        } catch (e) {
-            println "error en download"
-            response.sendError(404)
-        }
-    }
-
-    def downloadActa = {
-        def aprobacion = Aprobacion.get(params.id.toLong())
-//        def path = servletContext.getRealPath("/") + "pdf/actasAprobacion/" + aprobacion.pathPdf
-        def path = pathBaseArchivos + "${aprobacion.solicitud.id}/" + pathActas + aprobacion.pathPdf
-        def tipo = aprobacion.pathPdf.split("\\.")
-        tipo = tipo[1]
-//            println "tipo " + tipo
-        switch (tipo) {
-            case "jpeg":
-            case "gif":
-            case "jpg":
-            case "bmp":
-            case "png":
-                tipo = "application/image"
-                break;
-            case "pdf":
-                tipo = "application/pdf"
-                break;
-            case "doc":
-            case "docx":
-            case "odt":
-                tipo = "application/msword"
-                break;
-            case "xls":
-            case "xlsx":
-                tipo = "application/vnd.ms-excel"
-                break;
-            default:
-                tipo = "application/pdf"
-                break;
-        }
-        try {
-            def file = new File(path)
-            def b = file.getBytes()
-            response.setContentType(tipo)
-            response.setHeader("Content-disposition", "attachment; filename=" + (aprobacion.pathPdf))
-            response.setContentLength(b.length)
-            response.getOutputStream().write(b)
-        } catch (e) {
-            println "error en download"
-            response.sendError(404)
-        }
-    }
-
     def ingreso = {
         if (session.perfil.codigo == "RQ") {
             def usuario = Usro.get(session.usuario.id)
@@ -417,24 +568,41 @@ class SolicitudController extends app.seguridad.Shield {
     def saveRevision = {
         def solicitud = Solicitud.get(params.id)
         if (solicitud) {
-            if (params.observacionesJuridica) {
-                solicitud.observacionesJuridica = params.observacionesJuridica
+            uploadFile("revisiongaf", request.getFile('archivogaf'), solicitud)
+            uploadFile("revisiongj", request.getFile('archivogj'), solicitud)
+//            uploadFile("revisiongdp", request.getFile('archivogdp'), solicitud)
+
+            if (params.observacionesgj) {
+                solicitud.observacionesJuridica = params.observacionesgj
             }
-            if (params.observacionesAdministrativaFinanciera) {
-                solicitud.observacionesAdministrativaFinanciera = params.observacionesAdministrativaFinanciera
+            if (params.observacionesgaf) {
+                solicitud.observacionesAdministrativaFinanciera = params.observacionesgaf
             }
-            if (params.observacionesDireccionProyectos) {
-                solicitud.observacionesDireccionProyectos = params.observacionesDireccionProyectos
-            }
+//            if (params.observacionesgdp) {
+//                solicitud.observacionesDireccionProyectos = params.observacionesgdp
+//            }
             if (params.gj == "on") {
                 solicitud.revisadoJuridica = new Date()
+            } else {
+                if (params["_gj"]) {
+                    solicitud.revisadoJuridica = null
+                }
             }
             if (params.gaf == "on") {
                 solicitud.revisadoAdministrativaFinanciera = new Date()
+            } else {
+                if (params["_gaf"]) {
+                    solicitud.revisadoAdministrativaFinanciera = null
+                }
             }
-            if (params.gdp == "on") {
-                solicitud.revisadoDireccionProyectos = new Date()
-            }
+//            if (params.gdp == "on") {
+//                solicitud.revisadoDireccionProyectos = new Date()
+//            } else {
+//                if (params["_gdp"]) {
+//                    solicitud.revisadoDireccionProyectos = null
+//                }
+//            }
+
             if (!solicitud.save(flush: true)) {
                 println "error al guardar revision: " + solicitud.errors
                 flash.message = "Ha ocurrido un error al guardar su revisión."
@@ -482,63 +650,17 @@ class SolicitudController extends app.seguridad.Shield {
 
     def uploadActa = {
         def aprobacion = Aprobacion.get(params.id.toLong())
-
-        /* upload del PDF */
-//        def path = servletContext.getRealPath("/") + "pdf/actasAprobacion/"
-        def path = pathBaseArchivos + "${aprobacion.solicitud.id}/" + pathActas
-        new File(path).mkdirs()
-        def f = request.getFile('pdf')
-        def okContents = [
-                'application/pdf': 'pdf',
-        ]
-        def nombre = ""
-        if (f && !f.empty) {
-            if (aprobacion.pathPdf) {
-                //si ya existe un archivo para esta aprobacion lo elimino
-                def oldFile = new File(path + aprobacion.pathPdf)
-                if (oldFile.exists()) {
-                    oldFile.delete()
-                }
-            }
-            def fileName = f.getOriginalFilename() //nombre original del archivo
-            def ext
-
-            def parts = fileName.split("\\.")
-            fileName = ""
-            parts.eachWithIndex { obj, i ->
-                if (i < parts.size() - 1) {
-                    fileName += obj
-                }
-            }
-            if (okContents.containsKey(f.getContentType())) {
-                ext = okContents[f.getContentType()]
-                fileName = fileName.size() < 40 ? fileName : fileName[0..39]
-                fileName = fileName.tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
-
-                nombre = fileName + "." + ext
-                def pathFile = path + nombre
-                def fn = fileName
-                def src = new File(pathFile)
-                def i = 1
-                while (src.exists()) {
-                    nombre = fn + "_" + i + "." + ext
-                    pathFile = path + nombre
-                    src = new File(pathFile)
-                    i++
-                }
-                try {
-                    f.transferTo(new File(pathFile)) // guarda el archivo subido al nuevo path
-                    aprobacion.pathPdf = nombre
-                    //println pathFile
-                } catch (e) {
-                    println "????????\n" + e + "\n???????????"
-                }
-            }
-        }
-        /* fin del upload */
-        if (!aprobacion.save(flush: true)) {
-            println aprobacion.errors
-        }
+        uploadFile("acta", request.getFile('pdf'), aprobacion)
         redirect(action: "show", id: aprobacion.solicitudId)
+    }
+
+    def downloadSolicitud = {
+        def solicitud = Solicitud.get(params.id.toLong())
+        downloadFile(params.tipo, solicitud)
+    }
+
+    def downloadActa = {
+        def aprobacion = Aprobacion.get(params.id.toLong())
+        downloadFile("acta", aprobacion)
     }
 }
