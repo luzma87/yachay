@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="layout" content="main"/>
-    <title>Aprobar aval</title>
+    <title>Aprobar anulación aval</title>
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}"
           type="text/css"/>
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'BreadCrumb.css')}"
@@ -35,69 +35,69 @@
         <thead>
         <tr>
             <th>Proceso</th>
+            <th>Tipo</th>
             <th>Concepto</th>
             <th>Monto</th>
             <th>Estado</th>
             <th>Doc. Respaldo</th>
-            <th>Solicitud</th>
+            %{--<th>Solicitud</th>--}%
         </tr>
         </thead>
         <tbody>
 
         <tr>
             <td>${solicitud.proceso.nombre}</td>
+            <td class="E03">Anulación</td>
             <td>${solicitud.concepto}</td>
             <td style="text-align: right">${solicitud.monto}</td>
             <td style="">${solicitud.estado?.descripcion}</td>
             <td style="text-align: center">
                 <a href="#" class="btn descRespaldo" iden="${solicitud.id}">Ver</a>
             </td>
-            <td style="text-align: center">
-                <a href="#" class="imprimiSolicitud " iden="${solicitud.id}">Ver</a>
-            </td>
+
         </tr>
 
         </tbody>
     </table>
 </fieldset>
+%{--<fieldset style="width: 95%;padding-bottom: 10px" class="ui-corner-all">--}%
+    %{--<legend>Datos para la generación del documento</legend>--}%
+
+    %{--<div class="fila" style="margin-top: 0px">--}%
+        %{--<div class="labelSvt" style="width: 180px">Número de aval:</div>--}%
+
+        %{--<div class="fieldSvt-small">--}%
+            %{--<input type="text" style="width: 100%;" id="numero" value="${solicitud.numero}" class="ui-corner-all ui-widget-content">--}%
+        %{--</div>--}%
+    %{--</div>--}%
+
+    %{--<div class="fila" style="height: 300px;position: relative">--}%
+        %{--<div class="labelSvt" style="width: 180px;position: absolute;top: 10px">Observaciones:</div>--}%
+
+        %{--<div style="width: 700px;height: 280px;display: inline-block;position: absolute;top: 10px;left: 190px">--}%
+            %{--<textarea id="richText" style="width: 100%;height: 100%;resize: none;display: inline-block">${solicitud.observaciones}</textarea>--}%
+        %{--</div>--}%
+    %{--</div>--}%
+    %{--<div class="fila" style="margin-top: 20px">--}%
+        %{--<div class="labelSvt">--}%
+            %{--<a href="#" class="btn" id="guardarDatosDoc">Guardar</a>--}%
+
+        %{--</div>--}%
+        %{--<div class="labelSvt">--}%
+            %{--<a href="#" class="btn" id="descargaForm" style="display: inline-block">Descargar</a>--}%
+        %{--</div>--}%
+    %{--</div>--}%
+
+
+%{--</fieldset>--}%
 <fieldset style="width: 95%;padding-bottom: 10px" class="ui-corner-all">
-    <legend>Datos para la generación del documento</legend>
-
-    <div class="fila" style="margin-top: 0px">
-        <div class="labelSvt" style="width: 180px">Número de aval:</div>
-
-        <div class="fieldSvt-small">
-            <input type="text" style="width: 100%;" id="numero" value="${solicitud.numero}" class="ui-corner-all ui-widget-content">
-        </div>
-    </div>
-
-    <div class="fila" style="height: 300px;position: relative">
-        <div class="labelSvt" style="width: 180px;position: absolute;top: 10px">Observaciones:</div>
-
-        <div style="width: 700px;height: 280px;display: inline-block;position: absolute;top: 10px;left: 190px">
-            <textarea id="richText" style="width: 100%;height: 100%;resize: none;display: inline-block">${solicitud.observaciones}</textarea>
-        </div>
-    </div>
-    <div class="fila" style="margin-top: 20px">
-        <div class="labelSvt">
-            <a href="#" class="btn" id="guardarDatosDoc">Guardar</a>
-
-        </div>
-        <div class="labelSvt">
-            <a href="#" class="btn" id="descargaForm" style="display: inline-block">Descargar</a>
-        </div>
-    </div>
-
-
-</fieldset>
-<fieldset style="width: 95%;padding-bottom: 10px" class="ui-corner-all">
-    <legend>Aprobación</legend>
-    <h3>Descargue el formulario, firmelo y subalo</h3>
-    <g:form action="guardarAprobacion" class="frmAprobar" enctype="multipart/form-data">
+    <legend>Anular</legend>
+    %{--<h3>Descargue el formulario, firmelo y subalo</h3>--}%
+    <g:form action="guardarAnulacion" class="frmAprobar" enctype="multipart/form-data">
 
         <input type="hidden" name="id" value="${solicitud.id}">
         <div class="fila">
-            <div class="labelSvt" style="width: 180px">Documento firmado:</div>
+            <div class="labelSvt" style="width: 180px">Documento de respaldo:</div>
 
             <div class="fieldSvt-medium">
                 <input type="file" id="archivo" name="archivo" style="display: inline-block">
@@ -108,7 +108,7 @@
     %{--Después de llenar y firmar el documento del Aval súbalo al sistema. </br> </br>--}%
         <div class="fila">
             <div class="labelSvt">
-                <a href="#" class="btn" id="aprobar">Aprobar</a>
+                <a href="#" class="btn" id="aprobar">Anular aval</a>
             </div>
         </div>
 
@@ -123,10 +123,6 @@
                 });
 
         $(".btn").button();
-        $(".imprimiSolicitud").button({icons:{ primary:"ui-icon-print"},text:false}).click(function(){
-            var url = "${g.createLink(controller: 'reporteSolicitud',action: 'imprimirSolicitudAval')}/?id="+$(this).attr("iden")
-            location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url+"&filename=solicitud.pdf"
-        })
         $(".descRespaldo").click(function () {
             location.href = "${createLink(controller:'avales',action:'descargaSolicitud')}/" + $(this).attr("iden");
         });

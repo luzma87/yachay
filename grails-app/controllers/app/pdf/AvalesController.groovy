@@ -175,6 +175,12 @@ class AvalesController {
         [proceso:proceso, disponible:disponible]
 
     }
+    def solicitarAnulacion = {
+
+        def aval = Aval.get(params.id)
+        [aval:aval]
+
+    }
 
     def guardarSolicitud = {
         println "solicitud aval "+params
@@ -221,17 +227,22 @@ class AvalesController {
             try {
                 f.transferTo(new File(pathFile)) // guarda el archivo subido al nuevo path
                 def proceso = ProcesoAval.get(params.proceso)
+
                 def monto = params.monto
                 monto = monto.toDouble()
                 def concepto = params.concepto
                 def momorando = params.memorando
                 def sol = new SolicitudAval()
                 sol.proceso=proceso
+                if(params.aval)
+                    sol.aval = Aval.get(params.aval)
                 sol.usuario=session.usuario
                 sol.monto=monto
                 sol.concepto=concepto
                 sol.memo=momorando
                 sol.path=nombre
+                if(params.tipo)
+                    sol.tipo=params.tipo
                 sol.fecha = new Date();
                 sol.estado=EstadoAval.findByCodigo("E01")
                 if(!sol.save(flush: true)){

@@ -1,5 +1,6 @@
 package app.yachai
 
+import app.Anio
 import app.Solicitud
 import app.seguridad.Usro
 
@@ -7,8 +8,12 @@ class RevisionAvalController {
 
     def pendientes = {
         def solicitudes = SolicitudAval.findAllByEstado(EstadoAval.findByCodigo("E01"))
-
-        [solicitudes:solicitudes]
+        def actual
+        if (params.anio)
+            actual = Anio.get(params.anio)
+        else
+            actual = Anio.findByAnio(new Date().format("yyyy"))
+        [solicitudes:solicitudes,actual:actual]
     }
 
     def  negarAval = {
@@ -33,7 +38,129 @@ class RevisionAvalController {
 
     }
 
+    def listaAvales = {
+        def actual
+        if (params.anio)
+            actual = Anio.get(params.anio)
+        else
+            actual = Anio.findByAnio(new Date().format("yyyy"))
+        [actual:actual]
+    }
+
+    def historialAvales = {
+       // println "historial aval "+params
+        def anio = Anio.get(params.anio).anio
+        def numero = ""
+        def proceso =params.proceso
+        def estado = EstadoAval.findByCodigo("E02")
+        def datos = []
+        def fechaInicio
+        def fechaFin
+        def orderBy =""
+        def externos =["usuario","proceso","proyecto"]
+        def band = true
+        if(params.numero && params.numero!=""){
+            numero=" and numero like ('%${numero}%')"
+        }
+        if(params.sort && params.sort!=""){
+            if(!externos.contains(params.sort))
+                orderBy=" order by ${params.sort} ${params.order}"
+            else
+                band=false
+        }
+        if(anio && anio!=""){
+            fechaInicio= new Date().parse("dd-MM-yyyy hh:mm:ss","01-01-"+anio+" 00:01:01")
+            fechaFin= new Date().parse("dd-MM-yyyy hh:mm:ss","31-12-"+anio+" 23:59:59")
+//            println "inicio "+fechaInicio+"  fin  "+fechaFin
+            datos += Aval.findAll("from Aval where (fechaAprobacion > '${fechaInicio}' and fechaAprobacion < '${fechaFin}') or (fechaAnulacion > '${fechaInicio}' and fechaAnulacion < '${fechaFin}') or (fechaLiberacion > '${fechaInicio}' and fechaLiberacion < '${fechaFin}') ${numero} ${orderBy}")
+//            println "datos fecha "+datos
+        }
+
+        if(proceso && proceso!=""){
+            def datosTemp = []
+            datos.each {av->
+
+                if(av.proceso.nombre=~proceso){
+
+                    datosTemp.add(sol)
+                }
+            }
+            datos=datosTemp
+//            println "datos proceso "+datos
+        }
+        if(!band){
+            switch (params.sort){
+                case "proceso":
+                    println "sort proceso"
+                    datos=datos.sort{it.proceso.nombre}
+
+                    break;
+                case "proyecto":
+                    datos=datos.sort{it.proceso.proyecto.nombre}
+                    break;
+            }
+            if(params.order=="desc")
+                datos=datos.reverse()
+
+        }
+        [datos:datos,estado:estado,sort:params.sort,order:params.order]
+    }
+
+    def historial = {
+//        println "historial "+params
+        def anio = Anio.get(params.anio).anio
+        def numero = params.numero
+        def proceso =params.proceso
+        def datos = []
+        def fechaInicio
+        def fechaFin
+        if(anio && anio!=""){
+            fechaInicio= new Date().parse("dd-MM-yyyy hh:mm:ss","01-01-"+anio+" 00:01:01")
+            fechaFin= new Date().parse("dd-MM-yyyy hh:mm:ss","31-12-"+anio+" 23:59:59")
+//            println "inicio "+fechaInicio+"  fin  "+fechaFin
+            datos += SolicitudAval.findAllByFechaBetween(fechaInicio,fechaFin)
+//            println "datos fecha "+datos
+        }
+        if(numero && numero!=""){
+//            println "buscando por numero ==> "+numero
+            def datosTemp = []
+            datos.each {sol->
+                println "tiene aval? "+sol.aval
+                if(sol.aval?.numero=~numero){
+                    println "encontro "
+                    datosTemp.add(sol)
+                }
+            }
+            datos=datosTemp
+//            println "datos numero "+datos
+        }
+        if(proceso && proceso!=""){
+            def datosTemp = []
+            datos.each {sol->
+
+                if(sol.proceso.nombre=~proceso){
+                    println "encontro "
+                    datosTemp.add(sol)
+                }
+            }
+            datos=datosTemp
+//            println "datos proceso "+datos
+        }
+        [datos:datos.sort{it.fecha}]
+    }
+
     def aprobarAval = {
+        def solicitud = SolicitudAval.get(params.id)
+        def band = false
+        def usuario = Usro.get(session.usuario.id)
+        /*todo validar quien puede*/
+        band=true
+        if (!band)
+            response.sendError(403)
+        [solicitud:solicitud]
+    }
+
+    def aprobarAnulacion = {
         def solicitud = SolicitudAval.get(params.id)
         def band = false
         def usuario = Usro.get(session.usuario.id)
@@ -51,6 +178,92 @@ class RevisionAvalController {
         sol.numero = params.aval
         sol.save(flush: true)
         render "ok"
+    }
+
+
+    def guardarAnulacion = {
+        println "aprobar anulacion "+params
+        def path = servletContext.getRealPath("/") + "avales/"
+        new File(path).mkdirs()
+        def f = request.getFile('archivo')
+        if (f && !f.empty) {
+            def fileName = f.getOriginalFilename()
+            def ext
+
+            def parts = fileName.split("\\.")
+            fileName = ""
+            parts.eachWithIndex { obj, i ->
+                if (i < parts.size() - 1) {
+                    fileName += obj
+                } else {
+                    ext = obj
+                }
+            }
+            def reps = [
+                    "a": "[àáâãäåæ]",
+                    "e": "[èéêë]",
+                    "i": "[ìíîï]",
+                    "o": "[òóôõöø]",
+                    "u": "[ùúûü]",
+
+                    "A": "[ÀÁÂÃÄÅÆ]",
+                    "E": "[ÈÉÊË]",
+                    "I": "[ÌÍÎÏ]",
+                    "O": "[ÒÓÔÕÖØ]",
+                    "U": "[ÙÚÛÜ]",
+
+                    "n": "[ñ]",
+                    "c": "[ç]",
+
+                    "N": "[Ñ]",
+                    "C": "[Ç]",
+
+                    "": "[\\!@\\\$%\\^&*()='\"\\/<>:;\\.,\\?]",
+
+                    "_": "[\\s]"
+            ]
+
+            reps.each { k, v ->
+                fileName = (fileName.trim()).replaceAll(v, k)
+            }
+
+            fileName = fileName+"_"+new Date().format("mm_ss")+"." + "pdf"
+
+            def pathFile = path + File.separatorChar + fileName
+            def src = new File(pathFile)
+            def msn
+
+            if (src.exists()) {
+                def sol = SolicitudAval.get(params.id)
+                flash.message="Ya existe un archivo con ese nombre. Por favor cámbielo."
+                redirect(action: 'aprobarAval',params: [id:sol.id])
+
+
+            } else {
+                def band = false
+                def usuario = Usro.get(session.usuario.id)
+                def sol = SolicitudAval.get(params.id)
+                /*Todo aqui validar quien puede*/
+                band = true
+
+                if(band){
+                    f.transferTo(new File(pathFile))
+                    def aval = sol.aval
+                    aval.pathAnulacion=fileName
+//                    aval.memo=sol.memo
+                    aval.estado=EstadoAval.findByCodigo("E04")
+//                    aval.monto=sol.monto
+                    aval.save(flush: true)
+                    sol.estado=EstadoAval.findByCodigo("E02")
+                    sol.save(flush: true)
+                    flash.message="Solciitud de anulación aprobada - Aval "+aval.fechaAprobacion.format("yyyy")+"-CP No."+aval.numero+" anulado"
+                    redirect(action: 'pendientes',controller: 'revisionAval')
+                }else{
+                    flash.message="Usted no tiene permisos para aprobar esta solicitud"
+                    redirect(controller: 'avales',action: 'listaProcesos')
+                }
+            }
+        }
     }
 
     def guardarAprobacion = {
