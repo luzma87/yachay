@@ -11,6 +11,31 @@ class ReporteSolicitudController {
 
     def index = {}
 
+    def solicitudes = {
+        def list = []
+        Solicitud.list().each { sol ->
+            def map = [:]
+            map.unidadEjecutora = sol.unidadEjecutora
+            map.actividad = sol.actividad
+            map.fecha = sol.fecha
+            map.montoSolicitado = sol.montoSolicitado
+            map.tipoContrato = sol.tipoContrato
+            map.nombreProceso = sol.nombreProceso
+            map.plazoEjecucion = sol.plazoEjecucion
+            map.aprobacion = Aprobacion.findBySolicitud(sol)?.tipoAprobacion
+            list += map
+        }
+
+        list = list.sort { it.aprobacion?.descripcion + it.unidadEjecutora?.nombre + it.fecha.format("dd-MM-yyyy") }
+//        list = list.sort { a, b ->
+//            ((a.aprobacion?.descripcion <=> b.aprobacion?.descripcion) ?:
+//                    (a.unidadEjecutora?.nombre <=> b.unidadEjecutora?.nombre)) ?:
+//                    (a.fecha?.format("dd-MM-yyyy") <=> b.fecha?.format("dd-MM-yyyy"))
+//    }
+
+        return [solicitudInstanceList: list]
+    }
+
     def imprimirSolicitud = {
         def solicitud = Solicitud.get(params.id)
 
@@ -44,9 +69,9 @@ class ReporteSolicitudController {
     }
 
     def imprimirSolicitudAval = {
-        println "impr sol "+params
+        println "impr sol " + params
         def solicitud = SolicitudAval.get(params.id)
-        println "solcitud "+solicitud
+        println "solcitud " + solicitud
         return [solicitud: solicitud]
     }
 }

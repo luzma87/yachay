@@ -19,6 +19,9 @@
                 <g:link class="button create" action="ingreso">
                     Nueva solicitud
                 </g:link>
+                <a href="#" class="button print">
+                    Imprimir
+                </a>
             </div> <!-- toolbar -->
 
             <div class="body">
@@ -54,7 +57,7 @@
                                 <tdn:sortableColumn property="montoSolicitado" class="ui-state-default"
                                                     title="Monto Solicitado"/>
                                 <tdn:sortableColumn property="tipoContrato" class="ui-state-default"
-                                                    title="Modadlidad de contratación"/>
+                                                    title="Modalidad de contratación"/>
                                 <tdn:sortableColumn property="nombreProceso" class="ui-state-default"
                                                     title="Nombre del proceso"/>
                                 <tdn:sortableColumn property="plazoEjecucion" class="ui-state-default"
@@ -90,16 +93,12 @@
         <script type="text/javascript">
             $(function () {
                 $(".button").button();
-                $(".home").button("option", "icons", {primary : 'ui-icon-home'});
-                $(".create").button("option", "icons", {primary : 'ui-icon-document'});
-
-                $(".edit").button("option", "icons", {primary : 'ui-icon-pencil'});
-                $(".delete").button("option", "icons", {primary : 'ui-icon-trash'}).click(function () {
-                    if (confirm("${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}")) {
-                        return true;
-                    }
+                $(".print").button("option", "icons", {primary : 'ui-icon-print'}).click(function () {
+                    var url = "${createLink(controller: 'reporteSolicitud', action: 'solicitudes')}";
+                    location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename=solicitudes.pdf";
                     return false;
                 });
+                $(".create").button("option", "icons", {primary : 'ui-icon-document'});
             });
         </script>
 
