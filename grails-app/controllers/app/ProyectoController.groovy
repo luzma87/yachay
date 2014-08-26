@@ -2293,11 +2293,11 @@ response.outputStream << file.newInputStream()
 //                            value = destFormat.format(dCell.getDate());
 //                        }
 
-                        def i = sheet.getCell(4, r).contents
-                        def c = sheet.getCell(2, r).contents
-                        def a = sheet.getCell(10, r).contents
-                        def t = sheet.getCell(24, r).contents
-                        def nmro = sheet.getCell(9, r).contents
+                        def i = sheet.getCell(4, r).contents // columna E: identificador de proyecto
+                        def c = sheet.getCell(2, r).contents // columna C: componentes
+                        def a = sheet.getCell(10, r).contents // columna K: actividades
+                        def t = sheet.getCell(24, r).contents // columna W: totales
+                        def nmro = sheet.getCell(9, r).contents // columna J: numero de la actividad
 
 
                         if(nmro){
