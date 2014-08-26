@@ -49,6 +49,7 @@ class RevisionAvalController {
 
     def historialAvales = {
        // println "historial aval "+params
+        def now = new Date()
         def anio = Anio.get(params.anio).anio
         def numero = ""
         def proceso =params.proceso
@@ -103,7 +104,7 @@ class RevisionAvalController {
                 datos=datos.reverse()
 
         }
-        [datos:datos,estado:estado,sort:params.sort,order:params.order]
+        [datos:datos,estado:estado,sort:params.sort,order:params.order,now:now]
     }
 
     def historial = {
@@ -178,6 +179,95 @@ class RevisionAvalController {
         sol.numero = params.aval
         sol.save(flush: true)
         render "ok"
+    }
+
+
+    def guardarLiberacion = {
+        println "liberacion "+params
+        def path = servletContext.getRealPath("/") + "avales/"
+        new File(path).mkdirs()
+        def f = request.getFile('archivo')
+        if (f && !f.empty) {
+            def fileName = f.getOriginalFilename()
+            def ext
+
+            def parts = fileName.split("\\.")
+            fileName = ""
+            parts.eachWithIndex { obj, i ->
+                if (i < parts.size() - 1) {
+                    fileName += obj
+                } else {
+                    ext = obj
+                }
+            }
+            def reps = [
+                    "a": "[àáâãäåæ]",
+                    "e": "[èéêë]",
+                    "i": "[ìíîï]",
+                    "o": "[òóôõöø]",
+                    "u": "[ùúûü]",
+
+                    "A": "[ÀÁÂÃÄÅÆ]",
+                    "E": "[ÈÉÊË]",
+                    "I": "[ÌÍÎÏ]",
+                    "O": "[ÒÓÔÕÖØ]",
+                    "U": "[ÙÚÛÜ]",
+
+                    "n": "[ñ]",
+                    "c": "[ç]",
+
+                    "N": "[Ñ]",
+                    "C": "[Ç]",
+
+                    "": "[\\!@\\\$%\\^&*()='\"\\/<>:;\\.,\\?]",
+
+                    "_": "[\\s]"
+            ]
+
+            reps.each { k, v ->
+                fileName = (fileName.trim()).replaceAll(v, k)
+            }
+
+            fileName = fileName+"_"+new Date().format("mm_ss")+"." + "pdf"
+
+            def pathFile = path + File.separatorChar + fileName
+            def src = new File(pathFile)
+            def msn
+
+            if (src.exists()) {
+
+                flash.message="Ya existe un archivo con ese nombre. Por favor cámbielo."
+                redirect(action: 'listaAvales')
+
+
+            } else {
+                def band = false
+                def usuario = Usro.get(session.usuario.id)
+                def aval = Aval.get(params.id)
+                /*Todo aqui validar quien puede*/
+                band = true
+                if(band){
+                    f.transferTo(new File(pathFile))
+                    aval.pathLiberacion=fileName
+                    aval.liberacion=aval.monto
+                    aval.monto=params.monto.toDouble()
+                    aval.estado=EstadoAval.findByCodigo("E05")
+                    aval.save(flush: true)
+                    flash.message="Aval "+aval.fechaAprobacion.format("yyyy")+"-CP No."+aval.numero+" Liberado"
+                    redirect(action: 'listaAvales',controller: 'revisionAval')
+                }else{
+                    flash.message="Usted no tiene permisos para liberar avales"
+                    redirect(controller: 'listaAvales',action: 'revisionAval')
+                }
+            }
+        }
+    }
+
+    def caducarAval = {
+        def aval = Aval.get(params.id)
+        aval.estado=EstadoAval.findByCodigo("E06")
+        aval.save(flush: true)
+        redirect(action: "listaAvales")
     }
 
 

@@ -153,7 +153,7 @@ class AvalesController {
     def avalesProceso = {
         def proceso = ProcesoAval.get(params.id)
         def avales = Aval.findAllByProceso(proceso)
-        def solicitudes = SolicitudAval.findAllByProceso(proceso)
+        def solicitudes = SolicitudAval.findAllByProceso(proceso,[sort:"fecha"])
         [avales:avales,proceso: proceso,solicitudes:solicitudes]
     }
     def solicitarAval = {

@@ -24,7 +24,9 @@
             <td style="text-align: center" class="${(sol.tipo=='A')?'E03':'E02'}">${(sol.tipo=="A")?'Anulación':'Aprobación'}</td>
             <td>${sol.usuario}</td>
             <td>${sol.concepto}</td>
-            <td style="text-align: right">${sol.monto}</td>
+            <td style="text-align: right">
+                <g:formatNumber number="${sol.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+              </td>
             <td style="text-align: center" class="${sol.estado?.codigo}">${sol.estado?.descripcion}</td>
             <td style="text-align: center">
                 <g:if test="${sol.tipo!='A'}">

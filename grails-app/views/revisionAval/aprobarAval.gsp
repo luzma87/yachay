@@ -47,7 +47,9 @@
         <tr>
             <td>${solicitud.proceso.nombre}</td>
             <td>${solicitud.concepto}</td>
-            <td style="text-align: right">${solicitud.monto}</td>
+            <td style="text-align: right">
+                <g:formatNumber number="${solicitud.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+            </td>
             <td style="">${solicitud.estado?.descripcion}</td>
             <td style="text-align: center">
                 <a href="#" class="btn descRespaldo" iden="${solicitud.id}">Ver</a>
@@ -66,8 +68,8 @@
     <div class="fila" style="margin-top: 0px">
         <div class="labelSvt" style="width: 180px">Número de aval:</div>
 
-        <div class="fieldSvt-small">
-            <input type="text" style="width: 100%;" id="numero" value="${solicitud.numero}" class="ui-corner-all ui-widget-content">
+        <div class="fieldSvt-large">
+            ${solicitud.fecha.format("yyyy")}-CP No. <input type="text" style="width: 50%;" id="numero" value="${solicitud.numero}" class="ui-corner-all ui-widget-content">
         </div>
     </div>
 
