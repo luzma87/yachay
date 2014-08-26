@@ -59,7 +59,9 @@
                             <a href="#" class="imprimiAval" iden="${p.id}">Imprimir</a>
                         </td>
                         <td style="text-align: center">
-
+                            <g:if test="${p.estado.codigo=='E02'}">
+                                <a href="#" class="solAnulacion" iden="${p.id}">Solicitar anulación</a>
+                            </g:if>
                         </td>
                     </tr>
                 </g:each>
@@ -74,6 +76,7 @@
                 <thead>
                 <tr>
                     <th>Proceso</th>
+                    <th>Tipo</th>
                     <th>Concepto</th>
                     <th>Monto</th>
                     <th>Estado</th>
@@ -85,6 +88,7 @@
                 <g:each in="${solicitudes}" var="p">
                     <tr>
                         <td>${p.proceso.nombre}</td>
+                        <td class="${(p.tipo=='A')?'E03':'E02'}">${(p.tipo=="A")?'Anulación':'Aprobación'}</td>
                         <td>${p.concepto}</td>
                         <td style="text-align: right">${p.monto}</td>
                         <td style="text-align: center" class="${p.estado?.codigo}">${p.estado?.descripcion}</td>
@@ -92,7 +96,9 @@
                             <a href="#" class="btn descRespaldo" iden="${p.id}">Ver</a>
                         </td>
                         <td style="text-align: center">
-                            <a href="#" class="imprimiSolicitud" iden="${p.id}">Imprimir</a>
+                            <g:if  test="${p.tipo!='A'}">
+                                <a href="#" class="imprimiSolicitud" iden="${p.id}">Imprimir</a>
+                            </g:if>
                         </td>
                     </tr>
                 </g:each>
@@ -103,6 +109,7 @@
     </div>
 
 </div>
+
 <script>
     $(".btn").button()
     $(".imprimiAval").button({icons:{ primary:"ui-icon-print"},text:false}).click(function(){
@@ -110,12 +117,15 @@
     })
     $(".imprimiSolicitud").button({icons:{ primary:"ui-icon-print"},text:false}).click(function(){
         var url = "${g.createLink(controller: 'reporteSolicitud',action: 'imprimirSolicitudAval')}/?id="+$(this).attr("iden")
-        location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url+"&filename=aval.pdf"
+        location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url+"&filename=solicitud.pdf"
     })
     $(".descRespaldo").click(function(){
-            location.href = "${createLink(controller:'avales',action:'descargaSolicitud')}/"+$(this).attr("iden")
+        location.href = "${createLink(controller:'avales',action:'descargaSolicitud')}/"+$(this).attr("iden")
 
     });
+    $(".solAnulacion").button({icons:{ primary:"ui-icon-document-b"},text:false}).click(function(){
+        location.href='${g.createLink(action: "solicitarAnulacion")}/'+$(this).attr("iden")
+    })
     $("#tabs").tabs()
 </script>
 </body>

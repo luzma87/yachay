@@ -17,6 +17,7 @@ class SolicitudAval {
     double monto=0;
     String observaciones
     String numero
+    String tipo /*A--> anulacion*/
 
     static mapping = {
         table 'slav'
@@ -40,6 +41,7 @@ class SolicitudAval {
             observaciones column: 'slavobs'
             observaciones type: 'text'
             numero column: 'slavnmro'
+            tipo column: 'slavtipo'
         }
     }
 
@@ -54,5 +56,6 @@ class SolicitudAval {
         memo (blank:true,nullable: true,size: 1..30)
         observaciones(blank:true,nullable: true)
         numero (blank:true,nullable: true,size: 1..30)
+        tipo(blank: true,nullable: true,size: 1..1)
     }
 }

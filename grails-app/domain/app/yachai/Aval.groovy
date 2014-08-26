@@ -13,6 +13,7 @@ class Aval {
     String memo
     String path
     String pathLiberacion
+    String pathAnulacion
     String contrato
     String numero
 
@@ -34,6 +35,7 @@ class Aval {
             memo column: 'avalmemo'
             path column: 'avalpath'
             pathLiberacion column: 'avalphlb'
+            pathLiberacion column: 'avalphan'
             contrato column: 'avalcntr'
             numero column: 'avalnmro'
             concepto column: 'avalcpto'
@@ -49,6 +51,7 @@ class Aval {
         memo(blank:true,nullable: true,size: 1..30)
         path (blank:true,nullable: true,size: 1..350)
         pathLiberacion (blank:true,nullable: true,size: 1..350)
+        pathAnulacion (blank:true,nullable: true,size: 1..350)
         contrato (blank:true,nullable: true,size: 1..30)
         numero (blank:true,nullable: true,size: 1..10)
         concepto (blank:true,nullable: true,size: 1..500)
