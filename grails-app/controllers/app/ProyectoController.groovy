@@ -2,6 +2,10 @@ package app
 
 import app.seguridad.Usro
 import jxl.*
+import jxl.write.DateFormat
+
+import java.text.SimpleDateFormat
+
 
 class ProyectoController extends app.seguridad.Shield {
 
@@ -2136,29 +2140,34 @@ response.outputStream << file.newInputStream()
         new File(path).mkdirs()
         def f = request.getFile('file')
 
-        Workbook workbook = Workbook.getWorkbook(f.inputStream)
+
+        WorkbookSettings ws = new WorkbookSettings();
+        ws.setEncoding("ISO-8859-1");
+
+
+        Workbook workbook = Workbook.getWorkbook(f.inputStream,ws)
         Sheet sheet = workbook.getSheet(0)
+
 
 //        println("columnas: " + sheet.getColumns())
 //        println("3 " + sheet.getColumn(3))
 
         //izq=columnas  der=filas
-        def top = []
+        def comp = []
+        def act = []
+        def fechasInicio = []
+        def fechasFin = []
+        def totales = []
+        def ids = []
+        def numero = []
+
+        def n =[]
+        def m =[]
+
+        byte b
 
 
 
-        for(int r = 1; r < sheet.rows; r++ ){
-
-            top += sheet.getCell(2, r).contents
-
-        }
-
-        println("celda" + top)
-
-//        def rows
-//        rows = f.getPhysicalNumberOfRows();
-//
-//        println("rows " + rows)
 
         def ext
 
@@ -2206,6 +2215,21 @@ response.outputStream << file.newInputStream()
             def pathFile = path + File.separatorChar + nombre
             def src = new File(pathFile)
 
+            def arreglo =[]
+            def varios = []
+
+            def proyecto
+            def componentes = []
+            def actividades = []
+            def tipoEl = TipoElemento.findByDescripcion("Componente")
+            def tipoUno = TipoElemento.findByDescripcion("Actividad")
+            def fechaI
+            def fechaF
+            def codigo
+            def fechaIni
+            def fechaFi
+            def mto = 0
+
 
 //            println("path " + pathFile )
 
@@ -2217,8 +2241,242 @@ response.outputStream << file.newInputStream()
                     redirect(action: 'cargarExcel')
                     return
                 }else{
+
+                    for(int r = 2; r < sheet.rows; r++ ){
+                        DateCell dCell=null;
+                        DateCell dCellF=null;
+//                        ids += sheet.getCell(4, r).contents
+//                        comp += sheet.getCell(2, r).contents
+//                        act += sheet.getCell(10, r).contents
+//                        fechasInicio += sheet.getCell(12, r).contents
+//                        fechasFin += sheet.getCell(13, r).contents
+//                        totales += sheet.getCell(16, r).contents
+//                        numero += sheet.getCell(7, r).contents
+
+                        if(sheet.getCell(19, r).type == CellType.DATE)
+                           dCell = (DateCell)sheet.getCell(19, r);
+                           TimeZone gmtZone = TimeZone.getTimeZone("GMT");
+                           java.text.DateFormat destFormat = new SimpleDateFormat("dd-MM-yyyy")
+                           destFormat.setTimeZone(gmtZone)
+
+
+                        if(dCell){
+                            println("fechaInicio " + destFormat.format(dCell.getDate()))
+                            fechaI = destFormat.format(dCell.getDate())
+                            fechaIni = new Date().parse("dd-MM-yyyy", fechaI)
+                        }
+
+                        if(sheet.getCell(20, r).type == CellType.DATE)
+                            dCellF = (DateCell)sheet.getCell(20, r);
+                            TimeZone gmtZone1 = TimeZone.getTimeZone("GMT");
+                            java.text.DateFormat destFormat1 = new SimpleDateFormat("dd-MM-yyyy")
+                            destFormat1.setTimeZone(gmtZone1)
+
+                        if(dCellF){
+                            println("fechaFin " + destFormat1.format(dCellF.getDate()))
+                            fechaF = destFormat1.format(dCellF.getDate())
+                            fechaFi = new Date().parse("dd-MM-yyyy", fechaF)
+                        }
+
+
+
+//ejemplo de correción de fecha al salir del excel
+
+//                        Cell valueCell = this.workingSheet.getCell(i, this.rowIndex);
+
+//                        if (valueCell.getType() == CellType.DATE) {
+//                            DateCell dCell = (DateCell) valueCell;
+
+//                            TimeZone gmtZone = TimeZone.getTimeZone("GMT");
+//                            DateFormat destFormat = new SimpleDateFormat("yyyyMMdd");
+//                            destFormat.setTimeZone(gmtZone);
+//                            value = destFormat.format(dCell.getDate());
+//                        }
+
+                        def i = sheet.getCell(4, r).contents
+                        def c = sheet.getCell(2, r).contents
+                        def a = sheet.getCell(10, r).contents
+                        def t = sheet.getCell(24, r).contents
+                        def nmro = sheet.getCell(9, r).contents
+
+
+                        if(nmro){
+                            arreglo = nmro.split('-')
+                            println("numero: " + arreglo[1])
+                            codigo = arreglo[1].toInteger()
+                        }else{
+                            codigo = 0
+                        }
+
+                        mto = t.replace(',','.')
+
+//                        println("-->" + sheet.getCell(24, r).contents)
+//                        println("-->" + sheet.getCell(12, r).contents)
+//                        System.out.println("Today's date is " + new java.util.Date(System.currentTimeMillis()));
+
+
+                        if(i != ''){
+                            proyecto = Proyecto.findByCodigoEsigef(i)
+                            println("i: " + i  + " Proyecto: " + proyecto)
+                            println("comp-->> " + c)
+                            println("act-->> " + a)
+                            println("monto-->> " + mto)
+
+                            if(proyecto){
+                                componentes = MarcoLogico.findAllByProyectoAndTipoElemento(proyecto,tipoEl)
+                                actividades = MarcoLogico.findAllByProyectoAndTipoElemento(proyecto,tipoUno)
+
+                                println("componentes " + componentes)
+                                println("actividades " + actividades)
+
+                                if(componentes){
+                                        if(componentes.objeto.contains(c)){
+                                            println("Ya existe componente!")
+
+                                                if(actividades.numero.contains(codigo)){
+                                                    println("ya existe actividad!")
+                                                }else{
+                                                    println("Nueva actividad!")
+                                                    def nuevaAct = new MarcoLogico()
+                                                    nuevaAct.proyecto = proyecto
+                                                    nuevaAct.objeto = a
+                                                    nuevaAct.tipoElemento = tipoUno
+                                                    nuevaAct.numero = codigo
+                                                    nuevaAct.fechaInicio = fechaIni
+                                                    nuevaAct.fechaFin = fechaFi
+                                                    nuevaAct.monto = mto.toDouble()
+                                                    if(nuevaAct.save(flush: true)){
+
+//                                                        flash.message = 'Datos Cargados'
+//                                                        flash.estado = "error"
+//                                                        flash.icon = "alert"
+//                                                        redirect(action: 'cargarExcel')
+//                                                        return
+
+                                                    }else{
+                                                        flash.message = 'Error al generar actividades' + errors
+                                                        flash.estado = "error"
+                                                        flash.icon = "alert"
+                                                        redirect(action: 'cargarExcel')
+                                                        return
+                                                    }
+                                                }
+                                        }else{
+                                            println("Nuevo componente")
+                                            def nuevoCom = new MarcoLogico()
+                                            nuevoCom.proyecto = proyecto
+                                            nuevoCom.objeto = c
+                                            nuevoCom.tipoElemento = tipoEl
+                                            if(nuevoCom.save(flush: true)){
+//                                                flash.message = 'Datos Cargados'
+//                                                flash.estado = "error"
+//                                                flash.icon = "alert"
+//                                                redirect(action: 'cargarExcel')
+//                                                return
+                                            }else{
+                                                flash.message = 'Error al generar componentes!' + errors
+                                                flash.estado = "error"
+                                                flash.icon = "alert"
+                                                redirect(action: 'cargarExcel')
+                                                return
+                                            }
+
+
+                                                if(actividades.numero.contains(codigo)){
+                                                    println("ya existe actividad!")
+                                                }else{
+                                                    println("Nueva actividad!")
+                                                    def nuevaAct = new MarcoLogico()
+                                                    nuevaAct.proyecto = proyecto
+                                                    nuevaAct.objeto = a
+                                                    nuevaAct.tipoElemento = tipoUno
+                                                    nuevaAct.numero = codigo
+                                                    nuevaAct.fechaInicio = fechaIni
+                                                    nuevaAct.fechaFin = fechaFi
+                                                    nuevaAct.monto = mto.toDouble()
+                                                    if(nuevaAct.save(flush: true)){
+//                                                        flash.message = 'Datos Cargados'
+//                                                        flash.estado = "error"
+//                                                        flash.icon = "alert"
+//                                                        redirect(action: 'cargarExcel')
+//                                                        return
+                                                    }else{
+                                                        flash.message = 'Error al generar actividades' + errors
+                                                        flash.estado = "error"
+                                                        flash.icon = "alert"
+                                                        redirect(action: 'cargarExcel')
+                                                        return
+                                                    }
+                                                }
+
+                                        }
+                                    println("-----------------------------")
+                                }else{
+                                    println("NINGUN componente! -  creando nuevo componente")
+                                    def nuevoCom = new MarcoLogico()
+                                            nuevoCom.proyecto = proyecto
+                                            nuevoCom.objeto = c
+                                            nuevoCom.tipoElemento = tipoEl
+                                            if(nuevoCom.save(flush: true)){
+//                                                flash.message = 'Datos Cargados'
+//                                                flash.estado = "error"
+//                                                flash.icon = "alert"
+//                                                redirect(action: 'cargarExcel')
+//                                                return
+
+                                            }else{
+                                                flash.message = 'Error al generar componentes!' + errors
+                                                flash.estado = "error"
+                                                flash.icon = "alert"
+                                                redirect(action: 'cargarExcel')
+                                                return
+                                            }
+
+
+
+                                    if(actividades){
+
+                                    }else{
+                                        println("NINGUNA actividad! - creando nueva actividad")
+                                        def nuevaAct = new MarcoLogico()
+                                                    nuevaAct.proyecto = proyecto
+                                                    nuevaAct.objeto = a
+                                                    nuevaAct.tipoElemento = tipoUno
+                                                    nuevaAct.numero = codigo
+                                                    nuevaAct.fechaInicio = fechaIni
+                                                    nuevaAct.fechaFin = fechaFi
+                                                    nuevaAct.monto = mto.toDouble()
+                                                    if(nuevaAct.save(flush: true)){
+//                                                        flash.message = 'Datos Cargados'
+//                                                        flash.estado = "error"
+//                                                        flash.icon = "alert"
+//                                                        redirect(action: 'cargarExcel')
+//                                                        return
+
+                                                    }else{
+                                                        flash.message = 'Error al generar actividades' + errors
+                                                        flash.estado = "error"
+                                                        flash.icon = "alert"
+                                                        redirect(action: 'cargarExcel')
+                                                        return
+                                                    }
+
+                                    }
+                                    println("-----------------------------")
+                                }
+
+                            }
+                        }
+                        else{
+                            println("---------ERROR--------")
+                        }
+                    }
+
                     f.transferTo(new File(pathFile))
                     println("Guardado!!")
+
+
+
                     flash.message = 'Archivo cargado existosamente.'
                     flash.estado = "error"
                     flash.icon = "alert"
