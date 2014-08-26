@@ -37,11 +37,13 @@ class LoginService {
 
     List perfiles(user){
         def lista=[]
-        user.sesiones.sort({it.perfil}).each {
+        user.sesiones.each {
             lista.add(it.perfil)
-            //println " it  "+it.perfil
+//            println " it  "+it.perfil
         }
-        return lista.toArray()
+//        def ls = lista.sort({it.nombre})
+//        println "despues: " + ls
+        return lista.sort({it.nombre}).toArray()     /* ordena por nombre de perfil */
     }
 
     List alertas(user){

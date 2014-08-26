@@ -36,7 +36,7 @@
         <script type="text/javascript" src="${resource(dir: 'js/jquery/plugins/box/js', file: 'jquery.luz.box.js')}"></script>
         <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/box/css', file: 'jquery.luz.box.css')}"/>
 
-        <title>&Aacute;rbol de entidades</title>
+        <title>Estructura Institucional</title>
 
 
         <style type="text/css">

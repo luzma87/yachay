@@ -5,16 +5,16 @@
     <meta name="layout" content="main"/>
 
     <script type="text/javascript" src="${resource(dir:'js/jquery/plugins', file:'jquery.cookie.js')}"></script>
+    <title>Parámetros</title>
 
 </head>
-
 <body>
 <div class="container ui-corner-all " style="">
 <div style="float:left; width:700px;">
     <div id="info">
         <ul id="info-nav">
             <li><a href="#proy">Proyectos</a></li>
-            <li><a href="#snpl">Proyectos Senplades</a></li>
+            %{--<li><a href="#snpl">Proyectos Senplades</a></li>--}%
             <li><a href="#papp">PAPP y PAC</a></li>
             <li><a href="#grgf">Generales</a></li>
         </ul>
@@ -51,16 +51,19 @@
                 </div><br>
 --}%
                 <div class="item" texto="tpmt">
-                    <g:link  controller="tipoMeta" action="list">Tipo de Meta</g:link> para la desagregaci&oacute;n de las metas a modo de unidad de medida del efecto social.
+                    <g:link  controller="tipoMeta" action="list">Tipo de Meta</g:link> para la desagregaci&oacute;n de las metas a modo de unidad de medida.
                 </div><br>
             </div>
 
+%{--
             <div id="snpl" class="ui-widget-content" style="height: 440px">
+--}%
 %{--
                 <div class="item" texto="calf">
                     <g:link  controller="calificacion" action="list">Calificaci&oacute;n</g:link> Criterio de calificaci&oacute;n del proyecto.
                 </div><br>
---}%
+--}%%{--
+
                 <div class="item" texto="cbrt">
                     <g:link  controller="cobertura" action="list">Cobertura del Proyecto</g:link> Cobertura geográfica del proyecto: nacional, provincial, etc.
                 </div><br>
@@ -76,6 +79,7 @@
                 <div class="item" texto="lnea">
                     <g:link  controller="linea" action="list">Lineamiento de inversi&oacute;n</g:link> Línea de inversión del proyecto, valores determinados por la Senplades
                 </div><br>
+--}%
 %{--
                 <div class="item" texto="sctr">
                     <g:link  controller="sector" action="list">Sector Econ&oacute;mico</g:link> que apoya o en el que se interviene con el proyecto
@@ -98,16 +102,20 @@
                 <div class="item" texto="tppd">
                     <g:link  controller="tipoProducto" action="list">Tipo de Producto</g:link> que se espera de resultado de la ejecuci&oacute;n del proyecto
                 </div><br>
---}%
+--}%%{--
+
                 <div class="item" texto="tppt">
                     <g:link  controller="tipoParticipacion" action="list">Tipo de Participaci&oacute;n</g:link> de la Entidad en el proyecto
                 </div>
             </div>
+--}%
 
             <div id="papp" class="ui-widget-content" style="height: 440px">
+%{--
                 <div class="item" texto="actv">
                     <g:link  controller="actividad" action="list">Actividades de Gasto Corriente</g:link> que figuran en el PAPP
                 </div><br>
+--}%
                 <div class="item" texto="anio">
                     <g:link  controller="anio" action="list">A&ntilde;o Fiscal</g:link> Año al cual corresponde el PAPP. Es similar al período contable o año fiscal.
                 </div><br>
@@ -116,9 +124,11 @@
                     <g:link  controller="cuatrimestre" action="list">Cuatrimestre</g:link> para la programación de la ejecución presupuestaria y del PAC
                 </div><br>
 --}%
+%{--
                 <div class="item" texto="fnte">
                     <g:link  controller="componente" action="list">Componente</g:link> Componentes, usados en el registro de asignaciones corrientes.
                 </div><br>
+--}%
                 <div class="item" texto="fnte">
                     <g:link  controller="fuente" action="list">Fuente de Financiamiento</g:link> Posibles fuentes de financiamiento que puede tener un proyecto
                 </div><br>
@@ -131,9 +141,11 @@
                 <div class="item" texto="tpcp">
                     <g:link  controller="tipoCompra" action="list">Tipo de Compra o adquisici&oacute;n</g:link> seg&uacute;n el INCOP
                 </div><br>
+%{--
                 <div class="item" texto="tpgs">
                     <g:link  controller="tipoGasto" action="list">Tipo de Gasto</g:link> de las asignaciones presupuestarias para los distintos proyectos y el PAPP
                 </div><br>
+--}%
             </div>
 
             <div id="grgf" class="ui-widget-content" style="height: 440px">
@@ -148,17 +160,21 @@
                     <g:link  controller="zona" action="list">Zona de Planificaci&oacute;n</g:link> zona geogr&aacute;fica de planificaci&oacute;n
                 </div><br>
 --}%
+%{--
                 <div class="item" texto="regn">
                     <g:link  controller="region" action="list">Regi&oacute;n</g:link> geogr&aacute;fica
                 </div><br>
+--}%
 %{--
                 <div class="item" texto="dstt">
                     <g:link  controller="distrito" action="list">Distritos</g:link> divisi&oacute;n del territorio ecuatoriano en distritos
                 </div><br>
 --}%
+%{--
                 <div class="item" texto="geog">
                     <g:link  controller="zona" action="arbol">Divisi&oacute;n geogr&aacute;fica del Pa&iacute;s</g:link> en zonas, regiones, provincias, cantones y parroquias.
                 </div><br>
+--}%
                 <div class="item" texto="tpin">
                     <g:link  controller="tipoInstitucion" action="list">Area de Gestión</g:link> que se aplica a las distintas entidades y unidades responsables
                 </div><br>

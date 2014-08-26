@@ -21,7 +21,7 @@
             width        : 200px;
             float        : left;
             margin-top   : 0px;
-            margin-left  : 25px;
+            margin-left  : 35px;
             color        : #555;
             padding-left : 5px;
             /*font-family: fantasy;*/
@@ -52,12 +52,12 @@
                 %{--<img src="${resource(dir: 'images', file: 'logo_app2.jpg')}" alt="Finix - Plan" >--}%
             </div>
                 %{--<div style=" width: 250px;height: 260px;margin-top: 60px;float: left;margin-left: 60px; ;background:#0066cc"--}%
-                <div style=" width: 250px; height: 320px;margin-top: 30px;float: left;margin-left: 60px; ;background:#f2f6fa; border-style: solid; border-color: #666; border-width: 1px;"
+                <div style=" width: 260px; height: 320px;margin-top: 30px;float: left;margin-left: 60px; ;background:#f2f6fa; border-style: solid; border-color: #666; border-width: 1px;"
 
-            %{--<div style=" width: 250px;height: 260px;margin-top: 60px;float: left;margin-left: 60px; ;background:#a5815f"--}%
+            %{--<div style=" width: 260px;height: 260px;margin-top: 60px;float: left;margin-left: 60px; ;background:#a5815f"--}%
                  class="esquinas">
 
-                <div style="height: 80px;margin-top: 25px;margin-left:25px;width: 200px;color:#f9f9f9;font-style:
+                <div style="height: 80px;margin-top: 25px;margin-left:30px;width: 200px;color:#f9f9f9;font-style:
                 italic;text-align: center" class="ui-corner-all">
                     <img src="${resource(dir: 'images', file: 'yachay-logo.png')}" alt="Yachay">
                     %{--<b>Sistema de Planificación Institucional<br/> Yachay</b>--}%
@@ -70,14 +70,14 @@
                             <input type="password" style="margin-top: 10px" class="ui-corner-all" id="psw" name="password">
 
                             <div id="mascara"
-                                 style="position: absolute;left:25px;top:40px;width: 200px;height: 30px;line-height: 30px;padding-left: 5px;color: #444;font-size: 13px;">contraseña</div>
+                                 style="position: absolute;left:35px;top:40px;width: 200px;height: 30px;line-height: 30px;padding-left: 5px;color: #444;font-size: 13px;">contraseña</div>
                             <g:submitButton name="entrar" value="Validar"
                                             style="height: 30px;margin-top: 15px;width: 70px;border: 1px solid black;float:right;margin-right:25px;"
                                             class="ui-corner-all"/>
                         </g:if>
                         <g:else>
                             <g:select from="${perfiles}" name="perfil" optionKey="id"
-                                      style="height: 25px;width: 200px;margin-top: 10px;background: #c7c7c7;margin-left: 25px"/>
+                                      style="height: 25px;width: 230px;margin-top: 10px;background: #c7c7c7;margin-left: 20px"/>
                             <g:submitButton value="Entrar" name="entrar"
                                             style="height: 30px;margin-top: 15px;width: 70px;border: 1px solid black;float:right;margin-right:25px;"
                                             class="ui-corner-all"/>
