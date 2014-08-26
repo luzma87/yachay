@@ -53,7 +53,9 @@
                         <td>${p.concepto}</td>
                         <td style="text-align: center">${p.fechaAprobacion?.format("dd-MM-yyyy")}</td>
                         <td style="text-align: center">${p.numero}</td>
-                        <td style="text-align: right">${p.monto}</td>
+                        <td style="text-align: right">
+                            <g:formatNumber number="${p.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                        </td>
                         <td style="text-align: center" class="${p.estado?.codigo}">${p.estado?.descripcion}</td>
                         <td style="text-align: center">
                             <a href="#" class="imprimiAval" iden="${p.id}">Imprimir</a>
@@ -75,6 +77,7 @@
             <table style="width: 95%;margin-top: 10px" >
                 <thead>
                 <tr>
+                    <th>Fecha</th>
                     <th>Proceso</th>
                     <th>Tipo</th>
                     <th>Concepto</th>
@@ -87,6 +90,7 @@
                 <tbody>
                 <g:each in="${solicitudes}" var="p">
                     <tr>
+                        <td>${p.fecha.format("dd-MM-yyyy")}</td>
                         <td>${p.proceso.nombre}</td>
                         <td class="${(p.tipo=='A')?'E03':'E02'}">${(p.tipo=="A")?'Anulación':'Aprobación'}</td>
                         <td>${p.concepto}</td>

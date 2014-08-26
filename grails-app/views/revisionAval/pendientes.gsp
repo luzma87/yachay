@@ -52,7 +52,7 @@
                         <td>${p.proceso.nombre}</td>
                         <td class="${(p.tipo=='A')?'E03':'E02'}">${(p.tipo=="A")?'Anulación':'Aprobación'}</td>
                         <td>${p.concepto}</td>
-                        <td style="text-align: right">${p.monto}</td>
+                        <td style="text-align: right"> <g:formatNumber number="${p.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber></td>
                         <td style="">${p.estado?.descripcion}</td>
                         <td style="text-align: center">
                             <a href="#" class="btn descRespaldo" iden="${p.id}">Ver</a>
