@@ -5,6 +5,7 @@ import app.seguridad.Prfl
 import app.seguridad.Sesn
 import app.seguridad.Usro
 import app.yachai.Categoria
+import app.yachai.SolicitudAval
 
 import javax.imageio.ImageIO
 import java.awt.image.BufferedImage
@@ -316,12 +317,29 @@ class SolicitudController extends app.seguridad.Shield {
     }
 
     def list = {
-        def title = g.message(code: "default.list.label", args: ["Solicitud"], default: "Solicitud List")
-//        <g:message code="default.list.label" args="[entityName]" />
 
         params.max = Math.min(params.max ? params.int('max') : 25, 100)
 
-        [solicitudInstanceList: Solicitud.list(params), solicitudInstanceTotal: Solicitud.count(), title: title, params: params]
+        def unidad = UnidadEjecutora.get(session.unidad.id)
+
+        def c = Solicitud.createCriteria()
+        def lista = c.list(params) {
+            eq("unidadEjecutora", unidad)
+            if (params.search) {
+                ilike("nombreProceso", "%" + params.search + "%")
+            }
+        }
+        def list2 = Solicitud.withCriteria {
+            eq("unidadEjecutora", unidad)
+            if (params.search) {
+                ilike("nombreProceso", "%" + params.search + "%")
+            }
+        }
+
+        def title = g.message(code: "default.list.label", args: ["Solicitud"], default: "Solicitud List")
+//        <g:message code="default.list.label" args="[entityName]" />
+
+        [solicitudInstanceList: lista, solicitudInstanceTotal: list2.size(), title: title, params: params]
     }
 
     def listAprobacion = {
