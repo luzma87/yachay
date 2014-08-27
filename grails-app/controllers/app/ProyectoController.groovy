@@ -2337,6 +2337,7 @@ response.outputStream << file.newInputStream()
                                                     println("ya existe actividad!")
                                                 }else{
                                                     println("Nueva actividad!")
+                                                    println("padre " + MarcoLogico.findByObjeto(c))
                                                     def nuevaAct = new MarcoLogico()
                                                     nuevaAct.proyecto = proyecto
                                                     nuevaAct.objeto = a
@@ -2345,6 +2346,7 @@ response.outputStream << file.newInputStream()
                                                     nuevaAct.fechaInicio = fechaIni
                                                     nuevaAct.fechaFin = fechaFi
                                                     nuevaAct.monto = mto.toDouble()
+                                                    nuevaAct.marcoLogico = MarcoLogico.findByObjeto(c)
                                                     if(nuevaAct.save(flush: true)){
 
 //                                                        flash.message = 'Datos Cargados'
@@ -2386,6 +2388,7 @@ response.outputStream << file.newInputStream()
                                                     println("ya existe actividad!")
                                                 }else{
                                                     println("Nueva actividad!")
+                                                    println("Padre " + nuevoCom)
                                                     def nuevaAct = new MarcoLogico()
                                                     nuevaAct.proyecto = proyecto
                                                     nuevaAct.objeto = a
@@ -2394,6 +2397,7 @@ response.outputStream << file.newInputStream()
                                                     nuevaAct.fechaInicio = fechaIni
                                                     nuevaAct.fechaFin = fechaFi
                                                     nuevaAct.monto = mto.toDouble()
+                                                    nuevaAct.marcoLogico= nuevoCom
                                                     if(nuevaAct.save(flush: true)){
 //                                                        flash.message = 'Datos Cargados'
 //                                                        flash.estado = "error"
@@ -2438,7 +2442,8 @@ response.outputStream << file.newInputStream()
 
                                     }else{
                                         println("NINGUNA actividad! - creando nueva actividad")
-                                        def nuevaAct = new MarcoLogico()
+                                        println("padre " + nuevoCom)
+                                                 def nuevaAct = new MarcoLogico()
                                                     nuevaAct.proyecto = proyecto
                                                     nuevaAct.objeto = a
                                                     nuevaAct.tipoElemento = tipoUno
@@ -2446,14 +2451,17 @@ response.outputStream << file.newInputStream()
                                                     nuevaAct.fechaInicio = fechaIni
                                                     nuevaAct.fechaFin = fechaFi
                                                     nuevaAct.monto = mto.toDouble()
+                                                    nuevaAct.marcoLogico = nuevoCom
+                                                     println("padre " + nuevaAct.marcoLogico)
                                                     if(nuevaAct.save(flush: true)){
+                                                        println("-->")
 //                                                        flash.message = 'Datos Cargados'
 //                                                        flash.estado = "error"
 //                                                        flash.icon = "alert"
 //                                                        redirect(action: 'cargarExcel')
 //                                                        return
-
                                                     }else{
+                                                        println("error " + nuevaAct.errors )
                                                         flash.message = 'Error al generar actividades' + errors
                                                         flash.estado = "error"
                                                         flash.icon = "alert"
@@ -2464,7 +2472,6 @@ response.outputStream << file.newInputStream()
                                     }
                                     println("-----------------------------")
                                 }
-
                             }
                         }
                         else{
@@ -2480,7 +2487,8 @@ response.outputStream << file.newInputStream()
                     flash.message = 'Archivo cargado existosamente.'
                     flash.estado = "error"
                     flash.icon = "alert"
-                    redirect(action: 'cargarExcel')
+//                    redirect(action: 'cargarExcel')
+                    redirect(controller: 'proyecto', action: 'list')
                     return
                 }
             }else{
