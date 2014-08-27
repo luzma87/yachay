@@ -865,7 +865,7 @@ class EntidadController extends app.seguridad.Shield {
 
     def saveFromTree = {
 
-//        println "Save from tree " + params
+        println "Save from tree " + params
 
         if (params.esUsuario == "1") {
 //            println "save usro " + params

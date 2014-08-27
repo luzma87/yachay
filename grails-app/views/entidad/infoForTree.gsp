@@ -52,13 +52,23 @@
                 </td> <!-- campo -->
             </tr>
 
-%{--
-            <tr class="prop">
-                <td class="label">Sigla</td>
+            %{--
+                        <tr class="prop">
+                            <td class="label">Sigla</td>
 
-                <td class="campo">${unidad?.sigla}</td> <!-- campo -->
+                            <td class="campo">${unidad?.sigla}</td> <!-- campo -->
+                        </tr>
+            --}%
+
+            <tr class="prop">
+                <td class="label">Objetivo</td>
+
+                <td class="campo">
+                    <div style="${maxMis} overflow-y: auto;">
+                        ${unidad?.objetivoUnidad.descripcion}
+                    </div>
+                </td> <!-- campo -->
             </tr>
---}%
 
             <tr class="prop">
                 <td class="label">Misión</td>
@@ -88,13 +98,13 @@
                 <td class="campo">${unidad?.email}</td> <!-- campo -->
             </tr>
 
-%{--
-            <tr class="prop">
-                <td class="label">Provincia</td>
+            %{--
+                        <tr class="prop">
+                            <td class="label">Provincia</td>
 
-                <td class="campo">${unidad?.provincia?.nombre}</td> <!-- campo -->
-            </tr>
---}%
+                            <td class="campo">${unidad?.provincia?.nombre}</td> <!-- campo -->
+                        </tr>
+            --}%
 
             <tr class="prop">
                 <td class="label">Fecha Inicio</td>
@@ -118,79 +128,79 @@
                 </td> <!-- campo -->
             </tr>
 
-            <g:if test="${presupuestos.size() > 0}">    %{--Se muestra prespuestos solo si existe--}%
-            <tr class="prop" style="max-height: 200px;">
-                <td class="label">Presupuesto</td>
-                <td class="campo" style="">
-                    <div style="${maxPre} overflow-y: auto;">
-                        <table border="1" cellpadding="2" style="border-collapse: collapse; border-color: #aaa;" width="100%">
-                            <g:set var="arr" value="${presupuestos}"/>
-                            <g:each in="${arr}" var="pr" status="i">
-                                <tr>
-                                    <th>Max. Inversi&oacute;n ${pr.anio}</th>
+            <g:if test="${presupuestos.size() > 0}">%{--Se muestra prespuestos solo si existe--}%
+                <tr class="prop" style="max-height: 200px;">
+                    <td class="label">Presupuesto</td>
+                    <td class="campo" style="">
+                        <div style="${maxPre} overflow-y: auto;">
+                            <table border="1" cellpadding="2" style="border-collapse: collapse; border-color: #aaa;" width="100%">
+                                <g:set var="arr" value="${presupuestos}"/>
+                                <g:each in="${arr}" var="pr" status="i">
+                                    <tr>
+                                        <th>Max. Inversi&oacute;n ${pr.anio}</th>
 
-                                    <td>
-                                        <g:formatNumber number="${pr.maxInversion}" format="###,##0"
-                                                        minFractionDigits="2" maxFractionDigits="2"/>
-                                    </td>
-                                </tr>
+                                        <td>
+                                            <g:formatNumber number="${pr.maxInversion}" format="###,##0"
+                                                            minFractionDigits="2" maxFractionDigits="2"/>
+                                        </td>
+                                    </tr>
 
-                            %{--<tr>--}%
-                            %{--<th>Max. Corrientes</th>--}%
+                                %{--<tr>--}%
+                                %{--<th>Max. Corrientes</th>--}%
 
-                            %{--<td>--}%
-                            %{--<g:formatNumber number="${pr.maxCorrientes}" format="###,##0"--}%
-                            %{--minFractionDigits="2" maxFractionDigits="2"/>--}%
-                            %{--</td>--}%
-                            %{--</tr>--}%
+                                %{--<td>--}%
+                                %{--<g:formatNumber number="${pr.maxCorrientes}" format="###,##0"--}%
+                                %{--minFractionDigits="2" maxFractionDigits="2"/>--}%
+                                %{--</td>--}%
+                                %{--</tr>--}%
 
-                            %{--<g:set var="max" value="${40}"/>--}%
+                                %{--<g:set var="max" value="${40}"/>--}%
 
-                            %{--<tr>--}%
-                            %{--<th>Eje program&aacute;tico</th>--}%
+                                %{--<tr>--}%
+                                %{--<th>Eje program&aacute;tico</th>--}%
 
-                            %{--<td>--}%
-                            %{--<g:if test="${pr.ejeProgramatico?.descripcion}">--}%
-                            %{--${pr.ejeProgramatico?.descripcion[0..(pr.ejeProgramatico?.descripcion?.size() > max ? (max - 1) : pr.ejeProgramatico?.descripcion?.size() - 1)]}${(pr.ejeProgramatico?.descripcion?.size() > max ? "..." : "")}--}%
-                            %{--</g:if>--}%
-                            %{--</td>--}%
-                            %{--</tr>--}%
+                                %{--<td>--}%
+                                %{--<g:if test="${pr.ejeProgramatico?.descripcion}">--}%
+                                %{--${pr.ejeProgramatico?.descripcion[0..(pr.ejeProgramatico?.descripcion?.size() > max ? (max - 1) : pr.ejeProgramatico?.descripcion?.size() - 1)]}${(pr.ejeProgramatico?.descripcion?.size() > max ? "..." : "")}--}%
+                                %{--</g:if>--}%
+                                %{--</td>--}%
+                                %{--</tr>--}%
 
-                            %{--<tr>--}%
-                            %{--<th>Objetivo estrat&eacute;gico</th>--}%
+                                %{--<tr>--}%
+                                %{--<th>Objetivo estrat&eacute;gico</th>--}%
 
-                            %{--<td>--}%
-                            %{--<g:if test="${pr.objetivoEstrategico?.descripcion}">--}%
-                            %{--${pr.objetivoEstrategico?.descripcion[0..(pr.objetivoEstrategico?.descripcion?.size() > max ? (max - 1) : pr.objetivoEstrategico?.descripcion?.size() - 1)]}${(pr.objetivoEstrategico?.descripcion?.size() > max ? "..." : "")}--}%
-                            %{--</g:if>--}%
-                            %{--</td>--}%
-                            %{--</tr>--}%
+                                %{--<td>--}%
+                                %{--<g:if test="${pr.objetivoEstrategico?.descripcion}">--}%
+                                %{--${pr.objetivoEstrategico?.descripcion[0..(pr.objetivoEstrategico?.descripcion?.size() > max ? (max - 1) : pr.objetivoEstrategico?.descripcion?.size() - 1)]}${(pr.objetivoEstrategico?.descripcion?.size() > max ? "..." : "")}--}%
+                                %{--</g:if>--}%
+                                %{--</td>--}%
+                                %{--</tr>--}%
 
-                            %{--<tr>--}%
-                            %{--<th>Objetivo GPR</th>--}%
+                                %{--<tr>--}%
+                                %{--<th>Objetivo GPR</th>--}%
 
-                            %{--<td>--}%
-                            %{--<g:if test="${pr.objetivoGobiernoResultado?.descripcion}">--}%
-                            %{--${pr.objetivoGobiernoResultado?.descripcion[0..(pr.objetivoGobiernoResultado?.descripcion?.size() > max ? (max - 1) : pr.objetivoGobiernoResultado?.descripcion?.size() - 1)]}${(pr.objetivoGobiernoResultado?.descripcion?.size() > max ? "..." : "")}--}%
-                            %{--</g:if>--}%
-                            %{--</td>--}%
-                            %{--</tr>--}%
+                                %{--<td>--}%
+                                %{--<g:if test="${pr.objetivoGobiernoResultado?.descripcion}">--}%
+                                %{--${pr.objetivoGobiernoResultado?.descripcion[0..(pr.objetivoGobiernoResultado?.descripcion?.size() > max ? (max - 1) : pr.objetivoGobiernoResultado?.descripcion?.size() - 1)]}${(pr.objetivoGobiernoResultado?.descripcion?.size() > max ? "..." : "")}--}%
+                                %{--</g:if>--}%
+                                %{--</td>--}%
+                                %{--</tr>--}%
 
-                            %{--<tr>--}%
-                            %{--<th>Pol&iacute;tica</th>--}%
+                                %{--<tr>--}%
+                                %{--<th>Pol&iacute;tica</th>--}%
 
-                            %{--<td>--}%
-                            %{--<g:if test="${pr.politica?.descripcion}">--}%
-                            %{--${pr.politica?.descripcion[0..(pr.politica?.descripcion?.size() > max ? (max - 1) : pr.politica?.descripcion?.size() - 1)]}${(pr.politica?.descripcion?.size() > max ? "..." : "")}--}%
-                            %{--</g:if>--}%
-                            %{--</td>--}%
-                            %{--</tr>--}%
-                            %{--</tbody>--}%
-                            </g:each>
-                        </table>
-                    </div>
-                </td> <!-- campo -->
-            </tr>
+                                %{--<td>--}%
+                                %{--<g:if test="${pr.politica?.descripcion}">--}%
+                                %{--${pr.politica?.descripcion[0..(pr.politica?.descripcion?.size() > max ? (max - 1) : pr.politica?.descripcion?.size() - 1)]}${(pr.politica?.descripcion?.size() > max ? "..." : "")}--}%
+                                %{--</g:if>--}%
+                                %{--</td>--}%
+                                %{--</tr>--}%
+                                %{--</tbody>--}%
+                                </g:each>
+                            </table>
+                        </div>
+                    </td> <!-- campo -->
+                </tr>
             </g:if>
         </tbody>
     </table>
