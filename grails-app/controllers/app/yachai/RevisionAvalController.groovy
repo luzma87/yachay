@@ -73,8 +73,37 @@ class RevisionAvalController {
             fechaInicio= new Date().parse("dd-MM-yyyy HH:mm:ss","01-01-"+anio+" 00:01:01")
             fechaFin= new Date().parse("dd-MM-yyyy HH:mm:ss","31-12-"+anio+" 23:59:59")
 //            println "inicio "+fechaInicio+"  fin  "+fechaFin
-            datos += Aval.findAll("from Aval where (fechaAprobacion > '${fechaInicio}' and fechaAprobacion < '${fechaFin}') or (fechaAnulacion > '${fechaInicio}' and fechaAnulacion < '${fechaFin}') or (fechaLiberacion > '${fechaInicio}' and fechaLiberacion < '${fechaFin}') ${numero} ${orderBy}")
+//            datos += Aval.findAll("from Aval where " +
+//                    "(fechaAprobacion > '${fechaInicio}' and fechaAprobacion < '${fechaFin}') " +
+//                    "or (fechaAnulacion > '${fechaInicio}' and fechaAnulacion < '${fechaFin}')" +
+//                    " or (fechaLiberacion > '${fechaInicio}' and fechaLiberacion < '${fechaFin}') ${numero} ${orderBy}")
 //            println "datos fecha "+datos
+
+            def avales = Aval.withCriteria {
+                or {
+                    and {
+                        gt("fechaAprobacion", fechaInicio)
+                        lt("fechaAprobacion", fechaFin)
+                    }
+                    and {
+                        gt("fechaAnulacion", fechaInicio)
+                        lt("fechaAnulacion", fechaFin)
+                    }
+                    and {
+                        gt("fechaLiberacion", fechaInicio)
+                        lt("fechaLiberacion", fechaFin)
+                    }
+                }
+                if(params.numero && params.numero!=""){
+                    ilike("numero", "%"+params.numero+"%")
+                }
+                if(params.sort && params.sort!=""){
+                    if(!externos.contains(params.sort)) {
+                        order(params.sort, params.order)
+                    }
+                }
+            }
+            datos+=avales
         }
 
         if(proceso && proceso!=""){
@@ -83,7 +112,7 @@ class RevisionAvalController {
 
                 if(av.proceso.nombre=~proceso){
 
-                    datosTemp.add(sol)
+                    datosTemp.add(av)
                 }
             }
             datos=datosTemp
