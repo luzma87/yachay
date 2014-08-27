@@ -70,8 +70,8 @@ class RevisionAvalController {
                 band=false
         }
         if(anio && anio!=""){
-            fechaInicio= new Date().parse("dd-MM-yyyy hh:mm:ss","01-01-"+anio+" 00:01:01")
-            fechaFin= new Date().parse("dd-MM-yyyy hh:mm:ss","31-12-"+anio+" 23:59:59")
+            fechaInicio= new Date().parse("dd-MM-yyyy HH:mm:ss","01-01-"+anio+" 00:01:01")
+            fechaFin= new Date().parse("dd-MM-yyyy HH:mm:ss","31-12-"+anio+" 23:59:59")
 //            println "inicio "+fechaInicio+"  fin  "+fechaFin
             datos += Aval.findAll("from Aval where (fechaAprobacion > '${fechaInicio}' and fechaAprobacion < '${fechaFin}') or (fechaAnulacion > '${fechaInicio}' and fechaAnulacion < '${fechaFin}') or (fechaLiberacion > '${fechaInicio}' and fechaLiberacion < '${fechaFin}') ${numero} ${orderBy}")
 //            println "datos fecha "+datos
