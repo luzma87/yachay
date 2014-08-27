@@ -17,11 +17,11 @@
                     %{--${padre?.nombre}--}%
                     %{--<g:hiddenField name="unidad.padre.id" value="${padre?.id}"/>--}%
 
-                    <g:select from="${UnidadEjecutora.list(sort:'nombre')}" optionKey="id"
+                    <g:select from="${UnidadEjecutora.list(sort: 'nombre')}" optionKey="id"
                               optionValue="nombre" class="field ui-widget-content ui-corner-all"
                               title="${UnidadEjecutora.constraints.padre.attributes.mensaje}"
-                              value="${padre?.id}" name="unidad.padre.id" noSelection="${['null':'Ninguno']}"
-                    style="width:560px;"/>
+                              value="${padre?.id}" name="unidad.padre.id" noSelection="${['null': 'Ninguno']}"
+                              style="width:560px;"/>
 
                 </td>
             </tr>
@@ -36,6 +36,19 @@
                 <td style="font-size: larger; font-weight: bolder;">
                     <g:textField name="unidad.orden" value="${unidad?.orden}" style="width:80px;"/>
                 </td>
+
+                <td class="label">Objetivo:</td>
+
+                <td class="indicator">
+                    &nbsp;
+                </td>
+
+                <td style="font-size: larger; font-weight: bolder;">
+                    <g:select from="${app.ObjetivoUnidad.list([sort: 'orden', order: 'asc'])}"
+                              name="unidad.objetivoUnidad.id"
+                              value="${unidad.objetivoUnidadId}"
+                              optionKey="id" optionValue="descripcion"/>
+                </td>
             </tr>
 
 
@@ -49,7 +62,7 @@
                 </td>
 
                 <td class="mandatory">
-                    <g:select from="${TipoInstitucion.list(sort:'descripcion')}" optionKey="id"
+                    <g:select from="${TipoInstitucion.list(sort: 'descripcion')}" optionKey="id"
                               optionValue="descripcion" class="field ui-widget-content ui-corner-all"
                               title="${UnidadEjecutora.constraints.tipoInstitucion.attributes.mensaje}"
                               value="${unidad?.tipoInstitucion?.id}" name="unidad.tipoInstitucion.id"/>
@@ -81,19 +94,19 @@
                                  title="${UnidadEjecutora.constraints.nombre.attributes.mensaje}"/>
                 </td> <!-- campo -->
 
-%{--
-                <td class="label">Sigla</td>
+            %{--
+                            <td class="label">Sigla</td>
 
-                <td class="indicator">
-                    &nbsp;
-                </td>
+                            <td class="indicator">
+                                &nbsp;
+                            </td>
 
-                <td>
-                    <g:textField value="${unidad?.sigla}" name="unidad.sigla"
-                                 class="field ui-widget-content ui-corner-all" maxlength="7" style="width: 80px;"
-                                 title="${UnidadEjecutora.constraints.sigla.attributes.mensaje}"/>
-                </td> <!-- campo -->
---}%
+                            <td>
+                                <g:textField value="${unidad?.sigla}" name="unidad.sigla"
+                                             class="field ui-widget-content ui-corner-all" maxlength="7" style="width: 80px;"
+                                             title="${UnidadEjecutora.constraints.sigla.attributes.mensaje}"/>
+                            </td> <!-- campo -->
+            --}%
             </tr>
 
             <tr class="prop">
@@ -162,20 +175,20 @@
                                  title="${UnidadEjecutora.constraints.email.attributes.mensaje}"/>
                 </td> <!-- campo -->
 
-%{--
-                <td class="label">Provincia</td>
+            %{--
+                            <td class="label">Provincia</td>
 
-                <td class="indicator">
-                    &nbsp;
-                </td>
+                            <td class="indicator">
+                                &nbsp;
+                            </td>
 
-                <td>
-                    <g:select from="${Provincia.list(sort:'nombre')}" value="${unidad?.provincia?.id}"
-                              name="unidad.provincia.id" optionKey="id" optionValue="nombre"
-                              noSelection="${['null':'Ninguna']}" class="field ui-widget-content ui-corner-all"
-                              title="${UnidadEjecutora.constraints.provincia.attributes.mensaje}"/>
-                </td> <!-- campo -->
---}%
+                            <td>
+                                <g:select from="${Provincia.list(sort:'nombre')}" value="${unidad?.provincia?.id}"
+                                          name="unidad.provincia.id" optionKey="id" optionValue="nombre"
+                                          noSelection="${['null':'Ninguna']}" class="field ui-widget-content ui-corner-all"
+                                          title="${UnidadEjecutora.constraints.provincia.attributes.mensaje}"/>
+                            </td> <!-- campo -->
+            --}%
             </tr>
 
             <tr class="prop">
@@ -253,11 +266,11 @@
     $(function () {
         /******************* DATEPICKERS ***********************************/
         $('#fechaInicio').datepicker({
-            changeMonth:true,
-            changeYear:true,
-            dateFormat:'dd-mm-yy',
-            maxDate:new Date(),
-            onClose:function (dateText, inst) {
+            changeMonth : true,
+            changeYear  : true,
+            dateFormat  : 'dd-mm-yy',
+            maxDate     : new Date(),
+            onClose     : function (dateText, inst) {
                 var date = $(this).datepicker('getDate');
                 var day, month, year;
                 if (date != null) {
@@ -277,10 +290,10 @@
         });
 
         $('#fechaFin').datepicker({
-            changeMonth:true,
-            changeYear:true,
-            dateFormat:'dd-mm-yy',
-            onClose:function (dateText, inst) {
+            changeMonth : true,
+            changeYear  : true,
+            dateFormat  : 'dd-mm-yy',
+            onClose     : function (dateText, inst) {
                 var date = $(this).datepicker('getDate');
                 var day, month, year;
                 if (date != null) {
@@ -309,40 +322,40 @@
                 .removeAttr('title');
         $('<div />').qtip(
                 {
-                    content:' ', // Can use any content here :)
-                    position:{
-                        target:'event' // Use the triggering element as the positioning target
+                    content  : ' ', // Can use any content here :)
+                    position : {
+                        target : 'event' // Use the triggering element as the positioning target
                     },
-                    show:{
-                        target:elems,
-                        event:'click mouseenter focus'
+                    show     : {
+                        target : elems,
+                        event  : 'click mouseenter focus'
                     },
-                    hide:{
-                        target:elems,
-                        delay:0,
-                        leave:false
+                    hide     : {
+                        target : elems,
+                        delay  : 0,
+                        leave  : false
                     },
-                    events:{
-                        show:function (event, api) {
+                    events   : {
+                        show : function (event, api) {
                             // Update the content of the tooltip on each show
                             var target = $(event.originalEvent.target);
                             api.set('content.text', target.attr('title'));
                         }
                     },
-                    style:{
-                        classes:'ui-tooltip-rounded ui-tooltip-cream'
+                    style    : {
+                        classes : 'ui-tooltip-rounded ui-tooltip-cream'
                     }
                 });
         // fin del codigo para los tooltips
 
         // Validacion del formulario
         myForm.validate({
-            errorClass:"errormessage",
-            onkeyup:false,
-            errorElement:"em",
-            errorClass:'error',
-            validClass:'valid',
-            errorPlacement:function (error, element) {
+            errorClass     : "errormessage",
+            onkeyup        : false,
+            errorElement   : "em",
+            errorClass     : 'error',
+            validClass     : 'valid',
+            errorPlacement : function (error, element) {
                 // Set positioning based on the elements position in the form
                 var elem = $(element),
                         corners = ['right center', 'left center'],
@@ -352,24 +365,24 @@
                 if (!error.is(':empty')) {
                     // Apply the tooltip only if it isn't valid
                     elem.filter(':not(.valid)').qtip({
-                                overwrite:false,
-                                content:error,
-                                position:{
-                                    my:corners[ flipIt ? 0 : 1 ],
-                                    at:corners[ flipIt ? 1 : 0 ],
-                                    viewport:$(window)
+                                overwrite : false,
+                                content   : error,
+                                position  : {
+                                    my       : corners[ flipIt ? 0 : 1 ],
+                                    at       : corners[ flipIt ? 1 : 0 ],
+                                    viewport : $(window)
                                 },
-                                show:{
-                                    event:false,
-                                    ready:true
+                                show      : {
+                                    event : false,
+                                    ready : true
                                 },
-                                hide:{
-                                    target:elems,
-                                    delay:0,
-                                    leave:false
+                                hide      : {
+                                    target : elems,
+                                    delay  : 0,
+                                    leave  : false
                                 },
-                                style:{
-                                    classes:'ui-tooltip-rounded ui-tooltip-red' // Make it red... the classic error colour!
+                                style     : {
+                                    classes : 'ui-tooltip-rounded ui-tooltip-red' // Make it red... the classic error colour!
                                 }
                             }
                     )
@@ -384,11 +397,10 @@
                     elem.qtip('destroy');
                 }
             },
-            success:$.noop // Odd workaround for errorPlacement not firing!
+            success        : $.noop // Odd workaround for errorPlacement not firing!
         })
         ;
         //fin de la validacion del formulario
-
 
     })
     ;

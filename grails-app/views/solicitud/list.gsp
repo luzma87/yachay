@@ -30,20 +30,23 @@
                 </g:if>
                 <div class="list" style="width: ${width}px;">
                     <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-top ui-helper-clearfix">
-                        %{--<div id="example_length" class="dataTables_length">--}%
-                        %{--<g:message code="show" default="Show"/>&nbsp;--}%
-                        %{--<g:select from="${[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}" name="max" value="${params.max}"/>&nbsp;--}%
-                        %{--<g:message code="entries" default="entries"/>--}%
+                        <div id="example_length" class="dataTables_length">
+                            Buscar (nombre del proceso)
+                            <g:textField name="txtBuscar" class="ui-widget-content ui-corner-all" value="${params.search}"/>
+                            <a href="#" class="button" id="btnBuscar">Buscar</a>
+                            %{--<g:message code="show" default="Show"/>&nbsp;--}%
+                            %{--<g:select from="${[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}" name="max" value="${params.max}"/>&nbsp;--}%
+                            %{--<g:message code="entries" default="entries"/>--}%
 
 
-                        %{--<g:select--}%
-                        %{--from="['asc': message(code: 'asc', default: 'Ascendente'), 'desc': message(code: 'desc', default: 'Descendente')]"--}%
-                        %{--name="order"--}%
-                        %{--optionKey="key"--}%
-                        %{--optionValue="value"--}%
-                        %{--value="${params.order}"--}%
-                        %{--class="ui-widget-content ui-corner-all"/>--}%
-                        %{--</div>--}%
+                            %{--<g:select--}%
+                            %{--from="['asc': message(code: 'asc', default: 'Ascendente'), 'desc': message(code: 'desc', default: 'Descendente')]"--}%
+                            %{--name="order"--}%
+                            %{--optionKey="key"--}%
+                            %{--optionValue="value"--}%
+                            %{--value="${params.order}"--}%
+                            %{--class="ui-widget-content ui-corner-all"/>--}%
+                        </div>
                     </div>
                     <table style="width: ${width}px;">
                         <thead>
@@ -93,6 +96,22 @@
         <script type="text/javascript">
             $(function () {
                 $(".button").button();
+
+                $("#btnBuscar").button({
+                    icons : {primary : 'ui-icon-search'},
+                    text  : false
+                }).click(function () {
+                    var search = $.trim($("#txtBuscar").val());
+                    location.href = "${createLink(controller: 'solicitud', action:'list')}?search=" + search;
+                    return false;
+                });
+                $("#txtBuscar").keyup(function (ev) {
+                    if (ev.keyCode == 13) {
+                        var search = $.trim($("#txtBuscar").val());
+                        location.href = "${createLink(controller: 'solicitud', action:'list')}?search=" + search;
+                    }
+                });
+
                 $(".print").button("option", "icons", {primary : 'ui-icon-print'}).click(function () {
                     var url = "${createLink(controller: 'reporteSolicitud', action: 'solicitudes')}";
                     location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename=solicitudes.pdf";

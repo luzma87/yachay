@@ -1,4 +1,5 @@
 package app
+
 class UnidadEjecutora implements Serializable {
     TipoInstitucion tipoInstitucion
     Provincia provincia
@@ -18,6 +19,8 @@ class UnidadEjecutora implements Serializable {
     String observaciones
 
     int orden
+
+    ObjetivoUnidad objetivoUnidad
 
     static auditable = [ignore: []]
     static mapping = {
@@ -43,8 +46,10 @@ class UnidadEjecutora implements Serializable {
             fax column: 'unejfaxx'
             email column: 'unejmail'
             observaciones column: 'unejobsr'
-            
+
             orden column: 'unejordn'
+
+            objetivoUnidad column: 'obun__id'
         }
     }
     static constraints = {
@@ -63,6 +68,8 @@ class UnidadEjecutora implements Serializable {
         fax(size: 1..63, blank: true, nullable: true, attributes: [mensaje: 'Números de fax, se los separa con “;”'])
         email(size: 1..63, blank: true, nullable: true, attributes: [mensaje: 'Dirección de correo electrónico institucional'])
         observaciones(size: 1..127, blank: true, nullable: true, attributes: [mensaje: 'Observaciones'])
+
+        objetivoUnidad(blank: true, nullable: true, attributes: [mensaje: "Objetivo de la unidad"])
     }
 
     String toString() {
