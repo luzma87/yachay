@@ -134,7 +134,7 @@ class ReportesController {
     }
 
     def reasignacion = {
-
+            /*todo*/
         def anio = Anio.findByAnio(new Date().format("yyyy"))
         def uni99 = UnidadEjecutora.findAllByCodigo("9999")
         def resto = UnidadEjecutora.findAllByCodigoNotEqual("9999").sort {it.codigo.toInteger()}

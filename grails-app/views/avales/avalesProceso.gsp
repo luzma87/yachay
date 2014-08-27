@@ -24,7 +24,7 @@
 </g:if>
 <div class="fila">
     <g:link controller="avales" action="listaProcesos" class="btn">Procesos</g:link>
-    <g:link controller="avales" action="solicitarAval" class="btn" id="${proceso.id}">Solicitar</g:link>
+    <g:link controller="avales" action="solicitarAval" class="btn" id="${proceso.id}">Nueva solicitud</g:link>
 </div>
 <div id="tabs" style="width: 1050px;margin-top: 10px;">
     <ul>
