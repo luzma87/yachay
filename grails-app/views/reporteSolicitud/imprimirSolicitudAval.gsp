@@ -147,7 +147,7 @@
                             Valor total del proceso:
                         </th>
                         <td colspan="2">
-                            $${solicitud.monto}
+                            $ <g:formatNumber number="${solicitud.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
                         </td>
                     </tr>
                     <g:each in="${app.yachai.ProcesoAsignacion.findAllByProceso(solicitud.proceso)}" var="pa">
@@ -188,7 +188,7 @@
                                 ${solicitud.proceso.fechaInicio?.format("yyyy")}
                             </td>
                             <td>
-                                $${pa.monto}
+                                $<g:formatNumber number="${pa.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
                             </td>
                         </tr>
                         <tr>

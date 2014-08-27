@@ -40,7 +40,9 @@
             <td>${p.nombre}</td>
             <td style="text-align: center">${p.fechaInicio?.format("dd-MM-yyyy")}</td>
             <td style="text-align: center">${p.fechaFin?.format("dd-MM-yyyy")}</td>
-            <td style="text-align: right">${p.getMonto()}</td>
+            <td style="text-align: right">
+                <g:formatNumber number="${p.getMonto()}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+               </td>
             <td style="text-align: center">
                 <a href="${g.createLink(action: 'crearProceso',id: p.id)}" class="btn">Editar</a>
             </td>
