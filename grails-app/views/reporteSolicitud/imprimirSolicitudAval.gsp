@@ -72,9 +72,9 @@
         }
 
         .numeracion {
-            float      : right;
+            float   : right;
             /*background : #bbb;*/
-            padding    : 7px;
+            padding : 7px;
         }
 
         .tbl {
@@ -147,23 +147,23 @@
                             Valor total del proceso:
                         </th>
                         <td colspan="2">
-                            $ <g:formatNumber number="${solicitud.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                            $ <g:formatNumber number="${solicitud.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"></g:formatNumber>
                         </td>
                     </tr>
                     <g:each in="${app.yachai.ProcesoAsignacion.findAllByProceso(solicitud.proceso)}" var="pa">
-                        %{--<tr>--}%
-                            %{--<td style="font-weight: bold">Unidad responsable</td>--}%
-                            %{--<td>${pa.asignacion.unidad}</td>--}%
-                        %{--</tr>--}%
+                    %{--<tr>--}%
+                    %{--<td style="font-weight: bold">Unidad responsable</td>--}%
+                    %{--<td>${pa.asignacion.unidad}</td>--}%
+                    %{--</tr>--}%
 
                         <tr>
                             <td style="font-weight: bold">Componente</td>
                             <td colspan="2">${pa.asignacion.marcoLogico.marcoLogico}</td>
                         </tr>
-                        %{--<tr>--}%
-                            %{--<td style="font-weight: bold">Número de la actividad</td>--}%
-                            %{--<td>${pa.asignacion.marcoLogico.numero} (${anio})</td>--}%
-                        %{--</tr>--}%
+                    %{--<tr>--}%
+                    %{--<td style="font-weight: bold">Número de la actividad</td>--}%
+                    %{--<td>${pa.asignacion.marcoLogico.numero} (${anio})</td>--}%
+                    %{--</tr>--}%
                         <tr>
                             <td style="font-weight: bold">Actividad</td>
                             <td colspan="2">${pa.asignacion.marcoLogico}</td>
@@ -184,11 +184,11 @@
                             <th>
                                 Año:
                             </th>
-                            <td >
+                            <td>
                                 ${solicitud.proceso.fechaInicio?.format("yyyy")}
                             </td>
                             <td>
-                                $<g:formatNumber number="${pa.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                                $<g:formatNumber number="${pa.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"></g:formatNumber>
                             </td>
                         </tr>
                         <tr>
@@ -210,7 +210,6 @@
 
                         </tr>
 
-
                     </g:each>
 
                 </table>
@@ -226,6 +225,15 @@
                 </p>
             </div>
 
+            <g:if test="${solicitud.firma1}">
+                <table width="100%" style="margin-top: 1.5cm;">
+                    <td width="33%"></td>
+                    <td width="33%" style="border-top: solid 1px black; text-align: center;">
+                        ${solicitud.firma1.persona.nombre} ${solicitud.firma1.persona.apellido}
+                    </td>
+                    <td width="33%"></td>
+                </table>
+            </g:if>
         </div>
     </body>
 </html>

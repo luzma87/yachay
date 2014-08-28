@@ -1,6 +1,7 @@
 package app.yachai
 
 import app.Proyecto
+import app.seguridad.Usro
 
 class ProcesoAval {
     Proyecto proyecto

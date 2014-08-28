@@ -2,6 +2,7 @@ package app.yachai
 
 import app.Anio
 import app.Solicitud
+import app.UnidadEjecutora
 import app.seguridad.Usro
 
 class RevisionAvalController {
@@ -13,24 +14,24 @@ class RevisionAvalController {
             actual = Anio.get(params.anio)
         else
             actual = Anio.findByAnio(new Date().format("yyyy"))
-        [solicitudes:solicitudes,actual:actual]
+        [solicitudes: solicitudes, actual: actual]
     }
 
-    def  negarAval = {
+    def negarAval = {
 
         def band = false
         def usuario = Usro.get(session.usuario.id)
         def sol = SolicitudAval.get(params.id)
         /*todo aqui validar quien puede*/
         band = true
-        if(band){
+        if (band) {
 
-            sol.estado=EstadoAval.findByCodigo("E03")
-            sol.fechaRevision=new Date()
+            sol.estado = EstadoAval.findByCodigo("E03")
+            sol.fechaRevision = new Date()
             sol.save(flush: true)
             render "ok"
 
-        }else{
+        } else {
             render("no")
 
         }
@@ -44,34 +45,34 @@ class RevisionAvalController {
             actual = Anio.get(params.anio)
         else
             actual = Anio.findByAnio(new Date().format("yyyy"))
-        [actual:actual]
+        [actual: actual]
     }
 
     def historialAvales = {
-       // println "historial aval "+params
+        // println "historial aval "+params
         def now = new Date()
         def anio = Anio.get(params.anio).anio
         def numero = ""
-        def proceso =params.proceso
+        def proceso = params.proceso
         def estado = EstadoAval.findByCodigo("E02")
         def datos = []
         def fechaInicio
         def fechaFin
-        def orderBy =""
-        def externos =["usuario","proceso","proyecto"]
+        def orderBy = ""
+        def externos = ["usuario", "proceso", "proyecto"]
         def band = true
-        if(params.numero && params.numero!=""){
-            numero=" and numero like ('%${numero}%')"
+        if (params.numero && params.numero != "") {
+            numero = " and numero like ('%${numero}%')"
         }
-        if(params.sort && params.sort!=""){
-            if(!externos.contains(params.sort))
-                orderBy=" order by ${params.sort} ${params.order}"
+        if (params.sort && params.sort != "") {
+            if (!externos.contains(params.sort))
+                orderBy = " order by ${params.sort} ${params.order}"
             else
-                band=false
+                band = false
         }
-        if(anio && anio!=""){
-            fechaInicio= new Date().parse("dd-MM-yyyy HH:mm:ss","01-01-"+anio+" 00:01:01")
-            fechaFin= new Date().parse("dd-MM-yyyy HH:mm:ss","31-12-"+anio+" 23:59:59")
+        if (anio && anio != "") {
+            fechaInicio = new Date().parse("dd-MM-yyyy HH:mm:ss", "01-01-" + anio + " 00:01:01")
+            fechaFin = new Date().parse("dd-MM-yyyy HH:mm:ss", "31-12-" + anio + " 23:59:59")
 //            println "inicio "+fechaInicio+"  fin  "+fechaFin
 //            datos += Aval.findAll("from Aval where " +
 //                    "(fechaAprobacion > '${fechaInicio}' and fechaAprobacion < '${fechaFin}') " +
@@ -94,100 +95,104 @@ class RevisionAvalController {
                         lt("fechaLiberacion", fechaFin)
                     }
                 }
-                if(params.numero && params.numero!=""){
-                    ilike("numero", "%"+params.numero+"%")
+                if (params.numero && params.numero != "") {
+                    ilike("numero", "%" + params.numero + "%")
                 }
-                if(params.sort && params.sort!=""){
-                    if(!externos.contains(params.sort)) {
+                if (params.sort && params.sort != "") {
+                    if (!externos.contains(params.sort)) {
                         order(params.sort, params.order)
                     }
                 }
             }
-            datos+=avales
+            datos += avales
         }
 
-        if(proceso && proceso!=""){
+        if (proceso && proceso != "") {
             def datosTemp = []
-            datos.each {av->
+            datos.each { av ->
 
-                if(av.proceso.nombre=~proceso){
+                if (av.proceso.nombre =~ proceso) {
 
                     datosTemp.add(av)
                 }
             }
-            datos=datosTemp
+            datos = datosTemp
 //            println "datos proceso "+datos
         }
-        if(!band){
-            switch (params.sort){
+        if (!band) {
+            switch (params.sort) {
                 case "proceso":
                     println "sort proceso"
-                    datos=datos.sort{it.proceso.nombre}
+                    datos = datos.sort { it.proceso.nombre }
 
                     break;
                 case "proyecto":
-                    datos=datos.sort{it.proceso.proyecto.nombre}
+                    datos = datos.sort { it.proceso.proyecto.nombre }
                     break;
             }
-            if(params.order=="desc")
-                datos=datos.reverse()
+            if (params.order == "desc")
+                datos = datos.reverse()
 
         }
-        [datos:datos,estado:estado,sort:params.sort,order:params.order,now:now]
+        [datos: datos, estado: estado, sort: params.sort, order: params.order, now: now]
     }
 
     def historial = {
 //        println "historial "+params
         def anio = Anio.get(params.anio).anio
         def numero = params.numero
-        def proceso =params.proceso
+        def proceso = params.proceso
         def datos = []
         def fechaInicio
         def fechaFin
-        if(anio && anio!=""){
-            fechaInicio= new Date().parse("dd-MM-yyyy hh:mm:ss","01-01-"+anio+" 00:01:01")
-            fechaFin= new Date().parse("dd-MM-yyyy hh:mm:ss","31-12-"+anio+" 23:59:59")
+        if (anio && anio != "") {
+            fechaInicio = new Date().parse("dd-MM-yyyy hh:mm:ss", "01-01-" + anio + " 00:01:01")
+            fechaFin = new Date().parse("dd-MM-yyyy hh:mm:ss", "31-12-" + anio + " 23:59:59")
 //            println "inicio "+fechaInicio+"  fin  "+fechaFin
-            datos += SolicitudAval.findAllByFechaBetween(fechaInicio,fechaFin)
+            datos += SolicitudAval.findAllByFechaBetween(fechaInicio, fechaFin)
 //            println "datos fecha "+datos
         }
-        if(numero && numero!=""){
+        if (numero && numero != "") {
 //            println "buscando por numero ==> "+numero
             def datosTemp = []
-            datos.each {sol->
-                println "tiene aval? "+sol.aval
-                if(sol.aval?.numero=~numero){
+            datos.each { sol ->
+                println "tiene aval? " + sol.aval
+                if (sol.aval?.numero =~ numero) {
                     println "encontro "
                     datosTemp.add(sol)
                 }
             }
-            datos=datosTemp
+            datos = datosTemp
 //            println "datos numero "+datos
         }
-        if(proceso && proceso!=""){
+        if (proceso && proceso != "") {
             def datosTemp = []
-            datos.each {sol->
+            datos.each { sol ->
 
-                if(sol.proceso.nombre=~proceso){
+                if (sol.proceso.nombre =~ proceso) {
                     println "encontro "
                     datosTemp.add(sol)
                 }
             }
-            datos=datosTemp
+            datos = datosTemp
 //            println "datos proceso "+datos
         }
-        [datos:datos.sort{it.fecha}]
+        [datos: datos.sort { it.fecha }]
     }
 
     def aprobarAval = {
+
+        def unidad = UnidadEjecutora.findByCodigo("DPI") // DIRECCIÓN DE PLANIFICACIÓN E INVERSIÓN
+        def personasFirmas = Usro.findAllByUnidad(unidad)
+
         def solicitud = SolicitudAval.get(params.id)
         def band = false
         def usuario = Usro.get(session.usuario.id)
         /*todo validar quien puede*/
-        band=true
+        band = true
         if (!band)
             response.sendError(403)
-        [solicitud:solicitud]
+        [solicitud: solicitud, personas: personasFirmas]
     }
 
     def aprobarAnulacion = {
@@ -195,24 +200,26 @@ class RevisionAvalController {
         def band = false
         def usuario = Usro.get(session.usuario.id)
         /*todo validar quien puede*/
-        band=true
+        band = true
         if (!band)
             response.sendError(403)
-        [solicitud:solicitud]
+        [solicitud: solicitud]
     }
 
     def guarDatosDoc = {
-        println "guardar datos doc "+params
+        println "guardar datos doc " + params
         def sol = SolicitudAval.get(params.id)
-        sol.observaciones=params.obs
+        sol.observaciones = params.obs
         sol.numero = params.aval
+        sol.firma2 = Usro.get(params.firma2)
+        sol.firma3 = Usro.get(params.firma3)
         sol.save(flush: true)
         render "ok"
     }
 
 
     def guardarLiberacion = {
-        println "liberacion "+params
+        println "liberacion " + params
         def path = servletContext.getRealPath("/") + "avales/"
         new File(path).mkdirs()
         def f = request.getFile('archivo')
@@ -248,7 +255,7 @@ class RevisionAvalController {
                     "N": "[Ñ]",
                     "C": "[Ç]",
 
-                    "": "[\\!@\\\$%\\^&*()='\"\\/<>:;\\.,\\?]",
+                    "" : "[\\!@\\\$%\\^&*()='\"\\/<>:;\\.,\\?]",
 
                     "_": "[\\s]"
             ]
@@ -257,7 +264,7 @@ class RevisionAvalController {
                 fileName = (fileName.trim()).replaceAll(v, k)
             }
 
-            fileName = fileName+"_"+new Date().format("mm_ss")+"." + "pdf"
+            fileName = fileName + "_" + new Date().format("mm_ss") + "." + "pdf"
 
             def pathFile = path + File.separatorChar + fileName
             def src = new File(pathFile)
@@ -265,7 +272,7 @@ class RevisionAvalController {
 
             if (src.exists()) {
 
-                flash.message="Ya existe un archivo con ese nombre. Por favor cámbielo."
+                flash.message = "Ya existe un archivo con ese nombre. Por favor cámbielo."
                 redirect(action: 'listaAvales')
 
 
@@ -275,18 +282,18 @@ class RevisionAvalController {
                 def aval = Aval.get(params.id)
                 /*Todo aqui validar quien puede*/
                 band = true
-                if(band){
+                if (band) {
                     f.transferTo(new File(pathFile))
-                    aval.pathLiberacion=fileName
-                    aval.liberacion=aval.monto
-                    aval.monto=params.monto.toDouble()
-                    aval.estado=EstadoAval.findByCodigo("E05")
+                    aval.pathLiberacion = fileName
+                    aval.liberacion = aval.monto
+                    aval.monto = params.monto.toDouble()
+                    aval.estado = EstadoAval.findByCodigo("E05")
                     aval.save(flush: true)
-                    flash.message="Aval "+aval.fechaAprobacion.format("yyyy")+"-CP No."+aval.numero+" Liberado"
-                    redirect(action: 'listaAvales',controller: 'revisionAval')
-                }else{
-                    flash.message="Usted no tiene permisos para liberar avales"
-                    redirect(controller: 'listaAvales',action: 'revisionAval')
+                    flash.message = "Aval " + aval.fechaAprobacion.format("yyyy") + "-CP No." + aval.numero + " Liberado"
+                    redirect(action: 'listaAvales', controller: 'revisionAval')
+                } else {
+                    flash.message = "Usted no tiene permisos para liberar avales"
+                    redirect(controller: 'listaAvales', action: 'revisionAval')
                 }
             }
         }
@@ -294,14 +301,14 @@ class RevisionAvalController {
 
     def caducarAval = {
         def aval = Aval.get(params.id)
-        aval.estado=EstadoAval.findByCodigo("E06")
+        aval.estado = EstadoAval.findByCodigo("E06")
         aval.save(flush: true)
         redirect(action: "listaAvales")
     }
 
 
     def guardarAnulacion = {
-        println "aprobar anulacion "+params
+        println "aprobar anulacion " + params
         def path = servletContext.getRealPath("/") + "avales/"
         new File(path).mkdirs()
         def f = request.getFile('archivo')
@@ -337,7 +344,7 @@ class RevisionAvalController {
                     "N": "[Ñ]",
                     "C": "[Ç]",
 
-                    "": "[\\!@\\\$%\\^&*()='\"\\/<>:;\\.,\\?]",
+                    "" : "[\\!@\\\$%\\^&*()='\"\\/<>:;\\.,\\?]",
 
                     "_": "[\\s]"
             ]
@@ -346,7 +353,7 @@ class RevisionAvalController {
                 fileName = (fileName.trim()).replaceAll(v, k)
             }
 
-            fileName = fileName+"_"+new Date().format("mm_ss")+"." + "pdf"
+            fileName = fileName + "_" + new Date().format("mm_ss") + "." + "pdf"
 
             def pathFile = path + File.separatorChar + fileName
             def src = new File(pathFile)
@@ -354,8 +361,8 @@ class RevisionAvalController {
 
             if (src.exists()) {
                 def sol = SolicitudAval.get(params.id)
-                flash.message="Ya existe un archivo con ese nombre. Por favor cámbielo."
-                redirect(action: 'aprobarAval',params: [id:sol.id])
+                flash.message = "Ya existe un archivo con ese nombre. Por favor cámbielo."
+                redirect(action: 'aprobarAval', params: [id: sol.id])
 
 
             } else {
@@ -365,21 +372,21 @@ class RevisionAvalController {
                 /*Todo aqui validar quien puede*/
                 band = true
 
-                if(band){
+                if (band) {
                     f.transferTo(new File(pathFile))
                     def aval = sol.aval
-                    aval.pathAnulacion=fileName
+                    aval.pathAnulacion = fileName
 //                    aval.memo=sol.memo
-                    aval.estado=EstadoAval.findByCodigo("E04")
+                    aval.estado = EstadoAval.findByCodigo("E04")
 //                    aval.monto=sol.monto
                     aval.save(flush: true)
-                    sol.estado=EstadoAval.findByCodigo("E02")
+                    sol.estado = EstadoAval.findByCodigo("E02")
                     sol.save(flush: true)
-                    flash.message="Solciitud de anulación aprobada - Aval "+aval.fechaAprobacion.format("yyyy")+"-CP No."+aval.numero+" anulado"
-                    redirect(action: 'pendientes',controller: 'revisionAval')
-                }else{
-                    flash.message="Usted no tiene permisos para aprobar esta solicitud"
-                    redirect(controller: 'avales',action: 'listaProcesos')
+                    flash.message = "Solciitud de anulación aprobada - Aval " + aval.fechaAprobacion.format("yyyy") + "-CP No." + aval.numero + " anulado"
+                    redirect(action: 'pendientes', controller: 'revisionAval')
+                } else {
+                    flash.message = "Usted no tiene permisos para aprobar esta solicitud"
+                    redirect(controller: 'avales', action: 'listaProcesos')
                 }
             }
         }
@@ -387,7 +394,7 @@ class RevisionAvalController {
 
     def guardarAprobacion = {
         /*TODO enviar alertas*/
-        println "aprobar "+params
+        println "aprobar " + params
         def path = servletContext.getRealPath("/") + "avales/"
         new File(path).mkdirs()
         def f = request.getFile('archivo')
@@ -423,7 +430,7 @@ class RevisionAvalController {
                     "N": "[Ñ]",
                     "C": "[Ç]",
 
-                    "": "[\\!@\\\$%\\^&*()='\"\\/<>:;\\.,\\?]",
+                    "" : "[\\!@\\\$%\\^&*()='\"\\/<>:;\\.,\\?]",
 
                     "_": "[\\s]"
             ]
@@ -432,7 +439,7 @@ class RevisionAvalController {
                 fileName = (fileName.trim()).replaceAll(v, k)
             }
 
-            fileName = fileName+"_"+new Date().format("mm_ss")+"." + "pdf"
+            fileName = fileName + "_" + new Date().format("mm_ss") + "." + "pdf"
 
             def pathFile = path + File.separatorChar + fileName
             def src = new File(pathFile)
@@ -440,8 +447,8 @@ class RevisionAvalController {
 
             if (src.exists()) {
                 def sol = SolicitudAval.get(params.id)
-                flash.message="Ya existe un archivo con ese nombre. Por favor cámbielo."
-                redirect(action: 'aprobarAval',params: [id:sol.id])
+                flash.message = "Ya existe un archivo con ese nombre. Por favor cámbielo."
+                redirect(action: 'aprobarAval', params: [id: sol.id])
 
 
             } else {
@@ -451,29 +458,29 @@ class RevisionAvalController {
                 /*Todo aqui validar quien puede*/
                 band = true
 
-                if(band){
+                if (band) {
                     f.transferTo(new File(pathFile))
                     def aval = new Aval()
-                    aval.proceso=sol.proceso
-                    aval.concepto=sol.concepto
-                    aval.path=fileName
-                    aval.memo=sol.memo
-                    aval.numero=sol.numero
-                    aval.fechaAprobacion=new Date()
-                    aval.estado=EstadoAval.findByCodigo("E02")
-                    aval.monto=sol.monto
+                    aval.proceso = sol.proceso
+                    aval.concepto = sol.concepto
+                    aval.path = fileName
+                    aval.memo = sol.memo
+                    aval.numero = sol.numero
+                    aval.fechaAprobacion = new Date()
+                    aval.estado = EstadoAval.findByCodigo("E02")
+                    aval.monto = sol.monto
                     aval.save(flush: true)
-                    sol.aval=aval;
-                    sol.estado=aval.estado
+                    sol.aval = aval;
+                    sol.estado = aval.estado
                     sol.save(flush: true)
-                    flash.message="Solciitud aprobada"
-                    redirect(action: 'pendientes',controller: 'revisionAval')
-                }else{
-                    msn="Usted no tiene permisos para aprobar esta solicitud"
+                    flash.message = "Solciitud aprobada"
+                    redirect(action: 'pendientes', controller: 'revisionAval')
+                } else {
+                    msn = "Usted no tiene permisos para aprobar esta solicitud"
                     if (params.tipo)
-                        redirect(action: "listaCertificados",params: [cer:cer,id: cer.asignacion.unidad.id])
+                        redirect(action: "listaCertificados", params: [cer: cer, id: cer.asignacion.unidad.id])
                     else
-                        redirect(action: 'listaSolicitudes',params: [msn:msn])
+                        redirect(action: 'listaSolicitudes', params: [msn: msn])
                 }
             }
         }

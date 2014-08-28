@@ -6,6 +6,7 @@ import app.MarcoLogico
 import app.Proceso
 import app.Proyecto
 import app.TipoElemento
+import app.UnidadEjecutora
 import app.seguridad.Usro
 import app.yachai.Aval
 import app.yachai.EstadoAval
@@ -16,181 +17,184 @@ import app.yachai.SolicitudAval
 class AvalesController {
 
     def procesos = {
-        println "procesos "+params
-        def proyecto=null
-        if(params.proyecto)
-            proyecto=Proyecto.get(params.proyecto)
+        println "procesos " + params
+        def proyecto = null
+        if (params.proyecto)
+            proyecto = Proyecto.get(params.proyecto)
         def procesos = []
-        if(proyecto){
-            procesos=ProcesoAval.findAllByProyecto(proyecto)
-        }else{
-            procesos=ProcesoAval.list([sort: "nombre"])
+        if (proyecto) {
+            procesos = ProcesoAval.findAllByProyecto(proyecto)
+        } else {
+            procesos = ProcesoAval.list([sort: "nombre"])
         }
-        [proyecto:proyecto,procesos:procesos]
+        [proyecto: proyecto, procesos: procesos]
     }
 
     def crearProceso = {
         def proceso
         def actual
-        def band=true
+        def band = true
         if (params.anio)
             actual = Anio.get(params.anio)
         else
             actual = Anio.findByAnio(new Date().format("yyyy"))
-        if(params.id) {
+        if (params.id) {
             proceso = ProcesoAval.get(params.id)
             def aval = Aval.findAllByProceso(proceso)
 
             aval.each {
-                if(it.estado?.codigo=="E01" || it.estado?.codigo=="E02"){
-                    band=false
+                if (it.estado?.codigo == "E01" || it.estado?.codigo == "E02") {
+                    band = false
                 }
             }
         }
 
-        [proceso:proceso,actual:actual,band:band]
+        [proceso: proceso, actual: actual, band: band]
     }
 
     def getDetalle = {
         def proceso
         def detalle = []
         proceso = ProcesoAval.get(params.id)
-        detalle = ProcesoAsignacion.findAllByProceso(proceso,[sort: "id"])
-        [proceso:proceso,detalle:detalle]
+        detalle = ProcesoAsignacion.findAllByProceso(proceso, [sort: "id"])
+        [proceso: proceso, detalle: detalle]
     }
 
     def saveProceso = {
-        println "save proceso "+params
-        params.fechaInicio = new Date().parse("dd-MM-yyyy",params.fechaInicio)
-        params.fechaFin = new Date().parse("dd-MM-yyyy",params.fechaFin)
+        println "save proceso " + params
+        params.fechaInicio = new Date().parse("dd-MM-yyyy", params.fechaInicio)
+        params.fechaFin = new Date().parse("dd-MM-yyyy", params.fechaFin)
         def proceso
-        if(params.id)
-            proceso=ProcesoAval.get(params.id)
+        if (params.id)
+            proceso = ProcesoAval.get(params.id)
         else
-            proceso=new ProcesoAval()
-        proceso.properties=params
-        if(!proceso.save(flush:true)) {
-            println "error save "+proceso.errors
+            proceso = new ProcesoAval()
+        proceso.properties = params
+        if (!proceso.save(flush: true)) {
+            println "error save " + proceso.errors
             flash.message = "Error al guardar el proceso"
-        }else {
+        } else {
             flash.message = "Datos guardados"
         }
-        redirect(action: "crearProceso",id:proceso.id)
+        redirect(action: "crearProceso", id: proceso.id)
     }
 
 
     def agregarAsignacion = {
-        println "agregar asg "+params
+        println "agregar asg " + params
         def proceso = ProcesoAval.get(params.proceso)
         def asg = Asignacion.get(params.asg)
         def monto = params.monto.toDouble()
         def detalle = new ProcesoAsignacion()
-        if(params.id && params.id!="")
-            detalle= ProcesoAsignacion.get(params.id)
-        detalle.asignacion=asg
-        detalle.proceso=proceso
-        detalle.monto=monto
+        if (params.id && params.id != "")
+            detalle = ProcesoAsignacion.get(params.id)
+        detalle.asignacion = asg
+        detalle.proceso = proceso
+        detalle.monto = monto
         detalle.save(flush: true)
         render "ok"
     }
 
     def borrarDetalle = {
-        println "borrar "+params
+        println "borrar " + params
         def detalle = ProcesoAsignacion.get(params.id)
         def aval = Aval.findAllByProceso(detalle.proceso)
-        def band=true
+        def band = true
         aval.each {
-            if(it.estado?.codigo=="E01" || it.estado?.codigo=="E02"){
-                band=false
+            if (it.estado?.codigo == "E01" || it.estado?.codigo == "E02") {
+                band = false
             }
         }
-        if(band) {
+        if (band) {
             detalle.delete()
             render "ok"
-        }else
+        } else
             render "no"
     }
 
     def editarDetalle = {
-        println "edtar "+params
+        println "edtar " + params
 
         def detalle = ProcesoAsignacion.get(params.id)
-        detalle.monto=params.monto.toDouble()
+        detalle.monto = params.monto.toDouble()
         detalle.save(flush: true)
         render "ok"
     }
 
-    def cargarActividades ={
+    def cargarActividades = {
         def comp = MarcoLogico.get(params.id)
-        [acts:MarcoLogico.findAllByMarcoLogico(comp,[sort:"numero"])]
+        [acts: MarcoLogico.findAllByMarcoLogico(comp, [sort: "numero"])]
     }
-    def cargarAsignaciones ={
-        println "cargar asg "+params
-        def act =  MarcoLogico.get(params.id)
+    def cargarAsignaciones = {
+        println "cargar asg " + params
+        def act = MarcoLogico.get(params.id)
         def anio = Anio.get(params.anio)
-        [asgs:Asignacion.findAllByMarcoLogicoAndAnio(act,anio)]
+        [asgs: Asignacion.findAllByMarcoLogicoAndAnio(act, anio)]
     }
 
-    def getMaximoAsg={
+    def getMaximoAsg = {
 //        println "get Maximo asg " +params
         def asg = Asignacion.get(params.id)
         def monto = asg.priorizado
         def usado = 0;
         ProcesoAsignacion.findAllByAsignacion(asg).each {
-            usado+=it.monto
+            usado += it.monto
         }
 
-        render ""+(monto-usado)
+        render "" + (monto - usado)
     }
 
     def listaProcesos = {
 
-        def procesos = ProcesoAval.list([sort:"id"])
-        [procesos:procesos]
+        def procesos = ProcesoAval.list([sort: "id"])
+        [procesos: procesos]
 
     }
 
     def avalesProceso = {
         def proceso = ProcesoAval.get(params.id)
         def avales = Aval.findAllByProceso(proceso)
-        def solicitudes = SolicitudAval.findAllByProceso(proceso,[sort:"fecha"])
-        [avales:avales,proceso: proceso,solicitudes:solicitudes]
+        def solicitudes = SolicitudAval.findAllByProceso(proceso, [sort: "fecha"])
+        [avales: avales, proceso: proceso, solicitudes: solicitudes]
     }
     def solicitarAval = {
+        def unidad = UnidadEjecutora.get(session.unidad.id)
+        def personasFirma = Usro.findAllByUnidad(unidad)
+
         def proceso = ProcesoAval.get(params.id)
         def now = new Date()
-        if(proceso.fechaInicio<now){
+        if (proceso.fechaInicio < now) {
             response.sendError(403)
         }
-        def estados = [0,1]
-        def avales = Aval.findAllByProcesoAndEstadoInList(proceso,[EstadoAval.findByCodigo("E02"),EstadoAval.findByCodigo("E05")])
-        def solicitudes = SolicitudAval.findAllByProcesoAndEstado(proceso,EstadoAval.findByCodigo("E01"))
+        def estados = [0, 1]
+        def avales = Aval.findAllByProcesoAndEstadoInList(proceso, [EstadoAval.findByCodigo("E02"), EstadoAval.findByCodigo("E05")])
+        def solicitudes = SolicitudAval.findAllByProcesoAndEstado(proceso, EstadoAval.findByCodigo("E01"))
         def disponible = proceso.getMonto()
         avales.each {
-            disponible-=it.monto
+            disponible -= it.monto
         }
         solicitudes.each {
-            disponible-=it.monto
+            disponible -= it.monto
         }
-        [proceso:proceso, disponible:disponible]
+        [proceso: proceso, disponible: disponible, personas: personasFirma]
 
     }
     def solicitarAnulacion = {
 
         def aval = Aval.get(params.id)
-        [aval:aval]
+        [aval: aval]
 
     }
 
     def guardarSolicitud = {
-        println "solicitud aval "+params
+        println "solicitud aval " + params
         /*TODO enviar alertas*/
 
         def path = servletContext.getRealPath("/") + "pdf/solicitudAval/"
         new File(path).mkdirs()
         def f = request.getFile('file')
         def okContents = [
-                'application/pdf': 'pdf',
+                'application/pdf'     : 'pdf',
                 'application/download': 'pdf'
         ]
         def nombre = ""
@@ -210,8 +214,8 @@ class AvalesController {
             ext = okContents[f.getContentType()]
             fileName = fileName.size() < 40 ? fileName : fileName[0..39]
             fileName = fileName.tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
-            if(!ext){
-                ext="pdf"
+            if (!ext) {
+                ext = "pdf"
             }
             nombre = fileName + "." + ext
             pathFile = path + nombre
@@ -233,32 +237,33 @@ class AvalesController {
                 def concepto = params.concepto
                 def momorando = params.memorando
                 def sol = new SolicitudAval()
-                sol.proceso=proceso
-                if(params.aval)
+                sol.proceso = proceso
+                if (params.aval)
                     sol.aval = Aval.get(params.aval)
-                sol.usuario=session.usuario
-                sol.monto=monto
-                sol.concepto=concepto
-                sol.memo=momorando
-                sol.path=nombre
-                if(params.tipo)
-                    sol.tipo=params.tipo
+                sol.usuario = session.usuario
+                sol.monto = monto
+                sol.concepto = concepto
+                sol.memo = momorando
+                sol.path = nombre
+                sol.firma1 = Usro.get(params.firma1)
+                if (params.tipo)
+                    sol.tipo = params.tipo
                 sol.fecha = new Date();
-                sol.estado=EstadoAval.findByCodigo("E01")
-                if(!sol.save(flush: true)){
-                    println "eror save "+sol.errors
+                sol.estado = EstadoAval.findByCodigo("E01")
+                if (!sol.save(flush: true)) {
+                    println "eror save " + sol.errors
                 }
-                flash.message="Solicitud enviada"
-                redirect(action: 'avalesProceso',params: [id: params.proceso])
+                flash.message = "Solicitud enviada"
+                redirect(action: 'avalesProceso', params: [id: params.proceso])
                 //println pathFile
             } catch (e) {
                 println "????????\n" + e + "\n???????????"
             }
 
 
-        }else{
-            flash.message="Error: Seleccione un archivo valido"
-            redirect(action: 'solicitarAval',params: [asg: params.asgn])
+        } else {
+            flash.message = "Error: Seleccione un archivo valido"
+            redirect(action: 'solicitarAval', params: [asg: params.asgn])
         }
         /* fin del upload */
     }
@@ -294,7 +299,6 @@ class AvalesController {
             render "archivo no encontrado"
         }
     }
-
 
 
 }
