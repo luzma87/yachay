@@ -61,7 +61,7 @@
             width         : 90%;
             margin        : 5%;
             margin-top    : 2px;
-            margin-bottom: 10px;
+            margin-bottom : 10px;
             height        : 30px;
             line-height   : 30px;
             text-align    : center;
@@ -88,7 +88,7 @@
             min-height : 115px;
             margin     : 5%;
             cursor     : pointer;
-            padding: 10px;
+            padding    : 10px;
         }
 
         textarea {
@@ -137,10 +137,10 @@
                             </g:link>
                         </li>
                         %{--<li>--}%
-                            %{--<g:link class="bc" controller="marcoLogico" action="showMarco"--}%
-                                    %{--id="${proyecto.id}">--}%
-                                %{--Marco L&oacute;gico--}%
-                            %{--</g:link>--}%
+                        %{--<g:link class="bc" controller="marcoLogico" action="showMarco"--}%
+                        %{--id="${proyecto.id}">--}%
+                        %{--Marco L&oacute;gico--}%
+                        %{--</g:link>--}%
                         %{--</li>--}%
                         <li>
                             Componentes
@@ -157,7 +157,7 @@
                     <g:set var="k" value="${0}"/>
                     <g:each in="${componentes}" var="comp">
                         <g:if test="${comp.estado == 0}">
-                            <h3><a href="#">Componente ${k + 1} : ${(comp?.objeto.length() > 40) ? comp?.objeto.substring(0, 40) + "..." : comp.objeto}</a>
+                            <h3><a href="#">Componente ${comp.numeroComp ?: 's/n'}%{--${k + 1}--}% : ${(comp?.objeto.length() > 40) ? comp?.objeto.substring(0, 40) + "..." : comp.objeto}</a>
                             </h3>
 
                             <div>
@@ -170,7 +170,7 @@
                                      style="margin-left: -10px;" tipo="1">
                                     <div class="titulo">Componente</div>
 
-                                    <div class="texto agregado ui-corner-all fin" ml="1" style="min-height: 115px;"
+                                    <div numero="${comp.numeroComp}" class="texto agregado ui-corner-all fin" ml="1" style="min-height: 115px;"
                                          id="rn_${k}"
                                          identificador="${comp?.id}" tipo="1">
                                         ${comp?.objeto}
@@ -178,10 +178,8 @@
 
                                 </div>
 
-
-
                             </div>
-                            <g:set var="k" value="${k+1}"/>
+                            <g:set var="k" value="${k + 1}"/>
                         </g:if>
                     </g:each>
                 %{--fin del each--}%
@@ -208,6 +206,7 @@
                 <input type="hidden" id="iden">
 
                 <div class="texto" style="min-height: 270px;width: 90%">
+                    Número: <input type="text" name="num" id="txt_numero"/>
                     <textarea name="mdo" id="txt_datos" style="min-height: 270px"></textarea>
                 </div>
             </div>
@@ -235,25 +234,25 @@
 
 
             $("#breadCrumb").jBreadCrumb({
-                beginingElementsToLeaveOpen: 10
+                beginingElementsToLeaveOpen : 10
             });
 
             function reajustar() {
                 var tam = 215
-                $.each($(".campo"), function() {
+                $.each($(".campo"), function () {
                     if ($(this).height() * 1 > tam)
                         tam = $(this).height() * 1
                 });
                 $(".campo").css("min-height", tam)
                 $("#div_fin").css("min-height", tam - 60)
                 tam = 215
-                $.each($(".campoProp"), function() {
+                $.each($(".campoProp"), function () {
                     if ($(this).height() * 1 > tam)
                         tam = $(this).height() * 1
                 });
                 $(".campoProp").css("min-height", tam)
                 $("#div_prop").css("min-height", tam - 60)
-                $.each($(".fila"), function() {
+                $.each($(".fila"), function () {
                     tam = 0
 //            $.each($(this).find(".der").children(),function(){
 //                //console.log("div de la izq "+$(this).css("display"))
@@ -264,25 +263,23 @@
                     if ($(this).find(".izq").height() < $(this).find(".der").height())
                         $(this).find(".izq").children().height($(this).find(".der").height() - 10)
 
-
                 });
-
 
             }
             reajustar()
             $(".link").button()
-            $(".back").button({icons:{primary:'ui-icon-arrowreturnthick-1-w'}});
+            $(".back").button({icons : {primary : 'ui-icon-arrowreturnthick-1-w'}});
 
-            $("#btnAgregar").button().click(function() {
+            $("#btnAgregar").button().click(function () {
                 if ($("").val() != "-1") {
                     $.ajax({
-                        type: "POST",
-                        url: "${createLink(action:'agregarSupuesto')}",
-                        data: {
-                            marco:$("#c_indi").val(),
-                            id:$("#tipoSupuesto").val()
+                        type    : "POST",
+                        url     : "${createLink(action:'agregarSupuesto')}",
+                        data    : {
+                            marco : $("#c_indi").val(),
+                            id    : $("#tipoSupuesto").val()
                         },
-                        success: function(msg) {
+                        success : function (msg) {
                             if (msg != "no") {
                                 var partes = msg.split("&&")
                                 if ($("#c_iden").val() == "0") {
@@ -296,7 +293,7 @@
                                     }
                                     div.html("Agregar")
                                     $("#" + $("#c_div").val()).parent().append(div)
-                                    div.bind("click", function() {
+                                    div.bind("click", function () {
                                         $("#txt_varios").val("")
                                         $("#c_ml").val($(this).attr("ml"))
                                         $("#c_div").val($(this).attr("div"))
@@ -305,18 +302,16 @@
                                         $("#c_tipo").val($(this).attr("tipo"))
                                         if ($(this).attr("tipo") != "3")
                                             $("#filaCombo").hide()
-                                        else
-                                        if ($("#c_iden").val() == "0")
+                                        else if ($("#c_iden").val() == "0")
                                             $("#filaCombo").show()
                                         if ($("#" + $(this).attr("div")).html())
                                             $("#txt_varios").val($("#" + $(this).attr("div")).html().trim())
                                         if ($("#txt_varios").val() == "Agregar")
                                             $("#txt_varios").val("")
-                                        $("#dlg_combo").dialog({title:$(this).attr("ml")})
+                                        $("#dlg_combo").dialog({title : $(this).attr("ml")})
                                         $("#dlg_combo").dialog("open")
                                     });
                                 }
-
 
                                 $("#" + $("#c_div").val()).html(partes[1])
                                 $("#" + $("#c_div").val()).attr("identificador", partes[0])
@@ -335,62 +330,63 @@
                 }
             });
 
-            $(".datos").click(function() {
+            $(".datos").click(function () {
                 if ($("#edicion").val() == "1") {
-                    $("#txt_datos").val("")
-                    $("#ml").val($(this).attr("tipo"))
-                    $("#div").val($(this).attr("div"))
-                    $("#iden").val($(this).attr("identificador"))
+                    $("#txt_datos").val("");
+                    $("#ml").val($(this).attr("tipo"));
+                    $("#div").val($(this).attr("div"));
+                    $("#iden").val($(this).attr("identificador"));
                     /* TODO hay un trim aqui que no valdria en ie... cambiar por la funcion */
-                    if ($("#" + $(this).attr("div")).html())
-                        $("#txt_datos").val($("#" + $(this).attr("div")).html().trim())
-                    $("#dlg_datos").dialog({title:"Ingreso de datos"})
-                    $("#dlg_datos").dialog("open")
+                    if ($("#" + $(this).attr("div")).html()) {
+                        $("#txt_datos").val($("#" + $(this).attr("div")).html().trim());
+                        $("#txt_numero").val($("#" + $(this).attr("div")).attr("numero"));
+                    }
+                    $("#dlg_datos").dialog({title : "Ingreso de datos"});
+                    $("#dlg_datos").dialog("open");
                 }
             });
 
-            $(".varios").click(function() {
+            $(".varios").click(function () {
                 if ($("#edicion").val() == "1") {
-                    $("#txt_varios").val("")
-                    $("#c_ml").val($(this).attr("ml"))
-                    $("#c_div").val($(this).attr("div"))
-                    $("#c_iden").val($(this).attr("identificador"))
-                    $("#c_indi").val($(this).attr("indicador"))
-                    $("#c_tipo").val($(this).attr("tipo"))
+                    $("#txt_varios").val("");
+                    $("#c_ml").val($(this).attr("ml"));
+                    $("#c_div").val($(this).attr("div"));
+                    $("#c_iden").val($(this).attr("identificador"));
+                    $("#c_indi").val($(this).attr("indicador"));
+                    $("#c_tipo").val($(this).attr("tipo"));
                     if ($(this).attr("tipo") != "4")
-                        $("#filaCombo").hide()
-                    else
-                    if ($("#c_iden").val() == "0")
-                        $("#filaCombo").show()
+                        $("#filaCombo").hide();
+                    else if ($("#c_iden").val() == "0")
+                        $("#filaCombo").show();
                     /* TODO hay un trim aqui que no valdria en ie... cambiar por la funcion */
                     if ($("#" + $(this).attr("div")).html())
-                        $("#txt_varios").val($("#" + $(this).attr("div")).html().trim())
+                        $("#txt_varios").val($("#" + $(this).attr("div")).html().trim());
                     if ($("#txt_varios").val() == "Agregar")
-                        $("#txt_varios").val("")
+                        $("#txt_varios").val("");
 
                     $("#dlg_combo").dialog("open")
                 }
             });
 
             $("#dlg_datos").dialog({
-                width:550,
-                height:440,
-                position:"center",
-                modal:true,
-                autoOpen:false,
-                buttons:{
-                    "Eliminar":function() {
+                width    : 550,
+                height   : 490,
+                position : "center",
+                modal    : true,
+                autoOpen : false,
+                buttons  : {
+                    "Eliminar" : function () {
                         if (confirm("Esta seguro que desea eliminar?. Esta acción es irreversible. El componente no se eliminara si tiene actividades asociadas")) {
                             $.ajax({
-                                type: "POST",
-                                url: "${createLink(action:'eliminarMarco')}",
-                                data: {
-                                    tipo:$("#ml").val(),
-                                    datos:$("#txt_datos").val(),
-                                    proyecto:$("#proyecto").val(),
-                                    id:$("#iden").val()
+                                type    : "POST",
+                                url     : "${createLink(action:'eliminarMarco')}",
+                                data    : {
+                                    tipo     : $("#ml").val(),
+                                    datos    : $("#txt_datos").val(),
+                                    proyecto : $("#proyecto").val(),
+                                    id       : $("#iden").val()
                                 },
-                                success: function(msg) {
+                                success : function (msg) {
                                     if (msg == "ok") {
                                         window.location.reload(true)
                                     } else {
@@ -400,20 +396,21 @@
                             });
                         }
                     },
-                    "Aceptar":function() {
+                    "Aceptar"  : function () {
                         if ($("#txt_datos").val() != "" && $("#txt_datos").val() != " ") {
 
-                            if($("#txt_datos").val().trim().length<1024){
+                            if ($("#txt_datos").val().trim().length < 1024) {
                                 $.ajax({
-                                    type: "POST",
-                                    url: "${createLink(action:'guadarDatosComponentes')}",
-                                    data: {
-                                        tipo:$("#ml").val(),
-                                        datos:$("#txt_datos").val(),
-                                        proyecto:$("#proyecto").val(),
-                                        id: $("#iden").val()
+                                    type    : "POST",
+                                    url     : "${createLink(action:'guadarDatosComponentes')}",
+                                    data    : {
+                                        tipo     : $("#ml").val(),
+                                        datos    : $("#txt_datos").val(),
+                                        proyecto : $("#proyecto").val(),
+                                        id       : $("#iden").val(),
+                                        num      : $("#txt_numero").val()
                                     },
-                                    success: function(msg) {
+                                    success : function (msg) {
                                         if (msg != "no") {
                                             window.location.reload(true)
                                         } else {
@@ -421,10 +418,9 @@
                                         }
                                     }
                                 });
-                            }else{
+                            } else {
                                 alert("La descripción del componente no puede tener mas de 1024 datos")
                             }
-
 
                         }
 
@@ -433,30 +429,30 @@
             });
 
             $("#dlg_combo").dialog({
-                width:310,
-                height:460,
-                position:"center",
-                modal:true,
-                autoOpen:false,
-                title:"Ingreso de datos",
-                buttons:{
-                    "Eliminar":function() {
+                width    : 310,
+                height   : 460,
+                position : "center",
+                modal    : true,
+                autoOpen : false,
+                title    : "Ingreso de datos",
+                buttons  : {
+                    "Eliminar" : function () {
                         if (confirm("Esta seguro que desea eliminar?. Esta acción es irreversible") && $("#c_iden").val() != "0") {
                             $.ajax({
-                                type: "POST",
-                                url: "${createLink(action:'eliminarIndiMedSupComponentes')}",
-                                data: {
-                                    ml:$("#c_ml").val(),
-                                    datos:$("#txt_varios").val(),
-                                    proyecto:$("#proyecto").val(),
-                                    id:$("#c_iden").val(),
-                                    indicador:$("#c_indi").val(),
-                                    tipo:$("#c_tipo").val()
+                                type    : "POST",
+                                url     : "${createLink(action:'eliminarIndiMedSupComponentes')}",
+                                data    : {
+                                    ml        : $("#c_ml").val(),
+                                    datos     : $("#txt_varios").val(),
+                                    proyecto  : $("#proyecto").val(),
+                                    id        : $("#c_iden").val(),
+                                    indicador : $("#c_indi").val(),
+                                    tipo      : $("#c_tipo").val()
                                 },
-                                success: function(msg) {
+                                success : function (msg) {
                                     if (msg == "ok") {
                                         if ($("#c_tipo").val() == "2") {
-                                            $.each($("#" + $("#c_div").val()).parent().parent().find(".der").children(), function() {
+                                            $.each($("#" + $("#c_div").val()).parent().parent().find(".der").children(), function () {
                                                 if (!$(this).hasClass("edicion"))
                                                     $(this).remove()
                                                 else
@@ -478,20 +474,20 @@
                             $("#dlg_combo").dialog("close")
                         }
                     },
-                    "Aceptar":function() {
+                    "Aceptar"  : function () {
                         if ($("#txt_varios").val() != "" && $("#txt_varios").val() != " ") {
                             $.ajax({
-                                type: "POST",
-                                url: "${createLink(action:'guadarDatosComponentes')}",
-                                data: {
-                                    ml:$("#c_ml").val(),
-                                    datos:$("#txt_varios").val(),
-                                    proyecto:$("#proyecto").val(),
-                                    id:$("#c_iden").val(),
-                                    indicador:$("#c_indi").val(),
-                                    tipo:$("#c_tipo").val()
+                                type    : "POST",
+                                url     : "${createLink(action:'guadarDatosComponentes')}",
+                                data    : {
+                                    ml        : $("#c_ml").val(),
+                                    datos     : $("#txt_varios").val(),
+                                    proyecto  : $("#proyecto").val(),
+                                    id        : $("#c_iden").val(),
+                                    indicador : $("#c_indi").val(),
+                                    tipo      : $("#c_tipo").val()
                                 },
-                                success: function(msg) {
+                                success : function (msg) {
                                     if (msg != "no") {
                                         if ($("#c_iden").val() == "0" && $("#c_tipo").val() * 1 == 2) {
                                             var d1 = $("<div>")
@@ -508,7 +504,7 @@
                                             d5.html("Agregar")
                                             d2.append(d3)
                                             d4.append(d5)
-                                            d5.bind("click", function() {
+                                            d5.bind("click", function () {
                                                 if ($("#edicion").val() == "1") {
                                                     $("#txt_varios").val("")
                                                     $("#c_ml").val($(this).attr("ml"))
@@ -528,7 +524,7 @@
                                                     $("#dlg_combo").dialog("open")
                                                 }
                                             });
-                                            d3.bind("click", function() {
+                                            d3.bind("click", function () {
                                                 if ($("#edicion").val() == "1") {
                                                     $("#txt_varios").val("")
                                                     $("#c_ml").val($(this).attr("ml"))
@@ -564,9 +560,8 @@
                                             d1.addClass("texto agregado ui-corner-all md fin varios nuevo edicion")
                                             d1.attr("pref", "mc_").attr("div", $("#c_div").val()).attr("ml", $("#c_ml").val()).attr("tipo", "3").attr("indicador", $("#c_indi").val()).attr("identificador", "0")
 
-
                                             $("#" + $("#c_div").val()).parent().append(d1)
-                                            d1.bind("click", function() {
+                                            d1.bind("click", function () {
                                                 if ($("#edicion").val() == "1") {
                                                     $("#txt_varios").val("")
                                                     $("#c_ml").val($(this).attr("ml"))
@@ -596,7 +591,7 @@
 
                                             div.html("Agregar")
                                             $("#" + $("#c_div").val()).parent().append(div)
-                                            div.bind("click", function() {
+                                            div.bind("click", function () {
                                                 if ($("#edicion").val() == "1") {
                                                     $("#txt_varios").val("")
                                                     $("#c_ml").val($(this).attr("ml"))
@@ -606,8 +601,7 @@
                                                     $("#c_tipo").val($(this).attr("tipo"))
                                                     if ($(this).attr("tipo") != "3")
                                                         $("#filaCombo").hide()
-                                                    else
-                                                    if ($("#c_iden").val() == "0")
+                                                    else if ($("#c_iden").val() == "0")
                                                         $("#filaCombo").show()
                                                     /* TODO hay un trim aqui que no valdria en ie... cambiar por la funcion */
                                                     if ($("#" + $(this).attr("div")).html())
@@ -653,7 +647,7 @@
                 }
             });
 
-            $("#accordion").accordion({collapsible: true})
+            $("#accordion").accordion({collapsible : true})
         </script>
     </body>
 </html>

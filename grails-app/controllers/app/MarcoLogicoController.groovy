@@ -314,6 +314,7 @@ class MarcoLogicoController extends app.seguridad.Shield {
                 } else {
                     componente = new MarcoLogico([proyecto: proyecto, tipoElemento: TipoElemento.findByDescripcion("Componente"), objeto: params.datos])
                 }
+                componente.numeroComp = params.num
                 componente = kerberosService.saveObject(componente, MarcoLogico, session.perfil, session.usuario, "guadarDatosComponentes", "marcoLogico", session)
                 println " componente " + componente.errors.getErrorCount()
                 if (componente.errors.getErrorCount() != 0) {
