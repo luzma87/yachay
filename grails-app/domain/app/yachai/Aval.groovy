@@ -18,6 +18,7 @@ class Aval {
     String pathAnulacion
     String contrato
     String numero
+    String certificacion
 
     static mapping = {
         table 'aval'
@@ -41,6 +42,7 @@ class Aval {
             contrato column: 'avalcntr'
             numero column: 'avalnmro'
             concepto column: 'avalcpto'
+            certificacion column: 'avalcert'
         }
     }
 
@@ -57,5 +59,6 @@ class Aval {
         contrato(blank: true, nullable: true, size: 1..30)
         numero(blank: true, nullable: true, size: 1..10)
         concepto(blank: true, nullable: true, size: 1..500)
+        certificacion(blank: true, nullable: true, size: 1..50)
     }
 }

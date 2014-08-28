@@ -43,7 +43,8 @@ class AvalesController {
             def aval = Aval.findAllByProceso(proceso)
 
             aval.each {
-                if (it.estado?.codigo == "E01" || it.estado?.codigo == "E02") {
+                //println "aval "+it.estado.descripcion+"  "+it.estado.codigo
+                if (it.estado?.codigo == "E01" || it.estado?.codigo == "E02" || it.estado.codigo=="E05" || it.estado.codigo=="E06" ) {
                     band = false
                 }
             }
@@ -57,7 +58,15 @@ class AvalesController {
         def detalle = []
         proceso = ProcesoAval.get(params.id)
         detalle = ProcesoAsignacion.findAllByProceso(proceso, [sort: "id"])
-        [proceso: proceso, detalle: detalle]
+        def aval = Aval.findAllByProceso(proceso)
+        def band = true
+        aval.each {
+            //println "aval "+it.estado.descripcion+"  "+it.estado.codigo
+            if (it.estado?.codigo == "E01" || it.estado?.codigo == "E02" || it.estado.codigo=="E05" || it.estado.codigo=="E06" ) {
+                band = false
+            }
+        }
+        [proceso: proceso, detalle: detalle,band:band]
     }
 
     def saveProceso = {

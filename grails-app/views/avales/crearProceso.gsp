@@ -63,7 +63,9 @@
                 <input type="text" class="ui-corner-all" name="nombre" id="nombre" style="width: 100%" value="${proceso?.nombre}">
             </div>
             <div class="fieldSvt-small" style="margin-left: 30px;">
-                <a href="#" id="guardar">Guardar</a>
+                <g:if test="${band}">
+                    <a href="#" id="guardar">Guardar</a>
+                </g:if>
             </div>
         </div>
     </g:form>

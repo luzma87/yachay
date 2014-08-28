@@ -48,6 +48,14 @@ class RevisionAvalController {
         [actual: actual]
     }
 
+    def liberarAval ={
+
+        def aval = Aval.get(params.id)
+        def detalle = ProcesoAsignacion.findAllByProceso(aval.proceso)
+        [aval:aval,detalle:detalle]
+
+    }
+
     def historialAvales = {
         // println "historial aval "+params
         def now = new Date()
@@ -282,12 +290,28 @@ class RevisionAvalController {
                 def aval = Aval.get(params.id)
                 /*Todo aqui validar quien puede*/
                 band = true
+                def datos = params.datos.split("&")
+                datos.each {
+                    if(it!=""){
+                        def data = it.split(";")
+                        println "data "+data
+                        if(data.size()==2){
+                            def det = ProcesoAsignacion.get(data[0])
+                            det.monto=data[1].toDouble()
+                            det.save(flush: true)
+                        }
+                    }
+
+
+                }
                 if (band) {
                     f.transferTo(new File(pathFile))
                     aval.pathLiberacion = fileName
                     aval.liberacion = aval.monto
                     aval.monto = params.monto.toDouble()
                     aval.estado = EstadoAval.findByCodigo("E05")
+                    aval.contrato=params.contrato
+                    aval.certificacion=params.certificacion
                     aval.save(flush: true)
                     flash.message = "Aval " + aval.fechaAprobacion.format("yyyy") + "-CP No." + aval.numero + " Liberado"
                     redirect(action: 'listaAvales', controller: 'revisionAval')

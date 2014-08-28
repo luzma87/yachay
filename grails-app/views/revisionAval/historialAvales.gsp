@@ -77,12 +77,13 @@
 </div>
 <script>
     $(".liberar").button({icons:{ primary:"ui-icon-extlink"},text:false}).click(function(){
-        $("#idLiberar").val($(this).attr("iden"))
-        $("#max").html($(this).attr("max"))
-        $("#monto").val("")
-        $("#contrato").val("")
-        $("#archivo").val("")
-        $("#dlgLiberar").dialog("open")
+//        $("#idLiberar").val($(this).attr("iden"))
+//        $("#max").html($(this).attr("max"))
+//        $("#monto").val("")
+//        $("#contrato").val("")
+//        $("#archivo").val("")
+//        $("#dlgLiberar").dialog("open")
+        location.href="${g.createLink(action: 'liberarAval')}/"+$(this).attr("iden")
     })
     $(".caducar").button({icons:{ primary:"ui-icon-alert"},text:false}).click(function(){
         $("#idCaducar").val($(this).attr("iden"))

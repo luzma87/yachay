@@ -20,8 +20,16 @@
             <td>${asg.asignacion.presupuesto.numero}</td>
             <td style="text-align: right">${asg.asignacion.priorizado}</td>
             <td style="text-align: right" id="monto_${asg.id}">${asg.monto}</td>
-            <td style="text-align: center"><a href="#" class="edit" iden="${asg.id}" asg="${asg.asignacion.id}">Editar</a></td>
-            <td style="text-align: center"><a href="#" class="borrar" iden="${asg.id}" >Borrar</a></td>
+            <td style="text-align: center">
+                <g:if test="${band}">
+                    <a href="#" class="edit" iden="${asg.id}" asg="${asg.asignacion.id}">Editar</a>
+                </g:if>
+            </td>
+            <td style="text-align: center">
+                <g:if test="${band}">
+                    <a href="#" class="borrar" iden="${asg.id}" >Borrar</a>
+                </g:if>
+            </td>
         </tr>
     </g:each>
     <tr>
