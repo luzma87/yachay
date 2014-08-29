@@ -105,7 +105,7 @@
 
             <div style="width: 100%; height: 1.5cm;">
                 <div class="numeracion">
-                    Numeración: ?????
+                    Numeración: ${solicitud.unidad?.codigo}-${solicitud.numero}
                 </div>
             </div>
 

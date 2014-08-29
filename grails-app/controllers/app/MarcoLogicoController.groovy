@@ -35,8 +35,8 @@ class MarcoLogicoController extends app.seguridad.Shield {
         println "indicador "
         def indicador = new Indicador([marcoLogico: fin, descripcion: params.indicador, cantidad: 0])
         indicador.save(flush: true)
-        println "errores " + indicador.errors
-        println "medios " + params.medios.class
+        //println "errores " + indicador.errors
+       // println "medios " + params.medios.class
         if (params.medios.class != java.lang.String) {
             params.medios.each {
                 def medio = new MedioVerificacion([indicador: indicador, descripcion: it])

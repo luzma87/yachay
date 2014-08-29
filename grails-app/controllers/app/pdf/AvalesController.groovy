@@ -6,7 +6,9 @@ import app.MarcoLogico
 import app.Proceso
 import app.Proyecto
 import app.TipoElemento
+import app.Unidad
 import app.UnidadEjecutora
+import app.alertas.Alerta
 import app.seguridad.Usro
 import app.yachai.Aval
 import app.yachai.EstadoAval
@@ -169,14 +171,23 @@ class AvalesController {
     def solicitarAval = {
         def unidad = UnidadEjecutora.get(session.unidad.id)
         def personasFirma = Usro.findAllByUnidad(unidad)
-
+        def numero = null
+        numero=SolicitudAval.findAllByUnidad(session.usuario.unidad,[sort: "numero", order: "desc", max: 1])
+        if(numero.size()>0){
+            numero=numero?.pop()?.numero
+        }
+        if(!numero){
+            numero=1
+        }else{
+            numero=numero+1
+        }
         def proceso = ProcesoAval.get(params.id)
         def now = new Date()
         if (proceso.fechaInicio < now) {
             response.sendError(403)
         }
-        def estados = [0, 1]
-        def avales = Aval.findAllByProcesoAndEstadoInList(proceso, [EstadoAval.findByCodigo("E02"), EstadoAval.findByCodigo("E05")])
+
+        def avales = Aval.findAllByProcesoAndEstadoInList(proceso, [EstadoAval.findByCodigo("E02"), EstadoAval.findByCodigo("E05"), EstadoAval.findByCodigo("E06")])
         def solicitudes = SolicitudAval.findAllByProcesoAndEstado(proceso, EstadoAval.findByCodigo("E01"))
         def disponible = proceso.getMonto()
         avales.each {
@@ -185,7 +196,7 @@ class AvalesController {
         solicitudes.each {
             disponible -= it.monto
         }
-        [proceso: proceso, disponible: disponible, personas: personasFirma]
+        [proceso: proceso, disponible: disponible, personas: personasFirma,numero:numero]
 
     }
     def solicitarAnulacion = {
@@ -250,17 +261,33 @@ class AvalesController {
                 if (params.aval)
                     sol.aval = Aval.get(params.aval)
                 sol.usuario = session.usuario
+                sol.numero=params.numero
                 sol.monto = monto
                 sol.concepto = concepto
                 sol.memo = momorando
                 sol.path = nombre
                 sol.firma1 = Usro.get(params.firma1)
+                sol.unidad=session.usuario.unidad
                 if (params.tipo)
                     sol.tipo = params.tipo
                 sol.fecha = new Date();
                 sol.estado = EstadoAval.findByCodigo("E01")
                 if (!sol.save(flush: true)) {
                     println "eror save " + sol.errors
+                }
+                def usuarios = Usro.findAllByUnidad(UnidadEjecutora.findByCodigo("DPI"))
+                usuarios.each { usu ->
+                    def alerta = new Alerta()
+                    alerta.from = session.usuario
+                    alerta.usro = usu
+                    alerta.fec_envio = new Date()
+                    alerta.mensaje = "Nueva solicitud de aval"
+                    alerta.controlador = "revisionAval"
+                    alerta.accion = "pendientes"
+                    alerta.id_remoto = sol.id
+                    if (!alerta.save(flush: true)) {
+                        println "error alerta: " + alerta.errors
+                    }
                 }
                 flash.message = "Solicitud enviada"
                 redirect(action: 'avalesProceso', params: [id: params.proceso])

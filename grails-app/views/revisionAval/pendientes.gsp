@@ -33,9 +33,11 @@
     </ul>
     <div id="solicitudes" style="width: 1000px;">
         <g:if test="${solicitudes.size()>0}">
-            <table style="width: 95%;margin-top: 10px" >
+            <table style="width: 100%;margin-top: 10px;font-size: 10px" >
                 <thead>
                 <tr>
+                    <th># Sol.</th>
+                    <th>Unidad</th>
                     <th>Proceso</th>
                     <th>Tipo</th>
                     <th>Concepto</th>
@@ -49,11 +51,13 @@
                 <tbody>
                 <g:each in="${solicitudes}" var="p">
                     <tr>
+                        <td>${p.unidad?.codigo}-${p.numero}</td>
+                        <td>${p.unidad}</td>
                         <td>${p.proceso.nombre}</td>
                         <td class="${(p.tipo=='A')?'E03':'E02'}">${(p.tipo=="A")?'Anulación':'Aprobación'}</td>
                         <td>${p.concepto}</td>
                         <td style="text-align: right"> <g:formatNumber number="${p.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber></td>
-                        <td style="">${p.estado?.descripcion}</td>
+                        <td style="text-align: center" class="${p.estado?.codigo}">${p.estado?.descripcion}</td>
                         <td style="text-align: center">
                             <a href="#" class="btn descRespaldo" iden="${p.id}">Ver</a>
                         </td>
@@ -64,10 +68,10 @@
                         </td>
                         <td style="text-align: center">
                             <g:if test="${p.tipo!='A'}">
-                                <a href="${g.createLink(action: 'aprobarAval',id: p.id)}" class="aprobar btn" >Aprobar</a>
+                                <a href="${g.createLink(action: 'aprobarAval',id: p.id)}" class="aprobar btn" style="margin: 5px" >Aprobar</a>
                             </g:if>
                             <g:else>
-                                <a href="${g.createLink(action: 'aprobarAnulacion',id: p.id)}" class="aprobarAnulacion btn" >Aprobar</a>
+                                <a href="${g.createLink(action: 'aprobarAnulacion',id: p.id)}" class="aprobarAnulacion btn"   style="margin: 5px">Aprobar</a>
                             </g:else>
                             <a href="#" class="negar btn"  iden="${p.id}">Negar</a>
                         </td>

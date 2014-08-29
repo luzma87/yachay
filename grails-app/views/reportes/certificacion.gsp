@@ -122,6 +122,10 @@
                                 <td>${pa.asignacion.marcoLogico.numero} (${anio})</td>
                             </tr>
                             <tr>
+                                <td style="font-weight: bold">Código</td>
+                                <td>${pa.proceso.proyecto.codigoEsigef} ${pa.asignacion.marcoLogico.marcoLogico.numero} ${pa.asignacion.presupuesto.numero}</td>
+                            </tr>
+                            <tr>
                                 <td style="font-weight: bold">Actividad</td>
                                 <td>${pa.asignacion.marcoLogico}</td>
                             </tr>

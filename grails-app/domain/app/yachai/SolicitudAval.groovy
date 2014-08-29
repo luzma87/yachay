@@ -1,10 +1,12 @@
 package app.yachai
 
+import app.UnidadEjecutora
 import app.seguridad.Usro
 
 class SolicitudAval {
 
     ProcesoAval proceso
+    UnidadEjecutora unidad
     Usro usuario
     Aval aval
     EstadoAval estado
@@ -49,6 +51,7 @@ class SolicitudAval {
             firma1 column: 'usro_id1'
             firma2 column: 'usro_id2'
             firma3 column: 'usro_id3'
+            unidad column: 'unej__id'
         }
     }
 
@@ -67,5 +70,6 @@ class SolicitudAval {
         firma1(blank: true, nullable: true)
         firma2(blank: true, nullable: true)
         firma3(blank: true, nullable: true)
+        unidad(nullable: true,blank:true)
     }
 }
