@@ -23,6 +23,7 @@ class ReporteSolicitudController {
             map.nombreProceso = sol.nombreProceso
             map.plazoEjecucion = sol.plazoEjecucion
             map.aprobacion = Aprobacion.findBySolicitud(sol)?.tipoAprobacion
+            map.incluirReunion = sol.incluirReunion
             list += map
         }
 

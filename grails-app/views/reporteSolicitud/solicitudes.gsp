@@ -108,6 +108,7 @@
                             <th>Nombre del proceso</th>
                             <th>Plazo de ejecución</th>
                             <th>Estado</th>
+                            <th>Reunión</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -124,6 +125,9 @@
                                 <td><g:formatNumber number="${solicitudInstance.plazoEjecucion}" maxFractionDigits="0"/> días</td>
                                 <td>
                                     ${solicitudInstance.aprobacion?.descripcion}
+                                </td>
+                                <td>
+                                    ${solicitudInstance.incluirReunion == "S" ? "Sí" : ""}
                                 </td>
                             </tr>
                         </g:each>
