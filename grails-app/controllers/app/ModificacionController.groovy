@@ -614,33 +614,114 @@ class ModificacionController extends app.seguridad.Shield {
 
 
     }
+    def guardarReasignacionYachay = {
+        println "reasignacion " + params
+        def f = request.getFile('archivo')
+        def path = servletContext.getRealPath("/") + "modificacionesPoa/"
+        new File(path).mkdirs()
+
+        if (f && !f.empty) {
+            def fileName = f.getOriginalFilename()
+            def ext
+
+            def parts = fileName.split("\\.")
+            fileName = ""
+            parts.eachWithIndex { obj, i ->
+                if (i < parts.size() - 1) {
+                    fileName += obj
+                } else {
+                    ext = obj
+                }
+            }
+            def reps = [
+                    "a": "[àáâãäåæ]",
+                    "e": "[èéêë]",
+                    "i": "[ìíîï]",
+                    "o": "[òóôõöø]",
+                    "u": "[ùúûü]",
+
+                    "A": "[ÀÁÂÃÄÅÆ]",
+                    "E": "[ÈÉÊË]",
+                    "I": "[ÌÍÎÏ]",
+                    "O": "[ÒÓÔÕÖØ]",
+                    "U": "[ÙÚÛÜ]",
+
+                    "n": "[ñ]",
+                    "c": "[ç]",
+
+                    "N": "[Ñ]",
+                    "C": "[Ç]",
+
+                    "": "[\\!@\\\$%\\^&*()='\"\\/<>:;\\.,\\?]",
+
+                    "_": "[\\s]"
+            ]
+
+            reps.each { k, v ->
+                fileName = (fileName.trim()).replaceAll(v, k)
+            }
+
+            fileName = fileName + "_" + new Date().format("hh_mm_ss") + "." + "pdf"
+
+            def pathFile = path + File.separatorChar + fileName
+            def src = new File(pathFile)
+            def msn
+
+            if (src.exists()) {
+                msn = "Ya existe un archivo con ese nombre. Por favor cámbielo."
+                if (params.tipoPag)
+                    redirect(action: 'poaInversionesMod', params: [msn: msn, id: params.unidad])
+                else
+                    redirect(action: 'poaCorrientesMod', params: [msn: msn, id: params.unidad])
+
+
+            } else {
+
+                if (params.destino != "") {
+                    println "si destino " + params.destino
+                    def origen = Asignacion.get(params.origen)
+                    def destino = Asignacion.get(params.destino)
+                    def mod = new ModificacionAsignacion()
+                    mod.desde = origen
+                    mod.recibe = destino
+                    mod.valor = params.monto.toDouble()
+                    mod.fecha = new Date()
+                    f.transferTo(new File(pathFile))
+                    mod.pdf = fileName
+                    origen.priorizado = origen.priorizado - params.monto.toDouble()
+                    destino.priorizado = destino.priorizado + params.monto.toDouble()
+
+                    origen = kerberosService.saveObject(origen, Asignacion, session.perfil, session.usuario, "guardarReasignacion", "modificacion", session)
+                    destino = kerberosService.saveObject(destino, Asignacion, session.perfil, session.usuario, "guardarReasignacion", "modificacion", session)
+                    //guardarPras(origen)
+                    //guardarPras(destino)
+                    mod = kerberosService.saveObject(mod, Asignacion, session.perfil, session.usuario, "guardarReasignacion", "modificacion", session)
+
+                    msn = "Modificación procesada"
+
+                    redirect(action: 'poaInversionesMod', params: [msn: msn, id: params.proyecto])
+
+
+
+                }
+
+
+            }
+        }
+
+
+    }
 
 
     def poaInversionesMod = {
 
         def band = false
-        def unidad = UnidadEjecutora.get(params.id)
-        def usuario = Usro.get(session.usuario.id)
+        def unidad = UnidadEjecutora.findByPadreIsNull()
+        def proyecto = Proyecto.get(params.id)
+        def marcos = MarcoLogico.findAllByProyectoAndTipoElemento(proyecto,TipoElemento.get(3))
+        //println "marcos "+marcos
+        band = true
 
-        if (usuario.id.toInteger() == 3 || usuario.unidad.id == 85) {
-            band = true
-        } else {
-
-            def resp = ResponsableProyecto.findAllByUnidadAndTipo(unidad, TipoResponsable.findByCodigo("I"))
-            // println "resp "+resp
-            def r = []
-            def ahora = new Date()
-            resp.each {
-                if (it.desde.before(ahora) && it.hasta.after(ahora))
-                    r.add(it)
-            }
-            r.each {rp ->
-                //println "r -> "+rp
-                if (rp.responsable.id.toInteger() == session.usuario.id.toInteger())
-                    band = true
-
-            }
-        }
 
         if (!band) {
             response.sendError(403)
@@ -668,8 +749,7 @@ class ModificacionController extends app.seguridad.Shield {
             def asignaciones = c.list {
                 and {
                     eq("anio", actual)
-                    eq("unidad", unidad)
-                    isNotNull("marcoLogico")
+                    inList("marcoLogico",marcos)
                 }
                 order("id", "asc")
             }
@@ -688,7 +768,7 @@ class ModificacionController extends app.seguridad.Shield {
 //            }
             def total = 0
             asignaciones.each { asg ->
-                total += ((asg.redistribucion == 0) ? asg.planificado.toDouble() : asg.redistribucion.toDouble())
+                total += asg.priorizado
             }
             def maxUnidad
             def max
@@ -699,7 +779,7 @@ class ModificacionController extends app.seguridad.Shield {
                 maxUnidad = 0
             }
 
-            [unidad: unidad, actual: actual, asignaciones: asignaciones, fuentes: fuentes,  totalUnidad: total, maxUnidad: maxUnidad, max: max, msn: params.msn]
+            [unidad: unidad, actual: actual, asignaciones: asignaciones, fuentes: fuentes,  totalUnidad: total, maxUnidad: maxUnidad, max: max, msn: params.msn,proyecto: proyecto]
         }
 
 

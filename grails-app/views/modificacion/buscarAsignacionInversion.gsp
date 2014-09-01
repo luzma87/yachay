@@ -2,8 +2,8 @@
 <g:if test="${res}">
     <table style="width: 850px;margin-bottom: 10px;font-size: 10px">
         <thead>
+        <th>Proyecto</th>
         <th style="width: 80px" class="ui-state-default">Unidad</th>
-        <th style="width: 200px" class="ui-state-default">Programa</th>
         <th class="ui-state-default">Actividad</th>
         <th style="width: 60px;" class="ui-state-default">Partida</th>
         <th style="width: 240px" class="ui-state-default">Desc. Presupuestaria</th>
@@ -20,9 +20,7 @@
                     ${asg.unidad}
                 </td>
 
-                <td class="programa ">
-                    ${asg.marcoLogico.proyecto.programa.descripcion}
-                </td>
+
 
                 <td class="actividad">
                     ${asg.marcoLogico}
@@ -41,7 +39,7 @@
                 </td>
 
                 <td class="valor" style="text-align: right">
-                    <g:formatNumber number="${(asg.redistribucion==0)?asg.planificado.toFloat():asg.redistribucion.toFloat()}"
+                    <g:formatNumber number="${asg.priorizado}"
                                     format="###,##0"
                                     minFractionDigits="2" maxFractionDigits="2"/>
                 </td>
@@ -49,7 +47,7 @@
                 <td style="text-align: center">
 
                     %{--<a href="#" class="btn origen ajax" iden="${asg.id}" icono="ico_001" clase="act_" band="0" tr="#det_${i}" prog="${asg.programa}" prsp_id="${asg.presupuesto.id}" prsp_num="${asg.presupuesto.numero}" desc="${asg.presupuesto.descripcion}" fuente="${asg.fuente}" valor="${(asg.redistribucion == 0) ? asg.planificado.toFloat().round(2) : asg.redistribucion.toFloat().round(2)}" actv="${asg.actividad}">Establecer como asignación de origen</a>--}%
-                    <a href="#" class="btn destino ajax" iden="${asg.id}" icono="ico_001" clase="act_" band="0" tr="#det_${i}" prog="${asg.marcoLogico.proyecto.programa.descripcion}" prsp_id="${asg.presupuesto.id}" prsp_num="${asg.presupuesto.numero}" desc="${asg.presupuesto.descripcion}" fuente="${asg.fuente}" valor="${(asg.redistribucion == 0) ? asg.planificado.toFloat().round(2) : asg.redistribucion.toFloat().round(2)}" actv="${asg.marcoLogico}">Establecer como asignación de destino</a>
+                    <a href="#" class="btn destino ajax" iden="${asg.id}" icono="ico_001" clase="act_" band="0" tr="#det_${i}"  prsp_id="${asg.presupuesto.id}" prsp_num="${asg.presupuesto.numero}" desc="${asg.presupuesto.descripcion}" fuente="${asg.fuente}" valor="${asg.priorizado}" actv="${asg.marcoLogico}" proy="${asg.marcoLogico.proyecto}">Establecer como asignación de destino</a>
                 </td>
             </tr>
 
@@ -59,7 +57,7 @@
     <script type="text/javascript">
         $(".origen").button({icons:{ primary:"ui-icon-arrowrefresh-1-n"},text:false}).click(function(){
             if($("#id_destino").val()!=$(this).attr("iden")){
-                $(".programa_org").html($(this).attr("prog"))
+                $(".proyecto_org").html($(this).attr("proy"))
                 $(".fuente_org").html($(this).attr("fuente"))
                 $(".valor_org").html(number_format($(this).attr("valor")*1, 2, ",", "."))
                 $(".prsp_org").html($(this).attr("prsp_num"))

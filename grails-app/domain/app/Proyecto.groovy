@@ -26,6 +26,7 @@ class Proyecto implements Serializable {
     Integer informacionDias = 0
     String subPrograma
     String aprobado
+    String aprobadoPoa /**/
 
     ObjetivoEstrategicoProyecto objetivoEstrategico
 
@@ -75,6 +76,7 @@ class Proyecto implements Serializable {
             informacionDias column: 'proyifdd'
             subPrograma column: 'proysbpr'
             aprobado column: 'proyapbd'
+            aprobadoPoa column: 'proyappa'
 
             objetivoEstrategico column: 'obes__id'
             ejeProgramatico column: 'ejpg__id'
@@ -115,6 +117,7 @@ class Proyecto implements Serializable {
         informacionDias(blank: true, nullable: true, attributes: [mensaje: 'Periodo de información en días para control de informes que debe enviar el responsable'])
         subPrograma(size: 1..2, blank: true, nullable: true, attributes: [mensaje: 'Subprograma al que pertenece, según el ESIGEF'])
         aprobado(size: 0..1, blank: true, nullable: true, attributes: [mensaje: 'Aprobado o no'])
+        aprobadoPoa(size: 0..1, blank: true, nullable: true, attributes: [mensaje: 'Aprobado poa'])
 
         objetivoEstrategico(blank: true, nullable: true, attributes: [mensaje: 'Objetivo Estratégico'])
         ejeProgramatico(size: 0..1023, blank: true, nullable: true, attributes: [mensaje: 'Eje Programático del proyecto'])

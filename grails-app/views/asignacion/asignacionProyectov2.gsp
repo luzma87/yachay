@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="layout" content="main"/>
-    <title>Asignaciones de la unidad ${unidad} del proyecto: ${proyecto}</title>
+    <title>Asignaciones del proyecto: ${proyecto}</title>
 
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}"
           type="text/css"/>
@@ -18,16 +18,26 @@
 
 <body>
 <div style="margin-left: 10px;">
-    %{--<g:if test="${actual.estado!=0}">--}%
-    %{--<g:link class="btn" controller="modificacionProyecto" action="solicitarModificacionUnidad"--}%
-    %{--params="${[unidad:proyecto.unidadEjecutora.id,anio:actual.id]}">Solicitar modificación</g:link>--}%
-    %{--</g:if>--}%
+%{--<g:if test="${actual.estado!=0}">--}%
+%{--<g:link class="btn" controller="modificacionProyecto" action="solicitarModificacionUnidad"--}%
+%{--params="${[unidad:proyecto.unidadEjecutora.id,anio:actual.id]}">Solicitar modificación</g:link>--}%
+%{--</g:if>--}%
     <g:link class="btn" controller="asignacion" action="programacionAsignacionesInversion" id="${proyecto.id}">Programación</g:link>
-    <g:link class="btn" controller="reportes" action="poaInversionesReporteWeb" id="${proyecto.unidadEjecutora.id}" target="_blank">Reporte</g:link>
-    <g:link class="btn" controller="cronograma" action="verCronograma" id="${proyecto.id}">Cronograma</g:link>
-    <g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades</g:link>
+%{--<g:link class="btn" controller="reportes" action="poaInversionesReporteWeb" id="${proyecto.unidadEjecutora.id}" target="_blank">Reporte</g:link>--}%
+%{--<g:link class="btn" controller="cronograma" action="verCronograma" id="${proyecto.id}">Cronograma</g:link>--}%
+%{--<g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades</g:link>--}%
     <g:link class="btn" controller="asignacion" action="agregarAsignacionInv" id="${proyecto.id}">Agregar asignaciones</g:link>
-    &nbsp;&nbsp;&nbsp;<b>Año:</b><g:select from="${app.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
+    <g:if test="${actual.estado==1}">
+        <g:if test="${proyecto.aprobadoPoa=='S'}">
+            <g:link class="btn" controller="modificacion" action="poaInversionesMod" id="${proyecto.id}">Modificaciones</g:link>
+        </g:if>
+    </g:if>
+    <g:if test="${actual.estado==1}">
+        <g:if test="${proyecto.aprobadoPoa!='S'}">
+            <a href="#" id="aprobPrio">Aprobar priorización</a>
+        </g:if>
+    </g:if>
+&nbsp;&nbsp;&nbsp;<b>Año:</b><g:select from="${app.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
 </div>
 <fieldset class="ui-corner-all" style="width: 98%;margin-top: 40px;">
     <legend>Asignaciones para el año ${actual}</legend>
@@ -83,12 +93,22 @@
                                     maxFractionDigits="2"/>
                 </td>
                 <g:if test="${actual.estado==1}">
+                    <g:if test="${proyecto.aprobadoPoa!='S'}">
+                        <td class="valor" style="text-align: right">
+                            <div style="width: 150px">
+                                <input type="text" style="width: 100px;text-align: right;display: inline-block" id="prio_${asg.id}" value="${asg.priorizado}">
+                                <a href="#" style="width: 30px;display: inline-block" class="savePrio" iden="${asg.id}">Guardar</a>
+                            </div>
+                        </td>
+                    </g:if><g:else>
                     <td class="valor" style="text-align: right">
                         <div style="width: 150px">
-                            <input type="text" style="width: 100px;text-align: right;display: inline-block" id="prio_${asg.id}" value="${asg.priorizado}">
-                            <a href="#" style="width: 30px;display: inline-block" class="savePrio" iden="${asg.id}">Guardar</a>
+                            <g:formatNumber number="${asg.priorizado}" format="###,##0" minFractionDigits="2"
+                                            maxFractionDigits="2"/>
+
                         </div>
                     </td>
+                </g:else>
                 </g:if>
                 <td class="agr">
                     <g:if test="${actual.estado==0}">
@@ -175,6 +195,23 @@
     Procesando
 </div>
 <script type="text/javascript">
+    $("#aprobPrio").button().click(function(){
+        if(confirm("Esta seguro?")){
+            $.ajax({
+                type:"POST",
+                url:"${createLink(action:'aprobarPrio', controller: 'asignacion')}",
+                data:"id=${proyecto.id}",
+                success:function (msg) {
+                    if(msg=="ok"){
+
+                        location.reload(true)
+                    }
+
+                }
+            });
+        }
+
+    });
     $(".btn_arbol").button({icons:{ primary:"ui-icon-bullet"}})
     $(".btn").button()
     $(".back").button("option", "icons", {primary:'ui-icon-arrowreturnthick-1-w'});

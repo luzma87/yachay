@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="layout" content="main"/>
-    <title>Modificaciones al PAPP de la unidad: ${unidad}</title>
+    <title>Modificaciones al PAPP del proyecto: ${proyecto}</title>
 
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}"
           type="text/css"/>
@@ -26,14 +26,14 @@
     </div>
 </g:if>
 <div style="margin-left: 10px;">
-    <g:if test="${actual.estado!=0}">
-        <g:link class="btn" controller="modificacionProyecto" action="solicitarModificacionUnidad" params="${[unidad:unidad.id,anio:actual.id]}">Solicitar modificación</g:link>
-    </g:if>
-    <g:link class="btn" controller="modificacion" action="programacionAsignacionesMod" id="${unidad.id}">Programación</g:link>
+    %{--<g:if test="${actual.estado!=0}">--}%
+        %{--<g:link class="btn" controller="modificacionProyecto" action="solicitarModificacionUnidad" params="${[unidad:unidad.id,anio:actual.id]}">Solicitar modificación</g:link>--}%
+    %{--</g:if>--}%
+    %{--<g:link class="btn" controller="modificacion" action="programacionAsignacionesMod" id="${unidad.id}">Programación</g:link>--}%
     %{--<a href="${createLink(controller: 'modificacion', action: 'poaCorrientesMod')}?id=${unidad.id}&anio=${actual.id}&todo=1" class="btn">Ver todas</a>--}%
-    <g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades ejecutoras</g:link>
-    <g:link class="btn" controller="modificacion" action="poaInversionesMod" id="${unidad.id}">Resetear</g:link>
-    <g:link class="btn" controller="modificacion" action="verModificacionesPoa" params="[id:unidad.id,anio:actual.id]">Ver modificaciones</g:link>
+    %{--<g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades ejecutoras</g:link>--}%
+    <g:link class="btn" controller="modificacion" action="poaInversionesMod" id="${proyecto.id}">Resetear</g:link>
+    %{--<g:link class="btn" controller="modificacion" action="verModificacionesPoa" params="[id:unidad.id,anio:actual.id]">Ver modificaciones</g:link>--}%
     <div style="margin-top: 15px;">
         <b>Año:</b>
         <g:select from="${app.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
@@ -48,7 +48,7 @@
     </legend>
     <table style="width: 1000px;margin-bottom: 10px;">
         <thead>
-        <th style="width: 280px">Programa</th>
+        <th style="width: 280px">Proyecto</th>
         <th>Actividad</th>
         <th style="width: 60px;">Partida</th>
         <th style="width: 240px">Desc. Presupuestaria</th>
@@ -60,7 +60,7 @@
         <tbody>
 
         <tr class="odd" id="tr_origen">
-            <td class="programa_org">
+            <td class="proyecto_org">
 
             </td>
 
@@ -96,7 +96,7 @@
     </legend>
     <table style="width: 1000px;margin-bottom: 10px;">
         <thead>
-        <th style="width: 280px">Programa</th>
+        <th style="width: 280px">Proyecto</th>
         <th>Actividad</th>
         <th style="width: 60px;">Partida</th>
         <th style="width: 240px">Desc. Presupuestaria</th>
@@ -108,7 +108,7 @@
         <tbody>
 
         <tr class="odd" id="tr_dest">
-            <td class="programa_dest" id="">
+            <td class="proyecto_dest" id="">
 
             </td>
 
@@ -149,7 +149,8 @@
     <g:set var="total" value="0"></g:set>
     <table style="width: 1000px;margin-bottom: 10px;">
         <thead>
-        <th style="width: 280px">Programa</th>
+        <th >Proyecto</th>
+        <th >Componente</th>
         <th>Actividad</th>
         <th style="width: 60px;">Partida</th>
         <th style="width: 240px">Desc. Presupuestaria</th>
@@ -162,11 +163,13 @@
         <g:each in="${asignaciones}" var="asg" status="i">
             <tr class="${(i % 2) == 0 ? 'odd' : 'even'}" id="det_${i}">
                 <td class="programa">
-                    ${asg.marcoLogico?.proyecto?.programa?.descripcion}
+                    ${asg.marcoLogico?.proyecto}
                 </td>
-
                 <td class="actividad">
-                    ${asg.marcoLogico}
+                    ${asg.marcoLogico.marcoLogico.numeroComp} - ${asg.marcoLogico.marcoLogico}
+                </td>
+                <td class="actividad">
+                   ${asg.marcoLogico.numero} - ${asg.marcoLogico}
                 </td>
 
                 <td class="prsp" style="text-align: center">
@@ -182,18 +185,18 @@
                 </td>
 
                 <td class="valor" style="text-align: right">
-                    <g:formatNumber number="${(asg.redistribucion==0)?asg.planificado.toFloat():asg.redistribucion.toFloat()}"
+                    <g:formatNumber number="${asg.priorizado}"
                                     format="###,##0"
                                     minFractionDigits="2" maxFractionDigits="2"/>
-                    <g:set var="total" value="${total.toDouble()+((asg.redistribucion==0)?asg.planificado.toDouble():asg.redistribucion.toDouble())}"></g:set>
+                    <g:set var="total" value="${total.toDouble()+asg.priorizado}"></g:set>
                 </td>
 
                 <td style="text-align: center">
 
-                    <a href="#" class="btn origen ajax" iden="${asg.id}" icono="ico_001" clase="act_" band="0" tr="#det_${i}" prog="${asg.marcoLogico?.proyecto?.programa?.descripcion}" prsp_id="${asg.presupuesto.id}" prsp_num="${asg.presupuesto.numero}" desc="${asg.presupuesto.descripcion}" fuente="${asg.fuente}" valor="${asg.getValorReal()}" actv="${asg.marcoLogico}">
+                    <a href="#" class="btn origen ajax" iden="${asg.id}" icono="ico_001" clase="act_" band="0" tr="#det_${i}" proy="${asg.marcoLogico?.proyecto}" prsp_id="${asg.presupuesto.id}" prsp_num="${asg.presupuesto.numero}" desc="${asg.presupuesto.descripcion}" fuente="${asg.fuente}" valor="${asg.priorizado}" actv="${asg.marcoLogico}">
                         Reducción
                     </a>
-                    <a href="#" class="btn destino ajax" iden="${asg.id}" icono="ico_001" clase="act_" band="0" tr="#det_${i}" prog="${asg.marcoLogico?.proyecto?.programa?.descripcion}" prsp_id="${asg.presupuesto.id}" prsp_num="${asg.presupuesto.numero}" desc="${asg.presupuesto.descripcion}" fuente="${asg.fuente}" valor="${asg.getValorReal()}" actv="${asg.marcoLogico}">
+                    <a href="#" class="btn destino ajax" iden="${asg.id}" icono="ico_001" clase="act_" band="0" tr="#det_${i}" proy="${asg.marcoLogico?.proyecto}" prsp_id="${asg.presupuesto.id}" prsp_num="${asg.presupuesto.numero}" desc="${asg.presupuesto.descripcion}" fuente="${asg.fuente}" valor="${asg.priorizado}" actv="${asg.marcoLogico}">
                         Incremento
                     </a>
                 </td>
@@ -244,11 +247,11 @@
 
 
 <div id="modificar_dlg">
-    <g:form action="guardarReasignacion" class="frm_modpoa" enctype="multipart/form-data">
+    <g:form action="guardarReasignacionYachay" class="frm_modpoa" enctype="multipart/form-data">
         <input type="hidden" id="h_origen" name="origen">
         <input type="hidden" id="h_destino" name="destino">
         <input type="hidden" name="tipoPag" value="inv">
-        <input type="hidden" id="unidad" name="unidad" value="${unidad.id}">
+        <input type="hidden" id="proyecto" name="proyecto" value="${proyecto.id}">
         <div style="height: 40px">
             <div style="width: 170px;height: 35px;float: left"><b>Monto de la reasignación:</b></div> <input type="text" style="width: 100px;" id="monto" name="monto"> Máximo:<span id="max"></span>
         </div>
@@ -334,7 +337,7 @@
 
         $(".origen").button({icons:{ primary:"ui-icon-arrowrefresh-1-n"},text:false}).click(function(){
             if($("#id_destino").val()!=$(this).attr("iden")){
-                $(".programa_org").html($(this).attr("prog"))
+                $(".proyecto_org").html($(this).attr("proy"))
                 $(".fuente_org").html($(this).attr("fuente"))
                 $(".valor_org").html(number_format($(this).attr("valor")*1, 2, ",", "."))
                 $(".valor_org").attr("valor",$(this).attr("valor"))
@@ -348,7 +351,7 @@
         });
         $(".destino").button({icons:{ primary:"ui-icon-arrowrefresh-1-s"},text:false}).click(function(){
             if($("#id_origen").val()!=$(this).attr("iden")){
-                $(".programa_dest").html($(this).attr("prog"))
+                $(".proyecto_dest").html($(this).attr("proy"))
                 $(".fuente_dest").html($(this).attr("fuente"))
                 $(".valor_dest").html(number_format($(this).attr("valor")*1, 2, ",", "."))
                 $(".valor_dest").attr("valor",$(this).attr("valor"))

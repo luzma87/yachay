@@ -56,7 +56,7 @@
     <input type="password" id="pass">
 </div>
 <g:if test="${anio.estado==0}">
-    <a href="#" style="margin-top: 15px;" class="boton" id="aprobar">Aprobar</a>
+    <a href="#" style="margin-top: 15px;" class="boton" id="aprobar">Aprobar proforma</a>
 </g:if>
 <g:else>
     Las asignaciones ya han sido aprobadas para este año

@@ -56,6 +56,14 @@ class AsignacionController extends app.seguridad.Shield {
     }
 
 
+    def aprobarPrio = {
+        println "aprob prio "+params
+        def proy=Proyecto.get(params.id)
+        proy.aprobadoPoa="S"
+        proy.save(flush: true)
+        render "ok"
+    }
+
     def asignacionProyectov2 = {
 //        println "params " + params
         def proyecto = Proyecto.get(params.id)
@@ -134,6 +142,31 @@ class AsignacionController extends app.seguridad.Shield {
     }
 
     def programacionAsignacionesInversion = {
+        def actual
+        if (params.anio)
+            actual = Anio.get(params.anio)
+        else
+            actual = Anio.findByAnio(new Date().format("yyyy"))
+        if (!actual)
+            actual = Anio.list([sort: 'anio', order: 'desc']).pop()
+        //def unidad =UnidadEjecutora.get(params.id)
+        if(actual.estado!=0)
+            redirect(action: 'programacionAsignacionesInversionPrio',params: params)
+
+        def proyecto = Proyecto.get(params.id)
+
+        def asgProy = []
+        MarcoLogico.findAll("from MarcoLogico where proyecto = ${proyecto.id} and tipoElemento=3 and estado=0").each {
+            def asig = Asignacion.findAllByMarcoLogicoAndAnio(it, actual, [sort: "id"])
+            if (asig)
+                asgProy += asig
+        }
+        def meses = []
+        12.times {meses.add(it + 1)}
+        [inversiones: asgProy, actual: actual, meses: meses, proyecto: proyecto]
+    }
+    def programacionAsignacionesInversionPrio = {
+        println "progra prio"
         def actual
         if (params.anio)
             actual = Anio.get(params.anio)
