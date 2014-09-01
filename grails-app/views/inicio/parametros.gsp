@@ -53,6 +53,9 @@
                 <div class="item" texto="tpmt">
                     <g:link  controller="tipoMeta" action="list">Tipo de Meta</g:link> para la desagregaci&oacute;n de las metas a modo de unidad de medida.
                 </div><br>
+                <div class="item" texto="obun">
+                    <g:link  controller="objetivoUnidad" action="list">Objetivo de la áreas de gestión</g:link> para el registro de las distintas áres.
+                </div><br>
             </div>
 
 %{--
@@ -150,7 +153,7 @@
 
             <div id="grgf" class="ui-widget-content" style="height: 440px">
                 <div class="item" texto="cgpr">
-                    <g:link  controller="cargoPersonal" action="list">Cargos del Personal de la Unidad Ejecutora</g:link> que se aplican a los responsables del ingreso y seguimiento del proyecto
+                    <g:link  controller="cargoPersonal" action="list">Cargos del Personal de las Unidades</g:link> que se aplican a los responsables del ingreso y seguimiento del proyecto
                 </div><br>
 %{--
                 <div class="item" texto="mess">
@@ -242,6 +245,11 @@
     <h1>Tipo de Meta</h1><br>
     <p>Tipo de meta para la desagregación de las metas a modo de unidad de medida del efecto social.</p>
     <p>Puenden ser valores como: personas de la tercera edad, adolecentes, niños, niñas, etc.</p>
+</div>
+
+<div id="obun" style="display:none">
+    <h1>Objetivos del Área de Gestión</h1><br>
+    <p>Determina el objetivo principal del área de gestión dentro del organigrama institucional.</p>
 </div>
 
 <div id="tpsp" style="display:none">

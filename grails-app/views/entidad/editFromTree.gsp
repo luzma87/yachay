@@ -36,6 +36,8 @@
                 <td style="font-size: larger; font-weight: bolder;">
                     <g:textField name="unidad.orden" value="${unidad?.orden}" style="width:80px;"/>
                 </td>
+            </tr>
+        <tr class="prop">
 
                 <td class="label">Objetivo:</td>
 

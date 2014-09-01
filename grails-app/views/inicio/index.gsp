@@ -63,7 +63,7 @@
                     </div>
                 </div>
             </g:link>
-            <g:link  controller="asignacion" action="asignacionesCorrientesv2"  id="${session.unidad.id}" title="Programación del gasto corriente">
+            <g:link  controller="revisionAval" action="listaAvales"  id="${session.unidad.id}" title="Administración del POA: Avales">
                 <div  class="ui-corner-all item fuera">
                     <div  class="ui-corner-all ui-widget-content item">
                         <div class="imagen">
@@ -74,7 +74,7 @@
                 </div>
             </g:link>
 
-            <g:link  controller="entidad" action="arbol_asg"  id="${session.unidad.id}" title="Plan Anual de Compras - gasto corriente ">
+            <g:link  controller="solicitud" action="list"  id="${session.unidad.id}" title="Solicitudes de contratación">
                 <div  class="ui-corner-all item fuera">
                     <div  class="ui-corner-all ui-widget-content item">
                         <div class="imagen">
@@ -88,7 +88,7 @@
 
             </g:link>
 
-            <g:link  controller="documento" action="list" title="Documentos de los Proyectos">
+            <g:link  controller="documento" action="list" title="Seguimiento">
                 <div  class="ui-corner-all  item fuera">
                     <div  class="ui-corner-all ui-widget-content item">
                         <div class="imagen">
