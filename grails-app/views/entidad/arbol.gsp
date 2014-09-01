@@ -369,7 +369,7 @@
                                         "id"   : id
                                     },
                                     "success" : function (msg) {
-                                        $("#dlg_editar").dialog("option", "title", "Editar Entidad");
+                                        $("#dlg_editar").dialog("option", "title", "Editar Área de Gestión");
                                         $("#dlg_editar").html(msg);
                                         $("#dlg_editar").dialog("open");
                                     }

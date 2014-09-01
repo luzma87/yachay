@@ -45,18 +45,27 @@
                     &nbsp;
                 </td>
 
-                <td style="font-size: larger; font-weight: bolder;">
+                <td colspan="5" style="font-size: larger; font-weight: bolder;">
+%{--
                     <g:select from="${app.ObjetivoUnidad.list([sort: 'orden', order: 'asc'])}"
                               name="unidad.objetivoUnidad.id"
                               value="${unidad.objetivoUnidadId}"
                               optionKey="id" optionValue="descripcion"/>
+--}%
+                    <g:select class="field ui-widget-content ui-corner-all objetivoGobiernoResultado"
+                              name="unidad.objetivoUnidad.id"
+                              style="width: 600px;" from="${app.ObjetivoUnidad.list([sort: 'orden', order: 'asc'])}"
+                              programaPresupuestario
+                              optionKey="id" optionValue="descripcion"
+                              value="${unidad?.objetivoUnidadId}"/>
+
                 </td>
             </tr>
 
 
             <tr class="prop">
                 <td class="label  mandatory" valign="middle">
-                    Área de Gestión
+                   Tipo de Área de Gestión
                 </td>
 
                 <td class="indicator mandatory">
