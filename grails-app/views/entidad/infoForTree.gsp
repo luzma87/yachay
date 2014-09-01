@@ -65,7 +65,7 @@
 
                 <td class="campo">
                     <div style="${maxMis} overflow-y: auto;">
-                        ${unidad?.objetivoUnidad.descripcion}
+                        ${unidad?.objetivoUnidad?.descripcion}
                     </div>
                 </td> <!-- campo -->
             </tr>

@@ -79,9 +79,9 @@
 
             <div id="" class="toolbar ui-widget-header ui-corner-all">
 
-                %{--<g:link class="button list" action="list">--}%
-                %{--Lista de proyectos--}%
-                %{--</g:link>--}%
+                <g:link class="button list" action="list">
+                Lista de proyectos
+                </g:link>
 
                 <!-- FLYOUT MENU PROYECTO -->
                 <a tabindex="0" href="#" id="menuProyecto">

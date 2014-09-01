@@ -27,7 +27,7 @@
 
         <div class="dialog">
 
-            <g:link action="arbol" class="button arbol">Unidades ejecutoras</g:link>
+            <g:link action="arbol" class="button arbol">Unidades</g:link>
 
             <g:if test="${flash.message}">
                 <div style="padding: 0.7em; margin-top: 10px;" class="mensaje ui-state-${flash.estado} ui-corner-all">
