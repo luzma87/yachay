@@ -1,97 +1,17 @@
 <%@ page import="app.PresupuestoUnidad; app.Anio; app.UnidadEjecutora; app.Provincia; app.TipoInstitucion" %>
 
+<style type="text/css">
+input[type="text"], textarea {
+    padding : 4px;
+}
+</style>
+
 <form id="frm_editar" class="frm_editar">
 
     <g:hiddenField name="unidad.id" value="${unidad.id}"/>
 
     <table width="100%">
         <tbody>
-            <tr class="prop">
-                <td class="label">Depende de:</td>
-
-                <td class="indicator">
-                    &nbsp;
-                </td>
-
-                <td colspan="4" style="font-size: larger; font-weight: bolder;">
-                    %{--${padre?.nombre}--}%
-                    %{--<g:hiddenField name="unidad.padre.id" value="${padre?.id}"/>--}%
-
-                    <g:select from="${UnidadEjecutora.list(sort: 'nombre')}" optionKey="id"
-                              optionValue="nombre" class="field ui-widget-content ui-corner-all"
-                              title="${UnidadEjecutora.constraints.padre.attributes.mensaje}"
-                              value="${padre?.id}" name="unidad.padre.id" noSelection="${['null': 'Ninguno']}"
-                              style="width:560px;"/>
-
-                </td>
-            </tr>
-
-            <tr class="prop">
-                <td class="label">Orden:</td>
-
-                <td class="indicator">
-                    &nbsp;
-                </td>
-
-                <td style="font-size: larger; font-weight: bolder;">
-                    <g:textField name="unidad.orden" value="${unidad?.orden}" style="width:80px;"/>
-                </td>
-            </tr>
-        <tr class="prop">
-
-                <td class="label">Objetivo:</td>
-
-                <td class="indicator">
-                    &nbsp;
-                </td>
-
-                <td colspan="5" style="font-size: larger; font-weight: bolder;">
-%{--
-                    <g:select from="${app.ObjetivoUnidad.list([sort: 'orden', order: 'asc'])}"
-                              name="unidad.objetivoUnidad.id"
-                              value="${unidad.objetivoUnidadId}"
-                              optionKey="id" optionValue="descripcion"/>
---}%
-                    <g:select class="field ui-widget-content ui-corner-all objetivoGobiernoResultado"
-                              name="unidad.objetivoUnidad.id"
-                              style="width: 600px;" from="${app.ObjetivoUnidad.list([sort: 'orden', order: 'asc'])}"
-                              programaPresupuestario
-                              optionKey="id" optionValue="descripcion"
-                              value="${unidad?.objetivoUnidadId}"/>
-
-                </td>
-            </tr>
-
-
-            <tr class="prop">
-                <td class="label  mandatory" valign="middle">
-                   Tipo de Área de Gestión
-                </td>
-
-                <td class="indicator mandatory">
-                    <span class="indicator">*</span>
-                </td>
-
-                <td class="mandatory">
-                    <g:select from="${TipoInstitucion.list(sort: 'descripcion')}" optionKey="id"
-                              optionValue="descripcion" class="field ui-widget-content ui-corner-all"
-                              title="${UnidadEjecutora.constraints.tipoInstitucion.attributes.mensaje}"
-                              value="${unidad?.tipoInstitucion?.id}" name="unidad.tipoInstitucion.id"/>
-                </td> <!-- campo -->
-
-                <td class="label">C&oacute;digo</td>
-
-                <td class="indicator">
-                    &nbsp;
-                </td>
-
-                <td>
-                    <g:textField value="${unidad?.codigo}" name="unidad.codigo"
-                                 class="field ui-widget-content ui-corner-all" maxlength="4" style="width: 80px;"
-                                 title="${UnidadEjecutora.constraints.codigo.attributes.mensaje}"/>
-                </td> <!-- campo -->
-            </tr>
-
             <tr class="prop">
                 <td class="label mandatory">Nombre</td>
 
@@ -101,7 +21,7 @@
 
                 <td class="mandatory" colspan="4">
                     <g:textField value="${unidad?.nombre}" name="unidad.nombre"
-                                 class="field required ui-widget-content ui-corner-all" maxlength="127" style="width: 500px;"
+                                 class="field required ui-widget-content ui-corner-all" maxlength="127" style="width: 612px;"
                                  title="${UnidadEjecutora.constraints.nombre.attributes.mensaje}"/>
                 </td> <!-- campo -->
 
@@ -121,17 +41,35 @@
             </tr>
 
             <tr class="prop">
-                <td class="label">Direcci&oacute;n</td>
+                <td class="label">Depende de:</td>
 
                 <td class="indicator">
                     &nbsp;
                 </td>
 
-                <td colspan="4">
-                    <g:textArea cols="75" rows="2" value="${unidad?.direccion}" name="unidad.direccion"
-                                class="field ui-widget-content ui-corner-all" maxlength="127" style="width: 600px;"
-                                title="${UnidadEjecutora.constraints.direccion.attributes.mensaje}"/>
-                </td> <!-- campo -->
+                <td colspan="4" style="font-size: larger; font-weight: bolder;">
+                    %{--${padre?.nombre}--}%
+                    %{--<g:hiddenField name="unidad.padre.id" value="${padre?.id}"/>--}%
+
+                    <g:select from="${UnidadEjecutora.list(sort: 'nombre')}" optionKey="id"
+                              optionValue="nombre" class="field ui-widget-content ui-corner-all select"
+                              title="${UnidadEjecutora.constraints.padre.attributes.mensaje}"
+                              value="${padre?.id}" name="unidad.padre.id" noSelection="${['null': 'Ninguno']}"
+                              style="width:560px;"/>
+
+                </td>
+            </tr>
+
+            <tr class="prop">
+                <td class="label">Orden:</td>
+
+                <td class="indicator">
+                    &nbsp;
+                </td>
+
+                <td style="font-size: larger; font-weight: bolder;">
+                    <g:textField name="unidad.orden" value="${unidad?.orden}" style="width:80px;"/>
+                </td>
             </tr>
 
             <tr class="prop">
@@ -143,8 +81,76 @@
 
                 <td colspan="4">
                     <g:textArea cols="75" rows="2" value="${unidad?.objetivo}" name="unidad.objetivo"
-                                class="field ui-widget-content ui-corner-all" maxlength="1023" style="width: 620px; height: 100px;"
+                                class="field ui-widget-content ui-corner-all" maxlength="1023" style="width: 612px; height: 100px;"
                                 title="${UnidadEjecutora.constraints.objetivo.attributes.mensaje}"/>
+                </td> <!-- campo -->
+            </tr>
+
+            <tr class="prop">
+
+                <td class="label">Objetivo:</td>
+
+                <td class="indicator">
+                    &nbsp;
+                </td>
+
+                <td colspan="5" style="font-size: larger; font-weight: bolder;">
+                    %{--
+                                        <g:select from="${app.ObjetivoUnidad.list([sort: 'orden', order: 'asc'])}"
+                                                  name="unidad.objetivoUnidad.id"
+                                                  value="${unidad.objetivoUnidadId}"
+                                                  optionKey="id" optionValue="descripcion"/>
+                    --}%
+                    <g:select class="field ui-widget-content ui-corner-all objetivoGobiernoResultado select"
+                              name="unidad.objetivoUnidad.id"
+                              style="width: 600px;" from="${app.ObjetivoUnidad.list([sort: 'orden', order: 'asc'])}"
+                              optionKey="id" optionValue="descripcion"
+                              value="${unidad?.objetivoUnidadId}"/>
+
+                </td>
+            </tr>
+
+
+            <tr class="prop">
+                <td class="label  mandatory" valign="middle">
+                    Tipo de Área de Gestión
+                </td>
+
+                <td class="indicator mandatory">
+                    <span class="indicator">*</span>
+                </td>
+
+                <td class="mandatory">
+                    <g:select from="${TipoInstitucion.list(sort: 'descripcion')}" optionKey="id"
+                              optionValue="descripcion" class="field ui-widget-content ui-corner-all select"
+                              title="${UnidadEjecutora.constraints.tipoInstitucion.attributes.mensaje}"
+                              value="${unidad?.tipoInstitucion?.id}" name="unidad.tipoInstitucion.id"/>
+                </td> <!-- campo -->
+
+                <td class="label">C&oacute;digo</td>
+
+                <td class="indicator">
+                    &nbsp;
+                </td>
+
+                <td>
+                    <g:textField value="${unidad?.codigo}" name="unidad.codigo"
+                                 class="field ui-widget-content ui-corner-all" maxlength="4" style="width: 80px;"
+                                 title="${UnidadEjecutora.constraints.codigo.attributes.mensaje}"/>
+                </td> <!-- campo -->
+            </tr>
+
+            <tr class="prop">
+                <td class="label">Ubicaci&oacute;n</td>
+
+                <td class="indicator">
+                    &nbsp;
+                </td>
+
+                <td colspan="4">
+                    <g:textArea cols="75" rows="2" value="${unidad?.direccion}" name="unidad.direccion"
+                                class="field ui-widget-content ui-corner-all" maxlength="127" style="width: 612px;"
+                                title="${UnidadEjecutora.constraints.direccion.attributes.mensaje}"/>
                 </td> <!-- campo -->
             </tr>
 
@@ -169,7 +175,7 @@
 
                 <td>
                     <g:textField value="${unidad?.fax}" name="unidad.fax" class="field ui-widget-content ui-corner-all"
-                                 title="${UnidadEjecutora.constraints.fax.attributes.mensaje}" maxlength="63"/>
+                                 title="${UnidadEjecutora.constraints.fax.attributes.mensaje}" style="width:240px;" maxlength="63"/>
                 </td> <!-- campo -->
             </tr>
 
@@ -264,7 +270,7 @@
 
                 <td colspan="4">
                     <g:textArea cols="75" rows="2" value="${unidad?.observaciones}" name="unidad.observaciones"
-                                title="${UnidadEjecutora.constraints.observaciones.attributes.mensaje}" style="width: 600px;"
+                                title="${UnidadEjecutora.constraints.observaciones.attributes.mensaje}" style="width: 612px;"
                                 class="field ui-widget-content ui-corner-all" maxlength="127"/>
                 </td> <!-- campo -->
             </tr>
@@ -275,6 +281,11 @@
 
 <script type="text/javascript">
     $(function () {
+
+//        $(".select").selectmenu({width : 150});
+        $("#unidad\\.padre\\.id").selectmenu({width : 620});
+        $("#unidad\\.objetivoUnidad\\.id").selectmenu({width : 620});
+
         /******************* DATEPICKERS ***********************************/
         $('#fechaInicio').datepicker({
             changeMonth : true,

@@ -1,6 +1,7 @@
 package app
 
 import app.seguridad.Usro
+import app.yachai.DetalleMontoSolicitud
 
 class Solicitud {
 
@@ -39,6 +40,8 @@ class Solicitud {
     String pathRevisionGAF
     String pathRevisionGJ
     String pathRevisionGDP
+
+    static hasMany = [detallesMonto: DetalleMontoSolicitud]
 
     static auditable = [ignore: []]
     static mapping = {

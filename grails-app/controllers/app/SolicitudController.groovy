@@ -5,6 +5,7 @@ import app.seguridad.Prfl
 import app.seguridad.Sesn
 import app.seguridad.Usro
 import app.yachai.Categoria
+import app.yachai.DetalleMontoSolicitud
 import app.yachai.SolicitudAval
 
 import javax.imageio.ImageIO
@@ -506,7 +507,13 @@ class SolicitudController extends app.seguridad.Shield {
         def actividad = MarcoLogico.get(params.id.toLong())
         def anio = Anio.findByAnio(new Date().format("yyyy"))
         def asignaciones = Asignacion.countByMarcoLogicoAndAnio(actividad, anio)
-        render actividad.objeto + "||" + actividad.monto + "||" + asignaciones
+        def days = 0
+        use(groovy.time.TimeCategory) {
+            def duration = actividad.fechaFin - actividad.fechaInicio
+            days = duration.days
+        }
+
+        render actividad.objeto + "||" + actividad.monto + "||" + asignaciones + "||" + days
     }
 
     def newActividad_ajax = {
@@ -517,7 +524,10 @@ class SolicitudController extends app.seguridad.Shield {
 
         def proyecto = Proyecto.get(params.proy.toLong())
         def componente = MarcoLogico.get(params.comp.toLong())
-        def categoria = Categoria.get(params.cat.toLong())
+        def categoria = null
+        if (params.cat.trim() != "") {
+            categoria = Categoria.get(params.cat.toLong())
+        }
         def fechaInicio = new Date().parse("dd-MM-yyyy", params.fechaIni)
         def fechaFin = new Date().parse("dd-MM-yyyy", params.fechaFin)
 
@@ -540,6 +550,39 @@ class SolicitudController extends app.seguridad.Shield {
             println "Error al guardar actividad: " + actividad.errors
         }
         render comboActividades(componente.id, actividad.id, params.width)
+    }
+
+    def detalleMonto = {
+        def solicitud = Solicitud.get(params.id)
+        def anio = new Date().format("yyyy").toInteger()
+        def anios = Anio.findAllByAnioGreaterThanEquals(anio, [sort: "anio"])
+        return [solicitud: solicitud, anios: anios]
+    }
+
+    def addDetalleMonto = {
+        def solicitud = Solicitud.get(params.id)
+        def anio = Anio.get(params.anio)
+        def monto = params.monto.replaceAll("\\.", "")
+        monto = monto.replaceAll(",", ".")
+        monto = monto.toDouble()
+        def detalle = DetalleMontoSolicitud.findAllByAnioAndSolicitud(anio, solicitud)
+        if (detalle.size() == 1) {
+            detalle = detalle.first()
+        } else if (detalle.size() > 1) {
+            println "hay ${detalle.size()} detalles anio: ${anio.anio} solicitud: ${solicitud.id}: " + detalle.id
+            detalle = detalle.first()
+        } else {
+            detalle = new DetalleMontoSolicitud()
+            detalle.solicitud = solicitud
+            detalle.anio = anio
+        }
+        detalle.monto = monto
+        if (detalle.save(flush: true)) {
+            render "OK"
+        } else {
+            println "Error al guardar detalle monto solicitud: " + detalle.errors
+            render "NO_" + renderErrors(bean: detalle)
+        }
     }
 
     def ingreso = {

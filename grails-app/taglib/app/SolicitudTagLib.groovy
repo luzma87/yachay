@@ -207,7 +207,7 @@ class SolicitudTagLib {
                 name = "gaf"
                 title = 'Gerencia Administrativa Financiera'
                 revisado = " (" + (solicitud.revisadoAdministrativaFinanciera ?
-                        'Revisado el ' + solicitud.revisadoAdministrativaFinanciera.format('dd-MM-yyyy') :
+                        'Revisado el ' + solicitud.revisadoAdministrativaFinanciera.format('dd-MM-yyyy HH:mm') :
                         'No revisado') + ")"
                 observaciones = solicitud.observacionesAdministrativaFinanciera
                 checked = (solicitud.revisadoAdministrativaFinanciera ? true : false)
@@ -217,7 +217,7 @@ class SolicitudTagLib {
                 name = "gj"
                 title = 'Gerencia Jurídica'
                 revisado = " (" + (solicitud.revisadoJuridica ?
-                        'Revisado el ' + solicitud.revisadoJuridica.format('dd-MM-yyyy') :
+                        'Revisado el ' + solicitud.revisadoJuridica.format('dd-MM-yyyy HH:mm') :
                         'No revisado') + ")"
                 observaciones = solicitud.observacionesJuridica
                 checked = (solicitud.revisadoJuridica ? true : false)
@@ -227,7 +227,7 @@ class SolicitudTagLib {
                 name = "gdp"
                 title = 'Gerencia de Dirección de Proyectos'
                 revisado = " (" + (solicitud.revisadoDireccionProyectos ?
-                        'Revisado el ' + solicitud.revisadoDireccionProyectos.format('dd-MM-yyyy') :
+                        'Revisado el ' + solicitud.revisadoDireccionProyectos.format('dd-MM-yyyy HH:mm') :
                         'No revisado') + ")"
                 observaciones = solicitud.observacionesDireccionProyectos
                 checked = (solicitud.revisadoDireccionProyectos ? true : false)

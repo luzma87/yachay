@@ -72,11 +72,13 @@ class EntidadController extends app.seguridad.Shield {
     }
 
     String makeBasicTree(tipo, id) {
-//        println tipo + "       " + id
+        println "makeBasicTree(" + tipo + "       " + id + ")"
         String tree = "", clase = "", rel, clUs = ""
         def unej1, usros = [], proys = []
         switch (tipo) {
             case "padre": //cargo las unidades ejecutoras de codigo 1
+                unej1 = UnidadEjecutora.findAllByPadreIsNull([sort: 'orden'])
+                break;
             case "padre_nu":
 //                unej1 = UnidadEjecutora.findAllByTipoInstitucion(TipoInstitucion.findByCodigo(1))
                 unej1 = UnidadEjecutora.findAllByPadreIsNull([sort: 'orden'])
@@ -88,7 +90,7 @@ class EntidadController extends app.seguridad.Shield {
                 break;
             case "unej_nu": //cargo las unidades ejecutoras a partir de un padre
                 def padre = UnidadEjecutora.get(id)
-                unej1 = UnidadEjecutora.findAllByPadre(padre, [sort: 'orden'])
+//                unej1 = UnidadEjecutora.findAllByPadre(padre, [sort: 'orden'])
                 proys = Proyecto.findAllByUnidadEjecutora(padre)
                 break;
         }

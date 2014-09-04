@@ -105,7 +105,7 @@
             <table width="100%" border="0">
                 <g:if test="${solicitud.id}">
                     <tr>
-                        <td colspan="4" style="padding-bottom: 15px; font-size: larger; font-weight: bold;">
+                        <td colspan="6" style="padding-bottom: 15px; font-size: larger; font-weight: bold;">
                             <g:if test="${solicitud.incluirReunion == 'S'}">
                                 Se incluirá en la próxima reunión de aprobación
 
@@ -114,7 +114,12 @@
                             <g:else>
                                 No se incluirá en la próxima reunión de aprobación
 
-                                <a href="#" class="button" id="btnIncluir" data-tipo="S">Incluir</a>
+                                <g:if test="${solicitud.revisadoAdministrativaFinanciera && solicitud.revisadoJuridica}">
+                                    <a href="#" class="button" id="btnIncluir" data-tipo="S">Incluir</a>
+                                </g:if>
+                                <g:else>
+                                    (podrá incluirla después de que sea revisada)
+                                </g:else>
                             </g:else>
                         </td>
                     </tr>
@@ -177,13 +182,22 @@
                     <td class="label">Fecha</td>
                     <td colspan="1">
                         <g:textField class="required datepicker field wide short ui-widget-content ui-corner-all"
-                                     name="fecha" title="Fecha" autocomplete="off" value="${solicitud.fecha?.format('dd-MM-yyyy')}"/>
+                                     name="fecha" title="Fecha" autocomplete="off" value="${solicitud.fecha?.format('dd-MM-yyyy') ?: new Date().format('dd-MM-yyyy')}"/>
                     </td>
 
                     <td class="label">Monto solicitado</td>
                     <td>
-                        <g:textField class="required number2 field wide medium ui-widget-content ui-corner-all"
-                                     name="montoSolicitado" title="Monto solicitado" autocomplete="off" value="${solicitud.montoSolicitado}"/>
+                        <g:if test="${solicitud.id}">
+                            <g:textField class="required number2 field wide medium ui-widget-content ui-corner-all"
+                                         name="montoSolicitado" title="Monto solicitado" autocomplete="off"
+                                         value="${solicitud.montoSolicitado}" readonly="readonly"/>
+                            <a href="#" id="btnMontoDetalle">Detalle</a>
+                        </g:if>
+                        <g:else>
+                            <g:textField class="required number2 field wide medium ui-widget-content ui-corner-all"
+                                         name="montoSolicitado" title="Monto solicitado" autocomplete="off"
+                                         value="${solicitud.montoSolicitado}"/>
+                        </g:else>
                     </td>
 
                     <td class="label">Modalidad de contratación</td>
@@ -288,11 +302,22 @@
                                 Cancelar
                             </g:link>
                         </g:if>
+                        <g:else>
+                            <g:link action="list" class="button">
+                                Cancelar
+                            </g:link>
+                        </g:else>
                         <a href="#" id="btnSave">Guardar</a>
                     </td>
                 </tr>
             </table>
         </g:uploadForm>
+
+
+        <div id="dlgDetalleMonto" title="Detalle anual del monto solicitado">
+            <div id="dlgDetalleMontoContent">
+            </div>
+        </div>
 
         <div id="dlgActividad" title="Crear una Actividad">
             <div id="dlgActividadContent">
@@ -309,7 +334,7 @@
                         <tr>
                             <td class="label">Categoría</td>
                             <td>
-                                <g:select from="${app.yachai.Categoria.list()}" name="nuevaCategoria"
+                                <g:select from="${app.yachai.Categoria.list()}" name="nuevaCategoria" noSelection="['': '- Ninguna -']"
                                           optionKey="id" optionValue="descripcion" class="requiredCmb"/>
                             </td>
                         </tr>
@@ -413,6 +438,7 @@
                             } else {
                                 $("#divPoa").hide();
                             }
+                            $("#plazoEjecucion").val(parts[3]).setMask("integer");
                         }
                     });
                 }
@@ -437,6 +463,28 @@
                 $("#nuevoAporte").val("");
             }
 
+            function dayDiff(d1, d2) {
+                var t2 = d2.getTime();
+                var t1 = d1.getTime();
+
+                return parseInt((t2 - t1) / (24 * 3600 * 1000));
+            }
+
+            function editarMonto() {
+                $.ajax({
+                    type    : "POST",
+                    url     : "${createLink(action:'detalleMonto')}",
+                    data    : {
+                        id        : "${solicitud.id}",
+                        actividad : $("#selActividad").val()
+                    },
+                    success : function (msg) {
+                        $("#dlgDetalleMontoContent").html(msg);
+                        $("#dlgDetalleMonto").dialog("open");
+                    }
+                });
+            }
+
             $(function () {
                 var myForm = $("#frmSolicitud");
                 $(".button").button();
@@ -448,6 +496,21 @@
                     myForm.submit();
                     return false;
                 });
+
+                <g:if test="${solicitud.id}">
+                $("#btnMontoDetalle").button({
+                    icons : {
+                        primary : "ui-icon-folder-open"
+                    },
+                    text  : false
+                }).click(function () {
+                    editarMonto();
+                    return false;
+                });
+                $("#montoSolicitado").click(function () {
+                    editarMonto();
+                });
+                </g:if>
 
                 $("#btnIncluir").click(function () {
                     var txt = "¿Está seguro de querer ";
@@ -477,6 +540,18 @@
                     return false;
                 });
 
+                $("#dlgDetalleMonto").dialog({
+                    modal     : true,
+                    resizable : false,
+                    autoOpen  : false,
+                    width     : 350,
+                    buttons   : {
+                        "Cerrar" : function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+
                 $("#dlgActividad").dialog({
                     modal         : true,
                     resizable     : false,
@@ -495,6 +570,9 @@
                                 var monto = $("#nuevoMonto").val();
                                 var aporte = $("#nuevoAporte").val();
 
+                                var dateIni = $("#fechaInicio").datepicker("getDate");
+                                var dateFin = $("#fechaFin").datepicker("getDate");
+
                                 $(this).dialog("close");
                                 $.ajax({
                                     type    : "POST",
@@ -512,6 +590,8 @@
                                     },
                                     success : function (msg) {
                                         $("#tdActividad").html(msg);
+                                        $("#montoSolicitado").val(monto).setMask('decimal');
+                                        $("#plazoEjecucion").val(dayDiff(dateIni, dateFin));
                                         resetActividadForm();
                                     }
                                 });
@@ -535,8 +615,8 @@
                 $('.datepicker').datepicker({
                     changeMonth : true,
                     changeYear  : true,
-                    dateFormat  : 'dd-mm-yy'
-//                    maxDate     : "+0"
+                    dateFormat  : 'dd-mm-yy',
+                    minDate     : "+0"
                 });
 
                 $("#montoSolicitado").setMask('decimal');
@@ -625,7 +705,8 @@
                 });
                 //fin de la validacion del formulario
 
-            });
+            })
+            ;
         </script>
 
     </body>
