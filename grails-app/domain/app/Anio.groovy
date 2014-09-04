@@ -1,7 +1,7 @@
 package app
 
 class Anio implements Serializable {
-    int anio
+    String anio
     int estado = 0 /* 0 -> no aprobado    1-> aprobadp */
 
     static auditable = [ignore: []]

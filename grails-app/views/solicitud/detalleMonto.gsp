@@ -74,6 +74,7 @@
     }).click(function () {
         var max = $("#spanMax").data("max");
         var val = $("#txtMonto").val();
+        val = val.replace(new RegExp("\\.", 'g'), replace);
         console.log(max, val);
         return false;
     });

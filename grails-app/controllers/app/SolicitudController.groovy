@@ -555,7 +555,8 @@ class SolicitudController extends app.seguridad.Shield {
     def detalleMonto = {
         def solicitud = Solicitud.get(params.id)
         def anio = new Date().format("yyyy").toInteger()
-        def anios = Anio.findAllByAnioGreaterThanEquals(anio, [sort: "anio"])
+//        def anios = Anio.findAllByAnioGreaterThanEquals(anio, [sort: "anio"])
+
         return [solicitud: solicitud, anios: anios]
     }
 
