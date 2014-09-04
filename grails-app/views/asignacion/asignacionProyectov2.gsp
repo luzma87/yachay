@@ -22,22 +22,25 @@
 %{--<g:link class="btn" controller="modificacionProyecto" action="solicitarModificacionUnidad"--}%
 %{--params="${[unidad:proyecto.unidadEjecutora.id,anio:actual.id]}">Solicitar modificación</g:link>--}%
 %{--</g:if>--}%
-    <g:link class="btn" controller="asignacion" action="programacionAsignacionesInversion" id="${proyecto.id}">Programación</g:link>
+    <g:link class="btn" controller="asignacion" action="programacionAsignacionesInversion" id="${proyecto?.id}">Programación</g:link>
 %{--<g:link class="btn" controller="reportes" action="poaInversionesReporteWeb" id="${proyecto.unidadEjecutora.id}" target="_blank">Reporte</g:link>--}%
 %{--<g:link class="btn" controller="cronograma" action="verCronograma" id="${proyecto.id}">Cronograma</g:link>--}%
 %{--<g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades</g:link>--}%
-    <g:link class="btn" controller="asignacion" action="agregarAsignacionInv" id="${proyecto.id}">Agregar asignaciones</g:link>
-    <g:if test="${actual.estado==1}">
+    <g:link class="btn" controller="asignacion" action="agregarAsignacionInv" id="${proyecto?.id}">Agregar asignaciones</g:link>
+    <g:if test="${actual?.estado==1}">
         <g:if test="${proyecto.aprobadoPoa=='S'}">
-            <g:link class="btn" controller="modificacion" action="poaInversionesMod" id="${proyecto.id}">Modificaciones</g:link>
+            <g:link class="btn" controller="modificacion" action="poaInversionesMod" id="${proyecto?.id}">Modificaciones</g:link>
         </g:if>
     </g:if>
-    <g:if test="${actual.estado==1}">
+    <g:if test="${actual?.estado==1}">
         <g:if test="${proyecto.aprobadoPoa!='S'}">
             <a href="#" id="aprobPrio">Aprobar priorización</a>
         </g:if>
     </g:if>
-&nbsp;&nbsp;&nbsp;<b>Año:</b><g:select from="${app.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
+&nbsp;&nbsp;&nbsp;<b>Año:</b><g:select from="${app.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual?.id}"/>
+&nbsp;&nbsp;&nbsp; <b>Filtro: </b><g:select from="${['Todos','Componente', 'Responsable']}" name="filtro"/>
+<div id="filtrados" style="margin-left: 375px"></div>
+
 </div>
 <fieldset class="ui-corner-all" style="width: 98%;margin-top: 40px;">
     <legend>Asignaciones para el año ${actual}</legend>
@@ -52,7 +55,7 @@
         <th style="width: 280px">Reponsable</th>
         <th style="width: 60px;">Partida</th>
         <th>Presupuesto</th>
-        <g:if test="${actual.estado==1}">
+        <g:if test="${actual?.estado==1}">
             <th>Priorizado</th>
         </g:if>
         <th></th>
@@ -61,7 +64,7 @@
         <g:set var="total" value="${0}"></g:set>
         <g:each in="${asignaciones}" var="asg" status="i">
             <g:if test="${asg.planificado>0}">
-                <g:if test="${actual.estado==0}">
+                <g:if test="${actual?.estado==0}">
                     <g:set var="total" value="${total.toDouble()+asg.getValorReal()}"></g:set>
                 </g:if>
                 <g:else>
@@ -153,7 +156,7 @@
 
     <div style="position: absolute;top:5px;right:10px;font-size: 10px;">
         <b>Total invertido proyecto actual:</b>
-        <g:formatNumber number="${total.toFloat()}"                        format="###,##0"
+        <g:formatNumber number="${total?.toFloat()}"                        format="###,##0"
                         minFractionDigits="2" maxFractionDigits="2"/>
     </div>
     <div style="position: absolute;top:25px;right:10px;font-size: 10px;">
@@ -195,6 +198,33 @@
     Procesando
 </div>
 <script type="text/javascript">
+
+    $("#filtro").change(function (){
+        var aniof = $("#anio_asg").val();
+        var camp = $("#filtro").val()
+
+        if($("#filtro").val() != 'Todos'){
+            $.ajax({
+                type: "POST",
+                url:"${createLink(action: 'filtro')}",
+                data:"id=${proyecto.id}"+"&anio=" + aniof + "&camp=" + camp,
+                success: function (msg){
+                    $("#filtrados").html(msg)
+                }
+            });
+        }else{
+            location.href = "${createLink(controller:'asignacion',action:'asignacionProyectov2')}?id=${proyecto.id}&anio=" + aniof
+        }
+    })
+
+    %{--function loadTodos () {--}%
+        %{--var aniof = new Date().format('yyyy')--}%
+        %{--location.href = "${createLink(controller:'asignacion',action:'asignacionProyectov2')}?id=${proyecto.id}&anio=" + aniof--}%
+    %{--}--}%
+
+
+    %{--loadTodos();--}%
+
     $("#aprobPrio").button().click(function(){
         if(confirm("Esta seguro?")){
             $.ajax({
@@ -336,7 +366,7 @@
         },
         text:false
     }).click(function () {
-        //alert ("id:" +$(this).attr("asgn"))
+        //alert ("id:" +$(this).attr("asgn"))1
 
         $.ajax({
             type:"POST", url:"${createLink(action:'agregaAsignacion', controller: 'asignacion')}",
