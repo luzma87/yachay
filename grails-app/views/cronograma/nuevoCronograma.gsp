@@ -88,6 +88,7 @@
     <th style="width: 220px">&nbsp;</th>
     <g:form action="nuevoCronograma" method="post" class="frm_anio">
         <input type="hidden" name="id" value="${proyecto.id}">
+        <input type="hidden" name="act" value="${actSel?.id}">
         <g:each in="${totAnios}" var="ta">
             <input type="hidden" id="fuente_${ta.key}" value="${ta.value}">
         </g:each>

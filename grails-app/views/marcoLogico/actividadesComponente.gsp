@@ -231,7 +231,7 @@
                         %{--${act?.monto}--}%
                         <g:formatNumber number="${act.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"  ></g:formatNumber>
                     </div>
-                    <div class="titulo" title="Aporte de contribución al complimiento del componente">Aporte al componente(%)</div>
+                    <div class="titulo" title="Aporte de contribución al complimiento del componente">Aporte (%)</div>
                     <div class="  ui-corner-all   " ml="6" style="margin-top: 0px;border: none" pref="fcin_" id="fcin_${act?.id}" div="fcin_${act?.id}"  tipo="6">
                         <input  type="number" style="width: 50%;height: 25px;line-height: 25px;margin-left: 50px;text-align: right" class=" field ui-widget-content ui-corner-all number digits" id="aporte_${act.id}" title="Aporte de contribución al complimiento del componente" value="${act.aporte?.round(2)}">
                     </div>

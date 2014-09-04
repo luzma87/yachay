@@ -12,7 +12,7 @@ class CronogramaController extends app.seguridad.Shield{
         def colores= ["rgba(221,123,66,0.7)","#FFAB48","#FFE7AD","#A7C9AE","#888A63"]
         def proyecto = Proyecto.get(params.id)
         def act = null
-        if(params.act)
+        if(params.act && params.act!="")
             act=MarcoLogico.get(params.act)
         def componentes = MarcoLogico.findAll("from MarcoLogico where proyecto=${proyecto.id} and tipoElemento=2 and estado=0 order by id")
         def anio
