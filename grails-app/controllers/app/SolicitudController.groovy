@@ -556,6 +556,12 @@ class SolicitudController extends app.seguridad.Shield {
         def solicitud = Solicitud.get(params.id)
         def anio = new Date().format("yyyy").toInteger()
 //        def anios = Anio.findAllByAnioGreaterThanEquals(anio, [sort: "anio"])
+        def anios = []
+        Anio.list([sort: "anio"]).each { a ->
+            if (a.anio.toInteger() >= anio) {
+                anios += a
+            }
+        }
 
         return [solicitud: solicitud, anios: anios]
     }
@@ -563,8 +569,8 @@ class SolicitudController extends app.seguridad.Shield {
     def addDetalleMonto = {
         def solicitud = Solicitud.get(params.id)
         def anio = Anio.get(params.anio)
-        def monto = params.monto.replaceAll("\\.", "")
-        monto = monto.replaceAll(",", ".")
+        def monto = params.monto/*.replaceAll("\\.", "")
+        monto = monto.replaceAll(",", ".")*/
         monto = monto.toDouble()
         def detalle = DetalleMontoSolicitud.findAllByAnioAndSolicitud(anio, solicitud)
         if (detalle.size() == 1) {
