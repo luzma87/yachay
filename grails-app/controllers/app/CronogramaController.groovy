@@ -8,7 +8,7 @@ class CronogramaController extends app.seguridad.Shield{
     def dbConnectionService
 
     def nuevoCronograma = {
-        println "nuevo cronograma "+params
+      //  println "nuevo cronograma "+params
         def colores= ["rgba(221,123,66,0.7)","#FFAB48","#FFE7AD","#A7C9AE","#888A63"]
         def proyecto = Proyecto.get(params.id)
         def act = null
