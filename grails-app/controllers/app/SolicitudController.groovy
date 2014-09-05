@@ -683,7 +683,7 @@ class SolicitudController extends app.seguridad.Shield {
         def solicitud = Solicitud.get(params.id.toLong())
         def perfil = Prfl.get(session.perfil.id)
         def title = "Aprobar solicitud"
-        if (!(solicitud.revisadoJuridica && solicitud.revisadoAdministrativaFinanciera && solicitud.revisadoDireccionProyectos)) {
+        if (!(solicitud.revisadoJuridica && solicitud.revisadoAdministrativaFinanciera/* && solicitud.revisadoDireccionProyectos*/)) {
             redirect(action: "show", id: solicitud.id)
             return
         }
