@@ -4,13 +4,16 @@
     <thead>
     <tr>
         <th style="background: white;border: 1px solid #000000"></th>
-        <th colspan="3" style="background: #FFAB48;border: 1px solid #000000">Proyectos</th>
+        %{--<th colspan="3" style="background: #FFAB48;border: 1px solid #000000">Proyectos</th>--}%
+        <th colspan="3" style="background: #595292;border: 1px solid #000000">Proyectos</th>
 
     </tr>
     <tr>
         <th style="background: white;width: 260px;;border: 1px solid #000000">Unidad ejecutora</th>
-        <th  style="background: #FFAB48;border: 1px solid #000000">Asignaciones</th>
-        <th style="background: #FFAB48;border: 1px solid #000000">Total</th>
+        %{--<th  style="background: #FFAB48;border: 1px solid #000000">Asignaciones</th>--}%
+        <th  style="background: #595292;border: 1px solid #000000">Asignaciones</th>
+        %{--<th style="background: #FFAB48;border: 1px solid #000000">Total</th>--}%
+        <th style="background: #595292;border: 1px solid #000000">Total</th>
 
 
     </tr>
@@ -35,15 +38,16 @@
         <g:set var="totObraCor" value="${totObraCor.toDouble()+dato.value.get(6)}"></g:set>
         <tr style="background: white">
             <td style="background: white;width: 260px;border: 1px solid #000000">${dato.key}</td>
-            <td style="background: #FFAB48;text-align: right;border: 1px solid #000000">${dato.value.get(1)}</td>
-            <td style="background: #FFAB48;text-align: right;border: 1px solid #000000">${dato.value.get(0)}</td>
+            %{--<td style="background: #FFAB48;text-align: right;border: 1px solid #000000">${dato.value.get(1)}</td>--}%
+            <td style="background: #595292;text-align: right;border: 1px solid #000000">${dato.value.get(1)}</td>
+            <td style="background: #595292;text-align: right;border: 1px solid #000000">${dato.value.get(0)}</td>
 
         </tr>
     </g:each>
     <tr>
         <td style="background: white;border: 1px solid #000000"><b>Total</b></td>
-        <td style="background: #FFAB48;text-align: right;border: 1px solid #000000">${totCantProy}</td>
-        <td style="background: #FFAB48;text-align: right;border: 1px solid #000000">${totProy.toFloat().round(2)}</td>
+        <td style="background: #595292;text-align: right;border: 1px solid #000000">${totCantProy}</td>
+        <td style="background: #595292;text-align: right;border: 1px solid #000000">${totProy.toFloat().round(2)}</td>
 
 
     </tr>

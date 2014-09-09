@@ -53,7 +53,8 @@
             /*border     : solid 3px #768CC1;*/
             /*background : #EAF2FF !important;*/
             padding    : 5px;
-            border     : solid 3px #A5815F;
+            /*border     : solid 3px #A5815F;*/
+            border     : solid 3px #595292;
             background : #F4F2EB !important;
         }
 

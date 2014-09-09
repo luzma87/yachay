@@ -83,7 +83,8 @@
 </g:else>
 <g:link controller="asignacion" action="asignacionProyectov2" id="${proyecto.id}" class="btn">Asignaciones</g:link>
 <table style="width: 1300px;margin-left: -20px;margin-top: 10px" border="1">
-<thead style="background: rgba(110, 182, 213,0.2)">
+%{--<thead style="background: rgba(110, 182, 213,0.2)">--}%
+<thead style="background: #595292">
 <tr>
     <th style="width: 220px">&nbsp;</th>
     <g:form action="nuevoCronograma" method="post" class="frm_anio">
@@ -396,9 +397,9 @@
     </tr>
 </g:each>
 <tr>
-    <td class="colGrande " style="background: #E0EEF4" colspan="13"><b>TOTAL DEL PROYECTO</b>
+    <td class="colGrande " style="background: #595292" colspan="13"><b>TOTAL DEL PROYECTO</b>
     </td>
-    <td style="text-align: center;background: #E0EEF4">
+    <td style="text-align: center;background: #595292">
         <b>
             <div id="totGeneralAsignado">
                 <g:formatNumber number="${totProyAsig}"
@@ -416,7 +417,7 @@
     %{--${totOtroAnioProyecto}--}%
     %{--</b>--}%
     %{--</td>--}%
-    <td style="text-align: center;background: #E0EEF4">
+    <td style="text-align: center;background: #595292">
         <b>
             <div id="totGeneral">
                 <g:formatNumber number="${(totProy.toDouble() - (totProyAsig.toDouble()))}"

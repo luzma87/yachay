@@ -48,15 +48,18 @@
         }
 
         .unidad.sel {
-            background : #EEF7EA;
+            /*background : #EEF7EA;*/
+            background : #7871BE;
         }
 
         .disp {
-            border-color : #EAD2C2;
+            /*border-color : #EAD2C2;*/
+            border-color : #595292;
         }
 
         .sel {
-            border-color : #CDEAC2;
+            /*border-color : #CDEAC2;*/
+            border-color : #7871BE;
         }
 
         .toolbar {

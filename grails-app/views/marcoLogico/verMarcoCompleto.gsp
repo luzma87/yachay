@@ -439,12 +439,14 @@
         <g:set var="totalInversion" value="0"></g:set>
         <g:each in="${componentes}" var="comp" status="k">
             <tr>
-                <th colspan="7" style="background: #EFB64F">
+                %{--<th colspan="7" style="background: #EFB64F">--}%
+                <th colspan="7" style="background: #595292">
                     Componente ${k + 1} : ${(comp?.objeto.length() > 70) ? comp?.objeto.substring(0, 70) + "..." : comp.objeto}
                 </th>
             </tr>
 
-                <tr style="background: #8FBF5C">
+                %{--<tr style="background: #8FBF5C">--}%
+                <tr style="background: #7871BE">
                     <th style="width: 300px;">
                         Ubicación
                     </th>

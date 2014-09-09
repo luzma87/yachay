@@ -15,6 +15,16 @@
     <script src="${resource(dir: 'js/jquery/plugins/jBreadCrumb/js', file: 'jquery.jBreadCrumb.1.1.js')}"
             type="text/javascript" language="JavaScript"></script>
 
+    <style type="text/css">
+
+        th{
+
+        background-color: #595292 !important;
+
+        }
+
+    </style>
+
 </head>
 <body>
 
