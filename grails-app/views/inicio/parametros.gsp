@@ -15,7 +15,7 @@
         <ul id="info-nav">
             <li><a href="#proy">Proyectos</a></li>
             %{--<li><a href="#snpl">Proyectos Senplades</a></li>--}%
-            <li><a href="#papp">PAPP y PAC</a></li>
+            <li><a href="#papp">POA y PAC</a></li>
             <li><a href="#grgf">Generales</a></li>
         </ul>
 
