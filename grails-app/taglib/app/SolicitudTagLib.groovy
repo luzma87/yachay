@@ -374,7 +374,8 @@ class SolicitudTagLib {
 
         def logoPath = resource(dir: 'images', file: 'logo.jpg')
         def rowspan = 2
-        def w = 65
+//        def w = 65
+        def w = 200
         if (title != "") {
             rowspan += 1
 //            w = 85
