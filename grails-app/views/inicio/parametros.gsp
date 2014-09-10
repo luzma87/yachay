@@ -173,11 +173,9 @@
                     <g:link  controller="distrito" action="list">Distritos</g:link> divisi&oacute;n del territorio ecuatoriano en distritos
                 </div><br>
 --}%
-%{--
-                <div class="item" texto="geog">
-                    <g:link  controller="zona" action="arbol">Divisi&oacute;n geogr&aacute;fica del Pa&iacute;s</g:link> en zonas, regiones, provincias, cantones y parroquias.
+                <div class="item" texto="tpcn">
+                    <g:link  controller="tipoContrato" action="list">Tipo de Contrato</g:link> que se aplica a los distintos procesos de contratación.
                 </div><br>
---}%
                 <div class="item" texto="tpin">
                     <g:link  controller="tipoInstitucion" action="list">Area de Gestión</g:link> que se aplica a las distintas entidades y unidades responsables
                 </div><br>
@@ -404,9 +402,9 @@
     <p>de acuerdo a la distribuci&oacute;n determinada por el estado para organizar las inversiones</p>
 </div>
 
-<div id="geog" style="display:none">
-    <h1>Divisi&oacute;n geogr&aacute;fica del Pa&iacute;s</h1><br>
-    <p>Zonas, regiones, provincias, cantones y parroquias</p>
+<div id="tpcn" style="display:none">
+    <h1>Tipo de Contrato</h1><br>
+    <p>Tipos de contrato que se pueden aplicar en los diferentes procesos de contratación</p>
 </div>
 <div id="tpin" style="display:none">
     <h1>Area de Gestión</h1><br>
