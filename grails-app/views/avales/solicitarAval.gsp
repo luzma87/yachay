@@ -67,7 +67,7 @@
     </div>
 
     <div style="width: 100%;margin-top: 10px;height: 40px">
-        <div class="label">Documento soporte:</div>
+        <div class="label">Documento de soporte:</div>
 
         <div style="width: 150px;height: 30px;margin-top: 10px;display: inline-block;;margin-right: 30px;">
             <input type="text" name="memorando" id="memorando" style="width: 140px;margin-right: 10px;"
