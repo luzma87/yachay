@@ -16,7 +16,7 @@ import app.yachai.ProcesoAsignacion
 import app.yachai.ProcesoAval
 import app.yachai.SolicitudAval
 
-class AvalesController {
+class AvalesController extends app.seguridad.Shield {
 
     def procesos = {
         println "procesos " + params
@@ -36,6 +36,15 @@ class AvalesController {
         def proceso
         def actual
         def band = true
+        def proyectos=[]
+        def unidad = session.usuario.unidad
+        Asignacion.findAllByUnidad(unidad).each {
+            def p = it.marcoLogico.proyecto
+            if(!proyectos.contains(p)){
+                proyectos.add(p)
+            }
+        }
+        proyectos.sort{it.nombre}
         if (params.anio)
             actual = Anio.get(params.anio)
         else
@@ -52,7 +61,7 @@ class AvalesController {
             }
         }
 
-        [proceso: proceso, actual: actual, band: band]
+        [proyectos:proyectos,  proceso: proceso, actual: actual, band: band,unidad:unidad]
     }
 
     def getDetalle = {
@@ -134,7 +143,8 @@ class AvalesController {
 
     def cargarActividades = {
         def comp = MarcoLogico.get(params.id)
-        [acts: MarcoLogico.findAllByMarcoLogico(comp, [sort: "numero"])]
+        def unidad = UnidadEjecutora.get(params.unidad)
+        [acts: MarcoLogico.findAllByMarcoLogicoAndResponsable(comp,unidad, [sort: "numero"])]
     }
     def cargarAsignaciones = {
         println "cargar asg " + params
@@ -184,7 +194,9 @@ class AvalesController {
         def proceso = ProcesoAval.get(params.id)
         def now = new Date()
         if (proceso.fechaInicio < now) {
-            response.sendError(403)
+            flash.message="Error: El proceso ${proceso.nombre}  (${proceso.fechaInicio.format('dd-MM-yyyy')} - ${proceso.fechaFin.format('dd-MM-yyyy')}) esta en ejecución, si desea solicitar un aval modifique las fechas de inicio y fin"
+            redirect(action: "avalesProceso",id: proceso.id)
+            return
         }
 
         def avales = Aval.findAllByProcesoAndEstadoInList(proceso, [EstadoAval.findByCodigo("E02"), EstadoAval.findByCodigo("E05"), EstadoAval.findByCodigo("E06")])

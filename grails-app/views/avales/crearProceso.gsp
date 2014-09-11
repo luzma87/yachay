@@ -15,6 +15,9 @@
     <script src="${resource(dir: 'js/jquery/plugins/jBreadCrumb/js', file: 'jquery.jBreadCrumb.1.1.js')}"
             type="text/javascript" language="JavaScript"></script>
 
+    <script type="text/javascript" src="${resource(dir: 'js/jquery/plugins/select', file: 'jquery.ui.selectmenu.js')}"></script>
+    <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/select', file: 'jquery.ui.selectmenu.css')}"/>
+
 </head>
 
 <body>
@@ -27,15 +30,18 @@
     <g:link controller="avales" action="listaProcesos" class="btn">Lista de procesos</g:link>
     <g:link controller="avales" action="crearProceso" class="btn">Crear nuevo</g:link>
 </div>
-<fieldset style="width: 95%;height: 150px;" class="ui-corner-all">
+<fieldset style="width: 95%;height: 170px;" class="ui-corner-all">
     <legend>Proceso</legend>
     <g:form action="saveProceso" class="frmProceso">
         <input type="hidden" name="id" value="${proceso?.id}">
         <div class="fila">
             <div class="labelSvt">Proyecto:</div>
-            <div class="fieldSvt-medium">
-                <g:select from="${app.Proyecto.list([sort:'nombre'])}" optionKey="id" optionValue="nombre" name="proyecto.id" id="proyecto" style="width:100%" class="ui-corner-all ui-widget-content" value="${proceso?.proyecto?.id}"></g:select>
+            <div class="fieldSvt-xxxl">
+                <g:select from="${proyectos}" optionKey="id" optionValue="nombre" name="proyecto.id" id="proyecto" style="width:100%" class="ui-corner-all ui-widget-content" value="${proceso?.proyecto?.id}"></g:select>
             </div>
+        </div>
+        <div class="fila">
+
             <div class="labelSvt">Fecha inicio:</div>
             <div class="fieldSvt-small">
                 <g:textField class="datepicker field ui-widget-content ui-corner-all fechaFin"
@@ -71,7 +77,7 @@
     </g:form>
 </fieldset>
 <g:if test="${proceso && band}">
-    <fieldset style="width: 95%;height: 180px;" class="ui-corner-all">
+    <fieldset style="width: 95%;height: 260px;" class="ui-corner-all">
         <legend>Agregar asignaciones</legend>
         <input type="hidden" id="idAgregar">
         <div class="fila">
@@ -79,21 +85,25 @@
             <div class="fieldSvt-small" id="">
                 <g:select from="${app.Anio.list( [sort:'anio'])}" value="${actual?.id}" optionKey="id" optionValue="anio" id="anio" name="anio"></g:select>
             </div>
+        </div>
+        <div class="fila">
             <div class="labelSvt">Componente:</div>
-            <div class="fieldSvt-medium" id="div_comp">
+            <div class="fieldSvt-xxxl" id="div_comp">
                 <g:if test="${proceso}">
-                    <g:select from="${app.MarcoLogico.findAllByProyectoAndTipoElemento(proceso?.proyecto,TipoElemento.get(2))}" optionValue="objeto" optionKey="id" name="comp" id="comp" noSelection="['-1':'Seleccione...']"></g:select>
+                    <g:select from="${app.MarcoLogico.findAllByProyectoAndTipoElemento(proceso?.proyecto,TipoElemento.get(2))}" optionValue="objeto" optionKey="id" name="comp" id="comp" noSelection="['-1':'Seleccione...']" style="width: 100%"></g:select>
                 </g:if>
             </div>
+        </div>
+        <div class="fila">
             <div class="labelSvt">Actividad:</div>
-            <div class="fieldSvt-medium" id="divAct">
-                <g:select from="${[]}"   id="actividad" name="actividad" style="width:200px" noSelection="['-1':'Seleccione']"></g:select>
+            <div class="fieldSvt-xxxl" id="divAct">
+                <g:select from="${[]}"   id="actividad" name="actividad" style="width:100%" noSelection="['-1':'Seleccione']" ></g:select>
             </div>
         </div>
         <div class="fila">
             <div class="labelSvt">Asignacion:</div>
             <div class="fieldSvt-xxxl" id="divAsg">
-                <g:select from="${[]}"   id="asignacion" name="actividad" style="width:200px" noSelection="['-1':'Seleccione']"></g:select>
+                <g:select from="${[]}"   id="asignacion" name="actividad" style="width:100%" noSelection="['-1':'Seleccione']"></g:select>
             </div>
         </div>
         <div class="fila">
@@ -171,6 +181,7 @@
         changeMonth:true,
         changeYear:true,
         dateFormat:'dd-mm-yy',
+        minDate:new Date(),
         onClose:function (dateText, inst) {
 
         }
@@ -298,13 +309,17 @@
             type: "POST",
             url: "${createLink(action:'cargarActividades')}",
             data: {
-                id:$("#comp").val()
+                id:$("#comp").val(),
+                unidad:"${unidad?.id}"
             },
             success: function(msg) {
                 $("#divAct").html(msg)
             }
         });
-    });
+    }).selectmenu({width : 600});
+    $("#proyecto").selectmenu({width : 600});
+    $("#actividad").selectmenu({width : 600});
+    $("#asignacion").selectmenu({width : 600});
 </script>
 </body>
 </html>

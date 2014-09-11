@@ -192,7 +192,11 @@ class RevisionAvalController {
 
         def unidad = UnidadEjecutora.findByCodigo("DPI") // DIRECCIÓN DE PLANIFICACIÓN E INVERSIÓN
         def personasFirmas = Usro.findAllByUnidad(unidad)
-
+        def numero = 0
+        def max = Aval.list([sort: "numero",order: "desc",max: 1])
+        println "max "+max.numero
+        if(max.size()>0)
+            numero=max[0].numero+1
         def solicitud = SolicitudAval.get(params.id)
         def band = false
         def usuario = Usro.get(session.usuario.id)
@@ -200,7 +204,7 @@ class RevisionAvalController {
         band = true
         if (!band)
             response.sendError(403)
-        [solicitud: solicitud, personas: personasFirmas]
+        [solicitud: solicitud, personas: personasFirmas,numero:numero]
     }
 
     def aprobarAnulacion = {

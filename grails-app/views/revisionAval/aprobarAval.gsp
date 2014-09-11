@@ -66,10 +66,11 @@
             <legend>Datos para la generación del documento</legend>
 
             <div class="fila" style="margin-top: 0px">
-                <div class="labelSvt" style="width: 180px">Número de aval:</div>
 
+                <div class="labelSvt" style="width: 180px;">Número:</div>
                 <div class="fieldSvt-large">
-                    ${solicitud.fecha.format("yyyy")}-CP No. <input type="text" style="width: 50%;" id="numero" value="${solicitud.numero}" class="ui-corner-all ui-widget-content">
+                    ${solicitud.fecha.format("yyyy")}-CP No. ${numero}
+                    <input type="hidden" style="width: 50%;" id="numero" value="${numero}" >
                 </div>
             </div>
 
@@ -81,10 +82,9 @@
                 </div>
             </div>
 
-            <div class="fila" style="height: 300px;position: relative">
-                <div class="labelSvt" style="width: 180px;position: absolute;top: 10px">Firmas:</div>
-
-                <div style="width: 700px;height: 280px;display: inline-block;position: absolute;top: 10px;left: 190px">
+            <div class="fila" style="">
+                <div class="labelSvt" style="">Firmas:</div>
+                <div class="fieldSvt-xxxl">
                     <g:select from="${personas}" optionKey="id" optionValue="${{
                         it.persona.nombre + ' ' + it.persona.apellido
                     }}" name="firma2"/>
