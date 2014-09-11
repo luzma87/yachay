@@ -15,6 +15,15 @@
     <script src="${resource(dir: 'js/jquery/plugins/jBreadCrumb/js', file: 'jquery.jBreadCrumb.1.1.js')}"
             type="text/javascript" language="JavaScript"></script>
 
+    <style type="text/css">
+
+        th{
+            background-color: #595292;
+
+        }
+
+    </style>
+
 </head>
 <body>
 <g:if test="${flash.message}">
@@ -33,7 +42,7 @@
     </ul>
     <div id="solicitudes" style="width: 1000px;">
         <g:if test="${solicitudes.size()>0}">
-            <table style="width: 100%;margin-top: 10px;font-size: 10px" >
+            <table style="width: 100%;margin-top: 10px;font-size: 10px;" >
                 <thead>
                 <tr>
                     <th># Sol.</th>

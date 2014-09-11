@@ -111,7 +111,7 @@ class ModificacionProyectoController extends app.seguridad.Shield {
 
     def listaSolicitudes = {
            /*TODO esto hayq ue cambiar xq salens 2 veces*/
-        def resp = ResponsableProyecto.findAll("from ResponsableProyecto where responsable=${session.usuario.id} and tipo!=1 ")
+        def resp =  ResponsableProyecto.findAll("from ResponsableProyecto where responsable=${session.usuario.id} and tipo!=1 ")
         def proys = []
         def unidades = []
         def mods = []

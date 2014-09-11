@@ -1,5 +1,7 @@
 package app
 
+import javax.activation.ActivationDataFlavor
+
 class AsignacionController extends app.seguridad.Shield {
 
     static allowedMethods = [guardarAsignacion: "POST"]
@@ -64,11 +66,15 @@ class AsignacionController extends app.seguridad.Shield {
         render "ok"
     }
 
-    def asignacionProyectov2 = {
-//        println "params " + params
+    def filtro = {
+
+//        println("params " + params)
         def proyecto = Proyecto.get(params.id)
         def asignaciones = []
         def actual
+        def componentes = []
+        def responsables = []
+        params.anio = params.anio.toDouble();
         if (params.anio)
             actual = Anio.get(params.anio)
         else
@@ -89,11 +95,138 @@ class AsignacionController extends app.seguridad.Shield {
             }
         }
         asignaciones.sort{it.unidad.nombre}
-        def unidad = UnidadEjecutora.findByPadreIsNull()
-        maxInv=PresupuestoUnidad.findByAnioAndUnidad(actual,unidad)?.maxInversion
-        if(!maxInv)
-            maxInv=0
-        [asignaciones: asignaciones, actual: actual, proyecto: proyecto,total: total,totalUnidad: totalUnidad,maxInv:maxInv]
+
+        asignaciones.each {
+
+            componentes += it.marcoLogico.marcoLogico
+            responsables += it.unidad
+
+        }
+
+//        println("componentes " + componentes)
+//        println("responsables " + responsables)
+
+        return [asignaciones: asignaciones, camp: params.camp, componentes: componentes, responsables: responsables, proyecto: proyecto, anio: params.anio]
+
+
+    }
+
+    def asignacionProyectov2 = {
+//        println "params " + params
+        def proyecto = Proyecto.get(params.id)
+        def asignaciones = []
+        def actual
+
+        if(params.resp || params.comp){
+//            println("con filtro!"  + params.resp + " " + params.comp)
+
+            def unidadE
+            def compon
+
+            if(params.resp){
+               unidadE = UnidadEjecutora.findByNombre(params.resp)
+
+//                println("unidad " + unidadE)
+
+
+                if (params.anio)
+                    actual = Anio.get(params.anio)
+                else
+                    actual = Anio.findByAnio(new Date().format("yyyy"))
+                if (!actual)
+                    actual = Anio.list([sort: 'anio', order: 'desc']).pop()
+
+                def totalR = 0
+                def totalUnidadR = 0
+                def maxInvR = 0
+                MarcoLogico.findAll("from MarcoLogico where proyecto = ${proyecto.id} and tipoElemento=3 and estado=0 and responsable=${unidadE.id}").each {
+                    def asig = Asignacion.findAll("from Asignacion where marcoLogico=${it.id} and anio=${actual.id}  order by id")
+                    if (asig){
+                        asignaciones += asig
+                        asig.each{asg->
+                            totalR = totalR+asg.getValorReal()
+                        }
+                    }
+                }
+
+
+                asignaciones.sort{it.unidad.nombre}
+                def unidad = UnidadEjecutora.findByPadreIsNull()
+                maxInvR=PresupuestoUnidad.findByAnioAndUnidad(actual,unidad)?.maxInversion
+                if(!maxInvR)
+                    maxInvR=0
+
+                [asignaciones: asignaciones, actual: actual, proyecto: proyecto,total: totalR,totalUnidad: totalUnidadR,maxInv:maxInvR]
+
+            }
+            else
+            {
+                compon = MarcoLogico.findByObjeto(params.comp)
+
+                if (params.anio)
+                    actual = Anio.get(params.anio)
+                else
+                    actual = Anio.findByAnio(new Date().format("yyyy"))
+                if (!actual)
+                    actual = Anio.list([sort: 'anio', order: 'desc']).pop()
+
+                def total = 0
+                def totalUnidad = 0
+                def maxInv = 0
+                MarcoLogico.findAll("from MarcoLogico where proyecto = ${proyecto.id} and tipoElemento=3 and estado=0").each {
+                    def asig = Asignacion.findAll("from Asignacion where marcoLogico=${it.id} and anio=${actual.id}   order by id")
+                    if (asig){
+                        asignaciones += asig
+                        asig.each{asg->
+                            total = total+asg.getValorReal()
+                        }
+                    }
+                }
+                asignaciones.sort{it.unidad.nombre}
+                def unidad = UnidadEjecutora.findByPadreIsNull()
+                maxInv=PresupuestoUnidad.findByAnioAndUnidad(actual,unidad)?.maxInversion
+                if(!maxInv)
+                    maxInv=0
+                [asignaciones: asignaciones, actual: actual, proyecto: proyecto,total: total,totalUnidad: totalUnidad,maxInv:maxInv]
+            }
+
+
+        }else {
+            if (params.anio){
+                actual = Anio.get(params.anio)
+            }
+            else{
+                actual = Anio.findByAnio(new Date().format('yyyy'))
+            }
+
+            if (!actual){
+                actual = Anio.list([sort: 'anio', order: 'desc']).pop()
+            }
+
+
+            def total = 0
+            def totalUnidad = 0
+            def maxInv = 0
+            MarcoLogico.findAll("from MarcoLogico where proyecto = ${proyecto.id} and tipoElemento=3 and estado=0").each {
+                def asig = Asignacion.findAll("from Asignacion where marcoLogico=${it.id} and anio=${actual.id}   order by id")
+                if (asig){
+                    asignaciones += asig
+                    asig.each{asg->
+                        total = total+asg.getValorReal()
+                    }
+                }
+            }
+            asignaciones.sort{it.unidad.nombre}
+            def unidad = UnidadEjecutora.findByPadreIsNull()
+            maxInv=PresupuestoUnidad.findByAnioAndUnidad(actual,unidad)?.maxInversion
+            if(!maxInv)
+                maxInv=0
+
+            [asignaciones: asignaciones, actual: actual, proyecto: proyecto,total: total,totalUnidad: totalUnidad,maxInv:maxInv]
+
+        }
+
+
 
 
     }

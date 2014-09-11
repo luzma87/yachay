@@ -31,10 +31,11 @@
         </style>
     </head>
 
-    <body>
+    <body background="${resource(dir: 'images', file: 'ecuador.jpg')}" style="background-repeat: no-repeat; background-position: center;">
 
-        <div class="esquinas" style="width: 800px;height: 500px; margin: auto;margin-top:100px;background: #EDEDED; border:medium solid #363636;">
-        %{--<div class="esquinas" style="width: 800px;height: 500px; margin: auto;margin-top:100px;background: #EDF8F3; border:medium solid #25416F;">--}%
+        %{--<div class="esquinas" style="width: 800px;height: 500px; margin: auto;margin-top:100px;background: #ffffff; border:medium solid #262626; background-image: \"${resource(dir: 'images', file: 'yachay-logo.png')}\"">--}%
+        <div class="esquinas" style="width: 800px;height: 500px; margin: auto;margin-top:100px;border:medium solid #262626; ">
+
             <div style="text-align: center; font-size: 42px; font-style: italic; font-family: 'Times New Roman'; padding-top: 10px;">Sistema de Planificación Institucional</div>
 
             <div style="margin-left: 30px;margin-top: 20px;float: left;width: 420px; height: 400px; font-size: 14px;text-align: justify" class="ui-corner-all">
@@ -52,14 +53,15 @@
                 %{--<img src="${resource(dir: 'images', file: 'logo_app2.jpg')}" alt="Finix - Plan" >--}%
             </div>
                 %{--<div style=" width: 250px;height: 260px;margin-top: 60px;float: left;margin-left: 60px; ;background:#0066cc"--}%
-                <div style=" width: 260px; height: 320px;margin-top: 30px;float: left;margin-left: 60px; ;background:#f2f6fa; border-style: solid; border-color: #666; border-width: 1px;"
+                %{--<div style=" width: 260px; height: 320px;margin-top: 30px;float: left;margin-left: 60px; ;background:#ffffff; border-style: solid; border-color: #666; border-width: 1px;"--}%
+                <div style=" width: 260px; height: 320px;margin-top: 30px;float: left;margin-left: 60px; border-style: solid; border-color: #666; border-width: 1px;"
 
             %{--<div style=" width: 260px;height: 260px;margin-top: 60px;float: left;margin-left: 60px; ;background:#a5815f"--}%
                  class="esquinas">
 
                 <div style="height: 80px;margin-top: 25px;margin-left:30px;width: 200px;color:#f9f9f9;font-style:
                 italic;text-align: center" class="ui-corner-all">
-                    <img src="${resource(dir: 'images', file: 'yachay-logo.png')}" alt="Yachay">
+                    <img src="${resource(dir: 'images', file: 'yachay-logo1.png')}" alt="Yachay">
                     %{--<b>Sistema de Planificación Institucional<br/> Yachay</b>--}%
                 </div>
 
@@ -84,12 +86,10 @@
                         </g:else>
                     </g:form>
                 </div>
+
         </div>
             <div style="position: absolute; margin-top:420px; margin-left:580px; text-align: left; font-size: 12px;">
             &copy; TEDEIN S.A. Versión ${message(code: 'version', default: '1.1.0x')}</div>
-
-
-
         </div>
         <script>
             $(document).ready(function () {

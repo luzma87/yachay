@@ -15,8 +15,8 @@
 
     }
     .imagen{
-        width: 180px;
-        height: 90px;
+        width: 170px;
+        height: 120px;
         margin: auto;
         margin-top: 15px;
     }
@@ -39,7 +39,7 @@
         margin-left: 15px;
         margin-top: 20px;
         /*background-color: #317fbf; */
-        background-color: #716d66;
+        background-color: #262626;
     }
     .desactivado{
         color: #bbc;
@@ -56,7 +56,7 @@
                 <div  class="ui-corner-all  item fuera">
                     <div  class="ui-corner-all ui-widget-content item">
                         <div class="imagen">
-                            <img src="${resource(dir: 'images', file: 'proyecto3.jpg')}" width="100%" height="100%"/>
+                            <img src="${resource(dir: 'images', file: 'proyecto.jpg')}" width="100%" height="100%"/>
                         </div>
                         <div class="texto"><b>Gestión de Proyectos</b>: Marco lógico, metas, indicadores,
                         cronograma de inversión, fuentes de financiamiento, programación de inversiones plurianual.</div>
@@ -67,7 +67,7 @@
                 <div  class="ui-corner-all item fuera">
                     <div  class="ui-corner-all ui-widget-content item">
                         <div class="imagen">
-                            <img src="${resource(dir: 'images', file: 'dinero3.jpg')}" width="100%" height="100%"/>
+                            <img src="${resource(dir: 'images', file: 'administracion.jpg')}" width="100%" height="100%"/>
                         </div>
                     <div class="texto"><b>Administración del POA</b>: gestión de avales, reformas, reprogramaciones y documentación de respaldo.</div>
                 </div>
@@ -78,7 +78,7 @@
                 <div  class="ui-corner-all item fuera">
                     <div  class="ui-corner-all ui-widget-content item">
                         <div class="imagen">
-                            <img src="${resource(dir: 'images', file: 'dinero4.jpg')}" width="100%" height="100%"/>
+                            <img src="${resource(dir: 'images', file: 'contratos.jpg')}" width="100%" height="100%"/>
                         </div>
                         <div class="texto"><b>Contrataciones</b>: sistematización del proceso de aprobación de contrataciones ligado al POA</div>
                     </div>
@@ -92,7 +92,7 @@
                 <div  class="ui-corner-all  item fuera">
                     <div  class="ui-corner-all ui-widget-content item">
                         <div class="imagen">
-                            <img src="${resource(dir: 'images', file: 'libros.jpg')}" width="100%" height="100%"/>
+                            <img src="${resource(dir: 'images', file: 'seguimiento.jpg')}" width="100%" height="100%"/>
                         </div>
                         <div class="texto"><b>Seguimiento</b>: seguimiento y evaluación del POA, detalle de subactividades, control de avales, anvances físico y económico</div>
                     </div>

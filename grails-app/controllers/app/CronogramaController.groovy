@@ -9,7 +9,8 @@ class CronogramaController extends app.seguridad.Shield{
 
     def nuevoCronograma = {
       //  println "nuevo cronograma "+params
-        def colores= ["rgba(221,123,66,0.7)","#FFAB48","#FFE7AD","#A7C9AE","#888A63"]
+//        def colores= ["rgba(221,123,66,0.7)","#FFAB48","#FFE7AD","#A7C9AE","#888A63"]
+        def colores= ["#7871BE","#7871BE","#7871BE","#7871BE","#7871BE"]
         def proyecto = Proyecto.get(params.id)
         def act = null
         if(params.act && params.act!="")
@@ -283,7 +284,8 @@ class CronogramaController extends app.seguridad.Shield{
 
     def verCronograma = {
         println "nuevo cronograma "+params
-        def colores= ["#DD7B42","#FFAB48","#FFE7AD","#A7C9AE","#888A63"]
+//        def colores= ["#DD7B42","#FFAB48","#FFE7AD","#A7C9AE","#888A63"]
+        def colores= ["#7871BE","#7871BE","#7871BE","#7871BE","#7871BE"]
         def proyecto = Proyecto.get(params.id)
         def componentes = MarcoLogico.findAll("from MarcoLogico where proyecto=${proyecto.id} and tipoElemento=2 and estado=0 order by id")
         def fuentes = Financiamiento.findAllByProyecto(proyecto).fuente
