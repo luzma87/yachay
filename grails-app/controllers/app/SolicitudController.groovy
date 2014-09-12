@@ -552,6 +552,78 @@ class SolicitudController extends app.seguridad.Shield {
         render comboActividades(componente.id, actividad.id, params.width)
     }
 
+    def cambiarMax = {
+        def solicitud = Solicitud.get(params.id)
+        def nuevoVal = params.monto.toDouble()
+
+        def msg = ""
+
+        if (nuevoVal > solicitud.actividad.monto) {
+            nuevoVal = solicitud.actividad.monto
+            msg += "_No puede asignar más de " + formatNumber(number: solicitud.actividad.monto, type: "currency")
+        }
+
+        solicitud.montoSolicitado = nuevoVal
+        if (solicitud.save(flush: true)) {
+            if (msg == "") {
+                msg += "_Valor máximo actualizado a " + formatNumber(number: nuevoVal, type: "currency")
+            } else {
+                msg += ", se ha actualizado al máximo permitido"
+            }
+            render "OK" + msg
+        } else {
+            render "NO_" + renderErrors(bean: solicitud)
+        }
+    }
+
+    def updateDetalleMonto_ajax = {
+        def solicitud = Solicitud.get(params.id)
+        def valores = params.valores
+        def errores = ""
+
+        def anios = []
+        def total = 0
+
+        (valores.split(";")).each { val ->
+            def parts = val.split("_")
+            if (parts.size() == 2) {
+                def a = parts[0]
+                def anio = Anio.findByAnio(a)
+                anios += a
+                def monto = parts[1].toDouble()
+                def detalle = DetalleMontoSolicitud.findByAnioAndSolicitud(anio, solicitud)
+                if (!detalle) {
+                    detalle = new DetalleMontoSolicitud()
+                    detalle.anio = anio
+                    detalle.solicitud = solicitud
+                }
+                detalle.monto = monto
+                total += monto
+                if (!detalle.save(flush: true)) {
+                    errores += "<li>" + renderErrors(bean: detalle) + "</li>"
+                }
+            }
+        }
+
+        def porEliminar = []
+        //verifico si la asignacion para algun anio fue eliminada
+        DetalleMontoSolicitud.findAllBySolicitud(solicitud).each { d ->
+            if (!anios.contains(d.anio.anio)) {
+                porEliminar += d.id
+            }
+        }
+        porEliminar.each { id ->
+            def det = DetalleMontoSolicitud.get(id)
+            det.delete(flush: true)
+        }
+        if (errores == "") {
+            render "OK_" + formatNumber(number: solicitud.montoSolicitado, maxFractionDigits: 2, minFractionDigits: 2) + "_" +
+                    formatNumber(number: total, type: "currency")
+        } else {
+            render "<ul>" + errores + "</ul>"
+        }
+    }
+
     def detalleMonto = {
         def solicitud = Solicitud.get(params.id)
         def anio = new Date().format("yyyy").toInteger()
@@ -611,7 +683,11 @@ class SolicitudController extends app.seguridad.Shield {
                 }
             }
             title += " solicitud"
-            return [unidadRequirente: unidadEjecutora, solicitud: solicitud, title: title]
+            def asignado = 0
+            DetalleMontoSolicitud.findAllBySolicitud(solicitud).each { d ->
+                asignado += d.monto
+            }
+            return [unidadRequirente: unidadEjecutora, solicitud: solicitud, title: title, asignado: formatNumber(number: asignado, type: "currency")]
         } else {
             if (params.id) {
                 redirect(action: "show", id: params.id)

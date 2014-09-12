@@ -2,6 +2,7 @@ package app
 
 import app.seguridad.Prfl
 import app.seguridad.Usro
+import app.yachai.DetalleMontoSolicitud
 
 class SolicitudTagLib {
     static namespace = 'slc'
@@ -74,6 +75,11 @@ class SolicitudTagLib {
             html += '<td class="label">Monto solicitado</td>'
             html += '<td>'
             html += g.formatNumber(number: solicitud.montoSolicitado, type: "currency")
+            def asignado = 0
+            DetalleMontoSolicitud.findAllBySolicitud(solicitud).each { d ->
+                asignado += d.monto
+            }
+            html += "<br/>(Asignado: ${formatNumber(number: asignado, type: 'currency')})"
             html += '</td>'
 
             html += '<td class="label">Modalidad de contratación</td>'

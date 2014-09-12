@@ -76,9 +76,11 @@
                                     <g:if test="${solicitud.revisadoAdministrativaFinanciera &&
                                             solicitud.revisadoJuridica}">
                                         <g:if test="${session.perfil.codigo == 'GP'}">
-                                            <g:link class="button aprobacion" action="aprobacion" id="${solicitud?.id}">
-                                                Reunión de aprobación
-                                            </g:link>
+                                            <g:if test="${solicitud.incluirReunion == 'S'}">
+                                                <g:link class="button aprobacion" action="aprobacion" id="${solicitud?.id}">
+                                                    Reunión de aprobación
+                                                </g:link>
+                                            </g:if>
                                         </g:if>
                                     </g:if>
                                 </g:if>

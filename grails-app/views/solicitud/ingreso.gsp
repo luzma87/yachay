@@ -112,10 +112,10 @@
                                 <a href="#" class="button" id="btnIncluir" data-tipo="N">No incluir</a>
                             </g:if>
                             <g:else>
-                                No se incluirá en la próxima reunión de aprobación
+                                Solicitar la inclusión de la actividad en la próxima reunión de planificación de contratación
 
                                 <g:if test="${solicitud.revisadoAdministrativaFinanciera && solicitud.revisadoJuridica}">
-                                    <a href="#" class="button" id="btnIncluir" data-tipo="S">Incluir</a>
+                                    <a href="#" class="button" id="btnIncluir" data-tipo="S">Solicitar</a>
                                 </g:if>
                                 <g:else>
                                     (podrá incluirla después de que sea revisada)
@@ -188,16 +188,17 @@
                     <td class="label">Monto solicitado</td>
                     <td>
                         <g:if test="${solicitud.id}">
-                            <g:textField class="required number2 field wide medium ui-widget-content ui-corner-all"
+                            <g:textField class="required number2 field wide short ui-widget-content ui-corner-all"
                                          name="montoSolicitado" title="Monto solicitado" autocomplete="off"
                                          value="${solicitud.montoSolicitado}" readonly="readonly"/>
                             <a href="#" id="btnMontoDetalle">Detalle</a>
                         </g:if>
                         <g:else>
-                            <g:textField class="required number2 field wide medium ui-widget-content ui-corner-all"
+                            <g:textField class="required number2 field wide short ui-widget-content ui-corner-all"
                                          name="montoSolicitado" title="Monto solicitado" autocomplete="off"
                                          value="${solicitud.montoSolicitado}"/>
                         </g:else>
+                        (Asignado: <span id="spanAsg">${asignado}</span>)
                     </td>
 
                     <td class="label">Modalidad de contratación</td>
@@ -546,7 +547,48 @@
                     autoOpen  : false,
                     width     : 350,
                     buttons   : {
-                        "Cerrar" : function () {
+                        "Guardar" : function () {
+                            var $dlg = $(this);
+                            var total = 0;
+                            var maximo = parseFloat($("#spanMax").attr("max"));
+                            var data = "";
+                            $("#tb").children().each(function () {
+                                var val = parseFloat($(this).attr("val"));
+                                var anio = parseFloat($(this).attr("class"));
+                                data += anio + "_" + val + ";";
+                                total += val;
+                            });
+                            if (total > maximo) {
+                                $("#spanError").text("Por favor ingrese valores cuya sumatoria no supere $" + number_format(maximo, 2, ",", "."));
+                                $("#divError").removeClass("ui-state-highlight").addClass("ui-state-error").show();
+                            } else {
+                                $("#divError").hide();
+                                $.ajax({
+                                    type    : "POST",
+                                    url     : "${createLink(action:'updateDetalleMonto_ajax')}",
+                                    data    : {
+                                        id      : "${solicitud.id}",
+                                        valores : data
+                                    },
+                                    success : function (msg) {
+                                        var parts = msg.split("_");
+                                        if (parts[0] == "OK") {
+                                            $(this).dialog("close");
+                                            var solicitado = parts[1];
+                                            var asignado = parts[2];
+
+                                            $("#spanAsg").text(asignado);
+                                            $("#montoSolicitado").val(solicitado).setMask("decimal");
+                                            $dlg.dialog("close");
+                                        } else {
+                                            $("#spanError").html(parts[1]);
+                                            $("#divError").removeClass("ui-state-highlight").addClass("ui-state-error").show();
+                                        }
+                                    }
+                                });
+                            }
+                        },
+                        "Cerrar"  : function () {
                             $(this).dialog("close");
                         }
                     }
@@ -557,7 +599,7 @@
                     resizable     : false,
                     autoOpen      : false,
                     closeOnEscape : false,
-                    width         : 450,
+                    width         : 500,
                     buttons       : {
                         "Guardar"  : function () {
                             if ($("#frmNuevaActividad").valid()) {
