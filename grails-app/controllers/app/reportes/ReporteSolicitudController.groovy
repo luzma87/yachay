@@ -5,6 +5,7 @@ import app.CargoPersonal
 import app.Solicitud
 import app.seguridad.Sesn
 import app.seguridad.Usro
+import app.yachai.DetalleMontoSolicitud
 import app.yachai.SolicitudAval
 
 class ReporteSolicitudController {
@@ -12,29 +13,48 @@ class ReporteSolicitudController {
     def index = {}
 
     def solicitudes = {
+        println "solicitudes"
         def list = []
-        Solicitud.list().each { sol ->
-            def map = [:]
-            map.unidadEjecutora = sol.unidadEjecutora
-            map.actividad = sol.actividad
-            map.fecha = sol.fecha
-            map.montoSolicitado = sol.montoSolicitado
-            map.tipoContrato = sol.tipoContrato
-            map.nombreProceso = sol.nombreProceso
-            map.plazoEjecucion = sol.plazoEjecucion
-            map.aprobacion = Aprobacion.findBySolicitud(sol)?.tipoAprobacion
-            map.incluirReunion = sol.incluirReunion
-            list += map
-        }
+        list = Solicitud.findAll("from Solicitud order by unidadEjecutora.id,fecha")
 
-        list = list.sort { it.aprobacion?.descripcion + it.unidadEjecutora?.nombre + it.fecha.format("dd-MM-yyyy") }
+        def anios = []
+
+
+
+//        list = list.sort { it.aprobacion?.descripcion + it.unidadEjecutora?.nombre + it.fecha.format("dd-MM-yyyy") }
 //        list = list.sort { a, b ->
 //            ((a.aprobacion?.descripcion <=> b.aprobacion?.descripcion) ?:
 //                    (a.unidadEjecutora?.nombre <=> b.unidadEjecutora?.nombre)) ?:
 //                    (a.fecha?.format("dd-MM-yyyy") <=> b.fecha?.format("dd-MM-yyyy"))
 //    }
 
-        return [solicitudInstanceList: list]
+
+        list.each {sol->
+            DetalleMontoSolicitud.findAllBySolicitud(sol,[sort:"anio"]).each {d->
+                if(!anios.contains(d.anio)){
+                    anios.add(d.anio)
+                }
+
+
+            }
+        }
+        return [solicitudInstanceList: list,anios:anios]
+    }
+
+    def solicitudesReunion={
+        def list = []
+        list = Solicitud.findAll("from Solicitud where  incluirReunion='S' order by unidadEjecutora.id,fecha")
+        def anios = []
+        list.each {sol->
+            DetalleMontoSolicitud.findAllBySolicitud(sol,[sort:"anio"]).each {d->
+                if(!anios.contains(d.anio)){
+                    anios.add(d.anio)
+                }
+
+
+            }
+        }
+        return [solicitudInstanceList: list,anios:anios]
     }
 
     def imprimirSolicitud = {

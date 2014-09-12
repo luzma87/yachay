@@ -97,38 +97,63 @@
             <slc:headerReporte title="Lista de Solicitudes de contratación"/>
 
             <div class="divTabla">
-                <table style="width: 100%;" border="1" class="tabla">
+                <table style="width: 100%;font-size: 10px" border="1" class="tabla">
                     <thead>
                         <tr>
-                            <th>Unidad Ejecutora</th>
-                            <th>Actividad</th>
-                            <th>Fecha</th>
-                            <th>Monto Solicitado</th>
-                            <th>Modalidad contratación</th>
-                            <th>Nombre del proceso</th>
-                            <th>Plazo de ejecución</th>
-                            <th>Estado</th>
-                            <th>Reunión</th>
+                            <th>Proyecto</th>
+                            <th>Componente</th>
+                            <th>N.Poa</th>
+                            <th>Nombre</th>
+                            <th>Objetivo</th>
+                            <th>TDR's</th>
+                            <th>Responsable</th>
+                            <g:each in="${anios}" var="a">
+                                <th>Valor ${a.anio}</th>
+                            </g:each>
+                            <th>Monto</th>
+                            <th>Aprobacion</th>
+                            %{--<th>Acta</th>--}%
+                            <th>
+                                Fecha<br>
+                                Solicitud
+                            </th>
+
                         </tr>
                     </thead>
                     <tbody>
                         <g:each in="${solicitudInstanceList}" status="i" var="solicitudInstance">
                             <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                                <td>
-                                    ${solicitudInstance.unidadEjecutora?.nombre}
-                                </td>
-                                <td>${solicitudInstance.actividad?.objeto}</td>
-                                <td>${solicitudInstance.fecha?.format('dd-MM-yyyy')}</td>
-                                <td><g:formatNumber number="${solicitudInstance.montoSolicitado}" type="currency"/></td>
-                                <td>${solicitudInstance.tipoContrato?.descripcion}</td>
+                                <td>${solicitudInstance.actividad.proyecto}</td>
+                                <td>${solicitudInstance.actividad.marcoLogico}</td>
+                                <td>${app.Asignacion.findByMarcoLogico(solicitudInstance.actividad)?.presupuesto?.numero}</td>
                                 <td>${solicitudInstance.nombreProceso}</td>
-                                <td><g:formatNumber number="${solicitudInstance.plazoEjecucion}" maxFractionDigits="0"/> días</td>
+                                <td>${solicitudInstance.objetoContrato}</td>
+                                <td>X</td>
                                 <td>
-                                    ${solicitudInstance.aprobacion?.descripcion}
+                                    ${solicitudInstance.unidadEjecutora?.codigo}
                                 </td>
-                                <td>
-                                    ${solicitudInstance.incluirReunion == "S" ? "Sí" : ""}
-                                </td>
+                                <g:each in="${anios}" var="a">
+                                    <g:set var="valor" value="${app.yachai.DetalleMontoSolicitud.findByAnioAndSolicitud(a,solicitudInstance)}"></g:set>
+                                    <g:if test="${valor}">
+                                        <td><g:formatNumber number="${valor.monto}" type="currency"/></td>
+                                    </g:if>
+                                    <g:else>
+                                        <td></td>
+                                    </g:else>
+
+                                </g:each>
+                                <td><g:formatNumber number="${solicitudInstance.montoSolicitado}" type="currency"/></td>
+                                <g:set var="estado" value="${Aprobacion.findBySolicitud(solicitudInstance)}"></g:set>
+                                <g:if test="${estado}">
+                                    <td>${estado.tipoAprobacion.descripcion}<br>${estado.fecha.format("dd-MM-yyyy")}</td>
+                                    %{--<td>Acta</td>--}%
+                                </g:if>
+                                <g:else>
+                                    <td>Pendiente</td>
+                                    %{--<td></td>--}%
+                                </g:else>
+                                <td>${solicitudInstance.fecha?.format('dd-MM-yyyy')}</td>
+
                             </tr>
                         </g:each>
                     </tbody>

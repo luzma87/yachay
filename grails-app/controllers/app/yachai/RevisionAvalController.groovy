@@ -57,7 +57,7 @@ class RevisionAvalController {
     }
 
     def historialAvales = {
-        // println "historial aval "+params
+        println "historial aval "+params
         def now = new Date()
         def anio = Anio.get(params.anio).anio
         def numero = ""
@@ -104,7 +104,7 @@ class RevisionAvalController {
                     }
                 }
                 if (params.numero && params.numero != "") {
-                    ilike("numero", "%" + params.numero + "%")
+                    eq("numero", params.numero.toInteger())
                 }
                 if (params.sort && params.sort != "") {
                     if (!externos.contains(params.sort)) {
