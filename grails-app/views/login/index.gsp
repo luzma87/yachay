@@ -89,7 +89,8 @@
 
         </div>
             <div style="position: absolute; margin-top:420px; margin-left:580px; text-align: left; font-size: 12px;">
-            &copy; TEDEIN S.A. Versión ${message(code: 'version', default: '1.1.0x')}</div>
+            %{--&copy; TEDEIN S.A. Versión ${message(code: 'version', default: '1.1.0x')}</div>--}%
+            Versión ${message(code: 'version', default: '1.1.0x')}</div>
         </div>
         <script>
             $(document).ready(function () {

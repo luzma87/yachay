@@ -32,7 +32,8 @@
 
                 <td style="width: 200px;">${proy.nombre}</td>
                 <td>${proy.codigoProyecto}</td>
-                <td><g:formatNumber number="${proy.monto}" locale="ec"/></td>
+                %{--<td><g:formatNumber number="${proy.monto}" locale="ec"/></td>--}%
+                <td style="text-align: right"><g:formatNumber number="${proy.monto.toDouble()}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
                 <td>${proy.estadoProyecto}</td>
                 <td style="text-align: center;"><g:link action="show" controller="proyecto" id="${proy.id}" target="_blank" class="btn">Ver</g:link></td>
                 <td style="text-align: center;"><g:link controller="marcoLogico" action="verMarcoCompleto" id="${proy.id}" target="_blank" class="btn">Ver</g:link></td>

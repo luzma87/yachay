@@ -9,8 +9,8 @@ class CronogramaController extends app.seguridad.Shield{
 
     def nuevoCronograma = {
       //  println "nuevo cronograma "+params
-//        def colores= ["rgba(221,123,66,0.7)","#FFAB48","#FFE7AD","#A7C9AE","#888A63"]
-        def colores= ["#7871BE","#7871BE","#7871BE","#7871BE","#7871BE"]
+        def colores= ["rgba(221,123,66,0.7)","#FFAB60","#FFE7AD","#A7C9AE","#888A63"]
+//        def colores= ["#7871BE","#7871BE","#7871BE","#7871BE","#7871BE"]
         def proyecto = Proyecto.get(params.id)
         def act = null
         if(params.act && params.act!="")

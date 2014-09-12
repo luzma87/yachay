@@ -440,13 +440,13 @@
         <g:each in="${componentes}" var="comp" status="k">
             <tr>
                 %{--<th colspan="7" style="background: #EFB64F">--}%
-                <th colspan="7" style="background: #595292">
+                <th colspan="7" style="background: #d0d0d0">
                     Componente ${k + 1} : ${(comp?.objeto.length() > 70) ? comp?.objeto.substring(0, 70) + "..." : comp.objeto}
                 </th>
             </tr>
 
                 %{--<tr style="background: #8FBF5C">--}%
-                <tr style="background: #7871BE">
+                <tr style="background: #e8e8e8">
                     <th style="width: 300px;">
                         Ubicación
                     </th>
