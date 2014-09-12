@@ -7,19 +7,132 @@ import app.seguridad.Sesn
 import app.seguridad.Usro
 import app.yachai.DetalleMontoSolicitud
 import app.yachai.SolicitudAval
+import jxl.Workbook
+import jxl.WorkbookSettings
+import jxl.write.Label
+import jxl.write.WritableCellFormat
+import jxl.write.WritableFont
+import jxl.write.WritableSheet
+import jxl.write.WritableWorkbook
 
 class ReporteSolicitudController {
 
     def index = {}
 
-    def solicitudes = {
-        println "solicitudes"
-        def list = []
-        list = Solicitud.findAll("from Solicitud order by unidadEjecutora.id,fecha")
+    def solicitudesXls = {
 
+        def list2 = Solicitud.findAll("from Solicitud order by unidadEjecutora.id,fecha")
+        def list01 = []
+        def list02 = []
         def anios = []
 
+        list2.each { s ->
+            def aprobaciones = Aprobacion.findBySolicitud(s)
+            if (aprobaciones && aprobaciones.tipoAprobacion.codigo != "NA") {
+                list01 += s
+            } else {
+                list02 += s
+            }
+        }
+        def list = list01 + list02
 
+        list.each { sol ->
+            DetalleMontoSolicitud.findAllBySolicitud(sol, [sort: "anio"]).each { d ->
+                if (!anios.contains(d.anio)) {
+                    anios.add(d.anio)
+                }
+            }
+        }
+
+        WorkbookSettings workbookSettings = new WorkbookSettings()
+        workbookSettings.locale = Locale.default
+        def file = File.createTempFile('solicitudes', '.xls')
+        def label
+        file.deleteOnExit()
+
+        WritableWorkbook workbook = Workbook.createWorkbook(file, workbookSettings)
+        WritableFont font = new WritableFont(WritableFont.ARIAL, 12)
+        WritableCellFormat formatXls = new WritableCellFormat(font)
+        def row = 1
+        WritableSheet sheet = workbook.createSheet('MySheet', 0)
+//        sheet.setColumnView(1, 30)
+//        sheet.setColumnView(2, 30)
+//        sheet.setColumnView(3, 62)
+//        sheet.setColumnView(4, 13)
+//        sheet.setColumnView(5, 35)
+//        sheet.setColumnView(6, 40)
+
+        /*Header*/
+        WritableFont times16font = new WritableFont(WritableFont.TIMES, 14, WritableFont.BOLD, true);
+        WritableCellFormat times16format = new WritableCellFormat(times16font);
+        def col = 1
+        label = new Label(col, row, "Proyecto", times16format); sheet.addCell(label);
+        col++
+        label = new Label(col, row, "Componente", times16format); sheet.addCell(label);
+        col++
+        label = new Label(col, row, "N.Poa", times16format); sheet.addCell(label);
+        col++
+        label = new Label(col, row, "Nombre", times16format); sheet.addCell(label);
+        col++
+        label = new Label(col, row, "Objetivo", times16format); sheet.addCell(label);
+        col++
+        label = new Label(col, row, "TDR's", times16format); sheet.addCell(label);
+        col++
+        label = new Label(col, row, "Responsable", times16format); sheet.addCell(label);
+        col++
+        anios.each { a ->
+            label = new Label(col, row, "Valor ${a.anio}", times16format); sheet.addCell(label);
+            col++
+        }
+        label = new Label(col, row, "Monto", times16format); sheet.addCell(label);
+        col++
+        label = new Label(col, row, "Aprobacion", times16format); sheet.addCell(label);
+        col++
+        label = new Label(col, row, "Fecha Solicitud", times16format); sheet.addCell(label);
+        col++
+
+
+        def usuarios = Usro.list()
+        usuarios = usuarios.sort { it.persona.apellido }
+        font = new WritableFont(WritableFont.ARIAL, 11)
+        formatXls = new WritableCellFormat(font)
+
+        usuarios.each { u ->
+            label = new Label(1, row, u.persona.apellido?.toUpperCase(), formatXls); sheet.addCell(label);
+            label = new Label(2, row, u.persona.nombre?.toUpperCase(), formatXls); sheet.addCell(label);
+            label = new Label(3, row, u.unidad.nombre?.toUpperCase(), formatXls); sheet.addCell(label);
+            label = new Label(4, row, u.persona.telefono, formatXls); sheet.addCell(label);
+            label = new Label(5, row, u.persona.mail, formatXls); sheet.addCell(label);
+            label = new Label(6, row, u.cargoPersonal?.descripcion?.toUpperCase(), formatXls); sheet.addCell(label);
+            row++
+
+        }
+
+        workbook.write();
+        workbook.close();
+        def output = response.getOutputStream()
+        def header = "attachment; filename=" + "reasignacion.xls";
+        response.setContentType("application/octet-stream")
+        response.setHeader("Content-Disposition", header);
+        output.write(file.getBytes());
+    }
+
+    def solicitudes = {
+        println "solicitudes"
+        def list2 = Solicitud.findAll("from Solicitud order by unidadEjecutora.id,fecha")
+        def list01 = []
+        def list02 = []
+        def anios = []
+
+        list2.each { s ->
+            def aprobaciones = Aprobacion.findBySolicitud(s)
+            if (aprobaciones && aprobaciones.tipoAprobacion.codigo != "NA") {
+                list01 += s
+            } else {
+                list02 += s
+            }
+        }
+        def list = list01 + list02
 
 //        list = list.sort { it.aprobacion?.descripcion + it.unidadEjecutora?.nombre + it.fecha.format("dd-MM-yyyy") }
 //        list = list.sort { a, b ->
@@ -29,32 +142,64 @@ class ReporteSolicitudController {
 //    }
 
 
-        list.each {sol->
-            DetalleMontoSolicitud.findAllBySolicitud(sol,[sort:"anio"]).each {d->
-                if(!anios.contains(d.anio)){
+        list.each { sol ->
+            DetalleMontoSolicitud.findAllBySolicitud(sol, [sort: "anio"]).each { d ->
+                if (!anios.contains(d.anio)) {
+                    anios.add(d.anio)
+                }
+            }
+        }
+        return [solicitudInstanceList: list, anios: anios]
+    }
+
+    def aprobadas = {
+        println "aprobadas"
+        def list = []
+        def list2 = Solicitud.findAll("from Solicitud order by unidadEjecutora.id,fecha")
+
+        list2.each { s ->
+            def aprobaciones = Aprobacion.findBySolicitud(s)
+            if (aprobaciones && aprobaciones.tipoAprobacion.codigo != "NA") {
+                list += s
+            }
+        }
+
+        def anios = []
+
+//        list = list.sort { it.aprobacion?.descripcion + it.unidadEjecutora?.nombre + it.fecha.format("dd-MM-yyyy") }
+//        list = list.sort { a, b ->
+//            ((a.aprobacion?.descripcion <=> b.aprobacion?.descripcion) ?:
+//                    (a.unidadEjecutora?.nombre <=> b.unidadEjecutora?.nombre)) ?:
+//                    (a.fecha?.format("dd-MM-yyyy") <=> b.fecha?.format("dd-MM-yyyy"))
+//    }
+
+
+        list.each { sol ->
+            DetalleMontoSolicitud.findAllBySolicitud(sol, [sort: "anio"]).each { d ->
+                if (!anios.contains(d.anio)) {
                     anios.add(d.anio)
                 }
 
 
             }
         }
-        return [solicitudInstanceList: list,anios:anios]
+        return [solicitudInstanceList: list, anios: anios]
     }
 
-    def solicitudesReunion={
+    def solicitudesReunion = {
         def list = []
         list = Solicitud.findAll("from Solicitud where  incluirReunion='S' order by unidadEjecutora.id,fecha")
         def anios = []
-        list.each {sol->
-            DetalleMontoSolicitud.findAllBySolicitud(sol,[sort:"anio"]).each {d->
-                if(!anios.contains(d.anio)){
+        list.each { sol ->
+            DetalleMontoSolicitud.findAllBySolicitud(sol, [sort: "anio"]).each { d ->
+                if (!anios.contains(d.anio)) {
                     anios.add(d.anio)
                 }
 
 
             }
         }
-        return [solicitudInstanceList: list,anios:anios]
+        return [solicitudInstanceList: list, anios: anios]
     }
 
     def imprimirSolicitud = {
