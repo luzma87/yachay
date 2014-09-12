@@ -49,21 +49,47 @@ class ReporteSolicitudController {
     }
 
     def imprimirActaAprobacion = {
+        println "Acta aprobacion:::: " + params
         def solicitud = Solicitud.get(params.id)
         def aprobacion = Aprobacion.findBySolicitud(solicitud)
 
-        def cargoDirectorPlanificacion = CargoPersonal.findByCodigo("DRPL")
-        def cargoGerentePlanificacion = CargoPersonal.findByCodigo("GRPL")
-
-        def directorPlanificacion = Usro.findByCargoPersonal(cargoDirectorPlanificacion)
-        def gerentePlanificacion = Usro.findByCargoPersonal(cargoGerentePlanificacion)
-
+//        def cargoDirectorPlanificacion = CargoPersonal.findByCodigo("DRPL")
+//        def cargoGerentePlanificacion = CargoPersonal.findByCodigo("GRPL")
+//
+//        def directorPlanificacion = Usro.findByCargoPersonal(cargoDirectorPlanificacion)
+//        def gerentePlanificacion = Usro.findByCargoPersonal(cargoGerentePlanificacion)
+//
+//        def firmas = []
+//        if (directorPlanificacion) {
+//            firmas += [cargo: "Director de planificación", usuario: directorPlanificacion]
+//        }
+//        if (gerentePlanificacion) {
+//            firmas += [cargo: "Gerente de planificación", usuario: gerentePlanificacion]
+//        }
         def firmas = []
-        if (directorPlanificacion) {
-            firmas += [cargo: "Director de planificación", usuario: directorPlanificacion]
+        if (params.fgp != "null") {
+            def gerentePlanificacion = Usro.get(params.fgp)
+            if (gerentePlanificacion) {
+                firmas += [cargo: "Gerente de planificación", usuario: gerentePlanificacion]
+            }
         }
-        if (gerentePlanificacion) {
-            firmas += [cargo: "Gerente de planificación", usuario: gerentePlanificacion]
+        if (params.fdp != "null") {
+            def directorPlanificacion = Usro.get(params.fdp)
+            if (directorPlanificacion) {
+                firmas += [cargo: "Director de planificación", usuario: directorPlanificacion]
+            }
+        }
+        if (params.fgt != "null") {
+            def gerenteTec = Usro.get(params.fgt)
+            if (gerenteTec) {
+                firmas += [cargo: "Gerente técnico", usuario: gerenteTec]
+            }
+        }
+        if (params.frq != "null") {
+            def req = Usro.get(params.frq)
+            if (req) {
+                firmas += [cargo: "Requirente", usuario: req]
+            }
         }
 
         return [solicitud: solicitud, aprobacion: aprobacion, firmas: firmas]

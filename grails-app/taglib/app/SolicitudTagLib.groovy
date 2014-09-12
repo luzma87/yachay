@@ -621,7 +621,6 @@ class SolicitudTagLib {
         def firmas = attrs.firmas
         def html = ''
         if (firmas.size() > 0) {
-
             def w = 100 / firmas.size()
             html = "<table width='100%' style='margin-top:2cm;' cellspacing='20' >"
             html += "<tr>"

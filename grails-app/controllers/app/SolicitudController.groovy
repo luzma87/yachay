@@ -771,7 +771,18 @@ class SolicitudController extends app.seguridad.Shield {
             }
         }
 
-        return [solicitud: solicitud, perfil: perfil, title: title, aprobacion: aprobacion]
+        def unidadGerenciaPlan = UnidadEjecutora.findByCodigo("DRPL") // GERENCIA DE PLANIFICACIÓN
+        def unidadDireccionPlan = UnidadEjecutora.findByCodigo("DPI") // DIRECCIÓN DE PLANIFICACIÓN E INVERSIÓN
+        def unidadGerenciaTec = UnidadEjecutora.findByCodigo("GT") // GERENCIA TÉCNICA
+        def unidadRequirente = solicitud.unidadEjecutora
+
+        def firmaGerenciaPlanif = Usro.findAllByUnidad(unidadGerenciaPlan)
+        def firmaDireccionPlanif = Usro.findAllByUnidad(unidadDireccionPlan)
+        def firmaGerenciaTec = Usro.findAllByUnidad(unidadGerenciaTec)
+        def firmaRequirente = Usro.findAllByUnidad(unidadRequirente)
+
+        return [solicitud           : solicitud, perfil: perfil, title: title, aprobacion: aprobacion, firmaGerenciaPlanif: firmaGerenciaPlanif,
+                firmaDireccionPlanif: firmaDireccionPlanif, firmaGerenciaTec: firmaGerenciaTec, firmaRequirente: firmaRequirente]
     }
 
     def saveAprobacion = {
