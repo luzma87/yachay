@@ -36,15 +36,15 @@ class AvalesController extends app.seguridad.Shield {
         def proceso
         def actual
         def band = true
-        def proyectos=[]
+        def proyectos = []
         def unidad = session.usuario.unidad
         Asignacion.findAllByUnidad(unidad).each {
             def p = it.marcoLogico.proyecto
-            if(!proyectos.contains(p)){
+            if (!proyectos.contains(p)) {
                 proyectos.add(p)
             }
         }
-        proyectos.sort{it.nombre}
+        proyectos.sort { it.nombre }
         if (params.anio)
             actual = Anio.get(params.anio)
         else
@@ -55,13 +55,13 @@ class AvalesController extends app.seguridad.Shield {
 
             aval.each {
                 //println "aval "+it.estado.descripcion+"  "+it.estado.codigo
-                if (it.estado?.codigo == "E01" || it.estado?.codigo == "E02" || it.estado.codigo=="E05" || it.estado.codigo=="E06" ) {
+                if (it.estado?.codigo == "E01" || it.estado?.codigo == "E02" || it.estado.codigo == "E05" || it.estado.codigo == "E06") {
                     band = false
                 }
             }
         }
 
-        [proyectos:proyectos,  proceso: proceso, actual: actual, band: band,unidad:unidad]
+        [proyectos: proyectos, proceso: proceso, actual: actual, band: band, unidad: unidad]
     }
 
     def getDetalle = {
@@ -73,11 +73,11 @@ class AvalesController extends app.seguridad.Shield {
         def band = true
         aval.each {
             //println "aval "+it.estado.descripcion+"  "+it.estado.codigo
-            if (it.estado?.codigo == "E01" || it.estado?.codigo == "E02" || it.estado.codigo=="E05" || it.estado.codigo=="E06" ) {
+            if (it.estado?.codigo == "E01" || it.estado?.codigo == "E02" || it.estado.codigo == "E05" || it.estado.codigo == "E06") {
                 band = false
             }
         }
-        [proceso: proceso, detalle: detalle,band:band]
+        [proceso: proceso, detalle: detalle, band: band]
     }
 
     def saveProceso = {
@@ -144,7 +144,7 @@ class AvalesController extends app.seguridad.Shield {
     def cargarActividades = {
         def comp = MarcoLogico.get(params.id)
         def unidad = UnidadEjecutora.get(params.unidad)
-        [acts: MarcoLogico.findAllByMarcoLogicoAndResponsable(comp,unidad, [sort: "numero"])]
+        [acts: MarcoLogico.findAllByMarcoLogicoAndResponsable(comp, unidad, [sort: "numero"])]
     }
     def cargarAsignaciones = {
         println "cargar asg " + params
@@ -182,20 +182,20 @@ class AvalesController extends app.seguridad.Shield {
         def unidad = UnidadEjecutora.get(session.unidad.id)
         def personasFirma = Usro.findAllByUnidad(unidad)
         def numero = null
-        numero=SolicitudAval.findAllByUnidad(session.usuario.unidad,[sort: "numero", order: "desc", max: 1])
-        if(numero.size()>0){
-            numero=numero?.pop()?.numero
+        numero = SolicitudAval.findAllByUnidad(session.usuario.unidad, [sort: "numero", order: "desc", max: 1])
+        if (numero.size() > 0) {
+            numero = numero?.pop()?.numero
         }
-        if(!numero){
-            numero=1
-        }else{
-            numero=numero+1
+        if (!numero) {
+            numero = 1
+        } else {
+            numero = numero + 1
         }
         def proceso = ProcesoAval.get(params.id)
         def now = new Date()
         if (proceso.fechaInicio < now) {
-            flash.message="Error: El proceso ${proceso.nombre}  (${proceso.fechaInicio.format('dd-MM-yyyy')} - ${proceso.fechaFin.format('dd-MM-yyyy')}) esta en ejecución, si desea solicitar un aval modifique las fechas de inicio y fin"
-            redirect(action: "avalesProceso",id: proceso.id)
+            flash.message = "Error: El proceso ${proceso.nombre}  (${proceso.fechaInicio.format('dd-MM-yyyy')} - ${proceso.fechaFin.format('dd-MM-yyyy')}) esta en ejecución, si desea solicitar un aval modifique las fechas de inicio y fin"
+            redirect(action: "avalesProceso", id: proceso.id)
             return
         }
 
@@ -208,7 +208,7 @@ class AvalesController extends app.seguridad.Shield {
         solicitudes.each {
             disponible -= it.monto
         }
-        [proceso: proceso, disponible: disponible, personas: personasFirma,numero:numero]
+        [proceso: proceso, disponible: disponible, personas: personasFirma, numero: numero]
 
     }
     def solicitarAnulacion = {
@@ -221,6 +221,11 @@ class AvalesController extends app.seguridad.Shield {
     def guardarSolicitud = {
         println "solicitud aval " + params
         /*TODO enviar alertas*/
+
+        if (params.monto) {
+            params.monto = params.monto.replaceAll("\\.", "")
+            params.monto = params.monto.replaceAll(",", ".")
+        }
 
         def path = servletContext.getRealPath("/") + "pdf/solicitudAval/"
         new File(path).mkdirs()
@@ -273,13 +278,13 @@ class AvalesController extends app.seguridad.Shield {
                 if (params.aval)
                     sol.aval = Aval.get(params.aval)
                 sol.usuario = session.usuario
-                sol.numero=params.numero
+                sol.numero = params.numero
                 sol.monto = monto
                 sol.concepto = concepto
                 sol.memo = momorando
                 sol.path = nombre
                 sol.firma1 = Usro.get(params.firma1)
-                sol.unidad=session.usuario.unidad
+                sol.unidad = session.usuario.unidad
                 if (params.tipo)
                     sol.tipo = params.tipo
                 sol.fecha = new Date();

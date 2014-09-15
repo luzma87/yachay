@@ -48,16 +48,16 @@ class RevisionAvalController {
         [actual: actual]
     }
 
-    def liberarAval ={
+    def liberarAval = {
 
         def aval = Aval.get(params.id)
         def detalle = ProcesoAsignacion.findAllByProceso(aval.proceso)
-        [aval:aval,detalle:detalle]
+        [aval: aval, detalle: detalle]
 
     }
 
     def historialAvales = {
-        println "historial aval "+params
+        println "historial aval " + params
         def now = new Date()
         def anio = Anio.get(params.anio).anio
         def numero = ""
@@ -193,10 +193,10 @@ class RevisionAvalController {
         def unidad = UnidadEjecutora.findByCodigo("DPI") // DIRECCIÓN DE PLANIFICACIÓN E INVERSIÓN
         def personasFirmas = Usro.findAllByUnidad(unidad)
         def numero = 0
-        def max = Aval.list([sort: "numero",order: "desc",max: 1])
-        println "max "+max.numero
-        if(max.size()>0)
-            numero=max[0].numero+1
+        def max = Aval.list([sort: "numero", order: "desc", max: 1])
+        println "max " + max.numero
+        if (max.size() > 0)
+            numero = max[0].numero + 1
         def solicitud = SolicitudAval.get(params.id)
         def band = false
         def usuario = Usro.get(session.usuario.id)
@@ -204,7 +204,7 @@ class RevisionAvalController {
         band = true
         if (!band)
             response.sendError(403)
-        [solicitud: solicitud, personas: personasFirmas,numero:numero]
+        [solicitud: solicitud, personas: personasFirmas, numero: numero]
     }
 
     def aprobarAnulacion = {
@@ -232,6 +232,12 @@ class RevisionAvalController {
 
     def guardarLiberacion = {
         println "liberacion " + params
+
+        if (params.monto) {
+            params.monto = params.monto.replaceAll("\\.", "")
+            params.monto = params.monto.replaceAll(",", ".")
+        }
+
         def path = servletContext.getRealPath("/") + "avales/"
         new File(path).mkdirs()
         def f = request.getFile('archivo')
@@ -296,12 +302,12 @@ class RevisionAvalController {
                 band = true
                 def datos = params.datos.split("&")
                 datos.each {
-                    if(it!=""){
+                    if (it != "") {
                         def data = it.split(";")
-                        println "data "+data
-                        if(data.size()==2){
+                        println "data " + data
+                        if (data.size() == 2) {
                             def det = ProcesoAsignacion.get(data[0])
-                            det.monto=data[1].toDouble()
+                            det.monto = data[1].toDouble()
                             det.save(flush: true)
                         }
                     }
@@ -314,8 +320,8 @@ class RevisionAvalController {
                     aval.liberacion = aval.monto
                     aval.monto = params.monto.toDouble()
                     aval.estado = EstadoAval.findByCodigo("E05")
-                    aval.contrato=params.contrato
-                    aval.certificacion=params.certificacion
+                    aval.contrato = params.contrato
+                    aval.certificacion = params.certificacion
                     aval.save(flush: true)
                     flash.message = "Aval " + aval.fechaAprobacion.format("yyyy") + "-CP No." + aval.numero + " Liberado"
                     redirect(action: 'listaAvales', controller: 'revisionAval')

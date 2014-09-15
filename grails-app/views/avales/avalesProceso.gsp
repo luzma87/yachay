@@ -1,136 +1,142 @@
 <%@ page import="app.TipoElemento" contentType="text/html;charset=UTF-8" %>
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="layout" content="main"/>
-    <title>Avales</title>
-    <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}"
-          type="text/css"/>
-    <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'BreadCrumb.css')}"
-          type="text/css"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'svt.css')}"
-          type="text/css"/>
-    <script src="${resource(dir: 'js/jquery/plugins/', file: 'jquery.easing.1.3.js')}" type="text/javascript"
-            language="JavaScript"></script>
-    <script src="${resource(dir: 'js/jquery/plugins/jBreadCrumb/js', file: 'jquery.jBreadCrumb.1.1.js')}"
-            type="text/javascript" language="JavaScript"></script>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="layout" content="main"/>
+        <title>Avales</title>
+        <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}"
+              type="text/css"/>
+        <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'BreadCrumb.css')}"
+              type="text/css"/>
+        <link rel="stylesheet" href="${resource(dir: 'css', file: 'svt.css')}"
+              type="text/css"/>
+        <script src="${resource(dir: 'js/jquery/plugins/', file: 'jquery.easing.1.3.js')}" type="text/javascript"
+                language="JavaScript"></script>
+        <script src="${resource(dir: 'js/jquery/plugins/jBreadCrumb/js', file: 'jquery.jBreadCrumb.1.1.js')}"
+                type="text/javascript" language="JavaScript"></script>
 
-</head>
-<body>
-<g:if test="${flash.message}">
-    <div class="message ui-state-highlight ui-corner-all">
-        ${flash.message}
-    </div>
-</g:if>
-<div class="fila">
-    <g:link controller="avales" action="listaProcesos" class="btn">Procesos</g:link>
-    <g:link controller="avales" action="solicitarAval" class="btn" id="${proceso.id}">Nueva solicitud</g:link>
-</div>
-<div id="tabs" style="width: 1050px;margin-top: 10px;">
-    <ul>
-        <li><a href="#lista">Avales</a></li>
-        <li><a href="#solicitudes">Solicitudes</a></li>
-    </ul>
-    <div id="lista" style="width: 960px;">
-        <g:if test="${avales.size()>0}">
-            <table style="width: 95%;margin-top: 10px" >
-                <thead>
-                <tr>
-                    <th>Proceso</th>
-                    <th>Concepto</th>
-                    <th>Fecha</th>
-                    <th>Número</th>
-                    <th>Monto</th>
-                    <th>Estado</th>
-                    <th>Aval</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <g:each in="${avales}" var="p">
-                    <tr>
-                        <td>${p.proceso.nombre}</td>
-                        <td>${p.concepto}</td>
-                        <td style="text-align: center">${p.fechaAprobacion?.format("dd-MM-yyyy")}</td>
-                        <td style="text-align: center">${p.numero}</td>
-                        <td style="text-align: right">
-                            <g:formatNumber number="${p.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
-                        </td>
-                        <td style="text-align: center" class="${p.estado?.codigo}">${p.estado?.descripcion}</td>
-                        <td style="text-align: center">
-                            <a href="#" class="imprimiAval" iden="${p.id}">Imprimir</a>
-                        </td>
-                        <td style="text-align: center">
-                            <g:if test="${p.estado.codigo=='E02'}">
-                                <a href="#" class="solAnulacion" iden="${p.id}">Solicitar anulación</a>
-                            </g:if>
-                        </td>
-                    </tr>
-                </g:each>
+    </head>
 
-                </tbody>
-            </table>
+    <body>
+        <g:if test="${flash.message}">
+            <div class="message ui-state-highlight ui-corner-all">
+                ${flash.message}
+            </div>
         </g:if>
-    </div>
-    <div id="solicitudes" style="width: 960px;">
-        <g:if test="${solicitudes.size()>0}">
-            <table style="width: 95%;margin-top: 10px" >
-                <thead>
-                <tr>
-                    <th>Fecha</th>
-                    <th>Proceso</th>
-                    <th>Tipo</th>
-                    <th>Concepto</th>
-                    <th>Monto</th>
-                    <th>Estado</th>
-                    <th>Doc. Respaldo</th>
-                    <th>Solicitud</th>
-                </tr>
-                </thead>
-                <tbody>
-                <g:each in="${solicitudes}" var="p">
-                    <tr>
-                        <td>${p.fecha.format("dd-MM-yyyy")}</td>
-                        <td>${p.proceso.nombre}</td>
-                        <td class="${(p.tipo=='A')?'E03':'E02'}">${(p.tipo=="A")?'Anulación':'Aprobación'}</td>
-                        <td>${p.concepto}</td>
-                        <td style="text-align: right">${p.monto}</td>
-                        <td style="text-align: center" class="${p.estado?.codigo}">${p.estado?.descripcion}</td>
-                        <td style="text-align: center">
-                            <a href="#" class="btn descRespaldo" iden="${p.id}">Ver</a>
-                        </td>
-                        <td style="text-align: center">
-                            <g:if  test="${p.tipo!='A'}">
-                                <a href="#" class="imprimiSolicitud" iden="${p.id}">Imprimir</a>
-                            </g:if>
-                        </td>
-                    </tr>
-                </g:each>
+        <div class="fila">
+            <g:link controller="avales" action="listaProcesos" class="btn">Procesos</g:link>
+            <g:link controller="avales" action="solicitarAval" class="btn" id="${proceso.id}">Nueva solicitud</g:link>
+        </div>
 
-                </tbody>
-            </table>
-        </g:if>
-    </div>
+        <div id="tabs" style="width: 1050px;margin-top: 10px;">
+            <ul>
+                <li><a href="#lista">Avales</a></li>
+                <li><a href="#solicitudes">Solicitudes</a></li>
+            </ul>
 
-</div>
+            <div id="lista" style="width: 960px;">
+                <g:if test="${avales.size() > 0}">
+                    <table style="width: 95%;margin-top: 10px">
+                        <thead>
+                            <tr>
+                                <th>Proceso</th>
+                                <th>Concepto</th>
+                                <th>Fecha</th>
+                                <th>Número</th>
+                                <th>Monto</th>
+                                <th>Estado</th>
+                                <th>Aval</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <g:each in="${avales}" var="p">
+                                <tr>
+                                    <td>${p.proceso.nombre}</td>
+                                    <td>${p.concepto}</td>
+                                    <td style="text-align: center">${p.fechaAprobacion?.format("dd-MM-yyyy")}</td>
+                                    <td style="text-align: center">${p.numero}</td>
+                                    <td style="text-align: right">
+                                        <g:formatNumber number="${p.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"></g:formatNumber>
+                                    </td>
+                                    <td style="text-align: center" class="${p.estado?.codigo}">${p.estado?.descripcion}</td>
+                                    <td style="text-align: center">
+                                        <a href="#" class="imprimiAval" iden="${p.id}">Imprimir</a>
+                                    </td>
+                                    <td style="text-align: center">
+                                        <g:if test="${p.estado.codigo == 'E02'}">
+                                            <a href="#" class="solAnulacion" iden="${p.id}">Solicitar anulación</a>
+                                        </g:if>
+                                    </td>
+                                </tr>
+                            </g:each>
 
-<script>
-    $(".btn").button()
-    $(".imprimiAval").button({icons:{ primary:"ui-icon-print"},text:false}).click(function(){
-        location.href = "${createLink(controller:'avales',action:'descargaAval')}/"+$(this).attr("iden")
-    })
-    $(".imprimiSolicitud").button({icons:{ primary:"ui-icon-print"},text:false}).click(function(){
-        var url = "${g.createLink(controller: 'reporteSolicitud',action: 'imprimirSolicitudAval')}/?id="+$(this).attr("iden")
-        location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url+"&filename=solicitud.pdf"
-    })
-    $(".descRespaldo").click(function(){
-        location.href = "${createLink(controller:'avales',action:'descargaSolicitud')}/"+$(this).attr("iden")
+                        </tbody>
+                    </table>
+                </g:if>
+            </div>
 
-    });
-    $(".solAnulacion").button({icons:{ primary:"ui-icon-document-b"},text:false}).click(function(){
-        location.href='${g.createLink(action: "solicitarAnulacion")}/'+$(this).attr("iden")
-    })
-    $("#tabs").tabs()
-</script>
-</body>
+            <div id="solicitudes" style="width: 960px;">
+                <g:if test="${solicitudes.size() > 0}">
+                    <table style="width: 95%;margin-top: 10px">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Proceso</th>
+                                <th>Tipo</th>
+                                <th>Concepto</th>
+                                <th>Monto</th>
+                                <th>Estado</th>
+                                <th>Doc. Respaldo</th>
+                                <th>Solicitud</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <g:each in="${solicitudes}" var="p">
+                                <tr>
+                                    <td>${p.fecha.format("dd-MM-yyyy")}</td>
+                                    <td>${p.proceso.nombre}</td>
+                                    <td class="${(p.tipo == 'A') ? 'E03' : 'E02'}">${(p.tipo == "A") ? 'Anulación' : 'Aprobación'}</td>
+                                    <td>${p.concepto}</td>
+                                    <td style="text-align: right">
+                                        <g:formatNumber number="${p.monto}" type="currency"/>
+                                    </td>
+                                    <td style="text-align: center" class="${p.estado?.codigo}">${p.estado?.descripcion}</td>
+                                    <td style="text-align: center">
+                                        <a href="#" class="btn descRespaldo" iden="${p.id}">Ver</a>
+                                    </td>
+                                    <td style="text-align: center">
+                                        <g:if test="${p.tipo != 'A'}">
+                                            <a href="#" class="imprimiSolicitud" iden="${p.id}">Imprimir</a>
+                                        </g:if>
+                                    </td>
+                                </tr>
+                            </g:each>
+
+                        </tbody>
+                    </table>
+                </g:if>
+            </div>
+
+        </div>
+
+        <script>
+            $(".btn").button()
+            $(".imprimiAval").button({icons : { primary : "ui-icon-print"}, text : false}).click(function () {
+                location.href = "${createLink(controller:'avales',action:'descargaAval')}/" + $(this).attr("iden")
+            })
+            $(".imprimiSolicitud").button({icons : { primary : "ui-icon-print"}, text : false}).click(function () {
+                var url = "${g.createLink(controller: 'reporteSolicitud',action: 'imprimirSolicitudAval')}/?id=" + $(this).attr("iden")
+                location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename=solicitud.pdf"
+            })
+            $(".descRespaldo").click(function () {
+                location.href = "${createLink(controller:'avales',action:'descargaSolicitud')}/" + $(this).attr("iden")
+
+            });
+            $(".solAnulacion").button({icons : { primary : "ui-icon-document-b"}, text : false}).click(function () {
+                location.href = '${g.createLink(action: "solicitarAnulacion")}/' + $(this).attr("iden")
+            })
+            $("#tabs").tabs()
+        </script>
+    </body>
 </html>
