@@ -20,8 +20,11 @@
                     Nueva solicitud
                 </g:link>
                 <a href="#" class="button print">
-                    Imprimir
+                    PDF
                 </a>
+                <g:link controller="reporteSolicitud" action="solicitudesXls" class="button xls">
+                    XLS
+                </g:link>
             </div> <!-- toolbar -->
 
             <div class="body">
@@ -117,6 +120,8 @@
                     location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename=solicitudes.pdf";
                     return false;
                 });
+
+                $(".xls").button("option", "icons", {primary : 'ui-icon-note'});
                 $(".create").button("option", "icons", {primary : 'ui-icon-document'});
             });
         </script>
