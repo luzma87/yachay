@@ -184,7 +184,11 @@ class CronogramaController extends app.seguridad.Shield{
         def cn = dbConnectionService.getConnection()
         def res = true
         def asignaciones = []
+        def bandUnidad = true
         MarcoLogico.findAll("from MarcoLogico where tipoElemento=3 and proyecto=${proyecto.id} and estado=0 ").each{comp->
+//            println "comp "+comp.responsable
+            if(!comp.responsable)
+                bandUnidad=false
             def asgs= Asignacion.findAll("from Asignacion where marcoLogico=${comp.id} and anio=${anio.id} and padre is null ")
             asgs.each {aa->
                 if (res){
@@ -194,23 +198,31 @@ class CronogramaController extends app.seguridad.Shield{
             }
 
         }
-        if(res){
-            asignaciones.each {asg->
+        print "band unidad "+bandUnidad
+        if(bandUnidad){
+            if(res){
+                asignaciones.each {asg->
 
-                res = eliminaHijas(asg)
-                if (res){
-                    try{
-                        params.id=asg.id
-                        kerberosService.delete(params,Asignacion,session.perfil,session.usuario)
-                    }catch (e){
-                        println "no pudo borrar  "+params.id+"  e "+e
-                        res = false
+                    res = eliminaHijas(asg)
+                    if (res){
+                        try{
+                            params.id=asg.id
+                            kerberosService.delete(params,Asignacion,session.perfil,session.usuario)
+                        }catch (e){
+                            println "no pudo borrar  "+params.id+"  e "+e
+                            res = false
+                        }
                     }
+
+
                 }
-
-
             }
+        }else{
+            render "error"
+            return
+            res=false
         }
+
 
         /*Inicio del cambio!!! usando views*/
 

@@ -207,7 +207,7 @@
                 <div style="width: 98%;height: 35px;">
                     <span style="font-weight: bold;font-style: italic">Responsable:</span>
                     <g:select from="${app.UnidadEjecutora.list([sort:'nombre'])}" name="responsable" optionKey="id" optionValue="nombre" class="responsable ui-corner-all"
-                              id="resp_${act.id}" value="${act.responsable?.id}" style="width: 350px"></g:select>
+                              id="resp_${act.id}" value="${act.responsable?.id}" style="width: 350px" noSelection="['-1':'Seleccione...']"></g:select>
                     <div style="width: 300px;height: 100%;float: right">
                         <a href="#" act="${act.id}" class="ui-corner-all guardarAct">Guardar cambios</a>
                         <g:link controller="cronograma" action="nuevoCronograma" params="['id':act.proyecto.id,'act':act.id]" class="btn">Cronograma</g:link>

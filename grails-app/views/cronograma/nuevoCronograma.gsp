@@ -612,13 +612,19 @@
                             proyecto:"${proyecto.id}"
                         },
                         success: function(msg) {
-                            if (msg != "no") {
+                            if (msg != "no" && msg!="error") {
 
                                 location.href="${createLink(controller: 'asignacion',action: 'asignacionProyectov2',params:[id:proyecto.id,anio:anio.id])}"
 
                             } else {
-                                $("#load").dialog("close")
-                                alert("Error: No se pudo eliminar todas las asignaciones, revice que no tengan modificaciones o certificaciones")
+                                if(msg=="error"){
+                                    $("#load").dialog("close")
+                                    alert("Error: No se pueden crear las asignaciones, revice que todas las actividades del proyecto tengan responsables")
+                                }else{
+                                    $("#load").dialog("close")
+                                    alert("Error: No se pudo eliminar todas las asignaciones, revice que no tengan modificaciones o certificaciones")
+                                }
+
                             }
                         }
                     });
