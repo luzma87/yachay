@@ -211,11 +211,13 @@ class AsignacionController extends app.seguridad.Shield {
                 def asig = Asignacion.findAll("from Asignacion where marcoLogico=${it.id} and anio=${actual.id}   order by id")
                 if (asig){
                     asignaciones += asig
+                    println "add "+asig.id+" "+asig.unidad
                     asig.each{asg->
                         total = total+asg.getValorReal()
                     }
                 }
             }
+
             asignaciones.sort{it.unidad.nombre}
             def unidad = UnidadEjecutora.findByPadreIsNull()
             maxInv=PresupuestoUnidad.findByAnioAndUnidad(actual,unidad)?.maxInversion
