@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="layout" content="main"/>
-    <title>Crear proceso</title>
+    <title>Lista de Procesos</title>
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}"
           type="text/css"/>
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'BreadCrumb.css')}"
@@ -29,7 +29,7 @@
 <body>
 
 <div class="fila">
-    <g:link controller="avales" action="crearProceso" class="btn">Crear nuevo</g:link>
+    <g:link controller="avales" action="crearProceso" class="btn">Crear nuevo Proceso de contratación</g:link>
 </div>
 <table style="width: 95%;margin-top: 10px" >
     <thead>

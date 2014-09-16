@@ -1,4 +1,8 @@
 package app
+/*
+  Actividades de gasto corriente
+ */
+
 class Actividad implements Serializable {
     String codigo
     String descripcion
