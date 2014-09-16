@@ -670,6 +670,7 @@ class SolicitudController extends app.seguridad.Shield {
             def unidadEjecutora = usuario.unidad
             def solicitud = new Solicitud()
             def title = "Nueva"
+            def asignado = 0
             if (params.id) {
                 solicitud = solicitud.get(params.id)
                 if (solicitud.estado == 'A') {
@@ -681,12 +682,12 @@ class SolicitudController extends app.seguridad.Shield {
                     flash.message = "No se encontró la solicitud"
                     solicitud = new Solicitud()
                 }
+
+                DetalleMontoSolicitud.findAllBySolicitud(solicitud).each { d ->
+                    asignado += d.monto
+                }
             }
             title += " solicitud"
-            def asignado = 0
-            DetalleMontoSolicitud.findAllBySolicitud(solicitud).each { d ->
-                asignado += d.monto
-            }
             return [unidadRequirente: unidadEjecutora, solicitud: solicitud, title: title, asignado: formatNumber(number: asignado, type: "currency")]
         } else {
             if (params.id) {
