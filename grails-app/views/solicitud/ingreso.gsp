@@ -198,7 +198,7 @@
                                          name="montoSolicitado" title="Monto solicitado" autocomplete="off"
                                          value="${solicitud.montoSolicitado}"/>
                         </g:else>
-                        (Asignado: <span id="spanAsg">${asignado}</span>)
+                        (Detallado: <span id="spanAsg">${asignado}</span>)
                     </td>
 
                     <td class="label">Modalidad de contratación</td>
@@ -654,7 +654,22 @@
                 $("#selContrato").selectmenu({width : 150});
                 $("#selFormaPago").selectmenu({width : 150});
 
-                $('.datepicker').datepicker({
+                $('#fecha').datepicker({
+                    changeMonth : true,
+                    changeYear  : true,
+                    dateFormat  : 'dd-mm-yy',
+                    minDate     : "+0"
+                });
+                $('#fechaInicio').datepicker({
+                    changeMonth : true,
+                    changeYear  : true,
+                    dateFormat  : 'dd-mm-yy',
+                    minDate     : "+0",
+                    onSelect    : function (dateText, inst) {
+                        $("#fechaFin").datepicker("option", "minDate", new Date(inst.selectedYear, inst.selectedMonth, parseInt(inst.selectedDay) + 1));
+                    }
+                });
+                $('#fechaFin').datepicker({
                     changeMonth : true,
                     changeYear  : true,
                     dateFormat  : 'dd-mm-yy',

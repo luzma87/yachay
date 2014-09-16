@@ -10,9 +10,19 @@
     <head>
         <title>Imprimir solicitud</title>
         <style type="text/css">
+        @font-face {
+            font-family : 'Arial';
+            src         : url('${resource(dir:"fontPdf", file: "arial.ttf")}');
+        }
+
         @page {
             size   : 21cm 29.7cm;  /*width height */
             margin : 2cm;
+        }
+
+        body {
+            font-family : Arial, arial, arial-black, sans-serif;
+            font-size   : 10pt;
         }
 
         .hoja {
@@ -82,6 +92,11 @@
             text-align  : center;
             font-weight : bold;
         }
+
+        .fecha {
+            text-align : right;
+            margin-top : 1cm;
+        }
         </style>
     </head>
 
@@ -89,6 +104,9 @@
         <div class="hoja">
             <slc:headerReporte title="Solicitud de contratación"/>
             <slc:infoReporte solicitud="${solicitud}"/>
+            <div class="fecha">
+                Quito, ${solicitud.fecha?.format("dd-MM-yyyy")}
+            </div>
             <slc:firmasReporte firmas="${firmas}"/>
         </div>
     </body>

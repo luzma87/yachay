@@ -79,7 +79,7 @@ class SolicitudTagLib {
             DetalleMontoSolicitud.findAllBySolicitud(solicitud).each { d ->
                 asignado += d.monto
             }
-            html += "<br/>(Asignado: ${formatNumber(number: asignado, type: 'currency')})"
+            html += "<br/>(Detallado: ${formatNumber(number: asignado, type: 'currency')})"
             html += '</td>'
 
             html += '<td class="label">Modalidad de contratación</td>'
@@ -390,10 +390,11 @@ class SolicitudTagLib {
         def html = ""
         html += "<table width='100%' style='margin-bottom:10px;'>"
         html += "<tr>"
-        html += "<td rowspan='${rowspan}'><img src='${logoPath}' style='width:${w}px;'/></td>"
+        html += "<td style='width:206px;' rowspan='${rowspan}'><img src='${logoPath}' style='width:${w}px;'/></td>"
         html += "</tr>"
         html += "<tr>"
         html += "<td class='ttl'>YACHAY EP</td>"
+        html += "<td style='width:100px;'> </td>"
         html += "</tr>"
 //        html += "<tr>"
 //        html += "<td class='ttl'>GERENCIA DE PLANIFICACIÓN</td>"
@@ -404,6 +405,7 @@ class SolicitudTagLib {
         if (title != "") {
             html += "<tr>"
             html += "<td class='ttl'>${title}</td>"
+            html += "<td> </td>"
             html += "</tr>"
         }
         html += "</table>"
@@ -418,7 +420,7 @@ class SolicitudTagLib {
         if (solicitud) {
             html += '<table style="width: 100%;">'
             html += '<tr>'
-            html += '<td class="label">Unidad requirente</td>'
+            html += '<td style="width:5.5cm;" class="label">Unidad requirente</td>'
             html += '<td colspan="5">'
             html += (solicitud.unidadEjecutora?.nombre ?: "")
             html += '</td>'
@@ -478,12 +480,12 @@ class SolicitudTagLib {
             html += '</td>'
             html += '</tr>'
 
-            html += '<tr>'
-            html += '<td class="label">Fecha</td>'
-            html += '<td colspan="3">'
-            html += solicitud.fecha?.format("dd-MM-yyyy")
-            html += '</td>'
-            html += '</tr>'
+//            html += '<tr>'
+//            html += '<td class="label">Fecha</td>'
+//            html += '<td colspan="3">'
+//            html += solicitud.fecha?.format("dd-MM-yyyy")
+//            html += '</td>'
+//            html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Monto solicitado</td>'
@@ -541,12 +543,12 @@ class SolicitudTagLib {
             html += '</td>'
             html += '</tr>'
             html += '</thead>'
-            html += '<tbody>'
-            html += '<td style="width: 98px;" class="label">Observaciones:</td>'
-            html += '<td style="width: 785px;">'
-            html += (solicitud.observacionesAdministrativaFinanciera ?: '- Sin observaciones-')
-            html += '</td>'
-            html += '</tbody>'
+//            html += '<tbody>'
+//            html += '<td style="width: 98px;" class="label">Observaciones:</td>'
+//            html += '<td style="width: 785px;">'
+//            html += (solicitud.observacionesAdministrativaFinanciera ?: '- Sin observaciones-')
+//            html += '</td>'
+//            html += '</tbody>'
             html += '</table>'
 
             html += '<table width="100%" class="ui-widget-content ui-corner-all">'
@@ -559,31 +561,31 @@ class SolicitudTagLib {
             html += '</td>'
             html += '</tr>'
             html += '</thead>'
-            html += '<tbody>'
-            html += '<td style="width: 98px;" class="label">Observaciones:</td>'
-            html += '<td style="width: 785px;">'
-            html += (solicitud.observacionesJuridica ?: '- Sin observaciones-')
-            html += '</td>'
-            html += '</tbody>'
+//            html += '<tbody>'
+//            html += '<td style="width: 98px;" class="label">Observaciones:</td>'
+//            html += '<td style="width: 785px;">'
+//            html += (solicitud.observacionesJuridica ?: '- Sin observaciones-')
+//            html += '</td>'
+//            html += '</tbody>'
             html += '</table>'
 
-            html += '<table width="100%" class="ui-widget-content ui-corner-all">'
-            html += '<thead>'
-            html += '<tr>'
-            html += '<td colspan="3" class="ui-widget ui-widget-header ui-corner-all" style="padding: 3px;">'
-            html += 'Gerencia de Dirección de Proyectos (' + (solicitud.revisadoDireccionProyectos ?
-                    'Revisado el ' + solicitud.revisadoDireccionProyectos.format('dd-MM-yyyy') :
-                    'No revisado') + ')'
-            html += '</td>'
-            html += '</tr>'
-            html += '</thead>'
-            html += '<tbody>'
-            html += '<td class="label" style="width: 98px;">Observaciones:</td>'
-            html += '<td style="width: 785px;">'
-            html += (solicitud.observacionesDireccionProyectos ?: '- Sin observaciones-')
-            html += '</td>'
-            html += '</tbody>'
-            html += '</table>'
+//            html += '<table width="100%" class="ui-widget-content ui-corner-all">'
+//            html += '<thead>'
+//            html += '<tr>'
+//            html += '<td colspan="3" class="ui-widget ui-widget-header ui-corner-all" style="padding: 3px;">'
+//            html += 'Gerencia de Dirección de Proyectos (' + (solicitud.revisadoDireccionProyectos ?
+//                    'Revisado el ' + solicitud.revisadoDireccionProyectos.format('dd-MM-yyyy') :
+//                    'No revisado') + ')'
+//            html += '</td>'
+//            html += '</tr>'
+//            html += '</thead>'
+//            html += '<tbody>'
+//            html += '<td class="label" style="width: 98px;">Observaciones:</td>'
+//            html += '<td style="width: 785px;">'
+//            html += (solicitud.observacionesDireccionProyectos ?: '- Sin observaciones-')
+//            html += '</td>'
+//            html += '</tbody>'
+//            html += '</table>'
         }
         out << html
     }
@@ -621,14 +623,24 @@ class SolicitudTagLib {
         def firmas = attrs.firmas
         def html = ''
         if (firmas.size() > 0) {
-            def w = 100 / firmas.size()
+            int s = firmas.size().toInteger()
+            def w = Math.floor(100 / s)
             html = "<table width='100%' style='margin-top:2cm;' cellspacing='20' >"
             html += "<tr>"
-            firmas.each { firma ->
-                html += "<td width='${w}%' style='border-top: solid 1px black; text-align:center;'>"
-                html += firma.usuario.persona.nombre + " " + firma.usuario.persona.apellido
-                html += "<br/>" + firma.cargo
+            if (s == 1) {
+                html += "<td width='20%' > </td>"
+                html += "<td width='50%' style='border-top: solid 1px black; text-align:center;'>"
+                html += firmas.first().usuario.persona.nombre + " " + firmas.first().usuario.persona.apellido
+                html += "<br/>" + firmas.first().cargo
                 html += "</td>"
+                html += "<td width='20%' > </td>"
+            } else {
+                firmas.each { firma ->
+                    html += "<td width='${w}%' style='border-top: solid 1px black; text-align:center;'>"
+                    html += firma.usuario.persona.nombre + " " + firma.usuario.persona.apellido
+                    html += "<br/>" + firma.cargo
+                    html += "</td>"
+                }
             }
             html += "</tr>"
             html += "</table>"
