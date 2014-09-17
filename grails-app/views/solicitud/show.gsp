@@ -15,7 +15,7 @@
 
     <body>
 
-        %{--<h2>${Prfl.get(session.perfil.id).nombre}</h2>--}%
+        %{--<h2>${Prfl.get(session.perfil.id).nombre} ${Prfl.get(session.perfil.id).codigo} ${solicitud.estado}</h2>--}%
 
         <div class="dialog" title="${title}">
             <div id="" class="toolbar ui-widget-header ui-corner-all">
@@ -48,7 +48,7 @@
                                 <td colspan="4" style="padding-bottom: 15px; font-size: larger; font-weight: bold;">
                                     <g:if test="${solicitud.incluirReunion == 'S'}">
                                         Se incluirá en la próxima reunión de aprobación
-                                        (Solicitado el ${solicitud.fechaPeticionReunion.format("dd-MM-yyyy HH:mm")})
+                                        (Solicitado el ${solicitud.fechaPeticionReunion?.format("dd-MM-yyyy HH:mm")})
                                     </g:if>
                                     <g:else>
                                         No se incluirá en la próxima reunión de aprobación
@@ -66,7 +66,7 @@
                         <tr>
                             <td colspan="4" class="buttons" style="text-align: right;">
                                 <g:if test="${solicitud.estado == 'P'}">
-                                    <g:if test="${session.perfil.codigo == 'RQ'}">
+                                    <g:if test="${session.perfil.codigo == 'RQ' || session.perfil.codigo == 'DRRQ'}">
                                         <g:link class="button edit" action="ingreso" id="${solicitud?.id}">
                                             <g:message code="default.button.update.label" default="Edit"/>
                                         </g:link>
