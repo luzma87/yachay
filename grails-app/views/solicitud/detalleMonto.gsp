@@ -15,7 +15,8 @@
 <div style="padding: 5px;" class="ui-widget-content ui-corner-all">
     <p>
         <span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-info"></span>
-        Los cambios efectuados no se guardarán hasta no hacer clic en el botón "Guardar".<br/>
+        Si desea modificar el monto solicitado, cambie el valor y presione el botón "Refrescar" a lado derecho.<br/>
+        Los cambios efectuados en el detalle no se guardarán hasta no hacer clic en el botón "Guardar".<br/>
     </p>
 </div>
 
@@ -26,22 +27,24 @@
     </p>
 </div>
 
-<table>
+<table width="100%" style="margin-bottom: 20px; border-bottom: double 1px #000000;">
     <tr>
-        <th>Monto solicitado:</th>
-        <td>
+        <th colspan="2">Monto solicitado:</th>
+        <td colspan="2">
             <g:textField name="txtMax" style="width: 95px;" max="${solicitud.actividad.monto}"
                          value="${g.formatNumber(number: solicitud.montoSolicitado, maxFractionDigits: 2, minFractionDigits: 2)}"/>
             <a href="#" id="btnCambiaMax">Modificar (si las asignaciones superan el nuevo máximo serán eliminadas)</a>
         </td>
     </tr>
+</table>
+
+<table>
     <tr>
         <th>Año:</th>
         <td>
             <g:select from="${anios}" name="selAnio" optionKey="id" optionValue="anio"/>
         </td>
-    </tr>
-    <tr>
+
         <th>Monto:</th>
         <td>
             <g:textField name="txtMonto" style="width: 95px;"/>
