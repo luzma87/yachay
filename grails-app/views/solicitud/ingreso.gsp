@@ -558,8 +558,8 @@
                                 data += anio + "_" + val + ";";
                                 total += val;
                             });
-                            if (total > maximo) {
-                                $("#spanError").text("Por favor ingrese valores cuya sumatoria no supere $" + number_format(maximo, 2, ",", "."));
+                            if (total != maximo) {
+                                $("#spanError").text("Por favor ingrese valores cuya sumatoria sea igual a $" + number_format(maximo, 2, ",", "."));
                                 $("#divError").removeClass("ui-state-highlight").addClass("ui-state-error").show();
                             } else {
                                 $("#divError").hide();
