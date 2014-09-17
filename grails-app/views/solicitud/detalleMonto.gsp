@@ -54,7 +54,7 @@
 </table>
 
 <div>
-    Monto máximo a asignar:
+    Monto máximo a detallar:
     <span id="spanMax" max="${solicitud.montoSolicitado}">
         ${formatNumber(number: solicitud.montoSolicitado, type: "currency")}
     </span>
@@ -92,6 +92,14 @@
                 <g:formatNumber number="${total}" type="currency"/>
             </th>
         </tr>
+        <tr>
+            <th>
+                Restante
+            </th>
+            <th class="num" id="thResto">
+                <g:formatNumber number="${solicitud.montoSolicitado - total}" type="currency"/>
+            </th>
+        </tr>
     </tfoot>
 </table>
 
@@ -104,11 +112,13 @@
         $("#tb").children().each(function () {
             total += parseFloat($(this).attr("val"));
         });
+        var resto = maximo - total;
         $("#thTotal").text("$" + number_format(total, 2, ",", "."));
+        $("#thResto").text("$" + number_format(resto, 2, ",", "."));
         if (total > maximo) {
-            $("#thTotal").addClass("ui-state-error");
+            $("#thTotal, #thResto").addClass("ui-state-error");
         } else {
-            $("#thTotal").removeClass("ui-state-error");
+            $("#thTotal, #thResto").removeClass("ui-state-error");
         }
         return total;
     }
