@@ -171,6 +171,8 @@ class SolicitudTagLib {
 
         def editableGAF = editable && perfil.codigo == "GAF"
         def editableGJ = editable && perfil.codigo == "GJ"
+        def editableASAF = editable && perfil.codigo == "ASAF"
+        def editableASGJ = editable && perfil.codigo == "ASGJ"
 //        def editableGDP = editable && perfil.codigo == "GDP"
 
         def js = ""
@@ -182,8 +184,8 @@ class SolicitudTagLib {
                     "}"
             html += "</style>"
 
-            html += revisionFragment(solicitud: solicitud, editable: editableGAF, tipo: "GAF")
-            html += revisionFragment(solicitud: solicitud, editable: editableGJ, tipo: "GJ")
+            html += revisionFragment(solicitud: solicitud, editable: editableGAF, editableA: editableASAF, tipo: "GAF")
+            html += revisionFragment(solicitud: solicitud, editable: editableGJ, editableA: editableASGJ, tipo: "GJ")
 //            html += revisionFragment(solicitud: solicitud, editable: editableGDP, tipo: "GDP")
 
             js = "<script type='text/javascript'>"
@@ -204,41 +206,52 @@ class SolicitudTagLib {
 
     def revisionFragment = { attrs ->
         Solicitud solicitud = attrs.solicitud
-        def editable = attrs.editable
+        def editableG = attrs.editable
+        def editableA = attrs.editableA
 
-        def title = "", name = "", revisado = "", observaciones = "", checked = "", archivo = null
+        def title = "", name = "", nameV = "", revisado = "", validado = "", observaciones = " ", checked = " ", checkedV = " ", archivo = null
 
         switch (attrs.tipo) {
             case "GAF":
                 name = "gaf"
+                nameV = "vgaf"
                 title = 'Gerencia Administrativa Financiera'
                 revisado = " (" + (solicitud.revisadoAdministrativaFinanciera ?
                         'Revisado el ' + solicitud.revisadoAdministrativaFinanciera.format('dd-MM-yyyy HH:mm') :
                         'No revisado') + ")"
+                validado = " - " + (solicitud.validadoAdministrativaFinanciera ?
+                        " - Validado el " + solicitud.validadoAdministrativaFinanciera.format('dd-MM-yyyy HH:mm') :
+                        " - No validado")
                 observaciones = solicitud.observacionesAdministrativaFinanciera
                 checked = (solicitud.revisadoAdministrativaFinanciera ? true : false)
+                checkedV = (solicitud.validadoAdministrativaFinanciera ? true : false)
                 archivo = solicitud.pathRevisionGAF
                 break;
             case "GJ":
                 name = "gj"
+                nameV = "vgj"
                 title = 'Gerencia Jurídica'
                 revisado = " (" + (solicitud.revisadoJuridica ?
                         'Revisado el ' + solicitud.revisadoJuridica.format('dd-MM-yyyy HH:mm') :
                         'No revisado') + ")"
+                validado = " - " + (solicitud.validadoJuridica ?
+                        " - Validado el " + solicitud.validadoJuridica.format('dd-MM-yyyy HH:mm') :
+                        " - No validado")
                 observaciones = solicitud.observacionesJuridica
                 checked = (solicitud.revisadoJuridica ? true : false)
+                checkedV = (solicitud.validadoJuridica ? true : false)
                 archivo = solicitud.pathRevisionGJ
                 break;
-            case "GDP":
-                name = "gdp"
-                title = 'Gerencia de Dirección de Proyectos'
-                revisado = " (" + (solicitud.revisadoDireccionProyectos ?
-                        'Revisado el ' + solicitud.revisadoDireccionProyectos.format('dd-MM-yyyy HH:mm') :
-                        'No revisado') + ")"
-                observaciones = solicitud.observacionesDireccionProyectos
-                checked = (solicitud.revisadoDireccionProyectos ? true : false)
-                archivo = solicitud.pathRevisionGDP
-                break;
+//            case "GDP":
+//                name = "gdp"
+//                title = 'Gerencia de Dirección de Proyectos'
+//                revisado = " (" + (solicitud.revisadoDireccionProyectos ?
+//                        'Revisado el ' + solicitud.revisadoDireccionProyectos.format('dd-MM-yyyy HH:mm') :
+//                        'No revisado') + ")"
+//                observaciones = solicitud.observacionesDireccionProyectos
+//                checked = (solicitud.revisadoDireccionProyectos ? true : false)
+//                archivo = solicitud.pathRevisionGDP
+//                break;
         }
 
         def html = ""
@@ -246,18 +259,19 @@ class SolicitudTagLib {
         html += '<table width="100%" class="ui-widget-content ui-corner-all">'
         html += '<thead>'
         html += '<tr>'
-        html += '<td colspan="3" class="collapsible ' + (editable ? "" : "collapsed") + ' ui-widget ui-widget-header ui-corner-all" style="padding: 3px;" title="Click para ver las observaciones">'
+        html += '<td colspan="3" class="collapsible ' + (editableA || editableG ? "" : "collapsed") + ' ui-widget ui-widget-header ui-corner-all" style="padding: 3px;" title="Click para ver las observaciones">'
         html += title
-        if (!editable) {
-            html += revisado
-        }
+//        if (!editableA && !editableG) {
+        html += revisado
+        html += validado
+//        }
         html += '</td>'
         html += '</tr>'
         html += '</thead>'
         html += '<tbody>'
         html += "<tr>"
         html += '<td style="width: 98px;" class="label">Observaciones</td>'
-        if (!editable) {
+        if (!editableA) {
             html += '<td>'
             html += (observaciones ?: '- Sin observaciones-')
             html += '</td>'
@@ -267,11 +281,18 @@ class SolicitudTagLib {
                     rows: "5", cols: "5", value: observaciones)
             html += '</td>'
         }
-        if (editable) {
+        if (editableA || editableG) {
             html += '<td style="width: 127px;">'
-            html += '<label class="label" for="gaf">Revisado'
-            html += g.checkBox(name: name, checked: checked)
-            html += '</label>'
+            if (editableA) {
+                html += '<label class="label" for="gaf">Revisado'
+                html += g.checkBox(name: name, checked: checked)
+                html += '</label>'
+            }
+            if (editableG) {
+                html += '<label class="label" for="gaf">Validado'
+                html += g.checkBox(name: nameV, checked: checkedV)
+                html += '</label>'
+            }
             html += '</td>'
         }
 
@@ -279,7 +300,7 @@ class SolicitudTagLib {
         html += "<tr>"
         html += '<td class="label">Archivo</td>'
         html += '<td>'
-        if (!editable) {
+        if (!editableA) {
             html += g.link(controller: "solicitud", action: "downloadSolicitud", params: [tipo: "revision" + name], id: solicitud.id) {
                 archivo
             }
@@ -356,6 +377,16 @@ class SolicitudTagLib {
                 html += g.textArea(name: "observaciones", rows: "5", cols: "5", value: aprobacion.observaciones)
             } else {
                 html += (aprobacion.observaciones ?: '-Sin observaciones-')
+            }
+            html += '</td>'
+            html += '</tr>'
+            html += '<tr>'
+            html += '<td class="label">Asistentes</td>'
+            html += '<td colspan="4">'
+            if (editable) {
+                html += g.textArea(name: "asistentes", rows: "5", cols: "5", value: aprobacion.asistentes)
+            } else {
+                html += (aprobacion.asistentes ?: '-Sin asistentes-')
             }
             html += '</td>'
             html += '</tr>'

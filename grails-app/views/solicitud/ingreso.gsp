@@ -104,25 +104,28 @@
         <g:uploadForm action="save" method="post" name="frmSolicitud" id="${solicitud.id}">
             <table width="100%" border="0">
                 <g:if test="${solicitud.id}">
-                    <tr>
-                        <td colspan="6" style="padding-bottom: 15px; font-size: larger; font-weight: bold;">
-                            <g:if test="${solicitud.incluirReunion == 'S'}">
-                                Se incluirá en la próxima reunión de aprobación
+                    <!-- TODO: validar que sea el director del requirente ??-->
+                    <g:if test="${true}">
+                        <tr>
+                            <td colspan="6" style="padding-bottom: 15px; font-size: larger; font-weight: bold;">
+                                <g:if test="${solicitud.incluirReunion == 'S'}">
+                                    Se incluirá en la próxima reunión de aprobación
 
-                                <a href="#" class="button" id="btnIncluir" data-tipo="N">No incluir</a>
-                            </g:if>
-                            <g:else>
-                                Solicitar la inclusión de la actividad en la próxima reunión de planificación de contratación
-
-                                <g:if test="${solicitud.revisadoAdministrativaFinanciera && solicitud.revisadoJuridica}">
-                                    <a href="#" class="button" id="btnIncluir" data-tipo="S">Solicitar</a>
+                                    <a href="#" class="button" id="btnIncluir" data-tipo="N">No incluir</a>
                                 </g:if>
                                 <g:else>
-                                    (podrá incluirla después de que sea revisada)
+                                    Solicitar la inclusión de la actividad en la próxima reunión de planificación de contratación
+
+                                    <g:if test="${solicitud.revisadoAdministrativaFinanciera && solicitud.revisadoJuridica}">
+                                        <a href="#" class="button" id="btnIncluir" data-tipo="S">Solicitar</a>
+                                    </g:if>
+                                    <g:else>
+                                        (podrá incluirla después de que sea revisada)
+                                    </g:else>
                                 </g:else>
-                            </g:else>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    </g:if>
                 </g:if>
 
                 <tr>

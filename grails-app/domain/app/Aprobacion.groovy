@@ -9,6 +9,8 @@ class Aprobacion {
     String observaciones
     String pathPdf
 
+    String asistentes
+
     static auditable = [ignore: []]
     static mapping = {
         table 'aprb'
@@ -24,11 +26,13 @@ class Aprobacion {
             fecha column: 'aprbfcha'
             observaciones column: 'aprbobsr'
             pathPdf column: 'aprb_pdf'
+            asistentes column: 'aprbasst'
         }
     }
 
     static constraints = {
         observaciones(blank: true, nullable: true, maxSize: 1023)
+        asistentes(blank: true, nullable: true, maxSize: 1023)
         pathPdf(blank: true, nullable: true, maxSize: 255)
     }
 }

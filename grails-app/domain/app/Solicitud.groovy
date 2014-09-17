@@ -10,9 +10,11 @@ class Solicitud {
     MarcoLogico actividad
     Date fecha
     String observaciones
-    Date revisadoAdministrativaFinanciera
-    Date revisadoJuridica
-    Date revisadoDireccionProyectos
+    Date revisadoAdministrativaFinanciera       //asistente
+    Date revisadoJuridica                       //asistente
+    Date revisadoDireccionProyectos             //ya no vale
+    Date validadoAdministrativaFinanciera       //gerente
+    Date validadoJuridica                       //gerente
     String observacionesAdministrativaFinanciera
     String observacionesJuridica
     String observacionesDireccionProyectos
@@ -40,6 +42,8 @@ class Solicitud {
     String pathRevisionGAF
     String pathRevisionGJ
     String pathRevisionGDP
+
+    Date fechaPeticionReunion
 
     static hasMany = [detallesMonto: DetalleMontoSolicitud]
 
@@ -87,6 +91,11 @@ class Solicitud {
             pathRevisionGAF column: 'slctptr1'
             pathRevisionGJ column: 'slctptr2'
             pathRevisionGDP column: 'slctptr3'
+
+            validadoAdministrativaFinanciera column: 'slctvlaf'
+            validadoJuridica column: 'slctvljr'
+
+            fechaPeticionReunion column: 'slctfcrn'
         }
     }
 
@@ -114,5 +123,10 @@ class Solicitud {
         pathRevisionGAF(blank: true, nullable: true)
         pathRevisionGJ(blank: true, nullable: true)
         pathRevisionGDP(blank: true, nullable: true)
+
+        validadoAdministrativaFinanciera(blank: true, nullable: true)
+        validadoJuridica(blank: true, nullable: true)
+
+        fechaPeticionReunion(blank: true, nullable: true)
     }
 }
