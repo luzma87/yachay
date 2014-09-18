@@ -1,5 +1,5 @@
 package app
-
+/*Año al cual corresponde el PAPP, cada año debe iniciarse una nueva gestión de proyectos. Es similar al período contable o año fiscal.*/
 class Anio implements Serializable {
     String anio
     int estado = 0 /* 0 -> no aprobado    1-> aprobadp */

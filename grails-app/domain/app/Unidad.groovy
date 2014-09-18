@@ -1,4 +1,7 @@
 package app
+
+/*Unidad de control o conteo de obras para el plan anual de adquisiciones (PAC) y para fijar las metas.*/
+
 class Unidad implements Serializable {
     String codigo
     String descripcion

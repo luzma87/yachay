@@ -1,4 +1,5 @@
 package app
+/*Programación de la asignación presupuestaria por cuatrimestres.*/
 class ProgramacionAsignacion implements Serializable {
     Asignacion asignacion
     DistribucionAsignacion distribucion

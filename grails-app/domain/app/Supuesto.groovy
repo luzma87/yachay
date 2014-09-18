@@ -1,4 +1,6 @@
 package app
+/*Para cada elemento del marco lógico se define uno o varios supuestos.
+Nótese que la relación del supuesto es al elemento del marco lógico, no a los indicadores ni a los medios de comprobación de los indicadores.*/
 class Supuesto implements Serializable {
     MarcoLogico marcoLogico
     String descripcion

@@ -1,4 +1,5 @@
 package app
+/*Fuente de financiamiento del proyecto, puede ser estado, préstamo a organismos internacionales, aporte propio, etc.*/
 class Fuente implements Serializable {
     String descripcion
     String codigo

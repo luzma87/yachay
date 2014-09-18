@@ -8,6 +8,7 @@ class CargoPersonalController {
         redirect(action: "list", params: params)
     }
 
+    /*Lista de cargos*/
     def list = {
         def title = g.message(code: "cargopersonal.list", default: "CargoPersonal List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -17,6 +18,7 @@ class CargoPersonalController {
         [cargoPersonalInstanceList: CargoPersonal.list(params), cargoPersonalInstanceTotal: CargoPersonal.count(), title: title, params: params]
     }
 
+    /*Form para crear un nuevo cargo de personal*/
     def form = {
         def title
         def cargoPersonalInstance
@@ -42,6 +44,7 @@ class CargoPersonalController {
         redirect(action: "form", params: params)
     }
 
+    /*Función para guardar los datos de un nuevo cargo de personal*/
     def save = {
         def title
         if (params.id) {
@@ -74,6 +77,7 @@ class CargoPersonalController {
         }
     }
 
+    /*Función para actualizar los datos de un cargo*/
     def update = {
         def cargoPersonalInstance = CargoPersonal.get(params.id)
         if (cargoPersonalInstance) {
@@ -101,6 +105,7 @@ class CargoPersonalController {
         }
     }
 
+    /*Muestra los datos de un cargo específico*/
     def show = {
         def cargoPersonalInstance = CargoPersonal.get(params.id)
         if (!cargoPersonalInstance) {
@@ -120,6 +125,7 @@ class CargoPersonalController {
         redirect(action: "form", params: params)
     }
 
+    /*Función para borrar un cargo*/
     def delete = {
         def cargoPersonalInstance = CargoPersonal.get(params.id)
         if (cargoPersonalInstance) {

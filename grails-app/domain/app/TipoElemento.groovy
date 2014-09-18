@@ -1,4 +1,5 @@
 package app
+/*Tipo de elemento del marco lógico: distingue entre meta o FIN, OBJETIVO o PROPÓSITO, COMPONENTES y ACTIVIDADES.*/
 class TipoElemento implements Serializable {
     String descripcion
     static auditable = [ignore: []]

@@ -1,4 +1,5 @@
 package app
+/*Meses para el registro del cronograma valorado*/
 class Mes implements Serializable {
     int numero
     String descripcion

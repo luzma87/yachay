@@ -1,5 +1,5 @@
 package app
-
+/*Marco lógico con cada uno de sus componentes */
 import app.yachai.Categoria
 
 class MarcoLogico implements Serializable {

@@ -11,7 +11,7 @@ class TipoCompraController {
     def prueba = {
 
     }
-
+    /*Lista de tipos de compras*/
     def list = {
         def title = g.message(code: "default.list.label", args: ["TipoCompra"], default: "TipoCompra List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -21,6 +21,7 @@ class TipoCompraController {
         [tipoCompraInstanceList: TipoCompra.list(params), tipoCompraInstanceTotal: TipoCompra.count(), title: title, params: params]
     }
 
+    /*Form para crear un tipo de compra*/
     def form = {
         def title
         def tipoCompraInstance
@@ -46,6 +47,7 @@ class TipoCompraController {
         redirect(action: "form", params: params)
     }
 
+    /*Funcion para guardar un tipo de compra nuevo*/
     def save = {
         def title
         if (params.id) {
@@ -78,6 +80,7 @@ class TipoCompraController {
         }
     }
 
+    /*Función para actualizar los datos de un tipo de compra ya creado*/
     def update = {
         def tipoCompraInstance = TipoCompra.get(params.id)
         if (tipoCompraInstance) {
@@ -105,6 +108,7 @@ class TipoCompraController {
         }
     }
 
+    /*Muestra los detalles de un tipo de compra específico*/
     def show = {
         def tipoCompraInstance = TipoCompra.get(params.id)
         if (!tipoCompraInstance) {
@@ -124,6 +128,7 @@ class TipoCompraController {
         redirect(action: "form", params: params)
     }
 
+    /*Función para borrar un tipo de compra*/
     def delete = {
         def tipoCompraInstance = TipoCompra.get(params.id)
         if (tipoCompraInstance) {

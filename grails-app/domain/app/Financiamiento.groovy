@@ -1,4 +1,5 @@
 package app
+/*Financiamiento del proyecto por fuente y año*/
 class Financiamiento implements Serializable {
     Anio anio
     Fuente fuente

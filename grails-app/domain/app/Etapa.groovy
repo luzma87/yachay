@@ -1,4 +1,5 @@
 package app
+/*Etapa del proyecto: PERFIL, PRIORIZADO, INVERSION.*/
 class Etapa implements Serializable {
     String descripcion
     static auditable = [ignore: []]

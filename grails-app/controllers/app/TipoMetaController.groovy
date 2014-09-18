@@ -8,6 +8,7 @@ class TipoMetaController {
         redirect(action: "list", params: params)
     }
 
+    /*Lista de metas*/
     def list = {
         def title = g.message(code: "default.list.label", args: ["TipoMeta"], default: "TipoMeta List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -17,6 +18,7 @@ class TipoMetaController {
         [tipoMetaInstanceList: TipoMeta.list(params), tipoMetaInstanceTotal: TipoMeta.count(), title: title, params: params]
     }
 
+    /*Form para crear una nueva meta*/
     def form = {
         def title
         def tipoMetaInstance
@@ -42,6 +44,7 @@ class TipoMetaController {
         redirect(action: "form", params: params)
     }
 
+    /*Función para guardar una nueva meta*/
     def save = {
         def title
         if (params.id) {
@@ -74,6 +77,7 @@ class TipoMetaController {
         }
     }
 
+    /*Función para actualizar los datos de una meta existente*/
     def update = {
         def tipoMetaInstance = TipoMeta.get(params.id)
         if (tipoMetaInstance) {
@@ -101,6 +105,7 @@ class TipoMetaController {
         }
     }
 
+    /*Muestra una meta ya existente*/
     def show = {
         def tipoMetaInstance = TipoMeta.get(params.id)
         if (!tipoMetaInstance) {
@@ -120,6 +125,8 @@ class TipoMetaController {
         redirect(action: "form", params: params)
     }
 
+
+/*Función para borrar una meta existente*/
     def delete = {
         def tipoMetaInstance = TipoMeta.get(params.id)
         if (tipoMetaInstance) {

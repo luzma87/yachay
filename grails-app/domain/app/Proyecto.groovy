@@ -1,4 +1,5 @@
 package app
+/*Proyecto*/
 class Proyecto implements Serializable {
     UnidadEjecutora unidadEjecutora
     Etapa etapa

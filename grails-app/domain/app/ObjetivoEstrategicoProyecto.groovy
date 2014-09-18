@@ -1,5 +1,5 @@
 package app
-
+/*Objetivo estratégico con el que puede estar alineado el proyecto.*/
 class ObjetivoEstrategicoProyecto implements Serializable {
     Integer orden
     String descripcion

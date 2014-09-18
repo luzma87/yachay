@@ -8,6 +8,7 @@ class TipoInstitucionController {
         redirect(action: "list", params: params)
     }
 
+    /*Lista de tipo de areas de gestión*/
     def list = {
         def title = g.message(code: "tipoinstitucion.list", default: "TipoInstitucion List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -17,6 +18,7 @@ class TipoInstitucionController {
         [tipoInstitucionInstanceList: TipoInstitucion.list(params), tipoInstitucionInstanceTotal: TipoInstitucion.count(), title: title, params: params]
     }
 
+    /*Form para crear una nueva área de gestión*/
     def form = {
         def title
         def tipoInstitucionInstance
@@ -42,6 +44,7 @@ class TipoInstitucionController {
         redirect(action: "form", params: params)
     }
 
+    /*Función para guardar una nueva área de gestión*/
     def save = {
         def title
         if (params.id) {
@@ -74,6 +77,7 @@ class TipoInstitucionController {
         }
     }
 
+    /*Función para guardar cambios en una área de gestión ya existente*/
     def update = {
         def tipoInstitucionInstance = TipoInstitucion.get(params.id)
         if (tipoInstitucionInstance) {
@@ -101,6 +105,7 @@ class TipoInstitucionController {
         }
     }
 
+    /*Muestra los datos de una área de gestión existente*/
     def show = {
         def tipoInstitucionInstance = TipoInstitucion.get(params.id)
         if (!tipoInstitucionInstance) {
@@ -120,6 +125,7 @@ class TipoInstitucionController {
         redirect(action: "form", params: params)
     }
 
+    /*Función para borrar una área de gestión*/
     def delete = {
         def tipoInstitucionInstance = TipoInstitucion.get(params.id)
         if (tipoInstitucionInstance) {

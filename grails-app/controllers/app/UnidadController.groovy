@@ -7,7 +7,7 @@ class UnidadController {
     def index = {
         redirect(action: "list", params: params)
     }
-
+        /*Lista las unidades de medida*/
     def list = {
         def title = g.message(code: "default.list.label", args: ["Unidad"], default: "Unidad List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -16,7 +16,7 @@ class UnidadController {
 
         [unidadInstanceList: Unidad.list(params), unidadInstanceTotal: Unidad.count(), title: title, params: params]
     }
-
+    /*Form para crear una nueva unidad de medidad*/
     def form = {
         def title
         def unidadInstance
@@ -41,7 +41,7 @@ class UnidadController {
         params.source = "create"
         redirect(action: "form", params: params)
     }
-
+    /*Función para guardar una nueva unidad de medida*/
     def save = {
         def title
         if (params.id) {
@@ -73,7 +73,7 @@ class UnidadController {
             }
         }
     }
-
+        /*Función para actualizar los datos de una unidad de medida*/
     def update = {
         def unidadInstance = Unidad.get(params.id)
         if (unidadInstance) {
@@ -100,7 +100,7 @@ class UnidadController {
             redirect(action: "list")
         }
     }
-
+   /*Muestra los detalles de una unidad específica*/
     def show = {
         def unidadInstance = Unidad.get(params.id)
         if (!unidadInstance) {
@@ -120,6 +120,7 @@ class UnidadController {
         redirect(action: "form", params: params)
     }
 
+    /*Función para borrar una unidad*/
     def delete = {
         def unidadInstance = Unidad.get(params.id)
         if (unidadInstance) {

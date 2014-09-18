@@ -1,4 +1,5 @@
 package app
+/*Ejecución de la asignación presupuestaria.*/
 class Ejecucion implements Serializable {
 
     Asignacion asignacion

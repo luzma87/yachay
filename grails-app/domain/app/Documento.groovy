@@ -1,4 +1,6 @@
 package app
+/*Es toda documentación importante que debe ser archivada en el proyecto. Este comprende el archivo de proyecto o el archivo de casos de proyecto.
+Se usará preferentemente formato pdf, pero pueden incluirse otros formatos aunque no puedan ser visualizados desde el sistema.*/
 class Documento implements Serializable {
     Proyecto proyecto
     GrupoProcesos grupoProcesos

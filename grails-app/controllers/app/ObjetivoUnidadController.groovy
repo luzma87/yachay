@@ -8,6 +8,7 @@ class ObjetivoUnidadController {
         redirect(action: "list", params: params)
     }
 
+    /*Listado de los objetivos x Unidad*/
     def list = {
         def title = g.message(code: "objetivounidad.list", default: "ObjetivoUnidad List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -17,6 +18,7 @@ class ObjetivoUnidadController {
         [objetivoUnidadInstanceList: ObjetivoUnidad.list(params), objetivoUnidadInstanceTotal: ObjetivoUnidad.count(), title: title, params: params]
     }
 
+    /*Forma para crear nuevos objetivos*/
     def form = {
         def title
         def objetivoUnidadInstance
@@ -41,7 +43,7 @@ class ObjetivoUnidadController {
         params.source = "create"
         redirect(action: "form", params: params)
     }
-
+        /*Función para guardar nuevos objetivos*/
     def save = {
         def title
         if (params.id) {
@@ -70,7 +72,7 @@ class ObjetivoUnidadController {
             }
         }
     }
-
+    /*Función para actualizar objetivos*/
     def update = {
         def objetivoUnidadInstance = ObjetivoUnidad.get(params.id)
         if (objetivoUnidadInstance) {
@@ -95,7 +97,7 @@ class ObjetivoUnidadController {
             redirect(action: "list")
         }
     }
-
+    /*Muestra los datos de un objetivo específico*/
     def show = {
         def objetivoUnidadInstance = ObjetivoUnidad.get(params.id)
         if (!objetivoUnidadInstance) {
@@ -113,7 +115,7 @@ class ObjetivoUnidadController {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
-
+    /*Función para borrar un objetivo*/
     def delete = {
         def objetivoUnidadInstance = ObjetivoUnidad.get(params.id)
         if (objetivoUnidadInstance) {

@@ -1,4 +1,5 @@
 package app
+/*Tipo de meta para agregar o agrupar metas.*/
 class TipoMeta implements Serializable {
     String descripcion
     static auditable = [ignore: []]

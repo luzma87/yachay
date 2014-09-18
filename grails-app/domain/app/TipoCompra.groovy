@@ -1,4 +1,5 @@
 package app
+/*Tipo de compra para el PAC, distingue entre bienes, servicios, etc.*/
 class TipoCompra implements Serializable {
     String descripcion
     static auditable=[ignore:[]]

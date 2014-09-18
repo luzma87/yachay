@@ -1,4 +1,5 @@
 package app
+/*Políticas que se aplican en el proyecto*/
 class PoliticasProyecto implements Serializable {
     Politica politica
     Proyecto proyecto

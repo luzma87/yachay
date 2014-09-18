@@ -8,6 +8,7 @@ class PoliticaController {
         redirect(action: "list", params: params)
     }
 
+    /*Lista de políticas*/
     def list = {
         def title = g.message(code: "default.list.label", args: ["Politica"], default: "Politica List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -17,6 +18,7 @@ class PoliticaController {
         [politicaInstanceList: Politica.list(params), politicaInstanceTotal: Politica.count(), title: title, params: params]
     }
 
+    /*Form para la creación de nuevas políticas*/
     def form = {
         def title
         def politicaInstance
@@ -42,6 +44,7 @@ class PoliticaController {
         redirect(action: "form", params: params)
     }
 
+    /*Función para guardar una nueva política creada*/
     def save = {
         def title
         if (params.id) {
@@ -74,6 +77,7 @@ class PoliticaController {
         }
     }
 
+    /*Función para actualizar una política*/
     def update = {
         def politicaInstance = Politica.get(params.id)
         if (politicaInstance) {
@@ -101,6 +105,7 @@ class PoliticaController {
         }
     }
 
+    /*Muestra la política actual a ser modificada*/
     def show = {
         def politicaInstance = Politica.get(params.id)
         if (!politicaInstance) {
@@ -120,6 +125,7 @@ class PoliticaController {
         redirect(action: "form", params: params)
     }
 
+    /*Función para borrar una política existente*/
     def delete = {
         def politicaInstance = Politica.get(params.id)
         if (politicaInstance) {

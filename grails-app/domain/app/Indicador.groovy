@@ -1,4 +1,5 @@
 package app
+/*Para cada elemento del marco lógico se define uno o varios indicadores*/
 class Indicador implements Serializable {
     MarcoLogico marcoLogico
     Asignacion asignacion

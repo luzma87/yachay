@@ -1,4 +1,5 @@
 package app
+/*Cada período de días fijado en el proyecto se debe registrar el detalle de avance de actividades.*/
 class Avance implements Serializable {
     Informe informe
     Meta meta

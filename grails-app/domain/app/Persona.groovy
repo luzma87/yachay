@@ -1,4 +1,5 @@
 package app
+/*Usuario del sistema*/
 class Persona implements Serializable {
     String cedula
     String nombre

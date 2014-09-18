@@ -1,4 +1,5 @@
 package app
+/*Para cada componente se determinan las metas desagregadas conforme al marco lógico. */
 class Meta implements Serializable {
     TipoMeta tipoMeta
     Parroquia parroquia

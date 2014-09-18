@@ -1,5 +1,5 @@
 package app
-
+/*Unidades ejecutoras de los proyectos, generalmente adscritas a los ministerios*/
 class UnidadEjecutora implements Serializable {
     TipoInstitucion tipoInstitucion
     Provincia provincia

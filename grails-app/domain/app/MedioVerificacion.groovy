@@ -1,4 +1,5 @@
 package app
+/* Para cada indicador del marco lógico se define uno o varios medios de verificación.*/
 class MedioVerificacion implements Serializable {
     Indicador indicador
     String descripcion

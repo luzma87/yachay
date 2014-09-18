@@ -1,7 +1,14 @@
+
+<style type="text/css">
+    th{
+        background-color: #595292;
+    }
+</style>
+
 <table style="width: 98%;font-size: 10px;margin-top: 10px">
     <thead>
     <tr>
-        <th sort="numero" class="sort ${(sort=='numero')?order:''}">Numero</th>
+        <th sort="numero" class="sort ${(sort=='numero')?order:''}">Número</th>
         <th sort="proyecto" class="sort ${(sort=='proyecto')?order:''}">Proyecto</th>
         <th sort="proceso" class="sort ${(sort=='proceso')?order:''}">Proceso</th>
         <th sort="monto" class="sort ${(sort=='monto')?order:''}">Monto</th>

@@ -1,4 +1,5 @@
 package app
+/*El cronograma valorado se registra por actividades del marco lógico, por año, mes y fuente de financiamiento.*/
 class Cronograma implements Serializable {
     Cronograma cronograma
     Mes mes

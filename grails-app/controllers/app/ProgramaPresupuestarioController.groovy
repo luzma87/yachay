@@ -10,6 +10,7 @@ class ProgramaPresupuestarioController extends app.seguridad.Shield {
         redirect(action: "list", params: params)
     }
 
+    /*Lista de programas presupuestarios*/
     def list = {
         def title = g.message(code: "programapresupuestario.list", default: "ProgramaPresupuestario List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +20,7 @@ class ProgramaPresupuestarioController extends app.seguridad.Shield {
         [programaPresupuestarioInstanceList: ProgramaPresupuestario.list(params), programaPresupuestarioInstanceTotal: ProgramaPresupuestario.count(), title: title, params: params]
     }
 
+    /*Form para la creación de un nuevo programa presupuestario*/
     def form = {
         def title
         def programaPresupuestarioInstance
@@ -44,6 +46,7 @@ class ProgramaPresupuestarioController extends app.seguridad.Shield {
         redirect(action: "form", params: params)
     }
 
+    /*Función para guardar un nuevo programa presupuestario*/
     def save = {
         def title
         if (params.id) {
@@ -76,6 +79,7 @@ class ProgramaPresupuestarioController extends app.seguridad.Shield {
         }
     }
 
+    /*Función para guardar cambios al actualizar datos del programa presupuestario*/
     def update = {
         def programaPresupuestarioInstance = ProgramaPresupuestario.get(params.id)
         if (programaPresupuestarioInstance) {
@@ -102,7 +106,7 @@ class ProgramaPresupuestarioController extends app.seguridad.Shield {
             redirect(action: "list")
         }
     }
-
+        /*Muestra el detalle de un programa presupuestario*/
     def show = {
         def programaPresupuestarioInstance = ProgramaPresupuestario.get(params.id)
         if (!programaPresupuestarioInstance) {
@@ -121,7 +125,7 @@ class ProgramaPresupuestarioController extends app.seguridad.Shield {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
-
+        /*Función para borrar un programa presupuestario*/
     def delete = {
         def programaPresupuestarioInstance = ProgramaPresupuestario.get(params.id)
         if (programaPresupuestarioInstance) {

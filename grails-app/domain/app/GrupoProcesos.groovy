@@ -1,4 +1,5 @@
 package app
+/*El grupo de procesos del proyecto se refiere a los distintos momentos del proyecto como son: INICIO, PLANIFICACIÓN, EJECUCIÓN y CIERRE*/
 class GrupoProcesos implements Serializable {
     String descripcion
     static auditable = [ignore: []]

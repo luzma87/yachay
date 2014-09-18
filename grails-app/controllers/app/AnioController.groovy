@@ -11,11 +11,12 @@ class AnioController   extends app.seguridad.Shield{
         redirect(action: "list", params: params)
     }
 
+    /*Vista para la aprobación de una proforma dependiendo el año*/
     def vistaAprobarAño = {
         def anios = Anio.findAllByEstado(0)
         [anios:anios]
     }
-
+    /*Detalle de la proforma por años a ser aprobados*/
     def detalleAnio = {
         def anio = Anio.get(params.anio)
         def unidades = UnidadEjecutora.list([sort:"nombre"])
@@ -76,6 +77,7 @@ class AnioController   extends app.seguridad.Shield{
         [datos:datos,anio:anio]
     }
 
+    /*Función para la aprobacion de las proformas*/
     def aprobarAnio = {
         if (request.method == 'POST') {
             println "params " + params
@@ -90,6 +92,7 @@ class AnioController   extends app.seguridad.Shield{
         }
     }
 
+    /*Lista de años*/
     def list = {
         def title = g.message(code:"default.list.label", args:["Anio"], default:"Anio List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -99,6 +102,7 @@ class AnioController   extends app.seguridad.Shield{
         [anioInstanceList: Anio.list(params), anioInstanceTotal: Anio.count(), title: title, params:params]
     }
 
+    /*Form para crear un nuevo año*/
     def form = {
         def title
         def anioInstance
@@ -124,6 +128,7 @@ class AnioController   extends app.seguridad.Shield{
         redirect(action:"form", params:params)
     }
 
+    /*Función para guardar los años*/
     def save = {
         def title
         if(params.id) {
@@ -155,7 +160,7 @@ class AnioController   extends app.seguridad.Shield{
             }
         }
     }
-
+    /*Función para actualizar los datos de los años*/
     def update = {
         def anioInstance = Anio.get(params.id)
         if (anioInstance) {
@@ -183,6 +188,7 @@ class AnioController   extends app.seguridad.Shield{
         }
     }
 
+    /*Muestra los años*/
     def show = {
         def anioInstance = Anio.get(params.id)
         if (!anioInstance) {
@@ -201,7 +207,7 @@ class AnioController   extends app.seguridad.Shield{
         params.source = "edit"
         redirect(action:"form", params:params)
     }
-
+        /*Función para borrar */
     def delete = {
         def anioInstance = Anio.get(params.id)
         if (anioInstance) {

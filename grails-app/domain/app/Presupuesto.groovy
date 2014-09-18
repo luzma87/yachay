@@ -1,4 +1,5 @@
 package app
+/*Presupuesto techo para elaborar la proforma presupuestaria.*/
 class Presupuesto implements Serializable {
     Presupuesto presupuesto
     String numero

@@ -7,7 +7,7 @@ class ProgramaController {
     def index = {
         redirect(action: "list", params: params)
     }
-
+    /*Lista de programas del proyecto*/
     def list = {
         def title = g.message(code: "default.list.label", args: ["Programa"], default: "Lista de Programas")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -16,7 +16,7 @@ class ProgramaController {
 
         [programaInstanceList: Programa.list(params), programaInstanceTotal: Programa.count(), title: title, params: params]
     }
-
+    /*Form para la creación de un nuevo programa*/
     def form = {
         def title
         def programaInstance
@@ -42,6 +42,7 @@ class ProgramaController {
         redirect(action: "form", params: params)
     }
 
+    /*FUnción para guardar un nuevo programa*/
     def save = {
         def title
         if (params.id) {
@@ -74,6 +75,7 @@ class ProgramaController {
         }
     }
 
+    /*Función para guardar las actualizaciones realizadas en un programa*/
     def update = {
         def programaInstance = Programa.get(params.id)
         if (programaInstance) {
@@ -101,6 +103,7 @@ class ProgramaController {
         }
     }
 
+    /*Muestra los datos un programa existente*/
     def show = {
         def programaInstance = Programa.get(params.id)
         if (!programaInstance) {
@@ -120,6 +123,7 @@ class ProgramaController {
         redirect(action: "form", params: params)
     }
 
+    /*Función para borrar un programa existente*/
     def delete = {
         def programaInstance = Programa.get(params.id)
         if (programaInstance) {

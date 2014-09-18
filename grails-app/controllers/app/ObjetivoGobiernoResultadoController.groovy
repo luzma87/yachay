@@ -7,7 +7,7 @@ class ObjetivoGobiernoResultadoController {
     def index = {
         redirect(action: "list", params: params)
     }
-
+     /*Lista de objetivos de gobierno x resultado*/
     def list = {
         def title = g.message(code: "objetivogobiernoresultado.list", default: "ObjetivoGobiernoResultado List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -17,6 +17,7 @@ class ObjetivoGobiernoResultadoController {
         [objetivoGobiernoResultadoInstanceList: ObjetivoGobiernoResultado.list(params), objetivoGobiernoResultadoInstanceTotal: ObjetivoGobiernoResultado.count(), title: title, params: params]
     }
 
+    /*form para la creación de un nuevo objetivo gobierno x resultado*/
     def form = {
         def title
         def objetivoGobiernoResultadoInstance
@@ -42,6 +43,7 @@ class ObjetivoGobiernoResultadoController {
         redirect(action: "form", params: params)
     }
 
+    /*función para guardar un nuevo objetivo*/
     def save = {
         def title
         if (params.id) {
@@ -74,6 +76,7 @@ class ObjetivoGobiernoResultadoController {
         }
     }
 
+    /*función para actualizar un objetivo*/
     def update = {
         def objetivoGobiernoResultadoInstance = ObjetivoGobiernoResultado.get(params.id)
         if (objetivoGobiernoResultadoInstance) {
@@ -101,6 +104,7 @@ class ObjetivoGobiernoResultadoController {
         }
     }
 
+    /*muestra el objetivo actual ha ser actualizado*/
     def show = {
         def objetivoGobiernoResultadoInstance = ObjetivoGobiernoResultado.get(params.id)
         if (!objetivoGobiernoResultadoInstance) {
@@ -120,6 +124,7 @@ class ObjetivoGobiernoResultadoController {
         redirect(action: "form", params: params)
     }
 
+    /*funcion para borrar un objetivo*/
     def delete = {
         def objetivoGobiernoResultadoInstance = ObjetivoGobiernoResultado.get(params.id)
         if (objetivoGobiernoResultadoInstance) {

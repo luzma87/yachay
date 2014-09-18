@@ -1,4 +1,5 @@
 package app
+/*Para cada actividad asignada un presupuesto, se registra el plan anual de compras como obras a alcanzar, ejecutar o productos a adquirir.*/
 class Obra implements Serializable {
     Unidad unidad
     CodigoComprasPublicas codigoComprasPublicas

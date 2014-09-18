@@ -17,7 +17,8 @@ class Aval {
     String pathLiberacion
     String pathAnulacion
     String contrato
-    int numero=0
+//    int numero=0
+    String numero
     String certificacion
 
     static mapping = {

@@ -8,6 +8,7 @@ class PoliticaAgendaSocialController {
         redirect(action: "list", params: params)
     }
 
+    /*Lista de políticas de la agenda social*/
     def list = {
         def title = g.message(code: "politicaagendasocial.list", default: "PoliticaAgendaSocial List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -17,6 +18,7 @@ class PoliticaAgendaSocialController {
         [politicaAgendaSocialInstanceList: PoliticaAgendaSocial.list(params), politicaAgendaSocialInstanceTotal: PoliticaAgendaSocial.count(), title: title, params: params]
     }
 
+    /*Forma para la creación de una nueva política de agenda social*/
     def form = {
         def title
         def politicaAgendaSocialInstance
@@ -42,6 +44,7 @@ class PoliticaAgendaSocialController {
         redirect(action: "form", params: params)
     }
 
+    /*Función para guardar una nueva política de agenda social*/
     def save = {
         def title
         if (params.id) {
@@ -74,6 +77,7 @@ class PoliticaAgendaSocialController {
         }
     }
 
+    /*Función para guardar las actualizaciones en políticas de agenda social*/
     def update = {
         def politicaAgendaSocialInstance = PoliticaAgendaSocial.get(params.id)
         if (politicaAgendaSocialInstance) {
@@ -101,6 +105,7 @@ class PoliticaAgendaSocialController {
         }
     }
 
+    /*Muestra los datos de una política de agenda social*/
     def show = {
         def politicaAgendaSocialInstance = PoliticaAgendaSocial.get(params.id)
         if (!politicaAgendaSocialInstance) {
@@ -120,6 +125,7 @@ class PoliticaAgendaSocialController {
         redirect(action: "form", params: params)
     }
 
+    /*Función para borrar una política de agenda social*/
     def delete = {
         def politicaAgendaSocialInstance = PoliticaAgendaSocial.get(params.id)
         if (politicaAgendaSocialInstance) {

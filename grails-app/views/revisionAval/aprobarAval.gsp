@@ -18,6 +18,13 @@
         <script type="text/javascript" src="${resource(dir: 'js/jquery/plugins/ckeditor', file: 'ckeditor.js')}"></script>
         <script type="text/javascript" src="${resource(dir: 'js/jquery/plugins/ckeditor/adapters', file: 'jquery.js')}"></script>
 
+        <style type="text/css">
+            th{
+                background-color: #595292;
+            }
+        </style>
+
+
     </head>
 
     <body>

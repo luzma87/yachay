@@ -1,4 +1,5 @@
 package app
+/*Estado del proyecto*/
 class EstadoProyecto implements Serializable {
     String descripcion
     static auditable = [ignore: []]

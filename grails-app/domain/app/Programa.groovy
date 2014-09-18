@@ -1,4 +1,5 @@
 package app
+/* Programa del cual es parte el proyecto.*/
 class Programa implements Serializable {
     String codigo
     String descripcion

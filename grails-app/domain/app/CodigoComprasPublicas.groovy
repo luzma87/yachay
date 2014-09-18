@@ -1,4 +1,6 @@
 package app
+/*Código del PAC para catalogar los bienes o servicios a adquirirse de acuerdo al (PAC).
+Esta tabla se toma tal como lo define el INCOP. No se maneja parámetro de nivel sólo el id del padre.*/
 class CodigoComprasPublicas implements Serializable {
     CodigoComprasPublicas padre
     String numero

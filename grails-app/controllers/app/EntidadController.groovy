@@ -15,6 +15,7 @@ class EntidadController extends app.seguridad.Shield {
         redirect(action: "list", params: params)
     }
 
+    /*Permite generar el arbol de entidades*/
     String makeTree() {
         def entidades = Entidad.list(sort: "nombre", order: "asc")
         def tree = ""
@@ -148,6 +149,7 @@ class EntidadController extends app.seguridad.Shield {
         render(makeBasicTree(params.tipo, params.id))
     }
 
+    /*Función para sacar los responsables de cada una de las partes de la estructura institucional definida*/
     def getResponsables = {
         /*
         'E' 'Ejecución'

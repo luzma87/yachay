@@ -1,5 +1,7 @@
 package app
 
+/* Tipo de responsabilidad en el proyecto*/
+
 class TipoResponsable implements Serializable {
 
     String codigo

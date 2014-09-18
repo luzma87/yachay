@@ -28,6 +28,7 @@ class PresupuestoController extends app.seguridad.Shield {
         return [presupuestoInstance: presupuestoInstance, presupuestoPadre: presupuestoPadre, lvl: lvl, hijos: hijos]
     }
 
+    /*Función para guardar elementos del árbol de presupuesto*/
     def saveFromTree = {
         def presupuesto
         if (params.id) {
@@ -52,6 +53,7 @@ class PresupuestoController extends app.seguridad.Shield {
         }
     }
 
+    /*Función para borrar elementos del árbol de presupuesto*/
     def deleteFromTree = {
         def presupuesto = Presupuesto.get(params.id)
         def hijos = Presupuesto.findAllByPresupuesto(presupuesto)
@@ -66,6 +68,7 @@ class PresupuestoController extends app.seguridad.Shield {
         }
     }
 
+    /*Función que permite generar el árbol del presupuesto*/
     def makeTree() {
         def lista = Presupuesto.findAllByNivel(1, [sort: "numero"]).id//Presupuesto.list(sort: "codigo")
         def res = ""
@@ -80,6 +83,7 @@ class PresupuestoController extends app.seguridad.Shield {
         res += "</ul>"
     }
 
+    /*Función para ver los hijos existentes de un padre específico*/
     def imprimeHijos(padre) {
         def band = true
         def t = ""
@@ -125,6 +129,7 @@ class PresupuestoController extends app.seguridad.Shield {
         redirect(action: "list", params: params)
     }
 
+    /*Lista de presupuestos*/
     def list = {
         def title = g.message(code: "default.list.label", args: ["Presupuesto"], default: "Presupuesto List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -134,6 +139,7 @@ class PresupuestoController extends app.seguridad.Shield {
         [presupuestoInstanceList: Presupuesto.list(params), presupuestoInstanceTotal: Presupuesto.count(), title: title, params: params]
     }
 
+    /*Forma para crear un nuevo presupuesto*/
     def form = {
         def title
         def presupuestoInstance
@@ -159,6 +165,7 @@ class PresupuestoController extends app.seguridad.Shield {
         redirect(action: "form", params: params)
     }
 
+    /*Función para guardar un nuevo presupuesto*/
     def save = {
         def title
         if (params.id) {
@@ -191,6 +198,7 @@ class PresupuestoController extends app.seguridad.Shield {
         }
     }
 
+    /*Función para guardar actualizaciones de un presupuesto ya existente*/
     def update = {
         def presupuestoInstance = Presupuesto.get(params.id)
         if (presupuestoInstance) {
@@ -218,6 +226,7 @@ class PresupuestoController extends app.seguridad.Shield {
         }
     }
 
+    /*Muestra un presupuesto ya existente*/
     def show = {
         def presupuestoInstance = Presupuesto.get(params.id)
         if (!presupuestoInstance) {
@@ -237,6 +246,7 @@ class PresupuestoController extends app.seguridad.Shield {
         redirect(action: "form", params: params)
     }
 
+    /*Función para borrar un presupuesto*/
     def delete = {
         def presupuestoInstance = Presupuesto.get(params.id)
         if (presupuestoInstance) {

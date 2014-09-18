@@ -1,5 +1,5 @@
 package app
-
+/*Objetivos establecidos en el sistema de GPR*/
 class ObjetivoGobiernoResultado implements Serializable {
     String descripcion
     static auditable = [ignore: []]

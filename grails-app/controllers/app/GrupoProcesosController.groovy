@@ -8,6 +8,8 @@ class GrupoProcesosController {
         redirect(action: "list", params: params)
     }
 
+    //lista de grupo de Procesos
+
     def list = {
         def title = g.message(code:"default.list.label", args:["GrupoProcesos"], default:"GrupoProcesos List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -16,6 +18,8 @@ class GrupoProcesosController {
 
         [grupoProcesosInstanceList: GrupoProcesos.list(params), grupoProcesosInstanceTotal: GrupoProcesos.count(), title: title, params:params]
     }
+
+    //form para creación de un nuevo grupo de procesos
 
     def form = {
         def title
@@ -41,6 +45,8 @@ class GrupoProcesosController {
         params.source = "create"
         redirect(action:"form", params:params)
     }
+
+    //función para guardar un nuevo grupo de procesos
 
     def save = {
         def title
@@ -119,6 +125,8 @@ class GrupoProcesosController {
         params.source = "edit"
         redirect(action:"form", params:params)
     }
+
+    //función para borrar el correspondiente grupo de procesos
 
     def delete = {
         def grupoProcesosInstance = GrupoProcesos.get(params.id)

@@ -7,7 +7,7 @@ class FuenteController {
     def index = {
         redirect(action: "list", params: params)
     }
-
+    /*Lista de fuentes de financiamiento*/
     def list = {
         def title = g.message(code: "default.list.label", args: ["Fuente"], default: "Fuente List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -16,7 +16,7 @@ class FuenteController {
 
         [fuenteInstanceList: Fuente.list(params), fuenteInstanceTotal: Fuente.count(), title: title, params: params]
     }
-
+    /*Form para crear nuevas fuentes de financiamiento*/
     def form = {
         def title
         def fuenteInstance
@@ -41,7 +41,7 @@ class FuenteController {
         params.source = "create"
         redirect(action: "form", params: params)
     }
-
+        /*Función para guardar una nueva fuente de financiamiento*/
     def save = {
         def title
         if (params.id) {
@@ -74,6 +74,7 @@ class FuenteController {
         }
     }
 
+    /*Función para actualizar los datos de una fuente de financiamiento*/
     def update = {
         def fuenteInstance = Fuente.get(params.id)
         if (fuenteInstance) {
@@ -100,7 +101,7 @@ class FuenteController {
             redirect(action: "list")
         }
     }
-
+    /*Muestra una fuente de financiamiento específica*/
     def show = {
         def fuenteInstance = Fuente.get(params.id)
         if (!fuenteInstance) {
@@ -120,6 +121,7 @@ class FuenteController {
         redirect(action: "form", params: params)
     }
 
+    /*Función para eliminar una fuente de financiamiento*/
     def delete = {
         def fuenteInstance = Fuente.get(params.id)
         if (fuenteInstance) {

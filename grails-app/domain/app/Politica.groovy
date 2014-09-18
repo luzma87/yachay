@@ -1,4 +1,5 @@
 package app
+/*Política que se aplica en el proyecto.*/
 class Politica implements Serializable {
     String descripcion
     static auditable = [ignore: []]
