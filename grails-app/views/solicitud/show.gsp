@@ -5,7 +5,7 @@
   Time: 01:25 PM
 --%>
 
-<%@ page import="app.Proyecto" contentType="text/html;charset=UTF-8" %>
+<%@ page import="app.seguridad.Prfl; app.Proyecto" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -14,6 +14,8 @@
     </head>
 
     <body>
+
+        %{--<h2>${Prfl.get(session.perfil.id).nombre} ${Prfl.get(session.perfil.id).codigo} ${solicitud.estado}</h2>--}%
 
         <div class="dialog" title="${title}">
             <div id="" class="toolbar ui-widget-header ui-corner-all">
@@ -46,6 +48,7 @@
                                 <td colspan="4" style="padding-bottom: 15px; font-size: larger; font-weight: bold;">
                                     <g:if test="${solicitud.incluirReunion == 'S'}">
                                         Se incluirá en la próxima reunión de aprobación
+                                        (Solicitado el ${solicitud.fechaPeticionReunion?.format("dd-MM-yyyy HH:mm")})
                                     </g:if>
                                     <g:else>
                                         No se incluirá en la próxima reunión de aprobación
@@ -63,18 +66,23 @@
                         <tr>
                             <td colspan="4" class="buttons" style="text-align: right;">
                                 <g:if test="${solicitud.estado == 'P'}">
-                                    <g:if test="${session.perfil.codigo == 'RQ'}">
+                                    <g:if test="${session.perfil.codigo == 'RQ' || session.perfil.codigo == 'DRRQ'}">
                                         <g:link class="button edit" action="ingreso" id="${solicitud?.id}">
                                             <g:message code="default.button.update.label" default="Edit"/>
                                         </g:link>
                                     </g:if>
-                                    <g:if test="${session.perfil.codigo == 'GAF' || session.perfil.codigo == 'GJ'/* || session.perfil.codigo == 'GDP'*/}">
+                                %{--<g:if test="${session.perfil.codigo == 'GAF' || session.perfil.codigo == 'GJ'/* || session.perfil.codigo == 'GDP'*/}">--}%
+                                    <g:if test="${session.perfil.codigo == 'ASAF' || session.perfil.codigo == 'ASGJ'/* || session.perfil.codigo == 'GDP'*/}">
                                         <g:link class="button revision" action="revision" id="${solicitud?.id}">
                                             Revisar
                                         </g:link>
                                     </g:if>
-                                    <g:if test="${solicitud.revisadoAdministrativaFinanciera &&
-                                            solicitud.revisadoJuridica}">
+                                    <g:if test="${solicitud.revisadoAdministrativaFinanciera && solicitud.revisadoJuridica}">
+                                        <g:if test="${session.perfil.codigo == 'GAF' || session.perfil.codigo == 'GJ'}">
+                                            <g:link class="button revision" action="revision" id="${solicitud?.id}">
+                                                Validar
+                                            </g:link>
+                                        </g:if>
                                         <g:if test="${session.perfil.codigo == 'GP'}">
                                             <g:if test="${solicitud.incluirReunion == 'S'}">
                                                 <g:link class="button aprobacion" action="aprobacion" id="${solicitud?.id}">

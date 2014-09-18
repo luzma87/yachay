@@ -101,9 +101,14 @@
             <p>La actividad seleccionada no se encuentra en el POA</p>
         </div>
 
+    %{--*${solicitud.validadoAdministrativaFinanciera}*--}%
+    %{--*${solicitud.validadoJuridica}*--}%
+    %{--*${solicitud.validadoAdministrativaFinanciera && solicitud.validadoJuridica}*--}%
+
         <g:uploadForm action="save" method="post" name="frmSolicitud" id="${solicitud.id}">
             <table width="100%" border="0">
-                <g:if test="${solicitud.id}">
+            <g:if test="${solicitud.id}">
+                <g:if test="${perfil.codigo == 'DRRQ'}">
                     <tr>
                         <td colspan="6" style="padding-bottom: 15px; font-size: larger; font-weight: bold;">
                             <g:if test="${solicitud.incluirReunion == 'S'}">
@@ -124,7 +129,13 @@
                         </td>
                     </tr>
                 </g:if>
+            </g:if>
 
+            <g:if test="${solicitud.validadoAdministrativaFinanciera && solicitud.validadoJuridica}">
+                </table>
+                <slc:showSolicitud solicitud="${solicitud}" editable="true" perfil="${perfil}"/>
+            </g:if>
+            <g:else>
                 <tr>
                     <td class="label">Unidad requirente</td>
                     <td colspan="3">
@@ -216,13 +227,13 @@
                     </td>
                 </tr>
 
-                %{--<tr>--}%
-                %{--<td class="label">Observaciones</td>--}%
-                %{--<td colspan="7">--}%
-                %{--<g:textArea name="observaciones" rows="4" cols="115" class="ta ui-widget-content ui-corner-all"--}%
-                %{--value="${solicitud.observaciones}"/>--}%
-                %{--</td>--}%
-                %{--</tr>--}%
+            %{--<tr>--}%
+            %{--<td class="label">Observaciones</td>--}%
+            %{--<td colspan="7">--}%
+            %{--<g:textArea name="observaciones" rows="4" cols="115" class="ta ui-widget-content ui-corner-all"--}%
+            %{--value="${solicitud.observaciones}"/>--}%
+            %{--</td>--}%
+            %{--</tr>--}%
 
                 <tr>
                     <td colspan="2" class="label">T.D.R.</td>
@@ -311,8 +322,10 @@
                         <a href="#" id="btnSave">Guardar</a>
                     </td>
                 </tr>
-            </table>
+                </table>
+            </g:else>
         </g:uploadForm>
+
 
 
         <div id="dlgDetalleMonto" title="Detalle anual del monto solicitado">

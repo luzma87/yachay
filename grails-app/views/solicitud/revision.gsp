@@ -30,7 +30,8 @@
                 <g:link class="button create" action="ingreso">
                     Nueva solicitud
                 </g:link>
-                <g:if test="${perfil.codigo == 'GAF' || perfil.codigo == 'GJ' || perfil.codigo == 'GDP'}">
+            %{--<g:if test="${perfil.codigo == 'GAF' || perfil.codigo == 'GJ' || perfil.codigo == 'GDP'}">--}%
+                <g:if test="${perfil.codigo == 'ASAF' || perfil.codigo == 'ASGJ' || perfil.codigo == 'GAF' || perfil.codigo == 'GJ'}">
                     <a href="#" id="btnSave" class="button" style="float: right;">Guardar</a>
                 </g:if>
                 <a href="#" id="btnPrint" class="button" style="float: right;">Imprimir</a>

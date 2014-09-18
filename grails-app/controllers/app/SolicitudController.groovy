@@ -321,17 +321,17 @@ class SolicitudController extends app.seguridad.Shield {
 
         params.max = Math.min(params.max ? params.int('max') : 25, 100)
 
-        def unidad = UnidadEjecutora.get(session.unidad.id)
+//        def unidad = UnidadEjecutora.get(session.unidad.id)
 
         def c = Solicitud.createCriteria()
         def lista = c.list(params) {
-            eq("unidadEjecutora", unidad)
+//            eq("unidadEjecutora", unidad)
             if (params.search) {
                 ilike("nombreProceso", "%" + params.search + "%")
             }
         }
         def list2 = Solicitud.withCriteria {
-            eq("unidadEjecutora", unidad)
+//            eq("unidadEjecutora", unidad)
             if (params.search) {
                 ilike("nombreProceso", "%" + params.search + "%")
             }
@@ -435,6 +435,7 @@ class SolicitudController extends app.seguridad.Shield {
         } else {
             solicitud.incluirReunion = "N"
         }
+        solicitud.fechaPeticionReunion = new Date()
         if (!solicitud.save(flush: true)) {
             println "error al incluir/excluir reunion " + solicitud.errors
         }
@@ -665,7 +666,7 @@ class SolicitudController extends app.seguridad.Shield {
     }
 
     def ingreso = {
-        if (session.perfil.codigo == "RQ") {
+        if (session.perfil.codigo == "RQ" || session.perfil.codigo == "DRRQ") {
             def usuario = Usro.get(session.usuario.id)
             def unidadEjecutora = usuario.unidad
             def solicitud = new Solicitud()
@@ -688,7 +689,8 @@ class SolicitudController extends app.seguridad.Shield {
                 }
             }
             title += " solicitud"
-            return [unidadRequirente: unidadEjecutora, solicitud: solicitud, title: title, asignado: formatNumber(number: asignado, type: "currency")]
+            return [unidadRequirente: unidadEjecutora, solicitud: solicitud, title: title,
+                    asignado        : formatNumber(number: asignado, type: "currency"), perfil: session.perfil]
         } else {
             if (params.id) {
                 redirect(action: "show", id: params.id)
@@ -738,6 +740,20 @@ class SolicitudController extends app.seguridad.Shield {
             } else {
                 if (params["_gaf"]) {
                     solicitud.revisadoAdministrativaFinanciera = null
+                }
+            }
+            if (params.vgj == "on") {
+                solicitud.validadoJuridica = new Date()
+            } else {
+                if (params["_vgj"]) {
+                    solicitud.validadoJuridica = null
+                }
+            }
+            if (params.vgaf == "on") {
+                solicitud.validadoAdministrativaFinanciera = new Date()
+            } else {
+                if (params["_vgaf"]) {
+                    solicitud.validadoAdministrativaFinanciera = null
                 }
             }
 //            if (params.gdp == "on") {
