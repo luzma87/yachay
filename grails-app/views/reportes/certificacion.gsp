@@ -80,11 +80,11 @@
 
             </div>
 
-            <div style="float: right;font-size: 12pt;">
+            <div style="float: right;font-size: 10pt;">
                 <p>Numeración: ${anio}-GP No. ${sol.numero}</p>
             </div>
 
-            <div style="text-align: justify;float: left;font-size: 12pt;">
+            <div style="text-align: justify;float: left;font-size: 10pt;">
                 <p>
                     Con solicitud de aval de POA Nro. ${sol.memo}, con fecha ${sol.fecha.format("dd-MM-yyyy")}, la Gerencia de Planificación solicita un aval para realizar la actividad "${sol.proceso.nombre}",
                     por un monto total de <g:formatNumber number="${sol.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"></g:formatNumber>$, con base en cual informo lo siguiente:
@@ -161,7 +161,7 @@
             </div>
 
 
-            <div style="width:6cm; margin-top: 100px;float: left;font-size: 12pt;text-align: center; border-top: solid, 1px #000000;">
+            <div style="width:6cm; margin-top: 100px;float: left;font-size: 10pt;text-align: center; border-top: solid, 1px #000000;">
                 <p>${sol.firma2.persona.nombre} ${sol.firma2.persona.apellido}</p>
 
                 %{--<p>--}%
@@ -169,7 +169,7 @@
                 %{--</p>--}%
             </div>
 
-            <div style="width:6cm;margin-top: 100px;float: left;font-size: 12pt;margin-left: 3cm;text-align: center;border-top: solid, 1px #000000;">
+            <div style="width:6cm;margin-top: 100px;float: left;font-size: 10pt;margin-left: 3cm;text-align: center;border-top: solid, 1px #000000;">
                 <p>${sol.firma3.persona.nombre} ${sol.firma3.persona.apellido}</p>
 
                 %{--<p>--}%

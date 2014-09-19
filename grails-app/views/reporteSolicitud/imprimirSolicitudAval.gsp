@@ -28,7 +28,7 @@
             /*background  : #fedcba;*/
             height      : 24.7cm; /*29.7-(1.5*2)*/
             font-family : arial;
-            font-size   : 12pt;
+            font-size   : 10pt;
         }
 
         .titulo {

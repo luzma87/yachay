@@ -255,6 +255,8 @@ class EntidadController extends app.seguridad.Shield {
         return [unidad: unidad]
     }
 
+
+    /*Lista los responsables actuales y nos permite agregar reponsables */
     def responsable = {
         def unidad = UnidadEjecutora.get(params.id)
         def usuarios = Usro.findAllByUnidad(unidad)
@@ -284,6 +286,7 @@ class EntidadController extends app.seguridad.Shield {
     } //responsable
 
 
+    /*Función para dar de baja a un responsable*/
     def bajaResponsable = {
         def responsable = ResponsableProyecto.get(params.id)
 
@@ -299,6 +302,7 @@ class EntidadController extends app.seguridad.Shield {
         }
     }
 
+    /*Función para guardar un responsable*/
     def saveResponsable = {
 //        println "SAVE RESP: " + params
         /*
@@ -343,6 +347,7 @@ class EntidadController extends app.seguridad.Shield {
         }
     }
 
+    /*Tabla de los responsables actuales*/
     def reloadResponsables = {
         def unidad = UnidadEjecutora.get(params.id)
         def responsables = []
@@ -506,6 +511,7 @@ class EntidadController extends app.seguridad.Shield {
         }
     }
 
+    /*Muestra responsables de la unidad actual*/
     def historialResponsables = {
         def unidad = UnidadEjecutora.get(params.id)
         params.max = Math.min(params.max ? params.int('max') : 10, 100)

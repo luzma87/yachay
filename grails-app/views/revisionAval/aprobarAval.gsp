@@ -108,7 +108,7 @@
                 </div>
 
                 <div class="labelSvt">
-                    <a href="#" class="btn" id="descargaForm" style="display: inline-block">Descargar</a>
+                    <a href="#" class="btn" id="descargaForm" style="display: inline-block">Imp. Solicitud</a>
                 </div>
             </div>
 

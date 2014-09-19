@@ -18,6 +18,7 @@ class ProyectoController extends app.seguridad.Shield {
         redirect(action: "list", params: params)
     }
 
+    /*Listado de los proyectos*/
     def list = {
         def title = g.message(code: "default.list.label", args: ["Proyecto"], default: "Proyecto List")
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
@@ -118,6 +119,7 @@ class ProyectoController extends app.seguridad.Shield {
 
         [proyectoInstanceList: proyectoInstanceList, proyectoInstanceTotal: proyectoInstanceTotal, title: title, params: params]
     }
+
 
     def form = {
         def title
@@ -488,6 +490,7 @@ class ProyectoController extends app.seguridad.Shield {
         }
     }
 
+    /*Muestra el proyecto en una pantalla nueva*/
     def show = {
         def proyectoInstance = Proyecto.get(params.id)
         if (!proyectoInstance) {
@@ -1016,7 +1019,7 @@ class ProyectoController extends app.seguridad.Shield {
             [documentoInstance: documentoInstance, title: title, proyecto: documentoInstance.proyecto]
         }
     }
-
+/*Muestra los documentos asociados del proyecto*/
     def documentos = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         if (!params.sort) {
@@ -1062,6 +1065,7 @@ class ProyectoController extends app.seguridad.Shield {
         return [proyecto: proyecto, documentoInstanceList: documentoInstanceList, documentoInstanceTotal: documentoInstanceTotal, params: params]
     }
 
+    /*Función para subir un documento asociado con el proyecto*/
     def uploadDoc = {
 
 //        println "UPLOADING"
@@ -1826,18 +1830,20 @@ response.outputStream << file.newInputStream()
         return [entidadesProyectoInstance: entidadesProyectoInstance, proyecto: proyecto]
     }
 
+    /*Muestra el financiamiento de un proyecto específico*/
     def verFinanciamiento = {
         def proyecto = Proyecto.get(params.id)
         def financiamientos = Financiamiento.findAllByProyecto(proyecto)
         [proyecto: proyecto, financiamientos: financiamientos]
     }
-
+    /*Permite editar o borrar un financiamiento*/
     def editarFinanciamiento = {
         def proyecto = Proyecto.get(params.id)
         def financiamientos = Financiamiento.findAllByProyecto(proyecto)
         [proyecto: proyecto, financiamientos: financiamientos]
     }
 
+    /*FUnción para guardar un nuevo financiamiento*/
     def saveFinanciamiento = {
 
         println params
@@ -2133,6 +2139,7 @@ response.outputStream << file.newInputStream()
 
     }
 
+    /*Función para cargar un archivo excel con componentes y actividades*/
     def subirExcel = {
 
 

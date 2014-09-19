@@ -562,7 +562,9 @@ class MarcoLogicoController extends app.seguridad.Shield {
         }
     }
 
+    /*Muestra el marco lógico del proyecto en una ventana separada*/
     def verMarcoCompleto = {
+//        print("params ml " + params)
         def proyecto = Proyecto.get(params.id)
         def tpel = TipoElemento.findByDescripcion("Fin")
         def fin = MarcoLogico.find("from MarcoLogico where proyecto=${proyecto.id} and tipoElemento=${tpel.id} and estado=0")
@@ -571,7 +573,7 @@ class MarcoLogicoController extends app.seguridad.Shield {
         tpel = TipoElemento.findByDescripcion("Componente")
         def componentes = MarcoLogico.findAll("from MarcoLogico where proyecto=${proyecto.id} and tipoElemento=${tpel.id} and estado=0 order by id")
 
-        println "fin " + fin.id + " prop " + proposito + " comp " + componentes
+//        println "fin " + fin.id + " prop " + proposito + " comp " + componentes
 
         [fin: fin, proposito: proposito, proyecto: proyecto, componentes: componentes]
 
