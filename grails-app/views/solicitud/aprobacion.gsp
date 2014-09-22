@@ -31,6 +31,15 @@
         label {
             width : auto;
         }
+
+        .wide {
+            height       : 29px;
+            padding-left : 5px;
+        }
+
+        .short {
+            width : 85px;
+        }
         </style>
     </head>
 

@@ -82,6 +82,11 @@
             text-align  : center;
             font-weight : bold;
         }
+
+        .fecha {
+            text-align : right;
+            margin-top : 1cm;
+        }
         </style>
     </head>
 
@@ -89,6 +94,9 @@
         <div class="hoja">
             <slc:headerReporte title="Acta de aprobación"/>
             <slc:infoReporte solicitud="${solicitud}"/>
+            <div class="fecha">
+                Quito, ${aprobacion.fecha?.format("dd-MM-yyyy")}
+            </div>
             <slc:firmasReporte firmas="${firmas}"/>
         </div>
     </body>

@@ -19,26 +19,47 @@ class SolicitudTagLib {
         def html = "No se encontró la solicitud a mostrar"
         if (solicitud) {
             html = '<table style="width: ' + w + ';">'
+
+            html += '<tr>'
+            html += '<td class="label">Fecha</td>'
+            html += '<td >'
+            html += solicitud.fecha?.format("dd-MM-yyyy")
+            html += '</td>'
+            html += "</tr>"
+
             html += '<tr>'
             html += '<td class="label">Unidad requirente</td>'
-            html += '<td colspan="3">'
+            html += '<td >'
             html += (solicitud.unidadEjecutora?.nombre ?: "")
             html += '</td>'
 
             html += '<td class="label">Proyecto</td>'
-            html += '<td colspan="3">'
+            html += '<td >'
             html += (solicitud.actividad?.proyecto?.nombre ?: "")
             html += '</td>'
             html += '</tr>'
+            html += "</tr>"
 
             html += '<tr>'
+            html += '<td class="label">Nombre del proceso</td>'
+            html += '<td >'
+            html += (solicitud.nombreProceso ?: "")
+            html += '</td>'
+
             html += '<td class="label">Componente</td>'
-            html += '<td colspan="3" id="tdComponente">'
+            html += '<td  id="tdComponente">'
             html += (solicitud.actividad?.marcoLogico?.objeto ?: "")
+            html += '</td>'
+            html += "</tr>"
+
+            html += '<tr>'
+            html += '<td class="label">Objeto del contrato</td>'
+            html += '<td>'
+            html += (solicitud.objetoContrato ?: "")
             html += '</td>'
 
             html += '<td class="label">Actividad</td>'
-            html += '<td colspan="3" id="tdActividad">'
+            html += '<td id="tdActividad">'
             html += solicitud.actividad?.objeto
             def anio = Anio.findByAnio(new Date().format('yyyy'))
             def tieneAsignacion = Asignacion.countByMarcoLogicoAndAnio(solicitud.actividad, anio) > 0
@@ -49,29 +70,13 @@ class SolicitudTagLib {
             html += '</td>'
             html += '</tr>'
 
-            html += '<tr>'
-            html += '<td class="label">Nombre del proceso</td>'
-            html += '<td colspan="3">'
-            html += (solicitud.nombreProceso ?: "")
-            html += '</td>'
+            html += "<tr>"
+            html += "<td colspan='4'>"
+            html += "<hr/>"
+            html += "</td>"
+            html += "</tr>"
 
-            html += '<td class="label">Forma de pago</td>'
-            html += '<td>'
-            html += (solicitud.formaPago ?: "")
-            html += '</td>'
-
-            html += '<td class="label">Plazo de ejecución</td>'
-            html += '<td>'
-            html += solicitud.plazoEjecucion + " días"
-            html += '</td>'
-            html += '</tr>'
-
-            html += '<tr>'
-            html += '<td class="label">Fecha</td>'
-            html += '<td colspan="3">'
-            html += solicitud.fecha?.format("dd-MM-yyyy")
-            html += '</td>'
-
+            html += "<tr>"
             html += '<td class="label">Monto solicitado</td>'
             html += '<td>'
             html += g.formatNumber(number: solicitud.montoSolicitado, type: "currency")
@@ -82,36 +87,40 @@ class SolicitudTagLib {
             html += "<br/>(Detallado: ${formatNumber(number: asignado, type: 'currency')})"
             html += '</td>'
 
+            html += '<td class="label">Forma de pago</td>'
+            html += '<td>'
+            html += (solicitud.formaPago ?: "")
+            html += '</td>'
+            html += "</tr>"
+
+            html += "<tr>"
+            html += '<td class="label">Plazo de ejecución</td>'
+            html += '<td>'
+            html += solicitud.plazoEjecucion + " días"
+            html += '</td>'
+
             html += '<td class="label">Modalidad de contratación</td>'
             html += '<td>'
             html += (solicitud.tipoContrato?.descripcion ?: "")
             html += '</td>'
             html += '</tr>'
 
-            html += '<tr>'
-            html += '<td class="label">Objeto del contrato</td>'
-            html += '<td colspan="7">'
-            html += (solicitud.objetoContrato ?: "")
-            html += '</td>'
-            html += '</tr>'
-
-//            html += '<tr>'
-//            html += '<td class="label">Observaciones</td>'
-//            html += '<td colspan="7">'
-//            html += (solicitud.observaciones ?: "")
-//            html += '</td>'
-//            html += '</tr>'
+            html += "<tr>"
+            html += "<td colspan='4'>"
+            html += "<hr/>"
+            html += "</td>"
+            html += "</tr>"
 
             html += '<tr>'
             html += '<td class="label">Archivo TDR</td>'
-            html += '<td colspan="3">'
+            html += '<td>'
             html += g.link(controller: 'solicitud', action: "downloadSolicitud", params: [tipo: "tdr"], id: solicitud.id) {
                 solicitud.pathPdfTdr
             }
             html += '</td>'
 
             html += '<td class="label">Oferta 1</td>'
-            html += '<td colspan="3">'
+            html += '<td>'
             html += g.link(controller: 'solicitud', action: "downloadSolicitud", params: [tipo: "oferta1"], id: solicitud.id) {
                 solicitud.pathOferta1
             }
@@ -120,14 +129,14 @@ class SolicitudTagLib {
 
             html += '<tr>'
             html += '<td class="label">Oferta 2</td>'
-            html += '<td colspan="3">'
+            html += '<td>'
             html += g.link(controller: 'solicitud', action: "downloadSolicitud", params: [tipo: "oferta2"], id: solicitud.id) {
                 solicitud.pathOferta2
             }
             html += '</td>'
 
             html += '<td class="label">Oferta 3</td>'
-            html += '<td colspan="3">'
+            html += '<td>'
             html += g.link(controller: 'solicitud', action: "downloadSolicitud", params: [tipo: "oferta3"], id: solicitud.id) {
                 solicitud.pathOferta3
             }
@@ -136,14 +145,14 @@ class SolicitudTagLib {
 
             html += '<tr>'
             html += '<td class="label">Cuadro comparativo</td>'
-            html += '<td colspan="3">'
+            html += '<td>'
             html += g.link(controller: 'solicitud', action: "downloadSolicitud", params: [tipo: "comparativo"], id: solicitud.id) {
                 solicitud.pathCuadroComparativo
             }
             html += '</td>'
 
             html += '<td class="label">Análisis de costos</td>'
-            html += '<td colspan="3">'
+            html += '<td>'
             html += g.link(controller: 'solicitud', action: "downloadSolicitud", params: [tipo: "analisis"], id: solicitud.id) {
                 solicitud.pathAnalisisCostos
             }
@@ -155,6 +164,144 @@ class SolicitudTagLib {
             html += revisiones(solicitud: solicitud, editable: editable, perfil: perfil)
             html += aprobaciones(solicitud: solicitud, editable: aprobacion, perfil: perfil)
         }
+//        if (solicitud) {
+//            html = '<table style="width: ' + w + ';">'
+//            html += '<tr>'
+//            html += '<td class="label">Unidad requirente</td>'
+//            html += '<td colspan="3">'
+//            html += (solicitud.unidadEjecutora?.nombre ?: "")
+//            html += '</td>'
+//
+//            html += '<td class="label">Proyecto</td>'
+//            html += '<td colspan="3">'
+//            html += (solicitud.actividad?.proyecto?.nombre ?: "")
+//            html += '</td>'
+//            html += '</tr>'
+//
+//            html += '<tr>'
+//            html += '<td class="label">Componente</td>'
+//            html += '<td colspan="3" id="tdComponente">'
+//            html += (solicitud.actividad?.marcoLogico?.objeto ?: "")
+//            html += '</td>'
+//
+//            html += '<td class="label">Actividad</td>'
+//            html += '<td colspan="3" id="tdActividad">'
+//            html += solicitud.actividad?.objeto
+//            def anio = Anio.findByAnio(new Date().format('yyyy'))
+//            def tieneAsignacion = Asignacion.countByMarcoLogicoAndAnio(solicitud.actividad, anio) > 0
+//            if (!tieneAsignacion) {
+//                html += "<div class='ui-widget-content ui-corner-all ui-state-error' style='padding:5px;'> " +
+//                        "La actividad no se encuentra en el POA </div>"
+//            }
+//            html += '</td>'
+//            html += '</tr>'
+//
+//            html += '<tr>'
+//            html += '<td class="label">Nombre del proceso</td>'
+//            html += '<td colspan="3">'
+//            html += (solicitud.nombreProceso ?: "")
+//            html += '</td>'
+//
+//            html += '<td class="label">Forma de pago</td>'
+//            html += '<td>'
+//            html += (solicitud.formaPago ?: "")
+//            html += '</td>'
+//
+//            html += '<td class="label">Plazo de ejecución</td>'
+//            html += '<td>'
+//            html += solicitud.plazoEjecucion + " días"
+//            html += '</td>'
+//            html += '</tr>'
+//
+//            html += '<tr>'
+//            html += '<td class="label">Fecha</td>'
+//            html += '<td colspan="3">'
+//            html += solicitud.fecha?.format("dd-MM-yyyy")
+//            html += '</td>'
+//
+//            html += '<td class="label">Monto solicitado</td>'
+//            html += '<td>'
+//            html += g.formatNumber(number: solicitud.montoSolicitado, type: "currency")
+//            def asignado = 0
+//            DetalleMontoSolicitud.findAllBySolicitud(solicitud).each { d ->
+//                asignado += d.monto
+//            }
+//            html += "<br/>(Detallado: ${formatNumber(number: asignado, type: 'currency')})"
+//            html += '</td>'
+//
+//            html += '<td class="label">Modalidad de contratación</td>'
+//            html += '<td>'
+//            html += (solicitud.tipoContrato?.descripcion ?: "")
+//            html += '</td>'
+//            html += '</tr>'
+//
+//            html += '<tr>'
+//            html += '<td class="label">Objeto del contrato</td>'
+//            html += '<td colspan="7">'
+//            html += (solicitud.objetoContrato ?: "")
+//            html += '</td>'
+//            html += '</tr>'
+//
+////            html += '<tr>'
+////            html += '<td class="label">Observaciones</td>'
+////            html += '<td colspan="7">'
+////            html += (solicitud.observaciones ?: "")
+////            html += '</td>'
+////            html += '</tr>'
+//
+//            html += '<tr>'
+//            html += '<td class="label">Archivo TDR</td>'
+//            html += '<td colspan="3">'
+//            html += g.link(controller: 'solicitud', action: "downloadSolicitud", params: [tipo: "tdr"], id: solicitud.id) {
+//                solicitud.pathPdfTdr
+//            }
+//            html += '</td>'
+//
+//            html += '<td class="label">Oferta 1</td>'
+//            html += '<td colspan="3">'
+//            html += g.link(controller: 'solicitud', action: "downloadSolicitud", params: [tipo: "oferta1"], id: solicitud.id) {
+//                solicitud.pathOferta1
+//            }
+//            html += '</td>'
+//            html += '</tr>'
+//
+//            html += '<tr>'
+//            html += '<td class="label">Oferta 2</td>'
+//            html += '<td colspan="3">'
+//            html += g.link(controller: 'solicitud', action: "downloadSolicitud", params: [tipo: "oferta2"], id: solicitud.id) {
+//                solicitud.pathOferta2
+//            }
+//            html += '</td>'
+//
+//            html += '<td class="label">Oferta 3</td>'
+//            html += '<td colspan="3">'
+//            html += g.link(controller: 'solicitud', action: "downloadSolicitud", params: [tipo: "oferta3"], id: solicitud.id) {
+//                solicitud.pathOferta3
+//            }
+//            html += '</td>'
+//            html += '</tr>'
+//
+//            html += '<tr>'
+//            html += '<td class="label">Cuadro comparativo</td>'
+//            html += '<td colspan="3">'
+//            html += g.link(controller: 'solicitud', action: "downloadSolicitud", params: [tipo: "comparativo"], id: solicitud.id) {
+//                solicitud.pathCuadroComparativo
+//            }
+//            html += '</td>'
+//
+//            html += '<td class="label">Análisis de costos</td>'
+//            html += '<td colspan="3">'
+//            html += g.link(controller: 'solicitud', action: "downloadSolicitud", params: [tipo: "analisis"], id: solicitud.id) {
+//                solicitud.pathAnalisisCostos
+//            }
+//            html += '</td>'
+//            html += '</tr>'
+//
+//            html += '</table>'
+//
+//            html += revisiones(solicitud: solicitud, editable: editable, perfil: perfil)
+//            html += aprobaciones(solicitud: solicitud, editable: aprobacion, perfil: perfil)
+//        }
         out << html
     }
 
@@ -344,7 +491,7 @@ class SolicitudTagLib {
         if (solicitud) {
             html = '<table>'
             html += '<tr>'
-            html += '<td class="label">Tipo de aprobación</td>'
+            html += '<td class="label">Estado</td>'
             html += '<td>'
             if (editable) {
                 html += g.select(from: TipoAprobacion.list(), name: "tipoAprobacion.id", id: "tipoAprobacion",
@@ -369,6 +516,24 @@ class SolicitudTagLib {
                 html += 'No usa recursos de arrastre'
             }
             html += '</td>'
+
+            html += '<td class="label">Fecha</td>'
+            html += '<td>'
+            if (editable) {
+                html += g.textField(name: "fecha", class: "required datepicker field wide short ui-widget-content ui-corner-all",
+                        value: aprobacion.fecha ? aprobacion.fecha.format("dd-MM-yyyy") : new Date().format("dd-MM-yyyy"))
+                html += "<script type='text/javascript'>"
+                html += "   \$('#fecha').datepicker({\n" +
+                        "                    changeMonth : true,\n" +
+                        "                    changeYear  : true,\n" +
+                        "                    dateFormat  : 'dd-mm-yy'\n" +
+                        "                });"
+                html += "</script>"
+            } else {
+                html += aprobacion.fecha.format("dd-MM-yyyy")
+            }
+            html += '</td>'
+
             html += '</tr>'
             html += '<tr>'
             html += '<td class="label">Observaciones</td>'
@@ -474,7 +639,7 @@ class SolicitudTagLib {
             html += '<tr>'
             html += '<td class="label">Actividad</td>'
             html += '<td colspan="5">'
-            html += solicitud.actividad?.objeto
+            html += solicitud.actividad?.numero + " - " + solicitud.actividad?.objeto
             def anio = Anio.findByAnio(new Date().format('yyyy'))
             def tieneAsignacion = Asignacion.countByMarcoLogicoAndAnio(solicitud.actividad, anio) > 0
             if (!tieneAsignacion) {
@@ -483,17 +648,31 @@ class SolicitudTagLib {
             html += '</td>'
             html += '</tr>'
 
-            html += '<tr>'
-            html += '<td class="label">Núm. POA</td>'
-            html += '<td colspan="5">'
-            html += (solicitud.actividad?.numero ?: "")
-            html += '</td>'
-            html += '</tr>'
+//            html += '<tr>'
+//            html += '<td class="label">Núm. POA</td>'
+//            html += '<td colspan="5">'
+//            html += (solicitud.actividad?.numero ?: "")
+//            html += '</td>'
+//            html += '</tr>'
 
             html += '<tr>'
             html += '<td class="label">Nombre del proceso</td>'
             html += '<td colspan="5">'
             html += (solicitud.nombreProceso ?: "")
+            html += '</td>'
+            html += '</tr>'
+
+            html += '<tr>'
+            html += '<td class="label">Objeto del contrato</td>'
+            html += '<td colspan="7">'
+            html += (solicitud.objetoContrato ?: "")
+            html += '</td>'
+            html += '</tr>'
+
+            html += '<tr>'
+            html += '<td class="label">Monto solicitado</td>'
+            html += '<td>'
+            html += g.formatNumber(number: solicitud.montoSolicitado, type: "currency")
             html += '</td>'
             html += '</tr>'
 
@@ -519,23 +698,9 @@ class SolicitudTagLib {
 //            html += '</tr>'
 
             html += '<tr>'
-            html += '<td class="label">Monto solicitado</td>'
-            html += '<td>'
-            html += g.formatNumber(number: solicitud.montoSolicitado, type: "currency")
-            html += '</td>'
-            html += '</tr>'
-
-            html += '<tr>'
             html += '<td class="label">Modalidad de contratación</td>'
             html += '<td colspan="3">'
             html += (solicitud.tipoContrato?.descripcion ?: "")
-            html += '</td>'
-            html += '</tr>'
-
-            html += '<tr>'
-            html += '<td class="label">Objeto del contrato</td>'
-            html += '<td colspan="7">'
-            html += (solicitud.objetoContrato ?: "")
             html += '</td>'
             html += '</tr>'
 
@@ -628,7 +793,7 @@ class SolicitudTagLib {
         if (solicitud && aprobacion) {
             html += '<table width="100%">'
             html += '<tr>'
-            html += '<td class="label">Aprobación</td>'
+            html += '<td style="width:5.5cm;" class="label">Estado</td>'
             html += '<td>'
             html += (aprobacion.tipoAprobacion?.descripcion ?: "")
             html += '</td>'
@@ -643,6 +808,12 @@ class SolicitudTagLib {
             html += '<td class="label">Observaciones</td>'
             html += '<td>'
             html += (aprobacion.observaciones ?: "")
+            html += '</td>'
+            html += '</tr>'
+            html += '<tr>'
+            html += '<td class="label">Asistentes</td>'
+            html += '<td>'
+            html += (aprobacion.asistentes ?: "")
             html += '</td>'
             html += '</tr>'
             html += '</table>'

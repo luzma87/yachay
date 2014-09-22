@@ -810,7 +810,11 @@ class SolicitudController extends app.seguridad.Shield {
         if (params.id) {
             aprobacion = Aprobacion.get(params.id.toLong())
         }
-        params.fecha = new Date()
+        if (params.fecha) {
+            params.fecha = new Date().parse(params.fecha, "dd-MM-yyyy")
+        } else {
+            params.fecha = new Date()
+        }
         aprobacion.properties = params
         if (aprobacion.save(flush: true)) {
             aprobacion.solicitud.estado = "A"

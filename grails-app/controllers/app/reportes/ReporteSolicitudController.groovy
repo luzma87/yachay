@@ -252,7 +252,7 @@ class ReporteSolicitudController {
     }
 
     def imprimirActaAprobacion = {
-        println "Acta aprobacion:::: " + params
+//        println "Acta aprobacion:::: " + params
         def solicitud = Solicitud.get(params.id)
         def aprobacion = Aprobacion.findBySolicitud(solicitud)
 
