@@ -35,7 +35,7 @@
             </td>
             <td>
                 <g:if test="${sol.aval}">
-                    ${sol.aval.fechaAprobacion.format("yyyy")}-CP No.${sol.aval.numero}
+                    ${sol.aval.fechaAprobacion.format("yyyy")}-GP No.<tdn:imprimeNumero aval="${sol.aval.id}"/>
                 </g:if>
             </td>
             <td>

@@ -76,7 +76,7 @@
 
                 <div class="labelSvt" style="width: 180px;">Número:</div>
                 <div class="fieldSvt-large">
-                    ${solicitud.fecha.format("yyyy")}-CP No. ${numero}
+                    ${solicitud.fecha.format("yyyy")}-GP No. <tdn:imprimeNumero solicitud="${solicitud.id}"/>
                     <input type="hidden" style="width: 50%;" id="numero" value="${numero}" >
                 </div>
             </div>
@@ -108,7 +108,7 @@
                 </div>
 
                 <div class="labelSvt">
-                    <a href="#" class="btn" id="descargaForm" style="display: inline-block">Imp. Solicitud</a>
+                    <a href="#" class="btn" id="descargaForm" style="display: inline-block;width: 140px">Imp. Solicitud</a>
                 </div>
             </div>
 

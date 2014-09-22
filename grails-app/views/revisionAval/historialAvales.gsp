@@ -22,7 +22,7 @@
     <tbody>
     <g:each in="${datos}" var="aval">
         <tr>
-            <td>${aval.fechaAprobacion.format("yyyy")}-CP No.${aval.numero}</td>
+            <td>${aval.fechaAprobacion.format("yyyy")}-GP No.<tdn:imprimeNumero aval="${aval.id}"/></td>
             <td style="text-align: center">${aval.proceso.proyecto}</td>
             <td>${aval.proceso.nombre}</td>
             <td style="text-align: right">
@@ -41,9 +41,9 @@
             <td style="text-align: center">
                 <g:if test="${aval.estado.codigo=='E02'}">
                     <a href="#" class="liberar" iden="${aval.id}" max="${aval.monto}">Liberar</a>
-                    <g:if test="${(now-aval.fechaAprobacion)>-1}">
-                        <a href="#" class="caducar" iden="${aval.id}">Caducar</a>
-                    </g:if>
+                    %{--<g:if test="${(now-aval.fechaAprobacion)>-1}">--}%
+                        %{--<a href="#" class="caducar" iden="${aval.id}">Caducar</a>--}%
+                    %{--</g:if>--}%
                 </g:if>
             </td>
         </tr>

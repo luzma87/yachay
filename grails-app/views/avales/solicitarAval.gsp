@@ -63,7 +63,10 @@
 
             <div style="width: 100%;margin-top: 10px;">
                 <div class="label">Monto:</div>
-                <input type="text" name="monto" id="monto" style="width: 140px;margin-right: 30px;text-align: right"
+                <input type="text" name="montoTxt" id="montoTxt" style="width: 140px;margin-right: 30px;text-align: right"
+                       class="ui-corner-all ui-widget-content decimal"
+                       value="${g.formatNumber(number: disponible, minFractionDigits: 2, maxFractionDigits: 2)}" disabled>
+                <input type="hidden" name="monto" id="monto" style="width: 140px;margin-right: 30px;text-align: right"
                        class="ui-corner-all ui-widget-content decimal"
                        value="${g.formatNumber(number: disponible, minFractionDigits: 2, maxFractionDigits: 2)}">
                 <b>Disponible:</b> <g:formatNumber number="${disponible}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/>

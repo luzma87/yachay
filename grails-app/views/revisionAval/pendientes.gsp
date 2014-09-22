@@ -98,7 +98,7 @@
                 <g:select from="${app.Anio.list([sort: 'anio'])}" id="anio" name="anio" optionKey="id" optionValue="anio" value="${actual.id}" class="ui-corner-all"></g:select>
             </div>
             <div class="labelSvt" style="width: 60px">Número:</div>
-            <div class="fieldSvt-medium">${actual.anio}-CP No.<input type="text" id="numero" class="ui-corner-all" style="width: 100px"></div>
+            <div class="fieldSvt-medium">${actual.anio}-GP No.<input type="text" id="numero" class="ui-corner-all" style="width: 100px"></div>
             <div class="labelSvt" style="width: 65px">Proceso:</div>
             <div class="fieldSvt-xl" ><input type="text" id="descProceso" class="ui-corner-all" style="width: 90%"></div>
             <div class="fieldSvt-small" style="width: 80px">

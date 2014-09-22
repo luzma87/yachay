@@ -1,4 +1,4 @@
-package app.pdf
+package app.yachai
 
 import app.Anio
 import app.Asignacion
@@ -179,9 +179,11 @@ class AvalesController extends app.seguridad.Shield {
         [avales: avales, proceso: proceso, solicitudes: solicitudes]
     }
     def solicitarAval = {
+        println "solicictar aval"
         def unidad = UnidadEjecutora.get(session.unidad.id)
         def personasFirma = Usro.findAllByUnidad(unidad)
         def numero = null
+        def band=true
         numero = SolicitudAval.findAllByUnidad(session.usuario.unidad, [sort: "numero", order: "desc", max: 1])
         if (numero.size() > 0) {
             numero = numero?.pop()?.numero
@@ -199,16 +201,28 @@ class AvalesController extends app.seguridad.Shield {
             return
         }
 
-        def avales = Aval.findAllByProcesoAndEstadoInList(proceso, [EstadoAval.findByCodigo("E02"), EstadoAval.findByCodigo("E05"), EstadoAval.findByCodigo("E06")])
+        def avales = Aval.findAllByProcesoAndEstadoInList(proceso, [EstadoAval.findByCodigo("E02"), EstadoAval.findByCodigo("E05")])
         def solicitudes = SolicitudAval.findAllByProcesoAndEstado(proceso, EstadoAval.findByCodigo("E01"))
         def disponible = proceso.getMonto()
+        println "aval "+avales
+        println "sols "+solicitudes
         avales.each {
+            band=false
             disponible -= it.monto
         }
         solicitudes.each {
+            band=false
             disponible -= it.monto
         }
-        [proceso: proceso, disponible: disponible, personas: personasFirma, numero: numero]
+        println "band "+band
+        if(!band){
+            flash.message="Este proceso ya tiene un aval vigente o tiene una solicitud pendiente, no puede solicitar otro."
+            redirect(controller: "avales",action: "avalesProceso",id:proceso?.id)
+            return
+        }else{
+            [proceso: proceso, disponible: disponible, personas: personasFirma, numero: numero]
+        }
+
 
     }
     def solicitarAnulacion = {

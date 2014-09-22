@@ -1,5 +1,7 @@
 package app
 
+import app.yachai.Aval
+import app.yachai.SolicitudAval
 import org.springframework.web.servlet.support.RequestContextUtils as RCU
 import java.text.DecimalFormatSymbols;
 
@@ -12,6 +14,32 @@ class CustomTagLib {
     /**
      * Dump out attributes in HTML compliant fashion.
      */
+    def imprimeNumero = {attrs->
+        def aval = null
+        def sol = null
+        if(attrs.aval)
+            aval=Aval.get(attrs.aval)
+        if(attrs.solicitud)
+            sol = SolicitudAval.get(attrs.solicitud)
+        def num=null
+        def output =""
+        if(aval){
+            num = aval.numero
+        }
+        if(sol)
+            num=sol.numero
+        if(num){
+            (3-num.length()).times {
+                output+="0"
+            }
+            output+=num
+        }
+
+
+
+        out << output
+    }
+
     void outputAttributes(attrs) {
         attrs.remove('tagName') // Just in case one is left
         def writer = getOut()

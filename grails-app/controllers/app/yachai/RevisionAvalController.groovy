@@ -1,7 +1,6 @@
 package app.yachai
 
 import app.Anio
-import app.Solicitud
 import app.UnidadEjecutora
 import app.seguridad.Usro
 
@@ -323,7 +322,7 @@ class RevisionAvalController {
                     aval.contrato = params.contrato
                     aval.certificacion = params.certificacion
                     aval.save(flush: true)
-                    flash.message = "Aval " + aval.fechaAprobacion.format("yyyy") + "-CP No." + aval.numero + " Liberado"
+                    flash.message = "Aval " + aval.fechaAprobacion.format("yyyy") + "-GP No." + aval.numero + " Liberado"
                     redirect(action: 'listaAvales', controller: 'revisionAval')
                 } else {
                     flash.message = "Usted no tiene permisos para liberar avales"
@@ -416,7 +415,7 @@ class RevisionAvalController {
                     aval.save(flush: true)
                     sol.estado = EstadoAval.findByCodigo("E02")
                     sol.save(flush: true)
-                    flash.message = "Solciitud de anulación aprobada - Aval " + aval.fechaAprobacion.format("yyyy") + "-CP No." + aval.numero + " anulado"
+                    flash.message = "Solciitud de anulación aprobada - Aval " + aval.fechaAprobacion.format("yyyy") + "-GP No." +tdn.imprimeNumero(aval:"${aval.id}") + " anulado"
                     redirect(action: 'pendientes', controller: 'revisionAval')
                 } else {
                     flash.message = "Usted no tiene permisos para aprobar esta solicitud"

@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="layout" content="main"/>
-        <title>Liberar aval ${aval.fechaAprobacion?.format("yyyy")}-CP No ${aval.numero}</title>
+        <title>Liberar aval ${aval.fechaAprobacion?.format("yyyy")}-GP No.<tdn:imprimeNumero aval="${aval.id}"/></title>
         <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}"
               type="text/css"/>
         <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'BreadCrumb.css')}"
