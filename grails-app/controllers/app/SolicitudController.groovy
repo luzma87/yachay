@@ -317,6 +317,7 @@ class SolicitudController extends app.seguridad.Shield {
         redirect(action: 'list')
     }
 
+    /*Listado de solicitudes*/
     def list = {
 
         params.max = Math.min(params.max ? params.int('max') : 25, 100)
@@ -355,6 +356,7 @@ class SolicitudController extends app.seguridad.Shield {
         [solicitudInstanceList: list, solicitudInstanceTotal: count, title: title, params: params]
     }
 
+    /*Permite ver los datos de la solicitud*/
     def show = {
         def solicitud = Solicitud.get(params.id)
         if (!solicitud) {
@@ -366,6 +368,7 @@ class SolicitudController extends app.seguridad.Shield {
         }
     }
 
+    /*Función para guardar una nueva solicitud*/
     def save = {
         def usuario = Usro.get(session.usuario.id)
         def unidadEjecutora = usuario.unidad
