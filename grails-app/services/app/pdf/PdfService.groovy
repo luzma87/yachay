@@ -14,6 +14,7 @@ class PdfService {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ITextRenderer renderer = new ITextRenderer();
 
+/*
         ITextFontResolver fontResolver = renderer.getFontResolver();
         fontResolver.addFontDirectory(pathFonts, true);
 
@@ -29,6 +30,7 @@ class PdfService {
         fontResolver.addFont(pathFonts + "ARIALNI.TTF", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
         fontResolver.addFont(pathFonts + "ARIALUNI.TTF", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
         fontResolver.addFont(pathFonts + "ariblk.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+*/
 
 //        println "123123123 " + url
         try {
