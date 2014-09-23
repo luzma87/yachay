@@ -1,4 +1,4 @@
-<%@ page import="app.TipoProducto" %>
+<%@ page import="yachay.parametros.TipoProducto" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

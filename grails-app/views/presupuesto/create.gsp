@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.Presupuesto" %>
+<%@ page import="yachay.parametros.poaPac.Presupuesto" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -33,7 +33,7 @@
                                     <label for="presupuesto"><g:message code="presupuesto.presupuesto.label" default="Presupuesto" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: presupuestoInstance, field: 'presupuesto', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="presupuesto.id" title="presupuesto" from="${app.Presupuesto.list()}" optionKey="id" value="${presupuestoInstance?.presupuesto?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="presupuesto.id" title="presupuesto" from="${yachay.parametros.poaPac.Presupuesto.list()}" optionKey="id" value="${presupuestoInstance?.presupuesto?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         

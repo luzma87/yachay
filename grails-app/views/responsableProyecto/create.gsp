@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.ResponsableProyecto" %>
+<%@ page import="yachay.proyectos.ResponsableProyecto" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -33,7 +33,7 @@
                                     <label for="responsable"><g:message code="responsableProyecto.responsable.label" default="Responsable" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: responsableProyectoInstance, field: 'responsable', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="responsable.id" title="responsable" from="${app.seguridad.Usro.list()}" optionKey="id" value="${responsableProyectoInstance?.responsable?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="responsable.id" title="responsable" from="${yachay.seguridad.Usro.list()}" optionKey="id" value="${responsableProyectoInstance?.responsable?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -42,7 +42,7 @@
                                     <label for="proyecto"><g:message code="responsableProyecto.proyecto.label" default="Proyecto" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: responsableProyectoInstance, field: 'proyecto', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="proyecto" from="${app.Proyecto.list()}" optionKey="id" value="${responsableProyectoInstance?.proyecto?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="proyecto" from="${yachay.proyectos.Proyecto.list()}" optionKey="id" value="${responsableProyectoInstance?.proyecto?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         

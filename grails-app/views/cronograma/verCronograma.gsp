@@ -75,7 +75,7 @@
                 <th>&nbsp;</th>
                 <g:form action="verCronograma" method="post" class="frm_anio">
                     <input type="hidden" name="id" value="${proyecto.id}">
-                    <th colspan="15"><g:select from="${app.Anio.list()}" optionKey="id" optionValue="anio"
+                    <th colspan="15"><g:select from="${yachay.parametros.poaPac.Anio.list()}" optionKey="id" optionValue="anio"
                                                name="anio" id="anio" value="${anio.id}"
                                                style="width: 70px"/></th>
                 </g:form>
@@ -83,7 +83,7 @@
 
             <tr>
                 <th class="colGrande">Componentes/Rubros</th>
-                <g:each in="${app.Mes.list()}" var="mes">
+                <g:each in="${yachay.parametros.poaPac.Mes.list()}" var="mes">
                     <th class="col">${mes.descripcion}</th>
                 </g:each>
                 <th style="width: 100px;">Total</th>
@@ -105,7 +105,7 @@
                         colspan="16"><b>Componente ${j + 1}</b>: ${(comp.objeto.length() > 100) ? comp.objeto.substring(0, 100) + "..." : comp.objeto}
                     </td>
                 </tr>
-                <g:each in="${app.MarcoLogico.findAllByMarcoLogicoAndEstado(comp,0,[sort:'id'])}" var="act" status="i">
+                <g:each in="${yachay.proyectos.MarcoLogico.findAllByMarcoLogicoAndEstado(comp,0,[sort:'id'])}" var="act" status="i">
                     <g:set var="monto" value="${act.monto}"></g:set>
                     <g:set var="totComp" value="${totComp.toDouble()+monto}"></g:set>
                     <tr>
@@ -113,8 +113,8 @@
                             title="${act.objeto}">${(act.objeto.length() > 100) ? act.objeto.substring(0, 100) + "..." : act.objeto}</td>
                         <g:set var="tot" value="0"></g:set>
                         <g:set var="totAct" value="${monto}"></g:set>
-                        <g:each in="${app.Mes.list()}" var="mes" status="k">
-                            <g:set var="crga" value='${app.Cronograma.findAllByMarcoLogicoAndMes(act,mes)}'></g:set>
+                        <g:each in="${yachay.parametros.poaPac.Mes.list()}" var="mes" status="k">
+                            <g:set var="crga" value='${yachay.proyectos.Cronograma.findAllByMarcoLogicoAndMes(act,mes)}'></g:set>
                             <g:if test="${crga.size()>0}">
                                 <g:each in="${crga}" var="c">
                                     <g:if test="${c?.anio==anio}">

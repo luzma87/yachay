@@ -115,7 +115,7 @@
             </tr>
             </tbody>
         </table>
-        <g:each in="${app.yachai.ProcesoAsignacion.findAllByProceso(sol.proceso)}" var="pa">
+        <g:each in="${yachay.avales.ProcesoAsignacion.findAllByProceso(sol.proceso)}" var="pa">
             <table style="width: 100%;margin-top: 15px">
                 <tr>
                     <td style="font-weight: bold;width: 160px !important;">Unidad responsable</td>

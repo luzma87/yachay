@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page import="app.seguridad.Usro; app.seguridad.Persona" %>
+<%@ page import="yachay.seguridad.Usro; yachay.seguridad.Persona" %>
 
 <g:form action="save" class="frm_editar"
         method="post">
@@ -286,7 +286,7 @@
                 <td class="" valign="middle">
                     <g:select class="field ui-widget-content ui-corner-all" name="usuario.unidad.id"
                               title="${Usro.constraints.unidad.attributes.mensaje}" style="width: 200px;"
-                              from="${app.UnidadEjecutora.list([sort: 'nombre'])}" optionKey="id" value="${unidad?.id}"/>
+                              from="${yachay.parametros.UnidadEjecutora.list([sort: 'nombre'])}" optionKey="id" value="${unidad?.id}"/>
                 </td>
 
                 <td class="label " valign="middle">
@@ -300,7 +300,7 @@
                 <td class="" valign="middle">
                     <g:select class="field ui-widget-content ui-corner-all" name="usuario.cargoPersonal.id"
                               title="${Usro.constraints.cargoPersonal.attributes.mensaje}" style="width: 200px;"
-                              from="${app.CargoPersonal.list()}" optionKey="id" value="${usuario?.cargoPersonal?.id}"
+                              from="${yachay.parametros.CargoPersonal.list()}" optionKey="id" value="${usuario?.cargoPersonal?.id}"
                               noSelection="['null': '']"/>
                 </td>
 
@@ -456,7 +456,7 @@
 
             <td class=" mandatory" valign="middle">
                 <g:select class="field ui-widget-content ui-corner-all" name="perfiles.perfil.id" id="perfiles"
-                          title="Perfil" style="width: 200px;" from="${app.seguridad.Prfl.list()}" optionKey="id"/>
+                          title="Perfil" style="width: 200px;" from="${yachay.seguridad.Prfl.list()}" optionKey="id"/>
                 <a href="#" id="btn_agregarPerfil">Agregar</a>
             </td>
         </tr>

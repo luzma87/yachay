@@ -1,4 +1,4 @@
-<%@ page import="app.Zona" %>
+<%@ page import="yachay.parametros.geografia.Zona" %>
 <table>
     <tbody>
 

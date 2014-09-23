@@ -1,4 +1,4 @@
-<%@ page import="app.Canton" %>
+<%@ page import="yachay.parametros.geografia.Canton" %>
 <table width="100%">
     <tbody>
 

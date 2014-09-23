@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.ObjetivoEstrategico" %>
+<%@ page import="yachay.proyectos.ObjetivoEstrategico" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -33,7 +33,7 @@
                                     <label for="proyecto"><g:message code="objetivoEstrategico.proyecto.label" default="Proyecto" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: objetivoEstrategicoInstance, field: 'proyecto', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="Proyecto" from="${app.Proyecto.list()}" optionKey="id" value="${objetivoEstrategicoInstance?.proyecto?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="Proyecto" from="${yachay.proyectos.Proyecto.list()}" optionKey="id" value="${objetivoEstrategicoInstance?.proyecto?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         

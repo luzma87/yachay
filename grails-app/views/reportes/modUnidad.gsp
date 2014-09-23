@@ -81,7 +81,7 @@
     <g:if test="${res}">
         <g:each in="${res}" var="pac">
             <g:set var="totalObra" value="${0}"></g:set>
-            <g:set var="mod" value="${app.ModificacionV2.findAllByDominioAndId_remoto('Obra',pac.id.toInteger())}"></g:set>
+            <g:set var="mod" value="${yachay.proyectos.ModificacionV2.findAllByDominioAndId_remoto('Obra',pac.id.toInteger())}"></g:set>
             <g:if test="${mod}">
                 <table style="margin-top: 40px;" width="600px">
                     <thead>

@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.Proyecto" %>
+<%@ page import="yachay.proyectos.Proyecto" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -33,7 +33,7 @@
                                     <label for="unidadEjecutora"><g:message code="proyecto.unidadEjecutora.label" default="Unidad Ejecutora" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: proyectoInstance, field: 'unidadEjecutora', 'errors')}">
-                                    <g:select class="10 field ui-widget-content ui-corner-all" name="unidadEjecutora.id" title="unidadEjecutora" from="${app.UnidadEjecutora.list()}" optionKey="id" value="${proyectoInstance?.unidadEjecutora?.id}" noSelection="['null': '']" />
+                                    <g:select class="10 field ui-widget-content ui-corner-all" name="unidadEjecutora.id" title="unidadEjecutora" from="${yachay.parametros.UnidadEjecutora.list()}" optionKey="id" value="${proyectoInstance?.unidadEjecutora?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -42,7 +42,7 @@
                                     <label for="etapa"><g:message code="proyecto.etapa.label" default="Etapa" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: proyectoInstance, field: 'etapa', 'errors')}">
-                                    <g:select class="10 field ui-widget-content ui-corner-all" name="etapa.id" title="etapa" from="${app.Etapa.list()}" optionKey="id" value="${proyectoInstance?.etapa?.id}" noSelection="['null': '']" />
+                                    <g:select class="10 field ui-widget-content ui-corner-all" name="etapa.id" title="etapa" from="${yachay.parametros.Etapa.list()}" optionKey="id" value="${proyectoInstance?.etapa?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -51,7 +51,7 @@
                                     <label for="fase"><g:message code="proyecto.fase.label" default="Fase" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: proyectoInstance, field: 'fase', 'errors')}">
-                                    <g:select class="10 field ui-widget-content ui-corner-all" name="fase.id" title="fase" from="${app.Fase.list()}" optionKey="id" value="${proyectoInstance?.fase?.id}" noSelection="['null': '']" />
+                                    <g:select class="10 field ui-widget-content ui-corner-all" name="fase.id" title="fase" from="${yachay.parametros.Fase.list()}" optionKey="id" value="${proyectoInstance?.fase?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -60,7 +60,7 @@
                                     <label for="tipoProducto"><g:message code="proyecto.tipoProducto.label" default="Tipo Producto" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: proyectoInstance, field: 'tipoProducto', 'errors')}">
-                                    <g:select class="10 field ui-widget-content ui-corner-all" name="tipoProducto.id" title="tipoProducto" from="${app.TipoProducto.list()}" optionKey="id" value="${proyectoInstance?.tipoProducto?.id}" noSelection="['null': '']" />
+                                    <g:select class="10 field ui-widget-content ui-corner-all" name="tipoProducto.id" title="tipoProducto" from="${yachay.parametros.TipoProducto.list()}" optionKey="id" value="${proyectoInstance?.tipoProducto?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -69,7 +69,7 @@
                                     <label for="estadoProyecto"><g:message code="proyecto.estadoProyecto.label" default="Estado Proyecto" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: proyectoInstance, field: 'estadoProyecto', 'errors')}">
-                                    <g:select class="10 field ui-widget-content ui-corner-all" name="estadoProyecto.id" title="estadoProyecto" from="${app.EstadoProyecto.list()}" optionKey="id" value="${proyectoInstance?.estadoProyecto?.id}" noSelection="['null': '']" />
+                                    <g:select class="10 field ui-widget-content ui-corner-all" name="estadoProyecto.id" title="estadoProyecto" from="${yachay.parametros.EstadoProyecto.list()}" optionKey="id" value="${proyectoInstance?.estadoProyecto?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -78,7 +78,7 @@
                                     <label for="linea"><g:message code="proyecto.linea.label" default="Linea" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: proyectoInstance, field: 'linea', 'errors')}">
-                                    <g:select class="10 field ui-widget-content ui-corner-all" name="linea.id" title="linea" from="${app.Linea.list()}" optionKey="id" value="${proyectoInstance?.linea?.id}" noSelection="['null': '']" />
+                                    <g:select class="10 field ui-widget-content ui-corner-all" name="linea.id" title="linea" from="${yachay.parametros.Linea.list()}" optionKey="id" value="${proyectoInstance?.linea?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -87,7 +87,7 @@
                                     <label for="tipoInversion"><g:message code="proyecto.tipoInversion.label" default="Tipo Inversion" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: proyectoInstance, field: 'tipoInversion', 'errors')}">
-                                    <g:select class="10 field ui-widget-content ui-corner-all" name="tipoInversion.id" title="tipoInversion" from="${app.TipoInversion.list()}" optionKey="id" value="${proyectoInstance?.tipoInversion?.id}" noSelection="['null': '']" />
+                                    <g:select class="10 field ui-widget-content ui-corner-all" name="tipoInversion.id" title="tipoInversion" from="${yachay.parametros.TipoInversion.list()}" optionKey="id" value="${proyectoInstance?.tipoInversion?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -96,7 +96,7 @@
                                     <label for="cobertura"><g:message code="proyecto.cobertura.label" default="Cobertura" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: proyectoInstance, field: 'cobertura', 'errors')}">
-                                    <g:select class="10 field ui-widget-content ui-corner-all" name="cobertura.id" title="cobertura" from="${app.Cobertura.list()}" optionKey="id" value="${proyectoInstance?.cobertura?.id}" noSelection="['null': '']" />
+                                    <g:select class="10 field ui-widget-content ui-corner-all" name="cobertura.id" title="cobertura" from="${yachay.parametros.Cobertura.list()}" optionKey="id" value="${proyectoInstance?.cobertura?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -105,7 +105,7 @@
                                     <label for="calificacion"><g:message code="proyecto.calificacion.label" default="Calificacion" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: proyectoInstance, field: 'calificacion', 'errors')}">
-                                    <g:select class="10 field ui-widget-content ui-corner-all" name="calificacion.id" title="calificacion" from="${app.Calificacion.list()}" optionKey="id" value="${proyectoInstance?.calificacion?.id}" noSelection="['null': '']" />
+                                    <g:select class="10 field ui-widget-content ui-corner-all" name="calificacion.id" title="calificacion" from="${yachay.parametros.Calificacion.list()}" optionKey="id" value="${proyectoInstance?.calificacion?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -114,7 +114,7 @@
                                     <label for="programa"><g:message code="proyecto.programa.label" default="Programa" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: proyectoInstance, field: 'programa', 'errors')}">
-                                    <g:select class="10 field ui-widget-content ui-corner-all" name="programa.id" title="programa" from="${app.Programa.list()}" optionKey="id" value="${proyectoInstance?.programa?.id}" noSelection="['null': '']" />
+                                    <g:select class="10 field ui-widget-content ui-corner-all" name="programa.id" title="programa" from="${yachay.parametros.proyectos.Programa.list()}" optionKey="id" value="${proyectoInstance?.programa?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         

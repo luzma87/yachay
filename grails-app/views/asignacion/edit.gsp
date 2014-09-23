@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.Asignacion" %>
+<%@ page import="yachay.poa.Asignacion" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -36,7 +36,7 @@
                                   <label for="anio"><g:message code="asignacion.anio.label" default="Anio" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: asignacionInstance, field: 'anio', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="anio.id" title="Año o “ejercicio”" from="${app.Anio.list()}" optionKey="id" value="${asignacionInstance?.anio?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="anio.id" title="Año o “ejercicio”" from="${yachay.parametros.poaPac.Anio.list()}" optionKey="id" value="${asignacionInstance?.anio?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -45,7 +45,7 @@
                                   <label for="fuente"><g:message code="asignacion.fuente.label" default="Fuente" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: asignacionInstance, field: 'fuente', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="fuente.id" title="Fuente de financiamiento" from="${app.Fuente.list()}" optionKey="id" value="${asignacionInstance?.fuente?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="fuente.id" title="Fuente de financiamiento" from="${yachay.parametros.poaPac.Fuente.list()}" optionKey="id" value="${asignacionInstance?.fuente?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -54,7 +54,7 @@
                                   <label for="marcoLogico"><g:message code="asignacion.marcoLogico.label" default="Marco Logico" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: asignacionInstance, field: 'marcoLogico', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="marcoLogico.id" title="Actividad del marco lógico" from="${app.MarcoLogico.list()}" optionKey="id" value="${asignacionInstance?.marcoLogico?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="marcoLogico.id" title="Actividad del marco lógico" from="${yachay.proyectos.MarcoLogico.list()}" optionKey="id" value="${asignacionInstance?.marcoLogico?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -63,7 +63,7 @@
                                   <label for="actividad"><g:message code="asignacion.actividad.label" default="Actividad" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: asignacionInstance, field: 'actividad', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="actividad.id" title="Actividad de gasto corriente" from="${app.Actividad.list()}" optionKey="id" value="${asignacionInstance?.actividad?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="actividad.id" title="Actividad de gasto corriente" from="${yachay.poa.Actividad.list()}" optionKey="id" value="${asignacionInstance?.actividad?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -72,7 +72,7 @@
                                   <label for="presupuesto"><g:message code="asignacion.presupuesto.label" default="Presupuesto" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: asignacionInstance, field: 'presupuesto', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="presupuesto.id" title="Partida presupuestaria" from="${app.Presupuesto.list()}" optionKey="id" value="${asignacionInstance?.presupuesto?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="presupuesto.id" title="Partida presupuestaria" from="${yachay.parametros.poaPac.Presupuesto.list()}" optionKey="id" value="${asignacionInstance?.presupuesto?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -81,7 +81,7 @@
                                   <label for="tipoGasto"><g:message code="asignacion.tipoGasto.label" default="Tipo Gasto" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: asignacionInstance, field: 'tipoGasto', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="tipoGasto.id" title="Tipo de gasto o grupo de gasto" from="${app.TipoGasto.list()}" optionKey="id" value="${asignacionInstance?.tipoGasto?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="tipoGasto.id" title="Tipo de gasto o grupo de gasto" from="${yachay.parametros.TipoGasto.list()}" optionKey="id" value="${asignacionInstance?.tipoGasto?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         

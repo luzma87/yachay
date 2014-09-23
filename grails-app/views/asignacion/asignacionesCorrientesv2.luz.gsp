@@ -1,4 +1,4 @@
-<%@ page import="app.MarcoLogico" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.proyectos.MarcoLogico" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -29,7 +29,7 @@
             <g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades ejecutoras</g:link>
             <div style="margin-top: 15px;">
                 <b>Año:</b>
-                <g:select from="${app.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
+                <g:select from="${yachay.parametros.poaPac.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
                 &nbsp;&nbsp;&nbsp;
                 <b>Programa:</b>
                 <g:select from="${programas}" id="programa" optionKey="id" optionValue="descripcion" name="programa" class="programa" value="${programa.id}"/>

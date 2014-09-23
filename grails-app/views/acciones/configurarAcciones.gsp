@@ -1,4 +1,4 @@
-<%@ page import="app.seguridad.Prfl; app.seguridad.Accn;app.seguridad.Tpac;" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.seguridad.Prfl; yachay.seguridad.Accn;yachay.seguridad.Tpac;" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Configuracion del menu</title>
@@ -49,7 +49,7 @@
                         <tr class="${(j % 2) == 0 ? 'odd' : 'even'}">
                             <td title="${accn.accnDescripcion}">${accn.accnNombre}</td>
                             <td>${accn.control}</td>
-                            <td><g:select from="${app.seguridad.Tpac.list()}" optionKey="id" accn="${accn.id}"
+                            <td><g:select from="${yachay.seguridad.Tpac.list()}" optionKey="id" accn="${accn.id}"
                                           name="accn"
                                           value="${accn.tipo.id}" id="tipo_${accn.id}" class="combo"
                                           style="margin-left: 15px; width:100px;"/></td>
@@ -68,7 +68,7 @@
 
     <div id="" class="toolbar ui-widget-header ui-corner-all">
         <a id="btenviar" href="#">Enviar al m&oacute;dulo</a>
-        <g:select optionKey="id" from="${app.seguridad.Modulo.list()}" name="modulo" value="${modulo?.id}"></g:select>
+        <g:select optionKey="id" from="${yachay.seguridad.Modulo.list()}" name="modulo" value="${modulo?.id}"></g:select>
         <a id="btagregar" href="#">Agregar al m&oacute;dulo</a>
         <a id="btcambiar" href="#">Cambiar de Men&uacute; a Porceso o viceversa</a>
     </div>

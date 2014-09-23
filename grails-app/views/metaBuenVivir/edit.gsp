@@ -1,4 +1,4 @@
-<%@ page import="app.MetaBuenVivir" %>
+<%@ page import="yachay.proyectos.MetaBuenVivir" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -43,7 +43,7 @@
                                     class="value ${hasErrors(bean: metaBuenVivirInstance, field: 'politica', 'errors')}">
                                     <g:select class="field required requiredCmb ui-widget-content ui-corner-all"
                                               name="politica.id" title="Meta del buen vivir"
-                                              from="${app.PoliticaBuenVivir.list()}" optionKey="id"
+                                              from="${yachay.parametros.proyectos.PoliticaBuenVivir.list()}" optionKey="id"
                                               value="${metaBuenVivirInstance?.politica?.id}"/>
                                 </td>
                             </tr>

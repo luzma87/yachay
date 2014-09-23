@@ -1,4 +1,4 @@
-<%@ page import="app.Informe" %>
+<%@ page import="yachay.proyectos.Informe" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -106,7 +106,7 @@
                     <td class="" valign="middle">
                         <g:select class="field ui-widget-content ui-corner-all" name="tipo.id"
                                   title="${Informe.constraints.tipo.attributes.mensaje}"
-                                  from="${app.TipoInforme.findAll('from TipoInforme where id <> 2')}" optionKey="id" optionValue="descripcion"
+                                  from="${yachay.parametros.TipoInforme.findAll('from TipoInforme where id <> 2')}" optionKey="id" optionValue="descripcion"
                                   value="${informeInstance?.tipo?.id}" id="tipo"/>
                         %{----}%
                     </td>

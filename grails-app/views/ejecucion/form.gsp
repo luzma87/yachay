@@ -1,5 +1,5 @@
 
-<%@ page import="app.Ejecucion" %>
+<%@ page import="yachay.proyectos.Ejecucion" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -58,7 +58,7 @@
                             <span class="indicator">*</span>
                         </label>
                         <div class="campo">
-                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="asignacion.id" title="Asignacion" from="${app.Asignacion.list()}" optionKey="id" value="${ejecucionInstance?.asignacion?.id}"  />
+                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="asignacion.id" title="Asignacion" from="${yachay.poa.Asignacion.list()}" optionKey="id" value="${ejecucionInstance?.asignacion?.id}"  />
                         </div>
                     </div>
                     
@@ -118,7 +118,7 @@
                             <span class="indicator">*</span>
                         </label>
                         <div class="campo">
-                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="sigef.id" title="Sigef" from="${app.Sigef.list()}" optionKey="id" value="${ejecucionInstance?.sigef?.id}"  />
+                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="sigef.id" title="Sigef" from="${yachay.proyectos.Sigef.list()}" optionKey="id" value="${ejecucionInstance?.sigef?.id}"  />
                         </div>
                     </div>
                     

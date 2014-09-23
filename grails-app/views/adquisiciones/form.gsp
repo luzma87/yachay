@@ -1,5 +1,5 @@
 
-<%@ page import="app.proyectos.Adquisiciones" %>
+<%@ page import="yachay.parametros.TipoProcedencia; yachay.proyectos.Proyecto; yachay.parametros.TipoAdquisicion; yachay.proyectos.Adquisiciones" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -74,7 +74,7 @@
                             &nbsp;
                         </td>
                         <td class="campo" valign="middle">
-                            <g:select class="field ui-widget-content ui-corner-all" name="TipoAdquisicion.id" title="${Adquisiciones.constraints.tipoAdquisicion.attributes.mensaje}" from="${app.TipoAdquisicion.list()}" optionKey="id" value="${adquisicionesInstance?.TipoAdquisicion?.id}" noSelection="['null': '']" />
+                            <g:select class="field ui-widget-content ui-corner-all" name="TipoAdquisicion.id" title="${Adquisiciones.constraints.tipoAdquisicion.attributes.mensaje}" from="${TipoAdquisicion.list()}" optionKey="id" value="${adquisicionesInstance?.TipoAdquisicion?.id}" noSelection="['null': '']" />
                             %{----}%
                         </td>
                     
@@ -88,7 +88,7 @@
                             &nbsp;
                         </td>
                         <td class="campo" valign="middle">
-                            <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="${Adquisiciones.constraints.proyecto.attributes.mensaje}" from="${app.Proyecto.list()}" optionKey="id" value="${adquisicionesInstance?.proyecto?.id}" noSelection="['null': '']" />
+                            <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="${Adquisiciones.constraints.proyecto.attributes.mensaje}" from="${Proyecto.list()}" optionKey="id" value="${adquisicionesInstance?.proyecto?.id}" noSelection="['null': '']" />
                             %{----}%
                         </td>
                     
@@ -106,7 +106,7 @@
                             &nbsp;
                         </td>
                         <td class="campo" valign="middle">
-                            <g:select class="field ui-widget-content ui-corner-all" name="tipoProcedencia.id" title="${Adquisiciones.constraints.tipoProcedencia.attributes.mensaje}" from="${app.TipoProcedencia.list()}" optionKey="id" value="${adquisicionesInstance?.tipoProcedencia?.id}" noSelection="['null': '']" />
+                            <g:select class="field ui-widget-content ui-corner-all" name="tipoProcedencia.id" title="${Adquisiciones.constraints.tipoProcedencia.attributes.mensaje}" from="${TipoProcedencia.list()}" optionKey="id" value="${adquisicionesInstance?.tipoProcedencia?.id}" noSelection="['null': '']" />
                             %{----}%
                         </td>
                     

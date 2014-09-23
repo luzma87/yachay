@@ -152,7 +152,7 @@
             </tr>
         </table>
 
-        <g:each in="${app.yachai.ProcesoAsignacion.findAllByProceso(solicitud.proceso)}" var="pa">
+        <g:each in="${yachay.avales.ProcesoAsignacion.findAllByProceso(solicitud.proceso)}" var="pa">
         %{--<tr>--}%
         %{--<td style="font-weight: bold">Unidad responsable</td>--}%
         %{--<td>${pa.asignacion.unidad}</td>--}%

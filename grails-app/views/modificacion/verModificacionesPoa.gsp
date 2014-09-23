@@ -24,7 +24,7 @@
 
     <div style="margin-top: 15px;">
         <b>Año:</b>
-        <g:select from="${app.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
+        <g:select from="${yachay.parametros.poaPac.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
         <g:link class="btn" controller="entidad" action="arbol_asg">Unidades ejecutoras</g:link>
         <g:link class="btn" controller="modificacion" action="poaCorrientesMod" id="${unidad.id}">Modificaciones PAPP</g:link>
         <g:link class="btn"  controller="pdf" action="pdfLink" params="[url:g.createLink(controller:'reportes',action:'modificacionesPoa',id:unidad.id),filename:'Modificaciones_poa_'+unidad.id+'.pdf']" >Reporte</g:link>

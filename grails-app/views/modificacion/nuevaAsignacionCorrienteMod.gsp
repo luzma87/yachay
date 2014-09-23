@@ -1,4 +1,4 @@
-<%@ page import="app.MarcoLogico" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.proyectos.MarcoLogico" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -46,7 +46,7 @@
             </tr>
 
             <tr>
-                <td><g:select from="${app.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/></td>
+                <td><g:select from="${yachay.parametros.poaPac.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/></td>
 
                 <td><g:select from="${programas}" id="programa" optionKey="id" name="programa" class="programa" value="${programa.id}"/></td>
 

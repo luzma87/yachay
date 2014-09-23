@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.Documento" %>
+<%@ page import="yachay.proyectos.Documento" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -33,7 +33,7 @@
                                     <label for="proyecto"><g:message code="documento.proyecto.label" default="Proyecto" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: documentoInstance, field: 'proyecto', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="proyecto" from="${app.Proyecto.list()}" optionKey="id" value="${documentoInstance?.proyecto?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="proyecto" from="${yachay.proyectos.Proyecto.list()}" optionKey="id" value="${documentoInstance?.proyecto?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -42,7 +42,7 @@
                                     <label for="grupoProcesos"><g:message code="documento.grupoProcesos.label" default="Grupo Procesos" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: documentoInstance, field: 'grupoProcesos', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="grupoProcesos.id" title="grupoProcesos" from="${app.GrupoProcesos.list()}" optionKey="id" value="${documentoInstance?.grupoProcesos?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="grupoProcesos.id" title="grupoProcesos" from="${yachay.parametros.proyectos.GrupoProcesos.list()}" optionKey="id" value="${documentoInstance?.grupoProcesos?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         

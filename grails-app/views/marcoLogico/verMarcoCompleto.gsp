@@ -1,4 +1,4 @@
-<%@ page import="app.Indicador" %>
+<%@ page import="yachay.proyectos.Indicador" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -191,7 +191,7 @@
             </div>
             <g:set var="band" value="0"></g:set>
 
-            <g:each in="${app.Indicador.findAllByMarcoLogicoAndEstado(fin,0)}" var="indicador"
+            <g:each in="${yachay.proyectos.Indicador.findAllByMarcoLogicoAndEstado(fin,0)}" var="indicador"
                     status="i">
                 <g:set var="band" value="1"></g:set>
                 <div class="matriz ui-corner-all  fila " id="ind" style="margin-top:-5px">
@@ -202,7 +202,7 @@
                     </div>
 
                     <div class="filaMedio der">
-                        <g:each in="${app.MedioVerificacion.findAllByIndicadorAndEstado(indicador,0)}"
+                        <g:each in="${yachay.proyectos.MedioVerificacion.findAllByIndicadorAndEstado(indicador,0)}"
                                 var="med">
                             <div class="texto agregado ui-corner-all md proposito varios">${med.descripcion}</div>
                         </g:each>
@@ -216,7 +216,7 @@
             <div class="titulo">Supuestos</div>
 
             <div class="texto" style=" min-height: 115px;" id="supuestos">
-                <g:each in="${app.Supuesto.findAllByMarcoLogicoAndEstado(fin,0)}" var="su">
+                <g:each in="${yachay.proyectos.Supuesto.findAllByMarcoLogicoAndEstado(fin,0)}" var="su">
                     <div class="agregado ui-corner-all proposito varios"
                          id="sf_${su.id}">${su.descripcion}</div>
                 </g:each>
@@ -249,7 +249,7 @@
                 <div class="titulo">Medios de Verificaci&oacute;n</div>
             </div>
             <g:set var="band" value="0"></g:set>
-            <g:each in="${app.Indicador.findAllByMarcoLogicoAndEstado(proposito,0)}" var="indiProp"
+            <g:each in="${yachay.proyectos.Indicador.findAllByMarcoLogicoAndEstado(proposito,0)}" var="indiProp"
                     status="i">
                 <g:set var="band" value="1"></g:set>
                 <div class="matriz ui-corner-all  fila " id="ind" style="margin-top:-5px">
@@ -260,7 +260,7 @@
                     </div>
 
                     <div class="filaMedio der">
-                        <g:each in="${app.MedioVerificacion.findAllByIndicadorAndEstado(indiProp,0)}"
+                        <g:each in="${yachay.proyectos.MedioVerificacion.findAllByIndicadorAndEstado(indiProp,0)}"
                                 var="med">
                             <div class="texto agregado ui-corner-all md proposito varios">${med.descripcion}</div>
                         </g:each>
@@ -274,7 +274,7 @@
             <div class="titulo">Supuestos</div>
 
             <div class="texto" style=" min-height: 115px;" id="div_sup_prop">
-                <g:each in="${app.Supuesto.findAllByMarcoLogicoAndEstado(proposito,0)}" var="su">
+                <g:each in="${yachay.proyectos.Supuesto.findAllByMarcoLogicoAndEstado(proposito,0)}" var="su">
                     <div class="agregado ui-corner-all proposito varios"
                          id="sp_${su.id}">${su.descripcion}</div>
                 </g:each>
@@ -312,7 +312,7 @@
                     <div class="titulo">Medios de Verificaci&oacute;n</div>
                 </div>
                 <g:set var="band" value="0"></g:set>
-                <g:each in="${app.Indicador.findAllByMarcoLogicoAndEstado(comp,0)}" var="indicador"
+                <g:each in="${yachay.proyectos.Indicador.findAllByMarcoLogicoAndEstado(comp,0)}" var="indicador"
                         status="i">
                     <g:set var="band" value="1"></g:set>
                     <div class="matriz ui-corner-all  fila " id="ind"
@@ -324,7 +324,7 @@
                         </div>
 
                         <div class="filaMedio der">
-                            <g:each in="${app.MedioVerificacion.findAllByIndicadorAndEstado(indicador,0)}"
+                            <g:each in="${yachay.proyectos.MedioVerificacion.findAllByIndicadorAndEstado(indicador,0)}"
                                     var="med">
                                 <div class="texto agregado ui-corner-all md proposito varios">${med.descripcion}</div>
                             </g:each>
@@ -337,7 +337,7 @@
                 <div class="titulo">Supuestos</div>
 
                 <div class="texto" style=" min-height: 115px;">
-                    <g:each in="${app.Supuesto.findAllByMarcoLogicoAndEstado(comp,0)}" var="su">
+                    <g:each in="${yachay.proyectos.Supuesto.findAllByMarcoLogicoAndEstado(comp,0)}" var="su">
                         <div class="agregado ui-corner-all proposito varios">${su.descripcion}</div>
                     </g:each>
                 </div>
@@ -371,7 +371,7 @@
 
         <div>
             <g:set var="total" value="${0}"></g:set>
-            <g:each in="${app.MarcoLogico.findAllByMarcoLogicoAndEstado(comp,0,[sort:'id'])}" var="act" status="l">
+            <g:each in="${yachay.proyectos.MarcoLogico.findAllByMarcoLogicoAndEstado(comp,0,[sort:'id'])}" var="act" status="l">
                 <fieldset
                         style="width: 970px;float: left;margin-top: 5px;margin-left: -10px;;border: 1px solid  rgba(150, 150, 150,0.6)"
                         class="ui-corner-all">
@@ -399,7 +399,7 @@
 
                     <div class="matriz ui-corner-all campo3 cmp datos actividades">
                         <div class="titulo">Indicadores</div>
-                        <g:each in="${app.Indicador.findAllByMarcoLogicoAndEstado(act,0)}" var="indicador"
+                        <g:each in="${yachay.proyectos.Indicador.findAllByMarcoLogicoAndEstado(act,0)}" var="indicador"
                                 status="i">
                             <div class="texto agregado ui-corner-all proposito" ml="1"
                                  style="min-height: 30px;">
@@ -412,7 +412,7 @@
                         <div class="titulo">Supuestos</div>
 
                         <div class="texto" style=" min-height: 115px;">
-                            <g:each in="${app.Supuesto.findAllByMarcoLogicoAndEstado(act,0)}" var="su">
+                            <g:each in="${yachay.proyectos.Supuesto.findAllByMarcoLogicoAndEstado(act,0)}" var="su">
                                 <div class="agregado ui-corner-all proposito varios">${su.descripcion}</div>
                             </g:each>
                         </div>
@@ -470,7 +470,7 @@
 
 
 
-                <g:each in="${app.Meta.findAllByMarcoLogicoAndEstado(comp,0)}" var="meta" status="l">
+                <g:each in="${yachay.proyectos.Meta.findAllByMarcoLogicoAndEstado(comp,0)}" var="meta" status="l">
                     <tr>
                         <td style="width: 300px;">${""+meta.parroquia+" (Provincia:"+meta.parroquia.canton.provincia+", Canton "+meta.parroquia.canton})</td>
                         <td>${meta.anio}</td>

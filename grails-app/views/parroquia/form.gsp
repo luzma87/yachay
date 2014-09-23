@@ -1,4 +1,4 @@
-<%@ page import="app.Parroquia" %>
+<%@ page import="yachay.parametros.geografia.Parroquia" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -75,7 +75,7 @@
                     </td>
                     <td class="campo" valign="middle">
                         <g:select class="field ui-widget-content ui-corner-all" name="canton.id" title="${Parroquia.constraints.canton.attributes.mensaje}"
-                                  from="${app.Canton.list()}" optionKey="id" value="${parroquiaInstance?.canton?.id}"
+                                  from="${yachay.parametros.geografia.Canton.list()}" optionKey="id" value="${parroquiaInstance?.canton?.id}"
                                   noSelection="['null': '']"/>
                         %{----}%
                     </td>

@@ -73,7 +73,7 @@
                 </td>
 
                 <td class="valor" style="text-align: right">
-                    <g:set var="dist" value="${app.DistribucionAsignacion.findByAsignacionAndUnidadEjecutora(asg,unidad)}"></g:set>
+                    <g:set var="dist" value="${yachay.avales.DistribucionAsignacion.findByAsignacionAndUnidadEjecutora(asg,unidad)}"></g:set>
                     <g:set var="valor"  value="${dist.getValorReal()}"></g:set>
                     <g:formatNumber number="${valor}"
                                     format="###,##0"

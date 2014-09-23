@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.Componente" %>
+<%@ page import="yachay.poa.Componente" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

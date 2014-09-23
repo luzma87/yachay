@@ -1,4 +1,4 @@
-<%@ page import="app.Provincia" %>
+<%@ page import="yachay.parametros.geografia.Provincia" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -75,7 +75,7 @@
                     </td>
                     <td class="campo" valign="middle">
                         <g:select class="field ui-widget-content ui-corner-all" name="zona.id" title="${Provincia.constraints.zona.attributes.mensaje}"
-                                  from="${app.Zona.list()}" optionKey="id" value="${provinciaInstance?.zona?.id}"
+                                  from="${yachay.parametros.geografia.Zona.list()}" optionKey="id" value="${provinciaInstance?.zona?.id}"
                                   noSelection="['null': '']"/>
                         %{----}%
                     </td>
@@ -91,7 +91,7 @@
                     </td>
                     <td class="campo" valign="middle">
                         <g:select class="field ui-widget-content ui-corner-all" name="region.id" title="${Provincia.constraints.region.attributes.mensaje}"
-                                  from="${app.Region.list()}" optionKey="id" value="${provinciaInstance?.region?.id}"
+                                  from="${yachay.parametros.geografia.Region.list()}" optionKey="id" value="${provinciaInstance?.region?.id}"
                                   noSelection="['null': '']"/>
                         %{----}%
                     </td>

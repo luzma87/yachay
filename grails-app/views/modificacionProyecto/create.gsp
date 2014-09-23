@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.ModificacionProyecto" %>
+<%@ page import="yachay.proyectos.ModificacionProyecto" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -33,7 +33,7 @@
                                     <label for="informe"><g:message code="modificacionProyecto.informe.label" default="Informe" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: modificacionProyectoInstance, field: 'informe', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="informe.id" title="informe" from="${app.Informe.list()}" optionKey="id" value="${modificacionProyectoInstance?.informe?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="informe.id" title="informe" from="${yachay.proyectos.Informe.list()}" optionKey="id" value="${modificacionProyectoInstance?.informe?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -42,7 +42,7 @@
                                     <label for="tipoModificacion"><g:message code="modificacionProyecto.tipoModificacion.label" default="Tipo Modificacion" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: modificacionProyectoInstance, field: 'tipoModificacion', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="tipoModificacion.id" title="tipoModificacion" from="${app.TipoModificacion.list()}" optionKey="id" value="${modificacionProyectoInstance?.tipoModificacion?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="tipoModificacion.id" title="tipoModificacion" from="${yachay.parametros.TipoModificacion.list()}" optionKey="id" value="${modificacionProyectoInstance?.tipoModificacion?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         

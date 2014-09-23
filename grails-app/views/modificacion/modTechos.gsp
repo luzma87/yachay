@@ -1,4 +1,4 @@
-<%@ page import="app.MarcoLogico" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.proyectos.MarcoLogico" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

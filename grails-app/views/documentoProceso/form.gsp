@@ -1,5 +1,5 @@
 
-<%@ page import="app.DocumentoProceso" %>
+<%@ page import="yachay.proyectos.DocumentoProceso" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -58,7 +58,7 @@
                             <span class="indicator">*</span>
                         </label>
                         <div class="campo">
-                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="liquidacion.id" title="Liquidacion" from="${app.Liquidacion.list()}" optionKey="id" value="${documentoProcesoInstance?.liquidacion?.id}"  />
+                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="liquidacion.id" title="Liquidacion" from="${yachay.proyectos.Liquidacion.list()}" optionKey="id" value="${documentoProcesoInstance?.liquidacion?.id}"  />
                         </div>
                     </div>
                     
@@ -78,7 +78,7 @@
                             <span class="indicator">*</span>
                         </label>
                         <div class="campo">
-                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="tipo.id" title="Tipo del documento" from="${app.TipoDocumento.list()}" optionKey="id" value="${documentoProcesoInstance?.tipo?.id}"  />
+                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="tipo.id" title="Tipo del documento" from="${yachay.parametros.TipoDocumento.list()}" optionKey="id" value="${documentoProcesoInstance?.tipo?.id}"  />
                         </div>
                     </div>
                     

@@ -1,4 +1,4 @@
-<%@ page import="app.Proyecto" %>
+<%@ page import="yachay.proyectos.Proyecto" %>
 <html>
 
 <head>

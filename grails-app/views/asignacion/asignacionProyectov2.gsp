@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.parametros.UnidadEjecutora" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -37,7 +37,7 @@
             <a href="#" id="aprobPrio">Aprobar priorización</a>
         </g:if>
     </g:if>
-&nbsp;&nbsp;&nbsp;<b>Año:</b><g:select from="${app.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual?.id}"/>
+&nbsp;&nbsp;&nbsp;<b>Año:</b><g:select from="${yachay.parametros.poaPac.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual?.id}"/>
 &nbsp;&nbsp;&nbsp; <b>Filtro: </b><g:select from="${['Todos','Componente', 'Responsable']}" name="filtro"/>
 <div id="filtrados" style="margin-left: 375px"></div>
 
@@ -179,7 +179,7 @@
         <fieldset style="width: 450px;height: 160px;" class="ui-corner-all">
             <legend>Ingreso de datos</legend>
             Monto: <input type="text" id="monto_env" style="width: 100px;height: 20px;margin-left: 7px" class="ui-corner-all"> Máximo: <span id="lbl_max"></span><br> <br>
-            Unidad: <g:select from="${app.UnidadEjecutora.list([sort:'nombre'])}" id="cmb_env" name="unrb" optionKey="id" optionValue="nombre" noSelection="['-1':'Seleccione...']" style="width: 400px" class="ui-corner-all"></g:select>  <br><br>
+            Unidad: <g:select from="${UnidadEjecutora.list([sort:'nombre'])}" id="cmb_env" name="unrb" optionKey="id" optionValue="nombre" noSelection="['-1':'Seleccione...']" style="width: 400px" class="ui-corner-all"></g:select>  <br><br>
             <a href="#" class="btn" id="env">Enviar</a>
         </fieldset>
         <fieldset style="width: 450px;height: 400px;" class="ui-corner-all">

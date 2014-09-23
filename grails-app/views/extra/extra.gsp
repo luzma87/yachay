@@ -51,13 +51,13 @@
         Componente:
     </div>
     <div style="width:85%;float: left " id="divComp">
-        <g:select from="${app.Componente.list()}"  name="componente" optionKey="id" optionValue="descripcion" style="width:100%" id="comps"></g:select>
+        <g:select from="${yachay.poa.Componente.list()}"  name="componente" optionKey="id" optionValue="descripcion" style="width:100%" id="comps"></g:select>
     </div>
     <div style="width:10%;float: left" class="label">
         Actividad:
     </div>
     <div style="width:85%;float: left " class="field" id="divAct" >
-        <g:select from="${app.Actividad.list()}" name="proyecto" optionKey="id" optionValue="descripcion" style="width:100%"></g:select>
+        <g:select from="${yachay.poa.Actividad.list()}" name="proyecto" optionKey="id" optionValue="descripcion" style="width:100%"></g:select>
     </div>
 
 </div>
@@ -75,7 +75,7 @@
 <div style="width:100%;height: 30px;float: left;margin-top: 10px">
     <div class="label">Fuente:</div>
     <div class="field">
-        <g:select from="${app.Fuente.list()}" name="fuente" optionKey="id" optionValue="descripcion" style="width:200px"></g:select>
+        <g:select from="${yachay.parametros.poaPac.Fuente.list()}" name="fuente" optionKey="id" optionValue="descripcion" style="width:200px"></g:select>
     </div>
 </div>
 <div style="width:100%;height: 30px;float: left;margin-top: 10px">

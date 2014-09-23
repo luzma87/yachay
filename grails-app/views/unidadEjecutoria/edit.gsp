@@ -1,4 +1,4 @@
-<%@ page import="app.UnidadEjecutora" %>
+<%@ page import="yachay.parametros.UnidadEjecutora" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -42,7 +42,7 @@
                     <td valign="top"
                         class="value ${hasErrors(bean: unidadEjecutoraInstance, field: 'subSecretaria', 'errors')}">
                         <g:select class="field ui-widget-content ui-corner-all" name="subSecretaria.id"
-                                  title="subSecretaria" from="${app.SubSecretaria.list()}" optionKey="id"
+                                  title="subSecretaria" from="${yachay.parametros.SubSecretaria.list()}" optionKey="id"
                                   value="${unidadEjecutoraInstance?.subSecretaria?.id}" noSelection="['null': '']"/>
                     </td>
                 </tr>

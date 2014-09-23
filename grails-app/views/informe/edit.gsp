@@ -1,4 +1,4 @@
-<%@ page import="app.Informe" %>
+<%@ page import="yachay.proyectos.Informe" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -43,7 +43,7 @@
                                     class="value ${hasErrors(bean: informeInstance, field: 'responsableProyecto', 'errors')}">
                                     <g:select class="field ui-widget-content ui-corner-all"
                                               name="responsableProyecto.id" title="responsableActividad"
-                                              from="${app.ResponsableProyecto.list()}" optionKey="id"
+                                              from="${yachay.proyectos.ResponsableProyecto.list()}" optionKey="id"
                                               value="${informeInstance?.responsableProyecto?.id}"
                                               noSelection="['null': '']"/>
                                 </td>
@@ -56,7 +56,7 @@
                                 <td valign="top"
                                     class="value ${hasErrors(bean: informeInstance, field: 'tipo', 'errors')}">
                                     <g:select class="field ui-widget-content ui-corner-all" name="tipo.id" title="tipo"
-                                              from="${app.TipoInforme.list()}" optionKey="id"
+                                              from="${yachay.parametros.TipoInforme.list()}" optionKey="id"
                                               value="${informeInstance?.tipo?.id}" noSelection="['null': '']"/>
                                 </td>
                             </tr>

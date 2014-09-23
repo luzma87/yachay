@@ -1,4 +1,4 @@
-<%@ page import="app.ProgramacionAsignacion; app.MarcoLogico" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.poa.ProgramacionAsignacion; yachay.proyectos.MarcoLogico" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -32,7 +32,7 @@
 <div style="margin-left: 10px;">
     <g:link class="btn_arbol" controller="asignacion" action="asignacionProyectov2" id="${proyecto.id}">Asignaciones</g:link>
     %{--<g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades Ejecutoras</g:link>--}%
-    &nbsp;&nbsp;&nbsp;<b>Año:</b><g:select from="${app.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
+    &nbsp;&nbsp;&nbsp;<b>Año:</b><g:select from="${yachay.parametros.poaPac.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
 </div>
 
 <div id="accordion" style="width:1080px;margin-top: 5px;font-size: 11px;">

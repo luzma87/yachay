@@ -1,4 +1,4 @@
-<%@ page import="app.seguridad.Sistema" %>
+<%@ page import="yachay.seguridad.Sistema" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

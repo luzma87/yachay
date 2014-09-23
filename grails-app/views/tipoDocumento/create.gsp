@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.TipoDocumento" %>
+<%@ page import="yachay.parametros.TipoDocumento" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

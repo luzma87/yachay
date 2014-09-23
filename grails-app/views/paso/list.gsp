@@ -1,4 +1,4 @@
-<%@ page import="app.Paso" %>
+<%@ page import="yachay.proyectos.Paso" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

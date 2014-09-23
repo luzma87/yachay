@@ -28,7 +28,7 @@
             <td style="text-align: right">
                 <g:formatNumber number="${aval.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
                 </td>
-            <td>${app.yachai.SolicitudAval.findAll("from SolicitudAval where estado="+ estado.id+" and tipo is null and aval="+aval.id)?.pop()?.usuario}</td>
+            <td>${yachay.avales.SolicitudAval.findAll("from SolicitudAval where estado="+ estado.id+" and tipo is null and aval="+aval.id)?.pop()?.usuario}</td>
             <td>
                 ${aval.fechaAprobacion.format("dd-MM-yyyy")}
             </td>

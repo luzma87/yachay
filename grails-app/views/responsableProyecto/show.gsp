@@ -1,5 +1,5 @@
 
-<%@ page import="app.ResponsableProyecto" %>
+<%@ page import="yachay.proyectos.ResponsableProyecto" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

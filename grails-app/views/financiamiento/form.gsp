@@ -1,4 +1,4 @@
-<%@ page import="app.proyectos.Financiamiento" %>
+<%@ page import="yachay.proyectos.Financiamiento" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -90,7 +90,7 @@
                 </td>
                 <td class="" valign="middle">
                     <g:select class="field ui-widget-content ui-corner-all" name="anio.id" title="${Financiamiento.constraints.anio.attributes.mensaje}"
-                              from="${app.Anio.list()}" optionKey="id" value="${financiamientoInstance?.anio?.id}"
+                              from="${yachay.parametros.poaPac.Anio.list()}" optionKey="id" value="${financiamientoInstance?.anio?.id}"
                               noSelection="['null': '']"/>
                     %{----}%
                 </td>
@@ -106,7 +106,7 @@
                 </td>
                 <td class="" valign="middle">
                     <g:select class="field ui-widget-content ui-corner-all" name="fuente.id" title="${Financiamiento.constraints.fuente.attributes.mensaje}"
-                              from="${app.Fuente.list()}" optionKey="id" value="${financiamientoInstance?.fuente?.id}"
+                              from="${yachay.parametros.poaPac.Fuente.list()}" optionKey="id" value="${financiamientoInstance?.fuente?.id}"
                               noSelection="['null': '']"/>
                     %{----}%
                 </td>
@@ -126,7 +126,7 @@
                 </td>
                 <td class="" valign="middle">
                     <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="${Financiamiento.constraints.proyecto.attributes.mensaje}"
-                              from="${app.Proyecto.list()}" optionKey="id"
+                              from="${yachay.proyectos.Proyecto.list()}" optionKey="id"
                               value="${financiamientoInstance?.proyecto?.id}" noSelection="['null': '']"/>
                     %{----}%
                 </td>

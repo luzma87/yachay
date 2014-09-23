@@ -1,4 +1,4 @@
-<%@ page import="app.Informe" %>
+<%@ page import="yachay.proyectos.Informe" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -97,7 +97,7 @@
                     </td>
                     <td class="" valign="middle">
                         <input type="hidden" name="tipo.id" value="2">
-                        ${app.TipoInforme.get(2).descripcion}
+                        ${yachay.parametros.TipoInforme.get(2).descripcion}
                         %{----}%
                     </td>
 

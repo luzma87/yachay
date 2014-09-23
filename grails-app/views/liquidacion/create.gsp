@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.Liquidacion" %>
+<%@ page import="yachay.proyectos.Liquidacion" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -33,7 +33,7 @@
                                     <label for="obra"><g:message code="liquidacion.obra.label" default="Obra" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: liquidacionInstance, field: 'obra', 'errors')}">
-                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="obra.id" title="Obra" from="${app.Obra.list()}" optionKey="id" value="${liquidacionInstance?.obra?.id}"  />
+                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="obra.id" title="Obra" from="${yachay.proyectos.Obra.list()}" optionKey="id" value="${liquidacionInstance?.obra?.id}"  />
                                 </td>
                             </tr>
                         

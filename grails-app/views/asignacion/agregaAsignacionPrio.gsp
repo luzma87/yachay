@@ -1,4 +1,4 @@
-<%@ page import="app.poa.Asignacion" %>
+<%@ page import="yachay.poa.Asignacion" %>
 <g:if test="${flash.message}">
     <div class="message ui-state-highlight ui-corner-all">
         <g:message code="${flash.message}" args="${flash.args}" default="${flash.defaultMessage}"/>
@@ -44,7 +44,7 @@
                 <span style="font-size: smaller;">Haga clic para consultar</span>
                 <div id="desc2" style="width: 300px;font-size: 10px;text-align: left"></div>
                 %{--<g:select class="field ui-widget-content ui-corner-all" name=""--}%
-                %{--title="Partida presupuestaria" from="${app.Presupuesto.list()}" optionKey="id"--}%
+                %{--title="Partida presupuestaria" from="${yachay.parametros.poaPac.Presupuesto.list()}" optionKey="id"--}%
                 %{--noSelection="['null': '']"/>--}%
                 %{----}%
             </td>

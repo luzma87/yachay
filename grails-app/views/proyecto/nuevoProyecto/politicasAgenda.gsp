@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page import="app.parametros.proyectos.PoliticaAgendaSocial; app.PoliticaAgendaSocial; app.PoliticasAgendaProyecto; app.MetaBuenVivir; app.PoliticaBuenVivir; app.Politica; app.ObjetivoBuenVivir; app.Fuente" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.parametros.proyectos.PoliticaAgendaSocial; yachay.parametros.proyectos.PoliticaAgendaSocial; yachay.parametros.proyectos.PoliticasAgendaProyecto; yachay.proyectos.MetaBuenVivir; yachay.parametros.proyectos.PoliticaBuenVivir; yachay.parametros.proyectos.Politica; yachay.proyectos.ObjetivoBuenVivir; yachay.parametros.poaPac.Fuente" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -71,7 +71,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <g:each in="${app.parametros.proyectos.PoliticaAgendaSocial.list()}" status="i" var="pol">
+                            <g:each in="${yachay.parametros.proyectos.PoliticaAgendaSocial.list()}" status="i" var="pol">
                                 <g:set var="contiene"
                                        value="${(politicasAgenda.contains(pol.id.toLong())) ||(politicasAgenda.contains(pol.id.toInteger()))}"/>
                                 <tr class="${i % 2 == 0 ? 'even' : 'odd'} ${contiene ? 'ui-state-highlight' : ''}">

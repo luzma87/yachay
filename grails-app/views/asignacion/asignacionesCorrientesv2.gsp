@@ -1,4 +1,4 @@
-<%@ page import="app.MarcoLogico" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.parametros.Unidad; yachay.parametros.proyectos.TipoMeta; yachay.proyectos.MarcoLogico" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -46,7 +46,7 @@
             </tr>
 
             <tr>
-                <td><g:select from="${app.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/></td>
+                <td><g:select from="${yachay.parametros.poaPac.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/></td>
 
                 <td><g:select from="${programas}" id="programa" optionKey="id" name="programa" class="programa" value="${programa.id}"/></td>
 
@@ -326,7 +326,7 @@
                     <td valign="top"
                         class="value ${hasErrors(bean: metaInstance, field: 'tipoMeta', 'errors')}">
                         <g:select class="field ui-widget-content ui-corner-all" name="tipoMeta.id"
-                                  title="tipoMeta" from="${app.TipoMeta.list()}" optionKey="id"
+                                  title="tipoMeta" from="${TipoMeta.list()}" optionKey="id"
                                   value="" noSelection="['null': '']" id="indicador"/>
                     </td>
                 </tr>
@@ -340,7 +340,7 @@
                         class="value ${hasErrors(bean: metaInstance, field: 'unidad', 'errors')}">
                         <g:select class="field ui-widget-content ui-corner-all" name="unidad.id"
                                   title="unidad"
-                                  from="${app.Unidad.list()}" optionKey="id"
+                                  from="${Unidad.list()}" optionKey="id"
                                   value=""
                                   noSelection="['null': '']" id="unidad_meta"/>
                     </td>
@@ -373,7 +373,7 @@
 
                         <div id="parr_nombre"></div>
                         %{--<g:select class="field ui-widget-content ui-corner-all" name="parroquia.id" title="parroquia"--}%
-                        %{--from="${app.Parroquia.list()}" optionKey="id" value="${metaInstance?.parroquia?.id}"--}%
+                        %{--from="${yachay.parametros.geografia.Parroquia.list()}" optionKey="id" value="${metaInstance?.parroquia?.id}"--}%
                         %{--noSelection="['null': '']"/>--}%
                     </td>
                 </tr>

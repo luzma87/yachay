@@ -1,4 +1,4 @@
-<%@ page import="app.EntidadesProyecto; app.TipoParticipacion" %>
+<%@ page import="yachay.parametros.EntidadesProyecto; yachay.parametros.TipoParticipacion" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -117,7 +117,7 @@
                                     <td class="campo" valign="middle">
                                         <g:select class="field ui-widget-content ui-corner-all" name="unidad.id"
                                                   title="${EntidadesProyecto.constraints.unidad.attributes.mensaje}"
-                                                  from="${app.UnidadEjecutora.list()}" optionKey="id"
+                                                  from="${yachay.parametros.UnidadEjecutora.list()}" optionKey="id"
                                                   noSelection="['null': '']"/>
                                         %{----}%
                                     </td>
@@ -137,7 +137,7 @@
                                         <g:select class="field ui-widget-content ui-corner-all"
                                                   name="tipoPartisipacion.id"
                                                   title="${EntidadesProyecto.constraints.tipoPartisipacion.attributes.mensaje}"
-                                                  from="${app.TipoParticipacion.list()}"
+                                                  from="${yachay.parametros.TipoParticipacion.list()}"
                                                   optionKey="id" noSelection="['null': '']"/>
 
                                     </td>

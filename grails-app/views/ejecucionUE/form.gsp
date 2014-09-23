@@ -1,5 +1,5 @@
 
-<%@ page import="app.EjecucionUE" %>
+<%@ page import="yachay.proyectos.EjecucionUE" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -78,7 +78,7 @@
                             <span class="indicator">*</span>
                         </label>
                         <div class="campo">
-                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="fuente.id" title="Fuente" from="${app.Fuente.list()}" optionKey="id" value="${ejecucionUEInstance?.fuente?.id}"  />
+                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="fuente.id" title="Fuente" from="${yachay.parametros.poaPac.Fuente.list()}" optionKey="id" value="${ejecucionUEInstance?.fuente?.id}"  />
                         </div>
                     </div>
                     
@@ -88,7 +88,7 @@
                             <span class="indicator">*</span>
                         </label>
                         <div class="campo">
-                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="presupuesto.id" title="Presupuesto" from="${app.Presupuesto.list()}" optionKey="id" value="${ejecucionUEInstance?.presupuesto?.id}"  />
+                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="presupuesto.id" title="Presupuesto" from="${yachay.parametros.poaPac.Presupuesto.list()}" optionKey="id" value="${ejecucionUEInstance?.presupuesto?.id}"  />
                         </div>
                     </div>
                     
@@ -98,7 +98,7 @@
                             <span class="indicator">*</span>
                         </label>
                         <div class="campo">
-                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="programa.id" title="Programa" from="${app.ProgramaPresupuestario.list()}" optionKey="id" value="${ejecucionUEInstance?.programa?.id}"  />
+                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="programa.id" title="Programa" from="${yachay.parametros.poaPac.ProgramaPresupuestario.list()}" optionKey="id" value="${ejecucionUEInstance?.programa?.id}"  />
                         </div>
                     </div>
                     
@@ -108,7 +108,7 @@
                             <span class="indicator">*</span>
                         </label>
                         <div class="campo">
-                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="proyecto.id" title="Proyecto" from="${app.Proyecto.list()}" optionKey="id" value="${ejecucionUEInstance?.proyecto?.id}"  />
+                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="proyecto.id" title="Proyecto" from="${yachay.proyectos.Proyecto.list()}" optionKey="id" value="${ejecucionUEInstance?.proyecto?.id}"  />
                         </div>
                     </div>
                     
@@ -118,7 +118,7 @@
                             <span class="indicator">*</span>
                         </label>
                         <div class="campo">
-                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="sigef.id" title="Sigef" from="${app.Sigef.list()}" optionKey="id" value="${ejecucionUEInstance?.sigef?.id}"  />
+                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="sigef.id" title="Sigef" from="${yachay.proyectos.Sigef.list()}" optionKey="id" value="${ejecucionUEInstance?.sigef?.id}"  />
                         </div>
                     </div>
                     
@@ -128,7 +128,7 @@
                             <span class="indicator">*</span>
                         </label>
                         <div class="campo">
-                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="unidadEjecutora.id" title="UnidadEjecutora" from="${app.UnidadEjecutora.list()}" optionKey="id" value="${ejecucionUEInstance?.unidadEjecutora?.id}"  />
+                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="unidadEjecutora.id" title="UnidadEjecutora" from="${yachay.parametros.UnidadEjecutora.list()}" optionKey="id" value="${ejecucionUEInstance?.unidadEjecutora?.id}"  />
                         </div>
                     </div>
                     

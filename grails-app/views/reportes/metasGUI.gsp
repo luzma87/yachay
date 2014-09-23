@@ -38,7 +38,7 @@
                     <legend>Parametros</legend>
 
                     <b>Indicador:</b>
-                    <g:select class="ui-corner-all" from="${app.TipoMeta.list()}" optionKey="id" optionValue="descripcion" name="tipo" id="indicador" style="width: 110px;" noSelection="['-1': 'Todos']"/> &nbsp;&nbsp;
+                    <g:select class="ui-corner-all" from="${yachay.parametros.proyectos.TipoMeta.list()}" optionKey="id" optionValue="descripcion" name="tipo" id="indicador" style="width: 110px;" noSelection="['-1': 'Todos']"/> &nbsp;&nbsp;
 
                     <span id="spanLbl" style="font-weight:bold;">Parroquia:</span>
 

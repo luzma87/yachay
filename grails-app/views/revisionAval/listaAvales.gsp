@@ -1,4 +1,4 @@
-<%@ page import="app.TipoElemento" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.parametros.TipoElemento" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -26,7 +26,7 @@
 <div class="fila" style="font-size: 10px">
     <div class="labelSvt" style="width:40px;">Año:</div>
     <div class="fieldSvt-small" style="width: 80px">
-        <g:select from="${app.Anio.list([sort: 'anio'])}" id="anio" name="anio" optionKey="id" optionValue="anio" value="${actual.id}" class="ui-corner-all"></g:select>
+        <g:select from="${yachay.parametros.poaPac.Anio.list([sort: 'anio'])}" id="anio" name="anio" optionKey="id" optionValue="anio" value="${actual.id}" class="ui-corner-all"></g:select>
     </div>
     <div class="labelSvt" style="width: 60px">Número:</div>
     <div class="fieldSvt-medium">${actual.anio}-GP No.<input type="text" id="numero" class="ui-corner-all" style="width: 100px"></div>

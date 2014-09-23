@@ -169,7 +169,7 @@
 
                 <div style="float: left;width: 90%;height: 35px;display: block;margin-top: 10px;">
                     Actividad: <g:select
-                            from="${app.MarcoLogico.findAll('From MarcoLogico where tipoElemento = 3 and proyecto='+actividad.proyecto.id+' and estado=0 order by id')}"
+                            from="${yachay.proyectos.MarcoLogico.findAll('From MarcoLogico where tipoElemento = 3 and proyecto='+actividad.proyecto.id+' and estado=0 order by id')}"
                             optionKey="id" id="cmb_comp" value="${actividad.id}"/>
                 </div>
             </div>
@@ -189,7 +189,7 @@
                             </td>
                             <td class="campo" valign="middle">
                                 <g:select class="field ui-widget-content ui-corner-all" name="anio.id" title="anio"
-                                          from="${app.Anio.list()}" optionKey="id"
+                                          from="${yachay.parametros.poaPac.Anio.list()}" optionKey="id"
                                           value="${asignacionInstance?.anio?.id}"
                                           noSelection="['null': '']" id="anio"/>
                                 %{----}%
@@ -235,7 +235,7 @@
                             <td class="campo" valign="middle">
                                 <g:select class="field ui-widget-content ui-corner-all" name="actividad.id"
                                           title="actividad"
-                                          from="${app.Actividad.list()}" optionKey="id"
+                                          from="${yachay.poa.Actividad.list()}" optionKey="id"
                                           value="${asignacionInstance?.actividad?.id}" noSelection="['null': '']"/>
                                 %{----}%
                             </td>
@@ -252,7 +252,7 @@
                             <td class="campo" valign="middle">
                                 <g:select class="field ui-widget-content ui-corner-all" name="presupuesto.id"
                                           title="presupuesto"
-                                          from="${app.Presupuesto.list()}" optionKey="id"
+                                          from="${yachay.parametros.poaPac.Presupuesto.list()}" optionKey="id"
                                           value="${asignacionInstance?.presupuesto?.id}" noSelection="['null': '']"/>
                                 %{----}%
                             </td>
@@ -268,7 +268,7 @@
                             <td class="campo" valign="middle">
                                 <g:select class="field ui-widget-content ui-corner-all" name="tipoGasto.id"
                                           title="tipoGasto"
-                                          from="${app.TipoGasto.list()}" optionKey="id"
+                                          from="${yachay.parametros.TipoGasto.list()}" optionKey="id"
                                           value="${asignacionInstance?.tipoGasto?.id}" noSelection="['null': '']"/>
                                 %{----}%
                             </td>

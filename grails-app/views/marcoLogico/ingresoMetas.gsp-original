@@ -198,7 +198,7 @@
                         <div class="titulo">Indicadores</div>
 
                         <div class="texto indicadores" style=" min-height: 40px;" id="indis">
-                            <g:each in="${app.Indicador.findAllByMarcoLogico(actividad)}" var="indicador" status="i">
+                            <g:each in="${yachay.proyectos.Indicador.findAllByMarcoLogico(actividad)}" var="indicador" status="i">
                                 <div class="texto indi agregado ui-corner-all fin varios  " pref="ic_"
                                      id="ic_${indicador.id}" ml="${actividad.id}" tipo="2" div="ic_${indicador.id}"
                                      identificador="${indicador.id}" indicador="${actividad.id}">
@@ -214,7 +214,7 @@
                         <div class="titulo">Supuestos</div>
 
                         <div class="texto supuestos" style=" min-height: 40px;" id="supuestos">
-                            <g:each in="${app.Supuesto.findAllByMarcoLogico(actividad)}" var="su">
+                            <g:each in="${yachay.proyectos.Supuesto.findAllByMarcoLogico(actividad)}" var="su">
                                 <div class="texto sup ui-corner-all fin varios" id="sc_${su.id}" ml="${actividad.id}"
                                      div="sc_${su.id}" identificador="${su.id}" tipo="4"
                                      indicador="${actividad?.id}">${su.descripcion}</div>
@@ -345,7 +345,7 @@
 
                 <div style="float: left;width: 90%;height: 35px;display: block;margin-top: 10px;">
                     actividad: <g:select
-                            from="${app.MarcoLogico.findAllByMarcoLogicoAndEstado(actividad.marcoLogico,0,[sort:'id'])}"
+                            from="${yachay.proyectos.MarcoLogico.findAllByMarcoLogicoAndEstado(actividad.marcoLogico,0,[sort:'id'])}"
                             optionKey="id" id="cmb_comp" value="${actividad.id}"/>
                 </div>
             </div>
@@ -365,7 +365,7 @@
                                     class="value ${hasErrors(bean: metaInstance, field: 'tipoMeta', 'errors')}">
                                     <g:select class="field ui-widget-content ui-corner-all" name="tipoMeta.id"
                                               title="tipoMeta"
-                                              from="${app.TipoMeta.list()}" optionKey="id"
+                                              from="${yachay.parametros.proyectos.TipoMeta.list()}" optionKey="id"
                                               value="${metaInstance?.tipoMeta?.id}"
                                               noSelection="['null': '']"/>
                                 </td>
@@ -378,7 +378,7 @@
                                     class="value ${hasErrors(bean: metaInstance, field: 'unidad', 'errors')}">
                                     <g:select class="field ui-widget-content ui-corner-all" name="unidad.id"
                                               title="unidad"
-                                              from="${app.Unidad.list()}" optionKey="id"
+                                              from="${yachay.parametros.Unidad.list()}" optionKey="id"
                                               value="${metaInstance?.unidad?.id}"
                                               noSelection="['null': '']"/>
                                 </td>
@@ -391,7 +391,7 @@
                                     class="value ${hasErrors(bean: metaInstance, field: 'anio', 'errors')}">
                                     <g:select class="field ui-widget-content ui-corner-all" name="anio.id"
                                               title="año"
-                                              from="${app.Anio.list()}" optionKey="id"
+                                              from="${yachay.parametros.poaPac.Anio.list()}" optionKey="id"
                                               value="${metaInstance?.anio?.id}"/>
                                 </td>
                             </tr>
@@ -408,7 +408,7 @@
 
                                     <div id="parr_nombre"></div>
                                     %{--<g:select class="field ui-widget-content ui-corner-all" name="parroquia.id" title="parroquia"--}%
-                                    %{--from="${app.Parroquia.list()}" optionKey="id" value="${metaInstance?.parroquia?.id}"--}%
+                                    %{--from="${yachay.parametros.geografia.Parroquia.list()}" optionKey="id" value="${metaInstance?.parroquia?.id}"--}%
                                     %{--noSelection="['null': '']"/>--}%
                                 </td>
                             </tr>

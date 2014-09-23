@@ -11,7 +11,7 @@
     <div class="dialog">
         <fieldset class="ui-corner-all" style="width: 1010px;height: 55px;">
             <legend>Parametros</legend>
-            <b>Indicador:</b> <g:select from="${app.TipoMeta.list()}" optionKey="id" optionValue="descripcion" name="tipo" id="indicador" style="width: 120px;" noSelection="['-1':'Todos']"/> &nbsp;&nbsp;
+            <b>Indicador:</b> <g:select from="${yachay.parametros.proyectos.TipoMeta.list()}" optionKey="id" optionValue="descripcion" name="tipo" id="indicador" style="width: 120px;" noSelection="['-1':'Todos']"/> &nbsp;&nbsp;
             <b>Parroquia:</b><input type="text" style="width: 120px;" id="parr_nombre_txt">&nbsp;&nbsp;
             <input type="hidden" id="parr_id" name="parroquia.id">
             <b>Meta:</b>

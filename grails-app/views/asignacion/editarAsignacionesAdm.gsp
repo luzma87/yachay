@@ -1,4 +1,4 @@
-<%@ page import="app.MarcoLogico" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.parametros.poaPac.ProgramaPresupuestario; yachay.proyectos.MarcoLogico" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -27,7 +27,7 @@
 <body>
 
 <div style="margin-left: 10px;">
-    Año: <g:select from="${app.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}" style="margin-right: 10px;"/>
+    Año: <g:select from="${yachay.parametros.poaPac.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}" style="margin-right: 10px;"/>
     <g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades ejecutoras</g:link>
 </div>
 <fieldset class="ui-corner-all" style="">
@@ -114,7 +114,7 @@
         <p id="pTexto">
             Seleccione el nuevo programa
         </p>
-        <g:select from="${app.ProgramaPresupuestario.list()}" name="progs" optionKey="id" value="" id="progs"/>
+        <g:select from="${ProgramaPresupuestario.list()}" name="progs" optionKey="id" value="" id="progs"/>
     </form>
 </div>
 <div id="programacion">

@@ -1,4 +1,4 @@
-<%@ page import="app.TipoElemento" %>
+<%@ page import="yachay.parametros.TipoElemento" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

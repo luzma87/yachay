@@ -1,4 +1,4 @@
-<%@ page import="app.Avance" %>
+<%@ page import="yachay.proyectos.Avance" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -36,7 +36,7 @@
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: avanceInstance, field: 'informe', 'errors')}">
                         <g:select class="field ui-widget-content ui-corner-all" name="informe.id" title="informe"
-                                  from="${app.Informe.list()}" optionKey="id" value="${avanceInstance?.informe?.id}"
+                                  from="${yachay.proyectos.Informe.list()}" optionKey="id" value="${avanceInstance?.informe?.id}"
                                   noSelection="['null': '']"/>
                     </td>
                 </tr>
@@ -47,7 +47,7 @@
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: avanceInstance, field: 'meta', 'errors')}">
                         <g:select class="field ui-widget-content ui-corner-all" name="meta.id" title="meta"
-                                  from="${app.Meta.list()}" optionKey="id" value="${avanceInstance?.meta?.id}"
+                                  from="${yachay.proyectos.Meta.list()}" optionKey="id" value="${avanceInstance?.meta?.id}"
                                   noSelection="['null': '']"/>
                     </td>
                 </tr>

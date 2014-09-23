@@ -1,5 +1,5 @@
 
-<%@ page import="app.parametros.Contratista" %>
+<%@ page import="yachay.parametros.Contratista" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

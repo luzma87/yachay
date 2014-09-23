@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.EntidadesProyecto" %>
+<%@ page import="yachay.parametros.EntidadesProyecto" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -33,7 +33,7 @@
                                     <label for="entidad"><g:message code="entidadesProyecto.entidad.label" default="Entidad" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: entidadesProyectoInstance, field: 'entidad', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="entidad.id" title="entidad" from="${app.Entidad.list()}" optionKey="id" value="${entidadesProyectoInstance?.entidad?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="entidad.id" title="entidad" from="${yachay.parametros.Entidad.list()}" optionKey="id" value="${entidadesProyectoInstance?.entidad?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -42,7 +42,7 @@
                                     <label for="tipoParticipacion"><g:message code="entidadesProyecto.tipoParticipacion.label" default="Tipo Participacion" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: entidadesProyectoInstance, field: 'tipoParticipacion', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="tipoParticipacion.id" title="tipoParticipacion" from="${app.TipoParticipacion.list()}" optionKey="id" value="${entidadesProyectoInstance?.tipoParticipacion?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="tipoParticipacion.id" title="tipoParticipacion" from="${yachay.parametros.TipoParticipacion.list()}" optionKey="id" value="${entidadesProyectoInstance?.tipoParticipacion?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -51,7 +51,7 @@
                                     <label for="proyecto"><g:message code="entidadesProyecto.proyecto.label" default="Proyecto" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: entidadesProyectoInstance, field: 'proyecto', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="proyecto" from="${app.Proyecto.list()}" optionKey="id" value="${entidadesProyectoInstance?.proyecto?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="proyecto" from="${yachay.proyectos.Proyecto.list()}" optionKey="id" value="${entidadesProyectoInstance?.proyecto?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         

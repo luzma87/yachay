@@ -1,4 +1,4 @@
-<%@ page import="app.Provincia" %>
+<%@ page import="yachay.parametros.geografia.Provincia" %>
 <g:form action="save" class="frm_editar"
         method="post">
     <g:hiddenField name="id" value="${provinciaInstance?.id}"/>
@@ -22,7 +22,7 @@
                     </g:if>
                     <g:else>
                         <g:select class="field ui-widget-content ui-corner-all" name="zona.id" title="${Provincia.constraints.zona.attributes.mensaje}"
-                                  from="${app.Zona.list()}" optionKey="id" value="${provinciaInstance?.zona?.id}"
+                                  from="${yachay.parametros.geografia.Zona.list()}" optionKey="id" value="${provinciaInstance?.zona?.id}"
                                   noSelection="['null': '']"/>
                     </g:else>
                 </td>
@@ -35,7 +35,7 @@
                 </td>
                 <td class="campo" valign="middle">
                     <g:select class="field ui-widget-content ui-corner-all" name="region.id" title="${Provincia.constraints.region.attributes.mensaje}"
-                              from="${app.Region.list()}" optionKey="id" value="${provinciaInstance?.region?.id}"
+                              from="${yachay.parametros.geografia.Region.list()}" optionKey="id" value="${provinciaInstance?.region?.id}"
                               noSelection="['null': '']"/>
                 </td>
             </tr>

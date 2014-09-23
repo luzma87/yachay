@@ -1,4 +1,4 @@
-<%@ page import="app.proyectos.Financiamiento" %>
+<%@ page import="yachay.proyectos.Financiamiento" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

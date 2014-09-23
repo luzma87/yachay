@@ -1,5 +1,5 @@
 
-<%@ page import="app.ModificacionProyecto" %>
+<%@ page import="yachay.proyectos.ModificacionProyecto" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -74,7 +74,7 @@
                             &nbsp;
                         </td>
                         <td class="campo" valign="middle">
-                            <g:select class="field ui-widget-content ui-corner-all" name="informe.id" title="${ModificacionProyecto.constraints.informe.attributes.mensaje}" from="${app.Informe.list()}" optionKey="id" value="${modificacionProyectoInstance?.informe?.id}" noSelection="['null': '']" />
+                            <g:select class="field ui-widget-content ui-corner-all" name="informe.id" title="${ModificacionProyecto.constraints.informe.attributes.mensaje}" from="${yachay.proyectos.Informe.list()}" optionKey="id" value="${modificacionProyectoInstance?.informe?.id}" noSelection="['null': '']" />
                             %{----}%
                         </td>
                     
@@ -88,7 +88,7 @@
                             &nbsp;
                         </td>
                         <td class="campo" valign="middle">
-                            <g:select class="field ui-widget-content ui-corner-all" name="tipoModificacion.id" title="${ModificacionProyecto.constraints.tipoModificacion.attributes.mensaje}" from="${app.TipoModificacion.list()}" optionKey="id" value="${modificacionProyectoInstance?.tipoModificacion?.id}" noSelection="['null': '']" />
+                            <g:select class="field ui-widget-content ui-corner-all" name="tipoModificacion.id" title="${ModificacionProyecto.constraints.tipoModificacion.attributes.mensaje}" from="${yachay.parametros.TipoModificacion.list()}" optionKey="id" value="${modificacionProyectoInstance?.tipoModificacion?.id}" noSelection="['null': '']" />
                             %{----}%
                         </td>
                     

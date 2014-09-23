@@ -1,4 +1,4 @@
-<%@ page import="app.UnidadEjecutora" %>
+<%@ page import="yachay.parametros.UnidadEjecutora" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

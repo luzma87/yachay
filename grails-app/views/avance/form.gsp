@@ -1,4 +1,4 @@
-<%@ page import="app.Avance" %>
+<%@ page import="yachay.proyectos.Avance" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -88,7 +88,7 @@
                 </td>
                 <td class="" valign="middle">
                     <g:select class="field ui-widget-content ui-corner-all" name="informe.id" title="${Avance.constraints.informe.attributes.mensaje}"
-                              from="${app.Informe.list()}" optionKey="id" value="${avanceInstance?.informe?.id}"
+                              from="${yachay.proyectos.Informe.list()}" optionKey="id" value="${avanceInstance?.informe?.id}"
                               noSelection="['null': '']"/>
                     %{----}%
                 </td>
@@ -104,7 +104,7 @@
                 </td>
                 <td class="" valign="middle">
                     <g:select class="field ui-widget-content ui-corner-all" name="meta.id" title="${Avance.constraints.meta.attributes.mensaje}"
-                              from="${app.Meta.list()}" optionKey="id" value="${avanceInstance?.meta?.id}"
+                              from="${yachay.proyectos.Meta.list()}" optionKey="id" value="${avanceInstance?.meta?.id}"
                               noSelection="['null': '']"/>
                     %{----}%
                 </td>

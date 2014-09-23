@@ -1,4 +1,4 @@
-<%@ page import="app.seguridad.Modulo" %>
+<%@ page import="yachay.seguridad.Modulo" %>
 
 <g:form>
     <g:hiddenField name="id" id="id_mdlo" value="${mdloInstance?.id}"/>

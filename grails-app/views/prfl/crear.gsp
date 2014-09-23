@@ -1,4 +1,4 @@
-<%@ page import="app.seguridad.Prfl" %>
+<%@ page import="yachay.seguridad.Prfl" %>
 
 <g:form>
   <input type="hidden" name="id" id="id_prfl" value="${prflInstance?.id}" />
@@ -58,7 +58,7 @@
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: prflInstance, field: 'padre', 'errors')}">
                         <g:select class="10 field ui-widget-content ui-corner-all" name="padre_id" title="Padre"
-                                  from="${app.seguridad.Prfl.list()}" optionKey="id"
+                                  from="${yachay.seguridad.Prfl.list()}" optionKey="id"
                                   value="${prflInstance?.padre?.id}" noSelection="['null':'-Seleccione el Perfil Base-']"/>
                     </td>
                 </tr>

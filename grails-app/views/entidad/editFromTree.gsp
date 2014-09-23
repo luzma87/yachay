@@ -1,4 +1,4 @@
-<%@ page import="app.PresupuestoUnidad; app.Anio; app.UnidadEjecutora; app.Provincia; app.TipoInstitucion" %>
+<%@ page import="yachay.parametros.poaPac.PresupuestoUnidad; yachay.parametros.poaPac.Anio; yachay.parametros.UnidadEjecutora; yachay.parametros.geografia.Provincia; yachay.parametros.TipoInstitucion" %>
 
 <style type="text/css">
 input[type="text"], textarea {
@@ -96,14 +96,14 @@ input[type="text"], textarea {
 
                 <td colspan="5" style="font-size: larger; font-weight: bolder;">
                     %{--
-                                        <g:select from="${app.ObjetivoUnidad.list([sort: 'orden', order: 'asc'])}"
+                                        <g:select from="${yachay.parametros.proyectos.ObjetivoUnidad.list([sort: 'orden', order: 'asc'])}"
                                                   name="unidad.objetivoUnidad.id"
                                                   value="${unidad.objetivoUnidadId}"
                                                   optionKey="id" optionValue="descripcion"/>
                     --}%
                     <g:select class="field ui-widget-content ui-corner-all objetivoGobiernoResultado select"
                               name="unidad.objetivoUnidad.id"
-                              style="width: 600px;" from="${app.ObjetivoUnidad.list([sort: 'orden', order: 'asc'])}"
+                              style="width: 600px;" from="${yachay.parametros.proyectos.ObjetivoUnidad.list([sort: 'orden', order: 'asc'])}"
                               optionKey="id" optionValue="descripcion"
                               value="${unidad?.objetivoUnidadId}"/>
 

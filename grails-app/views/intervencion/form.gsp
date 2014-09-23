@@ -1,5 +1,5 @@
 
-<%@ page import="app.proyectos.Intervencion" %>
+<%@ page import="yachay.proyectos.Intervencion" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -74,7 +74,7 @@
                             &nbsp;
                         </td>
                         <td class="campo" valign="middle">
-                            <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="${Intervencion.constraints.proyecto.attributes.mensaje}" from="${app.Proyecto.list()}" optionKey="id" value="${intervencionInstance?.proyecto?.id}" noSelection="['null': '']" />
+                            <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="${Intervencion.constraints.proyecto.attributes.mensaje}" from="${yachay.proyectos.Proyecto.list()}" optionKey="id" value="${intervencionInstance?.proyecto?.id}" noSelection="['null': '']" />
                             %{----}%
                         </td>
                     
@@ -88,7 +88,7 @@
                             &nbsp;
                         </td>
                         <td class="campo" valign="middle">
-                            <g:select class="field ui-widget-content ui-corner-all" name="subSector.id" title="${Intervencion.constraints.subSector.attributes.mensaje}" from="${app.SubSector.list()}" optionKey="id" value="${intervencionInstance?.subSector?.id}" noSelection="['null': '']" />
+                            <g:select class="field ui-widget-content ui-corner-all" name="subSector.id" title="${Intervencion.constraints.subSector.attributes.mensaje}" from="${yachay.parametros.SubSector.list()}" optionKey="id" value="${intervencionInstance?.subSector?.id}" noSelection="['null': '']" />
                             %{----}%
                         </td>
                     

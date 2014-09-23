@@ -7,7 +7,7 @@
 --%>
 
 
-<%@ page import="app.Proyecto" %>
+<%@ page import="yachay.proyectos.Proyecto" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -121,7 +121,7 @@
                             <g:select class="required requiredCmb ui-widget-content ui-corner-all" name="unidadEjecutora.id"
                                       title="${Proyecto.constraints.unidadEjecutora.attributes.mensaje}"
                                       style="width: 360px;"
-                                      from="${app.UnidadEjecutora.list()}" optionKey="id"
+                                      from="${yachay.parametros.UnidadEjecutora.list()}" optionKey="id"
                                       value="${proyecto?.unidadEjecutora?.id}"/>
                         </td>
 
@@ -138,7 +138,7 @@
                                       name="programaPresupuestario.id"
                                       title="${Proyecto.constraints.programaPresupuestario.attributes.mensaje}"
                                       style="width: 380px;" optionKey="id"
-                                      from="${app.ProgramaPresupuestario.list()}"
+                                      from="${yachay.parametros.poaPac.ProgramaPresupuestario.list()}"
                                       value="${proyecto?.programaPresupuestario?.id}"/>
                         </td>
                     </tr>
@@ -309,7 +309,7 @@
 
                             <g:select class="field ui-widget-content ui-corner-all" name="ejeProgramatico.id"
                                       title="${Proyecto.constraints.ejeProgramatico.attributes.mensaje}"
-                                      from="${app.EjeProgramatico.list()}" optionKey="id" style="width: 360px;"
+                                      from="${yachay.proyectos.EjeProgramatico.list()}" optionKey="id" style="width: 360px;"
                                       value="${proyecto?.ejeProgramatico?.id}" noSelection="['null': '']"/>
                         </td> <!-- campo -->
 
@@ -325,7 +325,7 @@
                             <g:select class="field ui-widget-content ui-corner-all" name="cobertura.id"
                                       title="${Proyecto.constraints.cobertura.attributes.mensaje}"
                                       style="width: 360px;"
-                                      from="${app.Cobertura.list()}" optionKey="id" value="${proyecto?.cobertura?.id}"
+                                      from="${yachay.parametros.Cobertura.list()}" optionKey="id" value="${proyecto?.cobertura?.id}"
                                       noSelection="['null': '']"/>
                         </td>
 
@@ -383,7 +383,7 @@
                         <td colspan="4" valign="middle">
                             <g:select class="field ui-widget-content ui-corner-all" name="linea.id"
                                       title="${Proyecto.constraints.linea.attributes.mensaje}" style="width: 900px;"
-                                      from="${app.Linea.list()}" optionKey="id" value="${proyecto?.linea?.id}"
+                                      from="${yachay.parametros.Linea.list()}" optionKey="id" value="${proyecto?.linea?.id}"
                                       noSelection="['null': '']"/>
                         </td>
                     </tr>
@@ -424,7 +424,7 @@
                                       name="objetivoEstrategico.id"
                                       title="${Proyecto.constraints.objetivoEstrategico.attributes.mensaje}"
                                       style="width: 360px;"
-                                      from="${app.ObjetivoEstrategicoProyecto.list()}" optionKey="id"
+                                      from="${yachay.proyectos.ObjetivoEstrategicoProyecto.list()}" optionKey="id"
                                       value="${proyecto?.objetivoEstrategico?.id}"
                                       noSelection="['null': '']"/>
                         </td> <!-- campo -->
@@ -443,7 +443,7 @@
                             <g:select class="field ui-widget-content ui-corner-all objetivoGobiernoResultado"
                                       name="objetivoGobiernoResultado.id"
                                       title="${Proyecto.constraints.objetivoGobiernoResultado.attributes.mensaje}"
-                                      style="width: 900px;" from="${app.ObjetivoGobiernoResultado.list()}"
+                                      style="width: 900px;" from="${yachay.parametros.proyectos.ObjetivoGobiernoResultado.list()}"
                                       programaPresupuestario
                                       optionKey="id" optionValue="descripcion"
                                       value="${proyecto?.objetivoGobiernoResultado?.id}"/>
@@ -464,7 +464,7 @@
                             <g:select class="field ui-widget-content ui-corner-all programaId" name="programa.id"
                                       title="${Proyecto.constraints.programa.attributes.mensaje}"
                                       style="width: 900px;"
-                                      from="${app.Programa.list()}" optionKey="id" value="${proyecto?.programa?.id}"
+                                      from="${yachay.parametros.proyectos.Programa.list()}" optionKey="id" value="${proyecto?.programa?.id}"
                                       noSelection="['null': '']"/>
                         </td>
 

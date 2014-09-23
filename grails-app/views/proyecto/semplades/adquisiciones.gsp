@@ -1,4 +1,4 @@
-<%@ page import="app.proyectos.Adquisiciones" %>
+<%@ page import="yachay.proyectos.Adquisiciones" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -93,7 +93,7 @@
                             </td>
                             <td class="campo" valign="middle">
                                 <g:select class="field ui-widget-content ui-corner-all" name="TipoAdquisicion.id"
-                                          title="${Adquisiciones.constraints.tipoAdquisicion.attributes.mensaje}" from="${app.TipoAdquisicion.list()}" optionKey="id"
+                                          title="${Adquisiciones.constraints.tipoAdquisicion.attributes.mensaje}" from="${yachay.parametros.TipoAdquisicion.list()}" optionKey="id"
                                           value="${adquisicionesInstance?.TipoAdquisicion?.id}" optionValue="descripcion"
                                           noSelection="['null': '']"/>
                             </td>
@@ -110,7 +110,7 @@
                             </td>
                             <td class="campo" valign="middle">
                                 <g:select class="field ui-widget-content ui-corner-all" name="tipoProcedencia.id"
-                                          title="${Adquisiciones.constraints.tipoProcedencia.attributes.mensaje}" from="${app.TipoProcedencia.list()}" optionKey="id"
+                                          title="${Adquisiciones.constraints.tipoProcedencia.attributes.mensaje}" from="${yachay.parametros.TipoProcedencia.list()}" optionKey="id"
                                           value="${adquisicionesInstance?.tipoProcedencia?.id}"
                                           noSelection="['null': '']"/>
                             </td>

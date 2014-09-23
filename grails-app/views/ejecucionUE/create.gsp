@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.EjecucionUE" %>
+<%@ page import="yachay.proyectos.EjecucionUE" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -51,7 +51,7 @@
                                     <label for="fuente"><g:message code="ejecucionUE.fuente.label" default="Fuente" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: ejecucionUEInstance, field: 'fuente', 'errors')}">
-                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="fuente.id" title="Fuente" from="${app.Fuente.list()}" optionKey="id" value="${ejecucionUEInstance?.fuente?.id}"  />
+                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="fuente.id" title="Fuente" from="${yachay.parametros.poaPac.Fuente.list()}" optionKey="id" value="${ejecucionUEInstance?.fuente?.id}"  />
                                 </td>
                             </tr>
                         
@@ -60,7 +60,7 @@
                                     <label for="presupuesto"><g:message code="ejecucionUE.presupuesto.label" default="Presupuesto" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: ejecucionUEInstance, field: 'presupuesto', 'errors')}">
-                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="presupuesto.id" title="Presupuesto" from="${app.Presupuesto.list()}" optionKey="id" value="${ejecucionUEInstance?.presupuesto?.id}"  />
+                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="presupuesto.id" title="Presupuesto" from="${yachay.parametros.poaPac.Presupuesto.list()}" optionKey="id" value="${ejecucionUEInstance?.presupuesto?.id}"  />
                                 </td>
                             </tr>
                         
@@ -69,7 +69,7 @@
                                     <label for="programa"><g:message code="ejecucionUE.programa.label" default="Programa" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: ejecucionUEInstance, field: 'programa', 'errors')}">
-                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="programa.id" title="Programa" from="${app.ProgramaPresupuestario.list()}" optionKey="id" value="${ejecucionUEInstance?.programa?.id}"  />
+                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="programa.id" title="Programa" from="${yachay.parametros.poaPac.ProgramaPresupuestario.list()}" optionKey="id" value="${ejecucionUEInstance?.programa?.id}"  />
                                 </td>
                             </tr>
                         
@@ -78,7 +78,7 @@
                                     <label for="proyecto"><g:message code="ejecucionUE.proyecto.label" default="Proyecto" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: ejecucionUEInstance, field: 'proyecto', 'errors')}">
-                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="proyecto.id" title="Proyecto" from="${app.Proyecto.list()}" optionKey="id" value="${ejecucionUEInstance?.proyecto?.id}"  />
+                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="proyecto.id" title="Proyecto" from="${yachay.proyectos.Proyecto.list()}" optionKey="id" value="${ejecucionUEInstance?.proyecto?.id}"  />
                                 </td>
                             </tr>
                         
@@ -87,7 +87,7 @@
                                     <label for="sigef"><g:message code="ejecucionUE.sigef.label" default="Sigef" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: ejecucionUEInstance, field: 'sigef', 'errors')}">
-                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="sigef.id" title="Sigef" from="${app.Sigef.list()}" optionKey="id" value="${ejecucionUEInstance?.sigef?.id}"  />
+                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="sigef.id" title="Sigef" from="${yachay.proyectos.Sigef.list()}" optionKey="id" value="${ejecucionUEInstance?.sigef?.id}"  />
                                 </td>
                             </tr>
                         
@@ -96,7 +96,7 @@
                                     <label for="unidadEjecutora"><g:message code="ejecucionUE.unidadEjecutora.label" default="Unidad Ejecutora" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: ejecucionUEInstance, field: 'unidadEjecutora', 'errors')}">
-                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="unidadEjecutora.id" title="UnidadEjecutora" from="${app.UnidadEjecutora.list()}" optionKey="id" value="${ejecucionUEInstance?.unidadEjecutora?.id}"  />
+                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="unidadEjecutora.id" title="UnidadEjecutora" from="${yachay.parametros.UnidadEjecutora.list()}" optionKey="id" value="${ejecucionUEInstance?.unidadEjecutora?.id}"  />
                                 </td>
                             </tr>
                         

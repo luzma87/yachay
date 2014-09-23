@@ -1,4 +1,4 @@
-<%@ page import="app.seguridad.Usro" %>
+<%@ page import="yachay.seguridad.Usro" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -61,7 +61,7 @@
 
                         <div class="campo">
                             <g:select class="10 field ui-widget-content ui-corner-all" name="persona.id" title="${Usro.constraints.persona.attributes.mensaje}"
-                                      from="${app.Persona.list()}" optionKey="id"
+                                      from="${yachay.seguridad.Persona.list()}" optionKey="id"
                                       value="${usroInstance?.persona?.id}"/>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
 
                         <div class="campo">
                             <g:select class="10 field ui-widget-content ui-corner-all" name="cargoPersonal.id"
-                                      title="${Usro.constraints.cargoPersonal.attributes.mensaje}" from="${app.CargoPersonal.list()}" optionKey="id"
+                                      title="${Usro.constraints.cargoPersonal.attributes.mensaje}" from="${yachay.parametros.CargoPersonal.list()}" optionKey="id"
                                       value="${usroInstance?.cargoPersonal?.id}" noSelection="['null': '']"/>
                         </div>
                     </div>

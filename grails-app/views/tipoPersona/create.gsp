@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.TipoPersona" %>
+<%@ page import="yachay.parametros.TipoPersona" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

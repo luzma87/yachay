@@ -35,7 +35,7 @@
     <!-- modulo:${mdlo__id} -->
     <g:if test="${mdlo__id=='0'}">
         Enviar al módulo:
-        <g:select optionKey="id" from="${app.seguridad.Modulo.list()}" name="modulo" value="${modulo?.id}"></g:select>
+        <g:select optionKey="id" from="${yachay.seguridad.Modulo.list()}" name="modulo" value="${modulo?.id}"></g:select>
         <input id="mueveAJX" type="button" class="grabaPrms" value="Agregar al Módulo">
     </g:if>
     <g:else>

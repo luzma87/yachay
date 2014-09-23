@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.Meta" %>
+<%@ page import="yachay.proyectos.Meta" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -33,7 +33,7 @@
                                     <label for="tipoMeta"><g:message code="meta.tipoMeta.label" default="Tipo Meta" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: metaInstance, field: 'tipoMeta', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="tipoMeta.id" title="Tipo de Meta" from="${app.TipoMeta.list()}" optionKey="id" value="${metaInstance?.tipoMeta?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="tipoMeta.id" title="Tipo de Meta" from="${yachay.parametros.proyectos.TipoMeta.list()}" optionKey="id" value="${metaInstance?.tipoMeta?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -42,7 +42,7 @@
                                     <label for="parroquia"><g:message code="meta.parroquia.label" default="Parroquia" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: metaInstance, field: 'parroquia', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="parroquia.id" title="Parroquia en la cual se verificará la meta" from="${app.Parroquia.list()}" optionKey="id" value="${metaInstance?.parroquia?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="parroquia.id" title="Parroquia en la cual se verificará la meta" from="${yachay.parametros.geografia.Parroquia.list()}" optionKey="id" value="${metaInstance?.parroquia?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -51,7 +51,7 @@
                                     <label for="marcoLogico"><g:message code="meta.marcoLogico.label" default="Marco Logico" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: metaInstance, field: 'marcoLogico', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="marcoLogico.id" title="Componente del marco lógico" from="${app.MarcoLogico.list()}" optionKey="id" value="${metaInstance?.marcoLogico?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="marcoLogico.id" title="Componente del marco lógico" from="${yachay.proyectos.MarcoLogico.list()}" optionKey="id" value="${metaInstance?.marcoLogico?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -60,7 +60,7 @@
                                     <label for="unidad"><g:message code="meta.unidad.label" default="Unidad" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: metaInstance, field: 'unidad', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="unidad.id" title="Unidad de medida" from="${app.Unidad.list()}" optionKey="id" value="${metaInstance?.unidad?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="unidad.id" title="Unidad de medida" from="${yachay.parametros.Unidad.list()}" optionKey="id" value="${metaInstance?.unidad?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -87,7 +87,7 @@
                                     <label for="modificacion"><g:message code="meta.modificacion.label" default="Modificacion" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: metaInstance, field: 'modificacion', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="modificacion.id" title="Modificacion" from="${app.ModificacionProyecto.list()}" optionKey="id" value="${metaInstance?.modificacion?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="modificacion.id" title="Modificacion" from="${yachay.proyectos.ModificacionProyecto.list()}" optionKey="id" value="${metaInstance?.modificacion?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -105,7 +105,7 @@
                                     <label for="anio"><g:message code="meta.anio.label" default="Anio" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: metaInstance, field: 'anio', 'errors')}">
-                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="anio.id" title="Anio" from="${app.Anio.list()}" optionKey="id" value="${metaInstance?.anio?.id}"  />
+                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="anio.id" title="Anio" from="${yachay.parametros.poaPac.Anio.list()}" optionKey="id" value="${metaInstance?.anio?.id}"  />
                                 </td>
                             </tr>
                         

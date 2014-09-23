@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.Sigef" %>
+<%@ page import="yachay.proyectos.Sigef" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -33,7 +33,7 @@
                                     <label for="anio"><g:message code="sigef.anio.label" default="Anio" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: sigefInstance, field: 'anio', 'errors')}">
-                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="anio.id" title="Anio" from="${app.Anio.list()}" optionKey="id" value="${sigefInstance?.anio?.id}"  />
+                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="anio.id" title="Anio" from="${yachay.parametros.poaPac.Anio.list()}" optionKey="id" value="${sigefInstance?.anio?.id}"  />
                                 </td>
                             </tr>
                         
@@ -42,7 +42,7 @@
                                     <label for="mes"><g:message code="sigef.mes.label" default="Mes" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: sigefInstance, field: 'mes', 'errors')}">
-                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="mes.id" title="Mes" from="${app.Mes.list()}" optionKey="id" value="${sigefInstance?.mes?.id}"  />
+                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="mes.id" title="Mes" from="${yachay.parametros.poaPac.Mes.list()}" optionKey="id" value="${sigefInstance?.mes?.id}"  />
                                 </td>
                             </tr>
                         

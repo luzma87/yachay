@@ -1,4 +1,4 @@
-<%@ page import="app.ResponsableProyecto" %>
+<%@ page import="yachay.proyectos.ResponsableProyecto" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -76,7 +76,7 @@
                 <td class="campo" valign="middle">
                     <g:select class="field ui-widget-content ui-corner-all" name="responsable.id"
                               title="${ResponsableProyecto.constraints.responsable.attributes.mensaje}"
-                              from="${app.seguridad.Usro.list()}" optionKey="id"
+                              from="${yachay.seguridad.Usro.list()}" optionKey="id"
                               value="${responsableProyectoInstance?.responsable?.id}" noSelection="['null': '']"/>
                     %{----}%
                 </td>
@@ -93,7 +93,7 @@
                 <td class="campo" valign="middle">
                     <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id"
                               title="${ResponsableProyecto.constraints.proyecto.attributes.mensaje}"
-                              from="${app.Proyecto.list()}" optionKey="id"
+                              from="${yachay.proyectos.Proyecto.list()}" optionKey="id"
                               value="${responsableProyectoInstance?.proyecto?.id}" noSelection="['null': '']"/>
                     %{----}%
                 </td>

@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.Ejecucion" %>
+<%@ page import="yachay.proyectos.Ejecucion" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -36,7 +36,7 @@
                                   <label for="asignacion"><g:message code="ejecucion.asignacion.label" default="Asignacion" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: ejecucionInstance, field: 'asignacion', 'errors')}">
-                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="asignacion.id" title="Asignacion" from="${app.Asignacion.list()}" optionKey="id" value="${ejecucionInstance?.asignacion?.id}"  />
+                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="asignacion.id" title="Asignacion" from="${yachay.poa.Asignacion.list()}" optionKey="id" value="${ejecucionInstance?.asignacion?.id}"  />
                                 </td>
                             </tr>
                         
@@ -90,7 +90,7 @@
                                   <label for="sigef"><g:message code="ejecucion.sigef.label" default="Sigef" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: ejecucionInstance, field: 'sigef', 'errors')}">
-                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="sigef.id" title="Sigef" from="${app.Sigef.list()}" optionKey="id" value="${ejecucionInstance?.sigef?.id}"  />
+                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="sigef.id" title="Sigef" from="${yachay.proyectos.Sigef.list()}" optionKey="id" value="${ejecucionInstance?.sigef?.id}"  />
                                 </td>
                             </tr>
                         

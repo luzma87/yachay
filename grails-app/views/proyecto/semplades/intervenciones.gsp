@@ -1,4 +1,4 @@
-<%@ page import="app.proyectos.Intervencion" %>
+<%@ page import="yachay.proyectos.Intervencion" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -95,7 +95,7 @@
                             </td>
                             <td class="campo" valign="middle">
                                 <g:select class="field ui-widget-content ui-corner-all" name="subSector.id"
-                                          title="${Intervencion.constraints.subSector.attributes.mensaje}" from="${app.SubSector.list()}" optionKey="id"
+                                          title="${Intervencion.constraints.subSector.attributes.mensaje}" from="${yachay.parametros.SubSector.list()}" optionKey="id"
                                           value="${intervencionInstance?.subSector?.id}" noSelection="['null': '']"/>
                             </td>
                         </tr>

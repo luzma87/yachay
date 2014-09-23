@@ -1,4 +1,4 @@
-<%@ page import="app.MarcoLogico" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.proyectos.MarcoLogico" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -36,7 +36,7 @@
     %{--<g:link class="btn" controller="modificacion" action="verModificacionesPoa" params="[id:unidad.id,anio:actual.id]">Ver modificaciones</g:link>--}%
     <div style="margin-top: 15px;">
         <b>Año:</b>
-        <g:select from="${app.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
+        <g:select from="${yachay.parametros.poaPac.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
 
     </div>
 </div>
@@ -258,7 +258,7 @@
 
     %{--<div id="div_sel_unidad" class="ui-corner-all" style="margin-top: 5px;margin-bottom: 15px">--}%
 
-    %{--<b>Enviar a:</b> <g:select from="${app.UnidadEjecutora.list([sort:'nombre'])}" optionKey="id" optionValue="nombre" name="unidadInv" id="unidadInv" ></g:select> <br>--}%
+    %{--<b>Enviar a:</b> <g:select from="${yachay.parametros.UnidadEjecutora.list([sort:'nombre'])}" optionKey="id" optionValue="nombre" name="unidadInv" id="unidadInv" ></g:select> <br>--}%
     %{--El valor de la reasignación se incrementara al techo de inversión de la unidad ejecutora seleccionada--}%
 
     %{--</div>--}%
@@ -279,7 +279,7 @@
 
 
     <div style="margin-bottom: 10px">
-        <b>Unidad:</b><g:select from="${app.UnidadEjecutora.list([sort:'nombre'])}" optionKey="id" optionValue="nombre" name="unidad" id="unidadAsg" noSelection="['-1':'Todas']"></g:select><br><br>
+        <b>Unidad:</b><g:select from="${yachay.parametros.UnidadEjecutora.list([sort:'nombre'])}" optionKey="id" optionValue="nombre" name="unidad" id="unidadAsg" noSelection="['-1':'Todas']"></g:select><br><br>
         <b>Partida:</b>  <input type="hidden" class="prsp" value="${asignacionInstance?.presupuesto?.id}" id="prsp2" name="presupuesto.id">
         <input type="text" id="prsp_desc2" desc="desc2" style="width: 100px;border: 1px solid black;text-align: center" class="buscar ui-corner-all">
         <span style="font-size: smaller;">Haga clic para consultar</span><br>

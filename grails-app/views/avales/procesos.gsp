@@ -25,7 +25,7 @@
 </div>
 <div style="width: 100%;height: 35px">
    <b>Proyecto: </b>
-    <g:select from="${app.Proyecto.list([sort:'nombre'])}" optionKey="id" optionValue="nombre" name="proyecto" id="proyecto" style="width:450px;" class="ui-corner-all ui-widget-content"></g:select>
+    <g:select from="${yachay.proyectos.Proyecto.list([sort:'nombre'])}" optionKey="id" optionValue="nombre" name="proyecto" id="proyecto" style="width:450px;" class="ui-corner-all ui-widget-content"></g:select>
 </div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<%@ page import="app.seguridad.Sesn" %>
+<%@ page import="yachay.seguridad.Sesn" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -66,7 +66,7 @@
 
                         <div class="campo">
                             <g:select class="10 field ui-widget-content ui-corner-all" name="perfil.id" title="${Sesn.constraints.perfil.attributes.mensaje}"
-                                      from="${app.seguridad.Prfl.list()}" optionKey="id"
+                                      from="${yachay.seguridad.Prfl.list()}" optionKey="id"
                                       value="${sesnInstance?.perfil?.id}"/>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
 
                         <div class="campo">
                             <g:select class="10 field ui-widget-content ui-corner-all" name="usuario.id" title="${Sesn.constraints.usuario.attributes.mensaje}"
-                                      from="${app.seguridad.Usro.list()}" optionKey="id"
+                                      from="${yachay.seguridad.Usro.list()}" optionKey="id"
                                       value="${sesnInstance?.usuario?.id}"/>
                         </div>
                     </div>

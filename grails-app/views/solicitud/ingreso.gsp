@@ -5,7 +5,7 @@
   Time: 12:10 PM
 --%>
 
-<%@ page import="app.FormaPago; app.TipoContrato; app.Actividad; app.Componente; app.Proyecto" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.parametros.FormaPago; yachay.parametros.TipoContrato; yachay.poa.Actividad; yachay.poa.Componente; yachay.proyectos.Proyecto" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -348,7 +348,7 @@
                         <tr>
                             <td class="label">Categoría</td>
                             <td>
-                                <g:select from="${app.yachai.Categoria.list()}" name="nuevaCategoria" noSelection="['': '- Ninguna -']"
+                                <g:select from="${yachay.proyectos.Categoria.list()}" name="nuevaCategoria" noSelection="['': '- Ninguna -']"
                                           optionKey="id" optionValue="descripcion" class="requiredCmb"/>
                             </td>
                         </tr>

@@ -1,4 +1,4 @@
-<%@ page import="app.Mes" %>
+<%@ page import="yachay.parametros.poaPac.Mes" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

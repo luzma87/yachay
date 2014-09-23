@@ -21,7 +21,7 @@
                     </td>
                     <td class="campo" valign="middle">
                         <g:select class="field ui-widget-content ui-corner-all" name="anio.id" title="anio"
-                                  from="${app.Anio.list()}" optionKey="id" value="${asignacionInstance?.anio?.id}"
+                                  from="${yachay.parametros.poaPac.Anio.list()}" optionKey="id" value="${asignacionInstance?.anio?.id}"
                                   noSelection="['null': '']" id="anio"/>
                         %{----}%
                     </td>
@@ -36,7 +36,7 @@
                     </td>
                     <td class="campo" valign="middle">
                         <g:select class="field ui-widget-content ui-corner-all" name="fuente.id" title="fuente"
-                                  from="${app.Fuente.list()}" optionKey="id" value="${asignacionInstance?.fuente?.id}"
+                                  from="${yachay.parametros.poaPac.Fuente.list()}" optionKey="id" value="${asignacionInstance?.fuente?.id}"
                                   noSelection="['null': '']"/>
                         %{----}%
                     </td>
@@ -51,7 +51,7 @@
                     </td>
                     <td class="campo" valign="middle">
                         <g:select class="field ui-widget-content ui-corner-all" name="actividad.id" title="actividad"
-                                  from="${app.Actividad.list()}" optionKey="id"
+                                  from="${yachay.poa.Actividad.list()}" optionKey="id"
                                   value="${asignacionInstance?.actividad?.id}" noSelection="['null': '']"/>
                         %{----}%
                     </td>
@@ -82,7 +82,7 @@
                     </td>
                     <td class="campo" valign="middle">
                         <g:select class="field ui-widget-content ui-corner-all" name="tipoGasto.id" title="tipoGasto"
-                                  from="${app.TipoGasto.list()}" optionKey="id"
+                                  from="${yachay.parametros.TipoGasto.list()}" optionKey="id"
                                   value="${asignacionInstance?.tipoGasto?.id}" noSelection="['null': '']"/>
                         %{----}%
                     </td>

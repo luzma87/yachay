@@ -87,7 +87,7 @@
             <input type="hidden" id="fuente_${ta.key}" value="${ta.value}">
         </g:each>
         <th colspan="16">
-            <g:select from="${app.Anio.list()}" optionKey="id" optionValue="anio"
+            <g:select from="${yachay.parametros.poaPac.Anio.list()}" optionKey="id" optionValue="anio"
                       name="anio" id="anio" value="${anio.id}"
                       style="width: 80px"/>
         </th>
@@ -96,7 +96,7 @@
 
 <tr>
     <th class="colGrande" style="width: 220px;">Componentes/Rubros</th>
-    <g:each in="${app.Mes.list()}" var="mes">
+    <g:each in="${yachay.parametros.poaPac.Mes.list()}" var="mes">
         <th class="col" style="width: 60px;">${(mes.descripcion.size()>5)?mes.descripcion .substring(0,5)+".":mes.descripcion}</th>
     </g:each>
     <th style="width: 90px;">Asignado <br>${anio.anio}</th>
@@ -120,7 +120,7 @@
             colspan="17"><b>Componente ${j + 1}</b>: ${(comp.objeto.length() > 100) ? comp.objeto.substring(0, 100) + "..." : comp.objeto}
         </td>
     </tr>
-    <g:each in="${app.MarcoLogico.findAllByMarcoLogicoAndEstado(comp,0,[sort:'id'])}" var="act" status="i">
+    <g:each in="${yachay.proyectos.MarcoLogico.findAllByMarcoLogicoAndEstado(comp,0,[sort:'id'])}" var="act" status="i">
         <g:set var="monto" value="${act.totalMetasAnio(anio)}"></g:set>
         <g:set var="totComp" value="${totComp.toDouble()+monto}"></g:set>
         %{--<g:set var="totOtrosAnios" value="0"></g:set>--}%
@@ -131,8 +131,8 @@
             </td>
             <g:set var="tot" value="0"></g:set>
             <g:set var="totAct" value="${monto}"></g:set>
-            <g:each in="${app.Mes.list()}" var="mes" status="k">
-                <g:set var="crga" value='${app.Cronograma.findAllByMarcoLogicoAndMes(act,mes)}'></g:set>
+            <g:each in="${yachay.parametros.poaPac.Mes.list()}" var="mes" status="k">
+                <g:set var="crga" value='${yachay.proyectos.Cronograma.findAllByMarcoLogicoAndMes(act,mes)}'></g:set>
                 <g:if test="${crga.size()>0}">
                     <g:each in="${crga}" var="c">
                         <g:if test="${c?.anio==anio && c?.cronograma == null}">

@@ -1,4 +1,4 @@
-<%@ page import="app.BeneficioSenplades" %>
+<%@ page import="yachay.proyectos.BeneficioSenplades" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

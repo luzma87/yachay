@@ -1,4 +1,4 @@
-<%@ page import="app.seguridad.Prfl" %>
+<%@ page import="yachay.seguridad.Prfl" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -70,7 +70,7 @@
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: prflInstance, field: 'padre', 'errors')}">
                         <g:select class="10 field ui-widget-content ui-corner-all" name="padre.id" title="Padre"
-                                  from="${app.seguridad.Prfl.list()}" optionKey="id"
+                                  from="${yachay.seguridad.Prfl.list()}" optionKey="id"
                                   value="${prflInstance?.padre?.id}"/>
                     </td>
                 </tr>

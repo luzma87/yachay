@@ -251,7 +251,7 @@
     <td class="" valign="middle">
         <g:select class="field ui-widget-content ui-corner-all" name="tipoCompra.id"
                   title="tipoCompra"
-                  from="${app.TipoCompra.list()}" optionKey="id"
+                  from="${yachay.parametros.poaPac.TipoCompra.list()}" optionKey="id"
                   value="${obraInstance?.tipoCompra?.id}"
                   noSelection="['null': '']"/>
     </td>
@@ -276,7 +276,7 @@
     </td>
     <td class="" valign="middle">
         <g:select class="field ui-widget-content ui-corner-all" name="obra.id" title="obra"
-                  from="${app.Obra.list()}"
+                  from="${yachay.proyectos.Obra.list()}"
                   optionKey="id" value="${obraInstance?.obra?.id}" noSelection="['null': '']"/>
     </td>
     <td class="label  mandatory" valign="middle">
@@ -286,7 +286,7 @@
         <span class="indicator">*</span>
     </td>
     <td class=" mandatory" valign="middle">
-        <g:select from="${app.Unidad.list()}" name="unidad.id" optionKey="id"
+        <g:select from="${yachay.parametros.Unidad.list()}" name="unidad.id" optionKey="id"
                   optionValue="descripcion"/>
     </td>
 </tr>

@@ -1,5 +1,5 @@
 
-<%@ page import="app.proyectos.GrupoDeAtencion" %>
+<%@ page import="yachay.proyectos.GrupoDeAtencion" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

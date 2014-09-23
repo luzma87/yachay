@@ -1,5 +1,5 @@
 
-<%@ page import="app.ObjetivoEstrategico" %>
+<%@ page import="yachay.proyectos.ObjetivoEstrategico" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

@@ -14,7 +14,7 @@
                 </td>
                 <td class="campo" valign="middle">
                     <g:select class="field ui-widget-content ui-corner-all" name="grupoProcesos.id"
-                              title="grupoProcesos" from="${app.GrupoProcesos.list()}" optionKey="id"
+                              title="grupoProcesos" from="${yachay.parametros.proyectos.GrupoProcesos.list()}" optionKey="id"
                               value="${documentoInstance?.grupoProcesos?.id}" noSelection="['null': '']"/>
                 </td>
             </tr>

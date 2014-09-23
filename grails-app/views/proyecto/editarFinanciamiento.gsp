@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page import="app.Anio; app.Fuente" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.parametros.poaPac.Anio; yachay.parametros.poaPac.Fuente" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta name="layout" content="main"/>

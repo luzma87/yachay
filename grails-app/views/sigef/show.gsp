@@ -1,5 +1,5 @@
 
-<%@ page import="app.Sigef" %>
+<%@ page import="yachay.proyectos.Sigef" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

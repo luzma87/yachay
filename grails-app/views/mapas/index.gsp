@@ -1,4 +1,4 @@
-<%@ page import="app.Meta" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.proyectos.Meta" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -62,7 +62,7 @@
                             <li>
                                 <g:checkBox class="chk filtro" name="resumen_" tipo="resumen"/>
                                 <span class="texto">
-                                    Proyectos por provincia (${app.Provincia.count()})
+                                    Proyectos por provincia (${yachay.parametros.geografia.Provincia.count()})
                                 </span>
                                 <span class="spanPin"></span>
                             </li>
@@ -73,7 +73,7 @@
 
                     <div>
                         <ul class="selects">
-                            <g:each in="${app.TipoMeta.list([sort: 'descripcion'])}" var="tipoMeta">
+                            <g:each in="${yachay.parametros.proyectos.TipoMeta.list([sort: 'descripcion'])}" var="tipoMeta">
                                 <li>
                                     <g:checkBox class="chk filtro" name="tipoMeta_${tipoMeta.id}" tipo="tipoMeta" disabled="${tipoMeta.metas.metasCoords.size() == 0}"/>
                                     <span class="texto ${tipoMeta.metas.metasCoords.size() == 0 ? 'disabled' : 'enabled'}">
@@ -89,7 +89,7 @@
 
                     <div>
                         <ul class="selects">
-                            <g:each in="${app.Proyecto.list([sort: 'nombre'])}" var="proyecto">
+                            <g:each in="${yachay.proyectos.Proyecto.list([sort: 'nombre'])}" var="proyecto">
                                 <li>
                                     <g:checkBox class="chk filtro" name="proyecto_${proyecto.id}" tipo="proyecto" disabled="${proyecto.metas.metasCoords.size() == 0}"/>
                                     <span class="texto ${proyecto.metas.metasCoords.size() == 0 ? 'disabled' : 'enabled'}">
@@ -105,7 +105,7 @@
 
                     <div>
                         <ul class="selects">
-                            <g:each in="${app.Provincia.list([sort: 'nombre'])}" var="prov">
+                            <g:each in="${yachay.parametros.geografia.Provincia.list([sort: 'nombre'])}" var="prov">
                                 <li>
                                     <g:checkBox class="chk filtro" name="provincia_${prov.id}" tipo="provincia" disabled="${prov.metas.metasCoords.size() == 0}"/>
                                     <span class="texto ${prov.metas.metasCoords.size() == 0 ? 'disabled' : 'enabled'}">

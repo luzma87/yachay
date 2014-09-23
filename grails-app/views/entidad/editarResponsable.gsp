@@ -1,4 +1,4 @@
-<%@ page import="app.seguridad.Usro; app.seguridad.Persona" %>
+<%@ page import="yachay.seguridad.Usro; yachay.seguridad.Persona" %>
 <%--
   Created by IntelliJ IDEA.
   User: luz
@@ -242,7 +242,7 @@
                     <g:else>
                         <g:select class="ui-widget-content ui-corner-all" name="usuario.unidad.id"
                                   title="${Usro.constraints.unidad.attributes.mensaje}" style="width: 200px;"
-                                  from="${app.UnidadEjecutora.list([sort:'nombre'])}" optionKey="id" value="${usuario?.unidad?.id}"
+                                  from="${yachay.parametros.UnidadEjecutora.list([sort:'nombre'])}" optionKey="id" value="${usuario?.unidad?.id}"
                                   noSelection="['null': '']"/>
                     </g:else>
                 </td>
@@ -256,7 +256,7 @@
                 <td class="" valign="middle">
                     <g:select class="field ui-widget-content ui-corner-all" name="usuario.cargoPersonal.id"
                               title="${Usro.constraints.cargoPersonal.attributes.mensaje}" style="width: 200px;"
-                              from="${app.CargoPersonal.list()}" optionKey="id" value="${usuario?.cargoPersonal?.id}"
+                              from="${yachay.parametros.CargoPersonal.list()}" optionKey="id" value="${usuario?.cargoPersonal?.id}"
                               noSelection="['null': '']"/>
                 </td>
 
@@ -394,7 +394,7 @@
             </td>
             <td class=" mandatory" valign="middle">
                 <g:select class="field ui-widget-content ui-corner-all" name="perfiles.perfil.id" id="perfiles"
-                          title="Perfil" style="width: 200px;" from="${app.seguridad.Prfl.list()}" optionKey="id"/>
+                          title="Perfil" style="width: 200px;" from="${yachay.seguridad.Prfl.list()}" optionKey="id"/>
                 <a href="#" id="btn_agregarPerfil">Agregar</a>
             </td>
         </tr>

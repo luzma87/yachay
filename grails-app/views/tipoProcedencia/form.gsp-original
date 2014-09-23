@@ -1,4 +1,4 @@
-<%@ page import="app.TipoProcedencia" %>
+<%@ page import="yachay.parametros.TipoProcedencia" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

@@ -28,7 +28,7 @@
     <tr>
         <g:set var="suma" value="${0}"/>
         <g:each in="${meses}" var="mes">
-            <g:set var="progra" value="${app.ProgramacionAsignacion.findAll('from ProgramacionAsignacion where asignacion = '+asg.id+' and mes = '+mes+' and padre is null')?.pop()}"></g:set>
+            <g:set var="progra" value="${yachay.poa.ProgramacionAsignacion.findAll('from ProgramacionAsignacion where asignacion = '+asg.id+' and mes = '+mes+' and padre is null')?.pop()}"></g:set>
             <td class="${mes}" style="width: 70px;">
                 <input type="text" class="${mes} valor asg_cor_${asg.id}" mes="${mes}" value="${g.formatNumber(number: progra?.valor, format: '###,##0', minFractionDigits: '2', maxFractionDigits: '2')}" style="width: 80px;text-align: right">
                 <g:set var="suma" value="${suma+progra.valor}"/>

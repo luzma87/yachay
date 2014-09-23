@@ -1,4 +1,4 @@
-<%@ page import="app.TipoResponsable; app.ResponsableProyecto" %>
+<%@ page import="yachay.parametros.TipoResponsable; yachay.proyectos.ResponsableProyecto" %>
 
 <style type="text/css">
 select.field {

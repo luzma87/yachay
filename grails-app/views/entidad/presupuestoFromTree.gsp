@@ -1,8 +1,8 @@
-<%@ page import="app.parametros.PresupuestoUnidad; app.Politica; app.ObjetivoGobiernoResultado; app.ObjetivoEstrategicoProyecto; com.sun.jndi.ldap.Obj; app.EjeProgramatico; app.PresupuestoUnidad; app.Anio" %>
+<%@ page import="yachay.parametros.PresupuestoUnidad; yachay.parametros.proyectos.Politica; yachay.parametros.proyectos.ObjetivoGobiernoResultado; yachay.proyectos.ObjetivoEstrategicoProyecto; com.sun.jndi.ldap.Obj; yachay.proyectos.EjeProgramatico; yachay.parametros.poaPac.PresupuestoUnidad; yachay.parametros.poaPac.Anio" %>
 
 <g:set var="anio" value="${new Date().format('yyyy')}"/>
 <g:set var="anioObj" value="${Anio.findByAnio(anio)}"/>
-<g:set var="presupuesto" value="${app.parametros.PresupuestoUnidad.findByAnioAndUnidad(anioObj, unidad)}"/>
+<g:set var="presupuesto" value="${yachay.parametros.PresupuestoUnidad.findByAnioAndUnidad(anioObj, unidad)}"/>
 <style type="text/css">
 #selObjetivoGob-button {
     height : 50px !important;

@@ -46,7 +46,7 @@
 <body>
 
 <div style="width: 100%;height: 40px;">
-    Anio: <g:select from="${app.Anio.list()}" name="anio" id="anio_asg" optionKey="id" optionValue="anio" value="${actual.id}"></g:select>
+    Anio: <g:select from="${yachay.parametros.poaPac.Anio.list()}" name="anio" id="anio_asg" optionKey="id" optionValue="anio" value="${actual.id}"></g:select>
 </div>
 <table style="width: 100%" >
     <thead>

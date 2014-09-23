@@ -1,5 +1,5 @@
 
-<%@ page import="app.Asignacion" %>
+<%@ page import="yachay.poa.Asignacion" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

@@ -9,7 +9,7 @@
             </label>
             <div class="campo">
                 <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="anio.id" title="Anio"
-                          from="${app.Anio.list([sort: 'anio'])}" optionKey="id" value="${meta?.anio?.id}" style="width: 80px;" />
+                          from="${yachay.parametros.poaPac.Anio.list([sort: 'anio'])}" optionKey="id" value="${meta?.anio?.id}" style="width: 80px;" />
             </div>
         </div>
         <div class="prop ${hasErrors(bean: meta, field: 'tipoMeta', 'error')}">
@@ -18,7 +18,7 @@
 
             </label>
             <div class="campo">
-                <g:select class="field ui-widget-content ui-corner-all" name="tipoMeta.id" title="Tipo de Meta" from="${app.TipoMeta.list()}" optionKey="id" value="${meta?.tipoMeta?.id}" noSelection="['null': '']" />
+                <g:select class="field ui-widget-content ui-corner-all" name="tipoMeta.id" title="Tipo de Meta" from="${yachay.parametros.proyectos.TipoMeta.list()}" optionKey="id" value="${meta?.tipoMeta?.id}" noSelection="['null': '']" />
             </div>
         </div>
         <div class="prop ${hasErrors(bean: meta, field: 'unidad', 'error')}">
@@ -27,7 +27,7 @@
 
             </label>
             <div class="campo">
-                <g:select class="field ui-widget-content ui-corner-all" name="unidad.id" title="Unidad de medida" from="${app.Unidad.list()}" optionKey="id" value="${meta?.unidad?.id}" noSelection="['null': '']" />
+                <g:select class="field ui-widget-content ui-corner-all" name="unidad.id" title="Unidad de medida" from="${yachay.parametros.Unidad.list()}" optionKey="id" value="${meta?.unidad?.id}" noSelection="['null': '']" />
             </div>
         </div>
 

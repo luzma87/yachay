@@ -1,4 +1,4 @@
-<%@ page import="app.Zona" %>
+<%@ page import="yachay.parametros.geografia.Zona" %>
 
 <g:form action="save" class="frm_editar"
         method="post">

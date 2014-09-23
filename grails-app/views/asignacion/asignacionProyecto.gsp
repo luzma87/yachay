@@ -1,4 +1,4 @@
-<%@ page import="app.MarcoLogico" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.proyectos.MarcoLogico" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -26,7 +26,7 @@
     </g:if>
     <g:link class="btn" controller="asignacion" action="programacionAsignaciones" id="${proyecto.unidadEjecutora.id}">Programación</g:link>
     <g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades ejecutoras</g:link>
-    &nbsp;&nbsp;&nbsp;<b>Año:</b><g:select from="${app.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
+    &nbsp;&nbsp;&nbsp;<b>Año:</b><g:select from="${yachay.parametros.poaPac.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
 
 </div>
 <div id="accordion" style="width:1030px">
@@ -35,7 +35,7 @@
         <g:set var="programa" value="${proyecto.programaPresupuestario}"></g:set>
         <g:set var="unidadEjec" value="${proyecto.unidadEjecutora}"></g:set>
         <b>Programa:</b> ${programa.descripcion}
-        <g:each in="${app.MarcoLogico.findAll('from MarcoLogico where proyecto='+proyecto.id+' and tipoElemento=2 and estado = 0 order by id')}" var="comp" status="k">
+        <g:each in="${yachay.proyectos.MarcoLogico.findAll('from MarcoLogico where proyecto='+proyecto.id+' and tipoElemento=2 and estado = 0 order by id')}" var="comp" status="k">
 
             <g:set var="acts" value="${MarcoLogico.findAllByMarcoLogicoAndEstado(comp,0)}"></g:set>
             <g:if test="${acts.size()>0}">
@@ -61,7 +61,7 @@
                                     <td style="width: 200px;">${act.toString()}</td>
                                     <td>${fuente}</td>
                                 %{--TODO cambiar para que valga con los valores de redistribucion--}%
-                                    <g:set var="asgs" value='${app.Asignacion.findAll("from Asignacion where marcoLogico = "+act.id+" and fuente= "+fuente.id+" and unidad = "+proyecto.unidadEjecutora)}'></g:set>
+                                    <g:set var="asgs" value='${yachay.poa.Asignacion.findAll("from Asignacion where marcoLogico = "+act.id+" and fuente= "+fuente.id+" and unidad = "+proyecto.unidadEjecutora)}'></g:set>
                                     <g:each in="${asgs}" var="ag">
                                         <g:set var="asignado" value="${asignado.toDouble()+ag.planificado}"></g:set>
                                         <g:if test="${!anios.contains(ag.anio.anio)}">
@@ -79,7 +79,7 @@
                                     <g:if test="${asg}">
                                         <td class="anio">
                                             %{--<g:select--}%
-                                            %{--from="${app.Anio.list([sort:'anio',order:'desc'])}" name="anio"--}%
+                                            %{--from="${yachay.parametros.poaPac.Anio.list([sort:'anio',order:'desc'])}" name="anio"--}%
                                             %{--value="${asg.anio.id}" optionKey="id" optionValue="anio"/>--}%
                                             ${actual}
                                             <input type="hidden" name="anio" value="${asg.anio.id}">
@@ -111,7 +111,7 @@
                                     <g:else>
                                         <g:if test="${actual.estado==0}">
                                             <td class="anio">
-                                                %{--<g:select from="${app.Anio.list([sort:'anio',order:'desc'])}" name="anio"--}%
+                                                %{--<g:select from="${yachay.parametros.poaPac.Anio.list([sort:'anio',order:'desc'])}" name="anio"--}%
                                                 %{--value="${anio}" optionKey="id" optionValue="anio"/>--}%
                                                 ${actual}
                                                 <input type="hidden" name="anio" value="${actual.id}">
@@ -122,7 +122,7 @@
                                                        class="buscar">
                                             </td>
                                             <td class="tipo">
-                                                <g:select from="${app.TipoGasto.list([sort:'descripcion'])}"
+                                                <g:select from="${yachay.parametros.TipoGasto.list([sort:'descripcion'])}"
                                                           name="tipoGasto" optionKey="id" optionValue="descripcion"/>
                                             </td>
                                             <td class="valor">

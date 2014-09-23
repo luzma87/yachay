@@ -1,5 +1,5 @@
 
-<%@ page import="app.Documento" %>
+<%@ page import="yachay.proyectos.Documento" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -74,7 +74,7 @@
                             &nbsp;
                         </td>
                         <td class="campo" valign="middle">
-                            <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="${Documento.constraints.proyecto.attributes.mensaje}" from="${app.Proyecto.list()}" optionKey="id" value="${documentoInstance?.proyecto?.id}" noSelection="['null': '']" />
+                            <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="${Documento.constraints.proyecto.attributes.mensaje}" from="${yachay.proyectos.Proyecto.list()}" optionKey="id" value="${documentoInstance?.proyecto?.id}" noSelection="['null': '']" />
                             %{----}%
                         </td>
                     
@@ -88,7 +88,7 @@
                             &nbsp;
                         </td>
                         <td class="campo" valign="middle">
-                            <g:select class="field ui-widget-content ui-corner-all" name="grupoProcesos.id" title="${Documento.constraints.grupoProcesos.attributes.mensaje}" from="${app.GrupoProcesos.list()}" optionKey="id" value="${documentoInstance?.grupoProcesos?.id}" noSelection="['null': '']" />
+                            <g:select class="field ui-widget-content ui-corner-all" name="grupoProcesos.id" title="${Documento.constraints.grupoProcesos.attributes.mensaje}" from="${yachay.parametros.proyectos.GrupoProcesos.list()}" optionKey="id" value="${documentoInstance?.grupoProcesos?.id}" noSelection="['null': '']" />
                             %{----}%
                         </td>
                     

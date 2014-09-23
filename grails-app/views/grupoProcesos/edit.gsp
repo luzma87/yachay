@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.GrupoProcesos" %>
+<%@ page import="yachay.parametros.proyectos.GrupoProcesos" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.DocumentoProceso" %>
+<%@ page import="yachay.proyectos.DocumentoProceso" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -36,7 +36,7 @@
                                   <label for="liquidacion"><g:message code="documentoProceso.liquidacion.label" default="Liquidacion" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: documentoProcesoInstance, field: 'liquidacion', 'errors')}">
-                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="liquidacion.id" title="Liquidacion" from="${app.Liquidacion.list()}" optionKey="id" value="${documentoProcesoInstance?.liquidacion?.id}"  />
+                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="liquidacion.id" title="Liquidacion" from="${yachay.proyectos.Liquidacion.list()}" optionKey="id" value="${documentoProcesoInstance?.liquidacion?.id}"  />
                                 </td>
                             </tr>
                         
@@ -54,7 +54,7 @@
                                   <label for="tipo"><g:message code="documentoProceso.tipo.label" default="Tipo" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: documentoProcesoInstance, field: 'tipo', 'errors')}">
-                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="tipo.id" title="Tipo del documento" from="${app.TipoDocumento.list()}" optionKey="id" value="${documentoProcesoInstance?.tipo?.id}"  />
+                                    <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="tipo.id" title="Tipo del documento" from="${yachay.parametros.TipoDocumento.list()}" optionKey="id" value="${documentoProcesoInstance?.tipo?.id}"  />
                                 </td>
                             </tr>
                         

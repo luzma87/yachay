@@ -1,4 +1,4 @@
-<%@ page import="app.GrupoProcesos" %>
+<%@ page import="yachay.parametros.proyectos.GrupoProcesos" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -84,7 +84,7 @@
                         <span class="indicator">*</span>
                     </td>
                     <td class=" mandatory" valign="middle">
-                        <g:textField name="descripcion" id="descripcion" title="${app.GrupoProcesos.constraints.descripcion.attributes.mensaje}"
+                        <g:textField name="descripcion" id="descripcion" title="${yachay.parametros.proyectos.GrupoProcesos.constraints.descripcion.attributes.mensaje}"
                                      class="field required ui-widget-content ui-corner-all" minLenght="1" style="width: 320px;"
                                      maxLenght="31" value="${grupoProcesosInstance?.descripcion}"/>
                         %{--<span class="indicator">*</span>--}%

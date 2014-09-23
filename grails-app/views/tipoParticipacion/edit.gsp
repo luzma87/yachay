@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.TipoParticipacion" %>
+<%@ page import="yachay.parametros.TipoParticipacion" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

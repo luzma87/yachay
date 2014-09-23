@@ -1,4 +1,4 @@
-<%@ page import="app.ResponsableProyecto" %>
+<%@ page import="yachay.proyectos.ResponsableProyecto" %>
 
 <style type="text/css">
 select.field {
@@ -59,7 +59,7 @@ select.field {
                     <td class="" valign="middle">
                         <g:select class="field ui-widget-content ui-corner-all" name="administrativo.responsable.id"
                                   title="${ResponsableProyecto.constraints.responsable.attributes.mensaje}"
-                                  from="${app.seguridad.Usro.findAllByUnidad(app.UnidadEjecutora.get(93))}" optionKey="id" noSelection="['null': '']" optionValue="persona"/>
+                                  from="${yachay.seguridad.Usro.findAllByUnidad(yachay.parametros.UnidadEjecutora.get(93))}" optionKey="id" noSelection="['null': '']" optionValue="persona"/>
                     </td>
                 </tr>
 
@@ -219,7 +219,7 @@ select.field {
                     <td class="" valign="middle">
                         <g:select class="field ui-widget-content ui-corner-all" name="administrativo.responsable.id"
                                   title="${ResponsableProyecto.constraints.responsable.attributes.mensaje}"
-                                  from="${app.seguridad.Usro.findAllByUnidad(app.UnidadEjecutora.get(94))}" optionKey="id" noSelection="['null': '']" optionValue="persona"/>
+                                  from="${yachay.seguridad.Usro.findAllByUnidad(yachay.parametros.UnidadEjecutora.get(94))}" optionKey="id" noSelection="['null': '']" optionValue="persona"/>
                     </td>
                 </tr>
 
@@ -385,7 +385,7 @@ select.field {
                     <td class="" valign="middle">
                         <g:select class="field ui-widget-content ui-corner-all" name="planificacion.responsable.id"
                                   title="${ResponsableProyecto.constraints.responsable.attributes.mensaje}"
-                                  from="${app.seguridad.Usro.findAllByUnidad(app.UnidadEjecutora.get(85))}" optionKey="id" noSelection="['null': '']"/>
+                                  from="${yachay.seguridad.Usro.findAllByUnidad(yachay.parametros.UnidadEjecutora.get(85))}" optionKey="id" noSelection="['null': '']"/>
                     </td>
                 </tr>
 

@@ -1,5 +1,5 @@
 
-<%@ page import="app.SubSecretaria" %>
+<%@ page import="yachay.parametros.SubSecretaria" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -74,7 +74,7 @@
                             &nbsp;
                         </td>
                         <td class="campo" valign="middle">
-                            <g:select class="field ui-widget-content ui-corner-all" name="entidad.id" title="${SubSecretaria.constraints.entidad.attributes.mensaje}" from="${app.Entidad.list()}" optionKey="id" value="${subSecretariaInstance?.entidad?.id}" noSelection="['null': '']" />
+                            <g:select class="field ui-widget-content ui-corner-all" name="entidad.id" title="${SubSecretaria.constraints.entidad.attributes.mensaje}" from="${yachay.parametros.Entidad.list()}" optionKey="id" value="${subSecretariaInstance?.entidad?.id}" noSelection="['null': '']" />
                             %{----}%
                         </td>
                     

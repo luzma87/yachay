@@ -1,5 +1,5 @@
 
-<%@ page import="app.EstudiosTecnicos" %>
+<%@ page import="yachay.proyectos.EstudiosTecnicos" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -74,7 +74,7 @@
                             &nbsp;
                         </td>
                         <td class="campo" valign="middle">
-                            <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="${EstudiosTecnicos.constraints.proyecto.attributes.mensaje}" from="${app.Proyecto.list()}" optionKey="id" value="${estudiosTecnicosInstance?.proyecto?.id}" noSelection="['null': '']" />
+                            <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="${EstudiosTecnicos.constraints.proyecto.attributes.mensaje}" from="${yachay.proyectos.Proyecto.list()}" optionKey="id" value="${estudiosTecnicosInstance?.proyecto?.id}" noSelection="['null': '']" />
                             %{----}%
                         </td>
                     

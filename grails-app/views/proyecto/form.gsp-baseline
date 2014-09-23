@@ -1,4 +1,4 @@
-<%@ page import="app.Proyecto" %>
+<%@ page import="yachay.proyectos.Proyecto" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -73,7 +73,7 @@
     </td>
     <td class="campo" valign="middle">
         <g:select class="field ui-widget-content ui-corner-all" name="unidadEjecutora.id" title="unidadEjecutora"
-                  from="${app.UnidadEjecutora.list()}" optionKey="id"
+                  from="${yachay.parametros.UnidadEjecutora.list()}" optionKey="id"
                   value="${proyectoInstance?.unidadEjecutora?.id}" noSelection="['null': '']"/>
         %{----}%
     </td>
@@ -89,7 +89,7 @@
     </td>
     <td class="campo" valign="middle">
         <g:select class="field ui-widget-content ui-corner-all" name="etapa.id" title="etapa"
-                  from="${app.Etapa.list()}" optionKey="id" value="${proyectoInstance?.etapa?.id}"
+                  from="${yachay.parametros.Etapa.list()}" optionKey="id" value="${proyectoInstance?.etapa?.id}"
                   noSelection="['null': '']"/>
         %{----}%
     </td>
@@ -108,7 +108,7 @@
         &nbsp;
     </td>
     <td class="campo" valign="middle">
-        <g:select class="field ui-widget-content ui-corner-all" name="fase.id" title="fase" from="${app.Fase.list()}"
+        <g:select class="field ui-widget-content ui-corner-all" name="fase.id" title="fase" from="${yachay.parametros.Fase.list()}"
                   optionKey="id" value="${proyectoInstance?.fase?.id}" noSelection="['null': '']"/>
         %{----}%
     </td>
@@ -124,7 +124,7 @@
     </td>
     <td class="campo" valign="middle">
         <g:select class="field ui-widget-content ui-corner-all" name="tipoProducto.id" title="tipoProducto"
-                  from="${app.TipoProducto.list()}" optionKey="id" value="${proyectoInstance?.tipoProducto?.id}"
+                  from="${yachay.parametros.TipoProducto.list()}" optionKey="id" value="${proyectoInstance?.tipoProducto?.id}"
                   noSelection="['null': '']"/>
         %{----}%
     </td>
@@ -144,7 +144,7 @@
     </td>
     <td class="campo" valign="middle">
         <g:select class="field ui-widget-content ui-corner-all" name="tipoAquisicion.id" title="tipoAquisicion"
-                  from="${app.TipoAquisicion.list()}" optionKey="id" value="${proyectoInstance?.tipoAquisicion?.id}"
+                  from="${yachay.parametros.TipoAquisicion.list()}" optionKey="id" value="${proyectoInstance?.tipoAquisicion?.id}"
                   noSelection="['null': '']"/>
         %{----}%
     </td>
@@ -159,7 +159,7 @@
         &nbsp;
     </td>
     <td class="campo" valign="middle">
-        <g:select class="field ui-widget-content ui-corner-all" name="anio.id" title="anio" from="${app.Anio.list()}"
+        <g:select class="field ui-widget-content ui-corner-all" name="anio.id" title="anio" from="${yachay.parametros.poaPac.Anio.list()}"
                   optionKey="id" value="${proyectoInstance?.anio?.id}" noSelection="['null': '']"/>
         %{----}%
     </td>
@@ -179,7 +179,7 @@
     </td>
     <td class="campo" valign="middle">
         <g:select class="field ui-widget-content ui-corner-all" name="estadoProyecto.id" title="estadoProyecto"
-                  from="${app.EstadoProyecto.list()}" optionKey="id" value="${proyectoInstance?.estadoProyecto?.id}"
+                  from="${yachay.parametros.EstadoProyecto.list()}" optionKey="id" value="${proyectoInstance?.estadoProyecto?.id}"
                   noSelection="['null': '']"/>
         %{----}%
     </td>
@@ -195,7 +195,7 @@
     </td>
     <td class="campo" valign="middle">
         <g:select class="field ui-widget-content ui-corner-all" name="linea.id" title="linea"
-                  from="${app.Linea.list()}" optionKey="id" value="${proyectoInstance?.linea?.id}"
+                  from="${yachay.parametros.Linea.list()}" optionKey="id" value="${proyectoInstance?.linea?.id}"
                   noSelection="['null': '']"/>
         %{----}%
     </td>
@@ -215,7 +215,7 @@
     </td>
     <td class="campo" valign="middle">
         <g:select class="field ui-widget-content ui-corner-all" name="sector.id" title="sector"
-                  from="${app.Sector.list()}" optionKey="id" value="${proyectoInstance?.sector?.id}"
+                  from="${yachay.parametros.Sector.list()}" optionKey="id" value="${proyectoInstance?.sector?.id}"
                   noSelection="['null': '']"/>
         %{----}%
     </td>
@@ -231,7 +231,7 @@
     </td>
     <td class="campo" valign="middle">
         <g:select class="field ui-widget-content ui-corner-all" name="subSector.id" title="subSector"
-                  from="${app.SubSector.list()}" optionKey="id" value="${proyectoInstance?.subSector?.id}"
+                  from="${yachay.parametros.SubSector.list()}" optionKey="id" value="${proyectoInstance?.subSector?.id}"
                   noSelection="['null': '']"/>
         %{----}%
     </td>
@@ -251,7 +251,7 @@
     </td>
     <td class="campo" valign="middle">
         <g:select class="field ui-widget-content ui-corner-all" name="tipoInversion.id" title="tipoInversion"
-                  from="${app.TipoInversion.list()}" optionKey="id" value="${proyectoInstance?.tipoInversion?.id}"
+                  from="${yachay.parametros.TipoInversion.list()}" optionKey="id" value="${proyectoInstance?.tipoInversion?.id}"
                   noSelection="['null': '']"/>
         %{----}%
     </td>
@@ -267,7 +267,7 @@
     </td>
     <td class="campo" valign="middle">
         <g:select class="field ui-widget-content ui-corner-all" name="cobertura.id" title="cobertura"
-                  from="${app.Cobertura.list()}" optionKey="id" value="${proyectoInstance?.cobertura?.id}"
+                  from="${yachay.parametros.Cobertura.list()}" optionKey="id" value="${proyectoInstance?.cobertura?.id}"
                   noSelection="['null': '']"/>
         %{----}%
     </td>
@@ -767,7 +767,7 @@
     </td>
     <td class="campo mandatory" valign="middle">
         <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="programa.id" title="Programa"
-                  from="${app.Programa.list()}" optionKey="id" value="${proyectoInstance?.programa?.id}"/>
+                  from="${yachay.parametros.proyectos.Programa.list()}" optionKey="id" value="${proyectoInstance?.programa?.id}"/>
         %{--<span class="indicator">*</span>--}%
     </td>
 

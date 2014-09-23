@@ -188,7 +188,7 @@
                 </div>
 
                 <div class="filaMedio der">
-                    <g:each in="${app.MedioVerificacion.findAllByIndicador(indicador)}" var="med">
+                    <g:each in="${yachay.proyectos.MedioVerificacion.findAllByIndicador(indicador)}" var="med">
                         <div class="texto agregado ui-corner-all md fin varios" pref="mf_"
                              id="mf_${med.id}"
                              ml="Fin" tipo="2" div="mf_${med.id}" indicador="${indicador.id}"
@@ -278,7 +278,7 @@
                 </div>
 
                 <div class="filaMedio der">
-                    <g:each in="${app.MedioVerificacion.findAllByIndicador(indiProp)}" var="med">
+                    <g:each in="${yachay.proyectos.MedioVerificacion.findAllByIndicador(indiProp)}" var="med">
                         <div class="texto agregado ui-corner-all md proposito varios" pref="mp_"
                              id="mp_${med.id}" ml="Proposito" div="mp_${med.id}"
                              indicador="${indiProp.id}"
@@ -352,7 +352,7 @@
     <input type="hidden" id="c_tipo">
     %{--<div id="filaCombo" style="display: none">--}%
     %{--<div id="combo" style="float:left">--}%
-    %{--<g:select from="${app.TipoSupuesto.list()}" name="tipo" optionKey="id" optionValue="descripcion" style="margin-left: 15px;max-width: 250px;" id="tipoSupuesto" noSelection="${['-1':'Seleccione']}"  />--}%
+    %{--<g:select from="${yachay.parametros.TipoSupuesto.list()}" name="tipo" optionKey="id" optionValue="descripcion" style="margin-left: 15px;max-width: 250px;" id="tipoSupuesto" noSelection="${['-1':'Seleccione']}"  />--}%
     %{--</div>--}%
     %{--<a href="#"  id="btnAgregar">Agregar</a>--}%
     %{--</div>--}%

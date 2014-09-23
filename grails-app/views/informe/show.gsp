@@ -1,4 +1,4 @@
-<%@ page import="app.Informe" %>
+<%@ page import="yachay.proyectos.Informe" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

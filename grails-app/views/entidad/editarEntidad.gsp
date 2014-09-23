@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page import="app.parametros.Entidad" %>
+<%@ page import="yachay.parametros.Entidad" %>
 
 <g:form action="save" class="frm_editar"
         method="post">

@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page import="app.parametros.SubSecretaria" %>
+<%@ page import="yachay.parametros.SubSecretaria" %>
 
 <g:form action="save" class="frm_editar"
         method="post">
@@ -33,7 +33,7 @@
                     </g:if>
                     <g:else>
                         <g:select class="field ui-widget-content ui-corner-all" name="entidad.id" title="${SubSecretaria.constraints.entidad.attributes.mensaje}"
-                                  from="${app.Entidad.list()}" optionKey="id" optionValue="nombre"
+                                  from="${yachay.parametros.Entidad.list()}" optionKey="id" optionValue="nombre"
                                   value="${subSecretariaInstance?.entidad?.id}"
                                   noSelection="['null': '']"/>
                     </g:else>

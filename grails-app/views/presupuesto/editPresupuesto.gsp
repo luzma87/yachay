@@ -1,4 +1,4 @@
-<%@ page import="app.Presupuesto" %>
+<%@ page import="yachay.parametros.poaPac.Presupuesto" %>
 
 <g:form action="save" class="frm_editar" method="post">
     <g:hiddenField name="id" value="${presupuestoInstance?.id}"/>

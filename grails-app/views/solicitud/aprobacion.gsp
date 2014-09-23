@@ -5,7 +5,7 @@
   Time: 12:54 PM
 --%>
 
-<%@ page import="app.Asignacion; app.Anio; app.Fuente; app.Financiamiento; app.TipoAprobacion" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.poa.Asignacion; yachay.parametros.poaPac.Anio; yachay.parametros.poaPac.Fuente; yachay.proyectos.Financiamiento; yachay.parametros.TipoAprobacion" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

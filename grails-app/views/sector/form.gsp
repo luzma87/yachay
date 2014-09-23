@@ -1,4 +1,4 @@
-<%@ page import="app.Sector" %>
+<%@ page import="yachay.parametros.Sector" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

@@ -1,4 +1,4 @@
-<%@ page import="app.Supuesto; app.Indicador" %>
+<%@ page import="yachay.proyectos.Supuesto; yachay.proyectos.Indicador" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -219,7 +219,7 @@
                 <input type="hidden" id="c_tipo">
                 %{--<div id="filaCombo" style="display: none">--}%
                 %{--<div id="combo" style="float:left">--}%
-                %{--<g:select from="${app.TipoSupuesto.list()}" name="tipo" optionKey="id" optionValue="descripcion" style="margin-left: 15px" id="tipoSupuesto" noSelection="${['-1':'Seleccione']}" />--}%
+                %{--<g:select from="${yachay.parametros.TipoSupuesto.list()}" name="tipo" optionKey="id" optionValue="descripcion" style="margin-left: 15px" id="tipoSupuesto" noSelection="${['-1':'Seleccione']}" />--}%
                 %{--</div>--}%
                 %{--<a href="#"  id="btnAgregar">Agregar</a>--}%
                 %{--</div>--}%

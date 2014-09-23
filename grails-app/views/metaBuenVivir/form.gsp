@@ -1,5 +1,5 @@
 
-<%@ page import="app.MetaBuenVivir" %>
+<%@ page import="yachay.proyectos.MetaBuenVivir" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -58,7 +58,7 @@
                             <span class="indicator">*</span>
                         </label>
                         <div class="campo">
-                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="politica.id" title="Meta del buen vivir" from="${app.PoliticaBuenVivir.list()}" optionKey="id" value="${metaBuenVivirInstance?.politica?.id}"  />
+                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="politica.id" title="Meta del buen vivir" from="${yachay.parametros.proyectos.PoliticaBuenVivir.list()}" optionKey="id" value="${metaBuenVivirInstance?.politica?.id}"  />
                         </div>
                     </div>
                     

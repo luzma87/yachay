@@ -1,5 +1,5 @@
 
-<%@ page import="app.Liquidacion" %>
+<%@ page import="yachay.proyectos.Liquidacion" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -58,7 +58,7 @@
                             <span class="indicator">*</span>
                         </label>
                         <div class="campo">
-                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="obra.id" title="Obra" from="${app.Obra.list()}" optionKey="id" value="${liquidacionInstance?.obra?.id}"  />
+                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="obra.id" title="Obra" from="${yachay.proyectos.Obra.list()}" optionKey="id" value="${liquidacionInstance?.obra?.id}"  />
                         </div>
                     </div>
                     

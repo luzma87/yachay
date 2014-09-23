@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.parametros.Entidad" %>
+<%@ page import="yachay.parametros.Entidad" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

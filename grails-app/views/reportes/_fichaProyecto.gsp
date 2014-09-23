@@ -1,4 +1,4 @@
-<%@ page import="app.MetaBuenVivirProyecto; app.PoliticasAgendaProyecto" %>
+<%@ page import="yachay.proyectos.MetaBuenVivirProyecto; yachay.parametros.proyectos.PoliticasAgendaProyecto" %>
 
 <div class="titulo">
     Resumen del proyecto

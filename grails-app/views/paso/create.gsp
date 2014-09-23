@@ -1,4 +1,4 @@
-<%@ page import="app.Paso" %>
+<%@ page import="yachay.proyectos.Paso" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -38,7 +38,7 @@
                                 <td valign="top"
                                     class="value ${hasErrors(bean: pasoInstance, field: 'proceso', 'errors')}">
                                     <g:select class="field ui-widget-content ui-corner-all" name="proceso.id"
-                                              title="proceso" from="${app.Proceso.list()}" optionKey="id"
+                                              title="proceso" from="${yachay.proyectos.Proceso.list()}" optionKey="id"
                                               value="${pasoInstance?.proceso?.id}" noSelection="['null': '']"/>
                                 </td>
                             </tr>

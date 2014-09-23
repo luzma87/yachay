@@ -1,5 +1,5 @@
 
-<%@ page import="app.EntidadesProyecto" %>
+<%@ page import="yachay.parametros.EntidadesProyecto" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -74,7 +74,7 @@
                             &nbsp;
                         </td>
                         <td class="campo" valign="middle">
-                            <g:select class="field ui-widget-content ui-corner-all" name="entidad.id" title="${EntidadesProyecto.constraints.entidad.attributes.mensaje}" from="${app.Entidad.list()}" optionKey="id" value="${entidadesProyectoInstance?.entidad?.id}" noSelection="['null': '']" />
+                            <g:select class="field ui-widget-content ui-corner-all" name="entidad.id" title="${EntidadesProyecto.constraints.entidad.attributes.mensaje}" from="${yachay.parametros.Entidad.list()}" optionKey="id" value="${entidadesProyectoInstance?.entidad?.id}" noSelection="['null': '']" />
                             %{----}%
                         </td>
                     
@@ -88,7 +88,7 @@
                             &nbsp;
                         </td>
                         <td class="campo" valign="middle">
-                            <g:select class="field ui-widget-content ui-corner-all" name="tipoParticipacion.id" title="${EntidadesProyecto.constraints.tipoParticipacion.attributes.mensaje}" from="${app.TipoParticipacion.list()}" optionKey="id" value="${entidadesProyectoInstance?.tipoParticipacion?.id}" noSelection="['null': '']" />
+                            <g:select class="field ui-widget-content ui-corner-all" name="tipoParticipacion.id" title="${EntidadesProyecto.constraints.tipoParticipacion.attributes.mensaje}" from="${yachay.parametros.TipoParticipacion.list()}" optionKey="id" value="${entidadesProyectoInstance?.tipoParticipacion?.id}" noSelection="['null': '']" />
                             %{----}%
                         </td>
                     
@@ -106,7 +106,7 @@
                             &nbsp;
                         </td>
                         <td class="campo" valign="middle">
-                            <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="${EntidadesProyecto.constraints.proyecto.attributes.mensaje}" from="${app.Proyecto.list()}" optionKey="id" value="${entidadesProyectoInstance?.proyecto?.id}" noSelection="['null': '']" />
+                            <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="${EntidadesProyecto.constraints.proyecto.attributes.mensaje}" from="${yachay.proyectos.Proyecto.list()}" optionKey="id" value="${entidadesProyectoInstance?.proyecto?.id}" noSelection="['null': '']" />
                             %{----}%
                         </td>
                     

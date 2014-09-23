@@ -1,5 +1,5 @@
 
-<%@ page import="app.EjecucionUE" %>
+<%@ page import="yachay.proyectos.EjecucionUE" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

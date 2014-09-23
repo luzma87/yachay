@@ -1,4 +1,4 @@
-<%@ page import="app.seguridad.Prfl; app.seguridad.Accn" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.seguridad.Prfl; yachay.seguridad.Accn" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Configuracion del menu</title>

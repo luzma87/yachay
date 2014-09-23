@@ -1,4 +1,4 @@
-<%@ page import="app.Canton" %>
+<%@ page import="yachay.parametros.geografia.Canton" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -42,7 +42,7 @@
                                 <td valign="top"
                                     class="value ${hasErrors(bean: cantonInstance, field: 'provincia', 'errors')}">
                                     <g:select class="field ui-widget-content ui-corner-all" name="provincia.id"
-                                              title="provincia" from="${app.Provincia.list()}" optionKey="id"
+                                              title="provincia" from="${yachay.parametros.geografia.Provincia.list()}" optionKey="id"
                                               value="${cantonInstance?.provincia?.id}" noSelection="['null': '']"/>
                                 </td>
                             </tr>

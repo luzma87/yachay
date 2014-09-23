@@ -1,4 +1,4 @@
-<%@ page import="app.Paso" %>
+<%@ page import="yachay.proyectos.Paso" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -78,7 +78,7 @@
                         </g:if>
                         <g:else>
                             <g:select class="field ui-widget-content ui-corner-all" name="proceso.id" title="${Paso.constraints.proceso.attributes.mensaje}"
-                                      from="${app.Proceso.list()}" optionKey="id" value="${pasoInstance?.proceso?.id}"
+                                      from="${yachay.proyectos.Proceso.list()}" optionKey="id" value="${pasoInstance?.proceso?.id}"
                                       noSelection="['null': '']"/>
                         </g:else>
                         %{----}%

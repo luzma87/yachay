@@ -1,5 +1,5 @@
 
-<%@ page import="app.Proyecto" %>
+<%@ page import="yachay.proyectos.Proyecto" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -58,7 +58,7 @@
                             
                         </label>
                         <div class="campo">
-                            <g:select class="10 field ui-widget-content ui-corner-all" name="unidadEjecutora.id" title="unidadEjecutora" from="${app.UnidadEjecutora.list()}" optionKey="id" value="${proyectoInstance?.unidadEjecutora?.id}" noSelection="['null': '']" />
+                            <g:select class="10 field ui-widget-content ui-corner-all" name="unidadEjecutora.id" title="unidadEjecutora" from="${yachay.parametros.UnidadEjecutora.list()}" optionKey="id" value="${proyectoInstance?.unidadEjecutora?.id}" noSelection="['null': '']" />
                         </div>
                     </div>
                     
@@ -68,7 +68,7 @@
                             
                         </label>
                         <div class="campo">
-                            <g:select class="10 field ui-widget-content ui-corner-all" name="etapa.id" title="etapa" from="${app.Etapa.list()}" optionKey="id" value="${proyectoInstance?.etapa?.id}" noSelection="['null': '']" />
+                            <g:select class="10 field ui-widget-content ui-corner-all" name="etapa.id" title="etapa" from="${yachay.parametros.Etapa.list()}" optionKey="id" value="${proyectoInstance?.etapa?.id}" noSelection="['null': '']" />
                         </div>
                     </div>
                     
@@ -78,7 +78,7 @@
                             
                         </label>
                         <div class="campo">
-                            <g:select class="10 field ui-widget-content ui-corner-all" name="fase.id" title="fase" from="${app.Fase.list()}" optionKey="id" value="${proyectoInstance?.fase?.id}" noSelection="['null': '']" />
+                            <g:select class="10 field ui-widget-content ui-corner-all" name="fase.id" title="fase" from="${yachay.parametros.Fase.list()}" optionKey="id" value="${proyectoInstance?.fase?.id}" noSelection="['null': '']" />
                         </div>
                     </div>
                     
@@ -88,7 +88,7 @@
                             
                         </label>
                         <div class="campo">
-                            <g:select class="10 field ui-widget-content ui-corner-all" name="tipoProducto.id" title="tipoProducto" from="${app.TipoProducto.list()}" optionKey="id" value="${proyectoInstance?.tipoProducto?.id}" noSelection="['null': '']" />
+                            <g:select class="10 field ui-widget-content ui-corner-all" name="tipoProducto.id" title="tipoProducto" from="${yachay.parametros.TipoProducto.list()}" optionKey="id" value="${proyectoInstance?.tipoProducto?.id}" noSelection="['null': '']" />
                         </div>
                     </div>
                     
@@ -98,7 +98,7 @@
                             
                         </label>
                         <div class="campo">
-                            <g:select class="10 field ui-widget-content ui-corner-all" name="estadoProyecto.id" title="estadoProyecto" from="${app.EstadoProyecto.list()}" optionKey="id" value="${proyectoInstance?.estadoProyecto?.id}" noSelection="['null': '']" />
+                            <g:select class="10 field ui-widget-content ui-corner-all" name="estadoProyecto.id" title="estadoProyecto" from="${yachay.parametros.EstadoProyecto.list()}" optionKey="id" value="${proyectoInstance?.estadoProyecto?.id}" noSelection="['null': '']" />
                         </div>
                     </div>
                     
@@ -108,7 +108,7 @@
                             
                         </label>
                         <div class="campo">
-                            <g:select class="10 field ui-widget-content ui-corner-all" name="linea.id" title="linea" from="${app.Linea.list()}" optionKey="id" value="${proyectoInstance?.linea?.id}" noSelection="['null': '']" />
+                            <g:select class="10 field ui-widget-content ui-corner-all" name="linea.id" title="linea" from="${yachay.parametros.Linea.list()}" optionKey="id" value="${proyectoInstance?.linea?.id}" noSelection="['null': '']" />
                         </div>
                     </div>
                     
@@ -118,7 +118,7 @@
                             
                         </label>
                         <div class="campo">
-                            <g:select class="10 field ui-widget-content ui-corner-all" name="tipoInversion.id" title="tipoInversion" from="${app.TipoInversion.list()}" optionKey="id" value="${proyectoInstance?.tipoInversion?.id}" noSelection="['null': '']" />
+                            <g:select class="10 field ui-widget-content ui-corner-all" name="tipoInversion.id" title="tipoInversion" from="${yachay.parametros.TipoInversion.list()}" optionKey="id" value="${proyectoInstance?.tipoInversion?.id}" noSelection="['null': '']" />
                         </div>
                     </div>
                     
@@ -128,7 +128,7 @@
                             
                         </label>
                         <div class="campo">
-                            <g:select class="10 field ui-widget-content ui-corner-all" name="cobertura.id" title="cobertura" from="${app.Cobertura.list()}" optionKey="id" value="${proyectoInstance?.cobertura?.id}" noSelection="['null': '']" />
+                            <g:select class="10 field ui-widget-content ui-corner-all" name="cobertura.id" title="cobertura" from="${yachay.parametros.Cobertura.list()}" optionKey="id" value="${proyectoInstance?.cobertura?.id}" noSelection="['null': '']" />
                         </div>
                     </div>
                     
@@ -138,7 +138,7 @@
                             
                         </label>
                         <div class="campo">
-                            <g:select class="10 field ui-widget-content ui-corner-all" name="calificacion.id" title="calificacion" from="${app.Calificacion.list()}" optionKey="id" value="${proyectoInstance?.calificacion?.id}" noSelection="['null': '']" />
+                            <g:select class="10 field ui-widget-content ui-corner-all" name="calificacion.id" title="calificacion" from="${yachay.parametros.Calificacion.list()}" optionKey="id" value="${proyectoInstance?.calificacion?.id}" noSelection="['null': '']" />
                         </div>
                     </div>
                     
@@ -148,7 +148,7 @@
                             
                         </label>
                         <div class="campo">
-                            <g:select class="10 field ui-widget-content ui-corner-all" name="programa.id" title="programa" from="${app.Programa.list()}" optionKey="id" value="${proyectoInstance?.programa?.id}" noSelection="['null': '']" />
+                            <g:select class="10 field ui-widget-content ui-corner-all" name="programa.id" title="programa" from="${yachay.parametros.proyectos.Programa.list()}" optionKey="id" value="${proyectoInstance?.programa?.id}" noSelection="['null': '']" />
                         </div>
                     </div>
                     

@@ -1,4 +1,4 @@
-<%@ page import="app.TipoElemento" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.parametros.TipoElemento" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -96,7 +96,7 @@
             <div class="labelSvt">Año:</div>
 
             <div class="fieldSvt-small" id="">
-                <g:select from="${app.Anio.list([sort: 'anio'])}" value="${actual?.id}" optionKey="id" optionValue="anio" id="anio" name="anio"></g:select>
+                <g:select from="${yachay.parametros.poaPac.Anio.list([sort: 'anio'])}" value="${actual?.id}" optionKey="id" optionValue="anio" id="anio" name="anio"></g:select>
             </div>
         </div>
 
@@ -105,7 +105,7 @@
 
             <div class="fieldSvt-xxxl" id="div_comp">
                 <g:if test="${proceso}">
-                    <g:select from="${app.MarcoLogico.findAllByProyectoAndTipoElemento(proceso?.proyecto, TipoElemento.get(2))}" optionValue="objeto" optionKey="id" name="comp" id="comp" noSelection="['-1': 'Seleccione...']" style="width: 100%"></g:select>
+                    <g:select from="${yachay.proyectos.MarcoLogico.findAllByProyectoAndTipoElemento(proceso?.proyecto, TipoElemento.get(2))}" optionValue="objeto" optionKey="id" name="comp" id="comp" noSelection="['-1': 'Seleccione...']" style="width: 100%"></g:select>
                 </g:if>
             </div>
         </div>

@@ -1,4 +1,4 @@
-<%@ page import="app.seguridad.Usro" %>
+<%@ page import="yachay.seguridad.Usro" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -38,7 +38,7 @@
                                 <td valign="top"
                                     class="value ${hasErrors(bean: usroInstance, field: 'sistema', 'errors')}">
                                     <g:select class="field required requiredCmb ui-widget-content ui-corner-all"
-                                              name="sistema.id" title="Sistema" from="${app.seguridad.Sistema.list()}"
+                                              name="sistema.id" title="Sistema" from="${yachay.seguridad.Sistema.list()}"
                                               optionKey="id" value="${usroInstance?.sistema?.id}"/>
                                 </td>
                             </tr>
@@ -51,7 +51,7 @@
                                 <td valign="top"
                                     class="value ${hasErrors(bean: usroInstance, field: 'persona', 'errors')}">
                                     <g:select class="field required requiredCmb ui-widget-content ui-corner-all"
-                                              name="persona.id" title="Persona" from="${app.Persona.list()}"
+                                              name="persona.id" title="Persona" from="${yachay.seguridad.Persona.list()}"
                                               optionKey="id" value="${usroInstance?.persona?.id}"/>
                                 </td>
                             </tr>
@@ -64,7 +64,7 @@
                                 <td valign="top"
                                     class="value ${hasErrors(bean: usroInstance, field: 'cargoPersonal', 'errors')}">
                                     <g:select class="field ui-widget-content ui-corner-all" name="cargoPersonal.id"
-                                              title="CargoPersonal" from="${app.CargoPersonal.list()}" optionKey="id"
+                                              title="CargoPersonal" from="${yachay.parametros.CargoPersonal.list()}" optionKey="id"
                                               value="${usroInstance?.cargoPersonal?.id}" noSelection="['null': '']"/>
                                 </td>
                             </tr>
@@ -197,7 +197,7 @@
                                 <td valign="top"
                                     class="value ${hasErrors(bean: usroInstance, field: 'unidad', 'errors')}">
                                     <g:select class="field ui-widget-content ui-corner-all" name="unidad.id"
-                                              title="Unidad" from="${app.UnidadEjecutora.list()}" optionKey="id"
+                                              title="Unidad" from="${yachay.parametros.UnidadEjecutora.list()}" optionKey="id"
                                               value="${usroInstance?.unidad?.id}" noSelection="['null': '']"/>
                                 </td>
                             </tr>

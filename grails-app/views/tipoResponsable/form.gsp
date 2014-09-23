@@ -1,5 +1,5 @@
 
-<%@ page import="app.TipoResponsable" %>
+<%@ page import="yachay.parametros.TipoResponsable" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

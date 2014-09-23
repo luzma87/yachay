@@ -1,4 +1,4 @@
-<%@ page import="app.Supuesto; app.Indicador" %>
+<%@ page import="yachay.proyectos.Supuesto; yachay.proyectos.Indicador" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -206,7 +206,7 @@
             <div>
                 <div style="width: 98%;height: 35px;">
                     <span style="font-weight: bold;font-style: italic">Responsable:</span>
-                    <g:select from="${app.UnidadEjecutora.list([sort:'nombre'])}" name="responsable" optionKey="id" optionValue="nombre" class="responsable ui-corner-all"
+                    <g:select from="${yachay.parametros.UnidadEjecutora.list([sort:'nombre'])}" name="responsable" optionKey="id" optionValue="nombre" class="responsable ui-corner-all"
                               id="resp_${act.id}" value="${act.responsable?.id}" style="width: 350px" noSelection="['-1':'Seleccione...']"></g:select>
                     <div style="width: 300px;height: 100%;float: right">
                         <a href="#" act="${act.id}" class="ui-corner-all guardarAct">Guardar cambios</a>
@@ -265,7 +265,7 @@
                 <div class="matriz ui-corner-all campo cmp  ">
                     <div class="titulo">Categoría </div>
                     <div class="  ui-corner-all   " ml="6" style="margin-top: 0px;border: none" pref="fcin_" id="fcin_${act?.id}" div="fcin_${act?.id}"  tipo="6">
-                        <g:select from="${app.yachai.Categoria.list()}" name="categoria" id="categoria_${act.id}" optionKey="id" noSelection="['-1':'Ninguna']"
+                        <g:select from="${yachay.proyectos.Categoria.list()}" name="categoria" id="categoria_${act.id}" optionKey="id" noSelection="['-1':'Ninguna']"
                                   optionValue="descripcion" value="${act.categoria?.id}" style="width: 100%" class="ui-corner-all field ui-widget-content"></g:select>
                     </div>
 
@@ -328,7 +328,7 @@
     <input type="hidden" id="c_tipo">
     %{--<div id="filaCombo" style="display: none">--}%
     %{--<div id="combo" style="float:left">--}%
-    %{--<g:select from="${app.TipoSupuesto.list()}" name="tipo" optionKey="id" optionValue="descripcion" style="margin-left: 15px" id="tipoSupuesto" noSelection="${['-1':'Seleccione']}" />--}%
+    %{--<g:select from="${yachay.parametros.TipoSupuesto.list()}" name="tipo" optionKey="id" optionValue="descripcion" style="margin-left: 15px" id="tipoSupuesto" noSelection="${['-1':'Seleccione']}" />--}%
     %{--</div>--}%
     %{--<a href="#"  id="btnAgregar">Agregar</a>--}%
     %{--</div>--}%

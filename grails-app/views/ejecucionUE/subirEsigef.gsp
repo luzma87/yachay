@@ -20,16 +20,16 @@
 
             <br/>
             Unidad Ejecutora:<g:select class="field ui-widget-content ui-corner-all" name="unidad"
-                      title="Unidad Ejecutora" from="${app.UnidadEjecutora.list([sort: 'nombre'])}" optionKey="id"
+                      title="Unidad Ejecutora" from="${yachay.parametros.UnidadEjecutora.list([sort: 'nombre'])}" optionKey="id"
                       value="" noSelection="['null': 'Seleccione una Unidad Ejecutora']" style="width: 400px;" />
             &nbsp;&nbsp;
             Año:<g:select class="field ui-widget-content ui-corner-all" name="anio"
-                      title="Año" from="${app.Anio.list()}" optionKey="id"
-                      value="${app.Anio.findByAnio(new Date().format("yyyy"))}"  style="width: 80px;" />
+                      title="Año" from="${yachay.parametros.poaPac.Anio.list()}" optionKey="id"
+                      value="${yachay.parametros.poaPac.Anio.findByAnio(new Date().format("yyyy"))}"  style="width: 80px;" />
             &nbsp;&nbsp;
             Fuente:<g:select class="field ui-widget-content ui-corner-all" name="fuente"
-                          title="Fuente de financiamiento" from="${app.Fuente.list()}" optionKey="id"
-                          value="${app.Fuente.findByCodigo('001')}"  style="width: 300px;" />
+                          title="Fuente de financiamiento" from="${yachay.parametros.poaPac.Fuente.list()}" optionKey="id"
+                          value="${yachay.parametros.poaPac.Fuente.findByCodigo('001')}"  style="width: 300px;" />
             <br/><br/>
             <div style="background: #eee; padding: 10px; ">
             1. Seleccione la Unidad Ejecutora, el Año y la Fuente de financiamiento<br/><br/>

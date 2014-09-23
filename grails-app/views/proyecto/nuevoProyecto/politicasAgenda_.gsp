@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page import="app.parametros.proyectos.PoliticaAgendaSocial; app.PoliticaAgendaSocial; app.PoliticasAgendaProyecto; app.MetaBuenVivir; app.PoliticaBuenVivir; app.Politica; app.ObjetivoBuenVivir; app.Fuente" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.parametros.proyectos.PoliticaAgendaSocial; yachay.parametros.proyectos.PoliticaAgendaSocial; yachay.parametros.proyectos.PoliticasAgendaProyecto; yachay.proyectos.MetaBuenVivir; yachay.parametros.proyectos.PoliticaBuenVivir; yachay.parametros.proyectos.Politica; yachay.proyectos.ObjetivoBuenVivir; yachay.parametros.poaPac.Fuente" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -59,7 +59,7 @@
                     <strong>
                         Pol&iacute;ticas:
                     </strong>
-                    <g:select from="${app.parametros.proyectos.PoliticaAgendaSocial.list()}" name="plas" id="plas" optionKey="id"
+                    <g:select from="${yachay.parametros.proyectos.PoliticaAgendaSocial.list()}" name="plas" id="plas" optionKey="id"
                               optionValue="descripcion" style="width: ${w}px;"
                               noSelection="${['null':'..-- Seleccione una política --..']}"/>
                 </div>

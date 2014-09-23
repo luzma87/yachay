@@ -1,4 +1,4 @@
-<%@ page import="app.seguridad.Sesn" %>
+<%@ page import="yachay.seguridad.Sesn" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -40,7 +40,7 @@
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: sesnInstance, field: 'perfil', 'errors')}">
                         <g:select class="10 field ui-widget-content ui-corner-all" name="perfil.id" title="Perfil"
-                                  from="${app.seguridad.Prfl.list()}" optionKey="id"
+                                  from="${yachay.seguridad.Prfl.list()}" optionKey="id"
                                   value="${sesnInstance?.perfil?.id}"/>
                     </td>
                 </tr>
@@ -51,7 +51,7 @@
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: sesnInstance, field: 'usuario', 'errors')}">
                         <g:select class="10 field ui-widget-content ui-corner-all" name="usuario.id" title="Usuario"
-                                  from="${app.seguridad.Usro.list()}" optionKey="id"
+                                  from="${yachay.seguridad.Usro.list()}" optionKey="id"
                                   value="${sesnInstance?.usuario?.id}"/>
                     </td>
                 </tr>

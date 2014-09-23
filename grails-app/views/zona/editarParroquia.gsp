@@ -1,4 +1,4 @@
-<%@ page import="app.Parroquia" %>
+<%@ page import="yachay.parametros.geografia.Parroquia" %>
 <g:form action="save" class="frm_editar"
         method="post">
     <g:hiddenField name="id" value="${parroquiaInstance?.id}"/>
@@ -24,7 +24,7 @@
                     </g:if>
                     <g:else>
                         <g:select class="field ui-widget-content ui-corner-all" name="canton.id" title="${Parroquia.constraints.canton.attributes.mensaje}"
-                                  from="${app.Canton.list([sort:'nombre'])}" optionKey="id" value="${parroquiaInstance?.canton?.id}"
+                                  from="${yachay.parametros.geografia.Canton.list([sort:'nombre'])}" optionKey="id" value="${parroquiaInstance?.canton?.id}"
                                   noSelection="['null': '']"/>
                     </g:else>
                 </td>

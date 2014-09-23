@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.proyectos.Adquisiciones" %>
+<%@ page import="yachay.parametros.TipoProcedencia; yachay.proyectos.Proyecto; yachay.parametros.TipoAdquisicion; yachay.proyectos.Adquisiciones" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -36,7 +36,7 @@
                                   <label for="TipoAdquisicion"><g:message code="adquisiciones.TipoAdquisicion.label" default="Tipo Aquisicion" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: adquisicionesInstance, field: 'TipoAdquisicion', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="TipoAdquisicion.id" title="TipoAdquisicion" from="${app.TipoAdquisicion.list()}" optionKey="id" value="${adquisicionesInstance?.TipoAdquisicion?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="TipoAdquisicion.id" title="TipoAdquisicion" from="${TipoAdquisicion.list()}" optionKey="id" value="${adquisicionesInstance?.TipoAdquisicion?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -45,7 +45,7 @@
                                   <label for="proyecto"><g:message code="adquisiciones.proyecto.label" default="Proyecto" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: adquisicionesInstance, field: 'proyecto', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="proyecto" from="${app.Proyecto.list()}" optionKey="id" value="${adquisicionesInstance?.proyecto?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="proyecto" from="${Proyecto.list()}" optionKey="id" value="${adquisicionesInstance?.proyecto?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -54,7 +54,7 @@
                                   <label for="tipoProcedencia"><g:message code="adquisiciones.tipoProcedencia.label" default="Tipo Procedencia" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: adquisicionesInstance, field: 'tipoProcedencia', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="tipoProcedencia.id" title="tipoProcedencia" from="${app.TipoProcedencia.list()}" optionKey="id" value="${adquisicionesInstance?.tipoProcedencia?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="tipoProcedencia.id" title="tipoProcedencia" from="${TipoProcedencia.list()}" optionKey="id" value="${adquisicionesInstance?.tipoProcedencia?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         

@@ -1,4 +1,4 @@
-<%@ page import="app.seguridad.Accn" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.seguridad.Accn" contentType="text/html;charset=UTF-8" %>
 <html>
 <head><title></title></head>
 <body>

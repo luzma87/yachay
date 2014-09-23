@@ -1,4 +1,4 @@
-<%@ page import="app.Presupuesto" %>
+<%@ page import="yachay.parametros.poaPac.Presupuesto" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -75,7 +75,7 @@
                 </td>
                 <td class="" valign="middle">
                     <g:select class="field ui-widget-content ui-corner-all" name="presupuesto.id"
-                              title="${Presupuesto.constraints.presupuesto.attributes.mensaje}" from="${app.Presupuesto.list()}" optionKey="id"
+                              title="${Presupuesto.constraints.presupuesto.attributes.mensaje}" from="${yachay.parametros.poaPac.Presupuesto.list()}" optionKey="id"
                               value="${presupuestoInstance?.presupuesto?.id}" noSelection="['null': '']"/>
                     %{----}%
                 </td>

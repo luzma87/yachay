@@ -1,4 +1,4 @@
-<%@ page import="app.parametros.Cobertura" %>
+<%@ page import="yachay.parametros.Cobertura" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

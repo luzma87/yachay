@@ -1,4 +1,4 @@
-<%@ page import="app.parametros.poaPac.Presupuesto; app.MarcoLogico" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.poa.Asignacion; yachay.parametros.poaPac.Anio; yachay.parametros.poaPac.Presupuesto; " contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -28,11 +28,11 @@
     </g:if>
     <g:link class="btn" controller="asignacion" action="programacionAsignaciones" id="${unidad.id}">Programación</g:link>
     <g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades ejecutoras</g:link>
-    &nbsp;&nbsp;&nbsp;<b>Año:</b><g:select from="${app.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
+    &nbsp;&nbsp;&nbsp;<b>Año:</b><g:select from="${Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
 
 </div>
 
-<g:set var="anio" value="${app.Anio.findByAnio(new Date().format('yyyy')).id}"></g:set>
+<g:set var="anio" value="${yachay.parametros.poaPac.Anio.findByAnio(new Date().format('yyyy')).id}"></g:set>
 <div id="accordion" style="width:1030px;margin-top: 5px;">
 <ul>
 
@@ -56,7 +56,7 @@
         <tbody>
         <g:set var="asignado" value="0"></g:set>
         <g:each in="${cinco}" var="act" status="i">
-            <g:set var="asg" value="${app.Asignacion.findAll('from Asignacion where actividad='+act.id+' and unidad= '+unidad.id+' and anio = '+actual.id)}"></g:set>
+            <g:set var="asg" value="${Asignacion.findAll('from Asignacion where actividad='+act.id+' and unidad= '+unidad.id+' and anio = '+actual.id)}"></g:set>
 
             <g:if test="${asg}">
                 <g:set var="asg" value="${asg.pop()}"></g:set>
@@ -72,7 +72,7 @@
                     <g:set var="asignado" value="${asignado.toDouble()+asg.planificado}"></g:set>
                     <td class="anio">
                         %{--<g:select--}%
-                        %{--from="${app.Anio.list([sort:'anio',order:'desc'])}" name="anio"--}%
+                        %{--from="${yachay.parametros.poaPac.Anio.list([sort:'anio',order:'desc'])}" name="anio"--}%
                         %{--value="${asg.anio.id}" optionKey="id" optionValue="anio"/>--}%
                         ${actual.anio}
                         <input type="hidden" name="anio" value="${actual.id}">
@@ -176,7 +176,7 @@
         <tbody>
         <g:set var="asignado" value="0"></g:set>
         <g:each in="${ocho}" var="act" status="i">
-            <g:set var="asg" value="${app.Asignacion.findAll('from Asignacion where actividad='+act.id+' and unidad= '+unidad.id+' and anio = '+actual.id)}"></g:set>
+            <g:set var="asg" value="${yachay.poa.Asignacion.findAll('from Asignacion where actividad='+act.id+' and unidad= '+unidad.id+' and anio = '+actual.id)}"></g:set>
             <g:if test="${asg}">
                 <g:set var="asg" value="${asg.pop()}"></g:set>
                 <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
@@ -291,7 +291,7 @@
         <tbody>
         <g:set var="asignado" value="0"></g:set>
         <g:each in="${nueve}" var="act" status="i">
-            <g:set var="asg" value="${app.Asignacion.findAll('from Asignacion where actividad='+act.id+' and unidad= '+unidad.id+' and anio = '+actual.id)}"></g:set>
+            <g:set var="asg" value="${yachay.poa.Asignacion.findAll('from Asignacion where actividad='+act.id+' and unidad= '+unidad.id+' and anio = '+actual.id)}"></g:set>
             <g:if test="${asg}">
                 <g:set var="asg" value="${asg.pop()}"></g:set>
                 <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">

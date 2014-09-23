@@ -1,4 +1,4 @@
-<%@ page import="app.parametros.PresupuestoUnidad" %>
+<%@ page import="yachay.parametros.PresupuestoUnidad" %>
 
 <style type="text/css">
 .thead {

@@ -1,4 +1,4 @@
-<%@ page import="app.Provincia" %>
+<%@ page import="yachay.parametros.geografia.Provincia" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

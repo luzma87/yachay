@@ -5,7 +5,7 @@
         3. Validar q la suma de los hijos no sume mas q el total posible
 --}%
 
-<%@ page import="app.Asignacion; app.MarcoLogico" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.poa.Asignacion; yachay.proyectos.MarcoLogico" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -29,7 +29,7 @@
     <a class="btn_arbol btn"  href="${g.createLink(action: 'pacWeb',controller: 'reportes')}/?id=${unidad.id}&anio=${actual.id}">Reporte</a>
 </div>
 
-<div style="margin-left: 10px;"><b>Año:</b><g:select from="${app.Anio.list([sort:'anio'])}" id="anio_asg"
+<div style="margin-left: 10px;"><b>Año:</b><g:select from="${yachay.parametros.poaPac.Anio.list([sort:'anio'])}" id="anio_asg"
                                                      name="anio" optionKey="id" optionValue="anio"
                                                      value="${actual.id}"/></div>
 
@@ -65,7 +65,7 @@
 <tbody>
 <g:set var="cont"  value="${0}"></g:set>
 <g:each in="${asgs}" var="asg" status="i">
-    <g:set var="obras" value="${app.Obra.findAllByAsignacionAndObraIsNull(asg, [sort:'id'])}"></g:set>
+    <g:set var="obras" value="${yachay.proyectos.Obra.findAllByAsignacionAndObraIsNull(asg, [sort:'id'])}"></g:set>
     <g:if test="${obras.size() > 0}">
         <g:set var="asigs" value="${0}"/>
         <g:each in="${obras}" var="obra" status="k">
@@ -192,7 +192,7 @@
 
                 <td class="unidad">
                     <g:select
-                            from="${app.Unidad.list([sort:'descripcion',order:'asc'])}"
+                            from="${yachay.parametros.Unidad.list([sort:'descripcion',order:'asc'])}"
                             name="unidad" value="" optionKey="id" optionValue="descripcion"
                             style="font-size: 9px;"/>
                 </td>

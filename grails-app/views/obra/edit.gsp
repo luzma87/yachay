@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.Obra" %>
+<%@ page import="yachay.proyectos.Obra" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -45,7 +45,7 @@
                                   <label for="codigoComprasPublicas"><g:message code="obra.codigoComprasPublicas.label" default="Codigo Compras Publicas" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: obraInstance, field: 'codigoComprasPublicas', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="codigoComprasPublicas.id" title="codigoComprasPublicas" from="${app.CodigoComprasPublicas.list()}" optionKey="id" value="${obraInstance?.codigoComprasPublicas?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="codigoComprasPublicas.id" title="codigoComprasPublicas" from="${yachay.parametros.CodigoComprasPublicas.list()}" optionKey="id" value="${obraInstance?.codigoComprasPublicas?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -54,7 +54,7 @@
                                   <label for="tipoCompra"><g:message code="obra.tipoCompra.label" default="Tipo Compra" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: obraInstance, field: 'tipoCompra', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="tipoCompra.id" title="tipoCompra" from="${app.TipoCompra.list()}" optionKey="id" value="${obraInstance?.tipoCompra?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="tipoCompra.id" title="tipoCompra" from="${yachay.parametros.poaPac.TipoCompra.list()}" optionKey="id" value="${obraInstance?.tipoCompra?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -63,7 +63,7 @@
                                   <label for="asignacion"><g:message code="obra.asignacion.label" default="Asignacion" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: obraInstance, field: 'asignacion', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="asignacion.id" title="asignacion" from="${app.Asignacion.list()}" optionKey="id" value="${obraInstance?.asignacion?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="asignacion.id" title="asignacion" from="${yachay.poa.Asignacion.list()}" optionKey="id" value="${obraInstance?.asignacion?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -72,7 +72,7 @@
                                   <label for="obra"><g:message code="obra.obra.label" default="Obra" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: obraInstance, field: 'obra', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="obra.id" title="obra" from="${app.Obra.list()}" optionKey="id" value="${obraInstance?.obra?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="obra.id" title="obra" from="${yachay.proyectos.Obra.list()}" optionKey="id" value="${obraInstance?.obra?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -81,7 +81,7 @@
                                   <label for="modificacionProyecto"><g:message code="obra.modificacionProyecto.label" default="Modificacion Proyecto" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: obraInstance, field: 'modificacionProyecto', 'errors')}">
-                                    <g:select class="field ui-widget-content ui-corner-all" name="modificacionProyecto.id" title="ModificacionProyecto" from="${app.ModificacionProyecto.list()}" optionKey="id" value="${obraInstance?.modificacionProyecto?.id}" noSelection="['null': '']" />
+                                    <g:select class="field ui-widget-content ui-corner-all" name="modificacionProyecto.id" title="ModificacionProyecto" from="${yachay.proyectos.ModificacionProyecto.list()}" optionKey="id" value="${obraInstance?.modificacionProyecto?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         

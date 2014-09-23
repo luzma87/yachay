@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.Fuente" %>
+<%@ page import="yachay.parametros.poaPac.Fuente" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

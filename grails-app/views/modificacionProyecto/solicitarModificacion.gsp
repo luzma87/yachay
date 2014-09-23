@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="app.ModificacionProyecto" %>
+<%@ page import="yachay.proyectos.ModificacionProyecto" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -66,7 +66,7 @@
                                     &nbsp;
                                 </td>
                                 <td class="campo" valign="middle">
-                                    <g:select from="${app.TipoModificacion.list()}" name="tipoModificacion.id"
+                                    <g:select from="${yachay.parametros.TipoModificacion.list()}" name="tipoModificacion.id"
                                               optionKey="id" optionValue="descripcion"/>
                                     %{----}%
                                 </td>

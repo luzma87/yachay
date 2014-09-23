@@ -62,29 +62,29 @@
                             <th>Modificado</th>
                         </thead>
                         <tbody>
-                            <g:set var="indis" value="${app.Indicador.findAllByModificacion(mod,[sort:'id'])}"></g:set>
-                            <g:set var="sups" value="${app.Supuesto.findAllByModificacion(mod,[sort:'id'])}"></g:set>
+                            <g:set var="indis" value="${yachay.proyectos.Indicador.findAllByModificacion(mod,[sort:'id'])}"></g:set>
+                            <g:set var="sups" value="${yachay.proyectos.Supuesto.findAllByModificacion(mod,[sort:'id'])}"></g:set>
                             <g:set var="medios"
-                                   value="${app.MedioVerificacion.findAllByModificacion(mod,[sort:'id'])}"></g:set>
+                                   value="${yachay.proyectos.MedioVerificacion.findAllByModificacion(mod,[sort:'id'])}"></g:set>
                             <g:set var="mdcb"
-                                   value="${app.Modificables.findAllByModificacion(mod,[sort:'id'])}"></g:set>
+                                   value="${yachay.proyectos.Modificables.findAllByModificacion(mod,[sort:'id'])}"></g:set>
                             <g:each in="${mdcb}" var="md">
                                 <tr>
                                     <g:if test="${md.tipo==1}">
                                         <td><b>Fin</b></td>
-                                        <g:set var="org" value="${app.MarcoLogico.get(md.id_remoto.toLong())}"></g:set>
+                                        <g:set var="org" value="${yachay.proyectos.MarcoLogico.get(md.id_remoto.toLong())}"></g:set>
                                         <td>${org.objeto}</td>
-                                        <td>${app.MarcoLogico.findByPadreMod(org).objeto}</td>
+                                        <td>${yachay.proyectos.MarcoLogico.findByPadreMod(org).objeto}</td>
                                     </g:if>
                                     <g:if test="${md.tipo==2}">
                                         <td><b>Proposito</b></td>
-                                        <g:set var="org" value="${app.MarcoLogico.get(md.id_remoto.toLong())}"></g:set>
+                                        <g:set var="org" value="${yachay.proyectos.MarcoLogico.get(md.id_remoto.toLong())}"></g:set>
                                         <td>${org.objeto}</td>
-                                        <td>${app.MarcoLogico.findByPadreMod(org).objeto}</td>
+                                        <td>${yachay.proyectos.MarcoLogico.findByPadreMod(org).objeto}</td>
                                     </g:if>
                                     <g:if test="${md.tipo==3}">
                                         <td>Indicador</td>
-                                        <g:set var="org" value="${app.Indicador.get(md.id_remoto.toLong())}"></g:set>
+                                        <g:set var="org" value="${yachay.proyectos.Indicador.get(md.id_remoto.toLong())}"></g:set>
                                         <td>${org.descripcion}</td>
                                         <g:if test="${indis.size()>0}">
                                             <td>${indis?.pop().descripcion}</td>
@@ -92,7 +92,7 @@
                                     </g:if>
                                     <g:if test="${md.tipo==5}">
                                         <td>Supuesto</td>
-                                        <g:set var="org" value="${app.Supuesto.get(md.id_remoto.toLong())}"></g:set>
+                                        <g:set var="org" value="${yachay.proyectos.Supuesto.get(md.id_remoto.toLong())}"></g:set>
                                         <td>${org.descripcion}</td>
                                         <g:if test="${sups.size()>0}">
                                             <td>${sups?.pop().descripcion}</td>
@@ -100,14 +100,14 @@
                                     </g:if>
                                     <g:if test="${md.tipo==6}">
                                         <td><b>Actividad</b></td>
-                                        <g:set var="org" value="${app.MarcoLogico.get(md.id_remoto.toLong())}"></g:set>
+                                        <g:set var="org" value="${yachay.proyectos.MarcoLogico.get(md.id_remoto.toLong())}"></g:set>
                                         <td>${org.objeto}</td>
-                                        <td>${app.MarcoLogico.findByPadreMod(org).objeto}</td>
+                                        <td>${yachay.proyectos.MarcoLogico.findByPadreMod(org).objeto}</td>
                                     </g:if>
                                     <g:if test="${md.tipo==7}">
                                         <td>Med. Verificación.</td>
                                         <g:set var="org"
-                                               value="${app.MedioVerificacion.get(md.id_remoto.toLong())}"></g:set>
+                                               value="${yachay.proyectos.MedioVerificacion.get(md.id_remoto.toLong())}"></g:set>
                                         <td>${org.descripcion}</td>
                                         <g:if test="${medios.size()>0}">
                                             <td>${medios?.pop().descripcion}</td>
@@ -115,9 +115,9 @@
                                     </g:if>
                                     <g:if test="${md.tipo==8}">
                                         <td><b>Componente</b></td>
-                                        <g:set var="org" value="${app.MarcoLogico.get(md.id_remoto.toLong())}"></g:set>
+                                        <g:set var="org" value="${yachay.proyectos.MarcoLogico.get(md.id_remoto.toLong())}"></g:set>
                                         <td>${org.objeto}</td>
-                                        <td>${app.MarcoLogico.findByPadreMod(org).objeto}</td>
+                                        <td>${yachay.proyectos.MarcoLogico.findByPadreMod(org).objeto}</td>
                                     </g:if>
                                 </tr>
                             </g:each>

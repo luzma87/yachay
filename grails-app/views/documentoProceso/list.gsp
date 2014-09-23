@@ -1,5 +1,5 @@
 
-<%@ page import="app.DocumentoProceso" %>
+<%@ page import="yachay.proyectos.DocumentoProceso" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

@@ -1,4 +1,4 @@
-<%@ page import="app.parametros.proyectos.ObjetivoGobiernoResultado" %>
+<%@ page import="yachay.parametros.proyectos.ObjetivoGobiernoResultado" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

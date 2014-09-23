@@ -1,4 +1,4 @@
-<%@ page import="app.proyectos.Financiamiento" %>
+<%@ page import="yachay.proyectos.Financiamiento" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -40,7 +40,7 @@
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: financiamientoInstance, field: 'anio', 'errors')}">
                         <g:select class="field ui-widget-content ui-corner-all" name="anio.id" title="anio"
-                                  from="${app.Anio.list()}" optionKey="id" value="${financiamientoInstance?.anio?.id}"
+                                  from="${yachay.parametros.poaPac.Anio.list()}" optionKey="id" value="${financiamientoInstance?.anio?.id}"
                                   noSelection="['null': '']"/>
                     </td>
                 </tr>
@@ -52,7 +52,7 @@
                     <td valign="top"
                         class="value ${hasErrors(bean: financiamientoInstance, field: 'fuente', 'errors')}">
                         <g:select class="field ui-widget-content ui-corner-all" name="fuente.id" title="fuente"
-                                  from="${app.Fuente.list()}" optionKey="id"
+                                  from="${yachay.parametros.poaPac.Fuente.list()}" optionKey="id"
                                   value="${financiamientoInstance?.fuente?.id}" noSelection="['null': '']"/>
                     </td>
                 </tr>
@@ -65,7 +65,7 @@
                     <td valign="top"
                         class="value ${hasErrors(bean: financiamientoInstance, field: 'proyecto', 'errors')}">
                         <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="proyecto"
-                                  from="${app.Proyecto.list()}" optionKey="id"
+                                  from="${yachay.proyectos.Proyecto.list()}" optionKey="id"
                                   value="${financiamientoInstance?.proyecto?.id}" noSelection="['null': '']"/>
                     </td>
                 </tr>

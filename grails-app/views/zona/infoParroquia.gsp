@@ -1,4 +1,4 @@
-<%@ page import="app.Parroquia" %>
+<%@ page import="yachay.parametros.geografia.Parroquia" %>
 <table width="100%">
     <tbody>
 

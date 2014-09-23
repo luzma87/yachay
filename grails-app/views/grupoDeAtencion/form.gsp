@@ -1,5 +1,5 @@
 
-<%@ page import="app.proyectos.GrupoDeAtencion" %>
+<%@ page import="yachay.proyectos.GrupoDeAtencion" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -74,7 +74,7 @@
                             &nbsp;
                         </td>
                         <td class="campo" valign="middle">
-                            <g:select class="field ui-widget-content ui-corner-all" name="tipoGrupo.id" title="${GrupoDeAtencion.constraints.tipoGrupo.attributes.mensaje}" from="${app.TipoGrupo.list()}" optionKey="id" value="${grupoDeAtencionInstance?.tipoGrupo?.id}" noSelection="['null': '']" />
+                            <g:select class="field ui-widget-content ui-corner-all" name="tipoGrupo.id" title="${GrupoDeAtencion.constraints.tipoGrupo.attributes.mensaje}" from="${yachay.parametros.TipoGrupo.list()}" optionKey="id" value="${grupoDeAtencionInstance?.tipoGrupo?.id}" noSelection="['null': '']" />
                             %{----}%
                         </td>
                     
@@ -88,7 +88,7 @@
                             &nbsp;
                         </td>
                         <td class="campo" valign="middle">
-                            <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="${GrupoDeAtencion.constraints.proyecto.attributes.mensaje}" from="${app.Proyecto.list()}" optionKey="id" value="${grupoDeAtencionInstance?.proyecto?.id}" noSelection="['null': '']" />
+                            <g:select class="field ui-widget-content ui-corner-all" name="proyecto.id" title="${GrupoDeAtencion.constraints.proyecto.attributes.mensaje}" from="${yachay.proyectos.Proyecto.list()}" optionKey="id" value="${grupoDeAtencionInstance?.proyecto?.id}" noSelection="['null': '']" />
                             %{----}%
                         </td>
                     

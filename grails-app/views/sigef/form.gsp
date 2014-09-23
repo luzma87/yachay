@@ -1,5 +1,5 @@
 
-<%@ page import="app.Sigef" %>
+<%@ page import="yachay.proyectos.Sigef" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -62,7 +62,7 @@
                         </label>
                         <div class="campo">
                             <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="anio.id" title="Anio"
-                                      from="${app.Anio.list()}" optionKey="id" style="width: 80px;" value="${sigefInstance?.anio?.id}"  />
+                                      from="${yachay.parametros.poaPac.Anio.list()}" optionKey="id" style="width: 80px;" value="${sigefInstance?.anio?.id}"  />
                         </div>
                     </div>
                     
@@ -73,7 +73,7 @@
                         </label>
                         <div class="campo">
                             <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="mes.id" title="Mes"
-                                      from="${app.Mes.list()}" optionKey="id" style="width: 120px;" value="${sigefInstance?.mes?.id}"  />
+                                      from="${yachay.parametros.poaPac.Mes.list()}" optionKey="id" style="width: 120px;" value="${sigefInstance?.mes?.id}"  />
                         </div>
                     </div>
                     

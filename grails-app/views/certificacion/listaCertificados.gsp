@@ -1,4 +1,4 @@
-<%@ page import="app.Certificacion" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.avales.Certificacion" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -18,7 +18,7 @@
 
 <body>
 <b>Año:</b>
-<g:select from="${app.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
+<g:select from="${yachay.parametros.poaPac.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
 <br>
 <div id="tabs" style="width: 1050px;margin-top: 10px;">
     <ul>

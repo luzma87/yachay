@@ -1,4 +1,4 @@
-<%@ page import="app.UnidadEjecutora" %>
+<%@ page import="yachay.parametros.UnidadEjecutora" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -43,7 +43,7 @@
                                     class="value ${hasErrors(bean: unidadEjecutoraInstance, field: 'tipoInstitucion', 'errors')}">
                                     <g:select class="field required requiredCmb ui-widget-content ui-corner-all"
                                               name="tipoInstitucion.id" title="Tipo de institución"
-                                              from="${app.TipoInstitucion.list()}" optionKey="id"
+                                              from="${yachay.parametros.TipoInstitucion.list()}" optionKey="id"
                                               value="${unidadEjecutoraInstance?.tipoInstitucion?.id}"/>
                                 </td>
                             </tr>
@@ -56,7 +56,7 @@
                                 <td valign="top"
                                     class="value ${hasErrors(bean: unidadEjecutoraInstance, field: 'provincia', 'errors')}">
                                     <g:select class="field ui-widget-content ui-corner-all" name="provincia.id"
-                                              title="Provincia de la unidad ejecutora" from="${app.Provincia.list()}"
+                                              title="Provincia de la unidad ejecutora" from="${yachay.parametros.geografia.Provincia.list()}"
                                               optionKey="id" value="${unidadEjecutoraInstance?.provincia?.id}"
                                               noSelection="['null': '']"/>
                                 </td>
@@ -171,7 +171,7 @@
                                 <td valign="top"
                                     class="value ${hasErrors(bean: unidadEjecutoraInstance, field: 'padre', 'errors')}">
                                     <g:select class="field ui-widget-content ui-corner-all" name="padre.id"
-                                              title="Unidad Ejecutora padre" from="${app.UnidadEjecutora.list()}"
+                                              title="Unidad Ejecutora padre" from="${yachay.parametros.UnidadEjecutora.list()}"
                                               optionKey="id" value="${unidadEjecutoraInstance?.padre?.id}"
                                               noSelection="['null': '']"/>
                                 </td>
