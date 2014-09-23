@@ -46,11 +46,11 @@
                     <li> Ingrese el número de la Entidad Institucional y la Unidad Ejecutora</li>
                 </lu>
             </ul>
-            <img src="${resource(dir: 'esigef', file: 'cuadro1.jpeg')}" alt="Valores de Filtrado" border="1px;" style="margin-left: 40px;">
+            <img src="${resource(dir: 'financiero', file: 'cuadro1.jpeg')}" alt="Valores de Filtrado" border="1px;" style="margin-left: 40px;">
             <lu>
                 <li> Sefina la estuctura del reporte como:</li>
             </lu>
-            <img src="${resource(dir: 'esigef', file: 'cuadro2.jpeg')}" alt="Valores de Filtrado" border="1px;" style="margin-left: 40px;">
+            <img src="${resource(dir: 'financiero', file: 'cuadro2.jpeg')}" alt="Valores de Filtrado" border="1px;" style="margin-left: 40px;">
             <lu>
                 <li> Seleccione el mes de cierre y en el formato de reporte escoja "Archivo CSV (Excel)</li>
                 <li>Finalmente, genere el archivo u guardelo con un nombre, este deberá luego localizarlo para subir al sistema.</li>
