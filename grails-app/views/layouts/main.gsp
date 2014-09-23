@@ -84,7 +84,7 @@
 
 
         <div class="ui-dialog ui-widget ui-widget-content ui-corner-all"
-             style="height: 740px;  width: 1100px; margin-left:10px; position: absolute; left: 20px; top:37px;overflow-y: hidden">
+             style="height: 740px;  width: 1360px; margin-left:10px; position: absolute; left: 20px; top:37px;overflow-y: hidden">
             <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"
                  style="text-align: center;">
                 <span class="ui-dialog-title" style="float: none;"><g:layoutTitle default=""/></span>
