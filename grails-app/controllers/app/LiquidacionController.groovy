@@ -1,5 +1,8 @@
 package app
 
+import yachay.proyectos.Liquidacion
+import yachay.proyectos.Obra
+
 class LiquidacionController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

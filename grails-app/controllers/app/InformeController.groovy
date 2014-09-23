@@ -1,8 +1,10 @@
 package app
 
-import app.seguridad.Usro
-import app.seguridad.Sesn
-import app.seguridad.Prfl
+import yachay.proyectos.Informe
+import yachay.proyectos.ResponsableProyecto
+import yachay.seguridad.Usro
+import yachay.seguridad.Sesn
+import yachay.seguridad.Prfl
 
 class InformeController {
 
@@ -139,7 +141,7 @@ class InformeController {
         // TODO VERIFICAR A QUIEN SE MANDAN LAS ALERTAS: RESPONSABLE DE INGRESO DEL PROYECTO
         //            def usuarios = Sesn.findAllByPerfil(Prfl.findByNombre("Administrador")).usuario
 
-        def responsableProyecto = app.ResponsableProyecto.get(params.responsableProyecto.id)
+        def responsableProyecto = ResponsableProyecto.get(params.responsableProyecto.id)
         def proyecto = responsableProyecto.proyecto
 
         def c = ResponsableProyecto.createCriteria()

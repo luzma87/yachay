@@ -1,5 +1,7 @@
 package app
 
+import yachay.parametros.poaPac.TipoCompra
+
 class TipoCompraController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

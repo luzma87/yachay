@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page import="app.SubSecretaria" %>
+<%@ page import="app.parametros.SubSecretaria" %>
 
 <g:form action="save" class="frm_editar"
         method="post">

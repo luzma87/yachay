@@ -1,5 +1,5 @@
 
-<%@ page import="app.Distrito" %>
+<%@ page import="app.parametros.geografia.Distrito" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

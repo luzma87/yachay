@@ -1,8 +1,15 @@
 package app
 
-import app.seguridad.Usro
+import yachay.avales.Certificacion
+import yachay.parametros.UnidadEjecutora
+import yachay.parametros.poaPac.Anio
+import yachay.parametros.TipoResponsable
+import yachay.poa.Asignacion
+import yachay.proyectos.Obra
+import yachay.proyectos.ResponsableProyecto
+import yachay.seguridad.Usro
 
-class CertificacionController  extends app.seguridad.Shield{
+class CertificacionController  extends yachay.seguridad.Shield{
 
     def kerberosService
 

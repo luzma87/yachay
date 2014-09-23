@@ -5,7 +5,7 @@
   Time: 04:23 PM
 --%>
 
-<%@ page import="app.Aprobacion" contentType="text/html;charset=UTF-8" %>
+<%@ page import="app.contratacion.Aprobacion" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <title>Imprimir solicitudes</title>

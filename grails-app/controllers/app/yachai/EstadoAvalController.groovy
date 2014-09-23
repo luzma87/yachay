@@ -1,5 +1,7 @@
 package app.yachai
 
+import yachay.avales.EstadoAval
+
 class EstadoAvalController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

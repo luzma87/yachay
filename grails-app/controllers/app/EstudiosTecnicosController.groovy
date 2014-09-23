@@ -1,5 +1,7 @@
 package app
 
+import yachay.proyectos.EstudiosTecnicos
+
 class EstudiosTecnicosController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

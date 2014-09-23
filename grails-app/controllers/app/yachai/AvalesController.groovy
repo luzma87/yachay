@@ -1,22 +1,19 @@
 package app.yachai
 
-import app.Anio
-import app.Asignacion
-import app.MarcoLogico
-import app.Proceso
-import app.Proyecto
-import app.TipoElemento
-import app.Unidad
-import app.UnidadEjecutora
-import app.alertas.Alerta
-import app.seguridad.Usro
-import app.yachai.Aval
-import app.yachai.EstadoAval
-import app.yachai.ProcesoAsignacion
-import app.yachai.ProcesoAval
-import app.yachai.SolicitudAval
+import yachay.parametros.poaPac.Anio
+import yachay.poa.Asignacion
+import yachay.proyectos.MarcoLogico
+import yachay.proyectos.Proyecto
+import yachay.parametros.UnidadEjecutora
+import yachay.alertas.Alerta
+import yachay.seguridad.Usro
+import yachay.avales.Aval
+import yachay.avales.EstadoAval
+import yachay.avales.ProcesoAsignacion
+import yachay.avales.ProcesoAval
+import yachay.avales.SolicitudAval
 
-class AvalesController extends app.seguridad.Shield {
+class AvalesController extends yachay.seguridad.Shield {
 
     def procesos = {
         println "procesos " + params

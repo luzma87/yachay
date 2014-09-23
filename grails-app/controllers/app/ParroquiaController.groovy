@@ -1,5 +1,7 @@
 package app
 
+import yachay.parametros.geografia.Parroquia
+
 class ParroquiaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

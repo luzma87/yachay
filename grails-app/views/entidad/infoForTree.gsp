@@ -1,4 +1,4 @@
-<%@ page import="app.PresupuestoUnidad" %>
+<%@ page import="app.parametros.PresupuestoUnidad" %>
 
 <style type="text/css">
 .thead {

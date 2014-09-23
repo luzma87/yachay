@@ -1,4 +1,4 @@
-<%@ page import="app.GrupoDeAtencion; app.EstudiosTecnicos" %>
+<%@ page import="app.proyectos.GrupoDeAtencion; app.proyectos.GrupoDeAtencion; app.proyectos.GrupoDeAtencion; app.GrupoDeAtencion; app.EstudiosTecnicos" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -95,7 +95,7 @@
                             </td>
                             <td class="campo" valign="middle">
                                 <g:select class="field ui-widget-content ui-corner-all" name="tipoGrupo.id"
-                                          title="${GrupoDeAtencion.constraints.tipoGrupo.attributes.mensaje}"
+                                          title="${app.proyectos.GrupoDeAtencion.constraints.tipoGrupo.attributes.mensaje}"
                                           optionKey="id" optionValue="descripcion"
                                           from="${app.TipoGrupo.list()}"/>
                             </td>
@@ -109,7 +109,7 @@
                                 &nbsp;
                             </td>
                             <td class="campo" valign="middle">
-                                <g:textField name="hombre" id="hombre" title="${GrupoDeAtencion.constraints.hombre.attributes.mensaje}"
+                                <g:textField name="hombre" id="hombre" title="${app.proyectos.GrupoDeAtencion.constraints.hombre.attributes.mensaje}"
                                              class="field digits ui-widget-content ui-corner-all"/>
                             </td>
                         </tr>
@@ -122,7 +122,7 @@
                                 &nbsp;
                             </td>
                             <td class="campo" valign="middle">
-                                <g:textField name="mujer" id="mujer" title="${GrupoDeAtencion.constraints.mujer.attributes.mensaje}"
+                                <g:textField name="mujer" id="mujer" title="${app.proyectos.GrupoDeAtencion.constraints.mujer.attributes.mensaje}"
                                              class="field digits ui-widget-content ui-corner-all"/>
                             </td>
                         </tr>

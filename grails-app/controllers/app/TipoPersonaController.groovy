@@ -1,5 +1,7 @@
 package app
 
+import yachay.parametros.TipoPersona
+
 class TipoPersonaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

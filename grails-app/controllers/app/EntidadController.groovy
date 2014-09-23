@@ -1,21 +1,41 @@
 package app
 
-import app.seguridad.Usro
-import app.seguridad.Sesn
-import app.seguridad.Prfl
+import yachay.parametros.Entidad
+import yachay.parametros.PresupuestoUnidad
+import yachay.parametros.SubSecretaria
+import yachay.parametros.Unidad
+import yachay.parametros.UnidadEjecutora
+import yachay.parametros.poaPac.Anio
+import yachay.parametros.TipoResponsable
+import yachay.proyectos.Documento
+import yachay.proyectos.Proyecto
+import yachay.proyectos.ResponsableProyecto
+import yachay.seguridad.Persona
+import yachay.seguridad.Usro
+import yachay.seguridad.Sesn
+import yachay.seguridad.Prfl
 
-class EntidadController extends app.seguridad.Shield {
+
+/**
+ * Controlador para manejar operaciones sobre objetos de tipo entidad
+ */
+class EntidadController extends yachay.seguridad.Shield {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
     def kerberosService
     def dbConnectionService
 
+    /**
+     * redirecciona a la vista de lista
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
-    /*Permite generar el arbol de entidades*/
+    /**
+     * Genera el &aacute;rbol de entidades (deprecated)
+     */
     String makeTree() {
         def entidades = Entidad.list(sort: "nombre", order: "asc")
         def tree = ""
@@ -72,6 +92,14 @@ class EntidadController extends app.seguridad.Shield {
         return tree
     }
 
+    /**
+     * Genera un nodo del &aacute;rbol de entidades
+     * @param tipo  el tipo de nodo: padre        para cargar las unidades ejecutoras de c&oacute;digo 1
+     *                                 padre_nu     para cargar las unidades ejecutoras sin padre
+     *                                 unej         para cargar las unidades ejecutoras de padre 'unej'
+     * @param id    el id del nodo padre
+     * @return      el html del nodo del &aacute;rbol
+     */
     String makeBasicTree(tipo, id) {
         println "makeBasicTree(" + tipo + "       " + id + ")"
         String tree = "", clase = "", rel, clUs = ""
@@ -145,6 +173,11 @@ class EntidadController extends app.seguridad.Shield {
         return tree
     }
 
+    /**
+     * Recibe un request ajax para cargar un nodo del &aacute;rbol de entidades
+     * @param tipo  el tipo de nodo a cargar
+     * @param id    el id del nodo a cargar
+     */
     def loadTreePart = {
         render(makeBasicTree(params.tipo, params.id))
     }

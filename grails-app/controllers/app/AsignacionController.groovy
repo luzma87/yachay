@@ -1,8 +1,28 @@
 package app
 
-import javax.activation.ActivationDataFlavor
+import yachay.avales.Certificacion
+import yachay.avales.DistribucionAsignacion
+import yachay.parametros.CodigoComprasPublicas
+import yachay.parametros.PresupuestoUnidad
+import yachay.parametros.UnidadEjecutora
+import yachay.parametros.poaPac.Anio
+import yachay.parametros.TipoElemento
+import yachay.parametros.TipoGasto
+import yachay.parametros.poaPac.Fuente
+import yachay.parametros.poaPac.Mes
+import yachay.parametros.poaPac.Presupuesto
+import yachay.parametros.poaPac.ProgramaPresupuestario
+import yachay.poa.Actividad
+import yachay.poa.Asignacion
+import yachay.poa.Componente
+import yachay.poa.ProgramacionAsignacion
+import yachay.proyectos.Financiamiento
+import yachay.proyectos.MarcoLogico
+import yachay.proyectos.ModificacionAsignacion
+import yachay.proyectos.Obra
+import yachay.proyectos.Proyecto
 
-class AsignacionController extends app.seguridad.Shield {
+class AsignacionController extends yachay.seguridad.Shield {
 
     static allowedMethods = [guardarAsignacion: "POST"]
 

@@ -1,9 +1,36 @@
 package app
 
-import app.yachai.SolicitudAval
+import yachay.avales.Certificacion
+import yachay.parametros.PresupuestoUnidad
+import yachay.parametros.UnidadEjecutora
+import yachay.parametros.poaPac.Anio
+import yachay.parametros.geografia.Canton
+import yachay.parametros.geografia.Parroquia
+import yachay.parametros.geografia.Provincia
+import yachay.parametros.TipoElemento
+import yachay.parametros.poaPac.Mes
+import yachay.parametros.proyectos.Programa
+import yachay.parametros.proyectos.TipoMeta
+import yachay.poa.Asignacion
+import yachay.poa.ProgramacionAsignacion
+import yachay.proyectos.Avance
+import yachay.proyectos.Ejecucion
+import yachay.proyectos.Financiamiento
+import yachay.proyectos.Indicador
+import yachay.proyectos.MarcoLogico
+import yachay.proyectos.MedioVerificacion
+import yachay.proyectos.Meta
+import yachay.proyectos.ModificacionAsignacion
+import yachay.proyectos.ModificacionProyecto
+import yachay.proyectos.Obra
+import yachay.proyectos.PoliticasProyecto
+import yachay.proyectos.Proyecto
+import yachay.avales.SolicitudAval
+import yachay.proyectos.Sigef
+import yachay.proyectos.Supuesto
 import jxl.*
 import jxl.write.*
-import app.seguridad.Usro
+import yachay.seguridad.Usro
 
 class ReportesController {
 

@@ -1,4 +1,4 @@
-<%@ page import="app.Persona" %>
+<%@ page import="app.seguridad.Persona" %>
 
 <style type="text/css">
 .label {

@@ -1,5 +1,7 @@
 package app.yachai
 
+import yachay.proyectos.Categoria
+
 class CategoriaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

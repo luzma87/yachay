@@ -1,5 +1,7 @@
 package app
 
+import yachay.proyectos.BeneficioSenplades
+
 class BeneficioSenpladesController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

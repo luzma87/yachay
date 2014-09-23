@@ -1,5 +1,7 @@
 package app
 
+import yachay.proyectos.PoliticasProyecto
+
 class PoliticasProyectoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

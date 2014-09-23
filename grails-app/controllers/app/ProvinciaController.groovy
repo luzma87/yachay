@@ -1,5 +1,7 @@
 package app
 
+import yachay.parametros.geografia.Provincia
+
 class ProvinciaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

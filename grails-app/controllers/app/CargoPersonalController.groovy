@@ -1,5 +1,7 @@
 package app
 
+import yachay.parametros.CargoPersonal
+
 class CargoPersonalController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

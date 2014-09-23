@@ -1,9 +1,12 @@
 package app
 
-import app.alertas.Alerta
+import yachay.alertas.Alerta
+import yachay.avales.DistribucionAsignacion
+import yachay.poa.Asignacion
+import yachay.proyectos.ModificacionAsignacion
 
 
-class InicioController extends app.seguridad.Shield {
+class InicioController extends yachay.seguridad.Shield {
 
 
     def getValorReal(aa) {

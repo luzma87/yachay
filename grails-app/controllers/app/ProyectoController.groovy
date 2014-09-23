@@ -1,13 +1,54 @@
 package app
 
-import app.seguridad.Usro
+import yachay.parametros.UnidadEjecutora
+import yachay.parametros.poaPac.Anio
+import yachay.parametros.poaPac.Fuente
+import yachay.parametros.proyectos.GrupoProcesos
+import yachay.parametros.TipoElemento
+import yachay.parametros.TipoResponsable
+import yachay.parametros.proyectos.Politica
+import yachay.parametros.proyectos.PoliticaAgendaSocial
+import yachay.poa.Asignacion
+import yachay.poa.ProgramacionAsignacion
+import yachay.proyectos.Adquisiciones
+import yachay.proyectos.Avance
+import yachay.proyectos.BeneficioSenplades
+import yachay.proyectos.Cronograma
+import yachay.proyectos.Documento
+import yachay.proyectos.EntidadesProyecto
+import yachay.proyectos.EstudiosTecnicos
+import yachay.proyectos.Financiamiento
+import yachay.proyectos.GrupoDeAtencion
+import yachay.proyectos.Indicador
+import yachay.proyectos.IndicadoresSenplades
+import yachay.proyectos.Informe
+import yachay.proyectos.Intervencion
+import yachay.proyectos.MarcoLogico
+import yachay.proyectos.MedioVerificacion
+import yachay.proyectos.Meta
+import yachay.proyectos.MetaBuenVivir
+import yachay.proyectos.MetaBuenVivirProyecto
+import yachay.proyectos.Modificables
+import yachay.proyectos.ModificacionAsignacion
+import yachay.proyectos.ModificacionProyecto
+import yachay.proyectos.ObjetivoBuenVivir
+import yachay.proyectos.ObjetivoEstrategico
+import yachay.proyectos.Obra
+import yachay.proyectos.Paso
+import yachay.proyectos.PoliticaBuenVivir
+import yachay.proyectos.PoliticasAgendaProyecto
+import yachay.proyectos.PoliticasProyecto
+import yachay.proyectos.Proceso
+import yachay.proyectos.Proyecto
+import yachay.proyectos.ResponsableProyecto
+import yachay.proyectos.Supuesto
+import yachay.seguridad.Usro
 import jxl.*
-import jxl.write.DateFormat
 
 import java.text.SimpleDateFormat
 
 
-class ProyectoController extends app.seguridad.Shield {
+class ProyectoController extends yachay.seguridad.Shield {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 

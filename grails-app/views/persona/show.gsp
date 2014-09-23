@@ -1,4 +1,4 @@
-<%@ page import="app.Persona" %>
+<%@ page import="app.seguridad.Persona" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

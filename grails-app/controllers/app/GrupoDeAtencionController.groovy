@@ -1,5 +1,7 @@
 package app
 
+import yachay.proyectos.GrupoDeAtencion
+
 class GrupoDeAtencionController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

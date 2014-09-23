@@ -1,6 +1,9 @@
 package app
 
-class AnioController   extends app.seguridad.Shield{
+import yachay.parametros.UnidadEjecutora
+import yachay.parametros.poaPac.Anio
+
+class AnioController   extends yachay.seguridad.Shield{
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 

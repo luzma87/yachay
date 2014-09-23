@@ -1,18 +1,14 @@
 package app.reportes
 
-import app.Aprobacion
-import app.Asignacion
-import app.CargoPersonal
-import app.Solicitud
-import app.seguridad.Sesn
-import app.seguridad.Usro
-import app.yachai.DetalleMontoSolicitud
-import app.yachai.SolicitudAval
+import yachay.contratacion.Aprobacion
+import yachay.poa.Asignacion
+import yachay.contratacion.Solicitud
+import yachay.seguridad.Usro
+import yachay.contratacion.DetalleMontoSolicitud
+import yachay.avales.SolicitudAval
 import jxl.Workbook
 import jxl.WorkbookSettings
 import jxl.write.Label
-import jxl.write.WritableCellFormat
-import jxl.write.WritableFont
 import jxl.write.WritableSheet
 import jxl.write.WritableWorkbook
 

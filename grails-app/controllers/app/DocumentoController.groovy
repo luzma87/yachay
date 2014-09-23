@@ -1,6 +1,8 @@
 package app
 
-class DocumentoController extends app.seguridad.Shield {
+import yachay.proyectos.Documento
+
+class DocumentoController extends yachay.seguridad.Shield {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 

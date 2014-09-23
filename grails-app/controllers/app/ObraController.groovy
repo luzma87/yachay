@@ -1,6 +1,18 @@
 package app
 
-class ObraController extends app.seguridad.Shield {
+import yachay.parametros.PresupuestoUnidad
+import yachay.parametros.Unidad
+import yachay.parametros.UnidadEjecutora
+import yachay.parametros.poaPac.Anio
+import yachay.parametros.poaPac.TipoCompra
+import yachay.parametros.TipoResponsable
+import yachay.poa.Asignacion
+import yachay.proyectos.MarcoLogico
+import yachay.proyectos.Obra
+import yachay.proyectos.Proyecto
+import yachay.proyectos.ResponsableProyecto
+
+class ObraController extends yachay.seguridad.Shield {
 
     def kerberosService
 

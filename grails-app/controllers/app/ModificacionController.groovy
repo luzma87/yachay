@@ -1,8 +1,32 @@
 package app
 
-import app.seguridad.Usro
+import yachay.parametros.PresupuestoUnidad
+import yachay.parametros.UnidadEjecutora
+import yachay.parametros.poaPac.Anio
+import yachay.parametros.TipoElemento
+import yachay.parametros.TipoResponsable
+import yachay.parametros.poaPac.Fuente
+import yachay.parametros.poaPac.Mes
+import yachay.parametros.poaPac.Presupuesto
+import yachay.parametros.poaPac.ProgramaPresupuestario
+import yachay.poa.Asignacion
+import yachay.poa.Componente
+import yachay.poa.ProgramacionAsignacion
+import yachay.proyectos.Financiamiento
+import yachay.proyectos.Indicador
+import yachay.proyectos.MarcoLogico
+import yachay.proyectos.MedioVerificacion
+import yachay.proyectos.Meta
+import yachay.proyectos.Modificables
+import yachay.proyectos.ModificacionAsignacion
+import yachay.proyectos.ModificacionProyecto
+import yachay.proyectos.ModificacionTechos
+import yachay.proyectos.Proyecto
+import yachay.proyectos.ResponsableProyecto
+import yachay.proyectos.Supuesto
+import yachay.seguridad.Usro
 
-class ModificacionController extends app.seguridad.Shield {
+class ModificacionController extends yachay.seguridad.Shield {
 
     def kerberosService, modificacionesService
 

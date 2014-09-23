@@ -1,12 +1,19 @@
 package app
 
-import app.alertas.Alerta
-import app.seguridad.Prfl
-import app.seguridad.Sesn
-import app.seguridad.Usro
-import app.yachai.Categoria
-import app.yachai.DetalleMontoSolicitud
-import app.yachai.SolicitudAval
+import yachay.alertas.Alerta
+import yachay.contratacion.Aprobacion
+import yachay.parametros.UnidadEjecutora
+import yachay.parametros.poaPac.Anio
+import yachay.parametros.TipoElemento
+import yachay.contratacion.Solicitud
+import yachay.poa.Asignacion
+import yachay.proyectos.MarcoLogico
+import yachay.proyectos.Proyecto
+import yachay.seguridad.Prfl
+import yachay.seguridad.Sesn
+import yachay.seguridad.Usro
+import yachay.proyectos.Categoria
+import yachay.contratacion.DetalleMontoSolicitud
 
 import javax.imageio.ImageIO
 import java.awt.image.BufferedImage
@@ -14,7 +21,7 @@ import java.awt.image.BufferedImage
 import static java.awt.RenderingHints.KEY_INTERPOLATION
 import static java.awt.RenderingHints.VALUE_INTERPOLATION_BICUBIC
 
-class SolicitudController extends app.seguridad.Shield {
+class SolicitudController extends yachay.seguridad.Shield {
 
     def getPathBase() {
         return servletContext.getRealPath("/") + "solicitudes/"

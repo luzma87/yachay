@@ -1,8 +1,8 @@
-<%@ page import="app.Politica; app.ObjetivoGobiernoResultado; app.ObjetivoEstrategicoProyecto; com.sun.jndi.ldap.Obj; app.EjeProgramatico; app.PresupuestoUnidad; app.Anio" %>
+<%@ page import="app.parametros.PresupuestoUnidad; app.Politica; app.ObjetivoGobiernoResultado; app.ObjetivoEstrategicoProyecto; com.sun.jndi.ldap.Obj; app.EjeProgramatico; app.PresupuestoUnidad; app.Anio" %>
 
 <g:set var="anio" value="${new Date().format('yyyy')}"/>
 <g:set var="anioObj" value="${Anio.findByAnio(anio)}"/>
-<g:set var="presupuesto" value="${PresupuestoUnidad.findByAnioAndUnidad(anioObj, unidad)}"/>
+<g:set var="presupuesto" value="${app.parametros.PresupuestoUnidad.findByAnioAndUnidad(anioObj, unidad)}"/>
 <style type="text/css">
 #selObjetivoGob-button {
     height : 50px !important;

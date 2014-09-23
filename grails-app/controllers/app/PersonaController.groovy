@@ -1,5 +1,7 @@
 package app
 
+import yachay.seguridad.Persona
+
 class PersonaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

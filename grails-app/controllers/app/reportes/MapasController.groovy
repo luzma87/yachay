@@ -1,15 +1,12 @@
 package app.reportes
 
-import app.Meta
-import app.Proyecto
-import app.Provincia
-import app.CantonesDistrito
-import app.Canton
-import app.Parroquia
-import app.Avance
-import app.TipoMeta
-import app.MarcoLogico
-import app.TipoElemento
+import yachay.proyectos.Meta
+import yachay.proyectos.Proyecto
+import yachay.parametros.geografia.Provincia
+import yachay.parametros.geografia.Canton
+import yachay.parametros.geografia.Parroquia
+import yachay.proyectos.Avance
+import yachay.parametros.proyectos.TipoMeta
 
 class MapasController {
 

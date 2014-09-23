@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page import="app.seguridad.Usro; app.Persona" %>
+<%@ page import="app.seguridad.Usro; app.seguridad.Persona" %>
 
 <g:form action="save" class="frm_editar"
         method="post">

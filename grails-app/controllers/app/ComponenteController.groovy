@@ -1,5 +1,7 @@
 package app
 
+import yachay.poa.Componente
+
 class ComponenteController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

@@ -1,5 +1,16 @@
 package app
 
+import yachay.parametros.geografia.Canton
+import yachay.parametros.geografia.Parroquia
+import yachay.parametros.geografia.Provincia
+import yachay.parametros.TipoInforme
+import yachay.poa.Asignacion
+import yachay.proyectos.Avance
+import yachay.proyectos.Indicador
+import yachay.proyectos.Informe
+import yachay.proyectos.Meta
+import yachay.proyectos.ResponsableProyecto
+
 class MetaController {
 
     def kerberosService

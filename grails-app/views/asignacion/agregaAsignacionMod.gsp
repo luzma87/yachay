@@ -1,4 +1,4 @@
-<%@ page import="app.Asignacion" %>
+<%@ page import="app.poa.Asignacion" %>
 <g:if test="${flash.message}">
     <div class="message ui-state-highlight ui-corner-all">
         <g:message code="${flash.message}" args="${flash.args}" default="${flash.defaultMessage}"/>

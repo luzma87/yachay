@@ -1,5 +1,7 @@
 package app
 
+import yachay.parametros.EstadoProyecto
+
 class EstadoProyectoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

@@ -1,5 +1,5 @@
 
-<%@ page import="app.yachai.Categoria" %>
+<%@ page import="app.proyectos.Categoria" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

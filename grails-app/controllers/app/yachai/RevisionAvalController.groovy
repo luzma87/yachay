@@ -1,8 +1,12 @@
 package app.yachai
 
-import app.Anio
-import app.UnidadEjecutora
-import app.seguridad.Usro
+import yachay.parametros.poaPac.Anio
+import yachay.parametros.UnidadEjecutora
+import yachay.seguridad.Usro
+import yachay.avales.Aval
+import yachay.avales.EstadoAval
+import yachay.avales.ProcesoAsignacion
+import yachay.avales.SolicitudAval
 
 class RevisionAvalController {
 

@@ -1,5 +1,7 @@
 package app
 
+import yachay.proyectos.Proyecto
+
 class ExtraController {
 
     def index = {}

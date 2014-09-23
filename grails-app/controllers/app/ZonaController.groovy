@@ -1,5 +1,10 @@
 package app
 
+import yachay.parametros.geografia.Canton
+import yachay.parametros.geografia.Parroquia
+import yachay.parametros.geografia.Provincia
+import yachay.parametros.geografia.Zona
+
 class ZonaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

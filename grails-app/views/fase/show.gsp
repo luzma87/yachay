@@ -1,4 +1,4 @@
-<%@ page import="app.Fase" %>
+<%@ page import="app.parametros.Fase" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

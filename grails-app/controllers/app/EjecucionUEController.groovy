@@ -1,5 +1,13 @@
 package app
 
+import yachay.parametros.UnidadEjecutora
+import yachay.parametros.poaPac.Anio
+import yachay.parametros.poaPac.Fuente
+import yachay.parametros.poaPac.Presupuesto
+import yachay.parametros.poaPac.ProgramaPresupuestario
+import yachay.proyectos.DatosEsigef
+import yachay.proyectos.EjecucionUE
+
 class EjecucionUEController {
 
     def dbConnectionService

@@ -1,5 +1,7 @@
 package app
 
+import yachay.parametros.geografia.Canton
+
 class CantonController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

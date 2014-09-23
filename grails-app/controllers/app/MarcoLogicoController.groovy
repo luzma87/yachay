@@ -1,16 +1,25 @@
 package app
 
-import app.yachai.Categoria
-import sun.security.x509.AVA
-import jxl.WorkbookSettings
-import jxl.write.WritableWorkbook
-import jxl.Workbook
-import jxl.write.WritableFont
-import jxl.write.WritableCellFormat
-import jxl.write.WritableSheet
-import jxl.write.Label
+import yachay.parametros.Unidad
+import yachay.parametros.UnidadEjecutora
+import yachay.parametros.poaPac.Anio
+import yachay.parametros.geografia.Parroquia
+import yachay.parametros.TipoElemento
+import yachay.parametros.proyectos.TipoMeta
+import yachay.parametros.TipoSupuesto
+import yachay.poa.Asignacion
+import yachay.proyectos.Avance
+import yachay.proyectos.Financiamiento
+import yachay.proyectos.Indicador
+import yachay.proyectos.MarcoLogico
+import yachay.proyectos.MarcoLogicoRespaldo
+import yachay.proyectos.MedioVerificacion
+import yachay.proyectos.Meta
+import yachay.proyectos.Proyecto
+import yachay.proyectos.Categoria
+import yachay.proyectos.Supuesto
 
-class MarcoLogicoController extends app.seguridad.Shield {
+class MarcoLogicoController extends yachay.seguridad.Shield {
 
     def kerberosService
 
@@ -289,7 +298,7 @@ class MarcoLogicoController extends app.seguridad.Shield {
     }
 
     def cargaCombo = {
-        render g.select(from: app.TipoSupuesto.list(), name: "tipo", optionKey: "id", optionValue: "descripcion", style: "margin-left: 15px", id: "tipoSupuesto", noSelection: ['-1': 'Seleccione'])
+        render g.select(from: TipoSupuesto.list(), name: "tipo", optionKey: "id", optionValue: "descripcion", style: "margin-left: 15px", id: "tipoSupuesto", noSelection: ['-1': 'Seleccione'])
     }
 
     def componentes = {

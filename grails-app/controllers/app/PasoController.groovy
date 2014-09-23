@@ -1,5 +1,8 @@
 package app
 
+import yachay.proyectos.Paso
+import yachay.proyectos.Proceso
+
 class PasoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

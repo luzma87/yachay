@@ -1,5 +1,7 @@
 package app
 
+import yachay.parametros.poaPac.Fuente
+
 class FuenteController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

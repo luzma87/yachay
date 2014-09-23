@@ -1,4 +1,4 @@
-<%@ page import="app.seguridad.Usro; app.Persona" %>
+<%@ page import="app.seguridad.Usro; app.seguridad.Persona" %>
 <%--
   Created by IntelliJ IDEA.
   User: luz

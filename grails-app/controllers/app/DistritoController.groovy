@@ -1,5 +1,7 @@
 package app
 
+import yachay.parametros.geografia.Distrito
+
 class DistritoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

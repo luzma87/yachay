@@ -1,5 +1,7 @@
 package app
 
+import yachay.poa.Actividad
+
 class ActividadController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

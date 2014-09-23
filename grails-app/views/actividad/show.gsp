@@ -1,4 +1,4 @@
-<%@ page import="app.Actividad" %>
+<%@ page import="app.poa.Actividad" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

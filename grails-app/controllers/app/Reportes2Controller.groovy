@@ -1,6 +1,10 @@
 package app
 
-import app.seguridad.Usro
+import yachay.parametros.PresupuestoUnidad
+import yachay.parametros.UnidadEjecutora
+import yachay.parametros.poaPac.Anio
+import yachay.poa.Asignacion
+import yachay.seguridad.Usro
 import jxl.*
 import jxl.write.*
 

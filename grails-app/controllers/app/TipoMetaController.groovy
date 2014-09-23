@@ -1,5 +1,7 @@
 package app
 
+import yachay.parametros.proyectos.TipoMeta
+
 class TipoMetaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

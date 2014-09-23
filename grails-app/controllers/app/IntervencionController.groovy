@@ -1,5 +1,7 @@
 package app
 
+import yachay.proyectos.Intervencion
+
 class IntervencionController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

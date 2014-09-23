@@ -1,6 +1,9 @@
 package app
 
-class PresupuestoController extends app.seguridad.Shield {
+import yachay.parametros.poaPac.Presupuesto
+import yachay.poa.Actividad
+
+class PresupuestoController extends yachay.seguridad.Shield {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 

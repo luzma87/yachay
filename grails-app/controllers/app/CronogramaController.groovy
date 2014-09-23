@@ -1,8 +1,21 @@
 package app
 
-import app.seguridad.KerberosService
+import yachay.avales.Certificacion
+import yachay.avales.DistribucionAsignacion
+import yachay.parametros.poaPac.Anio
+import yachay.parametros.poaPac.Fuente
+import yachay.parametros.poaPac.Mes
+import yachay.parametros.poaPac.Presupuesto
+import yachay.poa.Asignacion
+import yachay.poa.ProgramacionAsignacion
+import yachay.proyectos.Cronograma
+import yachay.proyectos.Financiamiento
+import yachay.proyectos.MarcoLogico
+import yachay.proyectos.ModificacionAsignacion
+import yachay.proyectos.Obra
+import yachay.proyectos.Proyecto
 
-class CronogramaController extends app.seguridad.Shield{
+class CronogramaController extends yachay.seguridad.Shield{
 
     def kerberosService
     def dbConnectionService

@@ -1,7 +1,21 @@
 package app
 
+import yachay.parametros.UnidadEjecutora
+import yachay.parametros.poaPac.Anio
+import yachay.parametros.TipoElemento
+import yachay.parametros.TipoResponsable
+import yachay.proyectos.Indicador
+import yachay.proyectos.Informe
+import yachay.proyectos.MarcoLogico
+import yachay.proyectos.MedioVerificacion
+import yachay.proyectos.Modificables
+import yachay.proyectos.ModificacionProyecto
+import yachay.proyectos.Proyecto
+import yachay.proyectos.ResponsableProyecto
+import yachay.proyectos.Supuesto
 
-class ModificacionProyectoController extends app.seguridad.Shield {
+
+class ModificacionProyectoController extends yachay.seguridad.Shield {
 
     def kerberosService
 

@@ -1,5 +1,7 @@
 package app
 
+import yachay.parametros.proyectos.ObjetivoUnidad
+
 class ObjetivoUnidadController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]

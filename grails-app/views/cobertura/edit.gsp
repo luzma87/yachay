@@ -1,6 +1,6 @@
 
 
-<%@ page import="app.Cobertura" %>
+<%@ page import="app.parametros.Cobertura" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
