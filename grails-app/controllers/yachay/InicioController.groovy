@@ -5,10 +5,16 @@ import yachay.avales.DistribucionAsignacion
 import yachay.poa.Asignacion
 import yachay.proyectos.ModificacionAsignacion
 
-
+/**
+ * Controlador que muestra la pantalla inicial del sistema y contabiliza alertas
+ */
 class InicioController extends yachay.seguridad.Shield {
 
-
+    /**
+     * Retorna el valor real de la asignaci&oacute;n teniendo en cuenta la reubicaci&oacute;n
+     * @param aa    asignaci&oacute;n
+     * @return      el valor real
+     */
     def getValorReal(aa) {
         if (aa.reubicada == "S") {
             if (aa.planificado == 0)
@@ -73,6 +79,11 @@ class InicioController extends yachay.seguridad.Shield {
 
     }
 
+    /**
+     * Retorna el valor de los hijos de las asignaciones
+     * @param asg   asignaci&oacute;n
+     * @return      el valor de los hijos
+     */
     def getValorHijo(asg) {
         // println "get valor hijo "+asg.id
         def hijos = Asignacion.findAllByPadre(asg)
@@ -88,6 +99,11 @@ class InicioController extends yachay.seguridad.Shield {
         return val
     }
 
+    /**
+     * Retorna el valor de la asignaci&oacute;n sin modificaciones
+     * @param asg   asignaci&oacute;n
+     * @return      el valor sin modificaciones
+     */
     def getValorSinModificacion(asg) {
 
         def valor = asg.planificado
@@ -128,7 +144,10 @@ class InicioController extends yachay.seguridad.Shield {
 
     }
 
-
+    /**
+     * muestra la pantalla de inicio del sistema <br/>
+     * si no se encuentra la session redirecciona a logout
+     */
     def index = {
 
         if (!session.unidad) {
@@ -156,6 +175,9 @@ class InicioController extends yachay.seguridad.Shield {
 
     }
 
+    /**
+     * muestra la pantalla de alertas con las alertas del usuario que no han sido recibidas
+     */
     def mostrarAlertas = {
         //ejemplo de como mandar alertas
         //kerberosService.generarAlerta(session.usuario,finix.seguridad.Usro.get(48),"que eres pal burro","proceso","show",8)
@@ -164,6 +186,9 @@ class InicioController extends yachay.seguridad.Shield {
         return [alertas: alertas]
     }
 
+    /**
+     * redirecciona a la acci&oacute;n necesaria seg&uacute;n la alerta
+     */
     def showAlerta = {
         def alerta = Alerta.get(params.id)
         alerta.fec_recibido = new Date()
@@ -172,6 +197,9 @@ class InicioController extends yachay.seguridad.Shield {
         redirect(controller: alerta.controlador, action: alerta.accion, params: params)
     }
 
+    /**
+     * muestra la pantalla de par&aacute;metros
+     */
     def parametros = {
 
     }
@@ -189,6 +217,4 @@ class InicioController extends yachay.seguridad.Shield {
         session.color = params.color
         render "ok"
     }
-
-
 }

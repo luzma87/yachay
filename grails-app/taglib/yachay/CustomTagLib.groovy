@@ -14,25 +14,25 @@ class CustomTagLib {
     /**
      * Dump out attributes in HTML compliant fashion.
      */
-    def imprimeNumero = {attrs->
+    def imprimeNumero = { attrs ->
         def aval = null
         def sol = null
-        if(attrs.aval)
-            aval=Aval.get(attrs.aval)
-        if(attrs.solicitud)
+        if (attrs.aval)
+            aval = Aval.get(attrs.aval)
+        if (attrs.solicitud)
             sol = SolicitudAval.get(attrs.solicitud)
-        def num=null
-        def output =""
-        if(aval){
+        def num = null
+        def output = ""
+        if (aval) {
             num = aval.numero
         }
-        if(sol)
-            num=sol.numero
-        if(num){
-            (3-num.length()).times {
-                output+="0"
+        if (sol)
+            num = sol.numero
+        if (num) {
+            (3 - num.length()).times {
+                output += "0"
             }
-            output+=num
+            output += num
         }
 
 

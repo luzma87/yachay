@@ -1,4 +1,4 @@
-package app
+package yachay.parametros
 
 import yachay.parametros.TipoContrato
 
