@@ -604,6 +604,7 @@ class EntidadController extends yachay.seguridad.Shield {
 
     def arbol_asg = {}
 
+    /*Arbol de asignaciones*/
     def arbol_ = {
         return [tree: makeTree()]
     }

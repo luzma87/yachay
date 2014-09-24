@@ -1,4 +1,4 @@
-<%@ page import="yachay.parametros.poaPac.PresupuestoUnidad; yachay.parametros.poaPac.Anio; yachay.parametros.UnidadEjecutora; yachay.parametros.geografia.Provincia; yachay.parametros.TipoInstitucion" %>
+<%@ page import="yachay.parametros.PresupuestoUnidad; yachay.parametros.poaPac.Anio; yachay.parametros.UnidadEjecutora; yachay.parametros.geografia.Provincia; yachay.parametros.TipoInstitucion" %>
 
 <style type="text/css">
 input[type="text"], textarea {

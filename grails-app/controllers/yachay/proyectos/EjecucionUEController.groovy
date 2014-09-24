@@ -154,6 +154,7 @@ class EjecucionUEController {
     def subirEsigef = {
     }
 
+    /*Función que permite subir el archivo del ESIGEF*/
     def subirArchivo = {
         //println "Parametros de subirArchivo: $params"
         def parametros = [:]

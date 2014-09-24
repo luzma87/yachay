@@ -1,4 +1,4 @@
-<%@ page import="yachay.parametros.PresupuestoUnidad; yachay.parametros.proyectos.Politica; yachay.parametros.proyectos.ObjetivoGobiernoResultado; yachay.proyectos.ObjetivoEstrategicoProyecto; com.sun.jndi.ldap.Obj; yachay.proyectos.EjeProgramatico; yachay.parametros.poaPac.PresupuestoUnidad; yachay.parametros.poaPac.Anio" %>
+<%@ page import="yachay.parametros.PresupuestoUnidad; yachay.parametros.proyectos.Politica; yachay.parametros.proyectos.ObjetivoGobiernoResultado; yachay.proyectos.ObjetivoEstrategicoProyecto; com.sun.jndi.ldap.Obj; yachay.proyectos.EjeProgramatico; yachay.parametros.PresupuestoUnidad; yachay.parametros.poaPac.Anio" %>
 
 <g:set var="anio" value="${new Date().format('yyyy')}"/>
 <g:set var="anioObj" value="${Anio.findByAnio(anio)}"/>

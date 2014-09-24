@@ -31,11 +31,12 @@ class ProvinciaTests extends GrailsUnitTestCase {
         new Provincia(nombre: 'pruebaUpdate').save(flush: true)
         assertEquals(1,Provincia.count())
         def p = Provincia.findByNombre('pruebaUpdate')
-        println("p " + p.longitud)
-        p.longitud = 1
+//        println("p " + p.longitud)
+        p.nombre = "nuevo nombre"
         p.save(flush: true)
-        println("p1 " + p.longitud)
+//        println("p1 " + p.longitud)
         assertEquals(1,Provincia.count())
+        assertEquals("nuevo nombre",p.nombre)
     }
 
     void testDelete () {
@@ -43,10 +44,9 @@ class ProvinciaTests extends GrailsUnitTestCase {
         mockDomain(Provincia, testInstances)
         def p = new Provincia(nombre: "pruebaDelete")
         p.save(flush: true)
-//        assertEquals(1,Provincia.list().size())
-        assertEquals false, p.deleted
+        assertEquals(1,Provincia.count())
+
         p.delete()
-//        assertEquals (1,Provincia.list().size())
-        assertEquals true,p.deleted
+        assertEquals (0,Provincia.count())
     }
 }
