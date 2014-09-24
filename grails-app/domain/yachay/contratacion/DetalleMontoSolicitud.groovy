@@ -2,13 +2,31 @@ package yachay.contratacion
 
 import yachay.parametros.poaPac.Anio
 
+/**
+ * Clase para conectar con la tabla 'dtms' de la base de datos
+ */
 class DetalleMontoSolicitud {
-
+    /**
+     * Solicitud de la cual se detalla el monto
+     */
     Solicitud solicitud
+    /**
+     * A&ntilde;o para el cual se est&aacute; detallando
+     */
     Anio anio
+    /**
+     * Monto para el a&ntilde;o especificado
+     */
     double monto
 
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'dtms'
         cache usage: 'read-write', include: 'non-lazy'
@@ -22,6 +40,9 @@ class DetalleMontoSolicitud {
         }
     }
 
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
     }
 }

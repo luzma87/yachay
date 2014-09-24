@@ -80,7 +80,7 @@ class InicioController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Retorna el valor de los hijos de las asignaciones
+     * Retorna el valor de los hijos de la asignaci&oacute;n
      * @param asg   asignaci&oacute;n
      * @return      el valor de los hijos
      */
@@ -204,6 +204,10 @@ class InicioController extends yachay.seguridad.Shield {
 
     }
 
+    /**
+     * llamado con ajax, verifica que exista la session para saber si redireccionar a logout o no
+     * @return 'ok' o 'no' seg&uacute;n exista o no la session
+     */
     def verificarSession = {
         println "verificando session "
         if (session.usuario && session.perfil)
@@ -212,6 +216,11 @@ class InicioController extends yachay.seguridad.Shield {
             render "no"
     }
 
+    /**
+     * permite cambiar el color de la aplicaci&oacute;n
+     * @deprecated la nueva versi&oacute;n ya no permite cambios de color
+     */
+    @Deprecated
     def cambiarColor = {
         println "cambiar color " + params
         session.color = params.color

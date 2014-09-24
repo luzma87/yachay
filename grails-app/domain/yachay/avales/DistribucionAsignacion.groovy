@@ -3,58 +3,90 @@ package yachay.avales
 import yachay.parametros.UnidadEjecutora
 import yachay.poa.Asignacion
 
+/**
+ * Clase para conectar con la tabla 'dsas' de la base de datos
+ */
 class DistribucionAsignacion {
 
+    /**
+     * Asignaci&oacute;n de la distribuci&oacute;n
+     */
     Asignacion asignacion
+    /**
+     * Valor de la distribuci&oacute;n
+     */
     double valor = 0
+    /**
+     * Unidad Ejecutora de la distribuci&oacute;n
+     */
     UnidadEjecutora unidadEjecutora
 
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
+    static auditable = [ignore: []]
 
-    static auditable=[ignore:[]]
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'dsas'
-        cache usage:'read-write', include:'non-lazy'
-        id column:'dsas__id'
-        id generator:'identity'
+        cache usage: 'read-write', include: 'non-lazy'
+        id column: 'dsas__id'
+        id generator: 'identity'
         version false
         columns {
-            id column:'dsas__id'
+            id column: 'dsas__id'
             asignacion column: 'asgn__id'
             valor column: 'dsasvlor'
             unidadEjecutora column: 'unej__id'
         }
     }
+
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
 
     }
 
-    String toString(){
+    /**
+     * Genera un string para mostrar
+     * @return la unidad ejecutora y el valor concatenados
+     */
+    String toString() {
         "${this.unidadEjecutora} ${this.valor}"
     }
 
-
-    def getValorReal(){
-        def hijos = Asignacion.findAllByPadreAndUnidad(this.asignacion,this.unidadEjecutora)
-       // println " asgn  "+this.asignacion.id
-        def val=0
+    /**
+     * Retorna el valor real de la asignaci&oacute;n teniendo en cuenta la reubicaci&oacute;n
+     * @return el valor real
+     */
+    def getValorReal() {
+        def hijos = Asignacion.findAllByPadreAndUnidad(this.asignacion, this.unidadEjecutora)
+        // println " asgn  "+this.asignacion.id
+        def val = 0
         hijos.each {
             val += getValorHijo(it)
         }
         return this.valor - val
-        
+
     }
 
-    def getValorHijo(asg){
-       // println "get valor hijo "+asg.id
+    /**
+     * Retorna el valor de los hijos de la asignaci&oacute;n
+     * @param asg asignaci&oacute;n
+     * @return el valor de los hijos
+     */
+    def getValorHijo(asg) {
+        // println "get valor hijo "+asg.id
         def hijos = Asignacion.findAllByPadre(asg)
         //println "hijos "+hijos
-        def val=0
+        def val = 0
         hijos.each {
             val += getValorHijo(it)
         }
-       // println "return "+(val+asg.planificado)
-        return val+asg.planificado
+        // println "return "+(val+asg.planificado)
+        return val + asg.planificado
     }
-
-
 }

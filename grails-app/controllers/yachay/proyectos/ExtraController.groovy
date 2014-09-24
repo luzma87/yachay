@@ -1,5 +1,6 @@
 package yachay.proyectos
 
+import groovy.io.FileType
 import yachay.proyectos.Proyecto
 
 class ExtraController {
@@ -10,7 +11,7 @@ class ExtraController {
 
         def proys = Proyecto.list()
 //        println proys
-        [proys:proys]
+        [proys: proys]
 
     }
 
