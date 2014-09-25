@@ -12,8 +12,8 @@ class InicioController extends yachay.seguridad.Shield {
 
     /**
      * Retorna el valor real de la asignaci&oacute;n teniendo en cuenta la reubicaci&oacute;n
-     * @param aa    asignaci&oacute;n
-     * @return      el valor real
+     * @param aa asignaci&oacute;n
+     * @return el valor real
      */
     def getValorReal(aa) {
         if (aa.reubicada == "S") {
@@ -81,8 +81,8 @@ class InicioController extends yachay.seguridad.Shield {
 
     /**
      * Retorna el valor de los hijos de la asignaci&oacute;n
-     * @param asg   asignaci&oacute;n
-     * @return      el valor de los hijos
+     * @param asg asignaci&oacute;n
+     * @return el valor de los hijos
      */
     def getValorHijo(asg) {
         // println "get valor hijo "+asg.id
@@ -101,8 +101,8 @@ class InicioController extends yachay.seguridad.Shield {
 
     /**
      * Retorna el valor de la asignaci&oacute;n sin modificaciones
-     * @param asg   asignaci&oacute;n
-     * @return      el valor sin modificaciones
+     * @param asg asignaci&oacute;n
+     * @return el valor sin modificaciones
      */
     def getValorSinModificacion(asg) {
 

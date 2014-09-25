@@ -1,7 +1,22 @@
 package yachay.parametros
+
+/**
+ * Clase para conectar con la tabla 'lnea' de la base de datos
+ */
 class Linea implements Serializable {
+    /**
+     * Descipci&oacute;n de la l&iacute;nea
+     */
     String descripcion
+
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'lnea'
         cache usage: 'read-write', include: 'non-lazy'
@@ -13,10 +28,18 @@ class Linea implements Serializable {
             descripcion column: 'lneadscr'
         }
     }
+
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         descripcion(size: 1..127, blank: false, attributes: [mensaje: 'Descripción del lineamiento de inversión'])
     }
 
+    /**
+     * Genera un string para mostrar
+     * @return la descripci&oacute;n
+     */
     String toString() {
         "${this.descripcion}"
     }

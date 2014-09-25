@@ -6,6 +6,10 @@ import yachay.proyectos.Cronograma
 import yachay.proyectos.ModificacionProyecto
 
 /*Programación de la asignación presupuestaria por cuatrimestres.*/
+/**
+ * Clase para conectar con la tabla 'pras' de la base de datos<br/>
+ * Programaci&oacute;n de la asignación presupuestaria por cuatrimestres.
+ */
 class ProgramacionAsignacion implements Serializable {
     Asignacion asignacion
     DistribucionAsignacion distribucion
@@ -16,8 +20,14 @@ class ProgramacionAsignacion implements Serializable {
     double valor
     int estado=0
 
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable=[ignore:[]]
 
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'pras'
         cache usage:'read-write', include:'non-lazy'
@@ -37,6 +47,9 @@ class ProgramacionAsignacion implements Serializable {
 
         }
     }
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         asignacion( blank:true, nullable:true ,attributes:[mensaje:'Asignación'])
         distribucion(blank:true,nullable: true)

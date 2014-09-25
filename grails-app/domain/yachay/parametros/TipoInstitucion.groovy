@@ -1,9 +1,26 @@
 package yachay.parametros
 
+/**
+ * Clase para conectar con la tabla 'tpin' de la base de datos
+ */
 class TipoInstitucion implements Serializable {
+    /**
+     * C&oacute;digo del tipo de instituci&oacute;n
+     */
     String codigo
+    /**
+     * Descripci&oacute;n del tipo de instituci&oacute;n
+     */
     String descripcion
+
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'tpin'
         cache usage: 'read-write', include: 'non-lazy'
@@ -16,11 +33,19 @@ class TipoInstitucion implements Serializable {
             descripcion column: 'tpindscr'
         }
     }
+
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
-        codigo(size: 1..2, blank: false, nullable: false, attributes:[mensaje:'Código del área de gestión'])
+        codigo(size: 1..2, blank: false, nullable: false, attributes: [mensaje: 'Código del área de gestión'])
         descripcion(size: 1..31, blank: true, nullable: true, attributes: [mensaje: 'Descripción del área de gestión'])
     }
 
+    /**
+     * Genera un string para mostrar
+     * @return la descripci&oacute;n
+     */
     String toString() {
         return this.descripcion
     }

@@ -1,19 +1,43 @@
 package yachay.seguridad
 
-import java.io.Serializable;
-
-
+/**
+ * Clase para conectar con la tabla 'prfl' de la base de datos
+ */
 class Prfl implements Serializable {
+    /**
+     * Nombre del perfil
+     */
     String nombre
+    /**
+     * Descripci&oacute;n del perfil
+     */
     String descripcion
+    /**
+     * Perfil padre del perfil actual
+     */
     Prfl padre
+    /**
+     * Observaciones
+     */
     String observaciones
+    /**
+     * C&oacute;digo del perfil
+     */
     String codigo
+
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
 
+    /**
+     * Define las relaciones uno a varios
+     */
     static hasMany = [permisos: Prms, perfiles: Prfl]
 
-
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'prfl'
         cache usage: 'read-write'
@@ -30,10 +54,17 @@ class Prfl implements Serializable {
         }
     }
 
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         codigo(blank: true, nullable: true)
     }
 
+    /**
+     * Genera un string para mostrar
+     * @return el nombre
+     */
     String toString() {
         return "${this.nombre}"
     }

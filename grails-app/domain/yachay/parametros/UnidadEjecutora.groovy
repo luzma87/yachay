@@ -5,29 +5,88 @@ import yachay.parametros.TipoInstitucion
 import yachay.parametros.proyectos.ObjetivoUnidad
 
 /*Unidades ejecutoras de los proyectos, generalmente adscritas a los ministerios*/
+/**
+ * Clase para conectar con la tabla 'unej' de la base de datos<br/>
+ * Unidades ejecutoras de los proyectos, generalmente adscritas a los ministerios
+ */
 class UnidadEjecutora implements Serializable {
+    /**
+     * Tipo de instituci&oacute;n de la unidad ejecutora
+     */
     TipoInstitucion tipoInstitucion
+    /**
+     * Provincia en la cual se encuentra la unidad ejecutora
+     */
     Provincia provincia
+    /**
+     * C&oacute;digo de la unidad ejecutora
+     */
     String codigo
+    /**
+     * Fecha de inicio
+     */
     Date fechaInicio
+    /**
+     * Fecha de fin
+     */
     Date fechaFin
 
+    /**
+     * Unidad ejecutora padre de la actual
+     */
     UnidadEjecutora padre
 
+    /**
+     * Nombre de la unidad ejecutora
+     */
     String nombre
+    /**
+     * Direcci&oacute;n de la unidad ejecutora
+     */
     String direccion
+    /**
+     * Sigla de la unidad ejecutora
+     */
     String sigla
+    /**
+     * Objetivo de la unidad ejecutora
+     */
     String objetivo
+    /**
+     * N&uacute;mero de tel&eacute;fono de la unidad ejecutora
+     */
     String telefono
+    /**
+     * N&uacute;mero de fax de la unidad ejecutora
+     */
     String fax
+    /**
+     * Direcci&oacute;n e-mail de la unidad ejecutora
+     */
     String email
+    /**
+     * Observaciones
+     */
     String observaciones
 
+    /**
+     * Orden para mostrar
+     */
     int orden
 
+    /**
+     * Objetivo de la unidad
+     */
     ObjetivoUnidad objetivoUnidad
 
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'unej'
         cache usage: 'read-write', include: 'non-lazy'
@@ -57,6 +116,10 @@ class UnidadEjecutora implements Serializable {
             objetivoUnidad column: 'obun__id'
         }
     }
+
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         tipoInstitucion(blank: false, nullable: false, attributes: [mensaje: 'Tipo de institución'])
         provincia(blank: true, nullable: true, attributes: [mensaje: 'Provincia de la unidad ejecutora'])
@@ -77,6 +140,10 @@ class UnidadEjecutora implements Serializable {
         objetivoUnidad(blank: true, nullable: true, attributes: [mensaje: "Objetivo de la unidad"])
     }
 
+    /**
+     * Genera un string para mostrar
+     * @return el nombre
+     */
     String toString() {
         return this.nombre
     }

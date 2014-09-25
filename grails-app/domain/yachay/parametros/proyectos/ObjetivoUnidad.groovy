@@ -1,11 +1,26 @@
 package yachay.parametros.proyectos
 
+/**
+ * Clase para conectar con la tabla 'obun' de la base de datos
+ */
 class ObjetivoUnidad {
-
+    /**
+     * Descripci&oacute;n del objetivo de la unidad
+     */
     String descripcion
+    /**
+     * Orden del objetivo de la unidad (para mostrar)
+     */
     Integer orden
 
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'obun'
         cache usage: 'read-write', include: 'non-lazy'
@@ -19,8 +34,10 @@ class ObjetivoUnidad {
         }
     }
 
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         descripcion(size: 3..511)
     }
-
 }

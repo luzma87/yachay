@@ -1,7 +1,22 @@
 package yachay.parametros
+
+/**
+ * Clase para conectar con la tabla 'sbst' de la base de datos
+ */
 class SubSector implements Serializable {
+    /**
+     * Descripci&oacute;n del subsector
+     */
     String descripcion
+
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'sbst'
         cache usage: 'read-write', include: 'non-lazy'
@@ -13,10 +28,18 @@ class SubSector implements Serializable {
             descripcion column: 'sbstdscr'
         }
     }
+
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         descripcion(size: 1..31, blank: false, attributes: [mensaje: 'Descripción del subsector'])
     }
 
+    /**
+     * Genera un string para mostrar
+     * @return la descripci&oacute;n
+     */
     String toString() {
         return this.descripcion
     }

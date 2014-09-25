@@ -3,28 +3,70 @@ package yachay.seguridad
 import yachay.parametros.CargoPersonal
 import yachay.parametros.UnidadEjecutora
 
-class Usro implements Serializable{
+/**
+ * Clase para conectar con la tabla 'usro' de la base de datos
+ */
+class Usro implements Serializable {
+    /**
+     * Persona
+     */
     Persona persona
+    /**
+     * Cargo del usuario
+     */
     CargoPersonal cargoPersonal
+    /**
+     * Unidad ejecutora del usuario
+     */
     UnidadEjecutora unidad
+    /**
+     * Nombre de usuario del usuario
+     */
     String usroLogin
+    /**
+     * Contrase&ntilde;a del usuario
+     */
     String usroPassword
+    /**
+     * Autorizaci&oacute;n del usuario
+     */
     String autorizacion
+    /**
+     * Sigla del usuario
+     */
     String sigla
+    /**
+     * Indica si el usuario est&aacute; o no activo
+     */
     int usroActivo
+    /**
+     * Fecha de cambio de contrase&ntilde;a
+     */
     Date fechaPass
+    /**
+     * Observaciones
+     */
     String observaciones
-    
-    static hasMany = [sesiones:Sesn, accesos: Accs,alertas:yachay.alertas.Alerta]
-    static auditable = [ ignore:['usroPassword']]
-        
-	                       
+
+    /**
+     * Define las relaciones uno a varios
+     */
+    static hasMany = [sesiones: Sesn, accesos: Accs, alertas: yachay.alertas.Alerta]
+
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
+    static auditable = [ignore: ['usroPassword']]
+
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'usro'
-        cache usage:'read-write', include:'non-lazy'
+        cache usage: 'read-write', include: 'non-lazy'
         version false
         id generator: 'identity'
-        
+
         columns {
             id column: 'usro__id'
             persona column: 'prsn__id'
@@ -39,23 +81,29 @@ class Usro implements Serializable{
             unidad column: 'unej__id'
         }
     }
-	
+
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
-        persona(blank:false,nullable: false, attributes: [mensaje: 'Persona'],unique:true)
-        cargoPersonal(blank:true,nullable: true, attributes: [mensaje: 'Cargo'])
-        usroLogin(matches:/^[a-zA-Z0-9ñÑ .,áéíóúÁÉÍÚÓüÜ#_+-]{1,15}$/,size:1..15,blank:false,nullable:false,unique:true, attributes: [mensaje: 'Nombre de usuario'])
-        usroPassword(matches:/^[a-zA-Z0-9ñÑ .,áéíóúÁÉÍÚÓüÜ#_+-]+$/,size:1..64,blank:false,nullable:false, attributes: [mensaje: 'Contraseña para el ingreso al sistema'])
-        autorizacion (matches:/^[a-zA-Z0-9ñÑ .,áéíóúÁÉÍÚÓüÜ#_+-]+$/,size:1..255,blank:false,nullable:false, attributes: [mensaje: 'Contraseña para autorizaciones'])
-        sigla (matches:/^[a-zA-Z]{1,8}$/,size:1..8,blank:false,nullable:false, attributes: [mensaje: 'Sigla del usuario'])
-        usroActivo (matches:/^[0-1]{1}$/,size:1..1,blank:false,nullable: false, attributes: [mensaje: 'Usuario activo o no'])
-        fechaPass (blank:true, nullable:true, attributes: [mensaje: 'Fecha de cambio de contraseña'])
-        observaciones (matches:/^[a-zA-Z0-9ñÑ .,áéíóúÁÉÍÚÓüÜ#_+-]+$/,size:1..255,blank:true, nullable:true, attributes: [mensaje: 'Observaciones'])
-        unidad(blank: true,nullable: true, attributes: [mensaje: 'Unidad Ejecutora a la que pertenece el usuario'])
+        persona(blank: false, nullable: false, attributes: [mensaje: 'Persona'], unique: true)
+        cargoPersonal(blank: true, nullable: true, attributes: [mensaje: 'Cargo'])
+        usroLogin(matches: /^[a-zA-Z0-9ñÑ .,áéíóúÁÉÍÚÓüÜ#_+-]{1,15}$/, size: 1..15, blank: false, nullable: false, unique: true, attributes: [mensaje: 'Nombre de usuario'])
+        usroPassword(matches: /^[a-zA-Z0-9ñÑ .,áéíóúÁÉÍÚÓüÜ#_+-]+$/, size: 1..64, blank: false, nullable: false, attributes: [mensaje: 'Contraseña para el ingreso al sistema'])
+        autorizacion(matches: /^[a-zA-Z0-9ñÑ .,áéíóúÁÉÍÚÓüÜ#_+-]+$/, size: 1..255, blank: false, nullable: false, attributes: [mensaje: 'Contraseña para autorizaciones'])
+        sigla(matches: /^[a-zA-Z]{1,8}$/, size: 1..8, blank: false, nullable: false, attributes: [mensaje: 'Sigla del usuario'])
+        usroActivo(matches: /^[0-1]{1}$/, size: 1..1, blank: false, nullable: false, attributes: [mensaje: 'Usuario activo o no'])
+        fechaPass(blank: true, nullable: true, attributes: [mensaje: 'Fecha de cambio de contraseña'])
+        observaciones(matches: /^[a-zA-Z0-9ñÑ .,áéíóúÁÉÍÚÓüÜ#_+-]+$/, size: 1..255, blank: true, nullable: true, attributes: [mensaje: 'Observaciones'])
+        unidad(blank: true, nullable: true, attributes: [mensaje: 'Unidad Ejecutora a la que pertenece el usuario'])
     }
 
-    
-    String toString(){
+    /**
+     * Genera un string para mostrar
+     * @return el nombre de usuario
+     */
+    String toString() {
         return "${this.usroLogin}"
     }
-    
+
 }

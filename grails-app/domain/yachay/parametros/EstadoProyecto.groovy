@@ -1,8 +1,24 @@
 package yachay.parametros
 /*Estado del proyecto*/
+
+/**
+ * Clase para conectar con la tabla 'edpy' de la base de datos<br/>
+ * Guarda un cat&aacute;logo de posibles estados del proyecto
+ */
 class EstadoProyecto implements Serializable {
+    /**
+     * Descripci&oacute;n del estado del proyecto
+     */
     String descripcion
+
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'edpy'
         cache usage: 'read-write', include: 'non-lazy'
@@ -14,10 +30,18 @@ class EstadoProyecto implements Serializable {
             descripcion column: 'edpydscr'
         }
     }
+
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         descripcion(size: 1..31, blank: false, attributes: [mensaje: 'Descripción del Estado del proyecto'])
     }
 
+    /**
+     * Genera un string para mostrar
+     * @return la descripci&oacute;n
+     */
     String toString() {
         return this.descripcion
     }

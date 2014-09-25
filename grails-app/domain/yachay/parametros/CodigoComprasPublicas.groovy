@@ -3,7 +3,9 @@ package yachay.parametros
 Esta tabla se toma tal como lo define el INCOP. No se maneja parámetro de nivel sólo el id del padre.*/
 
 /**
- * Clase para conectar con la tabla 'cpac' de la base de datos
+ * Clase para conectar con la tabla 'cpac' de la base de datos<br/>
+ * Código del PAC para catalogar los bienes o servicios a adquirirse de acuerdo al (PAC).<br/>
+ * Esta tabla se toma tal como lo define el INCOP. No se maneja parámetro de nivel, sólo el id del padre.
  */
 class CodigoComprasPublicas implements Serializable {
     /**

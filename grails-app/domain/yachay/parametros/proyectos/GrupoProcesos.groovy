@@ -1,8 +1,24 @@
 package yachay.parametros.proyectos
 /*El grupo de procesos del proyecto se refiere a los distintos momentos del proyecto como son: INICIO, PLANIFICACIÓN, EJECUCIÓN y CIERRE*/
+/**
+ * Clase para conectar con la tabla 'grpr' de la base de datos<br/>
+ * El grupo de procesos del proyecto se refiere a los distintos momentos del proyecto como son:
+ * INICIO, PLANIFICACI&Oacute;N, EJECUCI&Oacute;N y CIERRE
+ */
 class GrupoProcesos implements Serializable {
+    /**
+     * Descripci&oacute;n del grupo de procesos
+     */
     String descripcion
+
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'grpr'
         cache usage: 'read-write', include: 'non-lazy'
@@ -14,10 +30,18 @@ class GrupoProcesos implements Serializable {
             descripcion column: 'grprdscr'
         }
     }
+
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         descripcion(size: 1..31, blank: false, attributes: [mensaje: 'Descripción del grupo de procesos'])
     }
 
+    /**
+     * Genera un string para mostrar
+     * @return la descripci&oacute;n
+     */
     String toString() {
         return this.descripcion
     }

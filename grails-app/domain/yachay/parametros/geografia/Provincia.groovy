@@ -2,24 +2,70 @@ package yachay.parametros.geografia
 
 import yachay.proyectos.Meta
 
+/**
+ * Clase para conectar con la tabla 'prov' de la base de datos<br/>
+ * Guarda la lista de provincias
+ */
 class Provincia implements Serializable {
+    /**
+     * Zona a la cual pertenece la provincia
+     */
     Zona zona
+    /**
+     * Regi&oacute;n a la cual pertenece la provincia
+     */
     Region region
+    /**
+     * N&uacute;mero de provincia
+     */
     Integer numero
+    /**
+     * Nombre de la provincia
+     */
     String nombre
+    /**
+     * Nombre para mostrar de la provincia
+     */
     String nombreMostrar
+    /**
+     * Coordenadas de la provincia
+     */
     String coords
+    /**
+     * Path del archivo de la imagen de la provincia
+     */
     String imagen
 
+    /**
+     * C&oacute;digo de la provincia
+     */
     String codigo
 
+    /**
+     * Posici&oacute;n geogr&aacute;fica de la provincia (longitud para ubicar en un mapa)
+     */
     double longitud
+    /**
+     * Posici&oacute;n geogr&aacute;fica de la provincia (latitud para ubicar en un mapa)
+     */
     double latitud
 
+    /**
+     * Diff
+     */
     double diff
+    /**
+     * Zoom de la provincia en el mapa
+     */
     double zoom
 
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'prov'
         cache usage: 'read-write', include: 'non-lazy'
@@ -45,6 +91,10 @@ class Provincia implements Serializable {
             zoom column: 'provzoom'
         }
     }
+
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         zona(blank: true, nullable: true, attributes: [mensaje: 'Zona a la que pertenece la provincia'])
         region(blank: true, nullable: true, attributes: [mensaje: 'Región a la que pertenece la provincia'])
@@ -56,10 +106,18 @@ class Provincia implements Serializable {
         codigo(maxSize: 4, blank: true, nullable: true, attributes: [mensaje: 'Código de la provincia'])
     }
 
+    /**
+     * Genera un string para mostrar
+     * @return el nombre
+     */
     String toString() {
         return this.nombre
     }
 
+    /**
+     * Busca las metas de la provincia y sus coordenadas
+     * @return un mapa: [metasCoords: las coordenadas de las metas, metasTotal: las metas]
+     */
     def getMetas() {
         def metas = Meta.withCriteria {
             parroquia {

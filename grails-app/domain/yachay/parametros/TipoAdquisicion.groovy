@@ -1,7 +1,22 @@
 package yachay.parametros
+
+/**
+ * Clase para conectar con la tabla 'tpaq' de la base de datos
+ */
 class TipoAdquisicion implements Serializable {
+    /**
+     * Descripci&oacute;n del tipo de adquisici&oacute;n
+     */
     String descripcion
+
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'tpaq'
         cache usage: 'read-write', include: 'non-lazy'
@@ -13,6 +28,10 @@ class TipoAdquisicion implements Serializable {
             descripcion column: 'tpaqdscr'
         }
     }
+    
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         descripcion(size: 1..31, blank: false, attributes: [mensaje: 'Descripción del tipo de adquisición'])
     }
