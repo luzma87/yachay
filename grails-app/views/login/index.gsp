@@ -88,7 +88,7 @@
                             <g:select from="${perfiles}" name="perfil" optionKey="id"
                                       style="height: 25px;width: 230px;margin-top: 10px;background: #c7c7c7;margin-left: 20px"/>
                             <g:submitButton value="Entrar" name="entrar"
-                                            style="height: 30px;margin-top: 15px;width: 70px;border: 1px solid black;float:right;margin-right:25px;"
+                                            style="height: 30px;margin-top: 15px;width: 70px;border: 1px solid black;float:right;margin-right:25px; background-color: #1e4f5a; color: #fff"
                                             class="ui-corner-all"/>
                         </g:else>
                     </g:form>

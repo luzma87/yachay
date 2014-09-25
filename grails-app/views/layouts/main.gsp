@@ -66,10 +66,12 @@
 
         <div style="height: 20px; background:none; margin-bottom: 5px; width: 100%;"></div>
 
+%{--
         <div id="treeMenu"
              style="margin-left: 10px;margin-top: 0px;float: left; position: absolute; left:20px; top: 3px;background: none">
             <g:generarMenuHorizontal/>
         </div>
+--}%
 
 %{--
         <div style="width: 60px;height: 30px;position: absolute;top:3px;left: 845px;font-size: 11px;line-height: 15px;" title="Cambiar color">
@@ -84,15 +86,23 @@
 
 
         <div class="ui-dialog ui-widget ui-widget-content ui-corner-all"
-             style="height: 740px;  width: 1360px; margin-left:10px; position: absolute; left: 20px; top:37px;overflow-y: hidden">
-            <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"
-                 style="text-align: center;">
-                <span class="ui-dialog-title" style="float: none;"><g:layoutTitle default=""/></span>
+             style="height: 740px;  width: 1360px; margin-left:10px; position: absolute; left: 20px; top:3px;overflow-y: hidden">
+            <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
+                <span class="ui-dialog-title" style="float: left; text-align: left">SISTEMA DE GESTIÓN DE PLANIFICACIÓN INSTITUCIONAL</span>
+                <span class="ui-dialog-title" style="float: right; text-align: center; width: 50%">- <g:layoutTitle default=""/> -</span>
             </div>
+        <div id="treeMenu"
+             style="margin-left: 5px;margin-top: 5px;float: left; width: 100%;height: 40px;background: none">
+            <div style="width: 60px; float: left"><img src="${resource(dir: 'images', file: 'logo.jpg')}" alt="Yachay" width="50px;" style="float: left; margin: 2px;"></div>
+            <g:generarMenuHorizontal/>
+        </div>
 
             <div class="ui-dialog-content ui-widget-content" style="height: 690px;">
                 <g:layoutBody/>
             </div>
+        <div class="ui-dialog-titlebar ui-widget-header "
+             style="position: fixed; bottom: 0; width: 100%; height: 10px; text-align: center;">
+            <span style="float: none; ">2014 Todos los derechos reservados. Empresa Pública Yachay</span>
         </div>
         <script type="text/javascript">
 

@@ -9,37 +9,34 @@
         margin: 0.25in;
     }
     .item{
-        width: 400px;height: 220px;float: left;margin: 8px;
+        width: 470px;
+        height: 270px;
+        float: left;
+        /*margin: 10px;*/
+        /*margin: 8px;*/
         /*border:1px solid #A6C9E2;*/
-        /*background-color: white;*/
+        background-color: white;
 
     }
     .imagen{
-        width: 170px;
-        height: 120px;
-        margin: auto;
-        margin-top: 15px;
+        width: 200px;
+        height: 270px;
+        float: right;
     }
     .texto{
-        width: 90%;
-        height: 50px;
         padding-top: 10px;
-        /*border: solid 1px black;*/
-        margin: auto;
         margin: 12px;
-        /*font-family: fantasy; */
         font-size: 12px;
-/*
-        font-weight: bolder;
-*/
         font-style: oblique;
-        /*text-align: justify;*/
+        float: left;
+        margin-left: 15px;
+        width: 230px;
+        text-align: justify;
     }
     .fuera{
-        margin-left: 15px;
-        margin-top: 20px;
-        /*background-color: #317fbf; */
-        background-color: #262626;
+        /*margin-left: 15px;*/
+        margin-top: 15px;
+        /*background-color: #262626;*/
     }
     .desactivado{
         color: #bbc;
@@ -49,38 +46,38 @@
 <body>
 %{-- TODO: Cambiar a: proyectos, biblioteca, entidades, asiganaciones, alertas, informes, --}%
 <div class="dialog">
-    <div style="text-align: center;"><h1>Sistema de Gestión de Planificación Institucional</h1></div>
-    <div class="body" style="width: 1000px;height: 580px;position: relative;">
-        <div style="width: 90%;height: 90%;float: left;padding-left: 80px;  margin-top: 0px;">
+    %{--<div style="text-align: center;"><h1>SISTEMA DE GESTIÓN DE PLANIFICACIÓN INSTITUCIONAL</h1></div>--}%
+    <div class="body" style="width: 1000px;height: 680px;position: relative;">
+        <div style="width: 100%;height: 85%;float: left;padding-left: 15px;  margin-top: 0px; background-color: #e9e9e9">
             <g:link  controller="proyecto" action="list" title="Gestión de proyectos">
-                <div  class="ui-corner-all  item fuera">
-                    <div  class="ui-corner-all ui-widget-content item">
+                <div  class="item fuera">
+                    <div  class="item">
                         <div class="imagen">
                             <img src="${resource(dir: 'images', file: 'proyecto.jpg')}" width="100%" height="100%"/>
                         </div>
-                        <div class="texto"><b>Gestión de Proyectos</b>: Marco lógico, metas, indicadores,
+                        <div class="texto"><h3>Gestión de Proyectos</h3>Marco lógico, metas, indicadores,
                         cronograma de inversión, fuentes de financiamiento, programación de inversiones plurianual.</div>
                     </div>
                 </div>
             </g:link>
             <g:link  controller="revisionAval" action="listaAvales"  id="${session.unidad.id}" title="Administración del POA: Avales">
-                <div  class="ui-corner-all item fuera">
-                    <div  class="ui-corner-all ui-widget-content item">
+                <div  class="item fuera">
+                    <div  class="item">
                         <div class="imagen">
                             <img src="${resource(dir: 'images', file: 'administracion.jpg')}" width="100%" height="100%"/>
                         </div>
-                    <div class="texto"><b>Administración del POA</b>: gestión de avales, reformas, reprogramaciones y documentación de respaldo.</div>
+                    <div class="texto"><h3>Administración del POA</h3>Gestión de avales, reformas, reprogramaciones y documentación de respaldo.</div>
                 </div>
                 </div>
             </g:link>
 
             <g:link  controller="solicitud" action="list"  id="${session.unidad.id}" title="Solicitudes de contratación">
-                <div  class="ui-corner-all item fuera">
-                    <div  class="ui-corner-all ui-widget-content item">
+                <div  class="item fuera">
+                    <div  class="item" style="background-color: #d0d0d0">
                         <div class="imagen">
                             <img src="${resource(dir: 'images', file: 'contratos.jpg')}" width="100%" height="100%"/>
                         </div>
-                        <div class="texto"><b>Contrataciones</b>: sistematización del proceso de aprobación de contrataciones ligado al POA</div>
+                        <div class="texto"><h3>Contrataciones</h3>Sistematización del proceso de aprobación de contrataciones ligado al POA</div>
                     </div>
                 </div>
 
@@ -89,32 +86,35 @@
             </g:link>
 
             <g:link  controller="documento" action="list" title="Seguimiento">
-                <div  class="ui-corner-all  item fuera">
-                    <div  class="ui-corner-all ui-widget-content item">
+                <div  class="item fuera">
+                    <div  class="item" style="background-color: #d0d0d0">
                         <div class="imagen">
                             <img src="${resource(dir: 'images', file: 'seguimiento.jpg')}" width="100%" height="100%"/>
                         </div>
-                        <div class="texto"><b>Seguimiento</b>: seguimiento y evaluación del POA, detalle de subactividades, control de avales, anvances físico y económico</div>
+                        <div class="texto"><h3>Seguimiento</h3>Seguimiento y evaluación del POA, detalle de subactividades, control de avales, anvances físico y económico</div>
                     </div>
                 </div>
             </g:link>
 
         </div>
+    <div style="text-align: center; font-size: 14px; font-family: 'Arial'; color: #fff;
+        height: 50px; width: 100%; display: block; position: absolute; bottom: 40px">
+        <img src="${resource(dir: 'images', file: 'escudo.jpg')}"/>
+        <img src="${resource(dir: 'images', file: 'ecuador-ama.jpg')}"/>
     </div>
-    <div style="height: 25px;width: 200px;position:absolute;bottom: 1px;right: 5px;text-align: left">&copy; TEDEIN S.A. Versión ${message(code: 'version', default: '1.1.0x')}</div>
-</div>
+
 <script type="text/javascript">
     $(".fuera").hover(function(){
         var d =  $(this).find(".imagen")
         d.width(d.width()+10)
-        d.height(d.height()+10)
+//        d.height(d.height()+10)
 //        $.each($(this).children(),function(){
 //            $(this).width( $(this).width()+10)
 //        });
     },function(){
         var d =  $(this).find(".imagen")
         d.width(d.width()-10)
-        d.height(d.height()-10)
+//        d.height(d.height()-10)
     })
 </script>
 </body>
