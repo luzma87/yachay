@@ -1,13 +1,34 @@
 package yachay.proyectos
 
-import yachay.proyectos.Proyecto
-
+/**
+ * Clase para conectar con la tabla 'estc' de la base de datos
+ */
 class EstudiosTecnicos implements Serializable {
+    /**
+     * Proyecto del estudio t&eacute;cnico
+     */
     Proyecto proyecto
+    /**
+     * Resumen del estudio t&eacute;cnico
+     */
     String resumen
+    /**
+     * Path del archivo del documento del estudio t&eacute;cnico
+     */
     String documento
+    /**
+     * Fecha del estudio t&eacute;cnico
+     */
     Date fecha
+
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'estc'
         cache usage: 'read-write', include: 'non-lazy'
@@ -22,6 +43,10 @@ class EstudiosTecnicos implements Serializable {
             fecha column: 'estcfcha'
         }
     }
+
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         proyecto(blank: true, nullable: true, attributes: [mensaje: 'Proyecto'])
         resumen(size: 1..1023, blank: true, nullable: true, attributes: [mensaje: 'Resumen del estudio'])

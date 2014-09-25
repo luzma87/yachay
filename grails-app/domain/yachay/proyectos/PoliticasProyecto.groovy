@@ -3,10 +3,19 @@ package yachay.proyectos
 import yachay.parametros.proyectos.Politica
 
 /*Políticas que se aplican en el proyecto*/
+/**
+ * Clase para conectar con la tabla '' de la base de datos
+ */
 class PoliticasProyecto implements Serializable {
     Politica politica
     Proyecto proyecto
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'plpy'
         cache usage: 'read-write', include: 'non-lazy'
@@ -19,6 +28,9 @@ class PoliticasProyecto implements Serializable {
             proyecto column: 'proy__id'
         }
     }
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         politica(blank: true, nullable: true, attributes: [mensaje: 'Política'])
         proyecto(blank: true, nullable: true, attributes: [mensaje: 'Proyecto'])

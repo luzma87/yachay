@@ -5,6 +5,9 @@ import yachay.parametros.UnidadEjecutora
 import yachay.parametros.poaPac.Anio
 import yachay.parametros.TipoModificacion
 
+/**
+ * Clase para conectar con la tabla '' de la base de datos
+ */
 class ModificacionProyecto implements Serializable {
     Informe informe
     TipoModificacion tipoModificacion
@@ -19,7 +22,13 @@ class ModificacionProyecto implements Serializable {
     int estado = 0 /* 0 -> solicitada | 1-> negada | 2-> aprobada  | 3-> usada*/
     String observaciones
     Anio anio
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'mdfc'
         cache usage: 'read-write', include: 'non-lazy'
@@ -43,6 +52,9 @@ class ModificacionProyecto implements Serializable {
             solicitante column: 'usroslct'
         }
     }
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         informe(blank: true, nullable: true, attributes: [mensaje: 'Informe correspondiente que genera la modificación'])
         tipoModificacion(blank: true, nullable: true, attributes: [mensaje: 'Tipo de Modificación'])

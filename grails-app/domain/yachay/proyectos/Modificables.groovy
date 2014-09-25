@@ -1,5 +1,8 @@
 package yachay.proyectos
 
+/**
+ * Clase para conectar con la tabla '' de la base de datos
+ */
 class Modificables {
 
     ModificacionProyecto modificacion
@@ -7,7 +10,13 @@ class Modificables {
     int id_remoto
     Date fecha
 
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable=[ignore:[]]
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'mdcb'
         cache usage:'read-write', include:'non-lazy'
@@ -22,12 +31,19 @@ class Modificables {
             fecha column: 'mdcbfcha'
         }
     }
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         modificacion(blank: false,nullable: false)
         tipo(blank: false,nullable: false)
         id_remoto(blank: false,nullable: false)
         fecha(blank: true,nullable: true)
     }
+    /**
+     * Genera un string para mostrar
+        * @return
+     */
     String toString(){
         "${this.tipo}:${id_remoto}"
     }

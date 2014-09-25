@@ -7,6 +7,9 @@ import yachay.parametros.geografia.Parroquia
 import yachay.parametros.proyectos.TipoMeta
 
 /*Para cada componente se determinan las metas desagregadas conforme al marco lógico. */
+/**
+ * Clase para conectar con la tabla '' de la base de datos
+ */
 class Meta implements Serializable {
     TipoMeta tipoMeta
     Parroquia parroquia
@@ -26,7 +29,13 @@ class Meta implements Serializable {
 
     ModificacionProyecto modificacion
     int estado = 0 /* 0 -> activo por facilidad en la base de datos  1-> modificado*/
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'meta'
         cache usage: 'read-write', include: 'non-lazy'
@@ -54,6 +63,9 @@ class Meta implements Serializable {
             zoom column: 'metazoom'
         }
     }
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         tipoMeta(blank: true, nullable: true, attributes: [mensaje: 'Tipo de Meta'])
         parroquia(blank: false, nullable: false, attributes: [mensaje: 'Parroquia en la cual se verificará la meta'])
@@ -66,7 +78,11 @@ class Meta implements Serializable {
         asignacion(nullable: true, blank: true)
     }
 
-//    String toString(){
+//    /**
+     * Genera un string para mostrar
+        * @return
+     */
+    String toString(){
 //        if(descripcion.size()>20){
 //            def partes = descripcion.split(" ")
 //            def cont=0

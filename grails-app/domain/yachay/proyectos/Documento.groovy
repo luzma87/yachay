@@ -5,17 +5,50 @@ import yachay.parametros.proyectos.GrupoProcesos
 
 /*Es toda documentación importante que debe ser archivada en el proyecto. Este comprende el archivo de proyecto o el archivo de casos de proyecto.
 Se usará preferentemente formato pdf, pero pueden incluirse otros formatos aunque no puedan ser visualizados desde el sistema.*/
+/**
+ * Clase para conectar con la tabla 'dcmt' de la base de datos<br/>
+ * Es toda documentaci&oacute;n importante que debe ser archivada en el proyecto.
+ * Esta comprende el archivo de proyecto o el archivo de casos de proyecto.
+ * Se usar&aacute; preferentemente formato pdf, pero pueden incluirse otros formatos aunque no puedan ser visualizados desde el sistema.
+ */
 class Documento implements Serializable {
+    /**
+     * Proyecto al cual pertenece el documento
+     */
     Proyecto proyecto
+    /**
+     * Grupo de procesos del documento
+     */
     GrupoProcesos grupoProcesos
+    /**
+     * Descripci&oacute;n del documento
+     */
     String descripcion
+    /**
+     * Palabras claves del documento
+     */
     String clave
+    /**
+     * Resumen del documento
+     */
     String resumen
+    /**
+     * Path del archivo del documento
+     */
     String documento
-
+    /**
+     * Unidad ejecutora a la cual pertenece el documento
+     */
     UnidadEjecutora unidadEjecutora
 
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'dcmt'
         cache usage: 'read-write', include: 'non-lazy'
@@ -33,6 +66,10 @@ class Documento implements Serializable {
             unidadEjecutora column: 'unej__id'
         }
     }
+
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         proyecto(blank: true, nullable: true, attributes: [mensaje: 'Proyecto'])
         grupoProcesos(blank: true, nullable: true, attributes: [mensaje: 'Grupo de Procesos'])
@@ -43,6 +80,10 @@ class Documento implements Serializable {
         unidadEjecutora(blank: true, nullable: true)
     }
 
+    /**
+     * Genera un string para mostrar
+     * @return la descripci&oacute;n
+     */
     String toString() {
         return this.descripcion
     }

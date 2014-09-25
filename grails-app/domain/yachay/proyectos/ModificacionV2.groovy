@@ -1,5 +1,8 @@
 package yachay.proyectos
 
+/**
+ * Clase para conectar con la tabla '' de la base de datos
+ */
 class ModificacionV2 {
 
     String dominio
@@ -10,6 +13,9 @@ class ModificacionV2 {
     Date fecha = new Date()
     yachay.seguridad.Usro usuario
     String tipo
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'mdv2'
         cache usage:'read-write', include:'non-lazy'
@@ -27,6 +33,9 @@ class ModificacionV2 {
             tipo column: 'mdv2tipo'
         }
     }
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         dominio(nullable: false,blank:false)
         oldValue(size: 1..500,nullable: true,blank: true)

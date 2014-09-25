@@ -5,12 +5,36 @@ import yachay.parametros.poaPac.Fuente
 import yachay.proyectos.Proyecto
 
 /*Financiamiento del proyecto por fuente y año*/
+/**
+ * Clase para conectar con la tabla 'fina' de la base de datos<br/>
+ * Financiamiento del proyecto por fuente y año
+ */
 class Financiamiento implements Serializable {
+    /**
+     * A&ntilde;o del financiamiento
+     */
     Anio anio
+    /**
+     * Fuente del financiamiento
+     */
     Fuente fuente
+    /**
+     * Proyecto del financiamiento
+     */
     Proyecto proyecto
+    /**
+     * Monto del financiamiento
+     */
     double monto
+
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'fina'
         cache usage: 'read-write', include: 'non-lazy'
@@ -25,6 +49,10 @@ class Financiamiento implements Serializable {
             monto column: 'finamnto'
         }
     }
+
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         anio(blank: true, nullable: true, attributes: [mensaje: 'Año'])
         fuente(blank: true, nullable: true, attributes: [mensaje: 'Fuente'])

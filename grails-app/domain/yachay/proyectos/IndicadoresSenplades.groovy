@@ -2,20 +2,67 @@ package yachay.proyectos
 
 import yachay.proyectos.Proyecto
 
+/**
+ * Clase para conectar con la tabla 'idsp' de la base de datos
+ */
 class IndicadoresSenplades implements Serializable {
+    /**
+     * Proyecto del indicador
+     */
     Proyecto proyecto
+    /**
+     * Valor de la tasa de an&aacute;lisis financiero del indicador
+     */
     double tasaAnalisisFinanciero
+    /**
+     * Valor actual neto del indicador
+     */
     double valorActualNeto
+    /**
+     * Valor de la tasa interna de retorno del indicador
+     */
     double tasaInternaDeRetorno
+    /**
+     * Valor de la tasa de an&aacute;lisis econ&oacute;mico del indicador
+     */
     double tasaAnalisisEconomico
+    /**
+     * Valor actual neto econ&oacute;mico del indicador
+     */
     double valorActualNetoEconomico
+    /**
+     * Valor de la tasa interna de retorno econ&oacute;mico del indicador
+     */
     double tasaInternaDeRetornoEconomico
+    /**
+     * Valor del costo beneficio del indicador
+     */
     double costoBeneficio
+    /**
+     * Pierde pa&iacute;s
+     */
     String pierdePais
+    /**
+     * Impactos del indicador
+     */
     String impactos
+    /**
+     * Metodolog&iacute;a del indicador
+     */
     String metodologia
+    /**
+     * Observaciones
+     */
     String observaciones
+
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'idsp'
         cache usage: 'read-write', include: 'non-lazy'
@@ -38,6 +85,10 @@ class IndicadoresSenplades implements Serializable {
             observaciones column: 'idspobsr'
         }
     }
+
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         proyecto(blank: true, nullable: true, attributes: [mensaje: 'Proyecto'])
         tasaAnalisisFinanciero(blank: true, nullable: true, attributes: [mensaje: 'Tasa de Análisis Financiero'])

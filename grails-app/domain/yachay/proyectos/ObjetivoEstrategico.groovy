@@ -2,13 +2,22 @@ package yachay.proyectos
 
 import yachay.proyectos.Proyecto
 
+/**
+ * Clase para conectar con la tabla '' de la base de datos
+ */
 class ObjetivoEstrategico implements Serializable {
     Proyecto proyecto
     String institucion
     String objetivo
     String politica
     String meta
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'obet'
         cache usage: 'read-write', include: 'non-lazy'
@@ -24,6 +33,9 @@ class ObjetivoEstrategico implements Serializable {
             meta column: 'obetmeta'
         }
     }
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         proyecto(blank: true, nullable: true, attributes: [mensaje: 'Proyecto'])
         institucion(size: 1..255, blank: true, nullable: true, attributes: [mensaje: 'Objetivo estratégico institucional'])

@@ -4,6 +4,9 @@ import yachay.parametros.UnidadEjecutora
 import yachay.parametros.TipoResponsable
 
 /* Responsable nombrado en la Unidad ejecutora para la ejecución de los proyectos.*/
+/**
+ * Clase para conectar con la tabla '' de la base de datos
+ */
 class ResponsableProyecto implements Serializable {
     yachay.seguridad.Usro responsable
     UnidadEjecutora unidad
@@ -12,7 +15,13 @@ class ResponsableProyecto implements Serializable {
     Date hasta
     TipoResponsable tipo
     String observaciones
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'rspy'
         cache usage: 'read-write', include: 'non-lazy'
@@ -29,6 +38,9 @@ class ResponsableProyecto implements Serializable {
             unidad column: 'unej__id'
         }
     }
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         responsable(blank: true, nullable: true, attributes: [mensaje: 'Responsable'])
         proyecto(blank: true, nullable: true, attributes: [mensaje: 'Proyecto'])
@@ -39,6 +51,10 @@ class ResponsableProyecto implements Serializable {
         unidad(blank:true,nullable: true)
     }
 
+    /**
+     * Genera un string para mostrar
+        * @return
+     */
     String toString() {
         return this.responsable.persona.nombre + " " + this.responsable.persona.apellido
     }

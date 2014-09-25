@@ -1,4 +1,7 @@
 package yachay.proyectos
+/**
+ * Clase para conectar con la tabla '' de la base de datos
+ */
 class Paso implements Serializable {
     Proceso proceso
     Integer orden
@@ -10,7 +13,13 @@ class Paso implements Serializable {
 
     String tablaEsp
 
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'paso'
         cache usage: 'read-write', include: 'non-lazy'
@@ -30,6 +39,9 @@ class Paso implements Serializable {
             tablaEsp column: 'pasotbes'
         }
     }
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         id(attributes: [mensaje: 'Código secuencial del paso'])
         proceso(blank: true, nullable: true, attributes: [mensaje: 'Proceso'])
@@ -42,6 +54,10 @@ class Paso implements Serializable {
         tablaEsp(size: 1..127, blank: false, nullable: false, attributes: [mensaje: 'Nombre de la tabla o tablas en español, para mostrar'])
     }
 
+    /**
+     * Genera un string para mostrar
+        * @return
+     */
     String toString() {
         return this.nombre
     }

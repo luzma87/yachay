@@ -1,11 +1,20 @@
 package yachay.proyectos
 /* Para cada indicador del marco lógico se define uno o varios medios de verificación.*/
+/**
+ * Clase para conectar con la tabla '' de la base de datos
+ */
 class MedioVerificacion implements Serializable {
     Indicador indicador
     String descripcion
     ModificacionProyecto modificacion
     int estado = 0 /* 0 -> activo por facilidad en la base de datos  1-> modificado*/
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable=[ignore:[]]
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'mdvf'
         cache usage:'read-write', include:'non-lazy'
@@ -20,6 +29,9 @@ class MedioVerificacion implements Serializable {
             estado column: 'mdvfetdo'
         }
     }
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         indicador( blank:false, nullable:false ,attributes:[mensaje:'Elemento del marco lógico al que se aplica el indicador'])
         descripcion(size:1..1023, blank:false, nullable:false ,attributes:[mensaje:'Descripción del medio de verificación'])
@@ -27,6 +39,10 @@ class MedioVerificacion implements Serializable {
         estado(blank:false,nullable: false)
     }
 
+    /**
+     * Genera un string para mostrar
+        * @return
+     */
     String toString(){
         if(descripcion.size()>20){
             def partes = descripcion.split(" ")
@@ -44,6 +60,10 @@ class MedioVerificacion implements Serializable {
         }
 
     }
+    /**
+     * Genera un string para mostrar
+        * @return
+     */
     String toStringCompleto(){
         return this.descripcion
     }

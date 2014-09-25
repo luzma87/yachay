@@ -2,6 +2,9 @@ package yachay.proyectos
 
 import yachay.proyectos.Obra
 
+/**
+ * Clase para conectar con la tabla '' de la base de datos
+ */
 class Liquidacion {
 
     Obra obra
@@ -11,7 +14,13 @@ class Liquidacion {
     Date fechaInicio
     Date fechaFin
 
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable=[ignore:[]]
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'lqdc'
         cache usage:'read-write', include:'non-lazy'
@@ -28,6 +37,9 @@ class Liquidacion {
             fechaFin column: 'lqdcfcfn'
         }
     }
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         obra(blank:false,nullable:false)
         valor(blank:false,nullable:false)
@@ -38,6 +50,10 @@ class Liquidacion {
 
     }
 
+    /**
+     * Genera un string para mostrar
+        * @return
+     */
     String toString(){
         "${this.obra} valor: ${this.valor}"
     }

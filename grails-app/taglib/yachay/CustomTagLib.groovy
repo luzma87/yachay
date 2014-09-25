@@ -7,12 +7,17 @@ import yachay.avales.SolicitudAval
 import org.springframework.web.servlet.support.RequestContextUtils as RCU
 import java.text.DecimalFormatSymbols
 
+/**
+ * Tags de elementos personalizados
+ */
 class CustomTagLib {
 
     static namespace = 'tdn'
 
     /**
-     * Dump out attributes in HTML compliant fashion.
+     * Imprime el n&uacute;mero del aval o de la solicidud con el formato '003'
+     * @param aval (opcional) el id del aval
+     * @param solicitud (opcional) el id de la solicitud
      */
     def imprimeNumero = { attrs ->
         def aval = null
@@ -34,12 +39,14 @@ class CustomTagLib {
             }
             output += num
         }
-
-
-
         out << output
     }
 
+    /**
+     * Copiado de FormTagLib de Grails, retorna los atributos para ser utilizados en tags HTML
+     * Dump out attributes in HTML compliant fashion.
+     * @param attrs
+     */
     void outputAttributes(attrs) {
         attrs.remove('tagName') // Just in case one is left
         def writer = getOut()
@@ -48,6 +55,10 @@ class CustomTagLib {
         }
     }
 
+    /**
+     * Imprime una fecha en letras
+     * @param fecha
+     */
     def fechaLetras = { attrs ->
         def meses = ["", "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto",
                      "septiembre", "octubre", "noviembre", "diciembre"]
@@ -61,11 +72,23 @@ class CustomTagLib {
         out << output
     }
 
+    /**
+     * Copiado de FormTagLib de Grails, retorna un option de tipo "Seleccione un valor" para ser utilizado en un select
+     * @param out el output
+     * @param noSelectionKey el value para el option
+     * @param noSelectionValue el label para el option
+     * @param value el value (para verificar si debe o no estar seleccionado)
+     */
     def renderNoSelectionOptionImpl(out, noSelectionKey, noSelectionValue, value) {
         // If a label for the '--Please choose--' first item is supplied, write it out
         out << "<option value=\"${(noSelectionKey == null ? '' : noSelectionKey)}\"${noSelectionKey == value ? ' selected="selected"' : ''}>${noSelectionValue.encodeAsHTML()}</option>"
     }
 
+    /**
+     *
+     * @param id
+     * @param campo
+     */
     def mostrarCampoModificacion = { attrs ->
         def mod = ModificacionV2.get(attrs.id)
         def campo = attrs.campo

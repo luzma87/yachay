@@ -2,6 +2,9 @@ package yachay.proyectos
 
 import yachay.parametros.PresupuestoUnidad
 
+/**
+ * Clase para conectar con la tabla '' de la base de datos
+ */
 class ModificacionTechos {
     
     PresupuestoUnidad desde
@@ -12,7 +15,13 @@ class ModificacionTechos {
     yachay.seguridad.Usro usuario
 
 
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable=[ignore:[]]
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'mdtc'
         cache usage:'read-write', include:'non-lazy'
@@ -29,6 +38,9 @@ class ModificacionTechos {
             tipo column: 'mdtctipo'
         }
     }
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         desde( blank:true, nullable:true ,attributes:[mensaje:'Asignación desde donde sale dinero'])
         recibe( blank:true, nullable:true ,attributes:[mensaje:'Asignación que recibe el dinero'])

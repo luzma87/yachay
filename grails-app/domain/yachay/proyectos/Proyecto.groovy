@@ -16,6 +16,9 @@ import yachay.parametros.proyectos.ObjetivoGobiernoResultado
 import yachay.parametros.proyectos.Programa
 
 /*Proyecto*/
+/**
+ * Clase para conectar con la tabla '' de la base de datos
+ */
 class Proyecto implements Serializable {
     UnidadEjecutora unidadEjecutora
     Etapa etapa
@@ -58,7 +61,13 @@ class Proyecto implements Serializable {
 
     String codigoEsigef
 
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'proy'
         cache usage: 'read-write', include: 'non-lazy'
@@ -107,6 +116,9 @@ class Proyecto implements Serializable {
             codigoEsigef column: 'proysigf'
         }
     }
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         unidadEjecutora(blank: true, nullable: true, attributes: [mensaje: 'Unidad Ejecutora'])
         etapa(blank: true, nullable: true, attributes: [mensaje: 'Etapa'])
@@ -148,6 +160,10 @@ class Proyecto implements Serializable {
         codigoEsigef(size: 0..3, blank: true, nullable: true, attributes: [mensaje: 'Número proyecto eSIGEF'])
     }
 
+    /**
+     * Genera un string para mostrar
+        * @return
+     */
     String toString() {
         if (nombre.size() > 20) {
             def partes = nombre.split(" ")
@@ -166,6 +182,10 @@ class Proyecto implements Serializable {
 
     }
 
+    /**
+     * Genera un string para mostrar
+        * @return
+     */
     String toStringLargo() {
         if (nombre.size() > 65) {
             def partes = nombre.split(" ")
@@ -184,6 +204,10 @@ class Proyecto implements Serializable {
 
     }
 
+    /**
+     * Genera un string para mostrar
+        * @return
+     */
     String toStringCompleto() {
         return this.nombre
     }

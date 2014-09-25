@@ -4,6 +4,9 @@ import yachay.poa.Asignacion
 import yachay.parametros.UnidadEjecutora
 
 /*La modificación de la asignación presupuestaria se refiere a la redistribución del valor asignado lo cual implica además una reprogramación.*/
+/**
+ * Clase para conectar con la tabla '' de la base de datos
+ */
 class ModificacionAsignacion implements Serializable {
     Asignacion desde
     Asignacion recibe
@@ -12,7 +15,13 @@ class ModificacionAsignacion implements Serializable {
     double valor
     String pdf
     UnidadEjecutora unidad
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable=[ignore:[]]
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'mdas'
         cache usage:'read-write', include:'non-lazy'
@@ -29,6 +38,9 @@ class ModificacionAsignacion implements Serializable {
             unidad column: 'unej__id'
         }
     }
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         desde( blank:true, nullable:true ,attributes:[mensaje:'Asignación desde donde sale dinero'])
         recibe( blank:true, nullable:true ,attributes:[mensaje:'Asignación que recibe el dinero'])

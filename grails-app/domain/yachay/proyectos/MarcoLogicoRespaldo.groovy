@@ -3,6 +3,9 @@ package yachay.proyectos
 import yachay.parametros.UnidadEjecutora
 import yachay.parametros.TipoElemento
 
+/**
+ * Clase para conectar con la tabla '' de la base de datos
+ */
 class MarcoLogicoRespaldo implements Serializable {
     MarcoLogico marcoLogicoOriginal     //el que se hizo repaldo
     Proyecto proyecto
@@ -17,8 +20,14 @@ class MarcoLogicoRespaldo implements Serializable {
     UnidadEjecutora responsable
     double aporte = 0;
     String tieneAsignacion = "S" //'S' - > esta en el POA (asignacion), 'N' -> no esta
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
     int numero = 0;
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'mlrs'
         cache usage: 'read-write', include: 'non-lazy'
@@ -43,6 +52,9 @@ class MarcoLogicoRespaldo implements Serializable {
             numero column: 'mlrsnmro'
         }
     }
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         proyecto(blank: true, nullable: true, attributes: [mensaje: 'Proyecto'])
         tipoElemento(blank: true, nullable: true, attributes: [mensaje: 'Tipo de Elemento'])
@@ -57,6 +69,10 @@ class MarcoLogicoRespaldo implements Serializable {
         tieneAsignacion(nullable: true, blank: true)
     }
 
+    /**
+     * Genera un string para mostrar
+        * @return
+     */
     String toString() {
         if (this.objeto.length() < 40)
             return this.objeto
@@ -64,6 +80,10 @@ class MarcoLogicoRespaldo implements Serializable {
             return this.objeto.substring(0, 40) + "..."
     }
 
+    /**
+     * Genera un string para mostrar
+        * @return
+     */
     String toStringCompleto() {
         return this.objeto
     }

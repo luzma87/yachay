@@ -4,14 +4,43 @@ import yachay.parametros.TipoAdquisicion
 import yachay.parametros.TipoProcedencia
 import yachay.proyectos.Proyecto
 
+/**
+ * Clase para conectar con la tabla 'adqc' de la base de datos
+ */
 class Adquisiciones implements Serializable {
+    /**
+     * Tipo de adquisici&oacute;n
+     */
     TipoAdquisicion tipoAdquisicion
+    /**
+     * Proyecto de la adquisici&oacute;n
+     */
     Proyecto proyecto
+    /**
+     * Tipo de procedencia de la adquisici&oacute;n
+     */
     TipoProcedencia tipoProcedencia
+    /**
+     * Descripci&oacute;n de la adquisici&oacute;n
+     */
     String descripcion
+    /**
+     * Valor de la adquisici&oacute;n
+     */
     double valor
+    /**
+     * Porcentaje de la adquisici&oacute;n
+     */
     double porcentaje
+
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'adqc'
         cache usage: 'read-write', include: 'non-lazy'
@@ -28,6 +57,10 @@ class Adquisiciones implements Serializable {
             porcentaje column: 'adqcpcnt'
         }
     }
+
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         tipoAdquisicion(blank: true, nullable: true, attributes: [mensaje: 'Tipo de Adquisición'])
         proyecto(blank: true, nullable: true, attributes: [mensaje: 'Proyecto'])

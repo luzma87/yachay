@@ -3,6 +3,9 @@ package yachay.proyectos
 import yachay.parametros.UnidadEjecutora
 import yachay.parametros.TipoResponsable
 
+/**
+ * Clase para conectar con la tabla '' de la base de datos
+ */
 class Responsable implements Serializable {
     UnidadEjecutora unidadEjecutora
     String nombre
@@ -16,7 +19,13 @@ class Responsable implements Serializable {
 
     TipoResponsable tipo
 
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'resp'
         cache usage: 'read-write', include: 'non-lazy'
@@ -38,6 +47,9 @@ class Responsable implements Serializable {
             tipo column: 'tprp__id'
         }
     }
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         unidadEjecutora(blank: true, nullable: true, attributes: [mensaje: 'unidadEjecutora'])
         nombre(size: 1..31, blank: false, attributes: [mensaje: 'nombre'])

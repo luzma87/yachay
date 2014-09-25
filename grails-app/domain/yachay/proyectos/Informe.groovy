@@ -3,6 +3,9 @@ package yachay.proyectos
 import yachay.parametros.TipoInforme
 import yachay.proyectos.ResponsableProyecto
 
+/**
+ * Clase para conectar con la tabla '' de la base de datos
+ */
 class Informe implements Serializable {
     ResponsableProyecto responsableProyecto
     TipoInforme tipo
@@ -11,7 +14,13 @@ class Informe implements Serializable {
     String dificultades
     Integer porcentaje=0
     String link
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable=[ignore:[]]
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'info'
         cache usage:'read-write', include:'non-lazy'
@@ -31,6 +40,9 @@ class Informe implements Serializable {
             link column: 'infolink'
         }
     }
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         responsableProyecto( blank:true, nullable:true ,attributes:[mensaje:'Responsable del proyecto'])
         tipo( blank:true, nullable:true ,attributes:[mensaje:'Tipo de informe'])

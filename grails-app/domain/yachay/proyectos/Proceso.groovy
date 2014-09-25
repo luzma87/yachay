@@ -1,4 +1,7 @@
 package yachay.proyectos
+/**
+ * Clase para conectar con la tabla '' de la base de datos
+ */
 class Proceso implements Serializable {
     String nombre
     String descripcion
@@ -6,7 +9,13 @@ class Proceso implements Serializable {
     Date fechaFin
     String estado
     String observaciones
+    /**
+     * Define los campos que se van a ignorar al momento de hacer logs
+     */
     static auditable = [ignore: []]
+    /**
+     * Define el mapeo entre los campos del dominio y las columnas de la base de datos
+     */
     static mapping = {
         table 'prcs'
         cache usage: 'read-write', include: 'non-lazy'
@@ -23,6 +32,9 @@ class Proceso implements Serializable {
             observaciones column: 'prcsobsr'
         }
     }
+    /**
+     * Define las restricciones de cada uno de los campos
+     */
     static constraints = {
         id(attributes:[mensaje:'Código secuencial del proceso'])
         nombre(size: 1..63, blank: false, attributes: [mensaje: 'Nombre del proceso'])
@@ -33,6 +45,10 @@ class Proceso implements Serializable {
         observaciones(size: 1..127, blank: true, nullable: true, attributes: [mensaje: 'Observaciones'])
     }
 
+    /**
+     * Genera un string para mostrar
+        * @return
+     */
     String toString() {
         return this.nombre
     }
