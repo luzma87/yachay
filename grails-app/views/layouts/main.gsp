@@ -87,7 +87,7 @@
 
         <div class="ui-dialog ui-widget ui-widget-content ui-corner-all"
              style="height: 740px;  width: 1360px; margin-left:10px; position: absolute; left: 20px; top:3px;overflow-y: hidden">
-            <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
+            <div class=" ui-helper-clearfix" style="background-color: #1b97a7; color: #fff; height: 24px; font-size: 14px; font-weight: bold; padding: 4px;">
                 <span class="ui-dialog-title" style="float: left; text-align: left">SISTEMA DE GESTIÓN DE PLANIFICACIÓN INSTITUCIONAL</span>
                 <span class="ui-dialog-title" style="float: right; text-align: center; width: 50%">- <g:layoutTitle default=""/> -</span>
             </div>
@@ -100,8 +100,7 @@
             <div class="ui-dialog-content ui-widget-content" style="height: 690px;">
                 <g:layoutBody/>
             </div>
-        <div class="ui-dialog-titlebar ui-widget-header "
-             style="position: fixed; bottom: 0; width: 100%; height: 10px; text-align: center;">
+        <div style="position: fixed; bottom: 0; width: 100%; height: 10px; text-align: center; background-color: #1b97a7; color: #fff; height: 14px; font-size: 12px; padding: 2px;">
             <span style="float: none; ">2014 Todos los derechos reservados. Empresa Pública Yachay</span>
         </div>
         <script type="text/javascript">

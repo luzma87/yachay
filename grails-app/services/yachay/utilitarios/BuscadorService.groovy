@@ -265,15 +265,15 @@ class BuscadorService {
     }
 
     /**
-     *
-     * @param qry
-     * @param qrwh
-     * @param campos
-     * @param orden
-     * @param tpOrdn
-     * @param numero
-     * @param qord
-     * @return
+     * effectua una busqueda en la base d etos basado en una sentencia sql
+     * @param qry parte del sql que contiene el select
+     * @param qrwh parte where del sql
+     * @param campos listado de campos a ser consultados
+     * @param orden sección order by del sql
+     * @param tpOrdn tipo de ordenamiento
+     * @param numero número de registros retornados
+     * @param qord columnas por las que se puede ordenar
+     * @return m lista de registros
      */
     List buscarSQL(qry, qrwh = 'w', campos, orden, tpOrdn, numero, qord) {
         def m = []
