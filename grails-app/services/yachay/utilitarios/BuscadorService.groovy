@@ -28,11 +28,12 @@ class BuscadorService {
     /**
      * Crea el sql para efectuar una b&uacute;squeda
      * @param operador el operador para la b&uacute;squeda (AND, OR)
-     * @param parametros par&aacute;metros de b&uacute;squeda
+     * @param parametros par&aacute;metros de b&uacute;squeda. En posici&oacute;n 1 recibe el comparador ('igual', 'mayor', 'menor', 'between',
+     * 'like', 'not like', 'like izq', 'like der', 'not like izq'
      * @param common el subconjunto entre los par&aacute;metros y los campos del dominio
      * @param mapa mapa con los campos del dominio
      * @param ignoreCase boolean que indica si se debe ignorar may&uacute;sculas y min&uacute;sculas
-     * @return el HQL
+     * @return la cadena del HQL
      */
     String filtro(operador, parametros, common, mapa, ignoreCase) {
         def where = " where "
@@ -130,8 +131,7 @@ class BuscadorService {
                                 break
 
                         }
-                    }
-                    else {
+                    } else {
                         try {
 
                             if (ignoreCase) {
@@ -236,7 +236,7 @@ class BuscadorService {
      * @param max la cantidad m&aacute;xima de registros
      * @param offset el offset para el SQL
      * @param sort el nombre de la columna para ordenamiento
-     * @param order el orden (ASC o DESC)
+     * @param order tipo de ordenamiento (ASC o DESC)
      * @return los resultados de la b&uacute;squeda
      */
     List buscar(dominio, tabla, tipo, parametros, ignoreCase, max, offset, sort, order) {
@@ -265,15 +265,15 @@ class BuscadorService {
     }
 
     /**
-     * effectua una busqueda en la base d etos basado en una sentencia sql
-     * @param qry parte del sql que contiene el select
-     * @param qrwh parte where del sql
+     * Efect&uacute;a una b&uacute;squeda en la base de datos basado en una sentencia sSQL
+     * @param qry parte del SQL que contiene el select
+     * @param qrwh parte where del SQL
      * @param campos listado de campos a ser consultados
-     * @param orden sección order by del sql
-     * @param tpOrdn tipo de ordenamiento
-     * @param numero número de registros retornados
+     * @param orden secci&oacute;n order by del SQL
+     * @param tpOrdn tipo de ordenamiento (ASC o DESC)
+     * @param numero n&uacute;mero de registros retornados
      * @param qord columnas por las que se puede ordenar
-     * @return m lista de registros
+     * @return los resultados de la b&uacute;squeda
      */
     List buscarSQL(qry, qrwh = 'w', campos, orden, tpOrdn, numero, qord) {
         def m = []
@@ -340,6 +340,16 @@ class BuscadorService {
         return m
     }
 
+    /**
+     * Construye la secci&oacute;n del WHERE del HQL
+     * @param mapa un mapa con: <br/>
+     * <ul>
+     *     <li>op: el oerador ('igual', '=','mayor', '>', 'menor', '<', 'like', 'not like', 'like izq', 'like der', 'not like izq'</li>
+     *     <li>cmpo: el nombre del campo</li>
+     *     <li>vlor: el valor</li>
+     * </ul>
+     * @return la cadena del WHERE
+     */
     String condicion(mapa) {
         println "condicion: ${mapa}"
         def where = ""
