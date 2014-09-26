@@ -1,4 +1,4 @@
-<%@ page import="yachay.parametros.proyectos.PoliticasProyecto" %>
+<%@ page import="yachay.proyectos.PoliticasProyecto" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -76,7 +76,7 @@
                 </td>
                 <td class="campo" valign="middle">
                     <g:select class="field ui-widget-content ui-corner-all" name="politicaAplicaProyecto.id"
-                              title="${PoliticasProyecto.constraints.politicaAplicaProyecto.attributes.mensaje}" from="${yachay.parametros.proyectos.PoliticaAplicaProyecto.list()}" optionKey="id"
+                              title="${PoliticasProyecto.constraints.politicaAplicaProyecto.attributes.mensaje}" from="${yachay.proyectos.PoliticaAplicaProyecto.list()}" optionKey="id"
                               value="${politicasProyectoInstance?.politicaAplicaProyecto?.id}"
                               noSelection="['null': '']"/>
                     %{----}%

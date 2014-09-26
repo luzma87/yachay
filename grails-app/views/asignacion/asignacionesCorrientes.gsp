@@ -1,4 +1,4 @@
-<%@ page import="yachay.poa.Asignacion; yachay.parametros.poaPac.Anio; yachay.parametros.poaPac.Presupuesto; " contentType="text/html;charset=UTF-8" %>
+%{--<%@ page import="yachay.poa.Asignacion;yachay.parametros.poaPac.Anio;yachay.parametros.poaPac.Presupuesto; " contentType="text/html;charset=UTF-8" %>--}%
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

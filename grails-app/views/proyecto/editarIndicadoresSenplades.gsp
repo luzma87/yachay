@@ -5,7 +5,7 @@
   Time: 12:43 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page import="yachay.parametros.EntidadesProyecto; yachay.proyectos.EstudiosTecnicos; yachay.proyectos.BeneficioSenplades; yachay.proyectos.IndicadoresSenplades; yachay.proyectos.Proyecto" %>
+<%@ page import="yachay.proyectos.EntidadesProyecto; yachay.proyectos.EstudiosTecnicos; yachay.proyectos.BeneficioSenplades; yachay.proyectos.IndicadoresSenplades; yachay.proyectos.Proyecto" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

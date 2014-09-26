@@ -43,7 +43,7 @@
                                     class="value ${hasErrors(bean: metaBuenVivirInstance, field: 'politica', 'errors')}">
                                     <g:select class="field required requiredCmb ui-widget-content ui-corner-all"
                                               name="politica.id" title="Meta del buen vivir"
-                                              from="${yachay.parametros.proyectos.PoliticaBuenVivir.list()}" optionKey="id"
+                                              from="${yachay.proyectos.PoliticaBuenVivir.list()}" optionKey="id"
                                               value="${metaBuenVivirInstance?.politica?.id}"/>
                                 </td>
                             </tr>

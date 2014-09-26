@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page import="yachay.parametros.proyectos.PoliticaAgendaSocial; yachay.parametros.proyectos.PoliticaAgendaSocial; yachay.parametros.proyectos.PoliticasAgendaProyecto; yachay.proyectos.MetaBuenVivir; yachay.parametros.proyectos.PoliticaBuenVivir; yachay.parametros.proyectos.Politica; yachay.proyectos.ObjetivoBuenVivir; yachay.parametros.poaPac.Fuente" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.parametros.proyectos.PoliticaAgendaSocial; yachay.parametros.proyectos.PoliticaAgendaSocial; yachay.proyectos.PoliticasAgendaProyecto; yachay.proyectos.MetaBuenVivir; yachay.proyectos.PoliticaBuenVivir; yachay.parametros.proyectos.Politica; yachay.proyectos.ObjetivoBuenVivir; yachay.parametros.poaPac.Fuente" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

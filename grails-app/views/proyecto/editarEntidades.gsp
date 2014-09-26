@@ -1,4 +1,4 @@
-<%@ page import="yachay.parametros.EntidadesProyecto; yachay.parametros.TipoParticipacion" %>
+<%@ page import="yachay.proyectos.EntidadesProyecto; yachay.parametros.TipoParticipacion" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

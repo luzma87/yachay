@@ -1,4 +1,4 @@
-<%@ page import="yachay.parametros.proyectos.PoliticasProyecto" %>
+<%@ page import="yachay.proyectos.PoliticasProyecto" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -39,7 +39,7 @@
                     <td valign="top"
                         class="value ${hasErrors(bean: politicasProyectoInstance, field: 'politicaAplicaProyecto', 'errors')}">
                         <g:select class="field ui-widget-content ui-corner-all" name="politicaAplicaProyecto.id"
-                                  title="politicaAplicaProyecto" from="${yachay.parametros.proyectos.PoliticaAplicaProyecto.list()}"
+                                  title="politicaAplicaProyecto" from="${yachay.proyectos.PoliticaAplicaProyecto.list()}"
                                   optionKey="id" value="${politicasProyectoInstance?.politicaAplicaProyecto?.id}"
                                   noSelection="['null': '']"/>
                     </td>
