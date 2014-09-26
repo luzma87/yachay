@@ -44,7 +44,8 @@
             padding    : 5px;
             /*border     : solid 3px #768CC1;*/
             /*background : #EAF2FF !important;*/
-            border     : solid 3px #A5815F;
+            /*border     : solid 3px #A5815F;*/
+            border     : solid 3px #1b97a7;
             background : #F4F2EB !important;
         }
 

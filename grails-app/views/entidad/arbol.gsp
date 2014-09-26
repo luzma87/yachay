@@ -54,7 +54,8 @@
             /*background : #EAF2FF !important;*/
             padding    : 5px;
             /*border     : solid 3px #A5815F;*/
-            border     : solid 3px #595292;
+            /*border     : solid 3px #595292;*/
+            border     : solid 3px #124f5a;
             background : #F4F2EB !important;
         }
 
