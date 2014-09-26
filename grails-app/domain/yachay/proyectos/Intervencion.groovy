@@ -5,16 +5,27 @@ import yachay.parametros.SubSector
 import yachay.proyectos.Proyecto
 
 /**
- * Clase para conectar con la tabla '' de la base de datos
+ * Clase para conectar con la tabla 'intv' de la base de datos
  */
 class Intervencion implements Serializable {
+    /**
+     * Proyecto para la intervenci&oacute;n
+     */
     Proyecto proyecto
+    /**
+     * Sector de la intervenci&oacute;n
+     */
     Sector sector
+    /**
+     * Subsector de la intervenci&oacute;n
+     */
     SubSector subSector
+
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
     static auditable = [ignore: []]
+
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
@@ -31,6 +42,7 @@ class Intervencion implements Serializable {
             sector column: 'sctr__id'
         }
     }
+
     /**
      * Define las restricciones de cada uno de los campos
      */

@@ -37,7 +37,7 @@ class Parroquia implements Serializable {
     double diff
 
     /**
-     * Zoom de la parroquia en el mapa
+     * Zoom del mapa al mostrar la parroquia
      */
     double zoom
 

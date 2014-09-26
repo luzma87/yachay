@@ -2,23 +2,48 @@ package yachay.proyectos
 
 import yachay.parametros.UnidadEjecutora
 import yachay.parametros.TipoResponsable
+import yachay.seguridad.Usro
 
 /* Responsable nombrado en la Unidad ejecutora para la ejecución de los proyectos.*/
 /**
- * Clase para conectar con la tabla '' de la base de datos
+ * Clase para conectar con la tabla 'rspy' de la base de datos<br/>
+ * Responsable nombrado en la Unidad ejecutora para la ejecución de los proyectos
  */
 class ResponsableProyecto implements Serializable {
-    yachay.seguridad.Usro responsable
+    /**
+     * Usuario responsable
+     */
+    Usro responsable
+    /**
+     * Unidad ejecutora del responsable
+     */
     UnidadEjecutora unidad
+    /**
+     * Proyecto
+     */
     Proyecto proyecto
+    /**
+     * Fecha inicial
+     */
     Date desde
+    /**
+     * Fecha final
+     */
     Date hasta
+    /**
+     * Tipo de responsable
+     */
     TipoResponsable tipo
+    /**
+     * Observaciones
+     */
     String observaciones
+
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
     static auditable = [ignore: []]
+
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
@@ -38,6 +63,7 @@ class ResponsableProyecto implements Serializable {
             unidad column: 'unej__id'
         }
     }
+
     /**
      * Define las restricciones de cada uno de los campos
      */
@@ -48,12 +74,12 @@ class ResponsableProyecto implements Serializable {
         hasta(blank: true, nullable: true, attributes: [mensaje: 'Responsable hasta (fecha)'])
         tipo(blank: false, nullable: false, attributes: [mensaje: 'Tipo de responsable'])
         observaciones(size: 1..127, blank: true, nullable: true, attributes: [mensaje: 'Observaciones'])
-        unidad(blank:true,nullable: true)
+        unidad(blank: true, nullable: true)
     }
 
     /**
      * Genera un string para mostrar
-        * @return
+     * @return el nombre y el apellido de la persona responsable concatenados
      */
     String toString() {
         return this.responsable.persona.nombre + " " + this.responsable.persona.apellido

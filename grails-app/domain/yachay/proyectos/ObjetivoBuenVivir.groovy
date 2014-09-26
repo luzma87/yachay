@@ -1,15 +1,23 @@
 package yachay.proyectos
 
 /**
- * Clase para conectar con la tabla '' de la base de datos
+ * Clase para conectar con la tabla 'obbv' de la base de datos
  */
 class ObjetivoBuenVivir implements Serializable {
+    /**
+     * C&oacute;digo del objetivo de buen vivir
+     */
     Integer codigo
+    /**
+     * Descripci&oacute;n del objetivo de buen vivir
+     */
     String descripcion
+
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
     static auditable = [ignore: []]
+
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
@@ -25,6 +33,7 @@ class ObjetivoBuenVivir implements Serializable {
             descripcion column: 'obbvdscr'
         }
     }
+
     /**
      * Define las restricciones de cada uno de los campos
      */
@@ -35,7 +44,7 @@ class ObjetivoBuenVivir implements Serializable {
 
     /**
      * Genera un string para mostrar
-        * @return
+     * @return el c&oaute;digo y la descripci&oacute;n concatenados
      */
     String toString() {
         return this.codigo + " - " + this.descripcion

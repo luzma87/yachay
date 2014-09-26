@@ -1,29 +1,55 @@
 package yachay.proyectos
 
+import yachay.seguridad.Usro
+
 /**
- * Clase para conectar con la tabla '' de la base de datos
+ * Clase para conectar con la tabla 'mdv2' de la base de datos
  */
 class ModificacionV2 {
-
+    /**
+     * Dominio
+     */
     String dominio
+    /**
+     * Campo
+     */
     String campo
+    /**
+     * Id remoto
+     */
     int id_remoto
+    /**
+     * Valor anterior
+     */
     String oldValue
+    /**
+     * Valor nuevo
+     */
     String newValue
+    /**
+     * Fecha de la modificaci&oacute;n
+     */
     Date fecha = new Date()
-    yachay.seguridad.Usro usuario
+    /**
+     * Usuario que efectu&oacute; la modificaci&oacute;n
+     */
+    Usro usuario
+    /**
+     * Tipo de modificaci&oacute;n
+     */
     String tipo
+
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
     static mapping = {
         table 'mdv2'
-        cache usage:'read-write', include:'non-lazy'
-        id column:'mdv2__id'
-        id generator:'identity'
+        cache usage: 'read-write', include: 'non-lazy'
+        id column: 'mdv2__id'
+        id generator: 'identity'
         version false
         columns {
-            id column:'mdv2__id'
+            id column: 'mdv2__id'
             dominio column: 'mdv2dmno'
             id_remoto column: 'mdv2idrm'
             oldValue column: 'mdv2olva'
@@ -33,15 +59,16 @@ class ModificacionV2 {
             tipo column: 'mdv2tipo'
         }
     }
+
     /**
      * Define las restricciones de cada uno de los campos
      */
     static constraints = {
-        dominio(nullable: false,blank:false)
-        oldValue(size: 1..500,nullable: true,blank: true)
-        newValue(size: 1..500,nullable: true,blank: true)
-        dominio(size:1..120,nullable: false,blank: false)
-        campo(size: 1..100,nullable: true,blank: true)
-        tipo(size: 1..100,nullable: true,blank: true)
+        dominio(nullable: false, blank: false)
+        oldValue(size: 1..500, nullable: true, blank: true)
+        newValue(size: 1..500, nullable: true, blank: true)
+        dominio(size: 1..120, nullable: false, blank: false)
+        campo(size: 1..100, nullable: true, blank: true)
+        tipo(size: 1..100, nullable: true, blank: true)
     }
 }

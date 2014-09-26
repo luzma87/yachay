@@ -1,17 +1,24 @@
 package yachay.proyectos
 
-import yachay.proyectos.Proyecto
-
 /**
- * Clase para conectar con la tabla '' de la base de datos
+ * Clase para conectar con la tabla 'mtpy' de la base de datos<br/>
+ * Tabla intermedia que conecta proyectos con metas del buen vivir
  */
 class MetaBuenVivirProyecto implements Serializable {
+    /**
+     * Proyecto
+     */
     Proyecto proyecto
+    /**
+     * Meta del buen vivir
+     */
     MetaBuenVivir metaBuenVivir
+
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
     static auditable = [ignore: []]
+
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
@@ -27,6 +34,7 @@ class MetaBuenVivirProyecto implements Serializable {
             metaBuenVivir column: 'mtbv__id'
         }
     }
+
     /**
      * Define las restricciones de cada uno de los campos
      */
@@ -37,7 +45,7 @@ class MetaBuenVivirProyecto implements Serializable {
 
     /**
      * Genera un string para mostrar
-        * @return
+     * @return el nombre del proyecto y la descripcion de la meta del buen vivir concatenados
      */
     String toString() {
         return this.proyecto.nombre + " - " + this.metaBuenVivir.descripcion

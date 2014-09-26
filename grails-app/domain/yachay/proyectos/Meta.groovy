@@ -8,31 +8,80 @@ import yachay.parametros.proyectos.TipoMeta
 
 /*Para cada componente se determinan las metas desagregadas conforme al marco lógico. */
 /**
- * Clase para conectar con la tabla '' de la base de datos
+ * Clase para conectar con la tabla 'meta' de la base de datos<br/>
+ * Para cada componente se determinan las metas desagregadas conforme al marco lógico.
  */
 class Meta implements Serializable {
+    /**
+     * Tipo de meta
+     */
     TipoMeta tipoMeta
+    /**
+     * Parroquia a la cual pertenece la meta
+     */
     Parroquia parroquia
+    /**
+     * Marco l&oacute;n de la meta
+     */
     MarcoLogico marcoLogico
+    /**
+     * Asignaci&oacute;n de la meta
+     */
     Asignacion asignacion
+    /**
+     * Unidad de la meta
+     */
     Unidad unidad
+    /**
+     * A&ntilde;o de la meta
+     */
     Anio anio
+    /**
+     * Descripci&oacute;n de la meta
+     */
     String descripcion
+    /**
+     * Indicador de la meta
+     */
     double indicador
+    /**
+     * Inversi&oacute;n de la meta
+     */
     double inversion = 0
+    /**
+     * Coordenada en x de la meta
+     */
     int cord_x = 0
+    /**
+     * Coordenada en y de la meta
+     */
     int cord_y = 0
-
+    /**
+     * Latitudo de la meta (para ubicarla en el mapa)
+     */
     double latitud
+    /**
+     * Longitud de la meta (para ubicarla en el mapa)
+     */
     double longitud
+    /**
+     * Zoom del mapa al mostrar la meta
+     */
     double zoom
-
+    /**
+     * Modificaci&oacute;n proyecto de la meta
+     */
     ModificacionProyecto modificacion
+    /**
+     * Estado de la meta (0: activo, 1: modificado)
+     */
     int estado = 0 /* 0 -> activo por facilidad en la base de datos  1-> modificado*/
+
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
     static auditable = [ignore: []]
+
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
@@ -63,6 +112,7 @@ class Meta implements Serializable {
             zoom column: 'metazoom'
         }
     }
+
     /**
      * Define las restricciones de cada uno de los campos
      */
@@ -78,25 +128,24 @@ class Meta implements Serializable {
         asignacion(nullable: true, blank: true)
     }
 
-//    /**
+    /**
      * Genera un string para mostrar
-        * @return
+     * @return la descripci&oacute;n limitada a 20 caracteres
      */
-    String toString(){
-//        if(descripcion.size()>20){
-//            def partes = descripcion.split(" ")
-//            def cont=0
-//            def des =""
-//            partes.each {
-//              cont+=it.size()
-//                if(cont<22)
-//                des+=" "+it
-//            }
-//            return des+"... "
-//
-//        }else{
-//            return "${this.descripcion}"
-//        }
-//
-//    }
+    String toString() {
+        if (descripcion.size() > 20) {
+            def partes = descripcion.split(" ")
+            def cont = 0
+            def des = ""
+            partes.each {
+                cont += it.size()
+                if (cont < 22)
+                    des += " " + it
+            }
+            return des + "... "
+
+        } else {
+            return "${this.descripcion}"
+        }
+    }
 }

@@ -4,25 +4,55 @@ import yachay.parametros.UnidadEjecutora
 import yachay.parametros.TipoResponsable
 
 /**
- * Clase para conectar con la tabla '' de la base de datos
+ * Clase para conectar con la tabla 'resp' de la base de datos
  */
 class Responsable implements Serializable {
+    /**
+     * Unidad ejecutora a la cual pertenece el responsable
+     */
     UnidadEjecutora unidadEjecutora
+    /**
+     * Nombre del responsable
+     */
     String nombre
+    /**
+     * Apellido del responsable
+     */
     String apellido
+    /**
+     * N&uacute;mero de c&eacute;dula del responsable
+     */
     String cedula
+    /**
+     * Direcci&oacute;n de e-mail del responsable
+     */
     String email
+    /**
+     * Direcci&oacute;n de e-mail del responsable
+     */
     String email2
+    /**
+     * N&uacute;mero de tel&eacute;fono del responsable
+     */
     String telefono
+    /**
+     * Cargo del responsable
+     */
     String cargo
+    /**
+     * Observaciones
+     */
     String observaciones
-
+    /**
+     * Tipo de responsable
+     */
     TipoResponsable tipo
 
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
     static auditable = [ignore: []]
+
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
@@ -47,6 +77,7 @@ class Responsable implements Serializable {
             tipo column: 'tprp__id'
         }
     }
+
     /**
      * Define las restricciones de cada uno de los campos
      */

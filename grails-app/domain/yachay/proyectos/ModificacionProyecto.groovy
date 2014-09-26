@@ -1,31 +1,72 @@
 package yachay.proyectos
 
-import yachay.proyectos.Informe
 import yachay.parametros.UnidadEjecutora
 import yachay.parametros.poaPac.Anio
 import yachay.parametros.TipoModificacion
+import yachay.seguridad.Usro
 
 /**
- * Clase para conectar con la tabla '' de la base de datos
+ * Clase para conectar con la tabla 'mdfc' de la base de datos
  */
 class ModificacionProyecto implements Serializable {
+    /**
+     * Informe de la modificaci&oacute;n de proyecto
+     */
     Informe informe
+    /**
+     * Tipo de modificaci&oacute;n de proyecto
+     */
     TipoModificacion tipoModificacion
+    /**
+     * Proyecto de la modificaci&oacute;n de proyecto
+     */
     Proyecto proyecto
+    /**
+     * Unidad ejecutora de la modificaci&oacute;n de proyecto
+     */
     UnidadEjecutora unidad
+    /**
+     * Valor de la modificaci&oacute;n de proyecto
+     */
     double valor
+    /**
+     * DEscripci&oacute;n de la modificaci&oacute;n de proyecto
+     */
     String descripcion
+    /**
+     * Fecha de la modificaci&oacute;n de proyecto
+     */
     Date fecha
+    /**
+     * Fecha de aprobaci&oacute;n de la modificaci&oacute;n de proyecto
+     */
     Date fechaAprobacion
-    yachay.seguridad.Usro solicitante
-    yachay.seguridad.Usro responsable
+    /**
+     * Usuario que solicita la modificaci&oacute;n de proyecto
+     */
+    Usro solicitante
+    /**
+     * Usuario responsable de la modificaci&oacute;n de proyecto
+     */
+    Usro responsable
+    /**
+     * Estado de la modificaci&oacute;n de proyecto (0: solicitada, 1: negada, 2: aprobada, 3: usada)
+     */
     int estado = 0 /* 0 -> solicitada | 1-> negada | 2-> aprobada  | 3-> usada*/
+    /**
+     * Observaciones
+     */
     String observaciones
+    /**
+     * A&ntilde;o de la modificaci&oacute;n de proyecto
+     */
     Anio anio
+
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
     static auditable = [ignore: []]
+
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
@@ -47,27 +88,28 @@ class ModificacionProyecto implements Serializable {
             fechaAprobacion column: 'mdfcfcap'
             observaciones column: 'mdfcobsr'
             responsable column: 'usro__id'
-            estado  column: 'mdfcetdo'
+            estado column: 'mdfcetdo'
             anio column: 'anio__id'
             solicitante column: 'usroslct'
         }
     }
+
     /**
      * Define las restricciones de cada uno de los campos
      */
     static constraints = {
         informe(blank: true, nullable: true, attributes: [mensaje: 'Informe correspondiente que genera la modificación'])
         tipoModificacion(blank: true, nullable: true, attributes: [mensaje: 'Tipo de Modificación'])
-        proyecto(blank: true,nullable: true)
-        unidad(blank: true,nullable: true)
+        proyecto(blank: true, nullable: true)
+        unidad(blank: true, nullable: true)
         valor(blank: true, nullable: true, attributes: [mensaje: 'Valor de la modificación si se trata de modificación en la inversión para actividades del marco lógico'])
         descripcion(size: 1..1023, blank: true, nullable: true, attributes: [mensaje: 'Descripción de la modificación de acuerdo a su tipo'])
         fecha(blank: true, nullable: true, attributes: [mensaje: 'Fecha de la modificación'])
         fechaAprobacion(blank: true, nullable: true, attributes: [mensaje: 'Fecha de aprobación de la modificación'])
         observaciones(size: 1..127, blank: true, nullable: true, attributes: [mensaje: 'Observaciones'])
-        estado(nullable: false,blank: false)
-        responsable(nullable: true,blank: true)
-        solicitante(nullable: true,blank: true)
-        anio(nullable: true,blank: true)
+        estado(nullable: false, blank: false)
+        responsable(nullable: true, blank: true)
+        solicitante(nullable: true, blank: true)
+        anio(nullable: true, blank: true)
     }
 }

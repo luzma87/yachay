@@ -55,7 +55,7 @@ class Provincia implements Serializable {
      */
     double diff
     /**
-     * Zoom de la provincia en el mapa
+     * Zoom del mapa al mostrar la provincia
      */
     double zoom
 

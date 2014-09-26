@@ -1,15 +1,24 @@
 package yachay.proyectos
 /*Objetivo estratégico con el que puede estar alineado el proyecto.*/
 /**
- * Clase para conectar con la tabla '' de la base de datos
+ * Clase para conectar con la tabla 'obes' de la base de datos<br/>
+ * Objetivo estratégico con el que puede estar alineado el proyecto
  */
 class ObjetivoEstrategicoProyecto implements Serializable {
+    /**
+     * Orden del objetivo estrat&eacute;gico de proyecto
+     */
     Integer orden
+    /**
+     * Descripci&oacute;n del objetivo estrat&eacute;gico de proyecto
+     */
     String descripcion
+
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
     static auditable = [ignore: []]
+
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
@@ -25,6 +34,7 @@ class ObjetivoEstrategicoProyecto implements Serializable {
             descripcion column: 'obesdscr'
         }
     }
+
     /**
      * Define las restricciones de cada uno de los campos
      */
@@ -35,7 +45,7 @@ class ObjetivoEstrategicoProyecto implements Serializable {
 
     /**
      * Genera un string para mostrar
-        * @return
+     * @return la descripci&oacute;n
      */
     String toString() {
         return this.descripcion

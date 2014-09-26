@@ -37,7 +37,7 @@ class Canton implements Serializable {
     double diff
 
     /**
-     * Zoom del cant&oacute;n en el mapa
+     * Zoom del mapa al mostrar el cant&oacute;n
      */
     double zoom
 

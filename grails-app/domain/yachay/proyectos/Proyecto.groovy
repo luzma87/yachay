@@ -17,54 +17,151 @@ import yachay.parametros.proyectos.Programa
 
 /*Proyecto*/
 /**
- * Clase para conectar con la tabla '' de la base de datos
+ * Clase para conectar con la tabla 'proy' de la base de datos
  */
 class Proyecto implements Serializable {
+    /**
+     * Unidad ejecutora del proyecto
+     */
     UnidadEjecutora unidadEjecutora
+    /**
+     * Etapa del proyecto
+     */
     Etapa etapa
+    /**
+     * Fase del proyecto
+     */
     Fase fase
+    /**
+     * Tipo de producto del proyecto
+     */
     TipoProducto tipoProducto
+    /**
+     * Estado del proyecto
+     */
     EstadoProyecto estadoProyecto
+    /**
+     * L&iacute;nea del proyecto
+     */
     Linea linea
+    /**
+     * Tipo de inveris&oacute;n del proyecto
+     */
     TipoInversion tipoInversion
+    /**
+     * Cobertura del proyecto
+     */
     Cobertura cobertura
+    /**
+     * Calificaci&oacute;n del proyecto
+     */
     Calificacion calificacion
+    /**
+     * Programa del proyecto
+     */
     Programa programa
+    /**
+     * C&oacute;digo del proyecto
+     */
     String codigoProyecto
+    /**
+     * Fecha de registro del proyecto
+     */
     Date fechaRegistro
+    /**
+     * Fecha de modificaci&oacute;n del proyecto
+     */
     Date fechaModificacion
+    /**
+     * Nombre del proyecto
+     */
     String nombre
+    /**
+     * Monto del proyecto
+     */
     Double monto
+    /**
+     * Producto del proyecto
+     */
     String producto
+    /**
+     * Descripci&oacute;n del proyecto
+     */
     String descripcion
+    /**
+     * Fecha de inicio planificada del proyecto
+     */
     Date fechaInicioPlanificada
+    /**
+     * Fecha de inicio real del proyecto
+     */
     Date fechaInicio
+    /**
+     * Fecha de fin planificada del proyecto
+     */
     Date fechaFinPlanificada
+    /**
+     * Fecha de fin real del proyecto
+     */
     Date fechaFin
+    /**
+     * Mes
+     */
     Integer mes = 1
+    /**
+     * Problema del proyecto
+     */
     String problema
+    /**
+     * Informaci&oacute;n d&iacute;as
+     */
     Integer informacionDias = 0
+    /**
+     * Subprograma del proyecto
+     */
     String subPrograma
+    /**
+     * Aprobado
+     */
     String aprobado
-    String aprobadoPoa /**/
-
+    /**
+     * Aprobado POA
+     */
+    String aprobadoPoa
+    /**
+     * Objetivo estrat&eacute;gico del proyecto
+     */
     ObjetivoEstrategicoProyecto objetivoEstrategico
-
+    /**
+     * Eje program&aacute;tico del proyecto
+     */
     EjeProgramatico ejeProgramatico
-
+    /**
+     * L&iacute;nea base del proyecto
+     */
     String lineaBase
+    /**
+     * Poblaci&oacute;n objetivo del proyecto
+     */
     String poblacionObjetivo
-
+    /**
+     * Objetivo gobierno resultado del proyecto
+     */
     ObjetivoGobiernoResultado objetivoGobiernoResultado
-
+    /**
+     * Programa presupuestario del proyecto
+     */
     ProgramaPresupuestario programaPresupuestario
-
+    /**
+     * C&oacute;digo ESIGEF del proyecto
+     */
     String codigoEsigef
 
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
     static auditable = [ignore: []]
+
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
@@ -116,6 +213,7 @@ class Proyecto implements Serializable {
             codigoEsigef column: 'proysigf'
         }
     }
+
     /**
      * Define las restricciones de cada uno de los campos
      */
@@ -162,7 +260,7 @@ class Proyecto implements Serializable {
 
     /**
      * Genera un string para mostrar
-        * @return
+     * @return el nombre limitado a 20 caracteres
      */
     String toString() {
         if (nombre.size() > 20) {
@@ -184,7 +282,7 @@ class Proyecto implements Serializable {
 
     /**
      * Genera un string para mostrar
-        * @return
+     * @return el nombre limitado a 65 caracteres
      */
     String toStringLargo() {
         if (nombre.size() > 65) {
@@ -206,12 +304,16 @@ class Proyecto implements Serializable {
 
     /**
      * Genera un string para mostrar
-        * @return
+     * @return el nombre completo
      */
     String toStringCompleto() {
         return this.nombre
     }
 
+    /**
+     * Busca las metas de un proyecto
+     * @return un mapa: [metasCoords: las coordenadas de las metas, metasTotal: las metas]
+     */
     def getMetas() {
         def metas = [], metasCoords = []
         MarcoLogico.findAllByProyectoAndTipoElemento(this, TipoElemento.get(2)).each { ml ->
@@ -226,5 +328,4 @@ class Proyecto implements Serializable {
         }
         return [metasCoords: metasCoords, metasTotal: metas]
     }
-
 }
