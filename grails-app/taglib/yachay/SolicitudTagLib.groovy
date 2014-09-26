@@ -11,6 +11,14 @@ import yachay.contratacion.DetalleMontoSolicitud
 class SolicitudTagLib {
     static namespace = 'slc'
 
+    /**
+     * Muestra los datos de una solicitud
+     * @param solicitud el objeto Solicitud
+     * @param editable si existe este par&aacute;metro los campos ser&aacute;n editables
+     * @param aprobacion si existe este par&aacute;metro la aprobaci&oacute;n sera editable
+     * @param perfil el perfil para decidir si los campos deben ser editables
+     * @param id el id de la solicitud (en lugar del objeto)
+     */
     def showSolicitud = { attrs ->
         def solicitud = attrs.solicitud
         def w = attrs.w ?: "1030px"
@@ -309,6 +317,12 @@ class SolicitudTagLib {
         out << html
     }
 
+    /**
+     * Muestra el &aacute;rea de revisiones de la solicitud
+     * @param solicitud el objeto Solicitud
+     * @param editable indica si los campos ser&aacute;n editables ("true", true, 1 o "1")
+     * @param perfil el perfil para decidir si los campos deben ser editables
+     */
     def revisiones = { attrs ->
         Solicitud solicitud = attrs.solicitud
         Prfl perfil = attrs.perfil ?: new Prfl()
@@ -355,6 +369,13 @@ class SolicitudTagLib {
         out << html + js
     }
 
+    /**
+     * Muestra el &aacute;rea de las revisiones
+     * @param solicitud el obejto Solicitud
+     * @param editable si es editable el &aacute;rea de gerencia
+     * @param editableA si es editable el &aacute;rea de asistente de gerencia
+     * @param tipo el tipo de revisi&oacute;n (GAF, GJ)
+     */
     def revisionFragment = { attrs ->
         Solicitud solicitud = attrs.solicitud
         def editableG = attrs.editable
@@ -472,6 +493,12 @@ class SolicitudTagLib {
         out << html
     }
 
+    /**
+     * Muestra el &aacute;rea de aprobaciones de la solicitud
+     * @param solicitud el objeto Solicitud
+     * @param editable indica si los campos ser&aacute;n editables ("true", true, 1 o "1")
+     * @param perfil el perfil para decidir si los campos deben ser editables
+     */
     def aprobaciones = { attrs ->
         Solicitud solicitud = attrs.solicitud
         Prfl perfil = attrs.perfil ?: new Prfl()
@@ -574,7 +601,10 @@ class SolicitudTagLib {
         out << html
     }
 
-
+    /**
+     * Muestra el header para los reportes
+     * @param title el t&iacute;tulo del reporte
+     */
     def headerReporte = { attrs ->
         def title = attrs.title ?: ""
 
@@ -613,6 +643,10 @@ class SolicitudTagLib {
         out << html
     }
 
+    /**
+     * Muestra la informaci&oacute;n de la solicitud para el reporte
+     * @param solicitud el objeto Solicitud
+     */
     def infoReporte = { attrs ->
         Solicitud solicitud = attrs.solicitud
 
@@ -728,6 +762,10 @@ class SolicitudTagLib {
         out << html
     }
 
+    /**
+     * Muestra el &aacute;rea de revisiones para el reporte
+     * @param solicitud el objeto Solicitud
+     */
     def revisionesReporte = { attrs ->
         Solicitud solicitud = attrs.solicitud
 
@@ -790,6 +828,10 @@ class SolicitudTagLib {
         out << html
     }
 
+    /**
+     * Muestra el &aacute;rea de aprobaciones para el reporte
+     * @param solicitud el objeto Solicitud
+     */
     def aprobacionesReporte = { attrs ->
         Solicitud solicitud = attrs.solicitud
         Aprobacion aprobacion = Aprobacion.findBySolicitud(solicitud)
@@ -825,6 +867,10 @@ class SolicitudTagLib {
         out << html
     }
 
+    /**
+     * Muestra el &aacute;rea de firmas para el reporte
+     * @param firmas la lista de usuarios que deben firmar
+     */
     def firmasReporte = { attrs ->
         def firmas = attrs.firmas
         def html = ''

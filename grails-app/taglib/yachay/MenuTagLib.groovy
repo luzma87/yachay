@@ -4,6 +4,13 @@ class MenuTagLib {
 
     def dbConnectionService
 
+    /**
+     * Crea el men&uacute;
+     * @param perfil perfil de la persona logueada
+     * @param bordeAlertas el estilo para el borde de las alertas
+     * @param divs define si muestra o no los divs
+     * @return el string con el HTML para el men&uacute;
+     */
     String createMenu(perfil, bordeAlertas, divs) {
 
         def borde = bordeAlertas ? "style='border:1px #1b97a7 solid'" : ""
@@ -29,13 +36,13 @@ class MenuTagLib {
             cnd.eachRow("select accn.accnnmbr as nombre, accn.accndscr as dscr, accn.tpac__id as tipo, " +
                     "ctrl.ctrlnmbr as controlador from ctrl, accn , prms " +
                     "where prms.accn__id = accn.accn__id and accn.ctrl__id=ctrl.ctrl__id and " +
-                    "prms.prfl__id = ${perfil.id} and accn.mdlo__id = ${it.id} order by accndscr") {rs ->
+                    "prms.prfl__id = ${perfil.id} and accn.mdlo__id = ${it.id} order by accndscr") { rs ->
                 if (rs.tipo == 1) {
                     menu += '<li>'
                     if (divs) {
                         menu += '<span></span>'
                     }
-                    menu += '<a href="' + g.createLink(controller: "${rs.controlador.substring(0,1).toLowerCase()+rs.controlador.substring(1,rs.controlador.size())}", action: "${rs.nombre}") + '" class="parent" title="' + rs.dscr + '">'
+                    menu += '<a href="' + g.createLink(controller: "${rs.controlador.substring(0, 1).toLowerCase() + rs.controlador.substring(1, rs.controlador.size())}", action: "${rs.nombre}") + '" class="parent" title="' + rs.dscr + '">'
                     menu += rs.dscr
                     menu += '</a>'
                     menu += '</li>'
@@ -49,7 +56,7 @@ class MenuTagLib {
 
         }
 
-        /** ***************************Alertas                                         ********************************************************/
+        /* * *************************** Alertas ********************************************************/
         menu += "<li " + borde + ">"
         menu += '<a href="#" class="parent" >'
         menu += 'Alertas'
@@ -73,7 +80,7 @@ class MenuTagLib {
         }
         menu += "</li>"
 
-        /** ***************************Logout                                         *********************************************************/
+        /* * *************************** Logout *********************************************************/
         menu += "<li>"
         menu += '<a href="#" class="parent" >'
         menu += 'Salir'
@@ -107,7 +114,10 @@ class MenuTagLib {
         return menu
     }
 
-    def generarMenuVertical = {attrs ->
+    /**
+     * Genera un men&uacute; vertical
+     */
+    def generarMenuVertical = { attrs ->
         def usuario = session.usuario
         def perfil = session.perfil
         if (usuario && perfil) {
@@ -133,7 +143,10 @@ class MenuTagLib {
         }
     }
 
-    def generarMenuHorizontal = {attrs ->
+    /**
+     * Genera un men&uacute; horizontal
+     */
+    def generarMenuHorizontal = { attrs ->
         def usuario = session.usuario
         def perfil = session.perfil
         if (usuario && perfil) {
@@ -162,7 +175,10 @@ class MenuTagLib {
         }
     }
 
-    def generarMenuPreview = {attrs ->
+    /**
+     * Genera una vista previa del men&uacute;
+     */
+    def generarMenuPreview = { attrs ->
         def perfil = yachay.seguridad.Prfl.get(attrs.perfil)
         def modulos
         def menu = createMenu(perfil, false, true)

@@ -85,9 +85,9 @@ class CustomTagLib {
     }
 
     /**
-     *
-     * @param id
-     * @param campo
+     * Muestra la modificaci&oacute;n con formato de n&uacute;mero, de fecha o sin formato, seg&uacute;n el tipo de dato
+     * @param id de la modificaci&oacute;n
+     * @param campo del que se quiere mostrar la modificaci&oacute;n
      */
     def mostrarCampoModificacion = { attrs ->
         def mod = ModificacionV2.get(attrs.id)
@@ -125,9 +125,11 @@ class CustomTagLib {
                 }
                 break;
         }
-
     }
 
+    /**
+     * Muestra un combo box con los meses en espa&ntilde;ol
+     */
     def selectMonth = { attrs ->
         def from = [1: "Enero", 2: "Febrero", 3: "Marzo", 4: "Abril", 5: "Mayo", 6: "Junio", 7: "Julio", 8: "Agosto", 9: "Septiembre", 10: "Octubre", 11: "Noviembre", 12: "Diciembre"]
         def optionKey = "key"
@@ -141,6 +143,8 @@ class CustomTagLib {
     }
 
     /**
+     * Copiado de FormTagLib de Grails, crea una columna que puede ordenarse
+     *
      * Renders a sortable column to support sorting in list views.<br/>
      *
      * Attribute title or titleKey is required. When both attributes are specified then titleKey takes precedence,
@@ -222,6 +226,8 @@ class CustomTagLib {
     } //sortable column
 
     /**
+     * Copiado de FormTagLib de Grails, crea links para paginaci&oacute;n
+     *
      * Creates next/previous links to support pagination for the current controller.<br/>
      *
      * &lt;g:paginate total="${Account.count()}" /&gt;<br/>
@@ -346,8 +352,10 @@ class CustomTagLib {
     } //pagination
 
     /**
-     * Devuelve un número con formato.
+     * Devuelve un número con formato.<br/>
      * Utiliza la configuración de números de la aplicación
+     * @param number el n&uacute;mero a formatear
+     * @param format el formato a utilizar
      */
     def formatNumber = { attrs ->
         def number = attrs.get('number')
