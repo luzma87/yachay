@@ -2,15 +2,15 @@ package yachay.parametros.poaPac
 /*Fuente de financiamiento del proyecto, puede ser estado, préstamo a organismos internacionales, aporte propio, etc.*/
 /**
  * Clase para conectar con la tabla 'fnte' de la base de datos<br/>
- * Fuente de financiamiento del proyecto, puede ser estado, pr&eacute;stamo a organismos internacionales, aporte propio, etc.
+ * Fuente de financiamiento del proyecto, puede ser estado, préstamo a organismos internacionales, aporte propio, etc.
  */
 class Fuente implements Serializable {
     /**
-     * Descripci&oacute;n de la fuente
+     * Descripción de la fuente
      */
     String descripcion
     /**
-     * C&oacute;digo de la fuente
+     * Código de la fuente
      */
     String codigo
 
@@ -45,7 +45,7 @@ class Fuente implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         "${this.descripcion}"

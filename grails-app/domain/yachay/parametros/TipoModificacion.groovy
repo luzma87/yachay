@@ -5,7 +5,7 @@ package yachay.parametros
  */
 class TipoModificacion implements Serializable {
     /**
-     * Descripci&oacute;n del tipo de modificaci&oacute;n
+     * Descripción del tipo de modificación
      */
     String descripcion
 

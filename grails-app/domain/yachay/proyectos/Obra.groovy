@@ -16,7 +16,7 @@ class Obra implements Serializable {
      */
     Unidad unidad
     /**
-     * C&oacute;digo de compras p&uacute;blicas de la obra
+     * Código de compras públicas de la obra
      */
     CodigoComprasPublicas codigoComprasPublicas
     /**
@@ -24,7 +24,7 @@ class Obra implements Serializable {
      */
     TipoCompra tipoCompra
     /**
-     * Asignaci&oacute;n de la obra
+     * Asignación de la obra
      */
     Asignacion asignacion
     /**
@@ -36,7 +36,7 @@ class Obra implements Serializable {
      */
     ModificacionProyecto modificacionProyecto
     /**
-     * Descripci&oacute;n de la obra
+     * Descripción de la obra
      */
     String descripcion
     /**
@@ -48,19 +48,19 @@ class Obra implements Serializable {
      */
     double costo
     /**
-     * Indica si est&aacute; o no en el primer cuatrimestre (S: s&iacute;)
+     * Indica si está o no en el primer cuatrimestre (S: sí)
      */
     String cuatrimestre1
     /**
-     * Indica si est&aacute; o no en el segundo cuatrimestre (S: s&iacute;)
+     * Indica si está o no en el segundo cuatrimestre (S: sí)
      */
     String cuatrimestre2
     /**
-     * Indica si est&aacute; o no en el tercer cuatrimestre (S: s&iacute;)
+     * Indica si está o no en el tercer cuatrimestre (S: sí)
      */
     String cuatrimestre3
     /**
-     * Valor de ejecuci&oacute;n de la obra
+     * Valor de ejecución de la obra
      */
     double ejecucion
     /**
@@ -80,7 +80,7 @@ class Obra implements Serializable {
      */
     String observaciones
     /**
-     * Indica si tiene o no certificado (S: s&iacute;, N: no)
+     * Indica si tiene o no certificado (S: sí, N: no)
      */
     String certificado    /* S--> si    N--> no*/
     /**

@@ -5,11 +5,11 @@ package yachay.seguridad
  */
 class Sesn implements Serializable {
     /**
-     * Usuario de la sesi&oacute;n
+     * Usuario de la sesión
      */
     Usro usuario
     /**
-     * Perfil de la sesi&oacute;n
+     * Perfil de la sesión
      */
     Prfl perfil
 

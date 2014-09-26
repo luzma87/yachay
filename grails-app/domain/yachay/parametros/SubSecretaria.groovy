@@ -5,15 +5,15 @@ package yachay.parametros
  */
 class SubSecretaria implements Serializable {
     /**
-     * Entidad de la subsecretar&iacute;a
+     * Entidad de la subsecretaría
      */
     Entidad entidad
     /**
-     * Nombre de la subsecretar&iacute;a
+     * Nombre de la subsecretaría
      */
     String nombre
     /**
-     * T&iacute;tulo de la subsecretar&iacute;a
+     * Título de la subsecretaría
      */
     String titulo
 

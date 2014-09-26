@@ -5,7 +5,7 @@ package yachay.parametros
  */
 class TipoProceso {
     /**
-     * Descripci&oacute;n del tipo de proceso
+     * Descripción del tipo de proceso
      */
     String descripcion
 
@@ -38,7 +38,7 @@ class TipoProceso {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         "${this.descripcion}"

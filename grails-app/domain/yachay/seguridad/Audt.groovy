@@ -5,23 +5,23 @@ package yachay.seguridad
  */
 class Audt implements Serializable {
     /**
-     * Usuario para la auditor&iacute;a
+     * Usuario para la auditoría
      */
     Usro usuario
     /**
-     * Perfil para la auditor&iacute;a
+     * Perfil para la auditoría
      */
     Prfl perfil
     /**
-     * Acci&oacute;n para la auditor&iacute;a
+     * Acción para la auditoría
      */
     String accion
     /**
-     * Controlador para la auditor&iacute;a
+     * Controlador para la auditoría
      */
     String controlador
     /**
-     * Id del registro para la auditor&iacute;a
+     * Id del registro para la auditoría
      */
     int registro
     /**
@@ -45,7 +45,7 @@ class Audt implements Serializable {
      */
     Date fecha
     /**
-     * Operaci&oacute;n realizada
+     * Operación realizada
      */
     String operacion
 
@@ -93,7 +93,7 @@ class Audt implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return el usuario, el dominio y la operaci&oacute;n concatenados
+     * @return el usuario, el dominio y la operación concatenados
      */
     String toString() {
         return "${this.usuario} ${this.dominio} ${this.operacion}"

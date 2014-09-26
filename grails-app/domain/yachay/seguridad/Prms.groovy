@@ -5,7 +5,7 @@ package yachay.seguridad
  */
 class Prms implements Serializable {
     /**
-     * Acci&oacute;n para el permiso
+     * Acción para el permiso
      */
     Accn accion
     /**

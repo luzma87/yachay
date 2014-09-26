@@ -2,16 +2,16 @@ package yachay.parametros.poaPac
 /*Año al cual corresponde el PAPP, cada año debe iniciarse una nueva gestión de proyectos. Es similar al período contable o año fiscal.*/
 /**
  * Clase para conectar con la tabla 'anio' de la base de datos<br/>
- * A&ntilde;o al cual corresponde el PAPP, cada a&ntildeo debe iniciarse una nueva
- * gesti&oacute;n de proyectos. Es similar al periodo contable o a&ntilde;o fiscal
+ * Año al cual corresponde el PAPP, cada a&ntildeo debe iniciarse una nueva
+ * gestión de proyectos. Es similar al periodo contable o año fiscal
  */
 class Anio implements Serializable {
     /**
-     * N&uacute;mero de a&ntilde;o
+     * Número de año
      */
     String anio
     /**
-     * Estado del a&ntilde;o: 0: no aprobado, 1: aprobado
+     * Estado del año: 0: no aprobado, 1: aprobado
      */
     int estado = 0 /* 0 -> no aprobado    1-> aprobadp */
 
@@ -46,7 +46,7 @@ class Anio implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return el n&uacute;mero del a&ntilde;o
+     * @return el número del año
      */
     String toString() {
         "${this.anio}"

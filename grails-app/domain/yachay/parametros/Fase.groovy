@@ -5,7 +5,7 @@ package yachay.parametros
  */
 class Fase implements Serializable {
     /**
-     * Descipci&oacute;n de la fase
+     * Descipción de la fase
      */
     String descripcion
 
@@ -38,7 +38,7 @@ class Fase implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         return this.descripcion

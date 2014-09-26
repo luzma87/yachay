@@ -9,11 +9,11 @@ package yachay.poa
  */
 class Actividad implements Serializable {
     /**
-     * C&oacute;digo de la actividad
+     * Código de la actividad
      */
     String codigo
     /**
-     * Descripci&oacute;n de la actividad
+     * Descripción de la actividad
      */
     String descripcion
 
@@ -48,7 +48,7 @@ class Actividad implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         "${this.descripcion}"

@@ -5,11 +5,11 @@ package yachay.avales
  */
 class EstadoAval {
     /**
-     * Descripci&oacute;n del estado del aval
+     * Descripción del estado del aval
      */
     String descripcion
     /**
-     * C&oacute;digo del estado del aval
+     * Código del estado del aval
      */
     String codigo
 

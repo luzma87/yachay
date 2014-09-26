@@ -16,11 +16,11 @@ class Paso implements Serializable {
      */
     String nombre
     /**
-     * Descripci&oacute;n del paso
+     * Descripción del paso
      */
     String descripcion
     /**
-     * Obligaci&oacute;n del paso
+     * Obligación del paso
      */
     String obligacion
     /**

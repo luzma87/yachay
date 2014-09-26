@@ -9,15 +9,15 @@ import yachay.proyectos.Proyecto
  */
 class Intervencion implements Serializable {
     /**
-     * Proyecto para la intervenci&oacute;n
+     * Proyecto para la intervención
      */
     Proyecto proyecto
     /**
-     * Sector de la intervenci&oacute;n
+     * Sector de la intervención
      */
     Sector sector
     /**
-     * Subsector de la intervenci&oacute;n
+     * Subsector de la intervención
      */
     SubSector subSector
 

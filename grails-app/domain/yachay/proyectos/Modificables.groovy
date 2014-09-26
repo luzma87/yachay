@@ -5,11 +5,11 @@ package yachay.proyectos
  */
 class Modificables {
     /**
-     * Modificaci&oacute;n proyecto
+     * Modificación proyecto
      */
     ModificacionProyecto modificacion
     /**
-     * Tipo (1: fin, 2: prop&oacute;sito, 3: indicador, 4: meta, 5: supuesto, 6: actividad, 7: medio de verificaci&oacute;n, 8: componentes)
+     * Tipo (1: fin, 2: propósito, 3: indicador, 4: meta, 5: supuesto, 6: actividad, 7: medio de verificación, 8: componentes)
      */
     int tipo
     /* 1 fin    2 proposito     3 indicador     4 meta     5 supuesto      6 actividad     7 medio de verificacion    8 componentes  */

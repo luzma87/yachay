@@ -12,11 +12,11 @@ class Provincia implements Serializable {
      */
     Zona zona
     /**
-     * Regi&oacute;n a la cual pertenece la provincia
+     * Región a la cual pertenece la provincia
      */
     Region region
     /**
-     * N&uacute;mero de provincia
+     * Número de provincia
      */
     Integer numero
     /**
@@ -37,16 +37,16 @@ class Provincia implements Serializable {
     String imagen
 
     /**
-     * C&oacute;digo de la provincia
+     * Código de la provincia
      */
     String codigo
 
     /**
-     * Posici&oacute;n geogr&aacute;fica de la provincia (longitud para ubicar en un mapa)
+     * Posición geográfica de la provincia (longitud para ubicar en un mapa)
      */
     double longitud
     /**
-     * Posici&oacute;n geogr&aacute;fica de la provincia (latitud para ubicar en un mapa)
+     * Posición geográfica de la provincia (latitud para ubicar en un mapa)
      */
     double latitud
 

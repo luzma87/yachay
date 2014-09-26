@@ -9,27 +9,27 @@ import yachay.proyectos.Proyecto
  */
 class Adquisiciones implements Serializable {
     /**
-     * Tipo de adquisici&oacute;n
+     * Tipo de adquisición
      */
     TipoAdquisicion tipoAdquisicion
     /**
-     * Proyecto de la adquisici&oacute;n
+     * Proyecto de la adquisición
      */
     Proyecto proyecto
     /**
-     * Tipo de procedencia de la adquisici&oacute;n
+     * Tipo de procedencia de la adquisición
      */
     TipoProcedencia tipoProcedencia
     /**
-     * Descripci&oacute;n de la adquisici&oacute;n
+     * Descripción de la adquisición
      */
     String descripcion
     /**
-     * Valor de la adquisici&oacute;n
+     * Valor de la adquisición
      */
     double valor
     /**
-     * Porcentaje de la adquisici&oacute;n
+     * Porcentaje de la adquisición
      */
     double porcentaje
 

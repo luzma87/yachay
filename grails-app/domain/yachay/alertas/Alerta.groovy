@@ -8,7 +8,7 @@ import yachay.seguridad.Usro
 class Alerta implements Serializable {
 
     /**
-     * Usuario que env&iacute;a la alerta
+     * Usuario que envía la alerta
      */
     Usro from
     /**
@@ -16,11 +16,11 @@ class Alerta implements Serializable {
      */
     Usro usro
     /**
-     * Fecha de env&iacute;o de la alerta
+     * Fecha de envío de la alerta
      */
     Date fec_envio
     /**
-     * Fecha de recepci&oacute;n de la alerta
+     * Fecha de recepción de la alerta
      */
     Date fec_recibido
     /**
@@ -32,7 +32,7 @@ class Alerta implements Serializable {
      */
     String controlador
     /**
-     * Acci&oacute;n a la cual se va a redireccionar al hacer clic en la alerta
+     * Acción a la cual se va a redireccionar al hacer clic en la alerta
      */
     String accion
     /**

@@ -5,15 +5,15 @@ package yachay.proyectos
  */
 class PoliticaBuenVivir implements Serializable {
     /**
-     * Objetivo del buen vivir de la pol&iacute;tica
+     * Objetivo del buen vivir de la política
      */
     ObjetivoBuenVivir objetivo
     /**
-     * C&oacute;digo de la pol&iacute;tica del buen vivir
+     * Código de la política del buen vivir
      */
     Integer codigo
     /**
-     * Descripci&oacute;n de la pol&iacute;tica del buen vivir
+     * Descripción de la política del buen vivir
      */
     String descripcion
 
@@ -50,7 +50,7 @@ class PoliticaBuenVivir implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return el c&oacute;digo del objetivo del buen vivir, el c&oacute;digo y la descripci&oacute;n concatenados
+     * @return el código del objetivo del buen vivir, el código y la descripción concatenados
      */
     String toString() {
         return this.objetivo.codigo + "." + this.codigo + " - " + this.descripcion

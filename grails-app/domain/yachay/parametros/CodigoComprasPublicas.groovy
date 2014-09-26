@@ -9,19 +9,19 @@ Esta tabla se toma tal como lo define el INCOP. No se maneja parámetro de nivel
  */
 class CodigoComprasPublicas implements Serializable {
     /**
-     * C&oacute;digo de compras p&uacute;blicas padre
+     * Código de compras públicas padre
      */
     CodigoComprasPublicas padre
     /**
-     * N&uacute;mero del c&oacute;digo de compras p&uacute;blicas
+     * Número del código de compras públicas
      */
     String numero
     /**
-     * Descripci&oacute;n del c&oacute;digo de compras p&uacute;blicas
+     * Descripción del código de compras públicas
      */
     String descripcion
     /**
-     * Nivel del c&oacute;digo de compras p&uacute;blicas
+     * Nivel del código de compras públicas
      */
     String nivel
     /**
@@ -72,7 +72,7 @@ class CodigoComprasPublicas implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return el n&uacute;mero
+     * @return el número
      */
     String toString() {
         return "${this.numero}"

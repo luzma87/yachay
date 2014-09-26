@@ -5,27 +5,27 @@ package yachay.proyectos
  */
 class Liquidacion {
     /**
-     * Obra de la liquidaci&oacute;n
+     * Obra de la liquidación
      */
     Obra obra
     /**
-     * Valor de la liquidaci&oacute;n
+     * Valor de la liquidación
      */
     double valor
     /**
-     * Fecha de registro de la liquidaci&oacute;n
+     * Fecha de registro de la liquidación
      */
     Date fechaRegistro = new Date()
     /**
-     * Fecha de adjudicaci&oacute;n de la liquidaci&oacute;n
+     * Fecha de adjudicación de la liquidación
      */
     Date fechaAdjudicacion
     /**
-     * Fecha de inicio de la liquidaci&oacute;n
+     * Fecha de inicio de la liquidación
      */
     Date fechaInicio
     /**
-     * Fecha de fin de la liquidaci&oacute;n
+     * Fecha de fin de la liquidación
      */
     Date fechaFin
 

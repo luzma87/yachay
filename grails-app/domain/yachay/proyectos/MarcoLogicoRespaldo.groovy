@@ -8,59 +8,59 @@ import yachay.parametros.TipoElemento
  */
 class MarcoLogicoRespaldo implements Serializable {
     /**
-     * Marco l&oacute;gico original (del que se hizo el respaldo)
+     * Marco lógico original (del que se hizo el respaldo)
      */
     MarcoLogico marcoLogicoOriginal     //el que se hizo repaldo
     /**
-     * Proyecto del marco l&oacute;gico de respaldo
+     * Proyecto del marco lógico de respaldo
      */
     Proyecto proyecto
     /**
-     * Tipo de elemento del marco l&oacute;gico de respaldo
+     * Tipo de elemento del marco lógico de respaldo
      */
     TipoElemento tipoElemento
     /**
-     * Marco l&oacute;gico padre del marco l&oacute;gico actual
+     * Marco lógico padre del marco lógico actual
      */
     MarcoLogico marcoLogico //padre
     /**
-     * Objeto del marco l&oacute;gico de respaldo
+     * Objeto del marco lógico de respaldo
      */
     String objeto
     /**
-     * Valor del monto del marco l&oacute;gico de respaldo
+     * Valor del monto del marco lógico de respaldo
      */
     double monto
     /**
-     * Estado del marco l&oacute;gico de respaldo (0: activo, 1: modificado)
+     * Estado del marco lógico de respaldo (0: activo, 1: modificado)
      */
     int estado = 0 /* 0 -> activo por facilidad en la base de datos  1-> modificado*/
     /**
-     * Categor&iacute;a del marco l&oacute;gico de respaldo
+     * Categoría del marco lógico de respaldo
      */
     Categoria categoria;
     /**
-     * Fecha de inicio del marco l&oacute;gico de respaldo
+     * Fecha de inicio del marco lógico de respaldo
      */
     Date fechaInicio
     /**
-     * Fecha de fin del marco l&oacute;gico de respaldo
+     * Fecha de fin del marco lógico de respaldo
      */
     Date fechaFin
     /**
-     * Unidad ejecutora responsable del marco l&oacute;gico de respaldo
+     * Unidad ejecutora responsable del marco lógico de respaldo
      */
     UnidadEjecutora responsable
     /**
-     * Valor del aporte del marco l&oacute;gico de respaldo
+     * Valor del aporte del marco lógico de respaldo
      */
     double aporte = 0;
     /**
-     * Indica si tiene o no asignaci&oacute;n en el POA (S: s&iacute;, N: no)
+     * Indica si tiene o no asignación en el POA (S: sí, N: no)
      */
     String tieneAsignacion = "S" //'S' - > esta en el POA (asignacion), 'N' -> no esta
     /**
-     * N&uacute;mero del marco l&oacute;gico de respaldo
+     * Número del marco lógico de respaldo
      */
     int numero = 0;
 
@@ -134,9 +134,9 @@ class MarcoLogicoRespaldo implements Serializable {
     }
 
     /**
-     * Calcula el total de inversi&oacute;n de las metas del marco l&oacute;gico para un a&ntilde;o dado
-     * @param anio el a&ntilde;o para el cual se quiere calcular el total de las metas
-     * @return el total de inversi&oacute;n de las metas del marco l&oacute;gico para el a&ntilde;o dado
+     * Calcula el total de inversión de las metas del marco lógico para un año dado
+     * @param anio el año para el cual se quiere calcular el total de las metas
+     * @return el total de inversión de las metas del marco lógico para el año dado
      */
     double totalMetasAnio(anio) {
         def metas = Meta.findAllByMarcoLogicoAndAnio(this, anio)

@@ -20,19 +20,19 @@ class Responsable implements Serializable {
      */
     String apellido
     /**
-     * N&uacute;mero de c&eacute;dula del responsable
+     * Número de cédula del responsable
      */
     String cedula
     /**
-     * Direcci&oacute;n de e-mail del responsable
+     * Dirección de e-mail del responsable
      */
     String email
     /**
-     * Direcci&oacute;n de e-mail del responsable
+     * Dirección de e-mail del responsable
      */
     String email2
     /**
-     * N&uacute;mero de tel&eacute;fono del responsable
+     * Número de teléfono del responsable
      */
     String telefono
     /**

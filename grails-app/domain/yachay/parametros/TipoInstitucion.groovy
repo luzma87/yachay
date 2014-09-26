@@ -5,11 +5,11 @@ package yachay.parametros
  */
 class TipoInstitucion implements Serializable {
     /**
-     * C&oacute;digo del tipo de instituci&oacute;n
+     * Código del tipo de institución
      */
     String codigo
     /**
-     * Descripci&oacute;n del tipo de instituci&oacute;n
+     * Descripción del tipo de institución
      */
     String descripcion
 
@@ -44,7 +44,7 @@ class TipoInstitucion implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         return this.descripcion

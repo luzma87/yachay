@@ -5,7 +5,7 @@ package yachay.parametros
  */
 class Cobertura implements Serializable {
     /**
-     * Descipci&oacute;n de la cobertura
+     * Descipción de la cobertura
      */
     String descripcion
 

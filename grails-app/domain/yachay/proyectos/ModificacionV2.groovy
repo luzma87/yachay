@@ -27,15 +27,15 @@ class ModificacionV2 {
      */
     String newValue
     /**
-     * Fecha de la modificaci&oacute;n
+     * Fecha de la modificación
      */
     Date fecha = new Date()
     /**
-     * Usuario que efectu&oacute; la modificaci&oacute;n
+     * Usuario que efectuó la modificación
      */
     Usro usuario
     /**
-     * Tipo de modificaci&oacute;n
+     * Tipo de modificación
      */
     String tipo
 

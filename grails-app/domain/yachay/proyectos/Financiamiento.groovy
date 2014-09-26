@@ -11,7 +11,7 @@ import yachay.proyectos.Proyecto
  */
 class Financiamiento implements Serializable {
     /**
-     * A&ntilde;o del financiamiento
+     * Año del financiamiento
      */
     Anio anio
     /**

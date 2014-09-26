@@ -7,11 +7,11 @@ import yachay.parametros.proyectos.PoliticaAgendaSocial
  */
 class PoliticasAgendaProyecto implements Serializable {
     /**
-     * Pol&iacute;tica de agenda social
+     * Política de agenda social
      */
     PoliticaAgendaSocial politicaAgendaSocial
     /**
-     * Proyecto de la pol&iacute;tica de agenda de proyecto
+     * Proyecto de la política de agenda de proyecto
      */
     Proyecto proyecto
 

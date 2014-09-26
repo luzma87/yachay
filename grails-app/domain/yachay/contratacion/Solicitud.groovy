@@ -30,25 +30,25 @@ class Solicitud {
      */
     String observaciones
     /**
-     * Fecha de revisi&oacute;n por parte del asistente de la gerencia Administrativa Financiera
+     * Fecha de revisión por parte del asistente de la gerencia Administrativa Financiera
      */
     Date revisadoAdministrativaFinanciera       //asistente
     /**
-     * Fecha de revisi&oacute;n por parte del asistente de la gerencia Jur&iacute;dica
+     * Fecha de revisión por parte del asistente de la gerencia Jurídica
      */
     Date revisadoJuridica                       //asistente
     /**
-     * Fecha de revisi&oacute;n por parte del asistente de la gerencia de Direcci&oacute;n de proyectos
-     * @deprecated se pidi&oacute; la eliminaci&oacute;n de este campo
+     * Fecha de revisión por parte del asistente de la gerencia de Dirección de proyectos
+     * @deprecated se pidió la eliminación de este campo
      */
     @Deprecated
     Date revisadoDireccionProyectos             //ya no vale
     /**
-     * Fecha de validaci&oacute;n por parte de la gerencia Administrativa Financiera
+     * Fecha de validación por parte de la gerencia Administrativa Financiera
      */
     Date validadoAdministrativaFinanciera       //gerente
     /**
-     * Fecha de validaci&oacute;n por parte de la gerencia Jur&iacute;dica
+     * Fecha de validación por parte de la gerencia Jurídica
      */
     Date validadoJuridica                       //gerente
     /**
@@ -56,17 +56,17 @@ class Solicitud {
      */
     String observacionesAdministrativaFinanciera
     /**
-     * Observaciones por parte del asistente de la gerencia Jur&iacute;dica
+     * Observaciones por parte del asistente de la gerencia Jurídica
      */
     String observacionesJuridica
     /**
-     * Observaciones por parte del asistente de la gerencia de Direcci&oacute;n de proyectos
-     * @deprecated se pidi&oacute; la eliminaci&oacute;n de este campo
+     * Observaciones por parte del asistente de la gerencia de Dirección de proyectos
+     * @deprecated se pidió la eliminación de este campo
      */
     @Deprecated
     String observacionesDireccionProyectos
     /**
-     * Path del archivo de los t&eacute;rminos de referencia
+     * Path del archivo de los términos de referencia
      */
     String pathPdfTdr
 
@@ -91,14 +91,14 @@ class Solicitud {
      */
     String formaPago
     /**
-     * Plazo de ejecuci&oacute;n en d&iacute;s
+     * Plazo de ejecución en dís
      */
     Integer plazoEjecucion
 
     /**
      * Estado de la solicitud:<br/>
      * &nbsp;&nbsp;&nbsp;&nbsp;P: pendiente, se puede modificar y revisar
-     * &nbsp;&nbsp;&nbsp;&nbsp;A: ya se realiz&oacute; ;a reuni&oacute;n de aprobaci&oacute;n, ya no se pueden modificar los datos ni las fechas/observaciones de revisi&oacute;n
+     * &nbsp;&nbsp;&nbsp;&nbsp;A: ya se realizó ;a reunión de aprobación, ya no se pueden modificar los datos ni las fechas/observaciones de revisión
      */
     String estado = "P" // P->pendiente, se puede modificar y revisar
     // A->ya se hizo la reunion de aprobacion, ya no se pueden modificar los datos ni las fechas/observaciones de revision
@@ -121,33 +121,33 @@ class Solicitud {
      */
     String pathCuadroComparativo
     /**
-     * Path del documento del &aacute;nalisis de costos
+     * Path del documento del ánalisis de costos
      */
     String pathAnalisisCostos
 
     /**
-     * Indica si se incluir&aacute; o no en la reuni&oacute;n de aprovaci&oacute;n<br/>
-     * &nbsp;&nbsp;&nbsp;&nbsp;S: s&iacute;
+     * Indica si se incluirá o no en la reunión de aprovación<br/>
+     * &nbsp;&nbsp;&nbsp;&nbsp;S: sí
      */
     String incluirReunion
 
     /**
-     * Path del documento de revisi&oacute;n por parte del asistente de gerencia Administrativa Financiera
+     * Path del documento de revisión por parte del asistente de gerencia Administrativa Financiera
      */
     String pathRevisionGAF
     /**
-     * Path del documento de revisi&oacute;n por parte del asistente de gerencia Jur&iacute;dica
+     * Path del documento de revisión por parte del asistente de gerencia Jurídica
      */
     String pathRevisionGJ
     /**
-     * Path del documento de revisi&oacute;n por parte del asistente de gerencia de Direcci&oacute;n de proyectos
-     * @deprecated se pidi&oacute; la eliminaci&oacute;n de este campo
+     * Path del documento de revisión por parte del asistente de gerencia de Dirección de proyectos
+     * @deprecated se pidió la eliminación de este campo
      */
     @Deprecated
     String pathRevisionGDP
 
     /**
-     * Fecha en la que se solicit&oacute; la inclusi&oacute;n en la reuni&oacute;n de aprovaci&oacute;n
+     * Fecha en la que se solicitó la inclusión en la reunión de aprovación
      */
     Date fechaPeticionReunion
 

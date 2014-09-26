@@ -10,47 +10,47 @@ import yachay.seguridad.Usro
  */
 class ModificacionProyecto implements Serializable {
     /**
-     * Informe de la modificaci&oacute;n de proyecto
+     * Informe de la modificación de proyecto
      */
     Informe informe
     /**
-     * Tipo de modificaci&oacute;n de proyecto
+     * Tipo de modificación de proyecto
      */
     TipoModificacion tipoModificacion
     /**
-     * Proyecto de la modificaci&oacute;n de proyecto
+     * Proyecto de la modificación de proyecto
      */
     Proyecto proyecto
     /**
-     * Unidad ejecutora de la modificaci&oacute;n de proyecto
+     * Unidad ejecutora de la modificación de proyecto
      */
     UnidadEjecutora unidad
     /**
-     * Valor de la modificaci&oacute;n de proyecto
+     * Valor de la modificación de proyecto
      */
     double valor
     /**
-     * DEscripci&oacute;n de la modificaci&oacute;n de proyecto
+     * DEscripción de la modificación de proyecto
      */
     String descripcion
     /**
-     * Fecha de la modificaci&oacute;n de proyecto
+     * Fecha de la modificación de proyecto
      */
     Date fecha
     /**
-     * Fecha de aprobaci&oacute;n de la modificaci&oacute;n de proyecto
+     * Fecha de aprobación de la modificación de proyecto
      */
     Date fechaAprobacion
     /**
-     * Usuario que solicita la modificaci&oacute;n de proyecto
+     * Usuario que solicita la modificación de proyecto
      */
     Usro solicitante
     /**
-     * Usuario responsable de la modificaci&oacute;n de proyecto
+     * Usuario responsable de la modificación de proyecto
      */
     Usro responsable
     /**
-     * Estado de la modificaci&oacute;n de proyecto (0: solicitada, 1: negada, 2: aprobada, 3: usada)
+     * Estado de la modificación de proyecto (0: solicitada, 1: negada, 2: aprobada, 3: usada)
      */
     int estado = 0 /* 0 -> solicitada | 1-> negada | 2-> aprobada  | 3-> usada*/
     /**
@@ -58,7 +58,7 @@ class ModificacionProyecto implements Serializable {
      */
     String observaciones
     /**
-     * A&ntilde;o de la modificaci&oacute;n de proyecto
+     * Año de la modificación de proyecto
      */
     Anio anio
 

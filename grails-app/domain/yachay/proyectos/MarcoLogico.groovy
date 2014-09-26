@@ -11,67 +11,67 @@ import yachay.parametros.TipoElemento
  */
 class MarcoLogico implements Serializable {
     /**
-     * Proyecto del marco l&oacute;gico
+     * Proyecto del marco lógico
      */
     Proyecto proyecto
     /**
-     * Tipo de elemento del marco l&oacute;gico
+     * Tipo de elemento del marco lógico
      */
     TipoElemento tipoElemento
     /**
-     * Marco l&oacute;gico padre del marco l&oacute;gico actual
+     * Marco lógico padre del marco lógico actual
      */
     MarcoLogico marcoLogico
     /**
-     * Modificaci&oacute;n del marco l&oacute;gico
+     * Modificación del marco lógico
      */
     ModificacionProyecto modificacionProyecto
     /**
-     * Objeto del marco l&oacute;gico
+     * Objeto del marco lógico
      */
     String objeto
     /**
-     * Monto del marco l&oacute;gico
+     * Monto del marco lógico
      */
     double monto
     /**
-     * Padre de la modificaci&oacute;n del marco l&oacute;gico
+     * Padre de la modificación del marco lógico
      */
     MarcoLogico padreMod
     /**
-     * Estado del marco l&oacute;gico (0: activo, 1: modificado)
+     * Estado del marco lógico (0: activo, 1: modificado)
      */
     int estado = 0 /* 0 -> activo por facilidad en la base de datos  1-> modificado*/
     /**
-     * Categor&iacute;a del marco l&oacute;gico
+     * Categoría del marco lógico
      */
     Categoria categoria;
     /**
-     * Fecha de inicio del marco l&oacute;gico
+     * Fecha de inicio del marco lógico
      */
     Date fechaInicio
     /**
-     * Fecha de fin del marco l&oacute;gico
+     * Fecha de fin del marco lógico
      */
     Date fechaFin
     /**
-     * Unidad ejecutora responsable del marco l&oacute;gico
+     * Unidad ejecutora responsable del marco lógico
      */
     UnidadEjecutora responsable
     /**
-     * Valor de aporte del marco l&oacute;gico
+     * Valor de aporte del marco lógico
      */
     double aporte = 0;
     /**
-     * Indica si tiene o no asignaci&oacute;n en el POA (S: s&iacute;, N: no)
+     * Indica si tiene o no asignación en el POA (S: sí, N: no)
      */
     String tieneAsignacion = "S" //'S' - > esta en el POA (asignacion), 'N' -> no esta
     /**
-     * N&uacute;mero del marco l&oacute;gico
+     * Número del marco lógico
      */
     int numero = 0;
     /**
-     * N&uacute;mero de componente del marco l&oacute;gico
+     * Número de componente del marco lógico
      */
     String numeroComp;
 
@@ -150,9 +150,9 @@ class MarcoLogico implements Serializable {
     }
 
     /**
-     * Calcula el total de inversi&oacute;n de las metas del marco l&oacute;gico para un a&ntilde;o dado
-     * @param anio el a&ntilde;o para el cual se quiere calcular el total de las metas
-     * @return el total de inversi&oacute;n de las metas del marco l&oacute;gico para el a&ntilde;o dado
+     * Calcula el total de inversión de las metas del marco lógico para un año dado
+     * @param anio el año para el cual se quiere calcular el total de las metas
+     * @return el total de inversión de las metas del marco lógico para el año dado
      */
     double totalMetasAnio(anio) {
         def metas = Meta.findAllByMarcoLogicoAndAnio(this, anio)

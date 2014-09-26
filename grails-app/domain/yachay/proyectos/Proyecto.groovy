@@ -41,11 +41,11 @@ class Proyecto implements Serializable {
      */
     EstadoProyecto estadoProyecto
     /**
-     * L&iacute;nea del proyecto
+     * Línea del proyecto
      */
     Linea linea
     /**
-     * Tipo de inveris&oacute;n del proyecto
+     * Tipo de inverisón del proyecto
      */
     TipoInversion tipoInversion
     /**
@@ -53,7 +53,7 @@ class Proyecto implements Serializable {
      */
     Cobertura cobertura
     /**
-     * Calificaci&oacute;n del proyecto
+     * Calificación del proyecto
      */
     Calificacion calificacion
     /**
@@ -61,7 +61,7 @@ class Proyecto implements Serializable {
      */
     Programa programa
     /**
-     * C&oacute;digo del proyecto
+     * Código del proyecto
      */
     String codigoProyecto
     /**
@@ -69,7 +69,7 @@ class Proyecto implements Serializable {
      */
     Date fechaRegistro
     /**
-     * Fecha de modificaci&oacute;n del proyecto
+     * Fecha de modificación del proyecto
      */
     Date fechaModificacion
     /**
@@ -85,7 +85,7 @@ class Proyecto implements Serializable {
      */
     String producto
     /**
-     * Descripci&oacute;n del proyecto
+     * Descripción del proyecto
      */
     String descripcion
     /**
@@ -113,7 +113,7 @@ class Proyecto implements Serializable {
      */
     String problema
     /**
-     * Informaci&oacute;n d&iacute;as
+     * Información días
      */
     Integer informacionDias = 0
     /**
@@ -129,11 +129,11 @@ class Proyecto implements Serializable {
      */
     String aprobadoPoa
     /**
-     * Objetivo estrat&eacute;gico del proyecto
+     * Objetivo estratégico del proyecto
      */
     ObjetivoEstrategicoProyecto objetivoEstrategico
     /**
-     * Eje program&aacute;tico del proyecto
+     * Eje programático del proyecto
      */
     EjeProgramatico ejeProgramatico
     /**
@@ -141,7 +141,7 @@ class Proyecto implements Serializable {
      */
     String lineaBase
     /**
-     * Poblaci&oacute;n objetivo del proyecto
+     * Población objetivo del proyecto
      */
     String poblacionObjetivo
     /**
@@ -153,7 +153,7 @@ class Proyecto implements Serializable {
      */
     ProgramaPresupuestario programaPresupuestario
     /**
-     * C&oacute;digo ESIGEF del proyecto
+     * Código ESIGEF del proyecto
      */
     String codigoEsigef
 

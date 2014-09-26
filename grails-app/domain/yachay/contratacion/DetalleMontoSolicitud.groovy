@@ -11,11 +11,11 @@ class DetalleMontoSolicitud {
      */
     Solicitud solicitud
     /**
-     * A&ntilde;o para el cual se est&aacute; detallando
+     * Año para el cual se está detallando
      */
     Anio anio
     /**
-     * Monto para el a&ntilde;o especificado
+     * Monto para el año especificado
      */
     double monto
 

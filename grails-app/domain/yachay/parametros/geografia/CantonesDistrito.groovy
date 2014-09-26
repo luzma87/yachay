@@ -10,7 +10,7 @@ class CantonesDistrito implements Serializable {
      */
     int dstt__id
     /**
-     * Id del cant&oacute;n
+     * Id del cantón
      */
     int cntn__id
 

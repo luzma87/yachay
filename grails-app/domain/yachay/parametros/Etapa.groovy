@@ -3,11 +3,11 @@ package yachay.parametros
 
 /**
  * Clase para conectar con la tabla 'etpa' de la base de datos<br/>
- * Guarda un cat&aacute;logo de posibles etapas del proyecto, como PERFIL, PRIORIZADO, INVERSION
+ * Guarda un catálogo de posibles etapas del proyecto, como PERFIL, PRIORIZADO, INVERSION
  */
 class Etapa implements Serializable {
     /**
-     * Descipci&oacute;n de la etapa
+     * Descipción de la etapa
      */
     String descripcion
 
@@ -40,7 +40,7 @@ class Etapa implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         return this.descripcion

@@ -5,11 +5,11 @@ package yachay.proyectos
  */
 class ObjetivoBuenVivir implements Serializable {
     /**
-     * C&oacute;digo del objetivo de buen vivir
+     * Código del objetivo de buen vivir
      */
     Integer codigo
     /**
-     * Descripci&oacute;n del objetivo de buen vivir
+     * Descripción del objetivo de buen vivir
      */
     String descripcion
 
@@ -44,7 +44,7 @@ class ObjetivoBuenVivir implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return el c&oaute;digo y la descripci&oacute;n concatenados
+     * @return el c&oaute;digo y la descripción concatenados
      */
     String toString() {
         return this.codigo + " - " + this.descripcion

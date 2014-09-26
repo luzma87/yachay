@@ -6,11 +6,11 @@ package yachay.proyectos
  */
 class ObjetivoEstrategicoProyecto implements Serializable {
     /**
-     * Orden del objetivo estrat&eacute;gico de proyecto
+     * Orden del objetivo estratégico de proyecto
      */
     Integer orden
     /**
-     * Descripci&oacute;n del objetivo estrat&eacute;gico de proyecto
+     * Descripción del objetivo estratégico de proyecto
      */
     String descripcion
 
@@ -45,7 +45,7 @@ class ObjetivoEstrategicoProyecto implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         return this.descripcion

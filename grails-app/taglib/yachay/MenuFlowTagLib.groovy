@@ -1,15 +1,15 @@
 package yachay
 
 /**
- * Tag del men&uacute; para SEMPLADES
+ * Tag del menú para SEMPLADES
  */
 class MenuFlowTagLib {
     static namespace = 'mf'
 
     /**
-     * Crea un men&uacute; para SEMPLADES
-     * @param items los items a ubicar en el men&uacute;
-     * @param links indica si crear o no links (crea a menos que este par&aacute;metro sea: "false", false, "0", 0)
+     * Crea un menú para SEMPLADES
+     * @param items los items a ubicar en el menú
+     * @param links indica si crear o no links (crea a menos que este parámetro sea: "false", false, "0", 0)
      */
     def menuSemplades = { attrs ->
         def str = ""

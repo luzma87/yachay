@@ -21,11 +21,11 @@ class Meta implements Serializable {
      */
     Parroquia parroquia
     /**
-     * Marco l&oacute;n de la meta
+     * Marco lón de la meta
      */
     MarcoLogico marcoLogico
     /**
-     * Asignaci&oacute;n de la meta
+     * Asignación de la meta
      */
     Asignacion asignacion
     /**
@@ -33,11 +33,11 @@ class Meta implements Serializable {
      */
     Unidad unidad
     /**
-     * A&ntilde;o de la meta
+     * Año de la meta
      */
     Anio anio
     /**
-     * Descripci&oacute;n de la meta
+     * Descripción de la meta
      */
     String descripcion
     /**
@@ -45,7 +45,7 @@ class Meta implements Serializable {
      */
     double indicador
     /**
-     * Inversi&oacute;n de la meta
+     * Inversión de la meta
      */
     double inversion = 0
     /**
@@ -69,7 +69,7 @@ class Meta implements Serializable {
      */
     double zoom
     /**
-     * Modificaci&oacute;n proyecto de la meta
+     * Modificación proyecto de la meta
      */
     ModificacionProyecto modificacion
     /**
@@ -130,7 +130,7 @@ class Meta implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n limitada a 20 caracteres
+     * @return la descripción limitada a 20 caracteres
      */
     String toString() {
         if (descripcion.size() > 20) {

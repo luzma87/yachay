@@ -5,19 +5,19 @@ package yachay.proyectos
  */
 class EstudiosTecnicos implements Serializable {
     /**
-     * Proyecto del estudio t&eacute;cnico
+     * Proyecto del estudio técnico
      */
     Proyecto proyecto
     /**
-     * Resumen del estudio t&eacute;cnico
+     * Resumen del estudio técnico
      */
     String resumen
     /**
-     * Path del archivo del documento del estudio t&eacute;cnico
+     * Path del archivo del documento del estudio técnico
      */
     String documento
     /**
-     * Fecha del estudio t&eacute;cnico
+     * Fecha del estudio técnico
      */
     Date fecha
 

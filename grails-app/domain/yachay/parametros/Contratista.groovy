@@ -5,7 +5,7 @@ package yachay.parametros
  */
 class Contratista {
     /**
-     * Direcci&oacute;n del contratista
+     * Dirección del contratista
      */
     String direccion
     /**
@@ -13,7 +13,7 @@ class Contratista {
      */
     String ruc
     /**
-     * Fecha de creaci&oacute;n del contratista
+     * Fecha de creación del contratista
      */
     Date fecha
     /**
@@ -29,7 +29,7 @@ class Contratista {
      */
     String apellido
     /**
-     * Direci&oacute;n e-mail del contratista
+     * Direción e-mail del contratista
      */
     String mail
     /**
@@ -41,7 +41,7 @@ class Contratista {
      */
     String estado
     /**
-     * Tel&eacute;fono del contratista
+     * Teléfono del contratista
      */
     String telefono
 

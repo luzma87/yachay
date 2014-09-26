@@ -8,7 +8,7 @@ import yachay.seguridad.Usro
  */
 class ModificacionTechos {
     /**
-     * Presupuesto que env&iacute;a
+     * Presupuesto que envía
      */
     PresupuestoUnidad desde
     /**
@@ -16,19 +16,19 @@ class ModificacionTechos {
      */
     PresupuestoUnidad recibe
     /**
-     * Tipo de modificaci&oacute;n (1: corriente a corriente, 2: corriente a inversi&oacuet;n, 3: eliminar asignaci&oacute;n)
+     * Tipo de modificación (1: corriente a corriente, 2: corriente a inversi&oacuet;n, 3: eliminar asignación)
      */
     int tipo /*  1-> corriente a corriente    2-> corriente a inversion  3-> eliminar asignacion */
     /**
-     * Valor de la modificaci&oacute;n
+     * Valor de la modificación
      */
     double valor
     /**
-     * Fecha de la modificaci&oacute;n
+     * Fecha de la modificación
      */
     Date fecha
     /**
-     * Usuario que efectu&oacute; la modificaci&oacute;n
+     * Usuario que efectuó la modificación
      */
     Usro usuario
 

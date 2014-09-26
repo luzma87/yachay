@@ -5,7 +5,7 @@ package yachay.parametros
  */
 class TipoGasto implements Serializable {
     /**
-     * Descripci&oacute;n del tipo de gasto
+     * Descripción del tipo de gasto
      */
     String descripcion
 
@@ -38,7 +38,7 @@ class TipoGasto implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         "${this.descripcion}"

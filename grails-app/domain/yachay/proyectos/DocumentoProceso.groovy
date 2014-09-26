@@ -7,7 +7,7 @@ import yachay.parametros.TipoDocumento
  */
 class DocumentoProceso {
     /**
-     * Liquidaci&oacute;n
+     * Liquidación
      */
     Liquidacion liquidacion
     /**
@@ -15,7 +15,7 @@ class DocumentoProceso {
      */
     TipoDocumento tipo
     /**
-     * Descripci&oacute;n
+     * Descripción
      */
     String descripcion
     /**
@@ -70,7 +70,7 @@ class DocumentoProceso {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         return this.descripcion

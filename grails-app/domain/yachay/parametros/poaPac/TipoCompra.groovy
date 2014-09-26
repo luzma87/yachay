@@ -6,7 +6,7 @@ package yachay.parametros.poaPac
  */
 class TipoCompra implements Serializable {
     /**
-     * Descripci&oacute;n del tipo de compra
+     * Descripción del tipo de compra
      */
     String descripcion
 
@@ -39,7 +39,7 @@ class TipoCompra implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         "${this.descripcion}"

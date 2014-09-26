@@ -5,11 +5,11 @@ package yachay.parametros
  */
 class TipoAprobacion {
     /**
-     * C&oacute;digo del tipo de aprobaci&oacute;n
+     * Código del tipo de aprobación
      */
     String codigo
     /**
-     * Descripci&oacute;n del tipo de aprobaci&oacute;n
+     * Descripción del tipo de aprobación
      */
     String descripcion
 

@@ -5,27 +5,27 @@ package yachay.seguridad
  */
 class Accn {
     /**
-     * Nombre de la acci&oacute;n
+     * Nombre de la acción
      */
     String accnNombre
     /**
-     * Descripci&oacute;n de la acci&oacute;n
+     * Descripción de la acción
      */
     String accnDescripcion
     /**
-     * Indica si la acci&oacute;n es o no auditable
+     * Indica si la acción es o no auditable
      */
     int accnAuditable
     /**
-     * Controlador al cual pertenece la acci&oacute;n
+     * Controlador al cual pertenece la acción
      */
     Ctrl control
     /**
-     * M&oacute;dulo al cual pertenece la acci&oacute;n
+     * Módulo al cual pertenece la acción
      */
     Modulo modulo
     /**
-     * Tipo de acci&oacute;n
+     * Tipo de acción
      */
     Tpac tipo
 
@@ -65,7 +65,7 @@ class Accn {
 
     /**
      * Genera un string para mostrar
-     * @return el nombre de controlador y el nombre de la acci&oacute;n concatenados
+     * @return el nombre de controlador y el nombre de la acción concatenados
      */
     String toString() {
         "${this.control.ctrlNombre} : ${this.accnNombre} "

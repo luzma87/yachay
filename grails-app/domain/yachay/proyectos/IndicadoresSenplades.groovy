@@ -11,7 +11,7 @@ class IndicadoresSenplades implements Serializable {
      */
     Proyecto proyecto
     /**
-     * Valor de la tasa de an&aacute;lisis financiero del indicador
+     * Valor de la tasa de análisis financiero del indicador
      */
     double tasaAnalisisFinanciero
     /**
@@ -23,15 +23,15 @@ class IndicadoresSenplades implements Serializable {
      */
     double tasaInternaDeRetorno
     /**
-     * Valor de la tasa de an&aacute;lisis econ&oacute;mico del indicador
+     * Valor de la tasa de análisis económico del indicador
      */
     double tasaAnalisisEconomico
     /**
-     * Valor actual neto econ&oacute;mico del indicador
+     * Valor actual neto económico del indicador
      */
     double valorActualNetoEconomico
     /**
-     * Valor de la tasa interna de retorno econ&oacute;mico del indicador
+     * Valor de la tasa interna de retorno económico del indicador
      */
     double tasaInternaDeRetornoEconomico
     /**
@@ -39,7 +39,7 @@ class IndicadoresSenplades implements Serializable {
      */
     double costoBeneficio
     /**
-     * Pierde pa&iacute;s
+     * Pierde país
      */
     String pierdePais
     /**
@@ -47,7 +47,7 @@ class IndicadoresSenplades implements Serializable {
      */
     String impactos
     /**
-     * Metodolog&iacute;a del indicador
+     * Metodología del indicador
      */
     String metodologia
     /**

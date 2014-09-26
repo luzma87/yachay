@@ -5,11 +5,11 @@ import yachay.parametros.proyectos.Politica
 /*Políticas que se aplican en el proyecto*/
 /**
  * Clase para conectar con la tabla 'plpy' de la base de datos<br/>
- * Pol&iacute;ticas que se aplican en el proyecto
+ * Políticas que se aplican en el proyecto
  */
 class PoliticasProyecto implements Serializable {
     /**
-     * Pol&iacute;tica
+     * Política
      */
     Politica politica
     /**

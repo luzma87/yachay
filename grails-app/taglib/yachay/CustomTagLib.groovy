@@ -15,7 +15,7 @@ class CustomTagLib {
     static namespace = 'tdn'
 
     /**
-     * Imprime el n&uacute;mero del aval o de la solicidud con el formato '003'
+     * Imprime el número del aval o de la solicidud con el formato '003'
      * @param aval (opcional) el id del aval
      * @param solicitud (opcional) el id de la solicitud
      */
@@ -85,9 +85,9 @@ class CustomTagLib {
     }
 
     /**
-     * Muestra la modificaci&oacute;n con formato de n&uacute;mero, de fecha o sin formato, seg&uacute;n el tipo de dato
-     * @param id de la modificaci&oacute;n
-     * @param campo del que se quiere mostrar la modificaci&oacute;n
+     * Muestra la modificación con formato de número, de fecha o sin formato, según el tipo de dato
+     * @param id de la modificación
+     * @param campo del que se quiere mostrar la modificación
      */
     def mostrarCampoModificacion = { attrs ->
         def mod = ModificacionV2.get(attrs.id)
@@ -128,7 +128,7 @@ class CustomTagLib {
     }
 
     /**
-     * Muestra un combo box con los meses en espa&ntilde;ol
+     * Muestra un combo box con los meses en español
      */
     def selectMonth = { attrs ->
         def from = [1: "Enero", 2: "Febrero", 3: "Marzo", 4: "Abril", 5: "Mayo", 6: "Junio", 7: "Julio", 8: "Agosto", 9: "Septiembre", 10: "Octubre", 11: "Noviembre", 12: "Diciembre"]
@@ -226,7 +226,7 @@ class CustomTagLib {
     } //sortable column
 
     /**
-     * Copiado de FormTagLib de Grails, crea links para paginaci&oacute;n
+     * Copiado de FormTagLib de Grails, crea links para paginación
      *
      * Creates next/previous links to support pagination for the current controller.<br/>
      *
@@ -354,7 +354,7 @@ class CustomTagLib {
     /**
      * Devuelve un número con formato.<br/>
      * Utiliza la configuración de números de la aplicación
-     * @param number el n&uacute;mero a formatear
+     * @param number el número a formatear
      * @param format el formato a utilizar
      */
     def formatNumber = { attrs ->

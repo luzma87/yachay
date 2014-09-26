@@ -5,7 +5,7 @@ package yachay.parametros.proyectos
  */
 class PoliticaAgendaSocial implements Serializable {
     /**
-     * Descripci&oacute;n de la pol&iacute;tica de agenda social
+     * Descripción de la política de agenda social
      */
     String descripcion
 

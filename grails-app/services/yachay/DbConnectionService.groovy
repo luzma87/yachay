@@ -3,7 +3,7 @@ package yachay
 import groovy.sql.Sql
 
 /**
- * Servicio para conexi&oacute;n con la base de datos
+ * Servicio para conexión con la base de datos
  */
 class DbConnectionService {
     boolean transactional = false

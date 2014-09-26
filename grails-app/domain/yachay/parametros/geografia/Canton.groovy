@@ -6,28 +6,28 @@ package yachay.parametros.geografia
  */
 class Canton implements Serializable {
     /**
-     * Provincia a la cual pertenece el cant&oacute;n
+     * Provincia a la cual pertenece el cantón
      */
     Provincia provincia
     /**
-     * Zona a la cual pertenece el cant&oacute;n
+     * Zona a la cual pertenece el cantón
      */
     Zona zona
     /**
-     * N&uacute;mero de cant&oacute;n
+     * Número de cantón
      */
     Integer numero
     /**
-     * Nombre del cant&oacute;n
+     * Nombre del cantón
      */
     String nombre
 
     /**
-     * Posici&oacute;n geogr&aacute;fica del cant&oacute;n (longitud para ubicar en un mapa)
+     * Posición geográfica del cantón (longitud para ubicar en un mapa)
      */
     double longitud
     /**
-     * Posici&oacute;n geogr&aacute;fica del cant&oacute;n (latitud para ubicar en un mapa)
+     * Posición geográfica del cantón (latitud para ubicar en un mapa)
      */
     double latitud
 
@@ -37,7 +37,7 @@ class Canton implements Serializable {
     double diff
 
     /**
-     * Zoom del mapa al mostrar el cant&oacute;n
+     * Zoom del mapa al mostrar el cantón
      */
     double zoom
 

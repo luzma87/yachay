@@ -5,11 +5,11 @@ package yachay.parametros
  */
 class CargoPersonal implements Serializable {
     /**
-     * Descipci&oacute;n del cargo de personal
+     * Descipción del cargo de personal
      */
     String descripcion
     /**
-     * C&oacute;digo del cargo de personal
+     * Código del cargo de personal
      */
     String codigo
     /**
@@ -43,7 +43,7 @@ class CargoPersonal implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         "${this.descripcion}"

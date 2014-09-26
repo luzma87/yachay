@@ -5,7 +5,7 @@ package yachay.parametros
  */
 class TipoParticipacion implements Serializable {
     /**
-     * Descripci&oacute;n del tipo de participaci&oacute;n
+     * Descripción del tipo de participación
      */
     String descripcion
 
@@ -38,7 +38,7 @@ class TipoParticipacion implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         "${this.descripcion}"

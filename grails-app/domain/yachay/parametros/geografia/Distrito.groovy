@@ -6,7 +6,7 @@ package yachay.parametros.geografia
  */
 class Distrito implements Serializable {
     /**
-     * C&oacute;digo del distrito
+     * Código del distrito
      */
     String codigo
     /**

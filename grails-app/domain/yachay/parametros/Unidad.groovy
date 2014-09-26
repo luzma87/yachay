@@ -8,11 +8,11 @@ package yachay.parametros
  */
 class Unidad implements Serializable {
     /**
-     * C&oacute;digo de la unidad
+     * Código de la unidad
      */
     String codigo
     /**
-     * Descripci&oacute;n de la unidad
+     * Descripción de la unidad
      */
     String descripcion
 
@@ -47,7 +47,7 @@ class Unidad implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         "${this.descripcion}"

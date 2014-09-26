@@ -16,7 +16,7 @@ class SolicitudAval {
      */
     UnidadEjecutora unidad
     /**
-     * Usuario que gener&oacute; la solicitud
+     * Usuario que generó la solicitud
      */
     Usro usuario
     /**
@@ -40,7 +40,7 @@ class SolicitudAval {
      */
     String contrato
     /**
-     * N&uacute;mero de memo de solicitud de aval
+     * Número de memo de solicitud de aval
      */
     String memo
     /**
@@ -48,7 +48,7 @@ class SolicitudAval {
      */
     Date fecha
     /**
-     * Fecha de revisi&oacute;n de la solicitud
+     * Fecha de revisión de la solicitud
      */
     Date fechaRevision
     /**
@@ -60,13 +60,13 @@ class SolicitudAval {
      */
     String observaciones
     /**
-     * N&uacute;mero de la solicitud
+     * Número de la solicitud
      */
     String numero
     /**
      * Tipo de solicitud: <br/>
-     * &nbsp;&nbsp;&nbsp;&nbsp; : aprobaci&oacute;n
-     * &nbsp;&nbsp;&nbsp;&nbsp;A: anulaci&oacute;n
+     * &nbsp;&nbsp;&nbsp;&nbsp; : aprobación
+     * &nbsp;&nbsp;&nbsp;&nbsp;A: anulación
      */
     String tipo /*A--> anulacion*/
 

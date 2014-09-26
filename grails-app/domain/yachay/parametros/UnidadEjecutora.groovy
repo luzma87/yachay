@@ -11,7 +11,7 @@ import yachay.parametros.proyectos.ObjetivoUnidad
  */
 class UnidadEjecutora implements Serializable {
     /**
-     * Tipo de instituci&oacute;n de la unidad ejecutora
+     * Tipo de institución de la unidad ejecutora
      */
     TipoInstitucion tipoInstitucion
     /**
@@ -19,7 +19,7 @@ class UnidadEjecutora implements Serializable {
      */
     Provincia provincia
     /**
-     * C&oacute;digo de la unidad ejecutora
+     * Código de la unidad ejecutora
      */
     String codigo
     /**
@@ -41,7 +41,7 @@ class UnidadEjecutora implements Serializable {
      */
     String nombre
     /**
-     * Direcci&oacute;n de la unidad ejecutora
+     * Dirección de la unidad ejecutora
      */
     String direccion
     /**
@@ -53,15 +53,15 @@ class UnidadEjecutora implements Serializable {
      */
     String objetivo
     /**
-     * N&uacute;mero de tel&eacute;fono de la unidad ejecutora
+     * Número de teléfono de la unidad ejecutora
      */
     String telefono
     /**
-     * N&uacute;mero de fax de la unidad ejecutora
+     * Número de fax de la unidad ejecutora
      */
     String fax
     /**
-     * Direcci&oacute;n e-mail de la unidad ejecutora
+     * Dirección e-mail de la unidad ejecutora
      */
     String email
     /**

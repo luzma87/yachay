@@ -5,7 +5,7 @@ package yachay.parametros
  */
 class Sector implements Serializable {
     /**
-     * Descipci&oacute;n del sector
+     * Descipción del sector
      */
     String descripcion
 

@@ -5,7 +5,7 @@ package yachay.parametros
  */
 class Calificacion implements Serializable {
     /**
-     * Descipci&oacute;n de la calificaci&oacute;n
+     * Descipción de la calificación
      */
     String descripcion
 

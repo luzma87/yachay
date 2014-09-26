@@ -15,67 +15,67 @@ import yachay.proyectos.ModificacionAsignacion
  */
 class Asignacion implements Serializable {
     /**
-     * A&ntilde;o de la asignaci&oacute;n
+     * Año de la asignación
      */
     Anio anio
     /**
-     * Fuente de la asignaci&oacute;n
+     * Fuente de la asignación
      */
     Fuente fuente
     /**
-     * Marco l&oacute;gico de la asignaci&oacute;n
+     * Marco lógico de la asignación
      */
     MarcoLogico marcoLogico
     /**
-     * Actividad de la asignaci&oacute;n
+     * Actividad de la asignación
      */
     String actividad
     /**
-     * Presupuesto de la asignaci&oacute;n
+     * Presupuesto de la asignación
      */
     Presupuesto presupuesto
     /**
-     * Tipo de gasto de la asignaci&oacute;n
+     * Tipo de gasto de la asignación
      */
     TipoGasto tipoGasto
     /**
-     * Componente de la asignaci&oacute;n
+     * Componente de la asignación
      */
     Componente componente
     /**
-     * Valor planificado de la asignaci&oacute;n
+     * Valor planificado de la asignación
      */
     double planificado
     /**
-     * Valor de la redistribuci&oacute;n de la asignaci&oacute;n
+     * Valor de la redistribución de la asignación
      */
     double redistribucion = 0
     /**
-     * Valor priorizado de la asignaci&oacute;n
+     * Valor priorizado de la asignación
      */
     double priorizado = 0
     /**
-     * Unidad ejecutora de la asignaci&oacute;n
+     * Unidad ejecutora de la asignación
      */
     UnidadEjecutora unidad
     /**
-     * Indica si est&aacute; o no reubicada (S o N respectivamente)
+     * Indica si está o no reubicada (S o N respectivamente)
      */
     String reubicada = "N"
     /**
-     * Programa presupuestario de la asignaci&oacute;n
+     * Programa presupuestario de la asignación
      */
     ProgramaPresupuestario programa
     /**
-     * Asignaci&oacute;n padre de la asignaci&oacute;n actual
+     * Asignación padre de la asignación actual
      */
     Asignacion padre
     /**
-     * Meta de la asignaci&oacute;n
+     * Meta de la asignación
      */
     String meta
     /**
-     * Indicador de la asignaci&oacute;n
+     * Indicador de la asignación
      */
     String indicador
 
@@ -136,8 +136,8 @@ class Asignacion implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return si la asignaci&oacute;n tiene marco l&oacute;gico: el responsable, el monto, el presupuesto, el a&ntilde;o concatenados<br/>
-     * caso contrario, el monto, el presupuesto, el a&ntilde;o concatenados
+     * @return si la asignación tiene marco lógico: el responsable, el monto, el presupuesto, el año concatenados<br/>
+     * caso contrario, el monto, el presupuesto, el año concatenados
      */
     String toString() {
         if (this.marcoLogico)
@@ -147,7 +147,7 @@ class Asignacion implements Serializable {
     }
 
     /**
-     * Calcula el valor real de la asignaci&oacute;n teniendo en cuenta la reubicaci&oacute;n
+     * Calcula el valor real de la asignación teniendo en cuenta la reubicación
      * @return el valor real calculado
      */
     def getValorReal() {
@@ -215,8 +215,8 @@ class Asignacion implements Serializable {
     }
 
     /**
-     * Calcula el valor de los hijos de la asignaci&oacute;n
-     * @param asg asignaci&oacute;n
+     * Calcula el valor de los hijos de la asignación
+     * @param asg asignación
      * @return el valor de los hijos
      */
     def getValorHijo(asg) {
@@ -235,8 +235,8 @@ class Asignacion implements Serializable {
     }
 
     /**
-     * Calcula el valor de la asignaci&oacute;n sin modificaciones
-     * @param asg la asignaci&oacute;n
+     * Calcula el valor de la asignación sin modificaciones
+     * @param asg la asignación
      * @return el valor calculado sin modificaciones
      */
     def getValorSinModificacion(asg) {

@@ -17,7 +17,7 @@ class ErrorLog {
      */
     String causa
     /**
-     * URL que gener&oacute; el error
+     * URL que generó el error
      */
     String url
     /**

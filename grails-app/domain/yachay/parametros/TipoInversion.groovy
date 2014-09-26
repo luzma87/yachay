@@ -5,7 +5,7 @@ package yachay.parametros
  */
 class TipoInversion implements Serializable {
     /**
-     * Descripci&oacute;n del tipo de inversi&oacute;n
+     * Descripción del tipo de inversión
      */
     String descripcion
 
@@ -38,7 +38,7 @@ class TipoInversion implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         "${this.descripcion}"

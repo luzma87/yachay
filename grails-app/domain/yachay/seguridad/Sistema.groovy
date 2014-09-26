@@ -9,7 +9,7 @@ class Sistema implements Serializable {
      */
     String nombre
     /**
-     * Descripci&oacute;n del sistema
+     * Descripción del sistema
      */
     String descripcion
 
@@ -44,7 +44,7 @@ class Sistema implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         "${this.descripcion}"

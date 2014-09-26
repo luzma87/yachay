@@ -10,11 +10,11 @@ class Presupuesto implements Serializable {
      */
     Presupuesto presupuesto
     /**
-     * N&uacute;mero del presupuesto
+     * Número del presupuesto
      */
     String numero
     /**
-     * Descripci&oacute;n del presupuesto
+     * Descripción del presupuesto
      */
     String descripcion
     /**
@@ -22,7 +22,7 @@ class Presupuesto implements Serializable {
      */
     int nivel
     /**
-     * Indica si es de movimiento o no (1: s&iacute;, 0: no)
+     * Indica si es de movimiento o no (1: sí, 0: no)
      */
     int movimiento = 0
 
@@ -63,7 +63,7 @@ class Presupuesto implements Serializable {
 
     /**
      * Genera un string para mostrar
-     @return el n&uacute;mero y la descripci&oacute;n concatenados
+     @return el número y la descripción concatenados
      */
     String toString() {
         "${this.numero}(${this.descripcion})"

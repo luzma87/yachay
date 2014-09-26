@@ -5,15 +5,15 @@ package yachay.seguridad
  */
 class Modulo implements Serializable {
     /**
-     * Nombre del m&oacute;dulo
+     * Nombre del módulo
      */
     String nombre
     /**
-     * Descripci&oacute;n del m&oacute;dulo
+     * Descripción del módulo
      */
     String descripcion
     /**
-     * Orden del m&oacute;dulo
+     * Orden del módulo
      */
     int orden
 

@@ -5,7 +5,7 @@ package yachay.parametros
  */
 class TipoInforme implements Serializable {
     /**
-     * Descripci&oacute;n del tipo de informe
+     * Descripción del tipo de informe
      */
     String descripcion
 
@@ -38,7 +38,7 @@ class TipoInforme implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         return this.descripcion

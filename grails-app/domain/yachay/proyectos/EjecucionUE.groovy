@@ -15,31 +15,31 @@ class EjecucionUE implements Serializable {
      */
     Sigef sigef
     /**
-     * Presupuesto de la ejecuci&oacute;n
+     * Presupuesto de la ejecución
      */
     Presupuesto presupuesto
     /**
-     * Programa presupuestario de la ejecuci&oacute;n
+     * Programa presupuestario de la ejecución
      */
     ProgramaPresupuestario programa
     /**
-     * Fuente de la ejecuci&oacute;n
+     * Fuente de la ejecución
      */
     Fuente fuente
     /**
-     * Proyecto de la ejecuci&oacute;n
+     * Proyecto de la ejecución
      */
     Proyecto proyecto
     /**
-     * Unidad ejecutora de la ejecuci&oacute;n
+     * Unidad ejecutora de la ejecución
      */
     UnidadEjecutora unidadEjecutora
     /**
-     * Valor vigente de la ejecuci&oacute;n
+     * Valor vigente de la ejecución
      */
     double vigente = 0
     /**
-     * Valor comprometido de la ejecuci&oacute;n
+     * Valor comprometido de la ejecución
      */
     double comprometido = 0
 

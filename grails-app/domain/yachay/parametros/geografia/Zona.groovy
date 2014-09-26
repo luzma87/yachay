@@ -5,7 +5,7 @@ package yachay.parametros.geografia
  */
 class Zona implements Serializable {
     /**
-     * N&uacute;mero de la zona
+     * Número de la zona
      */
     Integer numero
     /**

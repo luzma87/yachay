@@ -5,7 +5,7 @@ package yachay.parametros
  */
 class TipoContrato {
     /**
-     * Descripci&oacute;n del tipo de contrato
+     * Descripción del tipo de contrato
      */
     String descripcion
 

@@ -19,16 +19,16 @@ class ModificacionesService {
     def cronogramas = []
 
     /**
-     * Agrega una modificaci&oacute;n al cronograma. Trabaja sobre el arreglo cronogramas definido en el service
+     * Agrega una modificación al cronograma. Trabaja sobre el arreglo cronogramas definido en el service
      * @param params mapa que contiene: <br/>
      * <ul>
-     *     <li>idCelda: el id del cronograma (inserci&oacute;n y modificaci&oacute;n)</li>
-     *     <li>valor: el valor para el cronograma (inserci&oacute;n y modificaci&oacute;n)</li>
-     *     <li>fuente: el id de la fuente para el cronograma (inserci&oacute;n y modificaci&oacute;n)</li>
-     *     <li>mes: el id del mes (inserci&oacute;n)</li>
-     *     <li>act: el id de marco l&oacute;gico de la actividad (inserci&oacute;n)</li>
-     *     <li>anio: el id del a&ntilde;o (inserci&oacute;n)</li>
-     *     <li>modificacion: el id de la modificaci&oacute;n de proyecto (inserci&oacute;n)</li>
+     *     <li>idCelda: el id del cronograma (inserción y modificación)</li>
+     *     <li>valor: el valor para el cronograma (inserción y modificación)</li>
+     *     <li>fuente: el id de la fuente para el cronograma (inserción y modificación)</li>
+     *     <li>mes: el id del mes (inserción)</li>
+     *     <li>act: el id de marco lógico de la actividad (inserción)</li>
+     *     <li>anio: el id del año (inserción)</li>
+     *     <li>modificacion: el id de la modificación de proyecto (inserción)</li>
      *     <li>session: el objeto session</li>
      *     <li>id: el id del cronograma</li>
      * </ul>
@@ -102,7 +102,7 @@ class ModificacionesService {
     }
 
     /**
-     * Reinicia el arreglo cronogramas a un arreglo vac&iacute;o
+     * Reinicia el arreglo cronogramas a un arreglo vacío
      * @return
      */
     def reset() {

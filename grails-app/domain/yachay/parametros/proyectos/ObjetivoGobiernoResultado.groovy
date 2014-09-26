@@ -6,7 +6,7 @@ package yachay.parametros.proyectos
  */
 class ObjetivoGobiernoResultado implements Serializable {
     /**
-     * Descripci&oacute;n del objetivo gobierno resultado
+     * Descripción del objetivo gobierno resultado
      */
     String descripcion
 

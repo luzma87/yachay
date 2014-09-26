@@ -5,7 +5,7 @@ package yachay.parametros
  */
 class TipoPersona {
     /**
-     * Descripci&oacute;n del tipo de persona
+     * Descripción del tipo de persona
      */
     String descripcion
 
@@ -38,7 +38,7 @@ class TipoPersona {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         return this.descripcion

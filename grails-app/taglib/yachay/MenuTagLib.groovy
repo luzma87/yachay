@@ -1,18 +1,18 @@
 package yachay
 
 /**
- * Tags para men&uacute;s
+ * Tags para menús
  */
 class MenuTagLib {
 
     def dbConnectionService
 
     /**
-     * Crea el men&uacute;
+     * Crea el menú
      * @param perfil perfil de la persona logueada
      * @param bordeAlertas el estilo para el borde de las alertas
      * @param divs define si muestra o no los divs
-     * @return el string con el HTML para el men&uacute;
+     * @return el string con el HTML para el menú
      */
     String createMenu(perfil, bordeAlertas, divs) {
 
@@ -118,7 +118,7 @@ class MenuTagLib {
     }
 
     /**
-     * Genera un men&uacute; vertical
+     * Genera un menú vertical
      */
     def generarMenuVertical = { attrs ->
         def usuario = session.usuario
@@ -147,7 +147,7 @@ class MenuTagLib {
     }
 
     /**
-     * Genera un men&uacute; horizontal
+     * Genera un menú horizontal
      */
     def generarMenuHorizontal = { attrs ->
         def usuario = session.usuario
@@ -179,7 +179,7 @@ class MenuTagLib {
     }
 
     /**
-     * Genera una vista previa del men&uacute;
+     * Genera una vista previa del menú
      */
     def generarMenuPreview = { attrs ->
         def perfil = yachay.seguridad.Prfl.get(attrs.perfil)

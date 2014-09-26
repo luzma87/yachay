@@ -4,21 +4,21 @@ package yachay.proyectos
 Nótese que la relación del supuesto es al elemento del marco lógico, no a los indicadores ni a los medios de comprobación de los indicadores.*/
 /**
  * Clase para conectar con la tabla 'spst' de la base de datos<br/>
- * Para cada elemento del marco l&oacute;gico se define uno o varios supuestos.<br/>
- * N&oacute;tese que la relaci&oacute;n del supuesto es al elemento del marco l&oacute;gico,
- * no a los indicadores ni a los medios de comprobaci&oacute;n de los indicadores.
+ * Para cada elemento del marco lógico se define uno o varios supuestos.<br/>
+ * Nótese que la relación del supuesto es al elemento del marco lógico,
+ * no a los indicadores ni a los medios de comprobación de los indicadores.
  */
 class Supuesto implements Serializable {
     /**
-     * Marco l&oacute;gico del supuesto
+     * Marco lógico del supuesto
      */
     MarcoLogico marcoLogico
     /**
-     * Descripci&oacute;n del supuesto
+     * Descripción del supuesto
      */
     String descripcion
     /**
-     * Modificaci&oacute;n del supuesto
+     * Modificación del supuesto
      */
     ModificacionProyecto modificacion
     /**

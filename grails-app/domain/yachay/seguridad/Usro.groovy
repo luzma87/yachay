@@ -24,11 +24,11 @@ class Usro implements Serializable {
      */
     String usroLogin
     /**
-     * Contrase&ntilde;a del usuario
+     * Contraseña del usuario
      */
     String usroPassword
     /**
-     * Autorizaci&oacute;n del usuario
+     * Autorización del usuario
      */
     String autorizacion
     /**
@@ -36,11 +36,11 @@ class Usro implements Serializable {
      */
     String sigla
     /**
-     * Indica si el usuario est&aacute; o no activo
+     * Indica si el usuario está o no activo
      */
     int usroActivo
     /**
-     * Fecha de cambio de contrase&ntilde;a
+     * Fecha de cambio de contraseña
      */
     Date fechaPass
     /**

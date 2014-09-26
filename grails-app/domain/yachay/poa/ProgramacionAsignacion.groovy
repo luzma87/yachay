@@ -8,7 +8,7 @@ import yachay.proyectos.ModificacionProyecto
 /*Programación de la asignación presupuestaria por cuatrimestres.*/
 /**
  * Clase para conectar con la tabla 'pras' de la base de datos<br/>
- * Programaci&oacute;n de la asignación presupuestaria por cuatrimestres.
+ * Programación de la asignación presupuestaria por cuatrimestres.
  */
 class ProgramacionAsignacion implements Serializable {
     Asignacion asignacion

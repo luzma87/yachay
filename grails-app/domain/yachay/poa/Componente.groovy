@@ -5,7 +5,7 @@ package yachay.poa
  */
 class Componente {
     /**
-     * Descripci&oacute;n del componente
+     * Descripción del componente
      */
     String descripcion
 
@@ -37,7 +37,7 @@ class Componente {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         "${this.descripcion}"

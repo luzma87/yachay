@@ -9,7 +9,7 @@ import yachay.proyectos.Sigef
  */
 class Ejecucion implements Serializable {
     /**
-     * Asignaci&oacute;n de la ejecuci&oacute;n
+     * Asignación de la ejecución
      */
     Asignacion asignacion
     /**
@@ -17,27 +17,27 @@ class Ejecucion implements Serializable {
      */
     Sigef sigef
     /**
-     * Valor vigente de la ejecuci&oacute;n
+     * Valor vigente de la ejecución
      */
     double vigente = 0
     /**
-     * Valor de compromiso de la ejecuci&oacute;n
+     * Valor de compromiso de la ejecución
      */
     double compromiso = 0
     /**
-     * Valor devengado de la ejecuci&oacute;n
+     * Valor devengado de la ejecución
      */
     double devengado = 0
     /**
-     * Valor pagado de la ejecuci&oacute;n
+     * Valor pagado de la ejecución
      */
     double pagado = 0
     /**
-     * Saldo de presupuesto de la ejecuci&oacute;n
+     * Saldo de presupuesto de la ejecución
      */
     double saldoPresupuesto = 0
     /**
-     * Saldo disponible de la ejecuci&oacute;n
+     * Saldo disponible de la ejecución
      */
     double saldoDisponible = 0
 

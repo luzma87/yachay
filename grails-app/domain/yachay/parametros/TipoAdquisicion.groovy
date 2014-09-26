@@ -5,7 +5,7 @@ package yachay.parametros
  */
 class TipoAdquisicion implements Serializable {
     /**
-     * Descripci&oacute;n del tipo de adquisici&oacute;n
+     * Descripción del tipo de adquisición
      */
     String descripcion
 

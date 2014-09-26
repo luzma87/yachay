@@ -5,7 +5,7 @@ package yachay.parametros
  */
 class TipoSupuesto implements Serializable {
     /**
-     * Descripci&oacute;n del tipo de supuesto
+     * Descripción del tipo de supuesto
      */
     String descripcion
 
@@ -38,7 +38,7 @@ class TipoSupuesto implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         "${this.descripcion}"

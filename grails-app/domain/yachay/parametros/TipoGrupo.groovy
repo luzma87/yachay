@@ -5,7 +5,7 @@ package yachay.parametros
  */
 class TipoGrupo implements Serializable {
     /**
-     * Descripci&oacute;n del tipo de grupo
+     * Descripción del tipo de grupo
      */
     String descripcion
 
@@ -38,7 +38,7 @@ class TipoGrupo implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         return this.descripcion

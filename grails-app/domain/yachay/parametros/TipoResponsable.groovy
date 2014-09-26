@@ -4,15 +4,15 @@ package yachay.parametros
 
 /**
  * Clase para conectar con la tabla 'tprp' de la base de datos<br/>
- * Guarda un cat&aacute;logo de posibles tipos de responsabilidad en el proyecto
+ * Guarda un catálogo de posibles tipos de responsabilidad en el proyecto
  */
 class TipoResponsable implements Serializable {
     /**
-     * C&oacute;digo del tipo de responsable
+     * Código del tipo de responsable
      */
     String codigo
     /**
-     * Descripci&oacute;n del tipo de responsable
+     * Descripción del tipo de responsable
      */
     String descripcion
 
@@ -47,7 +47,7 @@ class TipoResponsable implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         "${this.descripcion}"

@@ -8,7 +8,7 @@ import yachay.parametros.poaPac.Presupuesto
 /*El cronograma valorado se registra por actividades del marco lógico, por año, mes y fuente de financiamiento.*/
 /**
  * Clase para conectar con la tabla 'crng' de la base de datos<br/>
- * El cronograma valorado se registra por actividades del marco l&oacute;gico, por a&ntilde;o, mes y fuente de financiamiento
+ * El cronograma valorado se registra por actividades del marco lógico, por año, mes y fuente de financiamiento
  */
 class Cronograma implements Serializable {
     /**
@@ -20,7 +20,7 @@ class Cronograma implements Serializable {
      */
     Mes mes
     /**
-     * Marco l&oacute;gico del cronograma
+     * Marco lógico del cronograma
      */
     MarcoLogico marcoLogico
     /**
@@ -28,11 +28,11 @@ class Cronograma implements Serializable {
      */
     Fuente fuente
     /**
-     * A&ntilde;o del cronograma
+     * Año del cronograma
      */
     Anio anio
     /**
-     * Modificaci&oacute;n del proyecto
+     * Modificación del proyecto
      */
     ModificacionProyecto modificacionProyecto
     /**

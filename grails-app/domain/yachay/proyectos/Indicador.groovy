@@ -6,19 +6,19 @@ import yachay.proyectos.MarcoLogico
 /*Para cada elemento del marco lógico se define uno o varios indicadores*/
 /**
  * Clase para conectar con la tabla '' de la base de datos<br/>
- * Para cada elemento del marco l&oacute;gico se define uno o varios indicadores
+ * Para cada elemento del marco lógico se define uno o varios indicadores
  */
 class Indicador implements Serializable {
     /**
-     * Marco l&oacute;gico del indicador
+     * Marco lógico del indicador
      */
     MarcoLogico marcoLogico
     /**
-     * Asignaci&oacute;n del indicador
+     * Asignación del indicador
      */
     Asignacion asignacion
     /**
-     * Descripci&oacute;n del indicador
+     * Descripción del indicador
      */
     String descripcion
     /**
@@ -26,7 +26,7 @@ class Indicador implements Serializable {
      */
     double cantidad = 0
     /**
-     * Modificaci&oacute;n del indicador
+     * Modificación del indicador
      */
     ModificacionProyecto modificacion
     /**
@@ -73,7 +73,7 @@ class Indicador implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         "${this.descripcion}"

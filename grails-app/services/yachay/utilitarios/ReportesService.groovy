@@ -5,7 +5,7 @@ import net.sf.jasperreports.engine.export.*;
 import java.util.*
 
 /**
- * Servicio para ayudar con la generaci&oacute;n de reportes
+ * Servicio para ayudar con la generación de reportes
  */
 class ReportesService {
 
@@ -14,10 +14,10 @@ class ReportesService {
 
     /**
      * muestra un PDF a partir de un archiv Jasper
-     * @param parametros los par&aacute;metros para el reporte
+     * @param parametros los parámetros para el reporte
      * @param nombreArchivoJasper nombre del archivo de JasperReports
      * @param nombreArchivo nombre del archivo a descargar
-     * @param extension extensi&oacute;n del archivo a descargar
+     * @param extension extensión del archivo a descargar
      * @param tipoStream "file" guarda un archivo en disco, otra cosa genera un archivo para descargar
      * @param response el objeto response
      */

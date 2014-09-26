@@ -6,7 +6,7 @@ package yachay.seguridad
  */
 class Persona implements Serializable {
     /**
-     * C&eacute;dula de la persona
+     * Cédula de la persona
      */
     String cedula
     /**
@@ -22,7 +22,7 @@ class Persona implements Serializable {
      */
     String sexo
     /**
-     * Indica si la persona es o no discapacitada (S para s&iacute;, N para no)
+     * Indica si la persona es o no discapacitada (S para sí, N para no)
      */
     String discapacitado
     /**
@@ -30,19 +30,19 @@ class Persona implements Serializable {
      */
     Date fechaNacimiento
     /**
-     * Direcci&oacute;n de la persona
+     * Dirección de la persona
      */
     String direccion
     /**
-     * N&uacute;mero de tel&eacute;fono de la persona
+     * Número de teléfono de la persona
      */
     String telefono
     /**
-     * Direcci&oacute;n de e-mail de la persona
+     * Dirección de e-mail de la persona
      */
     String mail
     /**
-     * N&uacute;mero de fax de la persona
+     * Número de fax de la persona
      */
     String fax
     /**

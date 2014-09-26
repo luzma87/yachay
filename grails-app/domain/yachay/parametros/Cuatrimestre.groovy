@@ -5,11 +5,11 @@ package yachay.parametros
  */
 class Cuatrimestre implements Serializable {
     /**
-     * N&uacute;mero de cuatrimestre
+     * Número de cuatrimestre
      */
     Integer numero
     /**
-     * Descripci&oacute;n del cuatrimestre
+     * Descripción del cuatrimestre
      */
     String descripcion
 

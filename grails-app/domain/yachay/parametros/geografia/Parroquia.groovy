@@ -2,15 +2,15 @@ package yachay.parametros.geografia
 
 /**
  * Clase para conectar con la tabla 'parr' de la base de datos<br/>
- * Guarda la lista de parroquias por cant&oacute;n
+ * Guarda la lista de parroquias por cantón
  */
 class Parroquia implements Serializable {
     /**
-     * Cant&oacute;n al cual pertenece la parroquia
+     * Cantón al cual pertenece la parroquia
      */
     Canton canton
     /**
-     * N&uacute;mero de parroquia
+     * Número de parroquia
      */
     Integer numero
     /**
@@ -18,16 +18,16 @@ class Parroquia implements Serializable {
      */
     String nombre
     /**
-     * C&oacute;digo de la parroquia
+     * Código de la parroquia
      */
     String codigo
 
     /**
-     * Posici&oacute;n geogr&aacute;fica de la parroquia (longitud para ubicar en un mapa)
+     * Posición geográfica de la parroquia (longitud para ubicar en un mapa)
      */
     double longitud
     /**
-     * Posici&oacute;n geogr&aacute;fica de la parroquia (latitud para ubicar en un mapa)
+     * Posición geográfica de la parroquia (latitud para ubicar en un mapa)
      */
     double latitud
 

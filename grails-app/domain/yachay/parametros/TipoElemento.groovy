@@ -2,11 +2,11 @@ package yachay.parametros
 /*Tipo de elemento del marco lógico: distingue entre meta o FIN, OBJETIVO o PROPÓSITO, COMPONENTES y ACTIVIDADES.*/
 /**
  * Clase para conectar con la tabla 'tpel' de la base de datos<br/>
- * Tipo de elemento del marco l&oacute;gico: distingue entre meta o FIN, OBJETIVO o PROP&Oacute;SITO, COMPONENTES y ACTIVIDADES.
+ * Tipo de elemento del marco lógico: distingue entre meta o FIN, OBJETIVO o PROPÓSITO, COMPONENTES y ACTIVIDADES.
  */
 class TipoElemento implements Serializable {
     /**
-     * Descripci&oacute;n del tipo de elemento
+     * Descripción del tipo de elemento
      */
     String descripcion
 

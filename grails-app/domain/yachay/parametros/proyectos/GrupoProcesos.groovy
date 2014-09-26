@@ -3,11 +3,11 @@ package yachay.parametros.proyectos
 /**
  * Clase para conectar con la tabla 'grpr' de la base de datos<br/>
  * El grupo de procesos del proyecto se refiere a los distintos momentos del proyecto como son:
- * INICIO, PLANIFICACI&Oacute;N, EJECUCI&Oacute;N y CIERRE
+ * INICIO, PLANIFICACIÓN, EJECUCIÓN y CIERRE
  */
 class GrupoProcesos implements Serializable {
     /**
-     * Descripci&oacute;n del grupo de procesos
+     * Descripción del grupo de procesos
      */
     String descripcion
 
@@ -40,7 +40,7 @@ class GrupoProcesos implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         return this.descripcion

@@ -6,20 +6,20 @@ import yachay.parametros.UnidadEjecutora
 /*La modificación de la asignación presupuestaria se refiere a la redistribución del valor asignado lo cual implica además una reprogramación.*/
 /**
  * Clase para conectar con la tabla 'mdas' de la base de datos<br/>
- * La modificaci&oacute;n de la asignaci&oacute;n presupuestaria se refiere a la redistribuci&oacute;n del valor asignado
- * lo cual implica adem&aacute;s una reprogramaci&oacute;n
+ * La modificación de la asignación presupuestaria se refiere a la redistribución del valor asignado
+ * lo cual implica además una reprogramación
  */
 class ModificacionAsignacion implements Serializable {
     /**
-     * Asignaci&oacute;n que env&iacute;a
+     * Asignación que envía
      */
     Asignacion desde
     /**
-     * Asignaci&oacute;n que recibe
+     * Asignación que recibe
      */
     Asignacion recibe
     /**
-     * Modificaci&oacute;n proyecto
+     * Modificación proyecto
      */
     ModificacionProyecto modificacionProyecto
     /**

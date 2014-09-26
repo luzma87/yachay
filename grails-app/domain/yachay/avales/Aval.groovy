@@ -14,15 +14,15 @@ class Aval {
      */
     String concepto
     /**
-     * Fecha de aprobaci&oacute;n del aval
+     * Fecha de aprobación del aval
      */
     Date fechaAprobacion
     /**
-     * Fecha de liberaci&oacute;n del aval
+     * Fecha de liberación del aval
      */
     Date fechaLiberacion
     /**
-     * Fecha de anulaci&oacute;n del aval
+     * Fecha de anulación del aval
      */
     Date fechaAnulacion
     /**
@@ -30,7 +30,7 @@ class Aval {
      */
     double monto
     /**
-     * Monto de liberaci&oacute;n del aval
+     * Monto de liberación del aval
      */
     double liberacion = 0
     /**
@@ -38,7 +38,7 @@ class Aval {
      */
     EstadoAval estado
     /**
-     * N&uacute;mero de memo de la petici&oacute;n del aval
+     * Número de memo de la petición del aval
      */
     String memo
     /**
@@ -46,24 +46,24 @@ class Aval {
      */
     String path
     /**
-     * Path del documento de respaldo de liberaci&oacute;n del aval
+     * Path del documento de respaldo de liberación del aval
      */
     String pathLiberacion
     /**
-     * Path del documento de respaldo de anulaci&oacute;n del aval
+     * Path del documento de respaldo de anulación del aval
      */
     String pathAnulacion
     /**
-     * N&uacute;mero de contrato para la liberaci&oacute;n
+     * Número de contrato para la liberación
      */
     String contrato
 //    int numero=0
     /**
-     * N&uacute;mero del aval
+     * Número del aval
      */
     String numero
     /**
-     * N&uacute;mero de la certificaci&oacute;n para el aval
+     * Número de la certificación para el aval
      */
     String certificacion
 

@@ -11,9 +11,9 @@ class LoginService {
     static scope = 'session'
 
     /**
-     * Busca el usuario en la base de datos seg&uacute;n lo par&aacute;metros enviados
+     * Busca el usuario en la base de datos según lo parámetros enviados
      * @param user el nombre de usuario
-     * @param pass la contrase&ntilde;a
+     * @param pass la contraseña
      * @return si encuentra el usuario lo retorna, caso contrario retorna null
      */
     Usro login(user, pass) {
@@ -30,7 +30,7 @@ class LoginService {
     }
 
     /**
-     * Verifica si un usuario puede acceder al sistema el d&iacute;a actual
+     * Verifica si un usuario puede acceder al sistema el día actual
      * @param user el objeto usuario
      * @return un boolean que indica si el usuario tiene acceso o no al sistema
      */
@@ -78,10 +78,10 @@ class LoginService {
     }
 
     /**
-     * Verifica si la autorizaci&oacute;n del usuario es correcta
+     * Verifica si la autorización del usuario es correcta
      * @param usuario el objeto usuario
-     * @param pass la clave de autorizaci&oacute;n
-     * @return un boolean que indica si la calve de autorizaci&oacute;n del usuario es o no correcta
+     * @param pass la clave de autorización
+     * @return un boolean que indica si la calve de autorización del usuario es o no correcta
      */
     boolean autorizaciones(usuario, pass) {
         def us = Usro.findWhere(usroLogin: usuario.usroLogin, autorizacion: pass.trim().encodeAsMD5(), usroActivo: 1)

@@ -22,11 +22,11 @@ class KerberosService {
     //principal servicio de seguridad
 
     /**
-     * Remplaza la funci&oacute;n save por defecto para crear una entrada de log con la acci&oacute;n ejecutada
-     * @param params los para&aacute;metros para hacer el save
+     * Remplaza la función save por defecto para crear una entrada de log con la acción ejecutada
+     * @param params los paraámetros para hacer el save
      * @param dominio el dominio que va a guardarse
-     * @param perfil el perfil del usuario efectuando la acci&oacute;n
-     * @param usuario el usuario efectuando la acci&oacute;n
+     * @param perfil el perfil del usuario efectuando la acción
+     * @param usuario el usuario efectuando la acción
      * @return el objeto guardado
      */
     public save(params, dominio, perfil, usuario) {
@@ -203,12 +203,12 @@ class KerberosService {
     }
 
     /**
-     * Remplaza la funci&oacute;n delete por defecto para crear una entrada de log con la acci&oacute;n ejecutada
+     * Remplaza la función delete por defecto para crear una entrada de log con la acción ejecutada
      * @param params toma params.id para eliminar, p.controllerName, p.actionName
      * @param dominio el dominio que va a guardarse
-     * @param perfil el perfil del usuario efectuando la acci&oacute;n
-     * @param usuario el usuario efectuando la acci&oacute;n
-     * @return un boolean que indica si se efectu&oacute; exitosamente la eliminaci&oacute;n
+     * @param perfil el perfil del usuario efectuando la acción
+     * @param usuario el usuario efectuando la acción
+     * @return un boolean que indica si se efectuó exitosamente la eliminación
      */
     public delete(params, dominio, perfil, usuario) {
         session = sessionFactory.getCurrentSession()
@@ -277,15 +277,15 @@ class KerberosService {
     }
 
     /**
-     * Genera una entrada en la tabla de auditor&iacute;a
+     * Genera una entrada en la tabla de auditoría
      * @param params utiliza actionName y controllerName para guardar en el log
      * @param dominio el dominio que va a guardarse
      * @param campo el campo modificado
      * @param newValue el valor nuevo del campo
      * @param oldValue el valor anterior del campo
-     * @param perfil el perfil del usuario efectuando la acci&oacute;n
-     * @param usuario usuario el usuario efectuando la acci&oacute;n
-     * @return un boolean que indica si se efectu&oacute; exitosamente la inserci&oacute;n
+     * @param perfil el perfil del usuario efectuando la acción
+     * @param usuario usuario el usuario efectuando la acción
+     * @return un boolean que indica si se efectuó exitosamente la inserción
      */
     public generarEntradaAuditoria(params, dominio, campo, newValue, oldValue, perfil, usuario) {
         def cn = dbConnectionService.getConnection()
@@ -319,10 +319,10 @@ class KerberosService {
      * Guarda un objeto
      * @param nuevo objeto a guardar
      * @param dominio dominio que se va a guardar
-     * @param perfil el perfil del usuario efectuando la acci&oacute;n
-     * @param usuario el usuario efectuando la acci&oacute;n
-     * @param actionName nombre de la acci&oacute;n que llam&oacute; a la funci&oacute;n
-     * @param controllerName nombre del controlador que llam&oacute; a la funci&oacute;n
+     * @param perfil el perfil del usuario efectuando la acción
+     * @param usuario el usuario efectuando la acción
+     * @param actionName nombre de la acción que llamó a la función
+     * @param controllerName nombre del controlador que llamó a la función
      * @param session objeto session
      * @return el objeto guardado
      */
@@ -446,10 +446,10 @@ class KerberosService {
     }
 
     /**
-     * Guarda una modificaci&oacute;n
+     * Guarda una modificación
      * @param nuevo objeto a guardar
      * @param dominio dominio que se va a guardar
-     * @param usuario el usuario efectuando la acci&oacute;n
+     * @param usuario el usuario efectuando la acción
      * @param session objeto session
      * @return el objeto guardado
      */
@@ -580,10 +580,10 @@ class KerberosService {
     }
 
     /**
-     * Inserta un nuevo registro en la tabla de auditor&iacute;a
+     * Inserta un nuevo registro en la tabla de auditoría
      * @param id el id del registro
-     * @param usuario el usuario efectuando la acci&oacute;n
-     * @param perfil el perfil del usuario efectuando la acci&oacute;n
+     * @param usuario el usuario efectuando la acción
+     * @param perfil el perfil del usuario efectuando la acción
      * @return
      */
     def insertaKerberos(id, usuario, perfil) {
@@ -612,7 +612,7 @@ class KerberosService {
     /**
      * Ejecuta un procedure de la base de datos
      * @param nombre nombre del procedure
-     * @param parametros par&aacute;metros para el procedure
+     * @param parametros parámetros para el procedure
      * @return los resultados del procedure
      */
     def ejecutarProcedure(nombre, parametros) {
@@ -630,8 +630,8 @@ class KerberosService {
     }
 
     /**
-     * Efet&uacute;a una conexi&oacute;n con la base de datos
-     * @return la conexi&oacute;n
+     * Efetúa una conexión con la base de datos
+     * @return la conexión
      */
     def getJavaConnection() {
         Connection dbConnection
@@ -649,13 +649,13 @@ class KerberosService {
 
     /**
      * Genera una alerta
-     * @param from usuario que env&iacute;a la alerta
+     * @param from usuario que envía la alerta
      * @param to usuario que recibe la alerta
      * @param mensaje el mensaje de la alerta
      * @param controlador el controlador para el link de la alerta
-     * @param accion la acci&oacute;n para el link de la alerta
+     * @param accion la acción para el link de la alerta
      * @param id el id para el link de la alerta
-     * @return un boolean que indica si se efectu&oacute; exitosamente la inserci&oacute;n
+     * @return un boolean que indica si se efectuó exitosamente la inserción
      */
     boolean generarAlerta(from, to, mensaje, controlador, accion, id) {
         try {

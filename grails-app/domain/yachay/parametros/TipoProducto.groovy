@@ -5,7 +5,7 @@ package yachay.parametros
  */
 class TipoProducto implements Serializable {
     /**
-     * Descripci&oacute;n del tipo de producto
+     * Descripción del tipo de producto
      */
     String tipoProducto
 

@@ -5,7 +5,7 @@ package yachay.parametros
  */
 class TipoDocumento {
     /**
-     * Descripci&oacute;n del tipo de documento
+     * Descripción del tipo de documento
      */
     String descripcion
 
@@ -39,7 +39,7 @@ class TipoDocumento {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         "${this.descripcion}"

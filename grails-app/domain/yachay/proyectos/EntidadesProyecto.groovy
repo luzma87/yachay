@@ -12,7 +12,7 @@ class EntidadesProyecto implements Serializable {
      */
     UnidadEjecutora unidad
     /**
-     * Tipo de participaci&oacute;n de la entidad del proyecto
+     * Tipo de participación de la entidad del proyecto
      */
     TipoParticipacion tipoPartisipacion
     /**
@@ -66,7 +66,7 @@ class EntidadesProyecto implements Serializable {
 
 //    /**
 //     * Genera un string para mostrar
-//     * @return la descripci&oacute;n
+//     * @return la descripción
 //     */
 //    String toString() {
 //        "${this.descripcion}"

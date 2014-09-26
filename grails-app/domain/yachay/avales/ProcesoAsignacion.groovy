@@ -12,7 +12,7 @@ class ProcesoAsignacion {
      */
     ProcesoAval proceso
     /**
-     * Asignaci&oacute;n
+     * Asignación
      */
     Asignacion asignacion
     /**

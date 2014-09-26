@@ -7,9 +7,9 @@ import yachay.parametros.proyectos.GrupoProcesos
 Se usará preferentemente formato pdf, pero pueden incluirse otros formatos aunque no puedan ser visualizados desde el sistema.*/
 /**
  * Clase para conectar con la tabla 'dcmt' de la base de datos<br/>
- * Es toda documentaci&oacute;n importante que debe ser archivada en el proyecto.
+ * Es toda documentación importante que debe ser archivada en el proyecto.
  * Esta comprende el archivo de proyecto o el archivo de casos de proyecto.
- * Se usar&aacute; preferentemente formato pdf, pero pueden incluirse otros formatos aunque no puedan ser visualizados desde el sistema.
+ * Se usará preferentemente formato pdf, pero pueden incluirse otros formatos aunque no puedan ser visualizados desde el sistema.
  */
 class Documento implements Serializable {
     /**
@@ -21,7 +21,7 @@ class Documento implements Serializable {
      */
     GrupoProcesos grupoProcesos
     /**
-     * Descripci&oacute;n del documento
+     * Descripción del documento
      */
     String descripcion
     /**
@@ -82,7 +82,7 @@ class Documento implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         return this.descripcion

@@ -6,11 +6,11 @@ package yachay.parametros.poaPac
  */
 class Mes implements Serializable {
     /**
-     * N&uacute;mero del mes
+     * Número del mes
      */
     int numero
     /**
-     * Descripci&oacute;n del mes (nombre)
+     * Descripción del mes (nombre)
      */
     String descripcion
 

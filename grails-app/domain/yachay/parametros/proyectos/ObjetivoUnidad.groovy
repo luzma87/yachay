@@ -5,7 +5,7 @@ package yachay.parametros.proyectos
  */
 class ObjetivoUnidad {
     /**
-     * Descripci&oacute;n del objetivo de la unidad
+     * Descripción del objetivo de la unidad
      */
     String descripcion
     /**

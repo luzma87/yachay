@@ -4,7 +4,7 @@ package yachay.proyectos
  */
 class PoliticaAplicaProyecto implements Serializable {
     /**
-     * Descripci&oacute;n de la pol&iacute;tica que aplica al proyecto
+     * Descripción de la política que aplica al proyecto
      */
     String descripcion
 

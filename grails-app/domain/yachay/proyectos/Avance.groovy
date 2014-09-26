@@ -15,7 +15,7 @@ class Avance implements Serializable {
      */
     Meta meta
     /**
-     * Descripci&oacute;n del avance
+     * Descripción del avance
      */
     String descripcion
     /**

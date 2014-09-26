@@ -5,7 +5,7 @@ package yachay.parametros
  */
 class Linea implements Serializable {
     /**
-     * Descipci&oacute;n de la l&iacute;nea
+     * Descipción de la línea
      */
     String descripcion
 
@@ -38,7 +38,7 @@ class Linea implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         "${this.descripcion}"

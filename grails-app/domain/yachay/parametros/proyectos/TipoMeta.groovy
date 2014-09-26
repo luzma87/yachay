@@ -10,7 +10,7 @@ import yachay.proyectos.Meta
  */
 class TipoMeta implements Serializable {
     /**
-     * Descripci&oacute;n del tipo de meta
+     * Descripción del tipo de meta
      */
     String descripcion
 
@@ -43,14 +43,14 @@ class TipoMeta implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         "${this.descripcion}"
     }
 
     /**
-     * Busca las metas de un cierto tipo o que no tengan ubicaci&oacute;n geogr&aacute;fica
+     * Busca las metas de un cierto tipo o que no tengan ubicación geográfica
      * @return un mapa: [metasCoords: las coordenadas de las metas, metasTotal: las metas]
      */
     def getMetas() {

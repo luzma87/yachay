@@ -5,7 +5,7 @@ package yachay.parametros
  */
 class SubSector implements Serializable {
     /**
-     * Descripci&oacute;n del subsector
+     * Descripción del subsector
      */
     String descripcion
 
@@ -38,7 +38,7 @@ class SubSector implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         return this.descripcion

@@ -5,7 +5,7 @@ package yachay.proyectos
  */
 class EjeProgramatico implements Serializable {
     /**
-     * Descripci&oacute;n del eje program&aacute;tico
+     * Descripción del eje programático
      */
     String descripcion
 
@@ -38,7 +38,7 @@ class EjeProgramatico implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         return this.descripcion

@@ -8,7 +8,7 @@ import yachay.parametros.poaPac.Mes
  */
 class Sigef {
     /**
-     * A&ntilde;o
+     * Año
      */
     Anio anio
     /**

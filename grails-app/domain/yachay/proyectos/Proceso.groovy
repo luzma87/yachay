@@ -9,7 +9,7 @@ class Proceso implements Serializable {
      */
     String nombre
     /**
-     * Descripci&oacute;n del proceso
+     * Descripción del proceso
      */
     String descripcion
     /**

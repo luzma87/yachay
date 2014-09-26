@@ -5,11 +5,11 @@ package yachay.proyectos
  */
 class ObjetivoEstrategico implements Serializable {
     /**
-     * Proyecto del objetivo estrat&eacute;gico
+     * Proyecto del objetivo estratégico
      */
     Proyecto proyecto
     /**
-     * Instituci&oacute;n del objetivo estrat&eacute;gico
+     * Institución del objetivo estratégico
      */
     String institucion
     /**
@@ -17,11 +17,11 @@ class ObjetivoEstrategico implements Serializable {
      */
     String objetivo
     /**
-     * Pol&iacute;tica del objetivo estrat&eacute;gico
+     * Política del objetivo estratégico
      */
     String politica
     /**
-     * Meta del objetivo estrat&eacute;gico
+     * Meta del objetivo estratégico
      */
     String meta
 

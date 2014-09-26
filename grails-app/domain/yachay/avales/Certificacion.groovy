@@ -9,75 +9,75 @@ import yachay.seguridad.Usro
 class Certificacion {
 
     /**
-     * Usuario que cre&oacute; la certificaci&oacute;n
+     * Usuario que creó la certificación
      */
     Usro usuario
     /**
-     * Asignaci&oacute;n a la cual pertenece la certificaci&oacute;n
+     * Asignación a la cual pertenece la certificación
      */
     Asignacion asignacion
     /**
-     * Fecha de creaci&oacute;n de la certificaci&oacute;n
+     * Fecha de creación de la certificación
      */
     Date fecha = new Date()
     /**
-     * Fecha de revisi&oacute;n de la certificaci&oacute;n
+     * Fecha de revisión de la certificación
      */
     Date fechaRevision
     /**
-     * Fecha de anulaci&oacute;n de la certificaci&oacute;n
+     * Fecha de anulación de la certificación
      */
     Date fechaAnulacion
     /**
-     * Fecha de revisi&oacute;n de la anulaci&oacute;n de la certificaci&oacute;n
+     * Fecha de revisión de la anulación de la certificación
      */
     Date fechaRevisionAnulacion
     /**
-     * Fecha de liberaci&oacute;n de la certificaci&oacute;n
+     * Fecha de liberación de la certificación
      */
     Date fechaLiberacion
     /**
-     * Concepto de la anulaci&oacute;n
+     * Concepto de la anulación
      */
     String conceptoAnulacion
     /**
-     * Path del archivo de solicitud de anulaci&oacute;n
+     * Path del archivo de solicitud de anulación
      */
     String pathSolicitudAnulacion
     /**
-     * Path del archivo de liberaci&oacute;n
+     * Path del archivo de liberación
      */
     String pathLiberacion
     /**
-     * Path del archivo de anulaci&oacute;n
+     * Path del archivo de anulación
      */
     String pathAnulacion
     /**
-     * N&uacute;mero del contrato
+     * Número del contrato
      */
     String numeroContrato
     /**
-     * Monto de la liberaci&oacute;n
+     * Monto de la liberación
      */
     double montoLiberacion = 0
     /**
-     * Monto de la certificaci&oacute;n
+     * Monto de la certificación
      */
     double monto
     /**
-     * Concepto de la certificaci&oacute;n
+     * Concepto de la certificación
      */
     String concepto
     /**
-     * Observaciones de la certificaci&oacute;n
+     * Observaciones de la certificación
      */
     String observaciones
     /**
-     * N&uacute;mero de memorando de solicitud
+     * Número de memorando de solicitud
      */
     String memorandoSolicitud
     /**
-     * N&uacute;mero de memorando del certificado
+     * Número de memorando del certificado
      */
     String memorandoCertificado
     /**
@@ -85,15 +85,15 @@ class Certificacion {
      */
     String pathSolicitud
     /**
-     * Acuerdo de la certificaci&oacute;n
+     * Acuerdo de la certificación
      */
     String acuerdo
     /**
-     * Archivo de la certificaci&oacute;n
+     * Archivo de la certificación
      */
     String archivo
     /**
-     * Estado de la certificaci&oacute;n:<br/>
+     * Estado de la certificación:<br/>
      * &nbsp;&nbsp;&nbsp;&nbsp;0: solicitado
      * &nbsp;&nbsp;&nbsp;&nbsp;1: aprobado
      * &nbsp;&nbsp;&nbsp;&nbsp;2: negado

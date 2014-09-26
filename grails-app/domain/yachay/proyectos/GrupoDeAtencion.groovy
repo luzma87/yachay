@@ -8,19 +8,19 @@ import yachay.proyectos.Proyecto
  */
 class GrupoDeAtencion implements Serializable {
     /**
-     * Tipo de grupo del grupo de atenci&oacute;n
+     * Tipo de grupo del grupo de atención
      */
     TipoGrupo tipoGrupo
     /**
-     * Proyecto del grupo de atenci&oacute;n
+     * Proyecto del grupo de atención
      */
     Proyecto proyecto
     /**
-     * Cantidad de hombres en el grupo de atenci&oacute;n
+     * Cantidad de hombres en el grupo de atención
      */
     int hombre
     /**
-     * Cantidad de mujeres en el grupo de atenci&oacute;n
+     * Cantidad de mujeres en el grupo de atención
      */
     int mujer
 

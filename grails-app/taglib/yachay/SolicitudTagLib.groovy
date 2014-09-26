@@ -9,7 +9,7 @@ import yachay.seguridad.Prfl
 import yachay.contratacion.DetalleMontoSolicitud
 
 /**
- * Tags para mostrar la informaci&oacute;n de las solicitudes de contrataci&oacute;n
+ * Tags para mostrar la información de las solicitudes de contratación
  */
 class SolicitudTagLib {
     static namespace = 'slc'
@@ -17,8 +17,8 @@ class SolicitudTagLib {
     /**
      * Muestra los datos de una solicitud
      * @param solicitud el objeto Solicitud
-     * @param editable si existe este par&aacute;metro los campos ser&aacute;n editables
-     * @param aprobacion si existe este par&aacute;metro la aprobaci&oacute;n sera editable
+     * @param editable si existe este parámetro los campos serán editables
+     * @param aprobacion si existe este parámetro la aprobación sera editable
      * @param perfil el perfil para decidir si los campos deben ser editables
      * @param id el id de la solicitud (en lugar del objeto)
      */
@@ -321,9 +321,9 @@ class SolicitudTagLib {
     }
 
     /**
-     * Muestra el &aacute;rea de revisiones de la solicitud
+     * Muestra el área de revisiones de la solicitud
      * @param solicitud el objeto Solicitud
-     * @param editable indica si los campos ser&aacute;n editables ("true", true, 1 o "1")
+     * @param editable indica si los campos serán editables ("true", true, 1 o "1")
      * @param perfil el perfil para decidir si los campos deben ser editables
      */
     def revisiones = { attrs ->
@@ -373,11 +373,11 @@ class SolicitudTagLib {
     }
 
     /**
-     * Muestra el &aacute;rea de las revisiones
+     * Muestra el área de las revisiones
      * @param solicitud el obejto Solicitud
-     * @param editable si es editable el &aacute;rea de gerencia
-     * @param editableA si es editable el &aacute;rea de asistente de gerencia
-     * @param tipo el tipo de revisi&oacute;n (GAF, GJ)
+     * @param editable si es editable el área de gerencia
+     * @param editableA si es editable el área de asistente de gerencia
+     * @param tipo el tipo de revisión (GAF, GJ)
      */
     def revisionFragment = { attrs ->
         Solicitud solicitud = attrs.solicitud
@@ -497,9 +497,9 @@ class SolicitudTagLib {
     }
 
     /**
-     * Muestra el &aacute;rea de aprobaciones de la solicitud
+     * Muestra el área de aprobaciones de la solicitud
      * @param solicitud el objeto Solicitud
-     * @param editable indica si los campos ser&aacute;n editables ("true", true, 1 o "1")
+     * @param editable indica si los campos serán editables ("true", true, 1 o "1")
      * @param perfil el perfil para decidir si los campos deben ser editables
      */
     def aprobaciones = { attrs ->
@@ -606,7 +606,7 @@ class SolicitudTagLib {
 
     /**
      * Muestra el header para los reportes
-     * @param title el t&iacute;tulo del reporte
+     * @param title el título del reporte
      */
     def headerReporte = { attrs ->
         def title = attrs.title ?: ""
@@ -647,7 +647,7 @@ class SolicitudTagLib {
     }
 
     /**
-     * Muestra la informaci&oacute;n de la solicitud para el reporte
+     * Muestra la información de la solicitud para el reporte
      * @param solicitud el objeto Solicitud
      */
     def infoReporte = { attrs ->
@@ -766,7 +766,7 @@ class SolicitudTagLib {
     }
 
     /**
-     * Muestra el &aacute;rea de revisiones para el reporte
+     * Muestra el área de revisiones para el reporte
      * @param solicitud el objeto Solicitud
      */
     def revisionesReporte = { attrs ->
@@ -832,7 +832,7 @@ class SolicitudTagLib {
     }
 
     /**
-     * Muestra el &aacute;rea de aprobaciones para el reporte
+     * Muestra el área de aprobaciones para el reporte
      * @param solicitud el objeto Solicitud
      */
     def aprobacionesReporte = { attrs ->
@@ -871,7 +871,7 @@ class SolicitudTagLib {
     }
 
     /**
-     * Muestra el &aacute;rea de firmas para el reporte
+     * Muestra el área de firmas para el reporte
      * @param firmas la lista de usuarios que deben firmar
      */
     def firmasReporte = { attrs ->

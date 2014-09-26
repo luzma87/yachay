@@ -3,11 +3,11 @@ package yachay.parametros
 
 /**
  * Clase para conectar con la tabla 'edpy' de la base de datos<br/>
- * Guarda un cat&aacute;logo de posibles estados del proyecto
+ * Guarda un catálogo de posibles estados del proyecto
  */
 class EstadoProyecto implements Serializable {
     /**
-     * Descripci&oacute;n del estado del proyecto
+     * Descripción del estado del proyecto
      */
     String descripcion
 
@@ -40,7 +40,7 @@ class EstadoProyecto implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         return this.descripcion

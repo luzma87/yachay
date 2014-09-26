@@ -5,7 +5,7 @@ package yachay.parametros
  */
 class FormaPago {
     /**
-     * Descipci&oacute;n de la forma de pago
+     * Descipción de la forma de pago
      */
     String descripcion
 

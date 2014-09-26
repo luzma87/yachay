@@ -16,15 +16,15 @@ class PresupuestoUnidad {
      */
     UnidadEjecutora unidad
     /**
-     * A&ntilde;o del presupuesto
+     * Año del presupuesto
      */
     Anio anio
     /**
-     * M&aacute;ximo de invesriones
+     * Máximo de invesriones
      */
     double maxInversion
     /**
-     * M&aacute;ximo de corrientes
+     * Máximo de corrientes
      */
     double maxCorrientes
     /**
@@ -36,11 +36,11 @@ class PresupuestoUnidad {
      */
     double originalInversion = 0
     /**
-     * Eje program&aacute;tico
+     * Eje programático
      */
     EjeProgramatico ejeProgramatico
     /**
-     * Objetivo estrat&eacute;gico
+     * Objetivo estratégico
      */
     ObjetivoEstrategicoProyecto objetivoEstrategico
     /**
@@ -48,15 +48,15 @@ class PresupuestoUnidad {
      */
     ObjetivoGobiernoResultado objetivoGobiernoResultado
     /**
-     * Pol&iacute;tica
+     * Política
      */
     Politica politica
     /**
-     * Est&aacute; o no aprobado corrientes
+     * Está o no aprobado corrientes
      */
     int aprobadoCorrientes = 0
     /**
-     * Est&aacute; o no aprobado inversi&oacute;n
+     * Está o no aprobado inversión
      */
     int aprobadoInversion = 0
 
@@ -107,7 +107,7 @@ class PresupuestoUnidad {
 
     /**
      * Genera un string para mostrar
-     * @return el a&ntilde;o, el m&aacute;ximo de invesriones y m&aacute;ximo de corrientes concatenados
+     * @return el año, el máximo de invesriones y máximo de corrientes concatenados
      */
     String toString() {
         "${this.anio}:${this.maxInversion}:${this.maxCorrientes}"

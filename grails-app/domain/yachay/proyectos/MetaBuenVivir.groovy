@@ -5,11 +5,11 @@ package yachay.proyectos
  */
 class MetaBuenVivir implements Serializable {
     /**
-     * Pol&iacute;tica del buen vivir de la meta
+     * Política del buen vivir de la meta
      */
     PoliticaBuenVivir politica
     /**
-     * C&oacute;digo de la meta del buen vivir
+     * Código de la meta del buen vivir
      */
     Integer codigo
     /**
@@ -50,8 +50,8 @@ class MetaBuenVivir implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return el c&oacute;digo del objetivo de la pol&iacute;tica, el c&oacute;digo de la pol&iacute;tica,
-     * el c&oacute;digo y la descripci&oacute;n concatenados
+     * @return el código del objetivo de la política, el código de la política,
+     * el código y la descripción concatenados
      */
     String toString() {
         return this.politica.objetivo.codigo + "." + this.politica.codigo + "." + this.codigo + " - " + this.descripcion

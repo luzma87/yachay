@@ -6,11 +6,11 @@ package yachay.parametros.geografia
  */
 class Region implements Serializable {
     /**
-     * C&oacute; de la regi&oacute;n
+     * Có de la región
      */
     String codigo
     /**
-     * Nombre de la regi&oacute;n
+     * Nombre de la región
      */
     String nombre
 

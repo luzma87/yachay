@@ -1,7 +1,7 @@
 package yachay.utilitarios
 
 /**
- * Servicio para efetuar b&uacute;squedas
+ * Servicio para efetuar búsquedas
  */
 class BuscadorService {
 
@@ -26,13 +26,13 @@ class BuscadorService {
     }
 
     /**
-     * Crea el sql para efectuar una b&uacute;squeda
-     * @param operador el operador para la b&uacute;squeda (AND, OR)
-     * @param parametros par&aacute;metros de b&uacute;squeda. En posici&oacute;n 1 recibe el comparador ('igual', 'mayor', 'menor', 'between',
+     * Crea el sql para efectuar una búsqueda
+     * @param operador el operador para la búsqueda (AND, OR)
+     * @param parametros parámetros de búsqueda. En posición 1 recibe el comparador ('igual', 'mayor', 'menor', 'between',
      * 'like', 'not like', 'like izq', 'like der', 'not like izq'
-     * @param common el subconjunto entre los par&aacute;metros y los campos del dominio
+     * @param common el subconjunto entre los parámetros y los campos del dominio
      * @param mapa mapa con los campos del dominio
-     * @param ignoreCase boolean que indica si se debe ignorar may&uacute;sculas y min&uacute;sculas
+     * @param ignoreCase boolean que indica si se debe ignorar mayúsculas y minúsculas
      * @return la cadena del HQL
      */
     String filtro(operador, parametros, common, mapa, ignoreCase) {
@@ -227,17 +227,17 @@ class BuscadorService {
     }
 
     /**
-     * Efect&uacute;a la b&uacute;squeda
-     * @param dominio el dominio donde se va a hacer la b&uacute;squeda
+     * Efectúa la búsqueda
+     * @param dominio el dominio donde se va a hacer la búsqueda
      * @param tabla el nombre del dominio (String)
      * @param tipo 'excluyente' para OR, otra cosa para AND
-     * @param parametros los par&aacute;metros para la b&uacute;squeda
-     * @param ignoreCase un boolean que indica si deben o no ignorarse may&uacute;sculas y min&uacute;sculas
-     * @param max la cantidad m&aacute;xima de registros
+     * @param parametros los parámetros para la búsqueda
+     * @param ignoreCase un boolean que indica si deben o no ignorarse mayúsculas y minúsculas
+     * @param max la cantidad máxima de registros
      * @param offset el offset para el SQL
      * @param sort el nombre de la columna para ordenamiento
      * @param order tipo de ordenamiento (ASC o DESC)
-     * @return los resultados de la b&uacute;squeda
+     * @return los resultados de la búsqueda
      */
     List buscar(dominio, tabla, tipo, parametros, ignoreCase, max, offset, sort, order) {
         def sql = "from " + tabla
@@ -265,15 +265,15 @@ class BuscadorService {
     }
 
     /**
-     * Efect&uacute;a una b&uacute;squeda en la base de datos basado en una sentencia sSQL
+     * Efectúa una búsqueda en la base de datos basado en una sentencia sSQL
      * @param qry parte del SQL que contiene el select
      * @param qrwh parte where del SQL
      * @param campos listado de campos a ser consultados
-     * @param orden secci&oacute;n order by del SQL
+     * @param orden sección order by del SQL
      * @param tpOrdn tipo de ordenamiento (ASC o DESC)
-     * @param numero n&uacute;mero de registros retornados
+     * @param numero número de registros retornados
      * @param qord columnas por las que se puede ordenar
-     * @return los resultados de la b&uacute;squeda
+     * @return los resultados de la búsqueda
      */
     List buscarSQL(qry, qrwh = 'w', campos, orden, tpOrdn, numero, qord) {
         def m = []
@@ -341,7 +341,7 @@ class BuscadorService {
     }
 
     /**
-     * Construye la secci&oacute;n del WHERE del HQL
+     * Construye la sección del WHERE del HQL
      * @param mapa un mapa con: <br/>
      * <ul>
      *     <li>op: el oerador ('igual', '=','mayor', '>', 'menor', '<', 'like', 'not like', 'like izq', 'like der', 'not like izq'</li>

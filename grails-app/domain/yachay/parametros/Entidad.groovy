@@ -9,7 +9,7 @@ class Entidad implements Serializable {
      */
     String nombre
     /**
-     * Direcci&oacute;n de la entidad
+     * Dirección de la entidad
      */
     String direccion
     /**
@@ -21,15 +21,15 @@ class Entidad implements Serializable {
      */
     String objetivo
     /**
-     * N&uacute;mero de tel&eacute;fono de la entidad
+     * Número de teléfono de la entidad
      */
     String telefono
     /**
-     * N&uacute;mero de fax de la entidad
+     * Número de fax de la entidad
      */
     String fax
     /**
-     * Direcci&oacute;n de e-mail de la entidad
+     * Dirección de e-mail de la entidad
      */
     String email
     /**

@@ -9,7 +9,7 @@ class Prfl implements Serializable {
      */
     String nombre
     /**
-     * Descripci&oacute;n del perfil
+     * Descripción del perfil
      */
     String descripcion
     /**
@@ -21,7 +21,7 @@ class Prfl implements Serializable {
      */
     String observaciones
     /**
-     * C&oacute;digo del perfil
+     * Código del perfil
      */
     String codigo
 

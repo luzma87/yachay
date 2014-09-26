@@ -6,19 +6,19 @@ package yachay.proyectos
  */
 class MedioVerificacion implements Serializable {
     /**
-     * Indicador del medio de verificaci&oacute;n
+     * Indicador del medio de verificación
      */
     Indicador indicador
     /**
-     * Descripci&oacute;n del medio de verificaci&oacute;n
+     * Descripción del medio de verificación
      */
     String descripcion
     /**
-     * Modificaci&oacute;n proyecto del medio de verificaci&oacute;n
+     * Modificación proyecto del medio de verificación
      */
     ModificacionProyecto modificacion
     /**
-     * Estado del medio de verificaci&oacute;n (0: activo, 1: modificado)
+     * Estado del medio de verificación (0: activo, 1: modificado)
      */
     int estado = 0 /* 0 -> activo por facilidad en la base de datos  1-> modificado*/
 
@@ -57,7 +57,7 @@ class MedioVerificacion implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n limitada a 20 caracteres
+     * @return la descripción limitada a 20 caracteres
      */
     String toString() {
         if (descripcion.size() > 20) {
@@ -77,7 +77,7 @@ class MedioVerificacion implements Serializable {
     }
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n completa
+     * @return la descripción completa
      */
     String toStringCompleto() {
         return this.descripcion

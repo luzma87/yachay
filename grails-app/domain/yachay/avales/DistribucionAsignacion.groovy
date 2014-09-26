@@ -9,15 +9,15 @@ import yachay.poa.Asignacion
 class DistribucionAsignacion {
 
     /**
-     * Asignaci&oacute;n de la distribuci&oacute;n
+     * Asignación de la distribución
      */
     Asignacion asignacion
     /**
-     * Valor de la distribuci&oacute;n
+     * Valor de la distribución
      */
     double valor = 0
     /**
-     * Unidad Ejecutora de la distribuci&oacute;n
+     * Unidad Ejecutora de la distribución
      */
     UnidadEjecutora unidadEjecutora
 
@@ -59,7 +59,7 @@ class DistribucionAsignacion {
     }
 
     /**
-     * Retorna el valor real de la asignaci&oacute;n teniendo en cuenta la reubicaci&oacute;n
+     * Retorna el valor real de la asignación teniendo en cuenta la reubicación
      * @return el valor real
      */
     def getValorReal() {
@@ -74,8 +74,8 @@ class DistribucionAsignacion {
     }
 
     /**
-     * Retorna el valor de los hijos de la asignaci&oacute;n
-     * @param asg asignaci&oacute;n
+     * Retorna el valor de los hijos de la asignación
+     * @param asg asignación
      * @return el valor de los hijos
      */
     def getValorHijo(asg) {

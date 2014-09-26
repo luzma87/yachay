@@ -18,20 +18,20 @@ class Aprobacion {
     TipoAprobacion tipoAprobacion
 //    Fuente fuente
     /**
-     * Fecha de aprobaci&oacute;n
+     * Fecha de aprobación
      */
     Date fecha
     /**
-     * Observaciones de la aprobaci&oacute;n
+     * Observaciones de la aprobación
      */
     String observaciones
     /**
-     * Path del documento de aprobaci&oacute;n
+     * Path del documento de aprobación
      */
     String pathPdf
 
     /**
-     * Asistentes a la reuni&oacute;n de aprobaci&oacute;n
+     * Asistentes a la reunión de aprobación
      */
     String asistentes
 

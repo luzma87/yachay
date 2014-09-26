@@ -5,11 +5,11 @@ package yachay.proyectos
  */
 class Categoria {
     /**
-     * Descripci&oacute;n de la categor&iacute;a
+     * Descripción de la categoría
      */
     String descripcion
     /**
-     * C&oacute;digo de la categor&iacute;a
+     * Código de la categoría
      */
     String codigo
 

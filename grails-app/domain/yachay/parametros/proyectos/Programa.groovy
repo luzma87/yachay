@@ -6,11 +6,11 @@ package yachay.parametros.proyectos
  */
 class Programa implements Serializable {
     /**
-     * C&oacute;digo del programa
+     * Código del programa
      */
     String codigo
     /**
-     * Descripci&oacute;n del programa
+     * Descripción del programa
      */
     String descripcion
 
@@ -45,7 +45,7 @@ class Programa implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return la descripci&oacute;n
+     * @return la descripción
      */
     String toString() {
         "${this.descripcion}"

@@ -9,19 +9,19 @@ class BeneficioSenplades implements Serializable {
      */
     Proyecto proyecto
     /**
-     * N&uacute;mero de beneficiarios directos hombres del beneficio
+     * Número de beneficiarios directos hombres del beneficio
      */
     int beneficiariosDirectosHombres
     /**
-     * N&uacute;mero de beneficiarios directos mujeres del beneficio
+     * Número de beneficiarios directos mujeres del beneficio
      */
     int beneficiariosDirectosMujeres
     /**
-     * N&uacute;mero de beneficiarios indirectos hombres del beneficio
+     * Número de beneficiarios indirectos hombres del beneficio
      */
     int beneficiariosIndirectosHombres
     /**
-     * N&uacute;mero de beneficiarios indirectos mujeres del beneficio
+     * Número de beneficiarios indirectos mujeres del beneficio
      */
     int beneficiariosIndirectosMujeres
 

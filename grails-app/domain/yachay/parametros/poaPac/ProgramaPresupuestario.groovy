@@ -5,11 +5,11 @@ package yachay.parametros.poaPac
  */
 class ProgramaPresupuestario implements Serializable {
     /**
-     * C&oacute;digo del programa presupuestario
+     * Código del programa presupuestario
      */
     String codigo
     /**
-     * Descripci&oacute;n del programa presupuestario
+     * Descripción del programa presupuestario
      */
     String descripcion
 
@@ -44,7 +44,7 @@ class ProgramaPresupuestario implements Serializable {
 
     /**
      * Genera un string para mostrar
-     * @return el c&oacute;digo y la descripci&oacute;n concatenados
+     * @return el código y la descripción concatenados
      */
     String toString() {
         "${this.codigo}:${this.descripcion}"

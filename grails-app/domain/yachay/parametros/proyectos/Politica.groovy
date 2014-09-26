@@ -2,11 +2,11 @@ package yachay.parametros.proyectos
 /*Política que se aplica en el proyecto.*/
 /**
  * Clase para conectar con la tabla 'pltc' de la base de datos<br/>
- * Pol&iacute;tica que se aplica en el proyecto.
+ * Política que se aplica en el proyecto.
  */
 class Politica implements Serializable {
     /**
-     * Descripci&oacute;n de la pol&iacute;tica
+     * Descripción de la política
      */
     String descripcion
 
