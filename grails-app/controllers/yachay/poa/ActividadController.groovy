@@ -2,14 +2,23 @@ package yachay.poa
 
 import yachay.poa.Actividad
 
+/**
+ * Controlador
+ */
 class ActividadController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Actividad"], default: "Actividad List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class ActividadController {
         [actividadInstanceList: Actividad.list(params), actividadInstanceTotal: Actividad.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def actividadInstance
@@ -39,11 +51,17 @@ class ActividadController {
         return [actividadInstance: actividadInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -73,6 +91,9 @@ class ActividadController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def actividadInstance = Actividad.get(params.id)
         if (actividadInstance) {
@@ -98,6 +119,9 @@ class ActividadController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def actividadInstance = Actividad.get(params.id)
         if (!actividadInstance) {
@@ -111,11 +135,17 @@ class ActividadController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def actividadInstance = Actividad.get(params.id)
         if (actividadInstance) {

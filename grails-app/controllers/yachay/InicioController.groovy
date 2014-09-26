@@ -11,8 +11,8 @@ import yachay.proyectos.ModificacionAsignacion
 class InicioController extends yachay.seguridad.Shield {
 
     /**
-     * Retorna el valor real de la asignaci&oacute;n teniendo en cuenta la reubicaci&oacute;n
-     * @param aa asignaci&oacute;n
+     * Retorna el valor real de la asignación teniendo en cuenta la reubicación
+     * @param aa asignación
      * @return el valor real
      */
     def getValorReal(aa) {
@@ -80,8 +80,8 @@ class InicioController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Retorna el valor de los hijos de la asignaci&oacute;n
-     * @param asg asignaci&oacute;n
+     * Retorna el valor de los hijos de la asignación
+     * @param asg asignación
      * @return el valor de los hijos
      */
     def getValorHijo(asg) {
@@ -100,9 +100,9 @@ class InicioController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Retorna el valor de la asignaci&oacute;n sin modificaciones
-     * @param asg asignaci&oacute;n
-     * @return el valor sin modificaciones
+     * Retorna el valor de la asignación sin modificaciones
+     * @param asg asignación
+     * @return valor el valor sin modificaciones
      */
     def getValorSinModificacion(asg) {
 
@@ -145,8 +145,8 @@ class InicioController extends yachay.seguridad.Shield {
     }
 
     /**
-     * muestra la pantalla de inicio del sistema <br/>
-     * si no se encuentra la session redirecciona a logout
+     * Acción que muestra la pantalla de inicio del sistema <br/>
+     * si no se encuentra la sesión redirecciona a logout
      */
     def index = {
 
@@ -171,12 +171,10 @@ class InicioController extends yachay.seguridad.Shield {
 //            }
 //
 //        }
-
-
     }
 
     /**
-     * muestra la pantalla de alertas con las alertas del usuario que no han sido recibidas
+     * Acción que muestra la pantalla de alertas con las alertas del usuario que no han sido recibidas
      */
     def mostrarAlertas = {
         //ejemplo de como mandar alertas
@@ -187,7 +185,7 @@ class InicioController extends yachay.seguridad.Shield {
     }
 
     /**
-     * redirecciona a la acci&oacute;n necesaria seg&uacute;n la alerta
+     * Acción que redirecciona a la acción necesaria según la alerta
      */
     def showAlerta = {
         def alerta = Alerta.get(params.id)
@@ -198,15 +196,15 @@ class InicioController extends yachay.seguridad.Shield {
     }
 
     /**
-     * muestra la pantalla de par&aacute;metros
+     * Acción que muestra la pantalla de parámetros
      */
     def parametros = {
 
     }
 
     /**
-     * llamado con ajax, verifica que exista la session para saber si redireccionar a logout o no
-     * @return 'ok' o 'no' seg&uacute;n exista o no la session
+     * Acción llamada con ajax que verifica que exista la sesión para saber si redireccionar a logout o no
+     * @Renders 'ok' o 'no' según exista o no la sesión
      */
     def verificarSession = {
         println "verificando session "
@@ -217,8 +215,8 @@ class InicioController extends yachay.seguridad.Shield {
     }
 
     /**
-     * permite cambiar el color de la aplicaci&oacute;n
-     * @deprecated la nueva versi&oacute;n ya no permite cambios de color
+     * Acción que permite cambiar el color de la aplicación
+     * @deprecated la nueva versión ya no permite cambios de color
      */
     @Deprecated
     def cambiarColor = {

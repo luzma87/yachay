@@ -2,14 +2,23 @@ package yachay.proyectos
 
 import yachay.proyectos.IndicadoresSenplades
 
+/**
+ * Controlador
+ */
 class IndicadoresSenpladesController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["IndicadoresSenplades"], default: "IndicadoresSenplades List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class IndicadoresSenpladesController {
         [indicadoresSenpladesInstanceList: IndicadoresSenplades.list(params), indicadoresSenpladesInstanceTotal: IndicadoresSenplades.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def indicadoresSenpladesInstance
@@ -39,11 +51,17 @@ class IndicadoresSenpladesController {
         return [indicadoresSenpladesInstance: indicadoresSenpladesInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class IndicadoresSenpladesController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def indicadoresSenpladesInstance = IndicadoresSenplades.get(params.id)
         if (indicadoresSenpladesInstance) {
@@ -103,6 +124,9 @@ class IndicadoresSenpladesController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def indicadoresSenpladesInstance = IndicadoresSenplades.get(params.id)
         if (!indicadoresSenpladesInstance) {
@@ -117,11 +141,17 @@ class IndicadoresSenpladesController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def indicadoresSenpladesInstance = IndicadoresSenplades.get(params.id)
         if (indicadoresSenpladesInstance) {

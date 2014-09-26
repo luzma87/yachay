@@ -2,14 +2,23 @@ package yachay.parametros.geografia
 
 import yachay.parametros.geografia.Region
 
+/**
+ * Controlador
+ */
 class RegionController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Region"], default: "Region List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class RegionController {
         [regionInstanceList: Region.list(params), regionInstanceTotal: Region.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def regionInstance
@@ -39,11 +51,17 @@ class RegionController {
         return [regionInstance: regionInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class RegionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def regionInstance = Region.get(params.id)
         if (regionInstance) {
@@ -103,6 +124,9 @@ class RegionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def regionInstance = Region.get(params.id)
         if (!regionInstance) {
@@ -117,11 +141,17 @@ class RegionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def regionInstance = Region.get(params.id)
         if (regionInstance) {

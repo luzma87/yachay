@@ -1,13 +1,22 @@
 package yachay.seguridad
 
+/**
+ * Controlador
+ */
 class CtrlController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "ctrl.list", default: "Ctrl List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -17,6 +26,9 @@ class CtrlController {
         [ctrlInstanceList: Ctrl.list(params), ctrlInstanceTotal: Ctrl.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def ctrlInstance
@@ -37,11 +49,17 @@ class CtrlController {
         return [ctrlInstance: ctrlInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -74,6 +92,9 @@ class CtrlController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def ctrlInstance = Ctrl.get(params.id)
         if (ctrlInstance) {
@@ -101,6 +122,9 @@ class CtrlController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def ctrlInstance = Ctrl.get(params.id)
         if (!ctrlInstance) {
@@ -115,11 +139,17 @@ class CtrlController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def ctrlInstance = Ctrl.get(params.id)
         if (ctrlInstance) {

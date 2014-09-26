@@ -15,11 +15,17 @@ import yachay.proyectos.ModificacionAsignacion
 import yachay.proyectos.Obra
 import yachay.proyectos.Proyecto
 
+/**
+ * Controlador
+ */
 class CronogramaController extends yachay.seguridad.Shield{
 
     def kerberosService
     def dbConnectionService
 
+    /**
+     * Acción
+     */
     def nuevoCronograma = {
       //  println "nuevo cronograma "+params
         def colores= ["rgba(221,123,66,0.7)","#FFAB60","#FFE7AD","#A7C9AE","#888A63"]
@@ -48,6 +54,9 @@ class CronogramaController extends yachay.seguridad.Shield{
 
     }
 
+    /**
+     * Acción
+     */
     def guardarDatosCronograma = {
         println "guardar "+params
         def crg
@@ -190,6 +199,9 @@ class CronogramaController extends yachay.seguridad.Shield{
 
     }
 
+    /**
+     * Acción
+     */
     def calcularAsignaciones = {
         //println "calc asg "+params
         def proyecto = Proyecto.get(params.proyecto)
@@ -307,6 +319,9 @@ class CronogramaController extends yachay.seguridad.Shield{
 
     }
 
+    /**
+     * Acción
+     */
     def verCronograma = {
         println "nuevo cronograma "+params
 //        def colores= ["#DD7B42","#FFAB48","#FFE7AD","#A7C9AE","#888A63"]

@@ -2,14 +2,23 @@ package yachay.avales
 
 import yachay.avales.EstadoAval
 
+/**
+ * Controlador
+ */
 class EstadoAvalController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "estadoaval.list", default: "EstadoAval List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class EstadoAvalController {
         [estadoAvalInstanceList: EstadoAval.list(params), estadoAvalInstanceTotal: EstadoAval.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def estadoAvalInstance
@@ -39,11 +51,17 @@ class EstadoAvalController {
         return [estadoAvalInstance: estadoAvalInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -73,6 +91,9 @@ class EstadoAvalController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def estadoAvalInstance = EstadoAval.get(params.id)
         if (estadoAvalInstance) {
@@ -98,6 +119,9 @@ class EstadoAvalController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def estadoAvalInstance = EstadoAval.get(params.id)
         if (!estadoAvalInstance) {
@@ -111,11 +135,17 @@ class EstadoAvalController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def estadoAvalInstance = EstadoAval.get(params.id)
         if (estadoAvalInstance) {

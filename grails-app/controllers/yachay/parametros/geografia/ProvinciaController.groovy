@@ -2,14 +2,23 @@ package yachay.parametros.geografia
 
 import yachay.parametros.geografia.Provincia
 
+/**
+ * Controlador
+ */
 class ProvinciaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Provincia"], default: "Provincia List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class ProvinciaController {
         [provinciaInstanceList: Provincia.list(params), provinciaInstanceTotal: Provincia.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def provinciaInstance
@@ -39,11 +51,17 @@ class ProvinciaController {
         return [provinciaInstance: provinciaInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class ProvinciaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def provinciaInstance = Provincia.get(params.id)
         if (provinciaInstance) {
@@ -103,6 +124,9 @@ class ProvinciaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def provinciaInstance = Provincia.get(params.id)
         if (!provinciaInstance) {
@@ -117,11 +141,17 @@ class ProvinciaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def provinciaInstance = Provincia.get(params.id)
         if (provinciaInstance) {

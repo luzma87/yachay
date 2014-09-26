@@ -4,8 +4,14 @@ import yachay.parametros.poaPac.Anio
 import yachay.parametros.UnidadEjecutora
 import yachay.seguridad.Usro
 
+/**
+ * Controlador
+ */
 class RevisionAvalController {
 
+    /**
+     * Acción
+     */
     def pendientes = {
         def solicitudes = SolicitudAval.findAllByEstado(EstadoAval.findByCodigo("E01"))
         def actual
@@ -16,6 +22,9 @@ class RevisionAvalController {
         [solicitudes: solicitudes, actual: actual]
     }
 
+    /**
+     * Acción
+     */
     def negarAval = {
 
         def band = false
@@ -38,6 +47,9 @@ class RevisionAvalController {
 
     }
 
+    /**
+     * Acción
+     */
     def listaAvales = {
         def actual
         if (params.anio)
@@ -47,6 +59,9 @@ class RevisionAvalController {
         [actual: actual]
     }
 
+    /**
+     * Acción
+     */
     def liberarAval = {
 
         def aval = Aval.get(params.id)
@@ -55,6 +70,9 @@ class RevisionAvalController {
 
     }
 
+    /**
+     * Acción
+     */
     def historialAvales = {
         println "historial aval " + params
         def now = new Date()
@@ -144,6 +162,9 @@ class RevisionAvalController {
         [datos: datos, estado: estado, sort: params.sort, order: params.order, now: now]
     }
 
+    /**
+     * Acción
+     */
     def historial = {
 //        println "historial "+params
         def anio = Anio.get(params.anio).anio
@@ -187,6 +208,9 @@ class RevisionAvalController {
         [datos: datos.sort { it.fecha }]
     }
 
+    /**
+     * Acción
+     */
     def aprobarAval = {
 
         def unidad = UnidadEjecutora.findByCodigo("DPI") // DIRECCIÓN DE PLANIFICACIÓN E INVERSIÓN
@@ -206,6 +230,9 @@ class RevisionAvalController {
         [solicitud: solicitud, personas: personasFirmas, numero: numero]
     }
 
+    /**
+     * Acción
+     */
     def aprobarAnulacion = {
         def solicitud = SolicitudAval.get(params.id)
         def band = false
@@ -217,6 +244,9 @@ class RevisionAvalController {
         [solicitud: solicitud]
     }
 
+    /**
+     * Acción
+     */
     def guarDatosDoc = {
         println "guardar datos doc " + params
         def sol = SolicitudAval.get(params.id)
@@ -229,6 +259,9 @@ class RevisionAvalController {
     }
 
 
+    /**
+     * Acción
+     */
     def guardarLiberacion = {
         println "liberacion " + params
 
@@ -332,6 +365,9 @@ class RevisionAvalController {
         }
     }
 
+    /**
+     * Acción
+     */
     def caducarAval = {
         def aval = Aval.get(params.id)
         aval.estado = EstadoAval.findByCodigo("E06")
@@ -340,6 +376,9 @@ class RevisionAvalController {
     }
 
 
+    /**
+     * Acción
+     */
     def guardarAnulacion = {
         println "aprobar anulacion " + params
         def path = servletContext.getRealPath("/") + "avales/"
@@ -425,6 +464,9 @@ class RevisionAvalController {
         }
     }
 
+    /**
+     * Acción
+     */
     def guardarAprobacion = {
         /*TODO enviar alertas*/
         println "aprobar " + params

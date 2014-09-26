@@ -21,6 +21,9 @@ import java.awt.image.BufferedImage
 import static java.awt.RenderingHints.KEY_INTERPOLATION
 import static java.awt.RenderingHints.VALUE_INTERPOLATION_BICUBIC
 
+/**
+ * Controlador
+ */
 class SolicitudController extends yachay.seguridad.Shield {
 
     def getPathBase() {
@@ -320,11 +323,17 @@ class SolicitudController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: 'list')
     }
 
     /*Listado de solicitudes*/
+    /**
+     * Acción
+     */
     def list = {
 
         params.max = Math.min(params.max ? params.int('max') : 25, 100)
@@ -351,6 +360,9 @@ class SolicitudController extends yachay.seguridad.Shield {
         [solicitudInstanceList: lista, solicitudInstanceTotal: list2.size(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def listAprobacion = {
         def title = g.message(code: "default.list.label", args: ["Solicitud"], default: "Solicitud List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -364,6 +376,9 @@ class SolicitudController extends yachay.seguridad.Shield {
     }
 
     /*Permite ver los datos de la solicitud*/
+    /**
+     * Acción
+     */
     def show = {
         def solicitud = Solicitud.get(params.id)
         if (!solicitud) {
@@ -376,6 +391,9 @@ class SolicitudController extends yachay.seguridad.Shield {
     }
 
     /*Función para guardar una nueva solicitud*/
+    /**
+     * Acción
+     */
     def save = {
         def usuario = Usro.get(session.usuario.id)
         def unidadEjecutora = usuario.unidad
@@ -438,6 +456,9 @@ class SolicitudController extends yachay.seguridad.Shield {
         redirect(action: 'show', id: solicitud.id)
     }
 
+    /**
+     * Acción
+     */
     def incluirReunion = {
         def solicitud = Solicitud.get(params.id)
         if (solicitud.incluirReunion != "S") {
@@ -452,6 +473,9 @@ class SolicitudController extends yachay.seguridad.Shield {
         redirect(action: "show", id: solicitud.id)
     }
 
+    /**
+     * Acción
+     */
     def getComponentesByProyecto = {
         def tipoComponente = TipoElemento.get(2)
 
@@ -510,10 +534,16 @@ class SolicitudController extends yachay.seguridad.Shield {
         return sel + btn + js
     }
 
+    /**
+     * Acción
+     */
     def getActividadesByComponente = {
         render comboActividades(params.id, params.val, params.width)
     }
 
+    /**
+     * Acción
+     */
     def getDatosActividad = {
         def actividad = MarcoLogico.get(params.id.toLong())
         def anio = Anio.findByAnio(new Date().format("yyyy"))
@@ -527,6 +557,9 @@ class SolicitudController extends yachay.seguridad.Shield {
         render actividad.objeto + "||" + actividad.monto + "||" + asignaciones + "||" + days
     }
 
+    /**
+     * Acción
+     */
     def newActividad_ajax = {
         def usuario = Usro.get(session.usuario.id)
         def unidadEjecutora = usuario.unidad
@@ -563,6 +596,9 @@ class SolicitudController extends yachay.seguridad.Shield {
         render comboActividades(componente.id, actividad.id, params.width)
     }
 
+    /**
+     * Acción
+     */
     def cambiarMax = {
         def solicitud = Solicitud.get(params.id)
         def nuevoVal = params.monto.toDouble()
@@ -587,6 +623,9 @@ class SolicitudController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def updateDetalleMonto_ajax = {
         def solicitud = Solicitud.get(params.id)
         def valores = params.valores
@@ -635,6 +674,9 @@ class SolicitudController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def detalleMonto = {
         def solicitud = Solicitud.get(params.id)
         def anio = new Date().format("yyyy").toInteger()
@@ -649,6 +691,9 @@ class SolicitudController extends yachay.seguridad.Shield {
         return [solicitud: solicitud, anios: anios]
     }
 
+    /**
+     * Acción
+     */
     def addDetalleMonto = {
         def solicitud = Solicitud.get(params.id)
         def anio = Anio.get(params.anio)
@@ -675,6 +720,9 @@ class SolicitudController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def ingreso = {
         if (session.perfil.codigo == "RQ" || session.perfil.codigo == "DRRQ") {
             def usuario = Usro.get(session.usuario.id)
@@ -710,6 +758,9 @@ class SolicitudController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def revision = {
         def perfil = Prfl.get(session.perfil.id)
         def solicitud = Solicitud.get(params.id)
@@ -722,6 +773,9 @@ class SolicitudController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def saveRevision = {
         def solicitud = Solicitud.get(params.id)
         if (solicitud) {
@@ -782,6 +836,9 @@ class SolicitudController extends yachay.seguridad.Shield {
         redirect(action: "show", id: solicitud.id)
     }
 
+    /**
+     * Acción
+     */
     def aprobacion = {
         def solicitud = Solicitud.get(params.id.toLong())
         def perfil = Prfl.get(session.perfil.id)
@@ -812,6 +869,9 @@ class SolicitudController extends yachay.seguridad.Shield {
                 firmaDireccionPlanif: firmaDireccionPlanif, firmaGerenciaTec: firmaGerenciaTec, firmaRequirente: firmaRequirente]
     }
 
+    /**
+     * Acción
+     */
     def saveAprobacion = {
         def aprobacion = new Aprobacion()
         if (params.id) {
@@ -834,17 +894,26 @@ class SolicitudController extends yachay.seguridad.Shield {
         redirect(action: "show", id: aprobacion.solicitudId)
     }
 
+    /**
+     * Acción
+     */
     def uploadActa = {
         def aprobacion = Aprobacion.get(params.id.toLong())
         uploadFile("acta", request.getFile('pdf'), aprobacion)
         redirect(action: "show", id: aprobacion.solicitudId)
     }
 
+    /**
+     * Acción
+     */
     def downloadSolicitud = {
         def solicitud = Solicitud.get(params.id.toLong())
         downloadFile(params.tipo, solicitud)
     }
 
+    /**
+     * Acción
+     */
     def downloadActa = {
         def aprobacion = Aprobacion.get(params.id.toLong())
         downloadFile("acta", aprobacion)

@@ -2,14 +2,23 @@ package yachay.parametros
 
 import yachay.parametros.Unidad
 
+/**
+ * Controlador
+ */
 class UnidadController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
         /*Lista las unidades de medida*/
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Unidad"], default: "Unidad List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class UnidadController {
         [unidadInstanceList: Unidad.list(params), unidadInstanceTotal: Unidad.count(), title: title, params: params]
     }
     /*Form para crear una nueva unidad de medidad*/
+    /**
+     * Acción
+     */
     def form = {
         def title
         def unidadInstance
@@ -39,11 +51,17 @@ class UnidadController {
         return [unidadInstance: unidadInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
     /*Función para guardar una nueva unidad de medida*/
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class UnidadController {
         }
     }
         /*Función para actualizar los datos de una unidad de medida*/
+    /**
+     * Acción
+     */
     def update = {
         def unidadInstance = Unidad.get(params.id)
         if (unidadInstance) {
@@ -103,6 +124,9 @@ class UnidadController {
         }
     }
    /*Muestra los detalles de una unidad específica*/
+    /**
+     * Acción
+     */
     def show = {
         def unidadInstance = Unidad.get(params.id)
         if (!unidadInstance) {
@@ -117,12 +141,18 @@ class UnidadController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
     /*Función para borrar una unidad*/
+    /**
+     * Acción
+     */
     def delete = {
         def unidadInstance = Unidad.get(params.id)
         if (unidadInstance) {

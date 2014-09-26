@@ -2,14 +2,23 @@ package yachay.parametros
 
 import yachay.parametros.TipoProcedencia
 
+/**
+ * Controlador
+ */
 class TipoProcedenciaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["TipoProcedencia"], default: "TipoProcedencia List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class TipoProcedenciaController {
         [tipoProcedenciaInstanceList: TipoProcedencia.list(params), tipoProcedenciaInstanceTotal: TipoProcedencia.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def tipoProcedenciaInstance
@@ -39,11 +51,17 @@ class TipoProcedenciaController {
         return [tipoProcedenciaInstance: tipoProcedenciaInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class TipoProcedenciaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def tipoProcedenciaInstance = TipoProcedencia.get(params.id)
         if (tipoProcedenciaInstance) {
@@ -103,6 +124,9 @@ class TipoProcedenciaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def tipoProcedenciaInstance = TipoProcedencia.get(params.id)
         if (!tipoProcedenciaInstance) {
@@ -117,11 +141,17 @@ class TipoProcedenciaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def tipoProcedenciaInstance = TipoProcedencia.get(params.id)
         if (tipoProcedenciaInstance) {

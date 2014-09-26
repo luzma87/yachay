@@ -2,16 +2,25 @@ package yachay.parametros.proyectos
 
 import yachay.parametros.proyectos.GrupoProcesos
 
+/**
+ * Controlador
+ */
 class GrupoProcesosController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
     //lista de grupo de Procesos
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code:"default.list.label", args:["GrupoProcesos"], default:"GrupoProcesos List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -23,6 +32,9 @@ class GrupoProcesosController {
 
     //form para creación de un nuevo grupo de procesos
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def grupoProcesosInstance
@@ -43,6 +55,9 @@ class GrupoProcesosController {
         return [grupoProcesosInstance: grupoProcesosInstance, title:title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action:"form", params:params)
@@ -50,6 +65,9 @@ class GrupoProcesosController {
 
     //función para guardar un nuevo grupo de procesos
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if(params.id) {
@@ -82,6 +100,9 @@ class GrupoProcesosController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def grupoProcesosInstance = GrupoProcesos.get(params.id)
         if (grupoProcesosInstance) {
@@ -109,6 +130,9 @@ class GrupoProcesosController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def grupoProcesosInstance = GrupoProcesos.get(params.id)
         if (!grupoProcesosInstance) {
@@ -123,6 +147,9 @@ class GrupoProcesosController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action:"form", params:params)
@@ -130,6 +157,9 @@ class GrupoProcesosController {
 
     //función para borrar el correspondiente grupo de procesos
 
+    /**
+     * Acción
+     */
     def delete = {
         def grupoProcesosInstance = GrupoProcesos.get(params.id)
         if (grupoProcesosInstance) {

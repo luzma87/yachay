@@ -20,13 +20,22 @@ class Reportes2Controller {
         return ret
     }
 
+    /**
+     * Acción
+     */
     def index = { }
 
+    /**
+     * Acción
+     */
     def usuariosGUI = {
 
     }
 
 
+    /**
+     * Acción
+     */
     def totales = {
         def actual
         if (params.anio)
@@ -69,18 +78,27 @@ class Reportes2Controller {
     }
 
 
+    /**
+     * Acción
+     */
     def usuariosWeb = {
         def usuarios = Usro.list()
         usuarios = usuarios.sort { it.persona.apellido }
         return [usuarios: usuarios]
     }
 
+    /**
+     * Acción
+     */
     def usuariosPdf = {
         def usuarios = Usro.list()
         usuarios = usuarios.sort { it.persona.apellido }
         return [usuarios: usuarios]
     }
 
+    /**
+     * Acción
+     */
     def usuariosCsv = {
 
         WorkbookSettings workbookSettings = new WorkbookSettings()
@@ -137,8 +155,14 @@ class Reportes2Controller {
         output.write(file.getBytes());
     }
 
+    /**
+     * Acción
+     */
     def techosGUI = {}
 
+    /**
+     * Acción
+     */
     def techosWeb = {
         def c = PresupuestoUnidad.createCriteria()
         def results = c.list {
@@ -152,6 +176,9 @@ class Reportes2Controller {
         return [results: results]
     }
 
+    /**
+     * Acción
+     */
     def techosPdf = {
         def c = PresupuestoUnidad.createCriteria()
         def results = c.list {
@@ -164,6 +191,9 @@ class Reportes2Controller {
         }
         return [results: results]
     }
+    /**
+     * Acción
+     */
     def techosCsv = {
         def c = PresupuestoUnidad.createCriteria()
         def results = c.list {

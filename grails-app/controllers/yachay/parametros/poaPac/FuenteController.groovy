@@ -2,14 +2,23 @@ package yachay.parametros.poaPac
 
 import yachay.parametros.poaPac.Fuente
 
+/**
+ * Controlador
+ */
 class FuenteController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
     /*Lista de fuentes de financiamiento*/
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Fuente"], default: "Fuente List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class FuenteController {
         [fuenteInstanceList: Fuente.list(params), fuenteInstanceTotal: Fuente.count(), title: title, params: params]
     }
     /*Form para crear nuevas fuentes de financiamiento*/
+    /**
+     * Acción
+     */
     def form = {
         def title
         def fuenteInstance
@@ -39,11 +51,17 @@ class FuenteController {
         return [fuenteInstance: fuenteInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
         /*Función para guardar una nueva fuente de financiamiento*/
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -77,6 +95,9 @@ class FuenteController {
     }
 
     /*Función para actualizar los datos de una fuente de financiamiento*/
+    /**
+     * Acción
+     */
     def update = {
         def fuenteInstance = Fuente.get(params.id)
         if (fuenteInstance) {
@@ -104,6 +125,9 @@ class FuenteController {
         }
     }
     /*Muestra una fuente de financiamiento específica*/
+    /**
+     * Acción
+     */
     def show = {
         def fuenteInstance = Fuente.get(params.id)
         if (!fuenteInstance) {
@@ -118,12 +142,18 @@ class FuenteController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
     /*Función para eliminar una fuente de financiamiento*/
+    /**
+     * Acción
+     */
     def delete = {
         def fuenteInstance = Fuente.get(params.id)
         if (fuenteInstance) {

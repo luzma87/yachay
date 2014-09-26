@@ -1,13 +1,22 @@
 package yachay.proyectos
 
+/**
+ * Controlador
+ */
 class PasoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Paso"], default: "Paso List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -17,6 +26,9 @@ class PasoController {
         [pasoInstanceList: Paso.list(params), pasoInstanceTotal: Paso.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def pasoInstance
@@ -38,11 +50,17 @@ class PasoController {
         return [pasoInstance: pasoInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -77,6 +95,9 @@ class PasoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def pasoInstance = Paso.get(params.id)
         if (pasoInstance) {
@@ -104,6 +125,9 @@ class PasoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def pasoInstance = Paso.get(params.id)
         if (!pasoInstance) {
@@ -118,11 +142,17 @@ class PasoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def pasoInstance = Paso.get(params.id)
         if (pasoInstance) {

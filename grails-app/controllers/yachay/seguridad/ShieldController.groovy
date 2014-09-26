@@ -1,7 +1,13 @@
 package yachay.seguridad
 
+/**
+ * Controlador
+ */
 class ShieldController {
     def loginService
+    /**
+     * Acción
+     */
     def ataques = {
         def msn="Se ha detectado que esta ejecutando una acción que atenta contra la seguridad del sistema.<br>Dicha accion sera registrada en su historial.<br>"
         render(view:"advertencia",model:[msn:msn])
@@ -11,6 +17,9 @@ class ShieldController {
         def msn="Esta tratando de ingresar a una accion no registrada en el sistema. Por favor use las opciones del menu para navegar por el sistema."
         render(view:"advertencia",model:[msn:msn])
     }
+    /**
+     * Acción
+     */
     def error = {
         def msn="Ha ocurrido un error interno."
         try{
@@ -30,6 +39,9 @@ class ShieldController {
         }
         render(view:"advertencia",model:[msn:msn,error:true])
     }
+    /**
+     * Acción
+     */
     def comprobarPassword = {
         if(request.method=='POST'){
             println "comprobar password "+params
@@ -41,6 +53,9 @@ class ShieldController {
     }
 
 
+    /**
+     * Acción
+     */
     def prueba = {
         def er = new ErrorLog()
         er.fecha=new Date()

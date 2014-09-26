@@ -1,5 +1,8 @@
 package yachay.seguridad
 
+/**
+ * Controlador
+ */
 class PrflController {
 
     def dbConnectionService
@@ -8,10 +11,16 @@ class PrflController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def modulos = {
 //       println "recibe de parametros: ${params.id}"
        def prflInstance = Prfl.get(params.id)
@@ -26,6 +35,9 @@ class PrflController {
        }
     }
 
+    /**
+     * Acción
+     */
   def verMenu = {
     def prfl = params.prfl.toInteger()
 //    println "verMenu: ---------parametros: ${params}"
@@ -33,6 +45,9 @@ class PrflController {
     //render(g.generarMenu( perfil: "${prfl}" ))
   }
 
+    /**
+     * Acción
+     */
     def ajaxPermisos = {
         def prfl = params.prfl.toInteger()
         def tpac = params.tpac
@@ -61,12 +76,18 @@ class PrflController {
         render(view: 'lsta', model: [datos: resultado, mdlo__id: ids, tpac__id: tpac])
       }
 
+    /**
+     * Acción
+     */
     def creaMdlo = {
       def mdloInstance = new Modulo()
       //prflInstance.properties = params
       render(view: 'creaMdlo', model: ['mdloInstance': mdloInstance])
     }
 
+    /**
+     * Acción
+     */
     def editMdlo = {
 //      println "------editMdlo: " + params
       def mdloInstance = Modulo.get(params.id)
@@ -74,6 +95,9 @@ class PrflController {
       render(view: 'creaMdlo', model: ['mdloInstance': mdloInstance])
     }
 
+    /**
+     * Acción
+     */
   def grabaMdlo = {
 //    println "+++++parametros: ${params}"
     if (!params.id) {
@@ -102,6 +126,9 @@ class PrflController {
     }
   }
 
+    /**
+     * Acción
+     */
     def borraMdlo = {
 //      println "------borrarMdlo: " + params
       params.controllerName = controllerName
@@ -110,12 +137,18 @@ class PrflController {
       render('borrado: ${params.id}')
     }
 
+    /**
+     * Acción
+     */
     def creaPrfl = {
       def prflInstance = new Prfl()
       //prflInstance.properties = params
       render(view: 'crear', model: ['prflInstance': prflInstance])
     }
 
+    /**
+     * Acción
+     */
     def grabaPrfl = {
 //      println "+++++parametros: ${params}"
       if (!params.id) {
@@ -152,12 +185,18 @@ class PrflController {
       }
     }
 
+    /**
+     * Acción
+     */
     def editPrfl = {
 //      println "------editPrfl: " + params
       def prflInstance = Prfl.get(params.id)
       render(view: 'crear', model: ['prflInstance': prflInstance])
     }
 
+    /**
+     * Acción
+     */
     def borraPrfl = {
 //      println "------editPrfl: " + params
       params.controllerName = controllerName
@@ -169,6 +208,9 @@ class PrflController {
     /* TODO: revisar grabar.
     * **/
 
+    /**
+     * Acción
+     */
     def grabar = {
       //println "parametros grabar: ${params}"
       def ids = params.ids
@@ -236,6 +278,9 @@ class PrflController {
 
     //---------------------------------
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "prfl.list", default: "Prfl List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -245,6 +290,9 @@ class PrflController {
         [prflInstanceList: Prfl.list(params), prflInstanceTotal: Prfl.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def prflInstance
@@ -265,11 +313,17 @@ class PrflController {
         return [prflInstance: prflInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -302,6 +356,9 @@ class PrflController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def prflInstance = Prfl.get(params.id)
         if (prflInstance) {
@@ -329,6 +386,9 @@ class PrflController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def prflInstance = Prfl.get(params.id)
         if (!prflInstance) {
@@ -343,11 +403,17 @@ class PrflController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def prflInstance = Prfl.get(params.id)
         if (prflInstance) {

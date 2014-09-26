@@ -2,14 +2,23 @@ package yachay.parametros
 
 import yachay.parametros.TipoModificacion
 
+/**
+ * Controlador
+ */
 class TipoModificacionController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["TipoModificacion"], default: "TipoModificacion List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class TipoModificacionController {
         [tipoModificacionInstanceList: TipoModificacion.list(params), tipoModificacionInstanceTotal: TipoModificacion.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def tipoModificacionInstance
@@ -39,11 +51,17 @@ class TipoModificacionController {
         return [tipoModificacionInstance: tipoModificacionInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class TipoModificacionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def tipoModificacionInstance = TipoModificacion.get(params.id)
         if (tipoModificacionInstance) {
@@ -103,6 +124,9 @@ class TipoModificacionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def tipoModificacionInstance = TipoModificacion.get(params.id)
         if (!tipoModificacionInstance) {
@@ -117,11 +141,17 @@ class TipoModificacionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def tipoModificacionInstance = TipoModificacion.get(params.id)
         if (tipoModificacionInstance) {

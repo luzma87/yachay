@@ -2,14 +2,23 @@ package yachay.parametros
 
 import yachay.parametros.TipoElemento
 
+/**
+ * Controlador
+ */
 class TipoElementoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "tipoelemento.list", default: "TipoElemento List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class TipoElementoController {
         [tipoElementoInstanceList: TipoElemento.list(params), tipoElementoInstanceTotal: TipoElemento.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def tipoElementoInstance
@@ -39,11 +51,17 @@ class TipoElementoController {
         return [tipoElementoInstance: tipoElementoInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class TipoElementoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def tipoElementoInstance = TipoElemento.get(params.id)
         if (tipoElementoInstance) {
@@ -103,6 +124,9 @@ class TipoElementoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def tipoElementoInstance = TipoElemento.get(params.id)
         if (!tipoElementoInstance) {
@@ -117,11 +141,17 @@ class TipoElementoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def tipoElementoInstance = TipoElemento.get(params.id)
         if (tipoElementoInstance) {

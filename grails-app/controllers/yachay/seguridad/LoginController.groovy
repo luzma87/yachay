@@ -1,20 +1,32 @@
 package yachay.seguridad
 
 
+/**
+ * Controlador
+ */
 class LoginController {
 
     def loginService
 
+    /**
+     * Acción
+     */
     def index = {
         println "index login"
     }
 
 
+    /**
+     * Acción
+     */
     def pagina = {
 
     }
 
 
+    /**
+     * Acción
+     */
     def login = {
         println "login "+params
         def user   = params.usuario
@@ -59,6 +71,9 @@ class LoginController {
             }
         }
     }
+    /**
+     * Acción
+     */
     def logout = {
         if(session.usuario) {
             session.usuario = null

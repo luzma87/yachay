@@ -2,15 +2,24 @@ package yachay.parametros.poaPac
 
 import yachay.parametros.poaPac.ProgramaPresupuestario
 
+/**
+ * Controlador
+ */
 class ProgramaPresupuestarioController extends yachay.seguridad.Shield {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /*Lista de programas presupuestarios*/
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "programapresupuestario.list", default: "ProgramaPresupuestario List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -21,6 +30,9 @@ class ProgramaPresupuestarioController extends yachay.seguridad.Shield {
     }
 
     /*Form para la creación de un nuevo programa presupuestario*/
+    /**
+     * Acción
+     */
     def form = {
         def title
         def programaPresupuestarioInstance
@@ -41,12 +53,18 @@ class ProgramaPresupuestarioController extends yachay.seguridad.Shield {
         return [programaPresupuestarioInstance: programaPresupuestarioInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
     /*Función para guardar un nuevo programa presupuestario*/
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -80,6 +98,9 @@ class ProgramaPresupuestarioController extends yachay.seguridad.Shield {
     }
 
     /*Función para guardar cambios al actualizar datos del programa presupuestario*/
+    /**
+     * Acción
+     */
     def update = {
         def programaPresupuestarioInstance = ProgramaPresupuestario.get(params.id)
         if (programaPresupuestarioInstance) {
@@ -107,6 +128,9 @@ class ProgramaPresupuestarioController extends yachay.seguridad.Shield {
         }
     }
         /*Muestra el detalle de un programa presupuestario*/
+    /**
+     * Acción
+     */
     def show = {
         def programaPresupuestarioInstance = ProgramaPresupuestario.get(params.id)
         if (!programaPresupuestarioInstance) {
@@ -121,11 +145,17 @@ class ProgramaPresupuestarioController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
         /*Función para borrar un programa presupuestario*/
+    /**
+     * Acción
+     */
     def delete = {
         def programaPresupuestarioInstance = ProgramaPresupuestario.get(params.id)
         if (programaPresupuestarioInstance) {

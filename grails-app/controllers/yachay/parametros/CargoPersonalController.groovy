@@ -2,15 +2,24 @@ package yachay.parametros
 
 import yachay.parametros.CargoPersonal
 
+/**
+ * Controlador
+ */
 class CargoPersonalController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /*Lista de cargos*/
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "cargopersonal.list", default: "CargoPersonal List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -21,6 +30,9 @@ class CargoPersonalController {
     }
 
     /*Form para crear un nuevo cargo de personal*/
+    /**
+     * Acción
+     */
     def form = {
         def title
         def cargoPersonalInstance
@@ -41,12 +53,18 @@ class CargoPersonalController {
         return [cargoPersonalInstance: cargoPersonalInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
     /*Función para guardar los datos de un nuevo cargo de personal*/
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -80,6 +98,9 @@ class CargoPersonalController {
     }
 
     /*Función para actualizar los datos de un cargo*/
+    /**
+     * Acción
+     */
     def update = {
         def cargoPersonalInstance = CargoPersonal.get(params.id)
         if (cargoPersonalInstance) {
@@ -108,6 +129,9 @@ class CargoPersonalController {
     }
 
     /*Muestra los datos de un cargo específico*/
+    /**
+     * Acción
+     */
     def show = {
         def cargoPersonalInstance = CargoPersonal.get(params.id)
         if (!cargoPersonalInstance) {
@@ -122,12 +146,18 @@ class CargoPersonalController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
     /*Función para borrar un cargo*/
+    /**
+     * Acción
+     */
     def delete = {
         def cargoPersonalInstance = CargoPersonal.get(params.id)
         if (cargoPersonalInstance) {

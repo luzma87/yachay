@@ -1,13 +1,22 @@
 package yachay.seguridad
 
+/**
+ * Controlador
+ */
 class SistemaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "sistema.list", default: "Sistema List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -17,6 +26,9 @@ class SistemaController {
         [sistemaInstanceList: Sistema.list(params), sistemaInstanceTotal: Sistema.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def sistemaInstance
@@ -37,11 +49,17 @@ class SistemaController {
         return [sistemaInstance: sistemaInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -74,6 +92,9 @@ class SistemaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def sistemaInstance = Sistema.get(params.id)
         if (sistemaInstance) {
@@ -101,6 +122,9 @@ class SistemaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def sistemaInstance = Sistema.get(params.id)
         if (!sistemaInstance) {
@@ -115,11 +139,17 @@ class SistemaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def sistemaInstance = Sistema.get(params.id)
         if (sistemaInstance) {

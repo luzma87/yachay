@@ -3,6 +3,9 @@ package yachay.parametros.poaPac
 import yachay.parametros.UnidadEjecutora
 import yachay.parametros.poaPac.Anio
 
+/**
+ * Controlador
+ */
 class AnioController   extends yachay.seguridad.Shield{
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
@@ -10,6 +13,9 @@ class AnioController   extends yachay.seguridad.Shield{
     def dbConnectionService
     def kerberosService
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
@@ -20,6 +26,9 @@ class AnioController   extends yachay.seguridad.Shield{
         [anios:anios]
     }
     /*Detalle de la proforma por años a ser aprobados*/
+    /**
+     * Acción
+     */
     def detalleAnio = {
         def anio = Anio.get(params.anio)
         def unidades = UnidadEjecutora.list([sort:"nombre"])
@@ -81,6 +90,9 @@ class AnioController   extends yachay.seguridad.Shield{
     }
 
     /*Función para la aprobacion de las proformas*/
+    /**
+     * Acción
+     */
     def aprobarAnio = {
         if (request.method == 'POST') {
             println "params " + params
@@ -96,6 +108,9 @@ class AnioController   extends yachay.seguridad.Shield{
     }
 
     /*Lista de años*/
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code:"default.list.label", args:["Anio"], default:"Anio List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -106,6 +121,9 @@ class AnioController   extends yachay.seguridad.Shield{
     }
 
     /*Form para crear un nuevo año*/
+    /**
+     * Acción
+     */
     def form = {
         def title
         def anioInstance
@@ -126,12 +144,18 @@ class AnioController   extends yachay.seguridad.Shield{
         return [anioInstance: anioInstance, title:title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action:"form", params:params)
     }
 
     /*Función para guardar los años*/
+    /**
+     * Acción
+     */
     def save = {
         def title
         if(params.id) {
@@ -164,6 +188,9 @@ class AnioController   extends yachay.seguridad.Shield{
         }
     }
     /*Función para actualizar los datos de los años*/
+    /**
+     * Acción
+     */
     def update = {
         def anioInstance = Anio.get(params.id)
         if (anioInstance) {
@@ -192,6 +219,9 @@ class AnioController   extends yachay.seguridad.Shield{
     }
 
     /*Muestra los años*/
+    /**
+     * Acción
+     */
     def show = {
         def anioInstance = Anio.get(params.id)
         if (!anioInstance) {
@@ -206,11 +236,17 @@ class AnioController   extends yachay.seguridad.Shield{
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action:"form", params:params)
     }
         /*Función para borrar */
+    /**
+     * Acción
+     */
     def delete = {
         def anioInstance = Anio.get(params.id)
         if (anioInstance) {

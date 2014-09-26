@@ -2,14 +2,23 @@ package yachay.proyectos
 
 import yachay.proyectos.PoliticasProyecto
 
+/**
+ * Controlador
+ */
 class PoliticasProyectoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["PoliticasProyecto"], default: "PoliticasProyecto List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class PoliticasProyectoController {
         [politicasProyectoInstanceList: PoliticasProyecto.list(params), politicasProyectoInstanceTotal: PoliticasProyecto.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def politicasProyectoInstance
@@ -39,11 +51,17 @@ class PoliticasProyectoController {
         return [politicasProyectoInstance: politicasProyectoInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class PoliticasProyectoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def politicasProyectoInstance = PoliticasProyecto.get(params.id)
         if (politicasProyectoInstance) {
@@ -103,6 +124,9 @@ class PoliticasProyectoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def politicasProyectoInstance = PoliticasProyecto.get(params.id)
         if (!politicasProyectoInstance) {
@@ -117,11 +141,17 @@ class PoliticasProyectoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def politicasProyectoInstance = PoliticasProyecto.get(params.id)
         if (politicasProyectoInstance) {

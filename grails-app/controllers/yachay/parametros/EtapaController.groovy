@@ -2,14 +2,23 @@ package yachay.parametros
 
 import yachay.parametros.Etapa
 
+/**
+ * Controlador
+ */
 class EtapaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Etapa"], default: "Etapa List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class EtapaController {
         [etapaInstanceList: Etapa.list(params), etapaInstanceTotal: Etapa.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def etapaInstance
@@ -39,11 +51,17 @@ class EtapaController {
         return [etapaInstance: etapaInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class EtapaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def etapaInstance = Etapa.get(params.id)
         if (etapaInstance) {
@@ -103,6 +124,9 @@ class EtapaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def etapaInstance = Etapa.get(params.id)
         if (!etapaInstance) {
@@ -117,11 +141,17 @@ class EtapaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def etapaInstance = Etapa.get(params.id)
         if (etapaInstance) {

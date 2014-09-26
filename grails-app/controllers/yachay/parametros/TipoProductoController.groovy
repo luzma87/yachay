@@ -2,14 +2,23 @@ package yachay.parametros
 
 import yachay.parametros.TipoProducto
 
+/**
+ * Controlador
+ */
 class TipoProductoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["TipoProducto"], default: "TipoProducto List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class TipoProductoController {
         [tipoProductoInstanceList: TipoProducto.list(params), tipoProductoInstanceTotal: TipoProducto.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def tipoProductoInstance
@@ -39,11 +51,17 @@ class TipoProductoController {
         return [tipoProductoInstance: tipoProductoInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class TipoProductoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def tipoProductoInstance = TipoProducto.get(params.id)
         if (tipoProductoInstance) {
@@ -103,6 +124,9 @@ class TipoProductoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def tipoProductoInstance = TipoProducto.get(params.id)
         if (!tipoProductoInstance) {
@@ -117,11 +141,17 @@ class TipoProductoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def tipoProductoInstance = TipoProducto.get(params.id)
         if (tipoProductoInstance) {

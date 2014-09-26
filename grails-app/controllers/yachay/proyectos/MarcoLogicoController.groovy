@@ -19,12 +19,21 @@ import yachay.proyectos.Proyecto
 import yachay.proyectos.Categoria
 import yachay.proyectos.Supuesto
 
+/**
+ * Controlador
+ */
 class MarcoLogicoController extends yachay.seguridad.Shield {
 
     def kerberosService
 
+    /**
+     * Acción
+     */
     def index = {}
 
+    /**
+     * Acción
+     */
     def nuevoMarco = {
         println "nuevo marco " + params
         def proyecto = Proyecto.get(params.id)
@@ -33,6 +42,9 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
     }
 
 
+    /**
+     * Acción
+     */
     def guardarMarco = {
 //        println "params guardar "+params
 
@@ -84,6 +96,9 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
         redirect(action: "showMarco")
     }
 
+    /**
+     * Acción
+     */
     def showMarco = {
         def proyecto = Proyecto.get(params.id)
         if (proyecto.aprobado == "a") {
@@ -94,6 +109,9 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
 
     }
 
+    /**
+     * Acción
+     */
     def eliminarMarco = {
         if (request.method == 'POST') {
             println "eliminar " + params
@@ -134,6 +152,9 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
 
     }
 
+    /**
+     * Acción
+     */
     def eliminarIndiMedSup = {
         if (request.method == 'POST') {
             println "params eliminarIndiMedSup " + params
@@ -164,6 +185,9 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
             redirect(controller: "shield", action: "ataques")
         }
     }
+    /**
+     * Acción
+     */
     def eliminarIndiMedSupComponentes = {
         if (request.method == 'POST') {
             println "params eliminarIndiMedSup " + params
@@ -195,6 +219,9 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def guardarDatosMarco = {
         //println "gdm " + params
         def proyecto = Proyecto.get(params.proyecto)
@@ -219,6 +246,9 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
 
     }
 
+    /**
+     * Acción
+     */
     def guardarDatosIndMedSup = {
         //println "gdims " + params
         switch (params.tipo) {
@@ -284,6 +314,9 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
 
     }
 
+    /**
+     * Acción
+     */
     def agregarSupuesto = {
         println "as " + params
         def tp = TipoSupuesto.get(params.id)
@@ -297,10 +330,16 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def cargaCombo = {
         render g.select(from: TipoSupuesto.list(), name: "tipo", optionKey: "id", optionValue: "descripcion", style: "margin-left: 15px", id: "tipoSupuesto", noSelection: ['-1': 'Seleccione'])
     }
 
+    /**
+     * Acción
+     */
     def componentes = {
         def proyecto = Proyecto.get(params.id)
         if (proyecto.aprobado == "a") {
@@ -311,6 +350,9 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def guadarDatosComponentes = {
         println "guadarDatosComponentes " + params
         switch (params.tipo) {
@@ -395,6 +437,9 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
     }
 
 
+    /**
+     * Acción
+     */
     def actividadesComponente = {
         // println "actividades " + params
 
@@ -425,6 +470,9 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
 
     }
 
+    /**
+     * Acción
+     */
     def guardarDatos = {
         println "SAVE ACTIVIDAD " + params
         //println "guardar datos!! "+params
@@ -459,6 +507,9 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def guadarDatosActividades = {
         println "guadarDatosActividades " + params
         switch (params.tipo) {
@@ -572,6 +623,9 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
     }
 
     /*Muestra el marco lógico del proyecto en una ventana separada*/
+    /**
+     * Acción
+     */
     def verMarcoCompleto = {
 //        print("params ml " + params)
         def proyecto = Proyecto.get(params.id)
@@ -589,6 +643,9 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
 
     }
 
+    /**
+     * Acción
+     */
     def ingresoMetas = {
         println "ingreso metas " + params
         def actividad = MarcoLogico.get(params.id)
@@ -603,6 +660,9 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
     }
 
 
+    /**
+     * Acción
+     */
     def matrizMetas = {
         def anios = Anio.list([sort: 'anio'])
         def componente = MarcoLogico.get(params.id)
@@ -611,6 +671,9 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
         [componente: componente, anios: anios, unidades: unidades, tipos: tipos]
     }
 
+    /**
+     * Acción
+     */
     def guardarMetasMatriz = {
         println "params " + params
         def componente = MarcoLogico.get(params.id)
@@ -631,6 +694,9 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
         redirect(action: ingresoMetas, id: componente.id)
     }
 
+    /**
+     * Acción
+     */
     def mapaMeta = {
 //        println "--params " + params
         def meta = Meta.get(params.id)
@@ -697,6 +763,9 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
         return [provincia: provincia, meta: meta, avance: avance, ttitle: ttitle, ttip: ttip, componente: meta.marcoLogico, geo: geo]
     }
 
+    /**
+     * Acción
+     */
     def guardarMapaMeta = {
         def meta = Meta.get(params.id)
 //        meta.cord_x = params.coordX.toInteger()
@@ -710,6 +779,9 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
         redirect(action: "mapaMeta", id: meta.id, params: [c: params.c])
     }
 
+    /**
+     * Acción
+     */
     def asignacionesActividad = {
         def actividad = MarcoLogico.get(params.id)
         def asignaciones = Asignacion.findAllByMarcoLogico(actividad, [sort: "anio"])

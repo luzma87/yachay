@@ -2,14 +2,23 @@ package yachay.parametros
 
 import yachay.parametros.Cobertura
 
+/**
+ * Controlador
+ */
 class CoberturaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Cobertura"], default: "Cobertura List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class CoberturaController {
         [coberturaInstanceList: Cobertura.list(params), coberturaInstanceTotal: Cobertura.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def coberturaInstance
@@ -39,11 +51,17 @@ class CoberturaController {
         return [coberturaInstance: coberturaInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class CoberturaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def coberturaInstance = Cobertura.get(params.id)
         if (coberturaInstance) {
@@ -103,6 +124,9 @@ class CoberturaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def coberturaInstance = Cobertura.get(params.id)
         if (!coberturaInstance) {
@@ -117,11 +141,17 @@ class CoberturaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def coberturaInstance = Cobertura.get(params.id)
         if (coberturaInstance) {

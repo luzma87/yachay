@@ -2,14 +2,23 @@ package yachay.proyectos
 
 import yachay.proyectos.ObjetivoEstrategico
 
+/**
+ * Controlador
+ */
 class ObjetivoEstrategicoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code:"objetivoestrategico.list", default:"ObjetivoEstrategico List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class ObjetivoEstrategicoController {
         [objetivoEstrategicoInstanceList: ObjetivoEstrategico.list(params), objetivoEstrategicoInstanceTotal: ObjetivoEstrategico.count(), title: title, params:params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def objetivoEstrategicoInstance
@@ -39,11 +51,17 @@ class ObjetivoEstrategicoController {
         return [objetivoEstrategicoInstance: objetivoEstrategicoInstance, title:title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action:"form", params:params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if(params.id) {
@@ -76,6 +94,9 @@ class ObjetivoEstrategicoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def objetivoEstrategicoInstance = ObjetivoEstrategico.get(params.id)
         if (objetivoEstrategicoInstance) {
@@ -103,6 +124,9 @@ class ObjetivoEstrategicoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def objetivoEstrategicoInstance = ObjetivoEstrategico.get(params.id)
         if (!objetivoEstrategicoInstance) {
@@ -117,11 +141,17 @@ class ObjetivoEstrategicoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action:"form", params:params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def objetivoEstrategicoInstance = ObjetivoEstrategico.get(params.id)
         if (objetivoEstrategicoInstance) {

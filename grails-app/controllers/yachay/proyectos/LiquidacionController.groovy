@@ -3,14 +3,23 @@ package yachay.proyectos
 import yachay.proyectos.Liquidacion
 import yachay.proyectos.Obra
 
+/**
+ * Controlador
+ */
 class LiquidacionController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "liquidacion.list", default: "Liquidacion List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -20,6 +29,9 @@ class LiquidacionController {
         [liquidacionInstanceList: Liquidacion.list(params), liquidacionInstanceTotal: Liquidacion.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def liquidacionInstance
@@ -40,11 +52,17 @@ class LiquidacionController {
         return [liquidacionInstance: liquidacionInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def datosLiquidacion = {
         def obra = Obra.get(params.id)
         def liq= Liquidacion.findByObra(obra)
@@ -54,6 +72,9 @@ class LiquidacionController {
         [liq:liq,obra:obra,source: source]
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -89,6 +110,9 @@ class LiquidacionController {
 
 
 
+    /**
+     * Acción
+     */
     def update = {
         def liquidacionInstance = Liquidacion.get(params.id)
         if (liquidacionInstance) {
@@ -116,6 +140,9 @@ class LiquidacionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def liquidacionInstance = Liquidacion.get(params.id)
         if (!liquidacionInstance) {
@@ -130,11 +157,17 @@ class LiquidacionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def liquidacionInstance = Liquidacion.get(params.id)
         if (liquidacionInstance) {

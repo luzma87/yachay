@@ -2,15 +2,24 @@ package yachay.parametros.proyectos
 
 import yachay.parametros.proyectos.ObjetivoUnidad
 
+/**
+ * Controlador
+ */
 class ObjetivoUnidadController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /*Listado de los objetivos x Unidad*/
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "objetivounidad.list", default: "ObjetivoUnidad List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -21,6 +30,9 @@ class ObjetivoUnidadController {
     }
 
     /*Forma para crear nuevos objetivos*/
+    /**
+     * Acción
+     */
     def form = {
         def title
         def objetivoUnidadInstance
@@ -41,11 +53,17 @@ class ObjetivoUnidadController {
         return [objetivoUnidadInstance: objetivoUnidadInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
         /*Función para guardar nuevos objetivos*/
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -75,6 +93,9 @@ class ObjetivoUnidadController {
         }
     }
     /*Función para actualizar objetivos*/
+    /**
+     * Acción
+     */
     def update = {
         def objetivoUnidadInstance = ObjetivoUnidad.get(params.id)
         if (objetivoUnidadInstance) {
@@ -100,6 +121,9 @@ class ObjetivoUnidadController {
         }
     }
     /*Muestra los datos de un objetivo específico*/
+    /**
+     * Acción
+     */
     def show = {
         def objetivoUnidadInstance = ObjetivoUnidad.get(params.id)
         if (!objetivoUnidadInstance) {
@@ -113,11 +137,17 @@ class ObjetivoUnidadController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
     /*Función para borrar un objetivo*/
+    /**
+     * Acción
+     */
     def delete = {
         def objetivoUnidadInstance = ObjetivoUnidad.get(params.id)
         if (objetivoUnidadInstance) {

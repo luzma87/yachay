@@ -2,14 +2,23 @@ package yachay.parametros
 
 import yachay.parametros.Linea
 
+/**
+ * Controlador
+ */
 class LineaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Linea"], default: "Linea List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class LineaController {
         [lineaInstanceList: Linea.list(params), lineaInstanceTotal: Linea.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def lineaInstance
@@ -39,11 +51,17 @@ class LineaController {
         return [lineaInstance: lineaInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class LineaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def lineaInstance = Linea.get(params.id)
         if (lineaInstance) {
@@ -103,6 +124,9 @@ class LineaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def lineaInstance = Linea.get(params.id)
         if (!lineaInstance) {
@@ -117,11 +141,17 @@ class LineaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def lineaInstance = Linea.get(params.id)
         if (lineaInstance) {

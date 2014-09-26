@@ -1,13 +1,22 @@
 package yachay.proyectos
 
+/**
+ * Controlador
+ */
 class ProcesoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Proceso"], default: "Proceso List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -17,6 +26,9 @@ class ProcesoController {
         [procesoInstanceList: Proceso.list(params), procesoInstanceTotal: Proceso.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def procesoInstance
@@ -39,11 +51,17 @@ class ProcesoController {
         return [procesoInstance: procesoInstance, title: title, source: params.source, pasos: pasos]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -78,6 +96,9 @@ class ProcesoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def procesoInstance = Proceso.get(params.id)
         if (procesoInstance) {
@@ -105,6 +126,9 @@ class ProcesoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def procesoInstance = Proceso.get(params.id)
         if (!procesoInstance) {
@@ -119,11 +143,17 @@ class ProcesoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def procesoInstance = Proceso.get(params.id)
         if (procesoInstance) {

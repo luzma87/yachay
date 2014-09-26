@@ -2,15 +2,24 @@ package yachay.parametros
 
 import yachay.parametros.TipoInstitucion
 
+/**
+ * Controlador
+ */
 class TipoInstitucionController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /*Lista de tipo de areas de gestión*/
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "tipoinstitucion.list", default: "TipoInstitucion List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -21,6 +30,9 @@ class TipoInstitucionController {
     }
 
     /*Form para crear una nueva área de gestión*/
+    /**
+     * Acción
+     */
     def form = {
         def title
         def tipoInstitucionInstance
@@ -41,12 +53,18 @@ class TipoInstitucionController {
         return [tipoInstitucionInstance: tipoInstitucionInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
     /*Función para guardar una nueva área de gestión*/
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -80,6 +98,9 @@ class TipoInstitucionController {
     }
 
     /*Función para guardar cambios en una área de gestión ya existente*/
+    /**
+     * Acción
+     */
     def update = {
         def tipoInstitucionInstance = TipoInstitucion.get(params.id)
         if (tipoInstitucionInstance) {
@@ -108,6 +129,9 @@ class TipoInstitucionController {
     }
 
     /*Muestra los datos de una área de gestión existente*/
+    /**
+     * Acción
+     */
     def show = {
         def tipoInstitucionInstance = TipoInstitucion.get(params.id)
         if (!tipoInstitucionInstance) {
@@ -122,12 +146,18 @@ class TipoInstitucionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
     /*Función para borrar una área de gestión*/
+    /**
+     * Acción
+     */
     def delete = {
         def tipoInstitucionInstance = TipoInstitucion.get(params.id)
         if (tipoInstitucionInstance) {

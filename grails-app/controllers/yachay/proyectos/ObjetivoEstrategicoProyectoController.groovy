@@ -2,14 +2,23 @@ package yachay.proyectos
 
 import yachay.proyectos.ObjetivoEstrategicoProyecto
 
+/**
+ * Controlador
+ */
 class ObjetivoEstrategicoProyectoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "objetivoestrategicoproyecto.list", default: "ObjetivoEstrategicoProyecto List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class ObjetivoEstrategicoProyectoController {
         [objetivoEstrategicoProyectoInstanceList: ObjetivoEstrategicoProyecto.list(params), objetivoEstrategicoProyectoInstanceTotal: ObjetivoEstrategicoProyecto.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def objetivoEstrategicoProyectoInstance
@@ -39,11 +51,17 @@ class ObjetivoEstrategicoProyectoController {
         return [objetivoEstrategicoProyectoInstance: objetivoEstrategicoProyectoInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class ObjetivoEstrategicoProyectoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def objetivoEstrategicoProyectoInstance = ObjetivoEstrategicoProyecto.get(params.id)
         if (objetivoEstrategicoProyectoInstance) {
@@ -103,6 +124,9 @@ class ObjetivoEstrategicoProyectoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def objetivoEstrategicoProyectoInstance = ObjetivoEstrategicoProyecto.get(params.id)
         if (!objetivoEstrategicoProyectoInstance) {
@@ -117,11 +141,17 @@ class ObjetivoEstrategicoProyectoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def objetivoEstrategicoProyectoInstance = ObjetivoEstrategicoProyecto.get(params.id)
         if (objetivoEstrategicoProyectoInstance) {

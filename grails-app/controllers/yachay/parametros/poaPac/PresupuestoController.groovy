@@ -3,12 +3,18 @@ package yachay.parametros.poaPac
 import yachay.parametros.poaPac.Presupuesto
 import yachay.poa.Actividad
 
+/**
+ * Controlador
+ */
 class PresupuestoController extends yachay.seguridad.Shield {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
     def kerberosService
 
+    /**
+     * Acción
+     */
     def editPresupuesto = {
         def id = params.id
         def lvl = params.level.toInteger()
@@ -32,6 +38,9 @@ class PresupuestoController extends yachay.seguridad.Shield {
     }
 
     /*Función para guardar elementos del árbol de presupuesto*/
+    /**
+     * Acción
+     */
     def saveFromTree = {
         def presupuesto
         if (params.id) {
@@ -57,6 +66,9 @@ class PresupuestoController extends yachay.seguridad.Shield {
     }
 
     /*Función para borrar elementos del árbol de presupuesto*/
+    /**
+     * Acción
+     */
     def deleteFromTree = {
         def presupuesto = Presupuesto.get(params.id)
         def hijos = Presupuesto.findAllByPresupuesto(presupuesto)
@@ -120,19 +132,31 @@ class PresupuestoController extends yachay.seguridad.Shield {
         return txt
     }
 
+    /**
+     * Acción
+     */
     def tree = {
         return [res: makeTree()]
     }
 
+    /**
+     * Acción
+     */
     def renderArbol = {
         render(makeTree())
     }
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /*Lista de presupuestos*/
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Presupuesto"], default: "Presupuesto List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -143,6 +167,9 @@ class PresupuestoController extends yachay.seguridad.Shield {
     }
 
     /*Forma para crear un nuevo presupuesto*/
+    /**
+     * Acción
+     */
     def form = {
         def title
         def presupuestoInstance
@@ -163,12 +190,18 @@ class PresupuestoController extends yachay.seguridad.Shield {
         return [presupuestoInstance: presupuestoInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
     /*Función para guardar un nuevo presupuesto*/
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -202,6 +235,9 @@ class PresupuestoController extends yachay.seguridad.Shield {
     }
 
     /*Función para guardar actualizaciones de un presupuesto ya existente*/
+    /**
+     * Acción
+     */
     def update = {
         def presupuestoInstance = Presupuesto.get(params.id)
         if (presupuestoInstance) {
@@ -230,6 +266,9 @@ class PresupuestoController extends yachay.seguridad.Shield {
     }
 
     /*Muestra un presupuesto ya existente*/
+    /**
+     * Acción
+     */
     def show = {
         def presupuestoInstance = Presupuesto.get(params.id)
         if (!presupuestoInstance) {
@@ -244,12 +283,18 @@ class PresupuestoController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
     /*Función para borrar un presupuesto*/
+    /**
+     * Acción
+     */
     def delete = {
         def presupuestoInstance = Presupuesto.get(params.id)
         if (presupuestoInstance) {
@@ -269,6 +314,9 @@ class PresupuestoController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def cargarCuentasCvs = {
         def archivo = new File("/home/svt/Downloads/presupuesto4.csv")
         def contador = 0
@@ -290,6 +338,9 @@ class PresupuestoController extends yachay.seguridad.Shield {
         render "se insertaron ${contador} cuentas. Hubo ${errores} errores"
     }
 
+    /**
+     * Acción
+     */
     def cargarCuentasCvsActividad = {
         def archivo = new File("/home/svt/Downloads/presupuesto4.csv")
         def contador = 0

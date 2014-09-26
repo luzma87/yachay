@@ -8,8 +8,14 @@ import yachay.parametros.geografia.Parroquia
 import yachay.proyectos.Avance
 import yachay.parametros.proyectos.TipoMeta
 
+/**
+ * Controlador
+ */
 class MapasController {
 
+    /**
+     * Acción
+     */
     def getPins = {
 //        println "getPins: " + params
         def parts = params.tipo.split("_")
@@ -123,10 +129,16 @@ class MapasController {
         render ret
     }
 
+    /**
+     * Acción
+     */
     def index = {
 
     }
 
+    /**
+     * Acción
+     */
     def provincia = {
         def proyectos = []
         def prov = Provincia.findByNombreIlike(params.nombre)
@@ -182,6 +194,9 @@ class MapasController {
         [image: image, prov: params.nombre, metas: metas, proyectos: proyectos]
     }
 
+    /**
+     * Acción
+     */
     def datosMeta = {
         println "datos meta " + params
         def meta = Meta.get(params.id)

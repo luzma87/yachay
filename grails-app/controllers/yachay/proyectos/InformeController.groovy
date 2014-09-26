@@ -6,16 +6,25 @@ import yachay.seguridad.Usro
 import yachay.seguridad.Sesn
 import yachay.seguridad.Prfl
 
+/**
+ * Controlador
+ */
 class InformeController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
     def kerberosService
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Informe"], default: "Informe List")
 
@@ -69,10 +78,16 @@ class InformeController {
         [informeInstanceList: informeInstanceList, informeInstanceTotal: informeInstanceTotal, title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def error = {
         return [params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def informeInstance
@@ -122,6 +137,9 @@ class InformeController {
         }
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
@@ -135,6 +153,9 @@ class InformeController {
         //kerberosService.generarAlerta(session.usuario, session.usuario, "ALERTA: Se genero un nuevo informe", "informe", "show", informeInstance.id)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
 
@@ -193,6 +214,9 @@ class InformeController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def informeInstance = Informe.get(params.id)
         if (informeInstance) {
@@ -220,6 +244,9 @@ class InformeController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def informeInstance = Informe.get(params.id)
         if (!informeInstance) {
@@ -234,11 +261,17 @@ class InformeController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def informeInstance = Informe.get(params.id)
         if (informeInstance) {

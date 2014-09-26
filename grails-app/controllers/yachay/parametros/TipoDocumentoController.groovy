@@ -2,14 +2,23 @@ package yachay.parametros
 
 import yachay.parametros.TipoDocumento
 
+/**
+ * Controlador
+ */
 class TipoDocumentoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "tipodocumento.list", default: "TipoDocumento List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class TipoDocumentoController {
         [tipoDocumentoInstanceList: TipoDocumento.list(params), tipoDocumentoInstanceTotal: TipoDocumento.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def tipoDocumentoInstance
@@ -39,11 +51,17 @@ class TipoDocumentoController {
         return [tipoDocumentoInstance: tipoDocumentoInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class TipoDocumentoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def tipoDocumentoInstance = TipoDocumento.get(params.id)
         if (tipoDocumentoInstance) {
@@ -103,6 +124,9 @@ class TipoDocumentoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def tipoDocumentoInstance = TipoDocumento.get(params.id)
         if (!tipoDocumentoInstance) {
@@ -117,11 +141,17 @@ class TipoDocumentoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def tipoDocumentoInstance = TipoDocumento.get(params.id)
         if (tipoDocumentoInstance) {

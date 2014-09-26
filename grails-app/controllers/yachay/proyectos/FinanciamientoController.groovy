@@ -2,14 +2,23 @@ package yachay.proyectos
 
 import yachay.proyectos.Financiamiento
 
+/**
+ * Controlador
+ */
 class FinanciamientoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Financiamiento"], default: "Financiamiento List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class FinanciamientoController {
         [financiamientoInstanceList: Financiamiento.list(params), financiamientoInstanceTotal: Financiamiento.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def financiamientoInstance
@@ -39,11 +51,17 @@ class FinanciamientoController {
         return [financiamientoInstance: financiamientoInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class FinanciamientoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def financiamientoInstance = Financiamiento.get(params.id)
         if (financiamientoInstance) {
@@ -103,6 +124,9 @@ class FinanciamientoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def financiamientoInstance = Financiamiento.get(params.id)
         if (!financiamientoInstance) {
@@ -117,11 +141,17 @@ class FinanciamientoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def financiamientoInstance = Financiamiento.get(params.id)
         if (financiamientoInstance) {

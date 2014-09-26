@@ -1,15 +1,24 @@
 package yachay.seguridad
 
+/**
+ * Controlador
+ */
 class AccionesController {
 
     def dbConnectionService
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "configurarMenu")
     }
 
     /**
      * OJO. el módulo de noAsignadas es de ID = 0
+     */
+    /**
+     * Acción
      */
     def acciones = {
         def resultado = []
@@ -21,6 +30,9 @@ class AccionesController {
         render(view:"acciones", model:[lstacmbo: resultado])
     }
 
+    /**
+     * Acción
+     */
     def ajaxAcciones = {
         //println " ajaxAcciones---parametros: ${params}"
 
@@ -51,6 +63,9 @@ class AccionesController {
         render(view:'detalle', model:[datos:resultado, mdlo__id:mdlo, tpac__id: tipo, titulos: titulos])
     }
 
+    /**
+     * Acción
+     */
     def grabaAccn = {
         //println "graba---------parametros: ${params}"
         def id  = params.id
@@ -68,6 +83,9 @@ class AccionesController {
         render("la accion '${dscr}' ha sido modificada")
     }
 
+    /**
+     * Acción
+     */
     def moverAccn = {
         //println "moverAccn---------parametros: ${params}"
         def mdlo = params.mdlo
@@ -86,6 +104,9 @@ class AccionesController {
         render("Acciones movidas")
     }
 
+    /**
+     * Acción
+     */
     def sacarAccn = {
         println "sacarAccn---------parametros: ${params}"
         def ids  = params.ids
@@ -105,6 +126,9 @@ class AccionesController {
         redirect(action: "ajaxAcciones", params: params)
     }
 
+    /**
+     * Acción
+     */
     def cambiaAccn = {
         println "cambia---------parametros: ${params}"
         def ids  = params.ids
@@ -128,6 +152,9 @@ class AccionesController {
     }
 
 
+    /**
+     * Acción
+     */
     def configurarAcciones = {
         def modulos = Modulo.list([sort:"orden"])
         def controladores = []
@@ -144,6 +171,9 @@ class AccionesController {
         [modulos:modulos, controladores:controladores, tipo_tpac:tp, titulo:'Men&uacute;s por M&oacute;dulo']
     }
 
+    /**
+     * Acción
+     */
     def procesos = {
         def modulos = Modulo.list([sort:"orden"])
         def controladores = []
@@ -160,12 +190,18 @@ class AccionesController {
     }
 
 
+    /**
+     * Acción
+     */
     def perfiles = {
         def modulos = Modulo.list([sort:"orden"])
         [modulos:modulos]
     }
 
 
+    /**
+     * Acción
+     */
     def guardarPermisos = {
         println "guardar permisos " + params
         def perfil = Prfl.get(params.perfil)
@@ -201,6 +237,9 @@ class AccionesController {
         redirect(action: "perfiles")
     }
 
+    /**
+     * Acción
+     */
     def cargarAccionesPerfil = {
         //println "cargar a p "+params
         def perfil = Prfl.get(params.perfil)
@@ -209,6 +248,9 @@ class AccionesController {
         [modulos:modulos,permisos:permisos,perfil:perfil]
     }
 
+    /**
+     * Acción
+     */
     def cambiarTipo = {
         println "cambiar tipo "+params
         def accn = Accn.get(params.accn)
@@ -216,6 +258,9 @@ class AccionesController {
         render "ok"
     }
 
+    /**
+     * Acción
+     */
     def cambiarModulo = {
         println "cambiar tipo "+params
         def accn = Accn.get(params.accn)
@@ -223,6 +268,9 @@ class AccionesController {
         render "ok"
     }
 
+    /**
+     * Acción
+     */
     def cambiarModuloControlador = {
         println "cmc "+params
         def ctrl = Ctrl.findByCtrlNombre(params.ctrl)
@@ -235,6 +283,9 @@ class AccionesController {
         render "ok"
     }
 
+    /**
+     * Acción
+     */
     def cargarControladores = {
         println "cargar controladores"
         def i = 0
@@ -250,6 +301,9 @@ class AccionesController {
         render("Se han agregado ${i} Controladores")
     }
 
+    /**
+     * Acción
+     */
     def cargarAcciones = {
 
         println "cargar acciones"

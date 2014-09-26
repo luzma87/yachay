@@ -8,16 +8,25 @@ import yachay.parametros.poaPac.ProgramaPresupuestario
 import yachay.proyectos.DatosEsigef
 import yachay.proyectos.EjecucionUE
 
+/**
+ * Controlador
+ */
 class EjecucionUEController {
 
     def dbConnectionService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "ejecucionue.list", default: "EjecucionUE List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -27,6 +36,9 @@ class EjecucionUEController {
         [ejecucionUEInstanceList: EjecucionUE.list(params), ejecucionUEInstanceTotal: EjecucionUE.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def ejecucionUEInstance
@@ -47,11 +59,17 @@ class EjecucionUEController {
         return [ejecucionUEInstance: ejecucionUEInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -84,6 +102,9 @@ class EjecucionUEController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def ejecucionUEInstance = EjecucionUE.get(params.id)
         if (ejecucionUEInstance) {
@@ -111,6 +132,9 @@ class EjecucionUEController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def ejecucionUEInstance = EjecucionUE.get(params.id)
         if (!ejecucionUEInstance) {
@@ -125,11 +149,17 @@ class EjecucionUEController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def ejecucionUEInstance = EjecucionUE.get(params.id)
         if (ejecucionUEInstance) {
@@ -151,10 +181,16 @@ class EjecucionUEController {
 
     /** subir el archivo **/
 
+    /**
+     * Acción
+     */
     def subirEsigef = {
     }
 
     /*Función que permite subir el archivo del ESIGEF*/
+    /**
+     * Acción
+     */
     def subirArchivo = {
         //println "Parametros de subirArchivo: $params"
         def parametros = [:]

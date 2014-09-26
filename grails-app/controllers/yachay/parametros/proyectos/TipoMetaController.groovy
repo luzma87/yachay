@@ -2,15 +2,24 @@ package yachay.parametros.proyectos
 
 import yachay.parametros.proyectos.TipoMeta
 
+/**
+ * Controlador
+ */
 class TipoMetaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /*Lista de metas*/
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["TipoMeta"], default: "TipoMeta List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -21,6 +30,9 @@ class TipoMetaController {
     }
 
     /*Form para crear una nueva meta*/
+    /**
+     * Acción
+     */
     def form = {
         def title
         def tipoMetaInstance
@@ -41,12 +53,18 @@ class TipoMetaController {
         return [tipoMetaInstance: tipoMetaInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
     /*Función para guardar una nueva meta*/
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -80,6 +98,9 @@ class TipoMetaController {
     }
 
     /*Función para actualizar los datos de una meta existente*/
+    /**
+     * Acción
+     */
     def update = {
         def tipoMetaInstance = TipoMeta.get(params.id)
         if (tipoMetaInstance) {
@@ -108,6 +129,9 @@ class TipoMetaController {
     }
 
     /*Muestra una meta ya existente*/
+    /**
+     * Acción
+     */
     def show = {
         def tipoMetaInstance = TipoMeta.get(params.id)
         if (!tipoMetaInstance) {
@@ -122,6 +146,9 @@ class TipoMetaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
@@ -129,6 +156,9 @@ class TipoMetaController {
 
 
 /*Función para borrar una meta existente*/
+    /**
+     * Acción
+     */
     def delete = {
         def tipoMetaInstance = TipoMeta.get(params.id)
         if (tipoMetaInstance) {

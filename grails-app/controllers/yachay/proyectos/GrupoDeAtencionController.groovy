@@ -2,14 +2,23 @@ package yachay.proyectos
 
 import yachay.proyectos.GrupoDeAtencion
 
+/**
+ * Controlador
+ */
 class GrupoDeAtencionController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["GrupoDeAtencion"], default: "GrupoDeAtencion List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class GrupoDeAtencionController {
         [grupoDeAtencionInstanceList: GrupoDeAtencion.list(params), grupoDeAtencionInstanceTotal: GrupoDeAtencion.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def grupoDeAtencionInstance
@@ -39,11 +51,17 @@ class GrupoDeAtencionController {
         return [grupoDeAtencionInstance: grupoDeAtencionInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class GrupoDeAtencionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def grupoDeAtencionInstance = GrupoDeAtencion.get(params.id)
         if (grupoDeAtencionInstance) {
@@ -103,6 +124,9 @@ class GrupoDeAtencionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def grupoDeAtencionInstance = GrupoDeAtencion.get(params.id)
         if (!grupoDeAtencionInstance) {
@@ -117,11 +141,17 @@ class GrupoDeAtencionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def grupoDeAtencionInstance = GrupoDeAtencion.get(params.id)
         if (grupoDeAtencionInstance) {

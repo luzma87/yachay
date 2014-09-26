@@ -19,6 +19,9 @@ import yachay.seguridad.Prfl
 /**
  * Controlador para manejar operaciones sobre objetos de tipo entidad
  */
+/**
+ * Controlador
+ */
 class EntidadController extends yachay.seguridad.Shield {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
@@ -28,6 +31,9 @@ class EntidadController extends yachay.seguridad.Shield {
 
     /**
      * redirecciona a la vista de lista
+     */
+    /**
+     * Acción
      */
     def index = {
         redirect(action: "list", params: params)
@@ -178,11 +184,17 @@ class EntidadController extends yachay.seguridad.Shield {
      * @param tipo  el tipo de nodo a cargar
      * @param id    el id del nodo a cargar
      */
+    /**
+     * Acción
+     */
     def loadTreePart = {
         render(makeBasicTree(params.tipo, params.id))
     }
 
     /*Función para sacar los responsables de cada una de las partes de la estructura institucional definida*/
+    /**
+     * Acción
+     */
     def getResponsables = {
         /*
         'E' 'Ejecución'
@@ -283,6 +295,9 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
 
+    /**
+     * Acción
+     */
     def responsables = {
         def unidad = UnidadEjecutora.get(params.id)
         return [unidad: unidad]
@@ -290,6 +305,9 @@ class EntidadController extends yachay.seguridad.Shield {
 
 
     /*Lista los responsables actuales y nos permite agregar reponsables */
+    /**
+     * Acción
+     */
     def responsable = {
         def unidad = UnidadEjecutora.get(params.id)
         def usuarios = Usro.findAllByUnidad(unidad)
@@ -320,6 +338,9 @@ class EntidadController extends yachay.seguridad.Shield {
 
 
     /*Función para dar de baja a un responsable*/
+    /**
+     * Acción
+     */
     def bajaResponsable = {
         def responsable = ResponsableProyecto.get(params.id)
 
@@ -336,6 +357,9 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /*Función para guardar un responsable*/
+    /**
+     * Acción
+     */
     def saveResponsable = {
 //        println "SAVE RESP: " + params
         /*
@@ -381,6 +405,9 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /*Tabla de los responsables actuales*/
+    /**
+     * Acción
+     */
     def reloadResponsables = {
         def unidad = UnidadEjecutora.get(params.id)
         def responsables = []
@@ -402,6 +429,9 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
 
+    /**
+     * Acción
+     */
     def saveResponsable_ = {
 //        println "SAVE RESPONSABLE " + params
 
@@ -545,6 +575,9 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /*Muestra responsables de la unidad actual*/
+    /**
+     * Acción
+     */
     def historialResponsables = {
         def unidad = UnidadEjecutora.get(params.id)
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
@@ -600,19 +633,34 @@ class EntidadController extends yachay.seguridad.Shield {
         return [unidad: unidad, responsableProyectoInstanceList: responsableProyectoInstanceList, responsableProyectoInstanceTotal: responsableProyectoInstanceTotal]
     }
 
+    /**
+     * Acción
+     */
     def arbol = {}
 
+    /**
+     * Acción
+     */
     def arbol_asg = {}
 
     /*Arbol de asignaciones*/
+    /**
+     * Acción
+     */
     def arbol_ = {
         return [tree: makeTree()]
     }
 
+    /**
+     * Acción
+     */
     def renderArbol = {
         render(makeTree())
     }
 
+    /**
+     * Acción
+     */
     def infoForTree = {
 
         if (params.tipo == "usro") {
@@ -635,6 +683,9 @@ class EntidadController extends yachay.seguridad.Shield {
 //        redirect(action: 'info' + (params.tipo).capitalize(), params: params)
     }
 
+    /**
+     * Acción
+     */
     def getPresupuestoAnio = {
         def anio = Anio.get(params.anio)
         def unidad = UnidadEjecutora.get(params.unidad)
@@ -662,11 +713,17 @@ class EntidadController extends yachay.seguridad.Shield {
         render(str)
     }
 
+    /**
+     * Acción
+     */
     def presupuestoFromTree = {
         def unidad = UnidadEjecutora.get(params.id)
 
         return [unidad: unidad]
     }
+    /**
+     * Acción
+     */
     def docsFromTreeVer = {
         def documentoInstance = Documento.get(params.id)
         if (!documentoInstance) {
@@ -679,6 +736,9 @@ class EntidadController extends yachay.seguridad.Shield {
             [documentoInstance: documentoInstance, unidad: documentoInstance.unidadEjecutora]
         }
     }
+    /**
+     * Acción
+     */
     def docsFromTreeEdit = {
         def unidad = UnidadEjecutora.get(params.unidad)
 
@@ -691,6 +751,9 @@ class EntidadController extends yachay.seguridad.Shield {
         return [unidad: unidad, documentoInstance: documentoInstance]
     }
 
+    /**
+     * Acción
+     */
     def docsFromTreeUpload = {
 
 //        println "UPLOADING"
@@ -799,6 +862,9 @@ class EntidadController extends yachay.seguridad.Shield {
         }
         redirect(action: "docsFromTree", params: [id: unidad.id])
     }
+    /**
+     * Acción
+     */
     def docsFromTreeDelete = {
 //        println "DELETE DOC"
 //        println params
@@ -828,6 +894,9 @@ class EntidadController extends yachay.seguridad.Shield {
 
         redirect(action: "docsFromTree", params: [id: unidad.id])
     }
+    /**
+     * Acción
+     */
     def docsFromTreeDownload = {
         def doc = Documento.get(params.id)
         def archivo = doc.documento
@@ -846,9 +915,15 @@ class EntidadController extends yachay.seguridad.Shield {
             redirect(action: "fileNotFound", params: ['archivo': archivo, 'id': unidad.id])
         }
     }
+    /**
+     * Acción
+     */
     def docsFromTreeFileNotFound = {
         return [archivo: params.archivo, id: params.id]
     }
+    /**
+     * Acción
+     */
     def docsFromTree = {
         def unidad = UnidadEjecutora.get(params.id)
 
@@ -895,6 +970,9 @@ class EntidadController extends yachay.seguridad.Shield {
         return [unidad: unidad, documentoInstanceList: documentoInstanceList, documentoInstanceTotal: documentoInstanceTotal, params: params]
     }
 
+    /**
+     * Acción
+     */
     def editFromTree = {
         def unidad, padre
         if (params.tipo == "edit") {
@@ -907,6 +985,9 @@ class EntidadController extends yachay.seguridad.Shield {
         return [unidad: unidad, padre: padre]
     }
 
+    /**
+     * Acción
+     */
     def saveFromTree = {
 
         println "Save from tree " + params
@@ -1083,6 +1164,9 @@ class EntidadController extends yachay.seguridad.Shield {
 
     }
 
+    /**
+     * Acción
+     */
     def deleteFromTree = {
         def unidad = UnidadEjecutora.get(params.id)
 
@@ -1095,6 +1179,9 @@ class EntidadController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def editUserFromTree = {
         def usuario, unidad, perfiles = []
         if (params.tipo == "edit") {
@@ -1107,6 +1194,9 @@ class EntidadController extends yachay.seguridad.Shield {
         }
         return [usuario: usuario, unidad: unidad, perfiles: perfiles]
     }
+    /**
+     * Acción
+     */
     def deleteUserFromTree = {
         def usuario = Usro.get(params.id)
         def sesion = Sesn.findAllByUsuario(usuario)
@@ -1129,32 +1219,53 @@ class EntidadController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def infoEntidad = {
         def obj = Entidad.get(params.id)
         return [entidadInstance: obj]
     }
+    /**
+     * Acción
+     */
     def infoSubsecretaria = {
         def obj = SubSecretaria.get(params.id)
         return [subSecretariaInstance: obj]
     }
+    /**
+     * Acción
+     */
     def infoUnidad = {
         def obj = UnidadEjecutora.get(params.id)
         return [unidadEjecutoraInstance: obj]
     }
+    /**
+     * Acción
+     */
     def infoResponsable = {
         def obj = Usro.get(params.id)
         def perfiles = Sesn.findAllByUsuario(obj)
         return [usuario: obj, perfiles: perfiles]
     }
+    /**
+     * Acción
+     */
     def infoProyecto = {
 
         def obj = Proyecto.get(params.id)
         return [proyecto: obj]
     }
 
+    /**
+     * Acción
+     */
     def editar = {
         redirect(action: 'editar' + (params.tipo).capitalize(), params: params)
     }
+    /**
+     * Acción
+     */
     def editarEntidad = {
         def obj
         if (params.id) {
@@ -1164,6 +1275,9 @@ class EntidadController extends yachay.seguridad.Shield {
         }
         return [entidadInstance: obj, tipo: params.tipo]
     }
+    /**
+     * Acción
+     */
     def editarSubsecretaria = {
         def obj, crear
         if (params.id) {
@@ -1176,6 +1290,9 @@ class EntidadController extends yachay.seguridad.Shield {
         }
         return [subSecretariaInstance: obj, tipo: params.tipo, crear: crear]
     }
+    /**
+     * Acción
+     */
     def editarUnidad = {
         def obj, crear
         if (params.id) {
@@ -1188,6 +1305,9 @@ class EntidadController extends yachay.seguridad.Shield {
         }
         return [unidadEjecutoraInstance: obj, tipo: params.tipo, crear: crear]
     }
+    /**
+     * Acción
+     */
     def editarResponsable = {
         def obj, crear
         def perfiles = []
@@ -1203,6 +1323,9 @@ class EntidadController extends yachay.seguridad.Shield {
         return [usuario: obj, tipo: params.tipo, crear: crear, perfiles: perfiles]
     }
 
+    /**
+     * Acción
+     */
     def saveFromTree_ = {
         def obj
         def err
@@ -1299,6 +1422,9 @@ class EntidadController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def deleteFromTree_ = {
         switch (params.tipo) {
             case "entidad":
@@ -1325,6 +1451,9 @@ class EntidadController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Entidad"], default: "Entidad List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -1334,6 +1463,9 @@ class EntidadController extends yachay.seguridad.Shield {
         [entidadInstanceList: Entidad.list(params), entidadInstanceTotal: Entidad.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def entidadInstance
@@ -1354,11 +1486,17 @@ class EntidadController extends yachay.seguridad.Shield {
         return [entidadInstance: entidadInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -1388,6 +1526,9 @@ class EntidadController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def entidadInstance = Entidad.get(params.id)
         if (entidadInstance) {
@@ -1413,6 +1554,9 @@ class EntidadController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def entidadInstance = Entidad.get(params.id)
         if (!entidadInstance) {
@@ -1426,11 +1570,17 @@ class EntidadController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def entidadInstance = Entidad.get(params.id)
         if (entidadInstance) {
@@ -1449,6 +1599,9 @@ class EntidadController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def validarAsignaciones = {
         def res = []
         def cn = dbConnectionService.getConnection()

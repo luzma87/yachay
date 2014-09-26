@@ -32,13 +32,22 @@ import jxl.*
 import jxl.write.*
 import yachay.seguridad.Usro
 
+/**
+ * Controlador
+ */
 class ReportesController {
 
     def dbConnectionService
 
+    /**
+     * Acción
+     */
     def index = { }
 
 
+    /**
+     * Acción
+     */
     def modificacionesPoa = {
         def unidad = UnidadEjecutora.get(params.id)
         def actual
@@ -67,6 +76,9 @@ class ReportesController {
 
     }
 
+    /**
+     * Acción
+     */
     def certificacionPac = {
         println params
         def obra = Obra.get(params.id)
@@ -76,6 +88,9 @@ class ReportesController {
     }
 
 
+    /**
+     * Acción
+     */
     def modUnidad = {
         def actual
         def unidad = UnidadEjecutora.get(params.id)
@@ -97,6 +112,9 @@ class ReportesController {
     }
 
 
+    /**
+     * Acción
+     */
     def reporteCertificaciones = {
         def actual
         if (params.anio)
@@ -119,6 +137,9 @@ class ReportesController {
         [mapa: mapa, actual: actual]
     }
 
+    /**
+     * Acción
+     */
     def reporteGeneralCertificaciones = {
         def actual
         if (params.anio)
@@ -143,6 +164,9 @@ class ReportesController {
 
 
 
+    /**
+     * Acción
+     */
     def certificacion = {
 
         println "certiificacion aaaa " + params
@@ -160,6 +184,9 @@ class ReportesController {
 
     }
 
+    /**
+     * Acción
+     */
     def reasignacion = {
             /*todo*/
         def anio = Anio.findByAnio(new Date().format("yyyy"))
@@ -222,6 +249,9 @@ class ReportesController {
 
     }
 
+    /**
+     * Acción
+     */
     def reasignacionDetallado = {
         def anio = Anio.findByAnio(new Date().format("yyyy"))
         def uni99 = UnidadEjecutora.findAllByCodigo("9999")
@@ -292,6 +322,9 @@ class ReportesController {
     }
 
 
+    /**
+     * Acción
+     */
     def reasignacionXls = {
         WorkbookSettings workbookSettings = new WorkbookSettings()
         workbookSettings.locale = Locale.default
@@ -438,6 +471,9 @@ class ReportesController {
 
     }
 
+    /**
+     * Acción
+     */
     def reasignacionDetalladoXls = {
         WorkbookSettings workbookSettings = new WorkbookSettings()
         workbookSettings.locale = Locale.default
@@ -592,6 +628,9 @@ class ReportesController {
 
     }
 
+    /**
+     * Acción
+     */
     def reasignacionAgrupado = {
         def anio = Anio.findByAnio(new Date().format("yyyy"))
 //        def uni99 = UnidadEjecutora.findAllByCodigo("9999")
@@ -656,6 +695,9 @@ class ReportesController {
     }
 
 
+    /**
+     * Acción
+     */
     def reasignacionAgrupadoXls = {
         def anio = Anio.findByAnio(new Date().format("yyyy"))
 //        def uni99 = UnidadEjecutora.findAllByCodigo("9999")
@@ -2823,10 +2865,16 @@ class ReportesController {
 
 
 
+    /**
+     * Acción
+     */
     def avanceGUI = {
 
     }
 
+    /**
+     * Acción
+     */
     def avanceReporteWeb = {
         params.id = params.id.split(",")
         if (params.id.class == java.lang.String) {
@@ -2835,6 +2883,9 @@ class ReportesController {
         return [resultados: reporteAvance(params.id)]
     }
 
+    /**
+     * Acción
+     */
     def avanceReportePDF = {
         params.id = params.id.split(",")
         if (params.id.class == java.lang.String) {
@@ -2843,18 +2894,33 @@ class ReportesController {
         return [resultados: reporteAvance(params.id)]
     }
 
+    /**
+     * Acción
+     */
     def intervencionGUI = { }
 
+    /**
+     * Acción
+     */
     def intervencionReporteWeb = {
         return [tabla: reporteIntervencion(params), anio: params.anio]
     }
 
+    /**
+     * Acción
+     */
     def intervencionReportePDF = {
         return [tabla: reporteIntervencion(params), anio: params.anio]
     }
 
+    /**
+     * Acción
+     */
     def fichaProyectoGUI = { }
 
+    /**
+     * Acción
+     */
     def fichaProyectoWeb = {
         params.id = params.id.split(",")
         if (params.id.class == java.lang.String) {
@@ -2863,6 +2929,9 @@ class ReportesController {
         return [proyectos: reporteFichaProyecto(params.id)]
     }
 
+    /**
+     * Acción
+     */
     def fichaProyectoPDF = {
         params.id = params.id.split(",")
         if (params.id.class == java.lang.String) {
@@ -2871,6 +2940,9 @@ class ReportesController {
         return [proyectos: reporteFichaProyecto(params.id)]
     }
 
+    /**
+     * Acción
+     */
     def buscarParroquias = {
         def parroquias = []
         if (params.parametro.trim().size() > 0) {
@@ -3020,14 +3092,26 @@ class ReportesController {
     }
 
 
+    /**
+     * Acción
+     */
     def metasGUI = {
         def signos = [[1: "Igual"], [2: "Mayor"], [3: "Menor"]]
         return [signos: signos]
     }
+    /**
+     * Acción
+     */
     def metasWeb = {
         [metas: reporteMetas(params)]
     }
+    /**
+     * Acción
+     */
     def metasPDF = {}
+    /**
+     * Acción
+     */
     def metasXls = {
         def metas = reporteMetas(params)
 
@@ -3134,8 +3218,14 @@ class ReportesController {
         output.write(file.getBytes());
     }
 
+    /**
+     * Acción
+     */
     def marcoLogicoGUI = { }
 
+    /**
+     * Acción
+     */
     def marcoLogicoWeb = {
         params.id = params.id.split(",")
         if (params.id.class == java.lang.String) {
@@ -3145,6 +3235,9 @@ class ReportesController {
         return [tabla: reporteMarcoLogicoTabla(params.id)]
     }
 
+    /**
+     * Acción
+     */
     def marcoLogicoPDF = {
         params.id = params.id.split(",")
         if (params.id.class == java.lang.String) {
@@ -3154,8 +3247,14 @@ class ReportesController {
         return [tabla: reporteMarcoLogicoTabla(params.id)]
     }
 
+    /**
+     * Acción
+     */
     def fichaMarcoLogicoGUI = { }
 
+    /**
+     * Acción
+     */
     def fichaMarcoLogicoWeb = {
         params.id = params.id.split(",")
         if (params.id.class == java.lang.String) {
@@ -3165,6 +3264,9 @@ class ReportesController {
 //        return [proyectos: reporteFichaMarcoLogico_(params.id)]
     }
 
+    /**
+     * Acción
+     */
     def fichaMarcoLogicoPDF = {
         params.id = params.id.split(",")
         if (params.id.class == java.lang.String) {
@@ -3173,8 +3275,14 @@ class ReportesController {
         return [bosque: reporteFichaMarcoLogico(params.id, false)]
     }
 
+    /**
+     * Acción
+     */
     def poaOriginalGUI = { }
 
+    /**
+     * Acción
+     */
     def poaOriginalReporteWeb = {
         params.id = params.id.split(",")
         if (params.id.class == java.lang.String) {
@@ -3183,8 +3291,14 @@ class ReportesController {
         return [unidades: reportePoaOriginal(params.id, params.anio)]
     }
 
+    /**
+     * Acción
+     */
     def poaGUI = { }
 
+    /**
+     * Acción
+     */
     def poaReporteWeb = {
         params.id = params.id.split(",")
         if (params.id.class == java.lang.String) {
@@ -3193,6 +3307,9 @@ class ReportesController {
         return [unidades: reportePoa(params.id, params.anio)]
     }
 
+    /**
+     * Acción
+     */
     def poaReportePDF = {
         params.id = params.id.split(",")
         if (params.id.class == java.lang.String) {
@@ -3201,6 +3318,9 @@ class ReportesController {
         return [unidades: reportePoa(params.id, params.anio)]
     }
 
+    /**
+     * Acción
+     */
     def poaReporteDisc = {
         Number number
         WorkbookSettings workbookSettings = new WorkbookSettings()
@@ -3633,6 +3753,9 @@ class ReportesController {
         return ret
     }
 
+    /**
+     * Acción
+     */
     def poaReporteCsv = {
         println "aqui reporte poa excel "
         WorkbookSettings workbookSettings = new WorkbookSettings()
@@ -4116,6 +4239,9 @@ class ReportesController {
     }
 
 
+    /**
+     * Acción
+     */
     def poaOriginalReporteCsv = {
         WorkbookSettings workbookSettings = new WorkbookSettings()
         workbookSettings.locale = Locale.default
@@ -4490,6 +4616,9 @@ class ReportesController {
         output.write(file.getBytes());
     }
 
+    /**
+     * Acción
+     */
     def poaReporteCsv_bck = {
         params.id = params.id.split(",")
         if (params.id.class == java.lang.String) {
@@ -4605,8 +4734,14 @@ class ReportesController {
 
     }
 
+    /**
+     * Acción
+     */
     def modificacionesProyectoGUI = { }
 
+    /**
+     * Acción
+     */
     def modificacionesProyectoWeb = {
 //        params.id = params.id.split(",")
 //        if (params.id.class == java.lang.String) {
@@ -4618,6 +4753,9 @@ class ReportesController {
         [mods: mods]
     }
 
+    /**
+     * Acción
+     */
     def modificacionesProyectoPDF = {
         //        params.id = params.id.split(",")
 //        if (params.id.class == java.lang.String) {
@@ -4629,8 +4767,14 @@ class ReportesController {
         [mods: mods]
     }
 
+    /**
+     * Acción
+     */
     def poaInversionesGUI = { }
 
+    /**
+     * Acción
+     */
     def poaInversionesReporteWeb = {
         params.id = params.id.split(",")
         if (params.id.class == java.lang.String) {
@@ -4648,6 +4792,9 @@ class ReportesController {
         return [tabla: reportePoaInversiones(actual.id, params.id)]
     }
 
+    /**
+     * Acción
+     */
     def poaInversionesReportePDF = {
         params.id = params.id.split(",")
         if (params.id.class == java.lang.String) {
@@ -4656,8 +4803,14 @@ class ReportesController {
         return [tabla: reportePoaInversiones(params.anio, params.id)]
     }
 
+    /**
+     * Acción
+     */
     def poaCorrientesGUI = { }
 
+    /**
+     * Acción
+     */
     def poaCorrientesReporteWeb = {
         params.id = params.id.split(",")
         if (params.id.class == java.lang.String) {
@@ -4666,6 +4819,9 @@ class ReportesController {
         return [tabla: reportePoaCorrientes(params.anio, params.id)]
     }
 
+    /**
+     * Acción
+     */
     def poaCorrientesReportePDF = {
         println "params " + params
         params.id = params.id.split(",")
@@ -4675,6 +4831,9 @@ class ReportesController {
         return [tabla: reportePoaCorrientes(params.anio, params.id)]
     }
 
+    /**
+     * Acción
+     */
     def reporteSQL = {
         if (params) {
             println "recibe de parametros: ${params}"
@@ -4686,6 +4845,9 @@ class ReportesController {
         }
     }
 
+    /**
+     * Acción
+     */
     def consulta = {ids ->
         def cn = dbConnectionService.getConnection()
         def resultados = []
@@ -4707,6 +4869,9 @@ class ReportesController {
     }
 
 
+    /**
+     * Acción
+     */
     def ejecucionProyectosGUI = {
         def sigef = Sigef.list()
         def meses = []
@@ -4719,16 +4884,28 @@ class ReportesController {
         return [meses: meses]
     }
 
+    /**
+     * Acción
+     */
     def ejecucionProyectosWeb = {
         return [proyectos: reporteEjecucionProyectos(params.id)]
     }
 
+    /**
+     * Acción
+     */
     def ejecucionProyectosPDF = {
         return [proyectos: reporteEjecucionProyectos(params.id)]
     }
 
+    /**
+     * Acción
+     */
     def componentesGUI = {}
 
+    /**
+     * Acción
+     */
     def componentesWeb = {
         params.id = params.id.split(",")
         if (params.id.class == java.lang.String) {
@@ -4737,6 +4914,9 @@ class ReportesController {
         return [proyectos: reporteComponentes(params.id)]
     }
 
+    /**
+     * Acción
+     */
     def componentesPdf = {
         params.id = params.id.split(",")
         if (params.id.class == java.lang.String) {
@@ -4745,6 +4925,9 @@ class ReportesController {
         return [proyectos: reporteComponentes(params.id)]
     }
 
+    /**
+     * Acción
+     */
     def componentesCsv = {
         params.id = params.id.split(",")
         if (params.id.class == java.lang.String) {
@@ -4778,10 +4961,16 @@ class ReportesController {
         render(contentType: "text/csv", text: "${arch}");
     }
 
+    /**
+     * Acción
+     */
     def pacGUI = {
 
     }
 
+    /**
+     * Acción
+     */
     def pacWeb = {
         params.id = params.id.split(",")
         if (params.id.class == java.lang.String) {
@@ -4790,10 +4979,16 @@ class ReportesController {
         return [result: reportePac(params.id, params.anio)]
     }
 
+    /**
+     * Acción
+     */
     def pacPdf = {
 
     }
 
+    /**
+     * Acción
+     */
     def pacCsv = {
 
         WorkbookSettings workbookSettings = new WorkbookSettings()
@@ -4914,6 +5109,9 @@ class ReportesController {
 
 
 
+    /**
+     * Acción
+     */
     def distribuciones = {
 
         def unidad = UnidadEjecutora.get(params.id)
@@ -4928,17 +5126,29 @@ class ReportesController {
 
 
 
+    /**
+     * Acción
+     */
     def usuariosGUI = {
 
     }
 
+    /**
+     * Acción
+     */
     def usuariosWeb = {
 
     }
+    /**
+     * Acción
+     */
     def usuariosPdf = {
 
     }
 
+    /**
+     * Acción
+     */
     def ejecucionUEGUI =  {
     }
 

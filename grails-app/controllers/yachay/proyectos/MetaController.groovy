@@ -6,12 +6,21 @@ import yachay.parametros.geografia.Provincia
 import yachay.parametros.TipoInforme
 import yachay.poa.Asignacion
 
+/**
+ * Controlador
+ */
 class MetaController {
 
     def kerberosService
 
+    /**
+     * Acción
+     */
     def index = { }
 
+    /**
+     * Acción
+     */
     def guardarMeta = {
         println "params guardar " + params
         if (params.id) {
@@ -46,6 +55,9 @@ class MetaController {
 
     }
 
+    /**
+     * Acción
+     */
     def guardaMetaIndicador = {
         println "params " + params
         def meta = kerberosService.save(params, Meta, session.perfil, session.usuario)
@@ -55,6 +67,9 @@ class MetaController {
     }
 
 
+    /**
+     * Acción
+     */
     def getDatosMeta = {
 
         def asg = Asignacion.get(params.id)
@@ -71,6 +86,9 @@ class MetaController {
     }
 
 
+    /**
+     * Acción
+     */
     def eliminarMeta = {
         def meta = Meta.get(params.id)
         def avances = Avance.findAllByMeta(meta)
@@ -85,12 +103,18 @@ class MetaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def buscadorMetas = {
         def signos = [[1: "Igual"], [2: "Mayor"], [3: "Menor"]]
         [signos: signos]
     }
 
 
+    /**
+     * Acción
+     */
     def buscarMeta = {
         //println "buscar meta "+params
         def metas = []
@@ -212,6 +236,9 @@ class MetaController {
 
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def meta
@@ -233,6 +260,9 @@ class MetaController {
     }
 
 
+    /**
+     * Acción
+     */
     def buscarParroquias = {
         def parroquias = []
         if (params.parametro.trim().size() > 0) {
@@ -261,6 +291,9 @@ class MetaController {
         [parroquias: parroquias]
     }
 
+    /**
+     * Acción
+     */
     def buscarParroquiasEditar = {
         def parroquias = []
         if (params.parametro.trim().size() > 0) {
@@ -289,12 +322,18 @@ class MetaController {
         [parroquias: parroquias]
     }
 
+    /**
+     * Acción
+     */
     def verAvances = {
         def meta = Meta.get(params.id)
         def avances = Avance.findAllByMeta(meta, [sort: "id"])
         [meta: meta, avances: avances]
     }
 
+    /**
+     * Acción
+     */
     def registrarAvanceFlow = {
         inicio {
             action {
@@ -406,6 +445,9 @@ class MetaController {
 
     }
 
+    /**
+     * Acción
+     */
     def datosProv = {
 //        println "datos prov:" + params
         def prov = Provincia.get(params.id)
@@ -431,6 +473,9 @@ class MetaController {
     }
 
 
+    /**
+     * Acción
+     */
     def datosMeta = {
         println params
 

@@ -2,14 +2,23 @@ package yachay.parametros
 
 import yachay.parametros.SubSecretaria
 
+/**
+ * Controlador
+ */
 class SubSecretariaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["SubSecretaria"], default: "SubSecretaria List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class SubSecretariaController {
         [subSecretariaInstanceList: SubSecretaria.list(params), subSecretariaInstanceTotal: SubSecretaria.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def subSecretariaInstance
@@ -39,11 +51,17 @@ class SubSecretariaController {
         return [subSecretariaInstance: subSecretariaInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class SubSecretariaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def subSecretariaInstance = SubSecretaria.get(params.id)
         if (subSecretariaInstance) {
@@ -103,6 +124,9 @@ class SubSecretariaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def subSecretariaInstance = SubSecretaria.get(params.id)
         if (!subSecretariaInstance) {
@@ -117,11 +141,17 @@ class SubSecretariaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def subSecretariaInstance = SubSecretaria.get(params.id)
         if (subSecretariaInstance) {

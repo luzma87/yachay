@@ -2,14 +2,23 @@ package yachay.parametros.geografia
 
 import yachay.parametros.geografia.Parroquia
 
+/**
+ * Controlador
+ */
 class ParroquiaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Parroquia"], default: "Parroquia List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class ParroquiaController {
         [parroquiaInstanceList: Parroquia.list(params), parroquiaInstanceTotal: Parroquia.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def parroquiaInstance
@@ -39,11 +51,17 @@ class ParroquiaController {
         return [parroquiaInstance: parroquiaInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class ParroquiaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def parroquiaInstance = Parroquia.get(params.id)
         if (parroquiaInstance) {
@@ -103,6 +124,9 @@ class ParroquiaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def parroquiaInstance = Parroquia.get(params.id)
         if (!parroquiaInstance) {
@@ -117,11 +141,17 @@ class ParroquiaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def parroquiaInstance = Parroquia.get(params.id)
         if (parroquiaInstance) {

@@ -2,18 +2,30 @@ package yachay.parametros.poaPac
 
 import yachay.parametros.poaPac.TipoCompra
 
+/**
+ * Controlador
+ */
 class TipoCompraController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def prueba = {
 
     }
     /*Lista de tipos de compras*/
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["TipoCompra"], default: "TipoCompra List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -24,6 +36,9 @@ class TipoCompraController {
     }
 
     /*Form para crear un tipo de compra*/
+    /**
+     * Acción
+     */
     def form = {
         def title
         def tipoCompraInstance
@@ -44,12 +59,18 @@ class TipoCompraController {
         return [tipoCompraInstance: tipoCompraInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
     /*Funcion para guardar un tipo de compra nuevo*/
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -83,6 +104,9 @@ class TipoCompraController {
     }
 
     /*Función para actualizar los datos de un tipo de compra ya creado*/
+    /**
+     * Acción
+     */
     def update = {
         def tipoCompraInstance = TipoCompra.get(params.id)
         if (tipoCompraInstance) {
@@ -111,6 +135,9 @@ class TipoCompraController {
     }
 
     /*Muestra los detalles de un tipo de compra específico*/
+    /**
+     * Acción
+     */
     def show = {
         def tipoCompraInstance = TipoCompra.get(params.id)
         if (!tipoCompraInstance) {
@@ -125,12 +152,18 @@ class TipoCompraController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
     /*Función para borrar un tipo de compra*/
+    /**
+     * Acción
+     */
     def delete = {
         def tipoCompraInstance = TipoCompra.get(params.id)
         if (tipoCompraInstance) {

@@ -2,14 +2,23 @@ package yachay.parametros
 
 import yachay.parametros.TipoProceso
 
+/**
+ * Controlador
+ */
 class TipoProcesoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "tipoproceso.list", default: "TipoProceso List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class TipoProcesoController {
         [tipoProcesoInstanceList: TipoProceso.list(params), tipoProcesoInstanceTotal: TipoProceso.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def tipoProcesoInstance
@@ -39,11 +51,17 @@ class TipoProcesoController {
         return [tipoProcesoInstance: tipoProcesoInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class TipoProcesoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def tipoProcesoInstance = TipoProceso.get(params.id)
         if (tipoProcesoInstance) {
@@ -103,6 +124,9 @@ class TipoProcesoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def tipoProcesoInstance = TipoProceso.get(params.id)
         if (!tipoProcesoInstance) {
@@ -117,11 +141,17 @@ class TipoProcesoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def tipoProcesoInstance = TipoProceso.get(params.id)
         if (tipoProcesoInstance) {

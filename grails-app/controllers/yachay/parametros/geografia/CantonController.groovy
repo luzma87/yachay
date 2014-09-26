@@ -2,14 +2,23 @@ package yachay.parametros.geografia
 
 import yachay.parametros.geografia.Canton
 
+/**
+ * Controlador
+ */
 class CantonController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Canton"], default: "Canton List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class CantonController {
         [cantonInstanceList: Canton.list(params), cantonInstanceTotal: Canton.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def cantonInstance
@@ -39,11 +51,17 @@ class CantonController {
         return [cantonInstance: cantonInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class CantonController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def cantonInstance = Canton.get(params.id)
         if (cantonInstance) {
@@ -103,6 +124,9 @@ class CantonController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def cantonInstance = Canton.get(params.id)
         if (!cantonInstance) {
@@ -117,11 +141,17 @@ class CantonController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def cantonInstance = Canton.get(params.id)
         if (cantonInstance) {

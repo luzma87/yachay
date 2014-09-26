@@ -2,15 +2,24 @@ package yachay.proyectos
 
 import yachay.parametros.proyectos.PoliticaAgendaSocial
 
+/**
+ * Controlador
+ */
 class PoliticaAgendaSocialController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /*Lista de políticas de la agenda social*/
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "politicaagendasocial.list", default: "PoliticaAgendaSocial List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -21,6 +30,9 @@ class PoliticaAgendaSocialController {
     }
 
     /*Forma para la creación de una nueva política de agenda social*/
+    /**
+     * Acción
+     */
     def form = {
         def title
         def politicaAgendaSocialInstance
@@ -41,12 +53,18 @@ class PoliticaAgendaSocialController {
         return [politicaAgendaSocialInstance: politicaAgendaSocialInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
     /*Función para guardar una nueva política de agenda social*/
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -80,6 +98,9 @@ class PoliticaAgendaSocialController {
     }
 
     /*Función para guardar las actualizaciones en políticas de agenda social*/
+    /**
+     * Acción
+     */
     def update = {
         def politicaAgendaSocialInstance = PoliticaAgendaSocial.get(params.id)
         if (politicaAgendaSocialInstance) {
@@ -108,6 +129,9 @@ class PoliticaAgendaSocialController {
     }
 
     /*Muestra los datos de una política de agenda social*/
+    /**
+     * Acción
+     */
     def show = {
         def politicaAgendaSocialInstance = PoliticaAgendaSocial.get(params.id)
         if (!politicaAgendaSocialInstance) {
@@ -122,12 +146,18 @@ class PoliticaAgendaSocialController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
     /*Función para borrar una política de agenda social*/
+    /**
+     * Acción
+     */
     def delete = {
         def politicaAgendaSocialInstance = PoliticaAgendaSocial.get(params.id)
         if (politicaAgendaSocialInstance) {

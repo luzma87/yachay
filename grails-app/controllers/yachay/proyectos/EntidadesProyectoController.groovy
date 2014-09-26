@@ -2,14 +2,23 @@ package yachay.proyectos
 
 import yachay.proyectos.EntidadesProyecto
 
+/**
+ * Controlador
+ */
 class EntidadesProyectoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["EntidadesProyecto"], default: "EntidadesProyecto List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class EntidadesProyectoController {
         [entidadesProyectoInstanceList: EntidadesProyecto.list(params), entidadesProyectoInstanceTotal: EntidadesProyecto.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def entidadesProyectoInstance
@@ -39,11 +51,17 @@ class EntidadesProyectoController {
         return [entidadesProyectoInstance: entidadesProyectoInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class EntidadesProyectoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def entidadesProyectoInstance = EntidadesProyecto.get(params.id)
         if (entidadesProyectoInstance) {
@@ -103,6 +124,9 @@ class EntidadesProyectoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def entidadesProyectoInstance = EntidadesProyecto.get(params.id)
         if (!entidadesProyectoInstance) {
@@ -117,11 +141,17 @@ class EntidadesProyectoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def entidadesProyectoInstance = EntidadesProyecto.get(params.id)
         if (entidadesProyectoInstance) {

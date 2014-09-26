@@ -5,10 +5,16 @@ import yachay.parametros.poaPac.Anio
 import yachay.parametros.TipoElemento
 import yachay.parametros.TipoResponsable
 
+/**
+ * Controlador
+ */
 class ModificacionProyectoController extends yachay.seguridad.Shield {
 
     def kerberosService
 
+    /**
+     * Acción
+     */
     def solicitarModificacion = {
         if (params.id) {
             session.proyecto = Proyecto.get(params.id)
@@ -18,6 +24,9 @@ class ModificacionProyectoController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def solicitarModificacionUnidad = {
         if (params.unidad) {
             session.unidad = UnidadEjecutora.get(params.unidad)
@@ -28,6 +37,9 @@ class ModificacionProyectoController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def guardarSolicitud = {
         println "guardar " + params
         session.modificacion = new ModificacionProyecto(params)
@@ -36,6 +48,9 @@ class ModificacionProyectoController extends yachay.seguridad.Shield {
         session.modificacion.fecha = new Date()
         redirect(action: "informeModificacion")
     }
+    /**
+     * Acción
+     */
     def guardarSolicitudUnidad = {
         println "guardar unidad " + params
         if (session.unidad && session.anio) {
@@ -49,6 +64,9 @@ class ModificacionProyectoController extends yachay.seguridad.Shield {
             response.sendError(403)
     }
 
+    /**
+     * Acción
+     */
     def informeModificacion = {
         def res = ResponsableProyecto.findAllByProyectoAndTipo(session.proyecto, TipoResponsable.get(2))
 
@@ -82,6 +100,9 @@ class ModificacionProyectoController extends yachay.seguridad.Shield {
         [resp: resp]
     }
 
+    /**
+     * Acción
+     */
     def informeModificacionUnidad = {
         def resps = ResponsableProyecto.findAll("from ResponsableProyecto where proyecto is null and tipo=5")
         def res
@@ -97,6 +118,9 @@ class ModificacionProyectoController extends yachay.seguridad.Shield {
         [res: session.resp]
     }
 
+    /**
+     * Acción
+     */
     def guardarInforme = {
 
         params.fecha = params.fecha_day + "/" + params.fecha_month + "/" + params.fecha_year
@@ -113,6 +137,9 @@ class ModificacionProyectoController extends yachay.seguridad.Shield {
 
     }
 
+    /**
+     * Acción
+     */
     def listaSolicitudes = {
            /*TODO esto hayq ue cambiar xq salens 2 veces*/
         def resp =  ResponsableProyecto.findAll("from ResponsableProyecto where responsable=${session.usuario.id} and tipo!=1 ")
@@ -142,12 +169,18 @@ class ModificacionProyectoController extends yachay.seguridad.Shield {
         [mods: mods]
     }
 
+    /**
+     * Acción
+     */
     def verSolicitud = {
         def modificacion = ModificacionProyecto.get(params.id)
         [modificacion: modificacion]
     }
 
 
+    /**
+     * Acción
+     */
     def listaAprobadas = {
         def mods = ModificacionProyecto.findAllByEstadoAndSolicitante(2,session.usuario)
         [mods: mods]
@@ -155,6 +188,9 @@ class ModificacionProyectoController extends yachay.seguridad.Shield {
     }
 
 
+    /**
+     * Acción
+     */
     def usarModificacion = {
         println "usar mod " + params
         def mod = ModificacionProyecto.get(params.id)
@@ -189,6 +225,9 @@ class ModificacionProyectoController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def modificarMarco = {
         def proyecto = session.proyecto
         def fin = MarcoLogico.findAllByProyectoAndTipoElemento(proyecto, TipoElemento.findByDescripcion("Fin"), [sort: "id", order: "desc", max: 1])
@@ -225,6 +264,9 @@ class ModificacionProyectoController extends yachay.seguridad.Shield {
         [fin: fin, indicadores: indicadores, medios: medios, sup: sup, proyecto: proyecto, proposito: proposito, indiProps: indiProps, mediosProp: mediosProp, supProp: supProp]
     }
 
+    /**
+     * Acción
+     */
     def guardarDatosMarco = {
         def proyecto = Proyecto.get(params.proyecto)
         def ml = MarcoLogico.findAllByProyectoAndTipoElemento(proyecto, TipoElemento.findByDescripcion(params.tipo), [sort: "id", order: "desc", max: 1])
@@ -280,6 +322,9 @@ class ModificacionProyectoController extends yachay.seguridad.Shield {
 
     }
 
+    /**
+     * Acción
+     */
     def arbolMarco = {
 
         def arbol = "<ul>"
@@ -407,6 +452,9 @@ class ModificacionProyectoController extends yachay.seguridad.Shield {
 
     }
 
+    /**
+     * Acción
+     */
     def aprobarModificacion = {
         if (request.method == 'POST') {
             //println "params " + params

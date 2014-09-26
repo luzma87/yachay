@@ -2,15 +2,24 @@ package yachay.parametros.proyectos
 
 import yachay.parametros.proyectos.Politica
 
+/**
+ * Controlador
+ */
 class PoliticaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /*Lista de políticas*/
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Politica"], default: "Politica List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -21,6 +30,9 @@ class PoliticaController {
     }
 
     /*Form para la creación de nuevas políticas*/
+    /**
+     * Acción
+     */
     def form = {
         def title
         def politicaInstance
@@ -41,12 +53,18 @@ class PoliticaController {
         return [politicaInstance: politicaInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
     /*Función para guardar una nueva política creada*/
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -80,6 +98,9 @@ class PoliticaController {
     }
 
     /*Función para actualizar una política*/
+    /**
+     * Acción
+     */
     def update = {
         def politicaInstance = Politica.get(params.id)
         if (politicaInstance) {
@@ -108,6 +129,9 @@ class PoliticaController {
     }
 
     /*Muestra la política actual a ser modificada*/
+    /**
+     * Acción
+     */
     def show = {
         def politicaInstance = Politica.get(params.id)
         if (!politicaInstance) {
@@ -122,12 +146,18 @@ class PoliticaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
     /*Función para borrar una política existente*/
+    /**
+     * Acción
+     */
     def delete = {
         def politicaInstance = Politica.get(params.id)
         if (politicaInstance) {

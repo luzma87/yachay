@@ -2,14 +2,23 @@ package yachay.parametros.poaPac
 
 import yachay.parametros.poaPac.Mes
 
+/**
+ * Controlador
+ */
 class MesController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code:"default.list.label", args:["Mes"], default:"Mes List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class MesController {
         [mesInstanceList: Mes.list(params), mesInstanceTotal: Mes.count(), title: title, params:params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def mesInstance
@@ -39,11 +51,17 @@ class MesController {
         return [mesInstance: mesInstance, title:title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action:"form", params:params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if(params.id) {
@@ -76,6 +94,9 @@ class MesController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def mesInstance = Mes.get(params.id)
         if (mesInstance) {
@@ -103,6 +124,9 @@ class MesController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def mesInstance = Mes.get(params.id)
         if (!mesInstance) {
@@ -117,11 +141,17 @@ class MesController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action:"form", params:params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def mesInstance = Mes.get(params.id)
         if (mesInstance) {

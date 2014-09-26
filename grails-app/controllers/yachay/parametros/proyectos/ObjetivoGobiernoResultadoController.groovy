@@ -2,14 +2,23 @@ package yachay.parametros.proyectos
 
 import yachay.parametros.proyectos.ObjetivoGobiernoResultado
 
+/**
+ * Controlador
+ */
 class ObjetivoGobiernoResultadoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
      /*Lista de objetivos de gobierno x resultado*/
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "objetivogobiernoresultado.list", default: "ObjetivoGobiernoResultado List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -20,6 +29,9 @@ class ObjetivoGobiernoResultadoController {
     }
 
     /*form para la creación de un nuevo objetivo gobierno x resultado*/
+    /**
+     * Acción
+     */
     def form = {
         def title
         def objetivoGobiernoResultadoInstance
@@ -40,12 +52,18 @@ class ObjetivoGobiernoResultadoController {
         return [objetivoGobiernoResultadoInstance: objetivoGobiernoResultadoInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
     /*función para guardar un nuevo objetivo*/
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -79,6 +97,9 @@ class ObjetivoGobiernoResultadoController {
     }
 
     /*función para actualizar un objetivo*/
+    /**
+     * Acción
+     */
     def update = {
         def objetivoGobiernoResultadoInstance = ObjetivoGobiernoResultado.get(params.id)
         if (objetivoGobiernoResultadoInstance) {
@@ -107,6 +128,9 @@ class ObjetivoGobiernoResultadoController {
     }
 
     /*muestra el objetivo actual ha ser actualizado*/
+    /**
+     * Acción
+     */
     def show = {
         def objetivoGobiernoResultadoInstance = ObjetivoGobiernoResultado.get(params.id)
         if (!objetivoGobiernoResultadoInstance) {
@@ -121,12 +145,18 @@ class ObjetivoGobiernoResultadoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
     /*funcion para borrar un objetivo*/
+    /**
+     * Acción
+     */
     def delete = {
         def objetivoGobiernoResultadoInstance = ObjetivoGobiernoResultado.get(params.id)
         if (objetivoGobiernoResultadoInstance) {

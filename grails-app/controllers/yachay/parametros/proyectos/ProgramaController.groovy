@@ -2,14 +2,23 @@ package yachay.parametros.proyectos
 
 import yachay.parametros.proyectos.Programa
 
+/**
+ * Controlador
+ */
 class ProgramaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
     /*Lista de programas del proyecto*/
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Programa"], default: "Lista de Programas")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class ProgramaController {
         [programaInstanceList: Programa.list(params), programaInstanceTotal: Programa.count(), title: title, params: params]
     }
     /*Form para la creación de un nuevo programa*/
+    /**
+     * Acción
+     */
     def form = {
         def title
         def programaInstance
@@ -39,12 +51,18 @@ class ProgramaController {
         return [programaInstance: programaInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
     /*FUnción para guardar un nuevo programa*/
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -78,6 +96,9 @@ class ProgramaController {
     }
 
     /*Función para guardar las actualizaciones realizadas en un programa*/
+    /**
+     * Acción
+     */
     def update = {
         def programaInstance = Programa.get(params.id)
         if (programaInstance) {
@@ -106,6 +127,9 @@ class ProgramaController {
     }
 
     /*Muestra los datos un programa existente*/
+    /**
+     * Acción
+     */
     def show = {
         def programaInstance = Programa.get(params.id)
         if (!programaInstance) {
@@ -120,12 +144,18 @@ class ProgramaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
     /*Función para borrar un programa existente*/
+    /**
+     * Acción
+     */
     def delete = {
         def programaInstance = Programa.get(params.id)
         if (programaInstance) {

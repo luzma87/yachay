@@ -2,14 +2,23 @@ package yachay.parametros
 
 import yachay.parametros.TipoInversion
 
+/**
+ * Controlador
+ */
 class TipoInversionController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["TipoInversion"], default: "TipoInversion List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class TipoInversionController {
         [tipoInversionInstanceList: TipoInversion.list(params), tipoInversionInstanceTotal: TipoInversion.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def tipoInversionInstance
@@ -39,11 +51,17 @@ class TipoInversionController {
         return [tipoInversionInstance: tipoInversionInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class TipoInversionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def tipoInversionInstance = TipoInversion.get(params.id)
         if (tipoInversionInstance) {
@@ -103,6 +124,9 @@ class TipoInversionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def tipoInversionInstance = TipoInversion.get(params.id)
         if (!tipoInversionInstance) {
@@ -117,11 +141,17 @@ class TipoInversionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def tipoInversionInstance = TipoInversion.get(params.id)
         if (tipoInversionInstance) {

@@ -2,14 +2,23 @@ package yachay.proyectos
 
 import yachay.proyectos.Sigef
 
+/**
+ * Controlador
+ */
 class SigefController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code:"sigef.list", default:"Sigef List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class SigefController {
         [sigefInstanceList: Sigef.list(params), sigefInstanceTotal: Sigef.count(), title: title, params:params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def sigefInstance
@@ -40,11 +52,17 @@ class SigefController {
         return [sigefInstance: sigefInstance, title:title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action:"form", params:params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if(params.id) {
@@ -77,6 +95,9 @@ class SigefController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def sigefInstance = Sigef.get(params.id)
         if (sigefInstance) {
@@ -104,6 +125,9 @@ class SigefController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def sigefInstance = Sigef.get(params.id)
         if (!sigefInstance) {
@@ -118,11 +142,17 @@ class SigefController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action:"form", params:params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def sigefInstance = Sigef.get(params.id)
         if (sigefInstance) {

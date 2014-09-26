@@ -2,14 +2,23 @@ package yachay.proyectos
 
 import yachay.proyectos.Adquisiciones
 
+/**
+ * Controlador
+ */
 class AdquisicionesController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code:"default.list.label", args:["Adquisiciones"], default:"Adquisiciones List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class AdquisicionesController {
         [adquisicionesInstanceList: Adquisiciones.list(params), adquisicionesInstanceTotal: Adquisiciones.count(), title: title, params:params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def adquisicionesInstance
@@ -39,11 +51,17 @@ class AdquisicionesController {
         return [adquisicionesInstance: adquisicionesInstance, title:title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action:"form", params:params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if(params.id) {
@@ -76,6 +94,9 @@ class AdquisicionesController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def adquisicionesInstance = Adquisiciones.get(params.id)
         if (adquisicionesInstance) {
@@ -103,6 +124,9 @@ class AdquisicionesController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def adquisicionesInstance = Adquisiciones.get(params.id)
         if (!adquisicionesInstance) {
@@ -117,11 +141,17 @@ class AdquisicionesController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action:"form", params:params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def adquisicionesInstance = Adquisiciones.get(params.id)
         if (adquisicionesInstance) {

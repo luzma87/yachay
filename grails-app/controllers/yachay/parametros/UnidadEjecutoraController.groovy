@@ -2,14 +2,23 @@ package yachay.parametros
 
 import yachay.parametros.UnidadEjecutora
 
+/**
+ * Controlador
+ */
 class UnidadEjecutoraController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["UnidadEjecutora"], default: "UnidadEjecutora List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class UnidadEjecutoraController {
         [unidadEjecutoraInstanceList: UnidadEjecutora.list(params), unidadEjecutoraInstanceTotal: UnidadEjecutora.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def unidadEjecutoraInstance
@@ -39,11 +51,17 @@ class UnidadEjecutoraController {
         return [unidadEjecutoraInstance: unidadEjecutoraInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class UnidadEjecutoraController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def unidadEjecutoraInstance = UnidadEjecutora.get(params.id)
         if (unidadEjecutoraInstance) {
@@ -103,6 +124,9 @@ class UnidadEjecutoraController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def unidadEjecutoraInstance = UnidadEjecutora.get(params.id)
         if (!unidadEjecutoraInstance) {
@@ -117,11 +141,17 @@ class UnidadEjecutoraController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def unidadEjecutoraInstance = UnidadEjecutora.get(params.id)
         if (unidadEjecutoraInstance) {

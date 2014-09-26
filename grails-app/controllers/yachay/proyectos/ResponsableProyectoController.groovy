@@ -2,14 +2,23 @@ package yachay.proyectos
 
 import yachay.proyectos.ResponsableProyecto
 
+/**
+ * Controlador
+ */
 class ResponsableProyectoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["ResponsableProyecto"], default: "ResponsableProyecto List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class ResponsableProyectoController {
         [responsableProyectoInstanceList: ResponsableProyecto.list(params), responsableProyectoInstanceTotal: ResponsableProyecto.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def responsableProyectoInstance
@@ -39,11 +51,17 @@ class ResponsableProyectoController {
         return [responsableProyectoInstance: responsableProyectoInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class ResponsableProyectoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def responsableProyectoInstance = ResponsableProyecto.get(params.id)
         if (responsableProyectoInstance) {
@@ -103,6 +124,9 @@ class ResponsableProyectoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def responsableProyectoInstance = ResponsableProyecto.get(params.id)
         if (!responsableProyectoInstance) {
@@ -117,11 +141,17 @@ class ResponsableProyectoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def responsableProyectoInstance = ResponsableProyecto.get(params.id)
         if (responsableProyectoInstance) {

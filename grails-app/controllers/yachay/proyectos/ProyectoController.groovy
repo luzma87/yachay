@@ -16,6 +16,9 @@ import jxl.*
 import java.text.SimpleDateFormat
 
 
+/**
+ * Controlador
+ */
 class ProyectoController extends yachay.seguridad.Shield {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
@@ -23,11 +26,17 @@ class ProyectoController extends yachay.seguridad.Shield {
     def kerberosService
     def dbConnectionService
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /*Listado de los proyectos*/
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Proyecto"], default: "Proyecto List")
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
@@ -130,6 +139,9 @@ class ProyectoController extends yachay.seguridad.Shield {
     }
 
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def proyectoInstance
@@ -150,11 +162,17 @@ class ProyectoController extends yachay.seguridad.Shield {
         return [proyectoInstance: proyectoInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
 
@@ -190,6 +208,9 @@ class ProyectoController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def proyectoInstance = Proyecto.get(params.id)
         if (proyectoInstance) {
@@ -218,6 +239,9 @@ class ProyectoController extends yachay.seguridad.Shield {
     }
 
 
+    /**
+     * Acción
+     */
     def listaAprobarProyecto = {
         println "lista " + params
         params.max = Math.min(params.max ? params.int('max') : 25, 100)
@@ -237,6 +261,9 @@ class ProyectoController extends yachay.seguridad.Shield {
     }
 
 
+    /**
+     * Acción
+     */
     def aprobarProyecto = {
         if (request.method == 'POST') {
             println "params " + params
@@ -254,6 +281,9 @@ class ProyectoController extends yachay.seguridad.Shield {
     }
 
 
+    /**
+     * Acción
+     */
     def estadoProyecto = {
         def proyectoInstance = Proyecto.get(params.id)
 
@@ -379,6 +409,9 @@ class ProyectoController extends yachay.seguridad.Shield {
         return eliminarTodo(elems, clase)
     }
 
+    /**
+     * Acción
+     */
     def deleteProyecto = {
         def proyecto = Proyecto.get(params.id)
         def b = true
@@ -487,6 +520,9 @@ class ProyectoController extends yachay.seguridad.Shield {
         redirect(action: 'show', id: proyecto.id)
     }
 
+    /**
+     * Acción
+     */
     def validarAutorizacion = {
         if (session.usuario.id.toLong() == Usro.findByUsroLogin("ruth").id.toLong()) {
             if (session.usuario.autorizacion == params.auth.encodeAsMD5()) {
@@ -500,6 +536,9 @@ class ProyectoController extends yachay.seguridad.Shield {
     }
 
     /*Muestra el proyecto en una pantalla nueva*/
+    /**
+     * Acción
+     */
     def show = {
         def proyectoInstance = Proyecto.get(params.id)
         if (!proyectoInstance) {
@@ -523,11 +562,17 @@ class ProyectoController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def proyectoInstance = Proyecto.get(params.id)
         if (proyectoInstance) {
@@ -547,6 +592,9 @@ class ProyectoController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def loadCombo = {
         println "aaa "+params
         def str = ""
@@ -603,6 +651,9 @@ class ProyectoController extends yachay.seguridad.Shield {
         render(str)
     }
 
+    /**
+     * Acción
+     */
     def nuevoProyectoFlow = {
         inicio {
             action {
@@ -1002,6 +1053,9 @@ class ProyectoController extends yachay.seguridad.Shield {
 
     } //nuevo proyecto flow
 
+    /**
+     * Acción
+     */
     def editar = {
 
         def proyecto = Proyecto.get(params.proyecto)
@@ -1015,6 +1069,9 @@ class ProyectoController extends yachay.seguridad.Shield {
         return [proyecto: proyecto, documentoInstance: documentoInstance]
     }
 
+    /**
+     * Acción
+     */
     def verDoc = {
         def documentoInstance = Documento.get(params.id)
         if (!documentoInstance) {
@@ -1029,6 +1086,9 @@ class ProyectoController extends yachay.seguridad.Shield {
         }
     }
 /*Muestra los documentos asociados del proyecto*/
+    /**
+     * Acción
+     */
     def documentos = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         if (!params.sort) {
@@ -1075,6 +1135,9 @@ class ProyectoController extends yachay.seguridad.Shield {
     }
 
     /*Función para subir un documento asociado con el proyecto*/
+    /**
+     * Acción
+     */
     def uploadDoc = {
 
 //        println "UPLOADING"
@@ -1190,6 +1253,9 @@ class ProyectoController extends yachay.seguridad.Shield {
         }
         redirect(action: "documentos", params: [id: proyecto.id])
     }
+    /**
+     * Acción
+     */
     def deleteDoc = {
         println "DELETE DOC"
         println params
@@ -1225,6 +1291,9 @@ class ProyectoController extends yachay.seguridad.Shield {
 
         redirect(action: "documentos", params: [id: proyecto.id])
     }
+    /**
+     * Acción
+     */
     def downloadDoc = {
         def doc = Documento.get(params.id)
         def archivo = doc.documento
@@ -1256,10 +1325,16 @@ response.outputStream << file.newInputStream()
  */
     }
 
+    /**
+     * Acción
+     */
     def fileNotFound = {
         return [archivo: params.archivo, id: params.id]
     }
 
+    /**
+     * Acción
+     */
     def responsable = {
         def proyecto = Proyecto.get(params.id)
 
@@ -1309,6 +1384,9 @@ response.outputStream << file.newInputStream()
         return [proyecto: proyecto, responsableEjecucion: results[0], responsableIngreso: results2[0], responsableSeguimiento: results3[0], responsablesEjecucion: responsablesEjecucion, responsablesIngreso: responsablesIngreso, responsablesSeguimiento: responsablesSeguimiento]
     } //responsable
 
+    /**
+     * Acción
+     */
     def responsables = {
         def proyecto = Proyecto.get(params.id)
 
@@ -1339,6 +1417,9 @@ response.outputStream << file.newInputStream()
         return [proyecto: proyecto, responsableEjecucion: results[0], responsableIngreso: results2[0]]
     } //responsable
 
+    /**
+     * Acción
+     */
     def saveResponsable = {
         println "SAVE RESPONSABLE"
         params.each {
@@ -1495,6 +1576,9 @@ response.outputStream << file.newInputStream()
         //        }
     }
 
+    /**
+     * Acción
+     */
     def historialResponsables = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         def proyecto = Proyecto.get(params.id)
@@ -1543,6 +1627,9 @@ response.outputStream << file.newInputStream()
         return [proyecto: proyecto, responsableProyectoInstanceList: responsableProyectoInstanceList, responsableProyectoInstanceTotal: responsableProyectoInstanceTotal]
     }
 
+    /**
+     * Acción
+     */
     def getDatos = {
         def proyecto = Proyecto.get(params.id)
         def headers, lista, tipo
@@ -1609,6 +1696,9 @@ response.outputStream << file.newInputStream()
         return [lista: lista, headers: headers, tipo: tipo]
     }
 
+    /**
+     * Acción
+     */
     def saveEstudiosTecnicos = {
         def obj = new EstudiosTecnicos(params)
 
@@ -1619,6 +1709,9 @@ response.outputStream << file.newInputStream()
             render("OK")
         }
     }
+    /**
+     * Acción
+     */
     def deleteEstudiosTecnicos = {
         if (params.id.class != java.lang.String) {
             (params.id).each { id ->
@@ -1636,6 +1729,9 @@ response.outputStream << file.newInputStream()
         render("OK")
     }
 
+    /**
+     * Acción
+     */
     def saveObjetivosEstrategicos = {
         def obj = new ObjetivoEstrategico(params)
 
@@ -1646,6 +1742,9 @@ response.outputStream << file.newInputStream()
             render("OK")
         }
     }
+    /**
+     * Acción
+     */
     def deleteObjetivosEstrategicos = {
         if (params.id.class != java.lang.String) {
             (params.id).each { id ->
@@ -1663,6 +1762,9 @@ response.outputStream << file.newInputStream()
         render("OK")
     }
 
+    /**
+     * Acción
+     */
     def saveGruposDeAtencion = {
         def obj = new GrupoDeAtencion(params)
 
@@ -1673,6 +1775,9 @@ response.outputStream << file.newInputStream()
             render("OK")
         }
     }
+    /**
+     * Acción
+     */
     def deleteGruposDeAtencion = {
         if (params.id.class != java.lang.String) {
             (params.id).each { id ->
@@ -1690,6 +1795,9 @@ response.outputStream << file.newInputStream()
         render("OK")
     }
 
+    /**
+     * Acción
+     */
     def saveEntidadesProyecto = {
 
         println actionName
@@ -1705,6 +1813,9 @@ response.outputStream << file.newInputStream()
             render("OK")
         }
     }
+    /**
+     * Acción
+     */
     def deleteEntidadesProyecto = {
         if (params.id.class != java.lang.String) {
             (params.id).each { id ->
@@ -1722,6 +1833,9 @@ response.outputStream << file.newInputStream()
         render("OK")
     }
 
+    /**
+     * Acción
+     */
     def saveIntervencion = {
         def obj = new Intervencion(params)
 
@@ -1732,6 +1846,9 @@ response.outputStream << file.newInputStream()
             render("OK")
         }
     }
+    /**
+     * Acción
+     */
     def deleteIntervencion = {
         if (params.id.class != java.lang.String) {
             (params.id).each { id ->
@@ -1749,6 +1866,9 @@ response.outputStream << file.newInputStream()
         render("OK")
     }
 
+    /**
+     * Acción
+     */
     def saveAdquisicion = {
         def obj = new Adquisiciones(params)
 
@@ -1759,6 +1879,9 @@ response.outputStream << file.newInputStream()
             render("OK")
         }
     }
+    /**
+     * Acción
+     */
     def deleteAdquisicion = {
         if (params.id.class != java.lang.String) {
             (params.id).each { id ->
@@ -1776,6 +1899,9 @@ response.outputStream << file.newInputStream()
         render("OK")
     }
 
+    /**
+     * Acción
+     */
     def verIndicadoresSenplades = {
         def proyecto = Proyecto.get(params.id)
         def indicadores = [:]
@@ -1783,6 +1909,9 @@ response.outputStream << file.newInputStream()
         return [proyecto: proyecto, indicadores: indicadores]
     }
 
+    /**
+     * Acción
+     */
     def editarIndicadoresSenplades = {
         def proyecto = Proyecto.get(params.id)
         def indicadores = [:]
@@ -1790,6 +1919,9 @@ response.outputStream << file.newInputStream()
         return [proyecto: proyecto, indicadores: indicadores]
     }
 
+    /**
+     * Acción
+     */
     def saveIndicadoresSenplades = {
         println params
         def proyecto = Proyecto.get(params.id)
@@ -1818,6 +1950,9 @@ response.outputStream << file.newInputStream()
         }
     }
 
+    /**
+     * Acción
+     */
     def verEntidades = {
         def proyecto = Proyecto.get(params.id)
         def indicadores = [:]
@@ -1832,6 +1967,9 @@ response.outputStream << file.newInputStream()
         return [proyecto: proyecto, indicadores: indicadores, headers: headers]
     }
 
+    /**
+     * Acción
+     */
     def editarEntidades = {
         def proyecto = Proyecto.get(params.id)
         def entidadesProyectoInstance = EntidadesProyecto.findAllByProyecto(proyecto)
@@ -1840,12 +1978,18 @@ response.outputStream << file.newInputStream()
     }
 
     /*Muestra el financiamiento de un proyecto específico*/
+    /**
+     * Acción
+     */
     def verFinanciamiento = {
         def proyecto = Proyecto.get(params.id)
         def financiamientos = Financiamiento.findAllByProyecto(proyecto)
         [proyecto: proyecto, financiamientos: financiamientos]
     }
     /*Permite editar o borrar un financiamiento*/
+    /**
+     * Acción
+     */
     def editarFinanciamiento = {
         def proyecto = Proyecto.get(params.id)
         def financiamientos = Financiamiento.findAllByProyecto(proyecto)
@@ -1853,6 +1997,9 @@ response.outputStream << file.newInputStream()
     }
 
     /*FUnción para guardar un nuevo financiamiento*/
+    /**
+     * Acción
+     */
     def saveFinanciamiento = {
 
         println params
@@ -1915,6 +2062,9 @@ response.outputStream << file.newInputStream()
         }
     }
 
+    /**
+     * Acción
+     */
     def verDatosSenplades = {
         def proyecto = Proyecto.get(params.id)
 
@@ -1970,6 +2120,9 @@ response.outputStream << file.newInputStream()
         return [proyecto: proyecto, indicadores: indicadores, headers: headers]
     }
 
+    /**
+     * Acción
+     */
     def sempladesFlow = {
         inicio {
             action {
@@ -2144,11 +2297,17 @@ response.outputStream << file.newInputStream()
         } //show
     }
 
+    /**
+     * Acción
+     */
     def cargarExcel = {
 
     }
 
     /*Función para cargar un archivo excel con componentes y actividades*/
+    /**
+     * Acción
+     */
     def subirExcel = {
 
 

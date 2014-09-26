@@ -2,14 +2,23 @@ package yachay.parametros
 
 import yachay.parametros.TipoGrupo
 
+/**
+ * Controlador
+ */
 class TipoGrupoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["TipoGrupo"], default: "TipoGrupo List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class TipoGrupoController {
         [tipoGrupoInstanceList: TipoGrupo.list(params), tipoGrupoInstanceTotal: TipoGrupo.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def tipoGrupoInstance
@@ -39,11 +51,17 @@ class TipoGrupoController {
         return [tipoGrupoInstance: tipoGrupoInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class TipoGrupoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def tipoGrupoInstance = TipoGrupo.get(params.id)
         if (tipoGrupoInstance) {
@@ -103,6 +124,9 @@ class TipoGrupoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def tipoGrupoInstance = TipoGrupo.get(params.id)
         if (!tipoGrupoInstance) {
@@ -117,11 +141,17 @@ class TipoGrupoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def tipoGrupoInstance = TipoGrupo.get(params.id)
         if (tipoGrupoInstance) {

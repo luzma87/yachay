@@ -2,14 +2,23 @@ package yachay.proyectos
 
 import yachay.proyectos.BeneficioSenplades
 
+/**
+ * Controlador
+ */
 class BeneficioSenpladesController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["BeneficioSenplades"], default: "BeneficioSenplades List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class BeneficioSenpladesController {
         [beneficioSenpladesInstanceList: BeneficioSenplades.list(params), beneficioSenpladesInstanceTotal: BeneficioSenplades.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def beneficioSenpladesInstance
@@ -39,11 +51,17 @@ class BeneficioSenpladesController {
         return [beneficioSenpladesInstance: beneficioSenpladesInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class BeneficioSenpladesController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def beneficioSenpladesInstance = BeneficioSenplades.get(params.id)
         if (beneficioSenpladesInstance) {
@@ -103,6 +124,9 @@ class BeneficioSenpladesController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def beneficioSenpladesInstance = BeneficioSenplades.get(params.id)
         if (!beneficioSenpladesInstance) {
@@ -117,11 +141,17 @@ class BeneficioSenpladesController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def beneficioSenpladesInstance = BeneficioSenplades.get(params.id)
         if (beneficioSenpladesInstance) {

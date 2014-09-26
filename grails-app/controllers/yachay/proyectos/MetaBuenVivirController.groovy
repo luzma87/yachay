@@ -2,14 +2,23 @@ package yachay.proyectos
 
 import yachay.proyectos.MetaBuenVivir
 
+/**
+ * Controlador
+ */
 class MetaBuenVivirController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "metabuenvivir.list", default: "MetaBuenVivir List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class MetaBuenVivirController {
         [metaBuenVivirInstanceList: MetaBuenVivir.list(params), metaBuenVivirInstanceTotal: MetaBuenVivir.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def metaBuenVivirInstance
@@ -39,11 +51,17 @@ class MetaBuenVivirController {
         return [metaBuenVivirInstance: metaBuenVivirInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class MetaBuenVivirController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def metaBuenVivirInstance = MetaBuenVivir.get(params.id)
         if (metaBuenVivirInstance) {
@@ -103,6 +124,9 @@ class MetaBuenVivirController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def metaBuenVivirInstance = MetaBuenVivir.get(params.id)
         if (!metaBuenVivirInstance) {
@@ -117,11 +141,17 @@ class MetaBuenVivirController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def metaBuenVivirInstance = MetaBuenVivir.get(params.id)
         if (metaBuenVivirInstance) {

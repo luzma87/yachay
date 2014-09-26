@@ -14,11 +14,17 @@ import yachay.poa.Componente
 import yachay.poa.ProgramacionAsignacion
 import yachay.seguridad.Usro
 
+/**
+ * Controlador
+ */
 class ModificacionController extends yachay.seguridad.Shield {
 
     def kerberosService, modificacionesService
 
 
+    /**
+     * Acción
+     */
     def modificacion = {
         /*
         tipos:
@@ -76,6 +82,9 @@ class ModificacionController extends yachay.seguridad.Shield {
     }
 
 
+    /**
+     * Acción
+     */
     def modTechos = {
         println "mod techos "+params
         def unidad = UnidadEjecutora.get(params.id)
@@ -90,6 +99,9 @@ class ModificacionController extends yachay.seguridad.Shield {
     }
 
 
+    /**
+     * Acción
+     */
     def modTechoCorreintes = {
         println "mod corr "+params
         def techo = PresupuestoUnidad.get(params.id)
@@ -111,6 +123,9 @@ class ModificacionController extends yachay.seguridad.Shield {
 
     }
 
+    /**
+     * Acción
+     */
     def modTechoInversiones = {
         println "mod inv "+params
         def techo = PresupuestoUnidad.get(params.id)
@@ -131,6 +146,9 @@ class ModificacionController extends yachay.seguridad.Shield {
         render "ok"
     }
 
+    /**
+     * Acción
+     */
     def guardarModificacion = {
         if (request.method == 'POST') {
             //println "Guardar modificaciones "+session.modificacion
@@ -278,6 +296,9 @@ class ModificacionController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def modificarCronograma = {
         if (session.modificacion && session?.modificacion?.estado == 2) {
             println "nuevo cronograma " + params
@@ -304,6 +325,9 @@ class ModificacionController extends yachay.seguridad.Shield {
 
 
 
+    /**
+     * Acción
+     */
     def guardarModificacionCronograma = {
         if (session.modificacion && session?.modificacion?.estado == 2) {
             params.modificacion = session.modificacion.id
@@ -316,6 +340,9 @@ class ModificacionController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def terminarModificacionCronograma = {
         def err = modificacionesService.saveModificacion()
         if (err[0] < 1 && err[1] == 0) {
@@ -333,6 +360,9 @@ class ModificacionController extends yachay.seguridad.Shield {
     }
 
 
+    /**
+     * Acción
+     */
     def modificarPresupuesto = {
         println "modificar presupuesto"
         if (session.modificacion && session?.modificacion?.estado == 2) {
@@ -343,6 +373,9 @@ class ModificacionController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def nuevaAsignacionCorrienteMod = {
         def band = true
 
@@ -425,6 +458,9 @@ class ModificacionController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def guardarAsignacionMod = {
         println "params guadr asignacion " + params
 
@@ -466,6 +502,9 @@ class ModificacionController extends yachay.seguridad.Shield {
 
     }
 
+    /**
+     * Acción
+     */
     def guardarReasignacion = {
         println "reasignacion " + params
         def f = request.getFile('archivo')
@@ -626,6 +665,9 @@ class ModificacionController extends yachay.seguridad.Shield {
 
 
     }
+    /**
+     * Acción
+     */
     def guardarReasignacionYachay = {
         println "reasignacion " + params
         def f = request.getFile('archivo')
@@ -725,6 +767,9 @@ class ModificacionController extends yachay.seguridad.Shield {
     }
 
 
+    /**
+     * Acción
+     */
     def poaInversionesMod = {
 
         def band = false
@@ -797,6 +842,9 @@ class ModificacionController extends yachay.seguridad.Shield {
 
     }
 
+    /**
+     * Acción
+     */
     def poaCorrientesMod = {
 
         def band = false
@@ -924,6 +972,9 @@ class ModificacionController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def buscarAsignacion = {
         println "buscar asignacion " + params
         def unidad
@@ -964,6 +1015,9 @@ class ModificacionController extends yachay.seguridad.Shield {
     }
 
 
+    /**
+     * Acción
+     */
     def buscarAsignacionInversion = {
         println "buscar asignacion " + params
         def unidad
@@ -1007,6 +1061,9 @@ class ModificacionController extends yachay.seguridad.Shield {
 
 
 
+    /**
+     * Acción
+     */
     def programacionAsignacionesMod = {
         def unidad = UnidadEjecutora.get(params.id)
         def band = false
@@ -1053,6 +1110,9 @@ class ModificacionController extends yachay.seguridad.Shield {
 
 
 
+    /**
+     * Acción
+     */
     def guardarProgramacionMod = {
 
         def asig = Asignacion.get(params.asignacion)
@@ -1077,6 +1137,9 @@ class ModificacionController extends yachay.seguridad.Shield {
 
 
 
+    /**
+     * Acción
+     */
     def verModificacionesPoa = {
         def unidad = UnidadEjecutora.get(params.id)
         def actual
@@ -1102,6 +1165,9 @@ class ModificacionController extends yachay.seguridad.Shield {
 
     }
 
+    /**
+     * Acción
+     */
     def descargaDocumento = {
         def mod = ModificacionAsignacion.get(params.id)
         def path = servletContext.getRealPath("/") + "modificacionesPoa/" + mod.pdf
@@ -1117,6 +1183,9 @@ class ModificacionController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def reversar = {
         def ids = params.asgn
         def resultado = new ArrayList()
@@ -1124,6 +1193,9 @@ class ModificacionController extends yachay.seguridad.Shield {
         return [resultado: asgn]
     }
 
+    /**
+     * Acción
+     */
     def reversaAsignacion = {
         println "reversaAsignacion parametros:" + params
         def dsde = 0
@@ -1189,6 +1261,9 @@ class ModificacionController extends yachay.seguridad.Shield {
         render "ok, vuelva a cargar esta página para no cometes errores de Repetir reversados"
     }
 
+    /**
+     * Acción
+     */
     def reversarTechos = {
         def resultado = new ArrayList()
         def mdtc = ModificacionTechos.findAllByIdBetween(68, 71).sort {it.id}
@@ -1196,6 +1271,9 @@ class ModificacionController extends yachay.seguridad.Shield {
     }
 
 
+    /**
+     * Acción
+     */
     def reversaTechosCorr = {
 
         /** solo sirve para modificacion de techos de corrientes **/

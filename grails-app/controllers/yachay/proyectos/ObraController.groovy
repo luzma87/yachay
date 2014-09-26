@@ -12,17 +12,26 @@ import yachay.proyectos.Obra
 import yachay.proyectos.Proyecto
 import yachay.proyectos.ResponsableProyecto
 
+/**
+ * Controlador
+ */
 class ObraController extends yachay.seguridad.Shield {
 
     def kerberosService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /*TODO cambiar esto para que valga con obras - asignacion*/
+    /**
+     * Acción
+     */
     def pacProyecto = {
         def proyecto = Proyecto.get(params.id)
         def componentes = MarcoLogico.findAll("from MarcoLogico where proyecto = ${proyecto.id} and tipoElemento = 2 and estado = 0")
@@ -51,6 +60,9 @@ class ObraController extends yachay.seguridad.Shield {
     }
 
 
+    /**
+     * Acción
+     */
     def pacCorrientes = {
         def band = true
         if (params.id.toLong() != session.unidad.id.toLong()) {
@@ -83,6 +95,9 @@ class ObraController extends yachay.seguridad.Shield {
     }
 
 
+    /**
+     * Acción
+     */
     def pacLiquidaciones = {
         def band = true
         if (params.id.toLong() != session.unidad.id.toLong()) {
@@ -162,6 +177,9 @@ class ObraController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def agregarFila = {
 //        println "params copiar obra!! "+params
 //        render params
@@ -170,6 +188,9 @@ class ObraController extends yachay.seguridad.Shield {
         render obra.id
     }
 
+    /**
+     * Acción
+     */
     def eliminarFila = {
         params.controllerName = "Obra"
         params.actionName = "eliminarFila"
@@ -181,12 +202,18 @@ class ObraController extends yachay.seguridad.Shield {
     }
 
 
+    /**
+     * Acción
+     */
     def obrasAsignacion = {
         def asignacion = Asignacion.get(params.id)
         def obras = Obra.findAllByAsignacionAndObraIsNull(asignacion)
         [obras: obras, asignacion: asignacion]
     }
 
+    /**
+     * Acción
+     */
     def guardarObra = {
         //println "params guardar obra!! " + params
         def obra = kerberosService.save(params, Obra, session.perfil, session.usuario)
@@ -195,6 +222,9 @@ class ObraController extends yachay.seguridad.Shield {
 
     }
 
+    /**
+     * Acción
+     */
     def guardarObraMod = {
         println "guardar obra mod  "+params
         def obra = Obra.get(params.id)
@@ -207,6 +237,9 @@ class ObraController extends yachay.seguridad.Shield {
             render obra.id
         }
     }
+    /**
+     * Acción
+     */
     def guardarObraGC = {
 
         params.cuatrimestre1 = "0"
@@ -241,6 +274,9 @@ class ObraController extends yachay.seguridad.Shield {
         render "ok"
 
     }
+    /**
+     * Acción
+     */
     def guardarObraGCform = {
         params.fechaFin = params.fechaFin_day + "/" + params.fechaFin_month + "/" + params.fechaFin_year
         params.fechaInicio = params.fechaInicio_day + "/" + params.fechaInicio_month + "/" + params.fechaInicio_year
@@ -276,6 +312,9 @@ class ObraController extends yachay.seguridad.Shield {
         redirect(controller: "asignacion", action: "pacAsignacion", id: obra.asignacion.id)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "obra.list", default: "Obra List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -285,6 +324,9 @@ class ObraController extends yachay.seguridad.Shield {
         [obraInstanceList: Obra.list(params), obraInstanceTotal: Obra.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def obraInstance
@@ -305,11 +347,17 @@ class ObraController extends yachay.seguridad.Shield {
         return [obraInstance: obraInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -342,6 +390,9 @@ class ObraController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def obraInstance = Obra.get(params.id)
         if (obraInstance) {
@@ -369,6 +420,9 @@ class ObraController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def obraInstance = Obra.get(params.id)
         if (!obraInstance) {
@@ -383,11 +437,17 @@ class ObraController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def obraInstance = Obra.get(params.id)
         if (obraInstance) {

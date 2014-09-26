@@ -2,14 +2,23 @@ package yachay.proyectos
 
 import yachay.proyectos.EstudiosTecnicos
 
+/**
+ * Controlador
+ */
 class EstudiosTecnicosController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["EstudiosTecnicos"], default: "EstudiosTecnicos List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class EstudiosTecnicosController {
         [estudiosTecnicosInstanceList: EstudiosTecnicos.list(params), estudiosTecnicosInstanceTotal: EstudiosTecnicos.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def estudiosTecnicosInstance
@@ -39,11 +51,17 @@ class EstudiosTecnicosController {
         return [estudiosTecnicosInstance: estudiosTecnicosInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class EstudiosTecnicosController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def estudiosTecnicosInstance = EstudiosTecnicos.get(params.id)
         if (estudiosTecnicosInstance) {
@@ -103,6 +124,9 @@ class EstudiosTecnicosController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def estudiosTecnicosInstance = EstudiosTecnicos.get(params.id)
         if (!estudiosTecnicosInstance) {
@@ -117,11 +141,17 @@ class EstudiosTecnicosController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def estudiosTecnicosInstance = EstudiosTecnicos.get(params.id)
         if (estudiosTecnicosInstance) {

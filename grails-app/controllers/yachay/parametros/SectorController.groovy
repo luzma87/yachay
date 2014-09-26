@@ -2,14 +2,23 @@ package yachay.parametros
 
 import yachay.parametros.Sector
 
+/**
+ * Controlador
+ */
 class SectorController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Sector"], default: "Sector List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class SectorController {
         [sectorInstanceList: Sector.list(params), sectorInstanceTotal: Sector.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def sectorInstance
@@ -39,11 +51,17 @@ class SectorController {
         return [sectorInstance: sectorInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class SectorController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def sectorInstance = Sector.get(params.id)
         if (sectorInstance) {
@@ -103,6 +124,9 @@ class SectorController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def sectorInstance = Sector.get(params.id)
         if (!sectorInstance) {
@@ -117,11 +141,17 @@ class SectorController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def sectorInstance = Sector.get(params.id)
         if (sectorInstance) {

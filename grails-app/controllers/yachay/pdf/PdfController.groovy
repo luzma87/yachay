@@ -1,11 +1,20 @@
 package yachay.pdf
 
+/**
+ * Controlador
+ */
 class PdfController {
 
     PdfService pdfService
 
+    /**
+     * Acción
+     */
     def index = { redirect(action: demo) }
 
+    /**
+     * Acción
+     */
     def pdfLink = {
         try {
             byte[] b
@@ -42,6 +51,9 @@ class PdfController {
         }
     }
 
+    /**
+     * Acción
+     */
     def pdfForm = {
         try {
             byte[] b
@@ -76,6 +88,9 @@ class PdfController {
         }
     }
 
+    /**
+     * Acción
+     */
     def demo = {
         def firstName = params.first ?: "Eric"
         def lastName = params.last ?: "Cartman"
@@ -100,6 +115,9 @@ class PdfController {
         return ['content': content, 'pdf': params, 'id': params.id]
     }
 
+    /**
+     * Acción
+     */
     def sampleInclude = {
         def bar = 'foo'
         def today = params?.today

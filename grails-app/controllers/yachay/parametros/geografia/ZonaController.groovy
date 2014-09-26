@@ -5,19 +5,31 @@ import yachay.parametros.geografia.Parroquia
 import yachay.parametros.geografia.Provincia
 import yachay.parametros.geografia.Zona
 
+/**
+ * Controlador
+ */
 class ZonaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
     def kerberosService
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def editar = {
         redirect(action: 'editar' + (params.tipo).capitalize(), params: params)
     }
+    /**
+     * Acción
+     */
     def editarZona = {
         def obj, crear
         if (params.id) {
@@ -29,6 +41,9 @@ class ZonaController {
         }
         return [zonaInstance: obj, tipo: params.tipo, crear: crear]
     }
+    /**
+     * Acción
+     */
     def editarProvincia = {
         def obj, crear
         if (params.id) {
@@ -41,6 +56,9 @@ class ZonaController {
         }
         return [provinciaInstance: obj, tipo: params.tipo, crear: crear]
     }
+    /**
+     * Acción
+     */
     def editarCanton = {
         def obj, crear
         if (params.id) {
@@ -53,6 +71,9 @@ class ZonaController {
         }
         return [cantonInstance: obj, tipo: params.tipo, crear: crear]
     }
+    /**
+     * Acción
+     */
     def editarParroquia = {
         def obj, crear
         if (params.id) {
@@ -66,6 +87,9 @@ class ZonaController {
         return [parroquiaInstance: obj, tipo: params.tipo, crear: crear]
     }
 
+    /**
+     * Acción
+     */
     def infoForTree = {
         if (params.tipo == "pais") {
             render ""
@@ -73,23 +97,38 @@ class ZonaController {
             redirect(action: 'info' + (params.tipo).capitalize(), params: params)
         }
     }
+    /**
+     * Acción
+     */
     def infoZona = {
         def obj = Zona.get(params.id)
         return [zonaInstance: obj]
     }
+    /**
+     * Acción
+     */
     def infoProvincia = {
         def obj = Provincia.get(params.id)
         return [provinciaInstance: obj]
     }
+    /**
+     * Acción
+     */
     def infoCanton = {
         def obj = Canton.get(params.id)
         return [cantonInstance: obj]
     }
+    /**
+     * Acción
+     */
     def infoParroquia = {
         def obj = Parroquia.get(params.id)
         return [parroquiaInstance: obj]
     }
 
+    /**
+     * Acción
+     */
     def updateProvinciaCoords = {
         def provincia = Provincia.get(params.id)
         provincia.latitud = params.lat.toDouble()
@@ -102,6 +141,9 @@ class ZonaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def updateCantonCoords = {
         def canton = Canton.get(params.id)
         canton.latitud = params.lat.toDouble()
@@ -114,6 +156,9 @@ class ZonaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def updateParroquiaCoords = {
         def parroquia = Parroquia.get(params.id)
         parroquia.latitud = params.lat.toDouble()
@@ -126,6 +171,9 @@ class ZonaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def saveFromTree = {
         def obj
         def err
@@ -154,6 +202,9 @@ class ZonaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def deleteFromTree = {
         switch (params.tipo) {
             case "zona":
@@ -400,19 +451,31 @@ class ZonaController {
         return tree
     }
 
+    /**
+     * Acción
+     */
     def loadTreePart = {
         render(makeBasicTree(params.tipo, params.id))
     }
 
+    /**
+     * Acción
+     */
     def arbol = {
         return [tree: makeTree()]
     }
 
+    /**
+     * Acción
+     */
     def renderArbol = {
         render(makeTree())
     }
 
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Zona"], default: "Zona List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -422,6 +485,9 @@ class ZonaController {
         [zonaInstanceList: Zona.list(params), zonaInstanceTotal: Zona.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def zonaInstance
@@ -442,11 +508,17 @@ class ZonaController {
         return [zonaInstance: zonaInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -479,6 +551,9 @@ class ZonaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def zonaInstance = Zona.get(params.id)
         if (zonaInstance) {
@@ -506,6 +581,9 @@ class ZonaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def zonaInstance = Zona.get(params.id)
         if (!zonaInstance) {
@@ -520,11 +598,17 @@ class ZonaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def zonaInstance = Zona.get(params.id)
         if (zonaInstance) {

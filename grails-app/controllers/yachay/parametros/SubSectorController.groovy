@@ -2,14 +2,23 @@ package yachay.parametros
 
 import yachay.parametros.SubSector
 
+/**
+ * Controlador
+ */
 class SubSectorController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["SubSector"], default: "SubSector List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class SubSectorController {
         [subSectorInstanceList: SubSector.list(params), subSectorInstanceTotal: SubSector.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def subSectorInstance
@@ -39,11 +51,17 @@ class SubSectorController {
         return [subSectorInstance: subSectorInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class SubSectorController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def subSectorInstance = SubSector.get(params.id)
         if (subSectorInstance) {
@@ -103,6 +124,9 @@ class SubSectorController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def subSectorInstance = SubSector.get(params.id)
         if (!subSectorInstance) {
@@ -117,11 +141,17 @@ class SubSectorController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def subSectorInstance = SubSector.get(params.id)
         if (subSectorInstance) {

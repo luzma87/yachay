@@ -9,10 +9,16 @@ import yachay.proyectos.Obra
 import yachay.proyectos.ResponsableProyecto
 import yachay.seguridad.Usro
 
+/**
+ * Controlador
+ */
 class CertificacionController  extends yachay.seguridad.Shield{
 
     def kerberosService
 
+    /**
+     * Acción
+     */
     def solicitarCertificacion = {
 //        println "params soollciitar "+params
         def usuario = session.usuario
@@ -59,6 +65,9 @@ class CertificacionController  extends yachay.seguridad.Shield{
         [unidad:unidad,actual:actual,inversion:inversion,now:now]
     }
 
+    /**
+     * Acción
+     */
     def solicitarAval = {
         def asg = Asignacion.get(params.asg)
         def now = new Date()
@@ -75,6 +84,9 @@ class CertificacionController  extends yachay.seguridad.Shield{
 
     }
 
+    /**
+     * Acción
+     */
     def listaCertificados = {
         def usuario = Usro.get(session.usuario.id)
         def band = false
@@ -96,6 +108,9 @@ class CertificacionController  extends yachay.seguridad.Shield{
         }
     }
 
+    /**
+     * Acción
+     */
     def certificarPac = {
         def unidad=UnidadEjecutora.get(params.id)
         def actual
@@ -114,6 +129,9 @@ class CertificacionController  extends yachay.seguridad.Shield{
     }
 
 
+    /**
+     * Acción
+     */
     def certificados = {
         def unidad = session.usuario.unidad
         def certificados = []
@@ -135,6 +153,9 @@ class CertificacionController  extends yachay.seguridad.Shield{
 
     }
 
+    /**
+     * Acción
+     */
     def cargarCertificados = {
         def asgn = Asignacion.get(params.id)
         def aprobados = Certificacion.findAllByAsignacionAndEstado(asgn,1)
@@ -144,6 +165,9 @@ class CertificacionController  extends yachay.seguridad.Shield{
 
     }
 
+    /**
+     * Acción
+     */
     def guardarSolicitud = {
         println "solicitud "+params
         /*TODO enviar alertas*/
@@ -221,6 +245,9 @@ class CertificacionController  extends yachay.seguridad.Shield{
 
     }
 
+    /**
+     * Acción
+     */
     def editarCertificacion = {
         def usuario = Usro.get(session.usuario.id)
         def band = false
@@ -238,12 +265,18 @@ class CertificacionController  extends yachay.seguridad.Shield{
         }
     }
 
+    /**
+     * Acción
+     */
     def verActividad ={
         def cert = Certificacion.get(params.id)
         def act = cert.asignacion.marcoLogico
         [act:act,asg:cert.asignacion]
     }
 
+    /**
+     * Acción
+     */
     def listaSolicitudes = {
 
         def band = false
@@ -300,6 +333,9 @@ class CertificacionController  extends yachay.seguridad.Shield{
     }
 
 
+    /**
+     * Acción
+     */
     def aprobarCertificacion = {
 
         /*TODO enviar alertas*/
@@ -395,6 +431,9 @@ class CertificacionController  extends yachay.seguridad.Shield{
         }
     }
 
+    /**
+     * Acción
+     */
     def negarCertificacion = {
         /*TODO enviar alertas*/
         //println "nergar cert "+params
@@ -420,6 +459,9 @@ class CertificacionController  extends yachay.seguridad.Shield{
 
     }
 
+    /**
+     * Acción
+     */
     def negarAnulacion = {
         // println "negarAnulacion "+params
         def band = false
@@ -444,6 +486,9 @@ class CertificacionController  extends yachay.seguridad.Shield{
     }
 
 
+    /**
+     * Acción
+     */
     def liberarAval = {
         println "libear aval "+params
         def path = servletContext.getRealPath("/") + "certificaciones/"
@@ -533,6 +578,9 @@ class CertificacionController  extends yachay.seguridad.Shield{
         }
     }
 
+    /**
+     * Acción
+     */
     def anularAval = {
         println "anular aval "+params
         def path = servletContext.getRealPath("/") + "certificaciones/"
@@ -619,6 +667,9 @@ class CertificacionController  extends yachay.seguridad.Shield{
         }
     }
 
+    /**
+     * Acción
+     */
     def saveSolicitudAnulacion = {
         // println "saveSolicitudAnulacion  "+params
         def path = servletContext.getRealPath("/") + "certificaciones/"
@@ -707,6 +758,9 @@ class CertificacionController  extends yachay.seguridad.Shield{
 
     }
 
+    /**
+     * Acción
+     */
     def descargaDocumento = {
         def cer = Certificacion.get(params.id)
         def path = servletContext.getRealPath("/") + "certificaciones/" + cer.archivo
@@ -721,6 +775,9 @@ class CertificacionController  extends yachay.seguridad.Shield{
             render "archivo no encontrado"
         }
     }
+    /**
+     * Acción
+     */
     def descargaSolicitud = {
         def cer = Certificacion.get(params.id)
 //        println "path solicitud "+cer.pathSolicitud
@@ -736,6 +793,9 @@ class CertificacionController  extends yachay.seguridad.Shield{
             render "archivo no encontrado"
         }
     }
+    /**
+     * Acción
+     */
     def descargaSolicitudAnulacion = {
         def cer = Certificacion.get(params.id)
         def path = servletContext.getRealPath("/") + "certificaciones/" + cer.pathSolicitudAnulacion
@@ -751,6 +811,9 @@ class CertificacionController  extends yachay.seguridad.Shield{
         }
     }
 
+    /**
+     * Acción
+     */
     def certificarObra = {
         def obra = Obra.get(params.id)
         obra.certificado="S"

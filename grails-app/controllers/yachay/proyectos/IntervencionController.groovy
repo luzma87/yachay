@@ -2,14 +2,23 @@ package yachay.proyectos
 
 import yachay.proyectos.Intervencion
 
+/**
+ * Controlador
+ */
 class IntervencionController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code:"default.list.label", args:["Intervencion"], default:"Intervencion List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class IntervencionController {
         [intervencionInstanceList: Intervencion.list(params), intervencionInstanceTotal: Intervencion.count(), title: title, params:params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def intervencionInstance
@@ -39,11 +51,17 @@ class IntervencionController {
         return [intervencionInstance: intervencionInstance, title:title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action:"form", params:params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if(params.id) {
@@ -76,6 +94,9 @@ class IntervencionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def intervencionInstance = Intervencion.get(params.id)
         if (intervencionInstance) {
@@ -103,6 +124,9 @@ class IntervencionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def intervencionInstance = Intervencion.get(params.id)
         if (!intervencionInstance) {
@@ -117,11 +141,17 @@ class IntervencionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action:"form", params:params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def intervencionInstance = Intervencion.get(params.id)
         if (intervencionInstance) {

@@ -12,10 +12,19 @@ import jxl.write.Label
 import jxl.write.WritableSheet
 import jxl.write.WritableWorkbook
 
+/**
+ * Controlador
+ */
 class ReporteSolicitudController {
 
+    /**
+     * Acción
+     */
     def index = {}
 
+    /**
+     * Acción
+     */
     def solicitudesXls = {
 
         def iniRow = 1
@@ -151,6 +160,9 @@ class ReporteSolicitudController {
         output.write(file.getBytes());
     }
 
+    /**
+     * Acción
+     */
     def solicitudes = {
         println "solicitudes"
         def list2 = Solicitud.findAll("from Solicitud order by unidadEjecutora.id,fecha")
@@ -186,6 +198,9 @@ class ReporteSolicitudController {
         return [solicitudInstanceList: list, anios: anios]
     }
 
+    /**
+     * Acción
+     */
     def aprobadas = {
         println "aprobadas"
         def list = []
@@ -220,6 +235,9 @@ class ReporteSolicitudController {
         return [solicitudInstanceList: list, anios: anios]
     }
 
+    /**
+     * Acción
+     */
     def solicitudesReunion = {
         def list = []
         list = Solicitud.findAll("from Solicitud where  incluirReunion='S' order by unidadEjecutora.id,fecha")
@@ -236,6 +254,9 @@ class ReporteSolicitudController {
         return [solicitudInstanceList: list, anios: anios]
     }
 
+    /**
+     * Acción
+     */
     def imprimirSolicitud = {
         def solicitud = Solicitud.get(params.id)
 
@@ -247,6 +268,9 @@ class ReporteSolicitudController {
         return [solicitud: solicitud, firmas: firmas]
     }
 
+    /**
+     * Acción
+     */
     def imprimirActaAprobacion = {
 //        println "Acta aprobacion:::: " + params
         def solicitud = Solicitud.get(params.id)
@@ -294,6 +318,9 @@ class ReporteSolicitudController {
         return [solicitud: solicitud, aprobacion: aprobacion, firmas: firmas]
     }
 
+    /**
+     * Acción
+     */
     def imprimirSolicitudAval = {
         println "impr sol " + params
         def solicitud = SolicitudAval.get(params.id)

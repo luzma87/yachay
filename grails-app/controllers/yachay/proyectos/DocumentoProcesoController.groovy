@@ -2,14 +2,23 @@ package yachay.proyectos
 
 import yachay.proyectos.DocumentoProceso
 
+/**
+ * Controlador
+ */
 class DocumentoProcesoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "documentoproceso.list", default: "DocumentoProceso List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class DocumentoProcesoController {
         [documentoProcesoInstanceList: DocumentoProceso.list(params), documentoProcesoInstanceTotal: DocumentoProceso.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def documentoProcesoInstance
@@ -39,11 +51,17 @@ class DocumentoProcesoController {
         return [documentoProcesoInstance: documentoProcesoInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class DocumentoProcesoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def documentoProcesoInstance = DocumentoProceso.get(params.id)
         if (documentoProcesoInstance) {
@@ -103,6 +124,9 @@ class DocumentoProcesoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def documentoProcesoInstance = DocumentoProceso.get(params.id)
         if (!documentoProcesoInstance) {
@@ -117,11 +141,17 @@ class DocumentoProcesoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def documentoProcesoInstance = DocumentoProceso.get(params.id)
         if (documentoProcesoInstance) {

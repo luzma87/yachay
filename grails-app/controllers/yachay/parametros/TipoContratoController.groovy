@@ -2,14 +2,23 @@ package yachay.parametros
 
 import yachay.parametros.TipoContrato
 
+/**
+ * Controlador
+ */
 class TipoContratoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "tipocontrato.list", default: "TipoContrato List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class TipoContratoController {
         [tipoContratoInstanceList: TipoContrato.list(params), tipoContratoInstanceTotal: TipoContrato.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def tipoContratoInstance
@@ -39,11 +51,17 @@ class TipoContratoController {
         return [tipoContratoInstance: tipoContratoInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -73,6 +91,9 @@ class TipoContratoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def tipoContratoInstance = TipoContrato.get(params.id)
         if (tipoContratoInstance) {
@@ -98,6 +119,9 @@ class TipoContratoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def tipoContratoInstance = TipoContrato.get(params.id)
         if (!tipoContratoInstance) {
@@ -111,11 +135,17 @@ class TipoContratoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def tipoContratoInstance = TipoContrato.get(params.id)
         if (tipoContratoInstance) {

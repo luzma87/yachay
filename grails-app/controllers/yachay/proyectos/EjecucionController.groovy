@@ -2,14 +2,23 @@ package yachay.proyectos
 
 import yachay.proyectos.Ejecucion
 
+/**
+ * Controlador
+ */
 class EjecucionController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code:"ejecucion.list", default:"Ejecucion List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class EjecucionController {
         [ejecucionInstanceList: Ejecucion.list(params), ejecucionInstanceTotal: Ejecucion.count(), title: title, params:params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def ejecucionInstance
@@ -39,11 +51,17 @@ class EjecucionController {
         return [ejecucionInstance: ejecucionInstance, title:title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action:"form", params:params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if(params.id) {
@@ -76,6 +94,9 @@ class EjecucionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def ejecucionInstance = Ejecucion.get(params.id)
         if (ejecucionInstance) {
@@ -103,6 +124,9 @@ class EjecucionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def ejecucionInstance = Ejecucion.get(params.id)
         if (!ejecucionInstance) {
@@ -117,11 +141,17 @@ class EjecucionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action:"form", params:params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def ejecucionInstance = Ejecucion.get(params.id)
         if (ejecucionInstance) {

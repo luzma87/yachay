@@ -1,13 +1,22 @@
 package yachay.seguridad
 
+/**
+ * Controlador
+ */
 class SesnController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "sesn.list", default: "Sesn List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -17,6 +26,9 @@ class SesnController {
         [sesnInstanceList: Sesn.list(params), sesnInstanceTotal: Sesn.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def sesnInstance
@@ -37,11 +49,17 @@ class SesnController {
         return [sesnInstance: sesnInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -74,6 +92,9 @@ class SesnController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def sesnInstance = Sesn.get(params.id)
         if (sesnInstance) {
@@ -101,6 +122,9 @@ class SesnController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def sesnInstance = Sesn.get(params.id)
         if (!sesnInstance) {
@@ -115,11 +139,17 @@ class SesnController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def sesnInstance = Sesn.get(params.id)
         if (sesnInstance) {

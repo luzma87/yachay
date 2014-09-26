@@ -8,8 +8,15 @@ import yachay.parametros.UnidadEjecutora
 import yachay.alertas.Alerta
 import yachay.seguridad.Usro
 
+/**
+ * Controlador qu muestra las pantallas de manejo de avales
+ */
 class AvalesController extends yachay.seguridad.Shield {
 
+    /**
+     * Acción que muestra la pantalla de lista de procesos por proyecto
+     * @param proyecto el id del proyecto. Si no existe el proyecto muestra la lista de todos los procesos
+     */
     def procesos = {
         println "procesos " + params
         def proyecto = null
@@ -24,6 +31,11 @@ class AvalesController extends yachay.seguridad.Shield {
         [proyecto: proyecto, procesos: procesos]
     }
 
+    /**
+     * Acción que muestra la pantalla que permite crear un nuevo proceso o modificar uno existente
+     * @param id el id del proceso en caso de que se quiera modificar uno existente
+     * @param anio el id del año. Si no existe el año tomará el actual
+     */
     def crearProceso = {
         def proceso
         def actual
@@ -56,6 +68,10 @@ class AvalesController extends yachay.seguridad.Shield {
         [proyectos: proyectos, proceso: proceso, actual: actual, band: band, unidad: unidad]
     }
 
+    /**
+     * Acción llamada con ajax que muestra las asignaciones de un proceso
+     * @param id el id del proceso
+     */
     def getDetalle = {
         def proceso
         def detalle = []
@@ -72,6 +88,9 @@ class AvalesController extends yachay.seguridad.Shield {
         [proceso: proceso, detalle: detalle, band: band]
     }
 
+    /**
+     * Acción que guarda el proceso y redirecciona a la acción crearProceso una vez completado.
+     */
     def saveProceso = {
         println "save proceso " + params
         params.fechaInicio = new Date().parse("dd-MM-yyyy", params.fechaInicio)
@@ -91,7 +110,13 @@ class AvalesController extends yachay.seguridad.Shield {
         redirect(action: "crearProceso", id: proceso.id)
     }
 
-
+    /**
+     * Acción llamada con ajax que permite agregar una asignación (ProcesoAsignacion) a un proceso
+     * @param proceso el id del ProcesoAval
+     * @param monto el monto de la asignación
+     * @param id el id del ProcesoAsignacion en caso de que sea edición
+     * @Renders "ok"
+     */
     def agregarAsignacion = {
         println "agregar asg " + params
         def proceso = ProcesoAval.get(params.proceso)
@@ -107,6 +132,11 @@ class AvalesController extends yachay.seguridad.Shield {
         render "ok"
     }
 
+    /**
+     * Acción llamada con ajax que permite eliminar una asignación (ProcesoAsignacion) de un proceso
+     * @param id el id del ProcesoAsignacion a ser eliminado
+     * @Renders "ok" si la eliminación se efectuó, false sino. No se permite eliminar si el proceso tiene un aval o una solicitud pendiente
+     */
     def borrarDetalle = {
         println "borrar " + params
         def detalle = ProcesoAsignacion.get(params.id)
@@ -124,6 +154,12 @@ class AvalesController extends yachay.seguridad.Shield {
             render "no"
     }
 
+    /**
+     * Acción llamada con ajax que permite modificar una asignación (ProcesoAsignacion) de un proceso
+     * @param id el id del ProcesoAsignacion a ser modificado
+     * @param monto el monto nuevo
+     * @Renders "ok"
+     */
     def editarDetalle = {
         println "edtar " + params
 
@@ -133,11 +169,21 @@ class AvalesController extends yachay.seguridad.Shield {
         render "ok"
     }
 
+    /**
+     * Acción llamada con ajax que carga las actividades (MarcoLogico) de un cierto componente y una cierta unidad
+     * @param id el componente padre de las actividades
+     * @param unidad el id de la unidad
+     */
     def cargarActividades = {
         def comp = MarcoLogico.get(params.id)
         def unidad = UnidadEjecutora.get(params.unidad)
         [acts: MarcoLogico.findAllByMarcoLogicoAndResponsable(comp, unidad, [sort: "numero"])]
     }
+    /**
+     * Acción llamada con ajax que carga las asignaciones de una cierta actividad (MarcoLogico) de un cierto año
+     * @param id el id de la actividad
+     * @param anio el id del año
+     */
     def cargarAsignaciones = {
         println "cargar asg " + params
         def act = MarcoLogico.get(params.id)
@@ -145,6 +191,11 @@ class AvalesController extends yachay.seguridad.Shield {
         [asgs: Asignacion.findAllByMarcoLogicoAndAnio(act, anio)]
     }
 
+    /**
+     * Acción llamada con ajax que calcula el monto máximo que se le puede dar a una asignación
+     * @param id el id de la asignación
+     * @Renders el monto priorizado meno el monto utilizado
+     */
     def getMaximoAsg = {
 //        println "get Maximo asg " +params
         def asg = Asignacion.get(params.id)
@@ -157,25 +208,35 @@ class AvalesController extends yachay.seguridad.Shield {
         render "" + (monto - usado)
     }
 
+    /**
+     * Acción que muestra una pantalla con la lista de procesos
+     */
     def listaProcesos = {
-
         def procesos = ProcesoAval.list([sort: "id"])
         [procesos: procesos]
-
     }
 
+    /**
+     * Acción que muestra una pantalla con la lista de avales de un proceso
+     * @param id el id del proceso
+     */
     def avalesProceso = {
         def proceso = ProcesoAval.get(params.id)
         def avales = Aval.findAllByProceso(proceso)
         def solicitudes = SolicitudAval.findAllByProceso(proceso, [sort: "fecha"])
         [avales: avales, proceso: proceso, solicitudes: solicitudes]
     }
+    /**
+     * Acción que muestra una pantalla que permite crear una solicitud de aval<br/>
+     * Si el proceso ya tiene un aval vigente o tiene una solicitud pendiente, no puede solicitar otro y redirecciona a la acción avalesProceso
+     * @param id el id del proceso
+     */
     def solicitarAval = {
         println "solicictar aval"
         def unidad = UnidadEjecutora.get(session.unidad.id)
         def personasFirma = Usro.findAllByUnidad(unidad)
         def numero = null
-        def band=true
+        def band = true
         numero = SolicitudAval.findAllByUnidad(session.usuario.unidad, [sort: "numero", order: "desc", max: 1])
         if (numero.size() > 0) {
             numero = numero?.pop()?.numero
@@ -196,34 +257,39 @@ class AvalesController extends yachay.seguridad.Shield {
         def avales = Aval.findAllByProcesoAndEstadoInList(proceso, [EstadoAval.findByCodigo("E02"), EstadoAval.findByCodigo("E05")])
         def solicitudes = SolicitudAval.findAllByProcesoAndEstado(proceso, EstadoAval.findByCodigo("E01"))
         def disponible = proceso.getMonto()
-        println "aval "+avales
-        println "sols "+solicitudes
+        println "aval " + avales
+        println "sols " + solicitudes
         avales.each {
-            band=false
+            band = false
             disponible -= it.monto
         }
         solicitudes.each {
-            band=false
+            band = false
             disponible -= it.monto
         }
-        println "band "+band
-        if(!band){
-            flash.message="Este proceso ya tiene un aval vigente o tiene una solicitud pendiente, no puede solicitar otro."
-            redirect(controller: "avales",action: "avalesProceso",id:proceso?.id)
+        println "band " + band
+        if (!band) {
+            flash.message = "Este proceso ya tiene un aval vigente o tiene una solicitud pendiente, no puede solicitar otro."
+            redirect(controller: "avales", action: "avalesProceso", id: proceso?.id)
             return
-        }else{
+        } else {
             [proceso: proceso, disponible: disponible, personas: personasFirma, numero: numero]
         }
-
-
     }
-    def solicitarAnulacion = {
 
+    /**
+     * Acción que muestra una pantalla que permite solicitar la anulación de un aval
+     */
+    def solicitarAnulacion = {
         def aval = Aval.get(params.id)
         [aval: aval]
-
     }
 
+    /**
+     * Acción que guarda la solicitud de aval.<br/>
+     * Si la solicitud se guarda correctamente redirecciona a la acción avalesProceso, caso contrario redirecciona a la acción solicitarAval
+     * @params los parámetros enviados por el submit del formulario
+     */
     def guardarSolicitud = {
         println "solicitud aval " + params
         /*TODO enviar alertas*/
@@ -326,6 +392,11 @@ class AvalesController extends yachay.seguridad.Shield {
         }
         /* fin del upload */
     }
+
+    /**
+     * Acción que permite descargar el archivo de la solicitud
+     * @param id el id de la solicitud
+     */
     def descargaSolicitud = {
         def sol = SolicitudAval.get(params.id)
 //        println "path solicitud "+cer.pathSolicitud
@@ -342,6 +413,10 @@ class AvalesController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción que permite descargar el archivo del aval
+     * @param id el id del aval
+     */
     def descargaAval = {
 //        println "descar aval "+params
         def aval = Aval.get(params.id)

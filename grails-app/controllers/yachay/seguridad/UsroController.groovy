@@ -1,13 +1,22 @@
 package yachay.seguridad
 
+/**
+ * Controlador
+ */
 class UsroController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code:"usro.list", default:"Usro List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -17,6 +26,9 @@ class UsroController {
         [usroInstanceList: Usro.list(params), usroInstanceTotal: Usro.count(), title: title, params:params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def usroInstance
@@ -37,11 +49,17 @@ class UsroController {
         return [usroInstance: usroInstance, title:title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action:"form", params:params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if(params.usroPassword && params.usroPassword!="" && params.usroPassword!=" ")
@@ -78,6 +96,9 @@ class UsroController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def usroInstance = Usro.get(params.id)
         if (usroInstance) {
@@ -105,6 +126,9 @@ class UsroController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def usroInstance = Usro.get(params.id)
         if (!usroInstance) {
@@ -119,11 +143,17 @@ class UsroController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action:"form", params:params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def usroInstance = Usro.get(params.id)
         if (usroInstance) {

@@ -2,14 +2,23 @@ package yachay.parametros
 
 import yachay.parametros.TipoGasto
 
+/**
+ * Controlador
+ */
 class TipoGastoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["TipoGasto"], default: "TipoGasto List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class TipoGastoController {
         [tipoGastoInstanceList: TipoGasto.list(params), tipoGastoInstanceTotal: TipoGasto.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def tipoGastoInstance
@@ -39,11 +51,17 @@ class TipoGastoController {
         return [tipoGastoInstance: tipoGastoInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class TipoGastoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def tipoGastoInstance = TipoGasto.get(params.id)
         if (tipoGastoInstance) {
@@ -103,6 +124,9 @@ class TipoGastoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def tipoGastoInstance = TipoGasto.get(params.id)
         if (!tipoGastoInstance) {
@@ -117,11 +141,17 @@ class TipoGastoController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def tipoGastoInstance = TipoGasto.get(params.id)
         if (tipoGastoInstance) {

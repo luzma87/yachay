@@ -2,14 +2,23 @@ package yachay.proyectos
 
 import yachay.proyectos.Documento
 
+/**
+ * Controlador
+ */
 class DocumentoController extends yachay.seguridad.Shield {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
 
         /*
@@ -62,6 +71,9 @@ class DocumentoController extends yachay.seguridad.Shield {
         return [documentoInstanceList: documentoInstanceList, documentoInstanceTotal: documentoInstanceTotal, params: params]
     }
 
+    /**
+     * Acción
+     */
     def downloadDoc = {
         def doc = Documento.get(params.id)
         def archivo = doc.documento
@@ -81,10 +93,16 @@ class DocumentoController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def fileNotFound = {
         return [archivo: params.archivo, id: params.id]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def documentoInstance
@@ -105,11 +123,17 @@ class DocumentoController extends yachay.seguridad.Shield {
         return [documentoInstance: documentoInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -142,6 +166,9 @@ class DocumentoController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def documentoInstance = Documento.get(params.id)
         if (documentoInstance) {
@@ -169,6 +196,9 @@ class DocumentoController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def documentoInstance = Documento.get(params.id)
         if (!documentoInstance) {
@@ -183,6 +213,9 @@ class DocumentoController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def ver = {
         println params
         def documentoInstance = Documento.get(params.id)
@@ -198,11 +231,17 @@ class DocumentoController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def documentoInstance = Documento.get(params.id)
         if (documentoInstance) {

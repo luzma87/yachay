@@ -18,6 +18,9 @@ import yachay.proyectos.ModificacionAsignacion
 import yachay.proyectos.Obra
 import yachay.proyectos.Proyecto
 
+/**
+ * Controlador
+ */
 class AsignacionController extends yachay.seguridad.Shield {
 
     static allowedMethods = [guardarAsignacion: "POST"]
@@ -26,6 +29,9 @@ class AsignacionController extends yachay.seguridad.Shield {
 
     /*TODO chequear el estado de los proyectos antes de sacar las asignaciones*/
 
+    /**
+     * Acción
+     */
     def asignacionesProyecto = {
         println "params " + params
         def unidad = UnidadEjecutora.get(params.id)
@@ -39,7 +45,7 @@ class AsignacionController extends yachay.seguridad.Shield {
             actual = Anio.findByAnio(new Date().format("yyyy"))
         if (!actual)
             actual = Anio.list([sort: 'anio', order: 'desc']).pop()
-        proyectos.each {proyecto ->
+        proyectos.each { proyecto ->
             fuentes.put(proyecto.id.toString(), Financiamiento.findAllByProyecto(proyecto).fuente)
             def componentes = MarcoLogico.findAll("from MarcoLogico where proyecto = ${proyecto.id} and tipoElemento = 2 and estado = 0")
             if (componentes.size() > 0) {
@@ -54,7 +60,9 @@ class AsignacionController extends yachay.seguridad.Shield {
 
     }
 
-
+    /**
+     * Acción
+     */
     def asignacionProyecto = {
         //println "params " + params
         def proyecto = Proyecto.get(params.id)
@@ -73,15 +81,20 @@ class AsignacionController extends yachay.seguridad.Shield {
 
     }
 
-
+    /**
+     * Acción
+     */
     def aprobarPrio = {
-        println "aprob prio "+params
-        def proy=Proyecto.get(params.id)
-        proy.aprobadoPoa="S"
+        println "aprob prio " + params
+        def proy = Proyecto.get(params.id)
+        proy.aprobadoPoa = "S"
         proy.save(flush: true)
         render "ok"
     }
 
+    /**
+     * Acción
+     */
     def filtro = {
 
 //        println("params " + params)
@@ -103,14 +116,14 @@ class AsignacionController extends yachay.seguridad.Shield {
         def maxInv = 0
         MarcoLogico.findAll("from MarcoLogico where proyecto = ${proyecto.id} and tipoElemento=3 and estado=0").each {
             def asig = Asignacion.findAll("from Asignacion where marcoLogico=${it.id} and anio=${actual.id}   order by id")
-            if (asig){
+            if (asig) {
                 asignaciones += asig
-                asig.each{asg->
-                    total = total+asg.getValorReal()
+                asig.each { asg ->
+                    total = total + asg.getValorReal()
                 }
             }
         }
-        asignaciones.sort{it.unidad.nombre}
+        asignaciones.sort { it.unidad.nombre }
 
         asignaciones.each {
 
@@ -133,14 +146,14 @@ class AsignacionController extends yachay.seguridad.Shield {
         def asignaciones = []
         def actual
 
-        if(params.resp || params.comp){
+        if (params.resp || params.comp) {
 //            println("con filtro!"  + params.resp + " " + params.comp)
 
             def unidadE
             def compon
 
-            if(params.resp){
-               unidadE = UnidadEjecutora.findByNombre(params.resp)
+            if (params.resp) {
+                unidadE = UnidadEjecutora.findByNombre(params.resp)
 
 //                println("unidad " + unidadE)
 
@@ -157,26 +170,24 @@ class AsignacionController extends yachay.seguridad.Shield {
                 def maxInvR = 0
                 MarcoLogico.findAll("from MarcoLogico where proyecto = ${proyecto.id} and tipoElemento=3 and estado=0 and responsable=${unidadE.id}").each {
                     def asig = Asignacion.findAll("from Asignacion where marcoLogico=${it.id} and anio=${actual.id}  order by id")
-                    if (asig){
+                    if (asig) {
                         asignaciones += asig
-                        asig.each{asg->
-                            totalR = totalR+asg.getValorReal()
+                        asig.each { asg ->
+                            totalR = totalR + asg.getValorReal()
                         }
                     }
                 }
 
 
-                asignaciones.sort{it.unidad.nombre}
+                asignaciones.sort { it.unidad.nombre }
                 def unidad = UnidadEjecutora.findByPadreIsNull()
-                maxInvR=PresupuestoUnidad.findByAnioAndUnidad(actual,unidad)?.maxInversion
-                if(!maxInvR)
-                    maxInvR=0
+                maxInvR = PresupuestoUnidad.findByAnioAndUnidad(actual, unidad)?.maxInversion
+                if (!maxInvR)
+                    maxInvR = 0
 
-                [asignaciones: asignaciones, actual: actual, proyecto: proyecto,total: totalR,totalUnidad: totalUnidadR,maxInv:maxInvR]
+                [asignaciones: asignaciones, actual: actual, proyecto: proyecto, total: totalR, totalUnidad: totalUnidadR, maxInv: maxInvR]
 
-            }
-            else
-            {
+            } else {
                 compon = MarcoLogico.findByObjeto(params.comp)
 
                 if (params.anio)
@@ -191,31 +202,30 @@ class AsignacionController extends yachay.seguridad.Shield {
                 def maxInv = 0
                 MarcoLogico.findAll("from MarcoLogico where proyecto = ${proyecto.id} and tipoElemento=3 and estado=0").each {
                     def asig = Asignacion.findAll("from Asignacion where marcoLogico=${it.id} and anio=${actual.id}   order by id")
-                    if (asig){
+                    if (asig) {
                         asignaciones += asig
-                        asig.each{asg->
-                            total = total+asg.getValorReal()
+                        asig.each { asg ->
+                            total = total + asg.getValorReal()
                         }
                     }
                 }
-                asignaciones.sort{it.unidad.nombre}
+                asignaciones.sort { it.unidad.nombre }
                 def unidad = UnidadEjecutora.findByPadreIsNull()
-                maxInv=PresupuestoUnidad.findByAnioAndUnidad(actual,unidad)?.maxInversion
-                if(!maxInv)
-                    maxInv=0
-                [asignaciones: asignaciones, actual: actual, proyecto: proyecto,total: total,totalUnidad: totalUnidad,maxInv:maxInv]
+                maxInv = PresupuestoUnidad.findByAnioAndUnidad(actual, unidad)?.maxInversion
+                if (!maxInv)
+                    maxInv = 0
+                [asignaciones: asignaciones, actual: actual, proyecto: proyecto, total: total, totalUnidad: totalUnidad, maxInv: maxInv]
             }
 
 
-        }else {
-            if (params.anio){
+        } else {
+            if (params.anio) {
                 actual = Anio.get(params.anio)
-            }
-            else{
+            } else {
                 actual = Anio.findByAnio(new Date().format('yyyy'))
             }
 
-            if (!actual){
+            if (!actual) {
                 actual = Anio.list([sort: 'anio', order: 'desc']).pop()
             }
 
@@ -225,30 +235,31 @@ class AsignacionController extends yachay.seguridad.Shield {
             def maxInv = 0
             MarcoLogico.findAll("from MarcoLogico where proyecto = ${proyecto.id} and tipoElemento=3 and estado=0").each {
                 def asig = Asignacion.findAll("from Asignacion where marcoLogico=${it.id} and anio=${actual.id}   order by id")
-                if (asig){
+                if (asig) {
                     asignaciones += asig
-                    println "add "+asig.id+" "+asig.unidad
-                    asig.each{asg->
-                        total = total+asg.getValorReal()
+                    println "add " + asig.id + " " + asig.unidad
+                    asig.each { asg ->
+                        total = total + asg.getValorReal()
                     }
                 }
             }
 
-            asignaciones.sort{it.unidad.nombre}
+            asignaciones.sort { it.unidad.nombre }
             def unidad = UnidadEjecutora.findByPadreIsNull()
-            maxInv=PresupuestoUnidad.findByAnioAndUnidad(actual,unidad)?.maxInversion
-            if(!maxInv)
-                maxInv=0
+            maxInv = PresupuestoUnidad.findByAnioAndUnidad(actual, unidad)?.maxInversion
+            if (!maxInv)
+                maxInv = 0
 
-            [asignaciones: asignaciones, actual: actual, proyecto: proyecto,total: total,totalUnidad: totalUnidad,maxInv:maxInv]
+            [asignaciones: asignaciones, actual: actual, proyecto: proyecto, total: total, totalUnidad: totalUnidad, maxInv: maxInv]
 
         }
 
 
-
-
     }
 
+//    /**
+//     * Acción
+//     */
 //    def enviarUnidad = {
 //        def asg = Asignacion.get(params.id)
 //        if (params.unidad!="-1")
@@ -259,7 +270,9 @@ class AsignacionController extends yachay.seguridad.Shield {
 //        render "ok"
 //    }
 
-
+    /**
+     * Acción
+     */
     def programacionInversion = {
         def actual
         def proyecto = Proyecto.get(params.proyecto)
@@ -278,20 +291,23 @@ class AsignacionController extends yachay.seguridad.Shield {
 //                asg.add(it.asignacion)
 //            }
 //        }
-        def asgInv=[]
+        def asgInv = []
         def acts = MarcoLogico.findAll("from MarcoLogico where proyecto=${proyecto.id} and tipoElemento = 3")
-        acts.each {act->
+        acts.each { act ->
             def asg = Asignacion.findAllByMarcoLogico(act)
-            if(asg.size()>0)
-                asgInv+=asg
+            if (asg.size() > 0)
+                asgInv += asg
         }
 //        def asgInv = Asignacion.findAll("from Asignacion  where marcoLogico is not null and unidad=${unidad.id} " )
-        asgInv.sort{it.unidad}
+        asgInv.sort { it.unidad }
         def meses = []
-        12.times {meses.add(it + 1)}
-        [inversiones: asgInv,actual: actual, meses: meses,proyecto:proyecto]
+        12.times { meses.add(it + 1) }
+        [inversiones: asgInv, actual: actual, meses: meses, proyecto: proyecto]
     }
 
+    /**
+     * Acción
+     */
     def programacionAsignacionesInversion = {
         def actual
         if (params.anio)
@@ -301,8 +317,8 @@ class AsignacionController extends yachay.seguridad.Shield {
         if (!actual)
             actual = Anio.list([sort: 'anio', order: 'desc']).pop()
         //def unidad =UnidadEjecutora.get(params.id)
-        if(actual.estado!=0)
-            redirect(action: 'programacionAsignacionesInversionPrio',params: params)
+        if (actual.estado != 0)
+            redirect(action: 'programacionAsignacionesInversionPrio', params: params)
 
         def proyecto = Proyecto.get(params.id)
 
@@ -313,9 +329,12 @@ class AsignacionController extends yachay.seguridad.Shield {
                 asgProy += asig
         }
         def meses = []
-        12.times {meses.add(it + 1)}
+        12.times { meses.add(it + 1) }
         [inversiones: asgProy, actual: actual, meses: meses, proyecto: proyecto]
     }
+    /**
+     * Acción
+     */
     def programacionAsignacionesInversionPrio = {
         println "progra prio"
         def actual
@@ -336,10 +355,13 @@ class AsignacionController extends yachay.seguridad.Shield {
                 asgProy += asig
         }
         def meses = []
-        12.times {meses.add(it + 1)}
+        12.times { meses.add(it + 1) }
         [inversiones: asgProy, actual: actual, meses: meses, proyecto: proyecto]
     }
 
+    /**
+     * Acción
+     */
     def asinacionesInversion = {
 
         def actual
@@ -354,23 +376,23 @@ class AsignacionController extends yachay.seguridad.Shield {
         def asg = []
         def dist = DistribucionAsignacion.findAllByUnidadEjecutora(unidad)
         dist.each {
-            if(it.asignacion.anio==actual){
+            if (it.asignacion.anio == actual) {
                 asg.add(it.asignacion)
             }
         }
-        def asgInv = Asignacion.findAll("from Asignacion  where marcoLogico is not null and unidad = ${unidad.id}  order by id desc" )
+        def asgInv = Asignacion.findAll("from Asignacion  where marcoLogico is not null and unidad = ${unidad.id}  order by id desc")
         // println "asgInv "+asgInv.id
 
         def proyectos = Proyecto.findAllByUnidadEjecutora(unidad)
 
-        def marcos = MarcoLogico.findAllByProyectoAndTipoElemento(Proyecto.get(7),TipoElemento.get(3))
-        println "marcos "+marcos.id
+        def marcos = MarcoLogico.findAllByProyectoAndTipoElemento(Proyecto.get(7), TipoElemento.get(3))
+        println "marcos " + marcos.id
         def a = []
         def total = 0
-        marcos.each {marco->
+        marcos.each { marco ->
             def tmp = Asignacion.findAllByMarcoLogico(marco)
             tmp.each {
-                total+=it.planificado
+                total += it.planificado
             }
 //            if (tmp)
 //                a+=tmp
@@ -386,11 +408,14 @@ class AsignacionController extends yachay.seguridad.Shield {
 //            total+=a1.planificado
 //        }
 
-        println "total "+total
+        println "total " + total
 
-        [asgs:asg, proyectos:proyectos, actual: actual, unidad: unidad, asgInv:asgInv]
+        [asgs: asg, proyectos: proyectos, actual: actual, unidad: unidad, asgInv: asgInv]
 
     }
+    /**
+     * Acción
+     */
     def asinacionesInversionProyecto = {
 
         def actual
@@ -402,14 +427,14 @@ class AsignacionController extends yachay.seguridad.Shield {
             actual = Anio.list([sort: 'anio', order: 'desc']).pop()
 //        def unidad = UnidadEjecutora.get(params.id)
         def proyecto = Proyecto.get(params.id)
-        def marcos = MarcoLogico.findAllByProyectoAndTipoElemento(proyecto,TipoElemento.get(3))
+        def marcos = MarcoLogico.findAllByProyectoAndTipoElemento(proyecto, TipoElemento.get(3))
         def a = []
         def total = 0
         def asgInv = []
-        marcos.each {marco->
+        marcos.each { marco ->
             def tmp = Asignacion.findAllByMarcoLogico(marco)
             tmp.each {
-                total+=it.planificado
+                total += it.planificado
                 asgInv.add(it)
             }
 //            if (tmp)
@@ -421,61 +446,70 @@ class AsignacionController extends yachay.seguridad.Shield {
 
 
 
-        println "total "+total
+        println "total " + total
 
-        [proyectos:proyectos, actual: actual, proyecto:proyecto, asgInv:asgInv]
+        [proyectos: proyectos, actual: actual, proyecto: proyecto, asgInv: asgInv]
 
     }
 
+    /**
+     * Acción
+     */
     def enviarUnidad = {
         def asgn = Asignacion.get(params.id)
-        if(params.unidad){
+        if (params.unidad) {
 
             def unidad = UnidadEjecutora.get(params.unidad)
             def monto = params.monto.toDouble()
 
             def dist = new DistribucionAsignacion()
-            def ds = DistribucionAsignacion.findByAsignacionAndUnidadEjecutora(asgn,unidad)
+            def ds = DistribucionAsignacion.findByAsignacionAndUnidadEjecutora(asgn, unidad)
             if (ds)
-                dist=ds
-            dist.valor=dist.valor+monto
-            dist.unidadEjecutora=unidad
-            dist.asignacion=asgn
-            dist = kerberosService.saveObject(dist,DistribucionAsignacion,session.perfil,session.usuario,"enviarUnidad","asginacion",session)
-            if (asgn.reubicada!="S"){
-                asgn.reubicada="S"
+                dist = ds
+            dist.valor = dist.valor + monto
+            dist.unidadEjecutora = unidad
+            dist.asignacion = asgn
+            dist = kerberosService.saveObject(dist, DistribucionAsignacion, session.perfil, session.usuario, "enviarUnidad", "asginacion", session)
+            if (asgn.reubicada != "S") {
+                asgn.reubicada = "S"
                 asgn.save(flush: true)
             }
         }
 
-        def d = DistribucionAsignacion.findAllByAsignacion(asgn,[sort: "id"])
-        [dist:d,asg: asgn]
+        def d = DistribucionAsignacion.findAllByAsignacion(asgn, [sort: "id"])
+        [dist: d, asg: asgn]
 
     }
 
-
-
-
+    /**
+     * Acción
+     */
     def eliminarDistribucion = {
         def asgn = DistribucionAsignacion.get(params.id).asignacion
-        def dist = kerberosService.delete(params,DistribucionAsignacion,session.perfil,session.usuario)
-        if (!DistribucionAsignacion.findAllByAsignacion(asgn)){
-            asgn.reubicada="N"
+        def dist = kerberosService.delete(params, DistribucionAsignacion, session.perfil, session.usuario)
+        if (!DistribucionAsignacion.findAllByAsignacion(asgn)) {
+            asgn.reubicada = "N"
             asgn.save(flush: true)
         }
-        redirect(action: "enviarUnidad",params: [id: asgn.id])
+        redirect(action: "enviarUnidad", params: [id: asgn.id])
 
     }
 
+    /**
+     * Acción
+     */
     def guardarPrio = {
-        println "params "+params
+        println "params " + params
         def asg = Asignacion.get(params.id)
         def monto = params.prio.toDouble()
-        asg.priorizado=monto
+        asg.priorizado = monto
         asg.save(flush: true)
         render "ok"
     }
 
+    /**
+     * Acción
+     */
     def asignacionesCorrientes = {
 
         def unidad = UnidadEjecutora.get(params.id)
@@ -498,6 +532,9 @@ class AsignacionController extends yachay.seguridad.Shield {
 
     }
 
+    /**
+     * Acción
+     */
     def cambiarPrograma = {
         println params
         def asg = Asignacion.get(params.idAsg)
@@ -505,7 +542,7 @@ class AsignacionController extends yachay.seguridad.Shield {
         asg.programa = prog
         asg = kerberosService.saveObject(asg, Asignacion, session.perfil, session.usuario, actionName, controllerName, session)
         if (asg.errors.getErrorCount() == 0) {
-            flash.message = "Asignación cambiada al programa <b>" + prog.codigo+": "+prog.descripcion + "</b>"
+            flash.message = "Asignación cambiada al programa <b>" + prog.codigo + ": " + prog.descripcion + "</b>"
             flash.clase = "ui-state-highlight ui-corner-all"
         } else {
             flash.message = "Ha ocurrido un error al cambiar el programa de la asignación"
@@ -513,6 +550,9 @@ class AsignacionController extends yachay.seguridad.Shield {
         }
         redirect(action: 'asignacionesCorrientesv2', params: [id: params.id, anio: params.anio, programa: params.programa])
     }
+    /**
+     * Acción
+     */
     def cambiarProgramaEditar = {
         println params
         def asg = Asignacion.get(params.idAsg)
@@ -520,7 +560,7 @@ class AsignacionController extends yachay.seguridad.Shield {
         asg.programa = prog
         asg = kerberosService.saveObject(asg, Asignacion, session.perfil, session.usuario, actionName, controllerName, session)
         if (asg.errors.getErrorCount() == 0) {
-            flash.message = "Asignación cambiada al programa <b>" + prog.codigo+": "+prog.descripcion + "</b>"
+            flash.message = "Asignación cambiada al programa <b>" + prog.codigo + ": " + prog.descripcion + "</b>"
             flash.clase = "ui-state-highlight ui-corner-all"
         } else {
             flash.message = "Ha ocurrido un error al cambiar el programa de la asignación"
@@ -532,8 +572,8 @@ class AsignacionController extends yachay.seguridad.Shield {
     def asignacionesCorrientesv2 = {
         def band = true
 
-        if(!session.unidad){
-            redirect(controller: 'login',action: 'logout')
+        if (!session.unidad) {
+            redirect(controller: 'login', action: 'logout')
         }
 
         if (params.id.toLong() != session.unidad.id.toLong()) {
@@ -549,7 +589,7 @@ class AsignacionController extends yachay.seguridad.Shield {
             def unidad = UnidadEjecutora.get(params.id)
             def fuentes = Fuente.list([sort: 'descripcion'])
             def programas = ProgramaPresupuestario.list()
-            programas = programas.sort { it.codigo.toInteger()}
+            programas = programas.sort { it.codigo.toInteger() }
             def actual, programa
             def componentes = Componente.list([sort: 'descripcion'])
 //            def componente
@@ -609,20 +649,20 @@ class AsignacionController extends yachay.seguridad.Shield {
             def max
             if (PresupuestoUnidad.findByUnidadAndAnio(unidad, actual)) {
                 max = PresupuestoUnidad.findByUnidadAndAnio(unidad, actual)
-                maxUnidad =max.maxCorrientes
+                maxUnidad = max.maxCorrientes
             } else {
                 maxUnidad = 0
             }
 
-            [unidad: unidad, actual: actual, asignaciones: asignaciones, fuentes: fuentes, programas: programas, programa: programa, totalUnidad: total, maxUnidad: maxUnidad, componentes: componentes,max: max]
+            [unidad: unidad, actual: actual, asignaciones: asignaciones, fuentes: fuentes, programas: programas, programa: programa, totalUnidad: total, maxUnidad: maxUnidad, componentes: componentes, max: max]
         }
     }
 
     def asignacionesInversionv2 = {
         def band = true
 
-        if(!session.unidad){
-            redirect(controller: 'login',action: 'logout')
+        if (!session.unidad) {
+            redirect(controller: 'login', action: 'logout')
         }
 
         if (params.id.toLong() != session.unidad.id.toLong()) {
@@ -638,7 +678,7 @@ class AsignacionController extends yachay.seguridad.Shield {
             def unidad = UnidadEjecutora.get(params.id)
             def fuentes = Fuente.list([sort: 'descripcion'])
             def programas = ProgramaPresupuestario.list()
-            programas = programas.sort { it.codigo.toInteger()}
+            programas = programas.sort { it.codigo.toInteger() }
             def actual, programa
             def componentes = Componente.list([sort: 'descripcion'])
 //            def componente
@@ -698,18 +738,18 @@ class AsignacionController extends yachay.seguridad.Shield {
             def max
             if (PresupuestoUnidad.findByUnidadAndAnio(un, actual)) {
                 max = PresupuestoUnidad.findByUnidadAndAnio(un, actual)
-                maxUnidad =max.maxInversion
+                maxUnidad = max.maxInversion
             } else {
                 maxUnidad = 0
             }
 
-            [unidad: unidad, actual: actual, asignaciones: asignaciones, fuentes: fuentes, programas: programas, programa: programa, totalUnidad: total, maxUnidad: maxUnidad, componentes: componentes,max: max]
+            [unidad: unidad, actual: actual, asignaciones: asignaciones, fuentes: fuentes, programas: programas, programa: programa, totalUnidad: total, maxUnidad: maxUnidad, componentes: componentes, max: max]
         }
     }
 
-
-
-
+    /**
+     * Acción
+     */
     def listaAsignaciones = {
         println "lista " + params
         params.max = Math.min(params.max ? params.int('max') : 25, 100)
@@ -743,11 +783,16 @@ class AsignacionController extends yachay.seguridad.Shield {
 
     }
 
-
+    /**
+     * Acción
+     */
     def show = {
         def asignacionInstance = Asignacion.get(params.id)
         [asignacionInstance: asignacionInstance]
     }
+    /**
+     * Acción
+     */
     def form = {
         def title
         def asignacionInstance
@@ -768,6 +813,9 @@ class AsignacionController extends yachay.seguridad.Shield {
         return [asignacionInstance: asignacionInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def save = {
         println "save " + params
         def asg = kerberosService.save(params, Asignacion, session.perfil, session.usuario)
@@ -778,7 +826,9 @@ class AsignacionController extends yachay.seguridad.Shield {
         }
     }
 
-
+    /**
+     * Acción
+     */
     def eliminarAsignacion = {
 //        println "params elim asignacion"
 //        println params
@@ -789,7 +839,7 @@ class AsignacionController extends yachay.seguridad.Shield {
 
             def asig = Asignacion.get(params.id)
             def unidad = asig.unidad
-            def anio=asig.anio
+            def anio = asig.anio
             def padre = asig.padre
             def obras = Obra.findAllByAsignacion(asig)
             def prgAsg = ProgramacionAsignacion.findAllByAsignacion(asig)
@@ -798,11 +848,11 @@ class AsignacionController extends yachay.seguridad.Shield {
             def valor = 0
 
             def total = 0
-            Asignacion.findAll("from Asignacion where anio=${anio.id} and unidad=${unidad.id} and marcoLogico is not null").each{
-                total+= it.getValorReal()
+            Asignacion.findAll("from Asignacion where anio=${anio.id} and unidad=${unidad.id} and marcoLogico is not null").each {
+                total += it.getValorReal()
             }
 
-            if(res){
+            if (res) {
                 obras.each { obra ->
                     def p = [:]
 
@@ -826,7 +876,7 @@ class AsignacionController extends yachay.seguridad.Shield {
                 }
 
                 hijos.each { asg ->
-                    Asignacion.findAllByPadre(asg).each{hh->
+                    Asignacion.findAllByPadre(asg).each { hh ->
                         def p = [:]
                         p.id = hh.id
                         p.controllerName = "Asignacion"
@@ -855,9 +905,9 @@ class AsignacionController extends yachay.seguridad.Shield {
                         }
 
 
-                        hh.padre.planificado+=hh.planificado
-                        valor+=hh.planificado
-                        kerberosService.saveObject(hh.padre,Asignacion,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+                        hh.padre.planificado += hh.planificado
+                        valor += hh.planificado
+                        kerberosService.saveObject(hh.padre, Asignacion, session.perfil, session.usuario, "eliminarAsignacion", "asignacion", session)
                         if (!kerberosService.delete(p, Asignacion, session.perfil, session.usuario)) {
                             band = false
                         }
@@ -889,18 +939,18 @@ class AsignacionController extends yachay.seguridad.Shield {
                         }
                     }
 
-                    asg.padre.planificado+=asg.planificado
-                    kerberosService.saveObject(asg.padre,Asignacion,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
-                    valor+=asg.planificado
+                    asg.padre.planificado += asg.planificado
+                    kerberosService.saveObject(asg.padre, Asignacion, session.perfil, session.usuario, "eliminarAsignacion", "asignacion", session)
+                    valor += asg.planificado
                     if (!kerberosService.delete(p, Asignacion, session.perfil, session.usuario)) {
                         band = false
                     }
                 }
-                valor+=asig.planificado
-                if (asig.padre){
-                    asig.padre.planificado+=asig.planificado
+                valor += asig.planificado
+                if (asig.padre) {
+                    asig.padre.planificado += asig.planificado
 
-                    kerberosService.saveObject(asig.padre,Asignacion,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+                    kerberosService.saveObject(asig.padre, Asignacion, session.perfil, session.usuario, "eliminarAsignacion", "asignacion", session)
                 }
                 if (!kerberosService.delete(params, Asignacion, session.perfil, session.usuario)) {
                     band = false
@@ -1009,7 +1059,7 @@ class AsignacionController extends yachay.seguridad.Shield {
                     println "2"
                     render("NO")
                 }
-            }else{
+            } else {
                 render "no"
             }
 
@@ -1019,6 +1069,9 @@ class AsignacionController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def guardarAsignacion = {
         println "params guadr asignacion " + params
 
@@ -1036,14 +1089,14 @@ class AsignacionController extends yachay.seguridad.Shield {
         if (params.id) {
             asg = Asignacion.get(params.id)
             asg.properties = params
-            asg.unidad=marco.responsable
+            asg.unidad = marco.responsable
 //            asg.unidadId=marco.responsable.id
             if (!band) {
                 asg.componente = null
             }
         } else {
             asg = new Asignacion(params)
-            asg.unidad=marco.responsable
+            asg.unidad = marco.responsable
 //            asg.unidadId=marco.responsable.id
         }
 //        def asignaciones = Asignacion.findAllByMarcoLogicoAndAnio(asg.marcoLogico,asg.anio)
@@ -1117,6 +1170,7 @@ class AsignacionController extends yachay.seguridad.Shield {
             return 0
         }
     }
+
     def guardarPrasPrio(asg) {
         if (asg) {
             def total = asg.priorizado
@@ -1148,9 +1202,9 @@ class AsignacionController extends yachay.seguridad.Shield {
         }
     }
 
-    def guardarPras(asg,unidad) {
+    def guardarPras(asg, unidad) {
         println "guardar pras! mod inv"
-        def dist = DistribucionAsignacion.findByAsignacionAndUnidadEjecutora(asg,unidad)
+        def dist = DistribucionAsignacion.findByAsignacionAndUnidadEjecutora(asg, unidad)
         if (asg) {
             def total = dist.getValorReal()
             def valor = (total / 12).toFloat().round(2)
@@ -1181,7 +1235,7 @@ class AsignacionController extends yachay.seguridad.Shield {
         }
     }
 
-    def  programacionAsignaciones = {
+    def programacionAsignaciones = {
         def actual
         if (params.anio)
             actual = Anio.get(params.anio)
@@ -1193,12 +1247,15 @@ class AsignacionController extends yachay.seguridad.Shield {
         def asgProy = Asignacion.findAll("from Asignacion where unidad=${unidad.id} and marcoLogico is not null and anio=${actual.id} order by id")
         def asgCor = Asignacion.findAll("from Asignacion where unidad=${unidad.id} and actividad is not null and anio=${actual.id} and marcoLogico is null order by id")
         def un = UnidadEjecutora.findByPadreIsNull()
-        def max = PresupuestoUnidad.findByUnidadAndAnio(un,actual)
+        def max = PresupuestoUnidad.findByUnidadAndAnio(un, actual)
         def meses = []
-        12.times {meses.add(it + 1)}
-        [unidad: unidad, corrientes: asgCor, inversiones: asgProy, actual: actual, meses: meses,max: max]
+        12.times { meses.add(it + 1) }
+        [unidad: unidad, corrientes: asgCor, inversiones: asgProy, actual: actual, meses: meses, max: max]
     }
 
+    /**
+     * Acción
+     */
     def guardarProgramacion = {
 
         def asig = Asignacion.get(params.asignacion)
@@ -1221,11 +1278,14 @@ class AsignacionController extends yachay.seguridad.Shield {
         render "ok"
     }
 
+    /**
+     * Acción
+     */
     def guardarProgramacionDistribucion = {
-        println "guardarProgramacionDistribucion "+params
+        println "guardarProgramacionDistribucion " + params
         def asig = Asignacion.get(params.asignacion)
         def unidad = UnidadEjecutora.get(params.unidad)
-        def dist = DistribucionAsignacion.findByAsignacionAndUnidadEjecutora(asig,unidad)
+        def dist = DistribucionAsignacion.findByAsignacionAndUnidadEjecutora(asig, unidad)
         def datos = params.datos.split(";")
         datos.each {
             def partes = it.split(":")
@@ -1245,10 +1305,15 @@ class AsignacionController extends yachay.seguridad.Shield {
         render "ok"
     }
 
-
+    /**
+     * Acción
+     */
     def nuevaAsignacionGastoCorriente = {
 
     }
+    /**
+     * Acción
+     */
     def buscarPresupuesto = {
         println "buscar " + params
         def prsp = []
@@ -1277,6 +1342,9 @@ class AsignacionController extends yachay.seguridad.Shield {
         [prsp: prsp]
     }
 
+    /**
+     * Acción
+     */
     def guardarAsignacionGastoCorriente = {
         println "save " + params
         def asg = kerberosService.save(params, Asignacion, session.perfil, session.usuario)
@@ -1287,12 +1355,18 @@ class AsignacionController extends yachay.seguridad.Shield {
         }
     }
 
+    /**
+     * Acción
+     */
     def pacAsignacion = {
         def asignacion = Asignacion.get(params.id)
         def pac = Obra.findAllByAsignacion(asignacion)
         [asignacion: asignacion, obras: pac]
     }
 
+    /**
+     * Acción
+     */
     def buscarCcp = {
         println "buscar " + params
         def ccps = []
@@ -1321,7 +1395,9 @@ class AsignacionController extends yachay.seguridad.Shield {
         [ccps: ccps]
     }
 
-
+    /**
+     * Acción
+     */
     def buscarActividad = {
         println "buscar act " + params
         def acts = []
@@ -1350,35 +1426,46 @@ class AsignacionController extends yachay.seguridad.Shield {
         [acts: acts]
     }
 
+    /**
+     * Acción
+     */
     def agregaAsignacion = {
         //println "parametros agregaAsignacion:" + params
         def listaFuentes = Financiamiento.findAllByProyectoAndAnio(Proyecto.get(params.proy), Anio.get(params.anio)).fuente
         def asgnInstance = Asignacion.get(params.id)
         def dist = null
-        if (params.dist && params.dist!="" && params.dist!="undefined")
-            dist=DistribucionAsignacion.get(params.dist)
-        render(view: 'crear', model: ['asignacionInstance': asgnInstance, 'fuentes': listaFuentes,'dist':dist])
+        if (params.dist && params.dist != "" && params.dist != "undefined")
+            dist = DistribucionAsignacion.get(params.dist)
+        render(view: 'crear', model: ['asignacionInstance': asgnInstance, 'fuentes': listaFuentes, 'dist': dist])
     }
 
+    /**
+     * Acción
+     */
     def agregaAsignacionPrio = {
         def listaFuentes = Financiamiento.findAllByProyectoAndAnio(Proyecto.get(params.proy), Anio.get(params.anio)).fuente
         def asgnInstance = Asignacion.get(params.id)
 
-       return ['asignacionInstance': asgnInstance, 'fuentes': listaFuentes]
+        return ['asignacionInstance': asgnInstance, 'fuentes': listaFuentes]
     }
 
+    /**
+     * Acción
+     */
     def agregaAsignacionMod = {
         println "parametros agregaAsignacion mod:" + params
         def fuentes = Fuente.list([sort: 'descripcion'])
         def asgnInstance = Asignacion.get(params.id)
         def unidad = UnidadEjecutora.get(params.unidad)
-        return ['asignacionInstance': asgnInstance, 'fuentes': fuentes,unidad: unidad]
+        return ['asignacionInstance': asgnInstance, 'fuentes': fuentes, unidad: unidad]
     }
 
-
+    /**
+     * Acción
+     */
     def creaHijo = {
         println "parametros creaHijo:" + params
-        if (params.id){
+        if (params.id) {
             def nueva = new Asignacion()
             def valor = params.valor.toFloat()
             def asgn = Asignacion.get(params.id)
@@ -1400,18 +1487,18 @@ class AsignacionController extends yachay.seguridad.Shield {
                 resultado = 0
             }
             if (resultado) {
-                nueva.marcoLogico=asgn.marcoLogico
-                nueva.programa=asgn.programa
-                nueva.actividad=asgn.actividad
-                nueva.anio=asgn.anio
-                nueva.indicador=asgn.indicador
-                nueva.meta=asgn.meta
-                nueva.componente=asgn.componente
+                nueva.marcoLogico = asgn.marcoLogico
+                nueva.programa = asgn.programa
+                nueva.actividad = asgn.actividad
+                nueva.anio = asgn.anio
+                nueva.indicador = asgn.indicador
+                nueva.meta = asgn.meta
+                nueva.componente = asgn.componente
                 nueva.padre = asgn
                 nueva.fuente = fnte
                 nueva.presupuesto = prsp
                 nueva.planificado = valor
-                nueva.unidad=asgn.unidad
+                nueva.unidad = asgn.unidad
 
 //            println "pone padre: ${nueva.padre}  ${nueva.unidad}"
                 nueva = kerberosService.saveObject(nueva, Asignacion, session.perfil, session.usuario, "agregaAsignacion", "asignacion", session)
@@ -1427,9 +1514,12 @@ class AsignacionController extends yachay.seguridad.Shield {
 
     }
 
+    /**
+     * Acción
+     */
     def creaHijoPrio = {
         println "parametros creaHijo:" + params
-        if (params.id){
+        if (params.id) {
             def nueva = new Asignacion()
             def valor = params.valor.toFloat()
             def asgn = Asignacion.get(params.id)
@@ -1451,19 +1541,19 @@ class AsignacionController extends yachay.seguridad.Shield {
                 resultado = 0
             }
             if (resultado) {
-                nueva.marcoLogico=asgn.marcoLogico
-                nueva.programa=asgn.programa
-                nueva.actividad=asgn.actividad
-                nueva.anio=asgn.anio
-                nueva.indicador=asgn.indicador
-                nueva.meta=asgn.meta
-                nueva.componente=asgn.componente
+                nueva.marcoLogico = asgn.marcoLogico
+                nueva.programa = asgn.programa
+                nueva.actividad = asgn.actividad
+                nueva.anio = asgn.anio
+                nueva.indicador = asgn.indicador
+                nueva.meta = asgn.meta
+                nueva.componente = asgn.componente
                 nueva.padre = asgn
                 nueva.fuente = fnte
                 nueva.presupuesto = prsp
                 nueva.planificado = valor
-                nueva.priorizado=valor
-                nueva.unidad=asgn.unidad
+                nueva.priorizado = valor
+                nueva.unidad = asgn.unidad
 
 //            println "pone padre: ${nueva.padre}  ${nueva.unidad}"
                 nueva = kerberosService.saveObject(nueva, Asignacion, session.perfil, session.usuario, "agregaAsignacion", "asignacion", session)
@@ -1479,8 +1569,9 @@ class AsignacionController extends yachay.seguridad.Shield {
 
     }
 
-
-
+    /**
+     * Acción
+     */
     def creaHijoInversion = {
         println "parametros creaHijo inversion:" + params
         def nueva = new Asignacion()
@@ -1493,7 +1584,7 @@ class AsignacionController extends yachay.seguridad.Shield {
         // debe borrar el registro actual de pras y crear uno nuevo con los nuevos valores
 
         //println "proceso la asignación ${it}"
-        ProgramacionAsignacion.findAllByAsignacion(asgn).each{
+        ProgramacionAsignacion.findAllByAsignacion(asgn).each {
             def p = [id: it.id, controllerName: 'asignacion', actionName: 'creaHijoInversion']
             //println "parametros de borrado: " + p
             kerberosService.delete(p, ProgramacionAsignacion, session.perfil, session.usuario)
@@ -1507,29 +1598,29 @@ class AsignacionController extends yachay.seguridad.Shield {
         /*TODO verificar esto!! */
         if (asgn.errors.getErrorCount() == 0) {
 
-                resultado += guardarPras(asgn)
+            resultado += guardarPras(asgn)
 
         } else {
             resultado = 0
         }
         if (resultado) {
 //            nueva.properties = asgn.properties
-            nueva.marcoLogico=asgn.marcoLogico
-            nueva.programa=asgn.programa
-            nueva.actividad=asgn.actividad
-            nueva.anio=asgn.anio
-            nueva.indicador=asgn.indicador
-            nueva.meta=asgn.meta
-            nueva.componente=asgn.componente
-            nueva.unidad=unidad
-            nueva.reubicada='N'
+            nueva.marcoLogico = asgn.marcoLogico
+            nueva.programa = asgn.programa
+            nueva.actividad = asgn.actividad
+            nueva.anio = asgn.anio
+            nueva.indicador = asgn.indicador
+            nueva.meta = asgn.meta
+            nueva.componente = asgn.componente
+            nueva.unidad = unidad
+            nueva.reubicada = 'N'
             nueva.padre = asgn
             nueva.fuente = fnte
             nueva.presupuesto = prsp
             nueva.planificado = valor
 
-            if (asgn.unidad!=unidad)
-                nueva.unidad= unidad
+            if (asgn.unidad != unidad)
+                nueva.unidad = unidad
             //println "pone padre: ${nueva.padre}"
             nueva = kerberosService.saveObject(nueva, Asignacion, session.perfil, session.usuario, "agregaAsignacionInversion", "asignacion", session)
             if (nueva.errors.getErrorCount() == 0) {
@@ -1542,9 +1633,12 @@ class AsignacionController extends yachay.seguridad.Shield {
         render(nueva.id)
     }
 
+    /**
+     * Acción
+     */
     def creaHijoMod = {
 
-        println "reasignacion mod!! "+params
+        println "reasignacion mod!! " + params
         def path = servletContext.getRealPath("/") + "modificacionesPoa/"
         new File(path).mkdirs()
 
@@ -1581,7 +1675,7 @@ class AsignacionController extends yachay.seguridad.Shield {
                     "N": "[Ñ]",
                     "C": "[Ç]",
 
-                    "": "[\\!@\\\$%\\^&*()='\"\\/<>:;\\.,\\?]",
+                    "" : "[\\!@\\\$%\\^&*()='\"\\/<>:;\\.,\\?]",
 
                     "_": "[\\s]"
             ]
@@ -1590,15 +1684,15 @@ class AsignacionController extends yachay.seguridad.Shield {
                 fileName = (fileName.trim()).replaceAll(v, k)
             }
 
-            fileName = fileName+"." + "pdf"
+            fileName = fileName + "." + "pdf"
 
             def pathFile = path + File.separatorChar + fileName
             def src = new File(pathFile)
             def msn
 
             if (src.exists()) {
-                msn="Ya existe un archivo con ese nombre. Por favor cámbielo."
-                redirect(action: 'poaCorrientesMod',params: [msn:msn,id:params.unidad])
+                msn = "Ya existe un archivo con ese nombre. Por favor cámbielo."
+                redirect(action: 'poaCorrientesMod', params: [msn: msn, id: params.unidad])
 
 
             } else {
@@ -1636,23 +1730,25 @@ class AsignacionController extends yachay.seguridad.Shield {
                         println "crea la progrmaación de " + nueva.id
                         resultado += guardarPras(nueva)
                         def mod = new ModificacionAsignacion()
-                        mod.desde=asgn
-                        mod.recibe=nueva
-                        mod.fecha=new Date()
-                        mod.valor=nueva.planificado
-                        mod.pdf=fileName
+                        mod.desde = asgn
+                        mod.recibe = nueva
+                        mod.fecha = new Date()
+                        mod.valor = nueva.planificado
+                        mod.pdf = fileName
                         mod.save(flush: true)
                     } else {
                         resultado = 0
                     }
                 }
                 msn = "Modificación procesada"
-                redirect(controller: "modificacion",action: "poaCorrientesMod",params: [msn:msn,id:params.unidad])
+                redirect(controller: "modificacion", action: "poaCorrientesMod", params: [msn: msn, id: params.unidad])
             }
         }
     }
 
-
+    /**
+     * Acción
+     */
     def borrarAsignacion = {
         println "parametros borrarAsignacion:" + params
         def asgn = Asignacion.get(params.id)
@@ -1665,7 +1761,7 @@ class AsignacionController extends yachay.seguridad.Shield {
         }
         p = [id: asgn.id, controllerName: 'asignacion', actionName: 'borrarAsignacion']
         def del = kerberosService.delete(p, Asignacion, session.perfil, session.usuario)
-        if (del){
+        if (del) {
             pdre.planificado += asgn.planificado
             pdre = kerberosService.saveObject(pdre, Asignacion, session.perfil, session.usuario, "agregaAsignacion", "asignacion", session)
             ProgramacionAsignacion.findAllByAsignacion(pdre).each {
@@ -1676,10 +1772,13 @@ class AsignacionController extends yachay.seguridad.Shield {
                 guardarPras(pdre)
             }
             render("ok")
-        }else{
+        } else {
             render("Error")
         }
     }
+    /**
+     * Acción
+     */
     def borrarAsignacionPrio = {
         println "parametros borrarAsignacion:" + params
         def asgn = Asignacion.get(params.id)
@@ -1692,7 +1791,7 @@ class AsignacionController extends yachay.seguridad.Shield {
         }
         p = [id: asgn.id, controllerName: 'asignacion', actionName: 'borrarAsignacion']
         def del = kerberosService.delete(p, Asignacion, session.perfil, session.usuario)
-        if (del){
+        if (del) {
             pdre.priorizado += asgn.priorizado
             pdre = kerberosService.saveObject(pdre, Asignacion, session.perfil, session.usuario, "agregaAsignacion", "asignacion", session)
             ProgramacionAsignacion.findAllByAsignacion(pdre).each {
@@ -1703,12 +1802,14 @@ class AsignacionController extends yachay.seguridad.Shield {
                 guardarPrasPrio(pdre)
             }
             render("ok")
-        }else{
+        } else {
             render("Error")
         }
     }
 
-
+    /**
+     * Acción
+     */
     def aprobarCorrientes = {
         def actual
         if (params.anio)
@@ -1721,48 +1822,57 @@ class AsignacionController extends yachay.seguridad.Shield {
         def asg = Asignacion.findAllByUnidadAndMarcoLogicoIsNull(unidad)
         def totCorrientes = 0
         asg.each {
-            totCorrientes+=it.planificado
+            totCorrientes += it.planificado
         }
         def un = UnidadEjecutora.findByPadreIsNull()
-        def max = PresupuestoUnidad.findByUnidadAndAnio(un,actual)
-        [unidad:unidad,asg :asg,max: max,actual: actual,totCorrientes:totCorrientes]
+        def max = PresupuestoUnidad.findByUnidadAndAnio(un, actual)
+        [unidad: unidad, asg: asg, max: max, actual: actual, totCorrientes: totCorrientes]
 
     }
 
+    /**
+     * Acción
+     */
     def aprobarAsgCorrientes = {
 
-        println "aprobar corrientes "+params
+        println "aprobar corrientes " + params
 
         def unidad = UnidadEjecutora.get(params.unidad)
         def anio = Anio.get(params.anio)
         def pass = params.ssap
-        println "claves "+ session.usuario.autorizacion+ " "+params.ssap.encodeAsMD5()
-        if (session.usuario.autorizacion == params.ssap.encodeAsMD5()){
+        println "claves " + session.usuario.autorizacion + " " + params.ssap.encodeAsMD5()
+        if (session.usuario.autorizacion == params.ssap.encodeAsMD5()) {
             def un = UnidadEjecutora.findByPadreIsNull()
-            def max = PresupuestoUnidad.findByUnidadAndAnio(un,anio)
-            if (max){
-                max.aprobadoCorrientes=1
-                max = kerberosService.saveObject(max,PresupuestoUnidad,session.perfil,session.usuario,"AsignacionController","aprobarAsgCorrientes",session)
-                if (max.errors.getErrorCount()!=0){
+            def max = PresupuestoUnidad.findByUnidadAndAnio(un, anio)
+            if (max) {
+                max.aprobadoCorrientes = 1
+                max = kerberosService.saveObject(max, PresupuestoUnidad, session.perfil, session.usuario, "AsignacionController", "aprobarAsgCorrientes", session)
+                if (max.errors.getErrorCount() != 0) {
                     render "error"
-                }else{
+                } else {
                     render "ok"
                 }
-            }else{
+            } else {
                 render "error"
             }
-        }else{
+        } else {
             render "no"
         }
 
     }
 
+    /**
+     * Acción
+     */
     def aprobarInversion = {
 
     }
 
+    /**
+     * Acción
+     */
     def editarAsignacionesAdm = {
-        if(session.usuario.id==3){
+        if (session.usuario.id == 3) {
             def actual
             if (params.anio)
                 actual = Anio.get(params.anio)
@@ -1772,18 +1882,21 @@ class AsignacionController extends yachay.seguridad.Shield {
             def unidad = UnidadEjecutora.get(params.id)
 
             def corrientes = Asignacion.findAll("from Asignacion  where anio=${actual.id} and unidad=${unidad.id} and marcoLogico is null");
-            [actual:actual,unidad: unidad,corrientes: corrientes,fuentes:Fuente.list([sort: "descripcion"])]
-        }else{
+            [actual: actual, unidad: unidad, corrientes: corrientes, fuentes: Fuente.list([sort: "descripcion"])]
+        } else {
             response.sendError(403)
         }
 
     }
 
+    /**
+     * Acción
+     */
     def guardarDatosEdicionAdm = {
-        println "editar adm "+params
-        if(session.usuario.id==3){
-            params.actionName="guardarDatosEdicionAdm"
-            params.controllerName="asginacion"
+        println "editar adm " + params
+        if (session.usuario.id == 3) {
+            params.actionName = "guardarDatosEdicionAdm"
+            params.controllerName = "asginacion"
             def band = true
             def asg = kerberosService.save(params, Asignacion, session.perfil, session.usuario)
             if (asg.errors.getErrorCount() == 0) {
@@ -1791,32 +1904,36 @@ class AsignacionController extends yachay.seguridad.Shield {
             } else {
                 render 0
             }
-        }else{
+        } else {
             response.sendError(403)
         }
     }
 
+    /**
+     * Acción
+     */
     def programacionEditarAdm = {
-        if(session.usuario.id==3){
-            def asg= Asignacion.get(params.id)
+        if (session.usuario.id == 3) {
+            def asg = Asignacion.get(params.id)
             def programacion = ProgramacionAsignacion.findAllByAsignacion(asg)
             def meses = []
-            12.times {meses.add(it + 1)}
-            [asg:asg,programa: programacion,meses: meses]
-        }else{
+            12.times { meses.add(it + 1) }
+            [asg: asg, programa: programacion, meses: meses]
+        } else {
             response.sendError(403)
         }
     }
 
-
-
+    /**
+     * Acción
+     */
     def agregarAsignacionInv = {
 
-        println "crear asgn inv "+params
+        println "crear asgn inv " + params
         def proy = Proyecto.get(params.id)
         def unidad = proy.unidadEjecutora
 
-        def comp = MarcoLogico.findAllByProyectoAndTipoElemento(proy,TipoElemento.get(2),[sort: "id"])
+        def comp = MarcoLogico.findAllByProyectoAndTipoElemento(proy, TipoElemento.get(2), [sort: "id"])
         def cmp
         def acts = []
 
@@ -1828,47 +1945,46 @@ class AsignacionController extends yachay.seguridad.Shield {
         else
             actual = Anio.findByAnio(new Date().format("yyyy"))
 
-        if (params.comp){
+        if (params.comp) {
             cmp = MarcoLogico.get(params.comp)
 
-        }else{
-            if (comp.size()>0)
-                cmp=comp[0]
+        } else {
+            if (comp.size() > 0)
+                cmp = comp[0]
         }
 
         if (cmp)
             acts = MarcoLogico.findAllByMarcoLogico(cmp)
 
         def asgn = []
-        def totalUnidad=0
+        def totalUnidad = 0
         acts.each {
-            def a =  Asignacion.findAllByMarcoLogico(it)
-            a.each {asignacion->
+            def a = Asignacion.findAllByMarcoLogico(it)
+            a.each { asignacion ->
                 asgn.add(asignacion)
-                totalUnidad+= asignacion.getValorReal()
+                totalUnidad += asignacion.getValorReal()
             }
 
 
         }
 
-
 //        Asignacion.findAll("from Asignacion where anio=${actual.id} and unidad=${unidad.id} and marcoLogico is not null").each{
 //            totalUnidad+= it.getValorReal()
 //        }
-        def un= UnidadEjecutora.findByPadreIsNull()
-        def maxUnidad = PresupuestoUnidad.findByAnioAndUnidad(actual,un)
+        def un = UnidadEjecutora.findByPadreIsNull()
+        def maxUnidad = PresupuestoUnidad.findByAnioAndUnidad(actual, un)
         if (maxUnidad)
-            maxUnidad=maxUnidad.maxInversion
+            maxUnidad = maxUnidad.maxInversion
         else
-            maxUnidad=0
+            maxUnidad = 0
 
 
-        [proy:proy,comp:comp,fuentes: fuentes,unidad: unidad,actual: actual,cmp:cmp,acts: acts,asgn:asgn,totalUnidad:totalUnidad ,maxUnidad:maxUnidad ]
+        [proy: proy, comp: comp, fuentes: fuentes, unidad: unidad, actual: actual, cmp: cmp, acts: acts, asgn: asgn, totalUnidad: totalUnidad, maxUnidad: maxUnidad]
 
     }
 
 
-    boolean verificarHijas(asgn){
+    boolean verificarHijas(asgn) {
         def hijas = Asignacion.findAllByPadre(asgn)
         def res = true
 
@@ -1876,24 +1992,24 @@ class AsignacionController extends yachay.seguridad.Shield {
             res = verificarHijas(it)
             if (!res)
                 return false
-            if( DistribucionAsignacion.findAllByAsignacion(it).size()>0){
+            if (DistribucionAsignacion.findAllByAsignacion(it).size() > 0) {
                 return false
             }
-            if(ModificacionAsignacion.findAllByDesdeOrRecibe(it,it).size()>0){
+            if (ModificacionAsignacion.findAllByDesdeOrRecibe(it, it).size() > 0) {
                 return false
             }
-            if(Certificacion.findAllByAsignacion(it).size()>0)
+            if (Certificacion.findAllByAsignacion(it).size() > 0)
                 return false
         }
 
 
-        if( DistribucionAsignacion.findAllByAsignacion(asgn).size()>0){
+        if (DistribucionAsignacion.findAllByAsignacion(asgn).size() > 0) {
             return false
         }
-        if(ModificacionAsignacion.findAllByDesdeOrRecibe(asgn,asgn).size()>0){
+        if (ModificacionAsignacion.findAllByDesdeOrRecibe(asgn, asgn).size() > 0) {
             return false
         }
-        if(Certificacion.findAllByAsignacion(asgn).size()>0)
+        if (Certificacion.findAllByAsignacion(asgn).size() > 0)
             return false
 
 

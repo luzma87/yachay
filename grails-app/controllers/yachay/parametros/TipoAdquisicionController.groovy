@@ -2,14 +2,23 @@ package yachay.parametros
 
 import yachay.parametros.TipoAdquisicion
 
+/**
+ * Controlador
+ */
 class TipoAdquisicionController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code: "default.list.label", args: ["TipoAdquisicion"], default: "TipoAdquisicion List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class TipoAdquisicionController {
         [tipoAdquisicionInstanceList: TipoAdquisicion.list(params), tipoAdquisicionInstanceTotal: TipoAdquisicion.count(), title: title, params: params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def tipoAdquisicionInstance
@@ -39,11 +51,17 @@ class TipoAdquisicionController {
         return [tipoAdquisicionInstance: tipoAdquisicionInstance, title: title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if (params.id) {
@@ -76,6 +94,9 @@ class TipoAdquisicionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def tipoAdquisicionInstance = TipoAdquisicion.get(params.id)
         if (tipoAdquisicionInstance) {
@@ -103,6 +124,9 @@ class TipoAdquisicionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def tipoAdquisicionInstance = TipoAdquisicion.get(params.id)
         if (!tipoAdquisicionInstance) {
@@ -117,11 +141,17 @@ class TipoAdquisicionController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def tipoAdquisicionInstance = TipoAdquisicion.get(params.id)
         if (tipoAdquisicionInstance) {

@@ -2,14 +2,23 @@ package yachay.proyectos
 
 import yachay.proyectos.Categoria
 
+/**
+ * Controlador
+ */
 class CategoriaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
+    /**
+     * Acción
+     */
     def index = {
         redirect(action: "list", params: params)
     }
 
+    /**
+     * Acción
+     */
     def list = {
         def title = g.message(code:"categoria.list", default:"Categoria List")
 //        <g:message code="default.list.label" args="[entityName]" />
@@ -19,6 +28,9 @@ class CategoriaController {
         [categoriaInstanceList: Categoria.list(params), categoriaInstanceTotal: Categoria.count(), title: title, params:params]
     }
 
+    /**
+     * Acción
+     */
     def form = {
         def title
         def categoriaInstance
@@ -39,11 +51,17 @@ class CategoriaController {
         return [categoriaInstance: categoriaInstance, title:title, source: params.source]
     }
 
+    /**
+     * Acción
+     */
     def create = {
         params.source = "create"
         redirect(action:"form", params:params)
     }
 
+    /**
+     * Acción
+     */
     def save = {
         def title
         if(params.id) {
@@ -76,6 +94,9 @@ class CategoriaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def update = {
         def categoriaInstance = Categoria.get(params.id)
         if (categoriaInstance) {
@@ -103,6 +124,9 @@ class CategoriaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def show = {
         def categoriaInstance = Categoria.get(params.id)
         if (!categoriaInstance) {
@@ -117,11 +141,17 @@ class CategoriaController {
         }
     }
 
+    /**
+     * Acción
+     */
     def edit = {
         params.source = "edit"
         redirect(action:"form", params:params)
     }
 
+    /**
+     * Acción
+     */
     def delete = {
         def categoriaInstance = Categoria.get(params.id)
         if (categoriaInstance) {
