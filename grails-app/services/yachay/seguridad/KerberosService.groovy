@@ -7,6 +7,9 @@ import java.sql.DriverManager
 import java.text.SimpleDateFormat
 import org.springframework.jdbc.core.JdbcTemplate
 
+/**
+ * Principal servicio para seguriidad: crea logs
+ */
 class KerberosService {
 
     boolean transactional = true
@@ -17,6 +20,15 @@ class KerberosService {
     def messageSource
     def session
     //principal servicio de seguridad
+
+    /**
+     * Remplaza la funci&oacute;n save por defecto para crear una entrada de log con la acci&oacute;n ejecutada
+     * @param params los para&aacute;metros para hacer el save
+     * @param dominio el dominio que va a guardarse
+     * @param perfil el perfil del usuario efectuando la acci&oacute;n
+     * @param usuario el usuario efectuando la acci&oacute;n
+     * @return el objeto guardado
+     */
     public save(params, dominio, perfil, usuario) {
         session = sessionFactory.getCurrentSession()
         def nuevo = dominio.newInstance()
@@ -103,8 +115,12 @@ class KerberosService {
                             if (!ignore.contains(it.key)) {
                                 // println "dif ! " + it.key + " viejo  " + it.value + "  actual " + nuevo.properties[it.key] + " en el log " + n
                                 sql = """insert into audt (audt__id,usro__id,prfl__id,audtaccn,audtctrl,reg_id,audttbla,audtcmpo,audtoldv,audtnewv,audtfcha,audtoprc)
-                                values (default,${usuario.id},${perfil.id},'${params.actionName}','${params.controllerName}',
-                                           ${old.id.toInteger()},'${dominio.getName()}','${it.key}','${it.properties[it.key]}','${n}','${new Date().format("yyyy/MM/dd hh:mm:ss")}','UPDATE') """
+                                values (default,${usuario.id},${perfil.id},'${params.actionName}','${
+                                    params.controllerName
+                                }',
+                                           ${old.id.toInteger()},'${dominio.getName()}','${it.key}','${
+                                    it.properties[it.key]
+                                }','${n}','${new Date().format("yyyy/MM/dd hh:mm:ss")}','UPDATE') """
                                 listAudt.add(sql)
                                 sql = null
                             }
@@ -132,8 +148,7 @@ class KerberosService {
 
                     return nuevo
 
-                }
-                else {
+                } else {
                     println "ERROR!!!: error en el save " + nuevo.properties.errors
 
                     return nuevo
@@ -171,8 +186,7 @@ class KerberosService {
                     //println "si grabo wtf despues del flush "
                     return nuevo
 
-                }
-                else {
+                } else {
                     println "errores :" + nuevo.properties.errors
                     println "ERROR!!!: error en el save (save)"
                     return nuevo
@@ -189,12 +203,12 @@ class KerberosService {
     }
 
     /**
-     *
+     * Remplaza la funci&oacute;n delete por defecto para crear una entrada de log con la acci&oacute;n ejecutada
      * @param params toma params.id para eliminar, p.controllerName, p.actionName
-     * @param dominio
-     * @param perfil
-     * @param usuario
-     * @return
+     * @param dominio el dominio que va a guardarse
+     * @param perfil el perfil del usuario efectuando la acci&oacute;n
+     * @param usuario el usuario efectuando la acci&oacute;n
+     * @return un boolean que indica si se efectu&oacute; exitosamente la eliminaci&oacute;n
      */
     public delete(params, dominio, perfil, usuario) {
         session = sessionFactory.getCurrentSession()
@@ -228,8 +242,12 @@ class KerberosService {
                 }
 //                println "+++++++++++++++++++++++++++++++++="
                 sql = """insert into audt (audt__id,usro__id,prfl__id,audtaccn,audtctrl,reg_id,audttbla,audtcmpo,audtoldv,audtnewv,audtfcha,audtoprc)
-                                values (default,${usuario.id},${perfil.id},'${params.actionName}','${params.controllerName}',
-                                ${old.id.toInteger()},'${dominio.getName()}','${it.key}','${anterior}',' BORRADO ','${new Date().format("yyyy/MM/dd hh:mm:ss")}','DELETE') """
+                                values (default,${usuario.id},${perfil.id},'${params.actionName}','${
+                    params.controllerName
+                }',
+                                ${old.id.toInteger()},'${dominio.getName()}','${it.key}','${anterior}',' BORRADO ','${
+                    new Date().format("yyyy/MM/dd hh:mm:ss")
+                }','DELETE') """
 
                 listAudt.add(sql)
                 sql = null
@@ -258,12 +276,27 @@ class KerberosService {
             return false
     }
 
+    /**
+     * Genera una entrada en la tabla de auditor&iacute;a
+     * @param params utiliza actionName y controllerName para guardar en el log
+     * @param dominio el dominio que va a guardarse
+     * @param campo el campo modificado
+     * @param newValue el valor nuevo del campo
+     * @param oldValue el valor anterior del campo
+     * @param perfil el perfil del usuario efectuando la acci&oacute;n
+     * @param usuario usuario el usuario efectuando la acci&oacute;n
+     * @return un boolean que indica si se efectu&oacute; exitosamente la inserci&oacute;n
+     */
     public generarEntradaAuditoria(params, dominio, campo, newValue, oldValue, perfil, usuario) {
         def cn = dbConnectionService.getConnection()
         def band = true
         def sql = """insert into audt (audt__id,usro__id,prfl__id,audtaccn,audtctrl,reg_id,audttbla,audtcmpo,audtoldv,audtnewv,audtfcha,audtoprc)
-                                values (default,${usuario.id},${perfil.id},'${params.actionName}','${params.controllerName}',
-                                           ${params.id},'${dominio.getName()}','${campo}','${oldValue}',' ${newValue} ','${new Date().format("yyyy/MM/dd hh:mm:ss")}','UPDATE') """
+                                values (default,${usuario.id},${perfil.id},'${params.actionName}','${
+            params.controllerName
+        }',
+                                           ${params.id},'${dominio.getName()}','${campo}','${oldValue}',' ${
+            newValue
+        } ','${new Date().format("yyyy/MM/dd hh:mm:ss")}','UPDATE') """
         //println "entrada audt " + sql
         if (!cn.execute(sql)) {
             band = false
@@ -273,24 +306,26 @@ class KerberosService {
         cn.close()
         return band
     }
-/**
- *
- * @param nuevo objeto a guardar
- * @param dominio Dominio
- * @param perfil
- * @param usuario
- * @param actionName
- * @param controllerName
- * @param session
- * @return
- *
- * flow.producto= kerberosService.saveObject( flow.producto,ProductoBancario, session.perfil, session.usuario,actionName,controllerName,session)
- if(flow.producto.errors.getErrorCount()!=0){
- MANEJAR ERRORES AQUI
- } else {
- NO OCURRIERON ERRORES
- }*
- */
+
+    /*
+    * flow.producto= kerberosService.saveObject( flow.producto,ProductoBancario, session.perfil, session.usuario,actionName,controllerName,session)
+     if(flow.producto.errors.getErrorCount()!=0){
+     MANEJAR ERRORES AQUI
+     } else {
+     NO OCURRIERON ERRORES
+     }*
+     */
+    /**
+     * Guarda un objeto
+     * @param nuevo objeto a guardar
+     * @param dominio dominio que se va a guardar
+     * @param perfil el perfil del usuario efectuando la acci&oacute;n
+     * @param usuario el usuario efectuando la acci&oacute;n
+     * @param actionName nombre de la acci&oacute;n que llam&oacute; a la funci&oacute;n
+     * @param controllerName nombre del controlador que llam&oacute; a la funci&oacute;n
+     * @param session objeto session
+     * @return el objeto guardado
+     */
     public saveObject(nuevo, dominio, perfil, usuario, actionName, controllerName, session) {
         session = sessionFactory.getCurrentSession()
         def old
@@ -347,8 +382,7 @@ class KerberosService {
                     session.flush()
                     return nuevo
                     audt = null
-                }
-                else {
+                } else {
                     println "errores :" + nuevo.properties.errors
                     println "ERROR!!!: error en el save (save)"
                     return nuevo
@@ -379,7 +413,7 @@ class KerberosService {
                 old = null
 //                println "antes del save " + nuevo.id
                 if (nuevo.save(flush: true)) {
-                   // println "si GRABO "
+                    // println "si GRABO "
                     session.flush()
                     def cn = dbConnectionService.getConnection()
                     listAudt.each {
@@ -396,8 +430,7 @@ class KerberosService {
                     cn.close()
                     return nuevo
 
-                }
-                else {
+                } else {
                     println "ERROR!!!: error en el save " + nuevo.properties.errors
 
                     return nuevo
@@ -412,7 +445,15 @@ class KerberosService {
 
     }
 
-    public saveModificacion(nuevo, dominio,usuario, session) {
+    /**
+     * Guarda una modificaci&oacute;n
+     * @param nuevo objeto a guardar
+     * @param dominio dominio que se va a guardar
+     * @param usuario el usuario efectuando la acci&oacute;n
+     * @param session objeto session
+     * @return el objeto guardado
+     */
+    public saveModificacion(nuevo, dominio, usuario, session) {
         session = sessionFactory.getCurrentSession()
         def old
         def audt
@@ -452,18 +493,17 @@ class KerberosService {
                     ModificacionV2.withTransaction { status ->
 
                         mod.usuario = usuario
-                        mod.newValue=null
-                        mod.oldValue=null
+                        mod.newValue = null
+                        mod.oldValue = null
                         mod.campo = "INSERT"
-                        mod.dominio=dominio
-                        mod.id_remoto=nuevo.id.toInteger()
+                        mod.dominio = dominio
+                        mod.id_remoto = nuevo.id.toInteger()
                         mod.save(flush: false)
                     }
                     session.flush()
                     return nuevo
                     audt = null
-                }
-                else {
+                } else {
                     println "errores :" + nuevo.properties.errors
                     println "ERROR!!!: error en el save (save)"
                     return nuevo
@@ -478,25 +518,25 @@ class KerberosService {
                     def originalValue = old.getPersistentValue(name)
                     def newValue = old.properties[name]
                     if (originalValue?.class?.toString() =~ "app") {
-                        println " clase tipo  "+old[name].class.toString()
-                        tipo=old[name].class.toString().split(" ")[1]
+                        println " clase tipo  " + old[name].class.toString()
+                        tipo = old[name].class.toString().split(" ")[1]
                         originalValue = originalValue?.id
                         newValue = newValue.id
-                    }else{
-                        if(old.properties.getClass()!=java.lang.String){
-                            if(old.properties.getClass()==java.util.Date)
-                                tipo="date"
+                    } else {
+                        if (old.properties.getClass() != java.lang.String) {
+                            if (old.properties.getClass() == java.util.Date)
+                                tipo = "date"
                             else
-                                tipo="number"
-                        }else{
-                            tipo="string"
+                                tipo = "number"
+                        } else {
+                            tipo = "string"
                         }
                     }
                     if (!ignore.contains(name)) {
 
-                        def mod = new ModificacionV2([usuario:usuario,campo:name,dominio:new org.codehaus.groovy.grails.commons.DefaultGrailsDomainClass(dominio).getName(),id_remoto:old.id.toInteger(),newValue:newValue,oldValue:originalValue,tipo:tipo])
+                        def mod = new ModificacionV2([usuario: usuario, campo: name, dominio: new org.codehaus.groovy.grails.commons.DefaultGrailsDomainClass(dominio).getName(), id_remoto: old.id.toInteger(), newValue: newValue, oldValue: originalValue, tipo: tipo])
                         listAudt.add(mod)
-                        mod =null
+                        mod = null
 
                     }
                 }//for
@@ -507,13 +547,13 @@ class KerberosService {
                 if (nuevo.save(flush: true)) {
                     println "si GRABO "
                     session.flush()
-                    println "lista "+listAudt
+                    println "lista " + listAudt
                     listAudt.each {
 
                         try {
 
                             it.save(flush: true)
-                            println "errores "+it.errors
+                            println "errores " + it.errors
 
                         } catch (e) {
                             println "ERROR!!!: error en la auditoria "
@@ -521,13 +561,10 @@ class KerberosService {
                         }
 
 
-
-
                     }
                     return nuevo
 
-                }
-                else {
+                } else {
                     println "ERROR!!!: error en el save " + nuevo.properties.errors
 
                     return nuevo
@@ -542,6 +579,13 @@ class KerberosService {
 
     }
 
+    /**
+     * Inserta un nuevo registro en la tabla de auditor&iacute;a
+     * @param id el id del registro
+     * @param usuario el usuario efectuando la acci&oacute;n
+     * @param perfil el perfil del usuario efectuando la acci&oacute;n
+     * @return
+     */
     def insertaKerberos(id, usuario, perfil) {
         def audt = new Audt()
         //println "si grabo wtf " + nuevo.class + " !!! audt " + audt.id + " " + audt
@@ -565,7 +609,12 @@ class KerberosService {
 
     ///////////////////////////////////////////////////Funciones de base de datos ////////////////////////////////////////
 
-
+    /**
+     * Ejecuta un procedure de la base de datos
+     * @param nombre nombre del procedure
+     * @param parametros par&aacute;metros para el procedure
+     * @return los resultados del procedure
+     */
     def ejecutarProcedure(nombre, parametros) {
         def p = ""
         parametros.each {
@@ -580,6 +629,10 @@ class KerberosService {
         return result
     }
 
+    /**
+     * Efet&uacute;a una conexi&oacute;n con la base de datos
+     * @return la conexi&oacute;n
+     */
     def getJavaConnection() {
         Connection dbConnection
         try {
@@ -594,7 +647,16 @@ class KerberosService {
 
 ///////////////////////////////////////////////////// ALERTAS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-
+    /**
+     * Genera una alerta
+     * @param from usuario que env&iacute;a la alerta
+     * @param to usuario que recibe la alerta
+     * @param mensaje el mensaje de la alerta
+     * @param controlador el controlador para el link de la alerta
+     * @param accion la acci&oacute;n para el link de la alerta
+     * @param id el id para el link de la alerta
+     * @return un boolean que indica si se efectu&oacute; exitosamente la inserci&oacute;n
+     */
     boolean generarAlerta(from, to, mensaje, controlador, accion, id) {
         try {
             def alerta = new yachay.alertas.Alerta()
@@ -613,7 +675,6 @@ class KerberosService {
             println "error generar alerta " + e
             return false
         }
-
     }
 
 }

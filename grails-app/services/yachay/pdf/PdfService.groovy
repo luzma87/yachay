@@ -2,12 +2,20 @@ package yachay.pdf
 
 import org.xhtmlrenderer.pdf.ITextRenderer
 
+/**
+ * Servicio para hacer PDFs
+ */
 class PdfService {
 
     boolean transactional = false
 
 /*  A Simple fetcher to turn a specific URL into a PDF.  */
-
+    /**
+     * Transforma un URL a PDF
+     * @param url
+     * @param pathFonts
+     * @return
+     */
     byte[] buildPdf(url, String pathFonts) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ITextRenderer renderer = new ITextRenderer();
@@ -48,6 +56,12 @@ class PdfService {
   The baseUri is included to allow for relative URL's in the XHTML string
 */
 
+    /**
+     * Transforma una cadena XHTML a PDF
+     * @param content
+     * @param baseUri
+     * @return
+     */
     byte[] buildPdfFromString(content, baseUri) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ITextRenderer renderer = new ITextRenderer();

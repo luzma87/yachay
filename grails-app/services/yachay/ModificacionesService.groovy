@@ -7,6 +7,9 @@ import yachay.proyectos.Cronograma
 import yachay.proyectos.MarcoLogico
 import yachay.proyectos.ModificacionProyecto
 
+/**
+ * Servicio para manejar las modificaciones
+ */
 class ModificacionesService {
 
     static transactional = true
@@ -15,6 +18,22 @@ class ModificacionesService {
 
     def cronogramas = []
 
+    /**
+     * Agrega una modificaci&oacute;n al cronograma. Trabaja sobre el arreglo cronogramas definido en el service
+     * @param params mapa que contiene: <br/>
+     * <ul>
+     *     <li>idCelda: el id del cronograma (inserci&oacute;n y modificaci&oacute;n)</li>
+     *     <li>valor: el valor para el cronograma (inserci&oacute;n y modificaci&oacute;n)</li>
+     *     <li>fuente: el id de la fuente para el cronograma (inserci&oacute;n y modificaci&oacute;n)</li>
+     *     <li>mes: el id del mes (inserci&oacute;n)</li>
+     *     <li>act: el id de marco l&oacute;gico de la actividad (inserci&oacute;n)</li>
+     *     <li>anio: el id del a&ntilde;o (inserci&oacute;n)</li>
+     *     <li>modificacion: el id de la modificaci&oacute;n de proyecto (inserci&oacute;n)</li>
+     *     <li>session: el objeto session</li>
+     *     <li>id: el id del cronograma</li>
+     * </ul>
+     * @return
+     */
     def agregarModificacionCronograma(params) {
         if ((cronogramas.idCelda).contains(params.idCelda)) {
             //modifico
@@ -49,6 +68,10 @@ class ModificacionesService {
 //        }
     } //agregar modificacion
 
+    /**
+     * Itera en el arreglo cronogramas del service y realiza inserciones en la base de datos para cada uno de los elementos
+     * @return
+     */
     def saveModificacion() {
         def err = 0
         def err2 = 0
@@ -78,6 +101,10 @@ class ModificacionesService {
         return [(err / cronogramas.size()), err2]
     }
 
+    /**
+     * Reinicia el arreglo cronogramas a un arreglo vac&iacute;o
+     * @return
+     */
     def reset() {
         cronogramas = []
     }

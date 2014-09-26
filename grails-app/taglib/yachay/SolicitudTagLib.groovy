@@ -8,6 +8,9 @@ import yachay.poa.Asignacion
 import yachay.seguridad.Prfl
 import yachay.contratacion.DetalleMontoSolicitud
 
+/**
+ * Tags para mostrar la informaci&oacute;n de las solicitudes de contrataci&oacute;n
+ */
 class SolicitudTagLib {
     static namespace = 'slc'
 

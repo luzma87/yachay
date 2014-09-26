@@ -1,5 +1,8 @@
 package yachay
 
+/**
+ * Tags para men&uacute;s
+ */
 class MenuTagLib {
 
     def dbConnectionService

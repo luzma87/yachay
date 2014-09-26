@@ -1,5 +1,8 @@
 package yachay
 
+/**
+ * Tag del men&uacute; para SEMPLADES
+ */
 class MenuFlowTagLib {
     static namespace = 'mf'
 

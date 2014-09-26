@@ -1,5 +1,8 @@
 package yachay.utilitarios
 
+/**
+ * Servicio para efetuar b&uacute;squedas
+ */
 class BuscadorService {
 
     def dbConnectionService
@@ -7,6 +10,11 @@ class BuscadorService {
     boolean transactional = true
     def numFilas
 
+    /**
+     * Transforma un dominio a HashMap
+     * @param dominio el dominio a transformar
+     * @return un hashMap con los datos del dominio
+     */
     HashMap toMap(dominio) {
         def mapa = [:]
         dominio.properties.declaredFields.each {
@@ -17,9 +25,17 @@ class BuscadorService {
         return mapa
     }
 
+    /**
+     * Crea el sql para efectuar una b&uacute;squeda
+     * @param operador el operador para la b&uacute;squeda (AND, OR)
+     * @param parametros par&aacute;metros de b&uacute;squeda
+     * @param common el subconjunto entre los par&aacute;metros y los campos del dominio
+     * @param mapa mapa con los campos del dominio
+     * @param ignoreCase boolean que indica si se debe ignorar may&uacute;sculas y min&uacute;sculas
+     * @return el HQL
+     */
     String filtro(operador, parametros, common, mapa, ignoreCase) {
         def where = " where "
-
 
         common.each {
 
@@ -200,8 +216,8 @@ class BuscadorService {
                                 break
                         }
                     }
-                } /** *********************************************** FIN           ***********************************************************************/
-            } /** *** FIN EACH          *********/
+                } /* * *********************************************** FIN           ***********************************************************************/
+            } /* * *** FIN EACH          *********/
         }
         if (where.length() > 7) {
             return where
@@ -210,6 +226,19 @@ class BuscadorService {
         }
     }
 
+    /**
+     * Efect&uacute;a la b&uacute;squeda
+     * @param dominio el dominio donde se va a hacer la b&uacute;squeda
+     * @param tabla el nombre del dominio (String)
+     * @param tipo 'excluyente' para OR, otra cosa para AND
+     * @param parametros los par&aacute;metros para la b&uacute;squeda
+     * @param ignoreCase un boolean que indica si deben o no ignorarse may&uacute;sculas y min&uacute;sculas
+     * @param max la cantidad m&aacute;xima de registros
+     * @param offset el offset para el SQL
+     * @param sort el nombre de la columna para ordenamiento
+     * @param order el orden (ASC o DESC)
+     * @return los resultados de la b&uacute;squeda
+     */
     List buscar(dominio, tabla, tipo, parametros, ignoreCase, max, offset, sort, order) {
         def sql = "from " + tabla
         def mapa = toMap(dominio)
@@ -235,6 +264,17 @@ class BuscadorService {
         return lista
     }
 
+    /**
+     *
+     * @param qry
+     * @param qrwh
+     * @param campos
+     * @param orden
+     * @param tpOrdn
+     * @param numero
+     * @param qord
+     * @return
+     */
     List buscarSQL(qry, qrwh = 'w', campos, orden, tpOrdn, numero, qord) {
         def m = []
         def cn = dbConnectionService.getConnection()
