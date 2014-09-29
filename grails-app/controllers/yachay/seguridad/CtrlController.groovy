@@ -1,21 +1,21 @@
 package yachay.seguridad
 
 /**
- * Controlador
+ * Controlador que muestra las pantallas para el manejo de controladores
  */
 class CtrlController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
     /**
-     * Acción
+     * Acción que muestra una lista de todos los controladores registrados en  el sistema
      */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /**
-     * Acción
+     * Acción que muestra una lista de todos los controladores registrados en  el sistema
      */
     def list = {
         def title = g.message(code: "ctrl.list", default: "Ctrl List")
@@ -27,7 +27,7 @@ class CtrlController {
     }
 
     /**
-     * Acción
+     * Acción que muestra un formulario para el ingreso de un controlador
      */
     def form = {
         def title
@@ -50,7 +50,7 @@ class CtrlController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona a form
      */
     def create = {
         params.source = "create"
@@ -58,7 +58,9 @@ class CtrlController {
     }
 
     /**
-     * Acción
+     * Acción que guarda un controlador con los datos ingresados por el usuario en el formulario
+     * @param id es el identificador del controlador en caso de tratarse de una edición
+     * @param params es un mapa que contiene todos los atributos y los valores ingresados por el usuario en el formulario
      */
     def save = {
         def title
@@ -93,7 +95,8 @@ class CtrlController {
     }
 
     /**
-     * Acción
+     * Acción que muestra un formulario con la información de un controlador seleccionado para su edición
+     * @param id es el identificador del controlador seleccionado
      */
     def update = {
         def ctrlInstance = Ctrl.get(params.id)
@@ -123,7 +126,8 @@ class CtrlController {
     }
 
     /**
-     * Acción
+     * Acción que muestra los datos de un controlador seleccionado
+     * @param id es el identificador del controlador
      */
     def show = {
         def ctrlInstance = Ctrl.get(params.id)
@@ -140,7 +144,7 @@ class CtrlController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona a form
      */
     def edit = {
         params.source = "edit"
@@ -148,7 +152,8 @@ class CtrlController {
     }
 
     /**
-     * Acción
+     * Acción que borra un controlador seleccionado
+     * @param id es el identificador del controlador
      */
     def delete = {
         def ctrlInstance = Ctrl.get(params.id)

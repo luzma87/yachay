@@ -1,14 +1,14 @@
 package yachay.seguridad
 
 /**
- * Controlador
+ * Controlador que muestra pantallas para el manejo de acciones
  */
 class AccionesController {
 
     def dbConnectionService
 
     /**
-     * Acción
+     * Acción que muestra la pantalla de configuración de menu
      */
     def index = {
         redirect(action: "configurarMenu")
@@ -18,7 +18,7 @@ class AccionesController {
      * OJO. el módulo de noAsignadas es de ID = 0
      */
     /**
-     * Acción
+     * Acción que muestra un listado de acciones  ordenadas por módulo
      */
     def acciones = {
         def resultado = []
@@ -31,7 +31,9 @@ class AccionesController {
     }
 
     /**
-     * Acción
+     * Acción que muestra una lista de acciones filtrando por módulo y tipo
+     * @param mdlo es el módulo
+     * @param tipo es el tipo de acción
      */
     def ajaxAcciones = {
         //println " ajaxAcciones---parametros: ${params}"
@@ -44,18 +46,15 @@ class AccionesController {
         def cn = dbConnectionService.getConnection()
         def tx = ""
         tx = poneSQL(tipo, mdlo)
-        //println "ajaxPermisos mdlo: ${mdlo}"
         if(tipo == '1'){
             titulos[0] = ['Permisos']+['Acción']+['Menú']+['Controlador']
         } else {
             titulos[0] = ['Permisos']+['Acción']+['Proceso']+['Controlador']
         }
-        //println "ajaxPermisos SQL: ${tx}"
         cn.eachRow(tx) { d ->
             resultado.add([d.accn__id] + [d.accnnmbr] + [d.accndscr] +[d.ctrlnmbr] + [d.mdlo__id])
         }
-        //cn.disconnect() TODO preguntar si se cierra la conexión
-        //println "-------------------------" + resultado
+        //cn.disconnect()
         if(resultado.size() == 0) {
             resultado[0] = ['0'] + ['<font color="red">no hay acciones</font>'] + [''] + [''] + ['']
         }
@@ -64,7 +63,10 @@ class AccionesController {
     }
 
     /**
-     * Acción
+     * Acción que actualiza el campo descripción de una acción
+     * @param id es el identificador de la acción
+     * @param dscr es la nueva descripción de la acción
+     * @render mensaje de datos modificados
      */
     def grabaAccn = {
         //println "graba---------parametros: ${params}"
@@ -84,7 +86,10 @@ class AccionesController {
     }
 
     /**
-     * Acción
+     * Acción que cambia de módulo a una acción
+     * @param mdlo nuevo módulo
+     * @param ids son los identificadores de las acciones a reubicarse
+     * @render mensaje de acciones movidas
      */
     def moverAccn = {
         //println "moverAccn---------parametros: ${params}"
@@ -105,10 +110,11 @@ class AccionesController {
     }
 
     /**
-     * Acción
+     * Acción que actualiza el campo módulo de un conjunto de acciones
+     * @param ids son los identificadores de las acciones a reubicar
      */
     def sacarAccn = {
-        println "sacarAccn---------parametros: ${params}"
+        //println "sacarAccn---------parametros: ${params}"
         def ids  = params.ids
         if(params.ids?.size() > 0) ids = params.ids; else ids = "null"
         def cn = dbConnectionService.getConnection()
@@ -127,7 +133,9 @@ class AccionesController {
     }
 
     /**
-     * Acción
+     * Acción que cambia el campo tipo de un subconjunto de acciones
+     * @param ids son los identificadores de las acciones a cambiarse el tipo
+     * @param tipo es el nuevo tipo puede ser 1 para menú y 2 para proceso
      */
     def cambiaAccn = {
         println "cambia---------parametros: ${params}"
@@ -153,7 +161,7 @@ class AccionesController {
 
 
     /**
-     * Acción
+     * Acción que muestra una lista de controladores con acciones que tengan módulos
      */
     def configurarAcciones = {
         def modulos = Modulo.list([sort:"orden"])
@@ -166,13 +174,13 @@ class AccionesController {
         cn.eachRow("select tpac__id from tpac where upper(tpacdscr) like '%MENU%'"){
             tp = it.tpac__id
         }
-        println tp
+       // println tp
 
         [modulos:modulos, controladores:controladores, tipo_tpac:tp, titulo:'Men&uacute;s por M&oacute;dulo']
     }
 
     /**
-     * Acción
+     * Acción que muestra una lista de controladores con acciones que tengan módulos
      */
     def procesos = {
         def modulos = Modulo.list([sort:"orden"])
@@ -191,7 +199,7 @@ class AccionesController {
 
 
     /**
-     * Acción
+     * Acción que muestra una lista de módulos
      */
     def perfiles = {
         def modulos = Modulo.list([sort:"orden"])
@@ -200,10 +208,12 @@ class AccionesController {
 
 
     /**
-     * Acción
+     * Acción que asigna una lista de permisos a un perfil
+     * @param perfil es el indentificador del perfil
+     * @param chk es un arreglo con los identificadores de las acciones
      */
     def guardarPermisos = {
-        println "guardar permisos " + params
+       // println "guardar permisos " + params
         def perfil = Prfl.get(params.perfil)
         def permisos = Prms.findAllByPerfil(perfil).accion
         //println "permisos "+permisos+" "+params.chk.clazz
@@ -211,7 +221,7 @@ class AccionesController {
             params.chk.each {
 
                 def accn = Accn.get(it)
-                println "each accn "+it + " "+permisos.contains(accn)
+                //println "each accn "+it + " "+permisos.contains(accn)
                 if(!(permisos.contains(accn))){
                     println "paso el if"
                     def perm = new Prms([accion:accn,perfil:perfil])
@@ -220,7 +230,7 @@ class AccionesController {
                 }
             }
             permisos.each {
-                println "quitar "+it+" "+params.chk.toList()
+                //println "quitar "+it+" "+params.chk.toList()
                 if(!(params.chk.toList().contains(it.id.toString()))) {
                     println "entro if del"
                     def perm = Prms.findByAccionAndPerfil(it,perfil).delete(flush:true)
@@ -238,7 +248,8 @@ class AccionesController {
     }
 
     /**
-     * Acción
+     * Acción que muestra las acciones de un perfil
+     * @param perfil es el identificador del perfil
      */
     def cargarAccionesPerfil = {
         //println "cargar a p "+params
@@ -249,7 +260,10 @@ class AccionesController {
     }
 
     /**
-     * Acción
+     * Acción que cambia el tipo a una acción
+     * @param accn es il identificador de la acción
+     * @param val es el identificador del nuevo tipo
+     * @render ok cuando la acción se completo correctamente
      */
     def cambiarTipo = {
         println "cambiar tipo "+params
@@ -259,20 +273,26 @@ class AccionesController {
     }
 
     /**
-     * Acción
+     * Acción que cambia el módulo de una acción
+     * @param accn es el identificador de la acción
+     * @param val es el idetificador del nuevo módulo
+     * @render ok cuando la acción se completo correctamente
      */
     def cambiarModulo = {
-        println "cambiar tipo "+params
+        //println "cambiar tipo "+params
         def accn = Accn.get(params.accn)
         accn.modulo=Modulo.get(params.val)
         render "ok"
     }
 
     /**
-     * Acción
+     * Acción que cambia de modulo a todas las acciones de un controlador
+     * @param ctrl es identificador del controlador
+     * @param val es el identificador del nuevo módulo
+     * @render ok cuando la acción se completo correctamente
      */
     def cambiarModuloControlador = {
-        println "cmc "+params
+        //println "cmc "+params
         def ctrl = Ctrl.findByCtrlNombre(params.ctrl)
         def acs = Accn.findAllByControl(ctrl)
         def modulo = Modulo.get(params.val)
@@ -284,7 +304,9 @@ class AccionesController {
     }
 
     /**
-     * Acción
+     * Acción que itera sobre todos los controladores creados en el proyecto grails, los busca en la base de datos y si no los encuentra los inserta dentro de la tabla representada en el dominio Ctrl
+     * @render un mensaje con el número de controladores agregados a la base de datos
+     *
      */
     def cargarControladores = {
         println "cargar controladores"
@@ -302,7 +324,8 @@ class AccionesController {
     }
 
     /**
-     * Acción
+     * Acción que itera sobre todos los controladores creados en el proyecto, analiza las acciones de cada controlador, las busca en la base de datos y si no las encuentra las inserta en la tabla representada por el dominio Accn
+     * @render un mensaje con el número de acciones insertadas en la base de datos
      */
     def cargarAcciones = {
 
@@ -361,13 +384,25 @@ class AccionesController {
         render("Se han agregado ${i} acciones")
     }
 
+    /*
+    * Función que construye un sql para seleccionar acciones filtradas por tipo y módulo
+    * @param tipo es el identificador del tipo de acción
+    * @param mdlo es el identificador del módulo
+    * @return un string con el sql generador
+    *
+    */
     def poneSQL(tipo, mdlo){
         return "select accn.accn__id, accnnmbr, accndscr, ctrlnmbr, accn.mdlo__id " +
                 "from accn, mdlo, ctrl where mdlo.mdlo__id = accn.mdlo__id and " +
                 "mdlo.mdlo__id = ${mdlo} and accn.ctrl__id = ctrl.ctrl__id and " +
                 "tpac__id = ${tipo} order by ctrlnmbr, accnnmbr"
     }
-
+    /*
+       * Función que construye un sql para seleccionar acciones filtradas por tipo
+       * @param tipo es el identificador del tipo de acción
+       * @return un string con el sql generador
+       *
+       */
     def poneSQLnull(tipo){
         return "select accn.accn__id, accnnmbr, accndscr, ctrlnmbr, accn.mdlo__id " +
                 "from accn, ctrl where mdlo__id is null and accn.ctrl__id = ctrl.ctrl__id and " +

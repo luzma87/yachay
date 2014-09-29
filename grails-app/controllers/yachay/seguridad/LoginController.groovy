@@ -9,10 +9,10 @@ class LoginController {
     def loginService
 
     /**
-     * Acción
+     * Acción que muestra la pantalla de ingreso al sistema
      */
     def index = {
-        println "index login"
+        //println "index login"
     }
 
 
@@ -25,7 +25,10 @@ class LoginController {
 
 
     /**
-     * Acción
+     * Acción que verifica las crendenciales ingresadas por el usuario
+     * @param usuario es el nombre de usuario
+     * @param password es la contraseña ingresada
+     * @para perfil es el perfil escogido
      */
     def login = {
         println "login "+params
@@ -72,7 +75,7 @@ class LoginController {
         }
     }
     /**
-     * Acción
+     * Acción que borra todo el contenido de la variable de sesión y redirecciona a la pantalla de ingreso al sistema
      */
     def logout = {
         if(session.usuario) {
@@ -81,7 +84,7 @@ class LoginController {
             session.permisos=null
             session.menu=null
             session.invalidate()
-            redirect(action:index)
+            redirect(action:"index")
         } else {
             redirect(action:'index')
         }

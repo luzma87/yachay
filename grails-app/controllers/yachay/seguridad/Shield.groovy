@@ -1,10 +1,11 @@
 package yachay.seguridad
-
+/**
+ * Clase que controla el acceso de los usuarios a las acciones de los controladores
+ */
 class Shield{
     def beforeInterceptor = [action:this.&auth,except:'login']
     /**
-     * Verifica si se ha iniciado una sesión
-     * Verifica si el usuario actual tiene los permisos para ejecutar una acción
+     * Verifica si se ha iniciado una sesión y si el usuario actual tiene los permisos para ejecutar una acción
      */
     def auth() {
 
@@ -61,7 +62,9 @@ class Shield{
             }
         }
     }
-
+    /**
+     * Verifica si el usuario logeado tiene permisos para ejecutar una acción
+     */
     boolean isAllowed(){
 
         try{

@@ -47,6 +47,7 @@ class PdfService {
             return b
         }
         catch (Throwable e) {
+            e.printStackTrace()
             log.error e
         }
     }
