@@ -22,14 +22,23 @@ import static java.awt.RenderingHints.KEY_INTERPOLATION
 import static java.awt.RenderingHints.VALUE_INTERPOLATION_BICUBIC
 
 /**
- * Controlador
+ * Controlador que muestra las pantallas de manejo de solicitudes de contratación
  */
 class SolicitudController extends yachay.seguridad.Shield {
 
+    /**
+     * Retorna el path para subir los archivos
+     * @return el path para subir los archivos
+     */
     def getPathBase() {
         return servletContext.getRealPath("/") + "solicitudes/"
     }
 
+    /**
+     * Redimensiona una imagen a un maximo de 800x800 manteniendo el aspec ratio
+     * @param f el archivo a ser redimensionado
+     * @param pathFile el path del nuevo archivo
+     */
     def resizeImage(f, pathFile) {
         def imageContent = ['image/png': "png", 'image/jpeg': "jpeg", 'image/jpg': "jpg"]
         def ext = ""
@@ -76,6 +85,11 @@ class SolicitudController extends yachay.seguridad.Shield {
         } //si es imagen hace resize para que no exceda 800x800
     }
 
+    /**
+     * Valida si un archivo es válido
+     * @param f el archivo a validar
+     * @return true si el archivo es de un tipo válido
+     */
     def validateContent(f) {
         return true
 //        def okContents = [
@@ -111,6 +125,12 @@ class SolicitudController extends yachay.seguridad.Shield {
 //        }
     }
 
+    /**
+     * Sube un archivo
+     * @param tipo el tipo de archivo (tdr, oferta1, oferta2, oferta3, comparativo, analisis, revisiongaf, revisiongj, acta)
+     * @param f el archivo a subir
+     * @param objeto el objeto en el cual se va a guardar el path del archivo subido
+     */
     def uploadFile(tipo, f, objeto) {
         String pathBaseArchivos = getPathBase()
         String archivoTdr = "tdr"
@@ -249,6 +269,11 @@ class SolicitudController extends yachay.seguridad.Shield {
         /* fin del upload */
     }
 
+    /**
+     * Permite descargar un archivo
+     * @param tipo el tipo de archivo (tdr, oferta1, oferta2, oferta3, comparativo, analisis, revisiongaf, revisiongj, acta)
+     * @param objeto el objeto en el cual está guardado el path del archivo
+     */
     def downloadFile(tipo, objeto) {
         def filename = ""
         String pathBaseArchivos = getPathBase()
@@ -324,7 +349,7 @@ class SolicitudController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona a la acción List
      */
     def index = {
         redirect(action: 'list')
@@ -332,7 +357,7 @@ class SolicitudController extends yachay.seguridad.Shield {
 
     /*Listado de solicitudes*/
     /**
-     * Acción
+     * Acción que muestra el listado de solicitudes de contratación
      */
     def list = {
 
@@ -361,7 +386,7 @@ class SolicitudController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que muestra el listado de solicitudes de contratación listas para ser incluidas en la reunión de aprobación
      */
     def listAprobacion = {
         def title = g.message(code: "default.list.label", args: ["Solicitud"], default: "Solicitud List")
@@ -377,7 +402,7 @@ class SolicitudController extends yachay.seguridad.Shield {
 
     /*Permite ver los datos de la solicitud*/
     /**
-     * Acción
+     * Acción que muestra una pantalla que permite ver los datos de la solicitud
      */
     def show = {
         def solicitud = Solicitud.get(params.id)
@@ -392,7 +417,7 @@ class SolicitudController extends yachay.seguridad.Shield {
 
     /*Función para guardar una nueva solicitud*/
     /**
-     * Acción
+     * Acción que guarda una nueva solicitud
      */
     def save = {
         def usuario = Usro.get(session.usuario.id)
@@ -457,7 +482,7 @@ class SolicitudController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que permite incluir o excluir una solicitud de la reunión de aprobación
      */
     def incluirReunion = {
         def solicitud = Solicitud.get(params.id)
@@ -474,7 +499,8 @@ class SolicitudController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción llamada con ajax que genera un combo box con los componentes de un proyecto
+     * @Renders el combo box y el código ajax para cargar las actividades
      */
     def getComponentesByProyecto = {
         def tipoComponente = TipoElemento.get(2)
@@ -497,6 +523,13 @@ class SolicitudController extends yachay.seguridad.Shield {
         render sel + js
     }
 
+    /**
+     * Crea un combo box de actividades
+     * @param compId el componente padre
+     * @param selected el valor seleccionado
+     * @param width el ancho del combo box
+     * @return
+     */
     def comboActividades(compId, selected, width) {
         def tipoActividad = TipoElemento.get(3)
 

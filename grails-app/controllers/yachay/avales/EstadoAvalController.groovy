@@ -3,21 +3,21 @@ package yachay.avales
 import yachay.avales.EstadoAval
 
 /**
- * Controlador
+ * Controlador que muestra las pantallas de manejo de estados de aval
  */
 class EstadoAvalController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
     /**
-     * Acción
+     * Acción que redirecciona a la lista de estados de aval
      */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /**
-     * Acción
+     * Acción que muestra una lista de los estados de aval disponibles
      */
     def list = {
         def title = g.message(code: "estadoaval.list", default: "EstadoAval List")
@@ -29,7 +29,9 @@ class EstadoAvalController {
     }
 
     /**
-     * Acción
+     * Acción que muestra un formulario para crear un nuevo estado o modificar uno existente<br/>
+     * Si es edición y no se encuentra un estado con el id enviado, redirecciona a la lista y muestra un mensaje de error
+     * @param id el id del estado de aval a editar
      */
     def form = {
         def title
@@ -52,7 +54,7 @@ class EstadoAvalController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona al formulario de creación (acción Form)
      */
     def create = {
         params.source = "create"
@@ -60,7 +62,10 @@ class EstadoAvalController {
     }
 
     /**
-     * Acción
+     * Acción que guarda los datos ingresados en el formulario<br/>
+     * Si el estado de aval se guarda correctamente se redirecciona a la acción Show, si se encuentra un error en los datos
+     * se redirecciona a la acción Form, si el id que recibe no corresponde a ningún tipo de aval, redirecciona a la acción List
+     * @params los parámetros enviados por el submit del formulario
      */
     def save = {
         def title
@@ -92,7 +97,10 @@ class EstadoAvalController {
     }
 
     /**
-     * Acción
+     * Acción que guarda los datos ingresados en el formulario<br/>
+     * Si el estado de aval se guarda correctamente se redirecciona a la acción Show, si se encuentra un error en los datos
+     * se redirecciona a la acción Form, si el id que recibe no corresponde a ningún tipo de aval, redirecciona a la acción List
+     * @params los parámetros enviados por el submit del formulario
      */
     def update = {
         def estadoAvalInstance = EstadoAval.get(params.id)
@@ -120,7 +128,9 @@ class EstadoAvalController {
     }
 
     /**
-     * Acción
+     * Acción que muestra los datos de un estado de aval en particular<br/>
+     * Si el id enviado no corresponde a ningún estado de aval redirecciona a la acción List
+     * @param id el id del estado aval
      */
     def show = {
         def estadoAvalInstance = EstadoAval.get(params.id)
@@ -136,7 +146,7 @@ class EstadoAvalController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona al formulario de edición (acción Form)
      */
     def edit = {
         params.source = "edit"
@@ -144,7 +154,9 @@ class EstadoAvalController {
     }
 
     /**
-     * Acción
+     * Acción que elimina un estado aval<br/>
+     * Si la eliminación fue exitosa redirecciona a la acción List, caso contrario redirecciona a la acción Show.
+     * @param id el id del estado aval a eliminar
      */
     def delete = {
         def estadoAvalInstance = EstadoAval.get(params.id)

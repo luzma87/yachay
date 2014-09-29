@@ -5,12 +5,13 @@ import yachay.parametros.UnidadEjecutora
 import yachay.seguridad.Usro
 
 /**
- * Controlador
+ * Controlador que muestra las pantallas de manejo de revisiones de avales
  */
 class RevisionAvalController {
 
     /**
-     * Acción
+     * Acción que muestra la lista de solicitudes de aval pendientes (estadoAval código E01)
+     * @param anio el año para el cual se van a mostrar las solicitudes. Si no recibe este parámetro muestra del año actual.
      */
     def pendientes = {
         def solicitudes = SolicitudAval.findAllByEstado(EstadoAval.findByCodigo("E01"))
@@ -23,7 +24,8 @@ class RevisionAvalController {
     }
 
     /**
-     * Acción
+     * Acción llamada con ajax que permite negar un aval.
+     * @Returns "ok" si se puede negar el aval, "no" en caso de que el usuario no pueda negar avales
      */
     def negarAval = {
 
@@ -41,14 +43,12 @@ class RevisionAvalController {
 
         } else {
             render("no")
-
         }
-
-
     }
 
     /**
-     * Acción
+     * Acción que muestra la lista de avales de un año
+     * @param anio el año para el cual se van a mostrar las solicitudes. Si no recibe este parámetro muestra del año actual.
      */
     def listaAvales = {
         def actual
@@ -60,18 +60,22 @@ class RevisionAvalController {
     }
 
     /**
-     * Acción
+     * Acción que muestra la pantalla que permite liberar un aval
+     * @param id el id del aval a liberar
      */
     def liberarAval = {
-
         def aval = Aval.get(params.id)
         def detalle = ProcesoAsignacion.findAllByProceso(aval.proceso)
         [aval: aval, detalle: detalle]
-
     }
 
     /**
-     * Acción
+     * Acción que muestra la pantalla con el historial de avales de un año
+     * @param anio el año para el cual se van a mostrar los avales
+     * @param proceso
+     * @param numero
+     * @param sort
+     * @param order
      */
     def historialAvales = {
         println "historial aval " + params
@@ -163,7 +167,10 @@ class RevisionAvalController {
     }
 
     /**
-     * Acción
+     * Acción que muestra la pantalla con el historial de solicitudes de avales
+     * @param anio el año para el cual se van a mostrar los avales
+     * @param proceso
+     * @param numero
      */
     def historial = {
 //        println "historial "+params
@@ -209,10 +216,10 @@ class RevisionAvalController {
     }
 
     /**
-     * Acción
+     * Acción que muestra la pantalla que permite aprobar una solicitud de aval
+     * @param id el id de la solicitud de aval a aprobar
      */
     def aprobarAval = {
-
         def unidad = UnidadEjecutora.findByCodigo("DPI") // DIRECCIÓN DE PLANIFICACIÓN E INVERSIÓN
         def personasFirmas = Usro.findAllByUnidad(unidad)
         def numero = 0
@@ -231,7 +238,8 @@ class RevisionAvalController {
     }
 
     /**
-     * Acción
+     * Acción que muestra la pantalla que permite aprobar la solicitud de anulación
+     * @param id el id de la solicitud de aval
      */
     def aprobarAnulacion = {
         def solicitud = SolicitudAval.get(params.id)
@@ -245,7 +253,13 @@ class RevisionAvalController {
     }
 
     /**
-     * Acción
+     * Acción llamada con ajax que guarda los datos de una solicitud de aval
+     * @param id el id de la solicitud de aval
+     * @param obs las observaciones de la solicitud
+     * @param aval el número de la solicitud
+     * @param firma2 la segunda firma de la solicitud
+     * @param firma3 la tercera firma de la solicitud
+     * @Renders "ok"
      */
     def guarDatosDoc = {
         println "guardar datos doc " + params
@@ -258,9 +272,9 @@ class RevisionAvalController {
         render "ok"
     }
 
-
     /**
-     * Acción
+     * Acción que permite guardar la liberación de un aval
+     * @params los parámetros enviados por el submit del formulario
      */
     def guardarLiberacion = {
         println "liberacion " + params
@@ -366,7 +380,7 @@ class RevisionAvalController {
     }
 
     /**
-     * Acción
+     * Acción que permite caducar un aval
      */
     def caducarAval = {
         def aval = Aval.get(params.id)
@@ -375,9 +389,8 @@ class RevisionAvalController {
         redirect(action: "listaAvales")
     }
 
-
     /**
-     * Acción
+     * Acción que permite guardar la anulación de una solicitud de aval
      */
     def guardarAnulacion = {
         println "aprobar anulacion " + params
@@ -454,7 +467,7 @@ class RevisionAvalController {
                     aval.save(flush: true)
                     sol.estado = EstadoAval.findByCodigo("E02")
                     sol.save(flush: true)
-                    flash.message = "Solciitud de anulación aprobada - Aval " + aval.fechaAprobacion.format("yyyy") + "-GP No." +tdn.imprimeNumero(aval:"${aval.id}") + " anulado"
+                    flash.message = "Solciitud de anulación aprobada - Aval " + aval.fechaAprobacion.format("yyyy") + "-GP No." + tdn.imprimeNumero(aval: "${aval.id}") + " anulado"
                     redirect(action: 'pendientes', controller: 'revisionAval')
                 } else {
                     flash.message = "Usted no tiene permisos para aprobar esta solicitud"
@@ -465,7 +478,7 @@ class RevisionAvalController {
     }
 
     /**
-     * Acción
+     * Acción que permite guardar la aprobación de una solicitud de aval
      */
     def guardarAprobacion = {
         /*TODO enviar alertas*/

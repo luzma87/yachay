@@ -9,7 +9,7 @@ import yachay.alertas.Alerta
 import yachay.seguridad.Usro
 
 /**
- * Controlador qu muestra las pantallas de manejo de avales
+ * Controlador que muestra las pantallas de manejo de avales
  */
 class AvalesController extends yachay.seguridad.Shield {
 
