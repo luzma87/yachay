@@ -268,15 +268,15 @@ class RevisionAvalController {
         if(obs) {
             obs = obs.replaceAll("&nbsp", "")
             obs = obs.replaceAll("&Oacute;", "Ó")
-            obs = obs.replaceAll("&oacute", "ó")
+            obs = obs.replaceAll("&oacute;", "ó")
             obs = obs.replaceAll("&Aacute;", "Á")
-            obs = obs.replaceAll("&aacute", "a")
+            obs = obs.replaceAll("&aacute;", "á")
             obs = obs.replaceAll("&Eacute;", "É")
-            obs = obs.replaceAll("&eacute", "e")
+            obs = obs.replaceAll("&eacute;", "é")
             obs = obs.replaceAll("&Iacute;", "Í")
-            obs = obs.replaceAll("&iacute", "í")
+            obs = obs.replaceAll("&iacute;", "í")
             obs = obs.replaceAll("&Uacute;", "Ú")
-            obs = obs.replaceAll("&uacute", "ú")
+            obs = obs.replaceAll("&uacute;", "ú")
 
         }
         sol.observaciones = obs
