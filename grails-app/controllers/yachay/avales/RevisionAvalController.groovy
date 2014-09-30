@@ -265,8 +265,20 @@ class RevisionAvalController {
         println "guardar datos doc " + params
         def sol = SolicitudAval.get(params.id)
         def obs = params.obs
-        if(obs)
-            obs = obs.replaceAll("&nbsp","")
+        if(obs) {
+            obs = obs.replaceAll("&nbsp", "")
+            obs = obs.replaceAll("&Oacute;", "Ó")
+            obs = obs.replaceAll("&oacute", "ó")
+            obs = obs.replaceAll("&Aacute;", "Á")
+            obs = obs.replaceAll("&aacute", "a")
+            obs = obs.replaceAll("&Eacute;", "É")
+            obs = obs.replaceAll("&eacute", "e")
+            obs = obs.replaceAll("&Iacute;", "Í")
+            obs = obs.replaceAll("&iacute", "í")
+            obs = obs.replaceAll("&Uacute;", "Ú")
+            obs = obs.replaceAll("&uacute", "ú")
+
+        }
         sol.observaciones = obs
         sol.numero = params.aval
         sol.firma2 = Usro.get(params.firma2)
