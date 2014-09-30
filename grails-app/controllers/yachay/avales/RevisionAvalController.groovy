@@ -264,7 +264,10 @@ class RevisionAvalController {
     def guarDatosDoc = {
         println "guardar datos doc " + params
         def sol = SolicitudAval.get(params.id)
-        sol.observaciones = params.obs
+        def obs = params.obs
+        if(obs)
+            obs = obs.replaceAll("&nbsp","")
+        sol.observaciones = obs
         sol.numero = params.aval
         sol.firma2 = Usro.get(params.firma2)
         sol.firma3 = Usro.get(params.firma3)
