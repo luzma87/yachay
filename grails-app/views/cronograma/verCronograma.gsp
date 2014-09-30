@@ -70,7 +70,7 @@
     <div class="dialog">
         <table style="width: 1600px;margin-left: -20px" border="1">
             %{--<thead style="background: rgba(110, 182, 213,0.2)">--}%
-            <thead style="background: #595292">
+            <thead style="background: #363636">
             <tr>
                 <th>&nbsp;</th>
                 <g:form action="verCronograma" method="post" class="frm_anio">
@@ -213,9 +213,9 @@
                 </tr>
             </g:each>
             <tr>
-                <td class="colGrande " style="background: #595292" colspan="13"><b>TOTAL DEL PROYECTO</b>
+                <td class="colGrande " style="background: #363636" colspan="13"><b>TOTAL DEL PROYECTO</b>
                 </td>
-                <td style="text-align: center;background: #595292"><b><div
+                <td style="text-align: center;background: #363636"><b><div
                         id="totGeneralAsignado">
                     <g:formatNumber number="${totProyAsig}"
                                     format="###,##0"

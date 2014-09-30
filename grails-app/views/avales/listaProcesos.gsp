@@ -19,7 +19,7 @@
 
         th{
 
-        background-color: #595292 !important;
+        background-color: #363636 !important;
 
         }
 

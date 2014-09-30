@@ -20,7 +20,7 @@
 
         <style type="text/css">
             th{
-                background-color: #595292;
+                background-color: #363636;
             }
         </style>
 

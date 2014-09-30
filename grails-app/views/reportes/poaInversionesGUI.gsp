@@ -54,7 +54,7 @@
 
         .disp {
             /*border-color : #EAD2C2;*/
-            border-color : #595292;
+            border-color : #363636;
         }
 
         .sel {
