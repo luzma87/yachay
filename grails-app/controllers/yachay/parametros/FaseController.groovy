@@ -1,23 +1,21 @@
 package yachay.parametros
 
-import yachay.parametros.Fase
-
 /**
- * Controlador
+ * Controlador que muestra las pantallas de manejo de fases
  */
 class FaseController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
     /**
-     * Acción
+     * Acción que redirecciona a la acción List
      */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /**
-     * Acción
+     * Acción que muestra la lista de fases
      */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Fase"], default: "Fase List")
@@ -29,7 +27,7 @@ class FaseController {
     }
 
     /**
-     * Acción
+     * Acción que muestra el formulario de creación y edición de fase
      */
     def form = {
         def title
@@ -52,7 +50,7 @@ class FaseController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona al formulario de creación (acción Form)
      */
     def create = {
         params.source = "create"
@@ -60,7 +58,9 @@ class FaseController {
     }
 
     /**
-     * Acción
+     * Acción que guarda una fase. Si guarda correctamente redirecciona a la acción Show, caso contrario a la acción Form y
+     * muestra un mensaje
+     * @params los parámetros enviados por el formulario
      */
     def save = {
         def title
@@ -72,12 +72,10 @@ class FaseController {
                 if (!faseInstance.hasErrors() && faseInstance.save(flush: true)) {
                     flash.message = "${message(code: 'default.updated.message', args: [message(code: 'fase.label', default: 'Fase'), faseInstance.id])}"
                     redirect(action: "show", id: faseInstance.id)
-                }
-                else {
+                } else {
                     render(view: "form", model: [faseInstance: faseInstance, title: title, source: "edit"])
                 }
-            }
-            else {
+            } else {
                 flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'fase.label', default: 'Fase'), params.id])}"
                 redirect(action: "list")
             }
@@ -87,15 +85,16 @@ class FaseController {
             if (faseInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.created.message', args: [message(code: 'fase.label', default: 'Fase'), faseInstance.id])}"
                 redirect(action: "show", id: faseInstance.id)
-            }
-            else {
+            } else {
                 render(view: "form", model: [faseInstance: faseInstance, title: title, source: "create"])
             }
         }
     }
 
     /**
-     * Acción
+     * Acción que guarda una fase. Si guarda correctamente redirecciona a la acción Show, caso contrario a la acción Form y
+     * muestra un mensaje
+     * @params los parámetros enviados por el formulario
      */
     def update = {
         def faseInstance = Fase.get(params.id)
@@ -113,27 +112,24 @@ class FaseController {
             if (!faseInstance.hasErrors() && faseInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'fase.label', default: 'Fase'), faseInstance.id])}"
                 redirect(action: "show", id: faseInstance.id)
-            }
-            else {
+            } else {
                 render(view: "edit", model: [faseInstance: faseInstance])
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'fase.label', default: 'Fase'), params.id])}"
             redirect(action: "list")
         }
     }
 
     /**
-     * Acción
+     * Acción que muestra los datos de una fase
      */
     def show = {
         def faseInstance = Fase.get(params.id)
         if (!faseInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'fase.label', default: 'Fase'), params.id])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
 
             def title = g.message(code: "default.show.label", args: ["Fase"], default: "Show Fase")
 
@@ -142,7 +138,7 @@ class FaseController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona al formulario de edición (acción Form)
      */
     def edit = {
         params.source = "edit"
@@ -150,7 +146,8 @@ class FaseController {
     }
 
     /**
-     * Acción
+     * Acción que permite eliminar una fase y redirecciona a la acción List
+     * @param id id del elemento a ser eliminado
      */
     def delete = {
         def faseInstance = Fase.get(params.id)
@@ -164,8 +161,7 @@ class FaseController {
                 flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'fase.label', default: 'Fase'), params.id])}"
                 redirect(action: "show", id: params.id)
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'fase.label', default: 'Fase'), params.id])}"
             redirect(action: "list")
         }

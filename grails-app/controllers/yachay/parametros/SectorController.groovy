@@ -1,23 +1,21 @@
 package yachay.parametros
 
-import yachay.parametros.Sector
-
 /**
- * Controlador
+ * Controlador que muestra las pantallas de manejo de sectores
  */
 class SectorController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
     /**
-     * Acción
+     * Acción que redirecciona a la acción List
      */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /**
-     * Acción
+     * Acción que muestra la lista de sectores
      */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Sector"], default: "Sector List")
@@ -29,7 +27,7 @@ class SectorController {
     }
 
     /**
-     * Acción
+     * Acción que muestra el formulario de creación y edición de sector
      */
     def form = {
         def title
@@ -52,7 +50,7 @@ class SectorController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona al formulario de creación (acción Form)
      */
     def create = {
         params.source = "create"
@@ -60,7 +58,9 @@ class SectorController {
     }
 
     /**
-     * Acción
+     * Acción que guarda un sector. Si guarda correctamente redirecciona a la acción Show, caso contrario a la acción Form y
+     * muestra un mensaje
+     * @params los parámetros enviados por el formulario
      */
     def save = {
         def title
@@ -72,12 +72,10 @@ class SectorController {
                 if (!sectorInstance.hasErrors() && sectorInstance.save(flush: true)) {
                     flash.message = "${message(code: 'default.updated.message', args: [message(code: 'sector.label', default: 'Sector'), sectorInstance.id])}"
                     redirect(action: "show", id: sectorInstance.id)
-                }
-                else {
+                } else {
                     render(view: "form", model: [sectorInstance: sectorInstance, title: title, source: "edit"])
                 }
-            }
-            else {
+            } else {
                 flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'sector.label', default: 'Sector'), params.id])}"
                 redirect(action: "list")
             }
@@ -87,15 +85,16 @@ class SectorController {
             if (sectorInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.created.message', args: [message(code: 'sector.label', default: 'Sector'), sectorInstance.id])}"
                 redirect(action: "show", id: sectorInstance.id)
-            }
-            else {
+            } else {
                 render(view: "form", model: [sectorInstance: sectorInstance, title: title, source: "create"])
             }
         }
     }
 
     /**
-     * Acción
+     * Acción que guarda un sector. Si guarda correctamente redirecciona a la acción Show, caso contrario a la acción Form y
+     * muestra un mensaje
+     * @params los parámetros enviados por el formulario
      */
     def update = {
         def sectorInstance = Sector.get(params.id)
@@ -113,27 +112,24 @@ class SectorController {
             if (!sectorInstance.hasErrors() && sectorInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'sector.label', default: 'Sector'), sectorInstance.id])}"
                 redirect(action: "show", id: sectorInstance.id)
-            }
-            else {
+            } else {
                 render(view: "edit", model: [sectorInstance: sectorInstance])
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'sector.label', default: 'Sector'), params.id])}"
             redirect(action: "list")
         }
     }
 
     /**
-     * Acción
+     * Acción que muestra los datos de un sector
      */
     def show = {
         def sectorInstance = Sector.get(params.id)
         if (!sectorInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'sector.label', default: 'Sector'), params.id])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
 
             def title = g.message(code: "default.show.label", args: ["Sector"], default: "Show Sector")
 
@@ -142,16 +138,17 @@ class SectorController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona al formulario de edición (acción Form)
      */
     def edit = {
         params.source = "edit"
         redirect(action: "form", params: params)
     }
 
-    /**
-     * Acción
-     */
+/**
+ * Acción que permite eliminar un sector y redirecciona a la acción List
+ * @param id id del elemento a ser eliminado
+ */
     def delete = {
         def sectorInstance = Sector.get(params.id)
         if (sectorInstance) {
@@ -164,8 +161,7 @@ class SectorController {
                 flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'sector.label', default: 'Sector'), params.id])}"
                 redirect(action: "show", id: params.id)
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'sector.label', default: 'Sector'), params.id])}"
             redirect(action: "list")
         }

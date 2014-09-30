@@ -1,23 +1,21 @@
 package yachay.parametros
 
-import yachay.parametros.Cobertura
-
 /**
- * Controlador
+ * Controlador que muestra las pantallas de manejo de coberturas
  */
 class CoberturaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
     /**
-     * Acción
+     * Acción que redirecciona a la acción List
      */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /**
-     * Acción
+     * Acción que muestra la lista de coberturas
      */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Cobertura"], default: "Cobertura List")
@@ -29,7 +27,7 @@ class CoberturaController {
     }
 
     /**
-     * Acción
+     * Acción que muestra el formulario de creación y edición de cobertura
      */
     def form = {
         def title
@@ -52,7 +50,7 @@ class CoberturaController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona al formulario de creación (acción Form)
      */
     def create = {
         params.source = "create"
@@ -60,7 +58,9 @@ class CoberturaController {
     }
 
     /**
-     * Acción
+     * Acción que guarda una cobertura. Si guarda correctamente redirecciona a la acción Show, caso contrario a la acción Form y
+     * muestra un mensaje
+     * @params los parámetros enviados por el formulario
      */
     def save = {
         def title
@@ -95,7 +95,9 @@ class CoberturaController {
     }
 
     /**
-     * Acción
+     * Acción que guarda una cobertura. Si guarda correctamente redirecciona a la acción Show, caso contrario a la acción Form y
+     * muestra un mensaje
+     * @params los parámetros enviados por el formulario
      */
     def update = {
         def coberturaInstance = Cobertura.get(params.id)
@@ -125,7 +127,7 @@ class CoberturaController {
     }
 
     /**
-     * Acción
+     * Acción que muestra los datos de una cobertura
      */
     def show = {
         def coberturaInstance = Cobertura.get(params.id)
@@ -142,7 +144,7 @@ class CoberturaController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona al formulario de edición (acción Form)
      */
     def edit = {
         params.source = "edit"
@@ -150,7 +152,8 @@ class CoberturaController {
     }
 
     /**
-     * Acción
+     * Acción que permite eliminar una cobertura y redirecciona a la acción List
+     * @param id id del elemento a ser eliminado
      */
     def delete = {
         def coberturaInstance = Cobertura.get(params.id)

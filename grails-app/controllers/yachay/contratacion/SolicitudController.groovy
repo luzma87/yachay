@@ -568,14 +568,20 @@ class SolicitudController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción llamada con ajax que muestra un combo box de actividades para un cierto componente
+     * @param id el id del componente
+     * @param val el valor que debe ser seleccionado
+     * @param width el ancho del combo box
+     * @Returns el combo de actividades
      */
     def getActividadesByComponente = {
         render comboActividades(params.id, params.val, params.width)
     }
 
     /**
-     * Acción
+     * Acción llamada con ajax que busca los datos de una actividad
+     * @param id el id de la actividad
+     * @Renders el objeto de la actividad, el monto, las asignaciones y la duración en días
      */
     def getDatosActividad = {
         def actividad = MarcoLogico.get(params.id.toLong())
@@ -591,7 +597,9 @@ class SolicitudController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción llamada con ajax que crea una nueva actividad
+     * @params los parámetros enviados por el formulario de cración de actividad
+     * @Renders el combo de actividades con la nueva actividad seleccionada
      */
     def newActividad_ajax = {
         def usuario = Usro.get(session.usuario.id)
@@ -630,7 +638,10 @@ class SolicitudController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción llamada con ajax que permite modificar el monto de una solicitud
+     * @param id el de la solicitud
+     * @param monto el nuevo monto de la solicitud
+     * @Renders "OK_"+mensaje en caso de guardar correctamente, "NO_"+mensaje de error en caso contrario
      */
     def cambiarMax = {
         def solicitud = Solicitud.get(params.id)
@@ -657,7 +668,10 @@ class SolicitudController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción llamada con ajax que permite actualizar el monto de un detalle de la solicitud
+     * @param id el id de la solicitud
+     * @param valores los valores separados por ;
+     * @Renders "OK_"+montoSolicitado+"_"+montoTotal en caso de guardar correctamente, una lista de los errores en caso contrario
      */
     def updateDetalleMonto_ajax = {
         def solicitud = Solicitud.get(params.id)
@@ -708,7 +722,8 @@ class SolicitudController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que muestra los detalles de planificación del monto de una solicitud por año
+     * @param id el id de la solicitud
      */
     def detalleMonto = {
         def solicitud = Solicitud.get(params.id)
@@ -725,8 +740,13 @@ class SolicitudController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción llamada con ajax que agregar un detalle de monto de la solicitud
+     * @param id el id de la solicitud
+     * @param anio el id del año
+     * @param monto el monto
+     * @deprecated ahora se utiliza la acción updateDetalleMonto_ajax
      */
+    @Deprecated
     def addDetalleMonto = {
         def solicitud = Solicitud.get(params.id)
         def anio = Anio.get(params.anio)
@@ -754,7 +774,10 @@ class SolicitudController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que muestra el formulario de creación o edición de una solicitud de contratación<br/>
+     * Verifica según el perfil si puede o no ver el formulario. Si no puede, redirecciona a la acción Show o a List
+     * dependiendo de si se envía o no el parámetro id
+     * @param id el id de la solicitud en caso de que sea edición
      */
     def ingreso = {
         if (session.perfil.codigo == "RQ" || session.perfil.codigo == "DRRQ") {
@@ -792,7 +815,9 @@ class SolicitudController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que muestra la pantalla de revisión de solicitud<br/>
+     * Según el perfil del usuario permite o no editar
+     * @param id id de la solicitud
      */
     def revision = {
         def perfil = Prfl.get(session.perfil.id)
@@ -807,7 +832,8 @@ class SolicitudController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que guarda la revisión realizada y redirecciona a la acción Show
+     * @params los parámetros enviados por el formulario
      */
     def saveRevision = {
         def solicitud = Solicitud.get(params.id)
@@ -870,7 +896,9 @@ class SolicitudController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que muestra la pantalla de aprobación de solicitud<br/>
+     * Según el perfil del usuario permite o no editar
+     * @param id el id de la solicitud
      */
     def aprobacion = {
         def solicitud = Solicitud.get(params.id.toLong())
@@ -903,7 +931,8 @@ class SolicitudController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que guarda la aprobación realizada y redirecciona a la acción Show
+     * @params los parámetros enviados por el formulario
      */
     def saveAprobacion = {
         def aprobacion = new Aprobacion()
@@ -928,7 +957,9 @@ class SolicitudController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que permite cargar el acta firmada y redirecciona a la acción Show
+     * @param id el id de la aprobación
+     * @param pdf el request del archivo enviado
      */
     def uploadActa = {
         def aprobacion = Aprobacion.get(params.id.toLong())
@@ -937,7 +968,9 @@ class SolicitudController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que permite descargar la solicitud
+     * @param id el id de la solicitud
+     * @param tipo el tipo de archivo a descargar
      */
     def downloadSolicitud = {
         def solicitud = Solicitud.get(params.id.toLong())
@@ -945,7 +978,9 @@ class SolicitudController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que permite descargar el acta
+     * @param id el id de la solicitud
+     * @param tipo el tipo de archivo a descargar
      */
     def downloadActa = {
         def aprobacion = Aprobacion.get(params.id.toLong())

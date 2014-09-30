@@ -1,7 +1,5 @@
 package yachay.parametros
 
-import yachay.parametros.SubSecretaria
-
 /**
  * Controlador
  */

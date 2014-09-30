@@ -1,16 +1,14 @@
 package yachay.parametros
 
-import yachay.parametros.CargoPersonal
-
 /**
- * Controlador
+ * Controlador que muestra las pantallas de manejo de cargos de personal
  */
 class CargoPersonalController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
     /**
-     * Acción
+     * Acción que redirecciona a la acción List
      */
     def index = {
         redirect(action: "list", params: params)
@@ -18,7 +16,7 @@ class CargoPersonalController {
 
     /*Lista de cargos*/
     /**
-     * Acción
+     * Acción que muestra la lista de cargos
      */
     def list = {
         def title = g.message(code: "cargopersonal.list", default: "CargoPersonal List")
@@ -31,7 +29,7 @@ class CargoPersonalController {
 
     /*Form para crear un nuevo cargo de personal*/
     /**
-     * Acción
+     * Acción que muestra el formulario de creación y edición de cargo
      */
     def form = {
         def title
@@ -54,7 +52,7 @@ class CargoPersonalController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona al formulario de creación (acción Form)
      */
     def create = {
         params.source = "create"
@@ -63,7 +61,9 @@ class CargoPersonalController {
 
     /*Función para guardar los datos de un nuevo cargo de personal*/
     /**
-     * Acción
+     * Acción que guarda un cargo. Si guarda correctamente redirecciona a la acción Show, caso contrario a la acción Form y
+     * muestra un mensaje
+     * @params los parámetros enviados por el formulario
      */
     def save = {
         def title
@@ -75,12 +75,10 @@ class CargoPersonalController {
                 if (!cargoPersonalInstance.hasErrors() && cargoPersonalInstance.save(flush: true)) {
                     flash.message = "${message(code: 'default.updated.message', args: [message(code: 'cargoPersonal.label', default: 'CargoPersonal'), cargoPersonalInstance.id])}"
                     redirect(action: "show", id: cargoPersonalInstance.id)
-                }
-                else {
+                } else {
                     render(view: "form", model: [cargoPersonalInstance: cargoPersonalInstance, title: title, source: "edit"])
                 }
-            }
-            else {
+            } else {
                 flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'cargoPersonal.label', default: 'CargoPersonal'), params.id])}"
                 redirect(action: "list")
             }
@@ -90,8 +88,7 @@ class CargoPersonalController {
             if (cargoPersonalInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.created.message', args: [message(code: 'cargoPersonal.label', default: 'CargoPersonal'), cargoPersonalInstance.id])}"
                 redirect(action: "show", id: cargoPersonalInstance.id)
-            }
-            else {
+            } else {
                 render(view: "form", model: [cargoPersonalInstance: cargoPersonalInstance, title: title, source: "create"])
             }
         }
@@ -99,7 +96,9 @@ class CargoPersonalController {
 
     /*Función para actualizar los datos de un cargo*/
     /**
-     * Acción
+     * Acción que guarda un cargo. Si guarda correctamente redirecciona a la acción Show, caso contrario a la acción Form y
+     * muestra un mensaje
+     * @params los parámetros enviados por el formulario
      */
     def update = {
         def cargoPersonalInstance = CargoPersonal.get(params.id)
@@ -117,12 +116,10 @@ class CargoPersonalController {
             if (!cargoPersonalInstance.hasErrors() && cargoPersonalInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'cargoPersonal.label', default: 'CargoPersonal'), cargoPersonalInstance.id])}"
                 redirect(action: "show", id: cargoPersonalInstance.id)
-            }
-            else {
+            } else {
                 render(view: "edit", model: [cargoPersonalInstance: cargoPersonalInstance])
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'cargoPersonal.label', default: 'CargoPersonal'), params.id])}"
             redirect(action: "list")
         }
@@ -130,15 +127,14 @@ class CargoPersonalController {
 
     /*Muestra los datos de un cargo específico*/
     /**
-     * Acción
+     * Acción que muestra los datos de un cargo
      */
     def show = {
         def cargoPersonalInstance = CargoPersonal.get(params.id)
         if (!cargoPersonalInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'cargoPersonal.label', default: 'CargoPersonal'), params.id])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
 
             def title = g.message(code: "cargopersonal.show", default: "Show CargoPersonal")
 
@@ -147,7 +143,7 @@ class CargoPersonalController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona al formulario de edición (acción Form)
      */
     def edit = {
         params.source = "edit"
@@ -156,7 +152,8 @@ class CargoPersonalController {
 
     /*Función para borrar un cargo*/
     /**
-     * Acción
+     * Acción que permite eliminar un cargo y redirecciona a la acción List
+     * @param id id del elemento a ser eliminado
      */
     def delete = {
         def cargoPersonalInstance = CargoPersonal.get(params.id)
@@ -170,8 +167,7 @@ class CargoPersonalController {
                 flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'cargoPersonal.label', default: 'CargoPersonal'), params.id])}"
                 redirect(action: "show", id: params.id)
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'cargoPersonal.label', default: 'CargoPersonal'), params.id])}"
             redirect(action: "list")
         }

@@ -1,26 +1,14 @@
 package yachay.parametros
 
-import yachay.parametros.Entidad
-import yachay.parametros.PresupuestoUnidad
-import yachay.parametros.SubSecretaria
-import yachay.parametros.Unidad
-import yachay.parametros.UnidadEjecutora
 import yachay.parametros.poaPac.Anio
-import yachay.parametros.TipoResponsable
 import yachay.proyectos.Documento
 import yachay.proyectos.Proyecto
 import yachay.proyectos.ResponsableProyecto
-import yachay.seguridad.Persona
-import yachay.seguridad.Usro
 import yachay.seguridad.Sesn
-import yachay.seguridad.Prfl
-
+import yachay.seguridad.Usro
 
 /**
- * Controlador para manejar operaciones sobre objetos de tipo entidad
- */
-/**
- * Controlador
+ * Controlador que muestra las pantallas de manejo de entidades
  */
 class EntidadController extends yachay.seguridad.Shield {
 
@@ -30,18 +18,17 @@ class EntidadController extends yachay.seguridad.Shield {
     def dbConnectionService
 
     /**
-     * redirecciona a la vista de lista
-     */
-    /**
-     * Acción
+     * Acción que redirecciona a la acción List
      */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /**
-     * Genera el &aacute;rbol de entidades (deprecated)
+     * Genera el árbol de entidades
+     * @deprecated ahora se utiliza la función que genera solamente nodos y no el árbol completo
      */
+    @Deprecated
     String makeTree() {
         def entidades = Entidad.list(sort: "nombre", order: "asc")
         def tree = ""
@@ -99,12 +86,12 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Genera un nodo del &aacute;rbol de entidades
-     * @param tipo  el tipo de nodo: padre        para cargar las unidades ejecutoras de c&oacute;digo 1
-     *                                 padre_nu     para cargar las unidades ejecutoras sin padre
-     *                                 unej         para cargar las unidades ejecutoras de padre 'unej'
-     * @param id    el id del nodo padre
-     * @return      el html del nodo del &aacute;rbol
+     * Genera un nodo del árbol de entidades
+     * @param tipo el tipo de nodo: padre: para cargar las unidades ejecutoras de código 1<br/>
+     *                              padre_nu: para cargar las unidades ejecutoras sin padre<br/>
+     *                              unej: para cargar las unidades ejecutoras de padre 'unej'
+     * @param id el id del nodo padre
+     * @return el html del nodo del árbol
      */
     String makeBasicTree(tipo, id) {
         println "makeBasicTree(" + tipo + "       " + id + ")"
@@ -180,20 +167,16 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Recibe un request ajax para cargar un nodo del &aacute;rbol de entidades
-     * @param tipo  el tipo de nodo a cargar
-     * @param id    el id del nodo a cargar
-     */
-    /**
-     * Acción
+     * Acción llamada con ajax que recibe un request para cargar un nodo del árbol de entidades
+     * @param tipo el tipo de nodo a cargar
+     * @param id el id del nodo a cargar
      */
     def loadTreePart = {
         render(makeBasicTree(params.tipo, params.id))
     }
 
-    /*Función para sacar los responsables de cada una de las partes de la estructura institucional definida*/
     /**
-     * Acción
+     * Acción para sacar los responsables de cada una de las partes de la estructura institucional definida
      */
     def getResponsables = {
         /*
@@ -294,19 +277,17 @@ class EntidadController extends yachay.seguridad.Shield {
         render g.select(from: ls, optionKey: 'key', optionValue: 'value', name: "responsable", "class": "field required ui-widget-content ui-corner-all")
     }
 
-
     /**
-     * Acción
+     * Acción que muestra los responsables de una unidad
+     * @param id el id de la unidad ejecutora
      */
     def responsables = {
         def unidad = UnidadEjecutora.get(params.id)
         return [unidad: unidad]
     }
 
-
-    /*Lista los responsables actuales y nos permite agregar reponsables */
     /**
-     * Acción
+     * Acción que muestra una lista los responsables actuales y permite agregar reponsables
      */
     def responsable = {
         def unidad = UnidadEjecutora.get(params.id)
@@ -336,10 +317,8 @@ class EntidadController extends yachay.seguridad.Shield {
         return [usuarios: usuarios, unidad: unidad, responsables: responsables]
     } //responsable
 
-
-    /*Función para dar de baja a un responsable*/
     /**
-     * Acción
+     * Acción para dar de baja a un responsable
      */
     def bajaResponsable = {
         def responsable = ResponsableProyecto.get(params.id)
@@ -356,9 +335,8 @@ class EntidadController extends yachay.seguridad.Shield {
         }
     }
 
-    /*Función para guardar un responsable*/
     /**
-     * Acción
+     * Acción para guardar un responsable
      */
     def saveResponsable = {
 //        println "SAVE RESP: " + params
@@ -404,9 +382,8 @@ class EntidadController extends yachay.seguridad.Shield {
         }
     }
 
-    /*Tabla de los responsables actuales*/
     /**
-     * Acción
+     * Acción que muestra una tabla con los responsables actuales
      */
     def reloadResponsables = {
         def unidad = UnidadEjecutora.get(params.id)
@@ -428,10 +405,11 @@ class EntidadController extends yachay.seguridad.Shield {
         return [responsables: responsables]
     }
 
-
     /**
-     * Acción
+     * Acción que guarda los datos de un responsable
+     * @deprecated ahora se utiliza la acción saveResponsable
      */
+    @Deprecated
     def saveResponsable_ = {
 //        println "SAVE RESPONSABLE " + params
 
@@ -574,9 +552,8 @@ class EntidadController extends yachay.seguridad.Shield {
         }
     }
 
-    /*Muestra responsables de la unidad actual*/
     /**
-     * Acción
+     * Acción que muestra el historial de los responsables de la unidad actual
      */
     def historialResponsables = {
         def unidad = UnidadEjecutora.get(params.id)
@@ -634,32 +611,35 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que muestra la pantalla con el árbol de entidades con usuarios
      */
     def arbol = {}
 
     /**
-     * Acción
+     * Acción que muestra la pantalla con el árbol de entidades para asignación
      */
     def arbol_asg = {}
 
-    /*Arbol de asignaciones*/
     /**
-     * Acción
+     * Acción que muestra la pantalla con el árbol de entidades con usuarios
+     * @deprecated ahora se usa la cción Arbol
      */
+    @Deprecated
     def arbol_ = {
         return [tree: makeTree()]
     }
 
     /**
-     * Acción
+     * Acción que renderiza el árbol de entidades
+     * @deprecated ya no se utiliza
      */
+    @Deprecated
     def renderArbol = {
         render(makeTree())
     }
 
     /**
-     * Acción
+     * Acción llamada con ajax que muestra la información de un nodo del árbol
      */
     def infoForTree = {
 
@@ -684,7 +664,9 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que busca el presupuesto de un año de una unidad ejecutora
+     * @param anio el id del año
+     * @param unidad el id de la unidad
      */
     def getPresupuestoAnio = {
         def anio = Anio.get(params.anio)
@@ -714,15 +696,18 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que muestra el formulario para asignar presupuesto
+     * @param id el id de la unidad
      */
     def presupuestoFromTree = {
         def unidad = UnidadEjecutora.get(params.id)
 
         return [unidad: unidad]
     }
+
     /**
-     * Acción
+     * Acción que muestra un documento
+     * @param id el id de la unidad
      */
     def docsFromTreeVer = {
         def documentoInstance = Documento.get(params.id)
@@ -736,8 +721,11 @@ class EntidadController extends yachay.seguridad.Shield {
             [documentoInstance: documentoInstance, unidad: documentoInstance.unidadEjecutora]
         }
     }
+
     /**
-     * Acción
+     * Acción que muestra un formulario para editar los documentos
+     * @param id el id del documento
+     * @param unidad el id de la unidad
      */
     def docsFromTreeEdit = {
         def unidad = UnidadEjecutora.get(params.unidad)
@@ -752,7 +740,9 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que permite cargar documentos
+     * @param id el id de la unidad
+     * @param fileUpload el request del archivo a subir
      */
     def docsFromTreeUpload = {
 
@@ -862,8 +852,11 @@ class EntidadController extends yachay.seguridad.Shield {
         }
         redirect(action: "docsFromTree", params: [id: unidad.id])
     }
+
     /**
-     * Acción
+     * Acción que permite eliminar un documento
+     * @param id los ids de los documentos a eliminar
+     * @param unidad el id de la unidad
      */
     def docsFromTreeDelete = {
 //        println "DELETE DOC"
@@ -894,8 +887,11 @@ class EntidadController extends yachay.seguridad.Shield {
 
         redirect(action: "docsFromTree", params: [id: unidad.id])
     }
+
     /**
-     * Acción
+     * Acción que permite descargar un archivo
+     * @param id el id del documento
+     * @param unidad el id de la unidad
      */
     def docsFromTreeDownload = {
         def doc = Documento.get(params.id)
@@ -915,14 +911,19 @@ class EntidadController extends yachay.seguridad.Shield {
             redirect(action: "fileNotFound", params: ['archivo': archivo, 'id': unidad.id])
         }
     }
+
     /**
-     * Acción
+     * Acción que muestra una pantalla de error para cuando no se ha encontrado un archivo
+     * @param archivo el nombre del archivo
+     * @param id el id para regresar a la pantalla anterior
      */
     def docsFromTreeFileNotFound = {
         return [archivo: params.archivo, id: params.id]
     }
+
     /**
-     * Acción
+     * Acción que muestra los documentos de una unidad
+     * @param id el id de la unidad
      */
     def docsFromTree = {
         def unidad = UnidadEjecutora.get(params.id)
@@ -971,7 +972,8 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que muestra el formulario de edición
+     * @param el id de la unidad ejecutora
      */
     def editFromTree = {
         def unidad, padre
@@ -986,7 +988,8 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que guarda los datos del formulario de edición
+     * @params los parámetros enviados por el formulario
      */
     def saveFromTree = {
 
@@ -1165,7 +1168,8 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que permite eliminar una unidad ejecutora
+     * @param id id del elemento a ser eliminado
      */
     def deleteFromTree = {
         def unidad = UnidadEjecutora.get(params.id)
@@ -1180,7 +1184,8 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que muestra el formulario de edición de usuario
+     * @param id el id del usuario
      */
     def editUserFromTree = {
         def usuario, unidad, perfiles = []
@@ -1194,8 +1199,10 @@ class EntidadController extends yachay.seguridad.Shield {
         }
         return [usuario: usuario, unidad: unidad, perfiles: perfiles]
     }
+
     /**
-     * Acción
+     * Acción que permite eliminar un usuario
+     * @param id id del elemento a ser eliminado
      */
     def deleteUserFromTree = {
         def usuario = Usro.get(params.id)
@@ -1220,51 +1227,62 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que muestra la información de la entidad
+     * @param id id de la entidad
      */
     def infoEntidad = {
         def obj = Entidad.get(params.id)
         return [entidadInstance: obj]
     }
+
     /**
-     * Acción
+     * Acción que muestra la información de la subsecretaría
+     * @param id el id de la subsecretaría
      */
     def infoSubsecretaria = {
         def obj = SubSecretaria.get(params.id)
         return [subSecretariaInstance: obj]
     }
+
     /**
-     * Acción
+     * Acción que muestra la información de una unidad
      */
     def infoUnidad = {
         def obj = UnidadEjecutora.get(params.id)
         return [unidadEjecutoraInstance: obj]
     }
+
     /**
-     * Acción
+     * Acción que muestra la información de un usuario responsable
+     * @param id el id del usuario
      */
     def infoResponsable = {
         def obj = Usro.get(params.id)
         def perfiles = Sesn.findAllByUsuario(obj)
         return [usuario: obj, perfiles: perfiles]
     }
+
     /**
-     * Acción
+     * Acción que muestra la información de un proyecto
+     * @param id el id del proyecto
      */
     def infoProyecto = {
-
         def obj = Proyecto.get(params.id)
         return [proyecto: obj]
     }
 
     /**
-     * Acción
+     * Acción que redirecciona a la acción de edición correspondiente al tipo enviado
+     * @param tipo el tipo de edición que se quiere realizar (entidad, subsecretaria, unidad, responsable)
+     * @params los parámetros para la edición
      */
     def editar = {
         redirect(action: 'editar' + (params.tipo).capitalize(), params: params)
     }
+
     /**
-     * Acción
+     * Acción que permite editar una entidad
+     * @param id el id de la entidad
      */
     def editarEntidad = {
         def obj
@@ -1275,8 +1293,10 @@ class EntidadController extends yachay.seguridad.Shield {
         }
         return [entidadInstance: obj, tipo: params.tipo]
     }
+
     /**
-     * Acción
+     * Acción que permite editar una subsecretaría
+     * @param id el id de la subsecretaría
      */
     def editarSubsecretaria = {
         def obj, crear
@@ -1290,8 +1310,10 @@ class EntidadController extends yachay.seguridad.Shield {
         }
         return [subSecretariaInstance: obj, tipo: params.tipo, crear: crear]
     }
+
     /**
-     * Acción
+     * Acción que permite editar una unidad
+     * @param id el id de la unidad
      */
     def editarUnidad = {
         def obj, crear
@@ -1305,8 +1327,10 @@ class EntidadController extends yachay.seguridad.Shield {
         }
         return [unidadEjecutoraInstance: obj, tipo: params.tipo, crear: crear]
     }
+
     /**
-     * Acción
+     * Acción que permite editar un responsable
+     * @param id el id del responsable
      */
     def editarResponsable = {
         def obj, crear
@@ -1324,8 +1348,10 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que permite guardar datos
+     * @deprecated ya no se usa
      */
+    @Deprecated
     def saveFromTree_ = {
         def obj
         def err
@@ -1423,8 +1449,10 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que permite eliminar elementos
+     * @deprecated ya no se utiliza
      */
+    @Deprecated
     def deleteFromTree_ = {
         switch (params.tipo) {
             case "entidad":
@@ -1452,7 +1480,7 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que muestra la lista de entidades
      */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Entidad"], default: "Entidad List")
@@ -1464,7 +1492,7 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que muestra el formulario de creación y edición de entidad
      */
     def form = {
         def title
@@ -1487,7 +1515,7 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona al formulario de creación (acción Form)
      */
     def create = {
         params.source = "create"
@@ -1495,7 +1523,9 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que guarda una entidad. Si guarda correctamente redirecciona a la acción Show, caso contrario a la acción Form y
+     * muestra un mensaje
+     * @params los parámetros enviados por el formulario
      */
     def save = {
         def title
@@ -1527,7 +1557,9 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que guarda una entidad. Si guarda correctamente redirecciona a la acción Show, caso contrario a la acción Form y
+     * muestra un mensaje
+     * @params los parámetros enviados por el formulario
      */
     def update = {
         def entidadInstance = Entidad.get(params.id)
@@ -1555,7 +1587,7 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que muestra los datos de una cobertura
      */
     def show = {
         def entidadInstance = Entidad.get(params.id)
@@ -1571,7 +1603,7 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona al formulario de edición (acción Form)
      */
     def edit = {
         params.source = "edit"
@@ -1579,7 +1611,8 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que permite eliminar una entidad y redirecciona a la acción List
+     * @param id id del elemento a ser eliminado
      */
     def delete = {
         def entidadInstance = Entidad.get(params.id)
@@ -1600,7 +1633,7 @@ class EntidadController extends yachay.seguridad.Shield {
     }
 
     /**
-     * Acción
+     * Acción que valida asignaciones
      */
     def validarAsignaciones = {
         def res = []

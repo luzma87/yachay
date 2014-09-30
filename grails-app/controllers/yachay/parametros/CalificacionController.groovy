@@ -1,23 +1,21 @@
 package yachay.parametros
 
-import yachay.parametros.Calificacion
-
 /**
- * Controlador
+ * Controlador que muestra las pantallas de manejo de calificaciones
  */
 class CalificacionController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
     /**
-     * Acción
+     * Acción que redirecciona a la acción List
      */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /**
-     * Acción
+     * Acción que muestra la lista de calificaciones
      */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Calificacion"], default: "Calificacion List")
@@ -29,7 +27,7 @@ class CalificacionController {
     }
 
     /**
-     * Acción
+     * Acción que muestra el formulario de creación y edición de calificación
      */
     def form = {
         def title
@@ -52,7 +50,7 @@ class CalificacionController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona al formulario de creación (acción Form)
      */
     def create = {
         params.source = "create"
@@ -60,7 +58,9 @@ class CalificacionController {
     }
 
     /**
-     * Acción
+     * Acción que guarda una calificación. Si guarda correctamente redirecciona a la acción Show, caso contrario a la acción Form y
+     * muestra un mensaje
+     * @params los parámetros enviados por el formulario
      */
     def save = {
         def title
@@ -72,12 +72,10 @@ class CalificacionController {
                 if (!calificacionInstance.hasErrors() && calificacionInstance.save(flush: true)) {
                     flash.message = "${message(code: 'default.updated.message', args: [message(code: 'calificacion.label', default: 'Calificacion'), calificacionInstance.id])}"
                     redirect(action: "show", id: calificacionInstance.id)
-                }
-                else {
+                } else {
                     render(view: "form", model: [calificacionInstance: calificacionInstance, title: title, source: "edit"])
                 }
-            }
-            else {
+            } else {
                 flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'calificacion.label', default: 'Calificacion'), params.id])}"
                 redirect(action: "list")
             }
@@ -87,15 +85,16 @@ class CalificacionController {
             if (calificacionInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.created.message', args: [message(code: 'calificacion.label', default: 'Calificacion'), calificacionInstance.id])}"
                 redirect(action: "show", id: calificacionInstance.id)
-            }
-            else {
+            } else {
                 render(view: "form", model: [calificacionInstance: calificacionInstance, title: title, source: "create"])
             }
         }
     }
 
     /**
-     * Acción
+     * Acción que guarda una calificación. Si guarda correctamente redirecciona a la acción Show, caso contrario a la acción Form y
+     * muestra un mensaje
+     * @params los parámetros enviados por el formulario
      */
     def update = {
         def calificacionInstance = Calificacion.get(params.id)
@@ -113,27 +112,24 @@ class CalificacionController {
             if (!calificacionInstance.hasErrors() && calificacionInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'calificacion.label', default: 'Calificacion'), calificacionInstance.id])}"
                 redirect(action: "show", id: calificacionInstance.id)
-            }
-            else {
+            } else {
                 render(view: "edit", model: [calificacionInstance: calificacionInstance])
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'calificacion.label', default: 'Calificacion'), params.id])}"
             redirect(action: "list")
         }
     }
 
     /**
-     * Acción
+     * Acción que muestra los datos de una calificación
      */
     def show = {
         def calificacionInstance = Calificacion.get(params.id)
         if (!calificacionInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'calificacion.label', default: 'Calificacion'), params.id])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
 
             def title = g.message(code: "default.show.label", args: ["Calificacion"], default: "Show Calificacion")
 
@@ -142,7 +138,7 @@ class CalificacionController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona al formulario de edición (acción Form)
      */
     def edit = {
         params.source = "edit"
@@ -150,7 +146,8 @@ class CalificacionController {
     }
 
     /**
-     * Acción
+     * Acción que permite eliminar una calificación y redirecciona a la acción List
+     * @param id id del elemento a ser eliminado
      */
     def delete = {
         def calificacionInstance = Calificacion.get(params.id)
@@ -164,8 +161,7 @@ class CalificacionController {
                 flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'calificacion.label', default: 'Calificacion'), params.id])}"
                 redirect(action: "show", id: params.id)
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'calificacion.label', default: 'Calificacion'), params.id])}"
             redirect(action: "list")
         }
