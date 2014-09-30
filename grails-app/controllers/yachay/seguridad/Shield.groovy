@@ -63,7 +63,7 @@ class Shield{
         }
     }
     /**
-     * Verifica si el usuario logeado tiene permisos para ejecutar una acción
+     *Función que verifica si el usuario logeado tiene permisos para ejecutar una acción
      */
     boolean isAllowed(){
 

@@ -1,21 +1,21 @@
 package yachay.seguridad
 
 /**
- * Controlador
+ * Controlador que muestra las pantallas de manejo de usuarios
  */
 class UsroController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
     /**
-     * Acción
+     * Acción que redirecciona a list
      */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /**
-     * Acción
+     * Acción que muestra una lista de los usuarios registrados en el sistema
      */
     def list = {
         def title = g.message(code:"usro.list", default:"Usro List")
@@ -27,7 +27,7 @@ class UsroController {
     }
 
     /**
-     * Acción
+     * Acción que muestra un formulario para la inserción o edición de usuarios
      */
     def form = {
         def title
@@ -50,7 +50,7 @@ class UsroController {
     }
 
     /**
-     * Acción
+     * Acción que redireciona a form
      */
     def create = {
         params.source = "create"
@@ -58,7 +58,9 @@ class UsroController {
     }
 
     /**
-     * Acción
+     * Acción que guarda los datos de un usuario
+     * @param id es el identificador del usuario en caso de edición
+     * @param params es un mapa con los nombres de los campos del dominio usuario y los valores ingresados por el usuario
      */
     def save = {
         def title
@@ -97,7 +99,9 @@ class UsroController {
     }
 
     /**
-     * Acción
+     * Acción para actualizar los datos del usuario
+     * @param id es el identificador del usuario
+     * @param params es un mapa con los nombres de los campos del dominio usuario y los valores ingresados por el usuario
      */
     def update = {
         def usroInstance = Usro.get(params.id)
@@ -127,7 +131,8 @@ class UsroController {
     }
 
     /**
-     * Acción
+     * Acción que muestra los datos de un usuario
+     * @param id es el identificador del usuario
      */
     def show = {
         def usroInstance = Usro.get(params.id)
@@ -144,7 +149,7 @@ class UsroController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona a form
      */
     def edit = {
         params.source = "edit"
@@ -152,7 +157,8 @@ class UsroController {
     }
 
     /**
-     * Acción
+     * Acción que borra un usuario
+     * @param id es el identificador del usuario
      */
     def delete = {
         def usroInstance = Usro.get(params.id)

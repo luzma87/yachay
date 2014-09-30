@@ -1,7 +1,7 @@
 package yachay.seguridad
 
 /**
- * Controlador
+ * Controlador que muestra las pantallas para el manejo de perfiles
  */
 class PrflController {
 
@@ -12,14 +12,15 @@ class PrflController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
     /**
-     * Acción
+     * Acción que redirecciona a list
      */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /**
-     * Acción
+     * Acción que muestra los módulos a los que un perfil tiene acceso
+     * @param id es el identificador del perfil
      */
     def modulos = {
 //       println "recibe de parametros: ${params.id}"
@@ -36,7 +37,8 @@ class PrflController {
     }
 
     /**
-     * Acción
+     * Acción que muestra una previsualización del menú de usuario basado en un perfil
+     * @param id es el identificador del perfil
      */
   def verMenu = {
     def prfl = params.prfl.toInteger()
@@ -46,7 +48,10 @@ class PrflController {
   }
 
     /**
-     * Acción
+     * Acción que muestra una lista de las acciones que puede ver un determinado perfil
+     * @param prfl es el identificador del perfil
+     * @param tpac es el identificador del tipo de acción.
+     * @param ids es la lista de los módulos
      */
     def ajaxPermisos = {
         def prfl = params.prfl.toInteger()
@@ -77,7 +82,7 @@ class PrflController {
       }
 
     /**
-     * Acción
+     * Acción que muestra un formulario para la creación de un nuevo módulo
      */
     def creaMdlo = {
       def mdloInstance = new Modulo()
@@ -86,7 +91,8 @@ class PrflController {
     }
 
     /**
-     * Acción
+     * Acción que muestra los datos de un módulo en un formulario para su edición
+     * @param id es el identificador del módulo
      */
     def editMdlo = {
 //      println "------editMdlo: " + params
@@ -96,7 +102,9 @@ class PrflController {
     }
 
     /**
-     * Acción
+     * Acción que guarda los datos de un módulo
+     * @param id es el identificador del módulo en caso de edición
+     * @param params es un mapa con los nombres de los campos del dominio módulo y los valores ingresados por el usuario
      */
   def grabaMdlo = {
 //    println "+++++parametros: ${params}"
@@ -127,7 +135,8 @@ class PrflController {
   }
 
     /**
-     * Acción
+     * Acción que borra un módulo
+     * @param id es el identificador del módulo
      */
     def borraMdlo = {
 //      println "------borrarMdlo: " + params
@@ -138,7 +147,7 @@ class PrflController {
     }
 
     /**
-     * Acción
+     * Acción que muestra un formulario para la creación de un nuevo perfil
      */
     def creaPrfl = {
       def prflInstance = new Prfl()
@@ -147,7 +156,9 @@ class PrflController {
     }
 
     /**
-     * Acción
+     * Acción que guarda los datos de un perfil
+     * @param id es el identificador del perfil en caso de edición
+     * @param params es un mapa con los nombres de los campos del dominio perfil y los valores ingresados por el usuario
      */
     def grabaPrfl = {
 //      println "+++++parametros: ${params}"
@@ -186,7 +197,8 @@ class PrflController {
     }
 
     /**
-     * Acción
+     * Acción que muestra los datos de un perfil en un formulario para su edición
+     * @param id es el identificador del perfil
      */
     def editPrfl = {
 //      println "------editPrfl: " + params
@@ -195,7 +207,8 @@ class PrflController {
     }
 
     /**
-     * Acción
+     * Acción que borra un perfil
+     * @param id es el identificador del perfil
      */
     def borraPrfl = {
 //      println "------editPrfl: " + params
@@ -209,7 +222,10 @@ class PrflController {
     * **/
 
     /**
-     * Acción
+     * Acción que graba los permisos asignados a un perfil
+     * @param ids es un arreglo con los identificadores de las acciones asignadas al perfil
+     * @param menu es el identificador del módulo
+     * @param prfl es el identificador del perfil
      */
     def grabar = {
       //println "parametros grabar: ${params}"
@@ -279,7 +295,7 @@ class PrflController {
     //---------------------------------
 
     /**
-     * Acción
+     * Acción que muestra una lista de los perfiles registrados en  el sistema
      */
     def list = {
         def title = g.message(code: "prfl.list", default: "Prfl List")
@@ -291,7 +307,7 @@ class PrflController {
     }
 
     /**
-     * Acción
+     * Acción que muestra un formulario para inserción o edición de perfiles
      */
     def form = {
         def title
@@ -314,7 +330,7 @@ class PrflController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona a form
      */
     def create = {
         params.source = "create"
@@ -322,7 +338,9 @@ class PrflController {
     }
 
     /**
-     * Acción
+     * Acción que guarda los datos de un perfil
+     * @param id es el identificador del perfil en caso de edición
+     * @param params es un mapa con el nombre de los campos del dominio perfil y los datos ingresados por el usuario
      */
     def save = {
         def title
@@ -357,7 +375,9 @@ class PrflController {
     }
 
     /**
-     * Acción
+     * Acción que actualiza los datos de un perfil
+     * @param id es el identificador del perfil
+     * @param params es un mapa con el nombre de los campos del dominio perfil y los datos ingresados por el usuario
      */
     def update = {
         def prflInstance = Prfl.get(params.id)
@@ -387,7 +407,8 @@ class PrflController {
     }
 
     /**
-     * Acción
+     * Acción que muestra los datos de un perfil
+     * @param id es el identificador del perfil
      */
     def show = {
         def prflInstance = Prfl.get(params.id)
@@ -404,7 +425,7 @@ class PrflController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona a form
      */
     def edit = {
         params.source = "edit"
@@ -412,7 +433,8 @@ class PrflController {
     }
 
     /**
-     * Acción
+     * Acción que borra un perfil
+     * @param id es el identificador del perfil
      */
     def delete = {
         def prflInstance = Prfl.get(params.id)
@@ -433,6 +455,11 @@ class PrflController {
         }
     }
 
+
+    /*
+    * Función que obtiene una lista de módulos de un perfil desde la base de datos
+    * @param perfil es el identificador del perfil
+    */
     List lstaModulos(prfl) {
       def resultado = []
       def cn = dbConnectionService.getConnection()

@@ -3,21 +3,21 @@ package yachay.seguridad
 import yachay.seguridad.Persona
 
 /**
- * Controlador
+ * Controlador que muestra las pantallas para el manejo de personas
  */
 class PersonaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
     /**
-     * Acción
+     * Acción que redirecciona a list
      */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /**
-     * Acción
+     * Acción que muestra una lista de las personas regitastradas en el sistema
      */
     def list = {
         def title = g.message(code: "persona.list", default: "Lista de personas")
@@ -29,7 +29,7 @@ class PersonaController {
     }
 
     /**
-     * Acción
+     * Acción que muestra un formulario para la edición o inserción de personas
      */
     def form = {
         def title
@@ -52,7 +52,7 @@ class PersonaController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona a form
      */
     def create = {
         params.source = "create"
@@ -60,7 +60,9 @@ class PersonaController {
     }
 
     /**
-     * Acción
+     * Acción que guarda los datos ingresados por el usuario en el dominio persona
+     * @param id es el identificador de la persona en caso de edición
+     * @param params es un mapa con el nombre de los campos del dominio persona y los datos ingresados por el usuario
      */
     def save = {
         def title
@@ -95,7 +97,9 @@ class PersonaController {
     }
 
     /**
-     * Acción
+     * Acción que actualiza los campos de una persona
+     * @param id es el identificador de la persona
+     * @param params es un mapa con el nombre de los campos del dominio persona y los datos ingresados por el usuario
      */
     def update = {
         def personaInstance = Persona.get(params.id)
@@ -125,7 +129,8 @@ class PersonaController {
     }
 
     /**
-     * Acción
+     * Acción que muestra los datos de una persona
+     * @param id es el identificador de la persona
      */
     def show = {
         def personaInstance = Persona.get(params.id)
@@ -142,7 +147,7 @@ class PersonaController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona a form
      */
     def edit = {
         params.source = "edit"
@@ -150,7 +155,8 @@ class PersonaController {
     }
 
     /**
-     * Acción
+     * Acción que borra una persona
+     * @param id es el identificador de la persona
      */
     def delete = {
         def personaInstance = Persona.get(params.id)

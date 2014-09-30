@@ -1,21 +1,21 @@
 package yachay.seguridad
 
 /**
- * Controlador
+ * Controlador que muestras las pantallas para el manejo de módulos
  */
 class ModuloController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
     /**
-     * Acción
+     * Acción que redirecciona a list
      */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /**
-     * Acción
+     * Acción que muestra una lista con los módulos registrados en el sistema
      */
     def list = {
         def title = g.message(code: "modulo.list", default: "Modulo List")
@@ -27,7 +27,7 @@ class ModuloController {
     }
 
     /**
-     * Acción
+     * Acción que muestra un formulario para el ingreso de datos
      */
     def form = {
         def title
@@ -50,7 +50,7 @@ class ModuloController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona a form
      */
     def create = {
         params.source = "create"
@@ -58,7 +58,9 @@ class ModuloController {
     }
 
     /**
-     * Acción
+     * Acción que guarda los datos ingresados por el usuario en un nuevo registro de tipo módulo
+     * @param id es el identificador del módulo en el caso de la edición
+     * @param params contiene un mapa con todos los campos del dominio módulo y los datos ingresados por el usuario
      */
     def save = {
         def title
@@ -93,7 +95,8 @@ class ModuloController {
     }
 
     /**
-     * Acción
+     * Acción que actualiza los datos de un módulo
+     * @param id es el identificador del módulo
      */
     def update = {
         def moduloInstance = Modulo.get(params.id)
@@ -123,7 +126,8 @@ class ModuloController {
     }
 
     /**
-     * Acción
+     * Acción que muestra los datos de un módulo
+     * @param id es el identificador del módulo
      */
     def show = {
         def moduloInstance = Modulo.get(params.id)
@@ -140,7 +144,7 @@ class ModuloController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona a form
      */
     def edit = {
         params.source = "edit"
@@ -148,7 +152,8 @@ class ModuloController {
     }
 
     /**
-     * Acción
+     * Acción que borra un módulo
+     * @param id es el identificador del módulo
      */
     def delete = {
         def moduloInstance = Modulo.get(params.id)

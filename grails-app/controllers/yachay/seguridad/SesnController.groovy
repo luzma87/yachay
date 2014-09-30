@@ -1,21 +1,21 @@
 package yachay.seguridad
 
 /**
- * Controlador
+ * Controlador que muestra pantallas para el manejo de sesiones
  */
 class SesnController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
     /**
-     * Acción
+     * Acción que redirecciona a list
      */
     def index = {
         redirect(action: "list", params: params)
     }
 
     /**
-     * Acción
+     * Acción que muestra una lista de todas las sesiones registradas en el sistema
      */
     def list = {
         def title = g.message(code: "sesn.list", default: "Sesn List")
@@ -27,7 +27,7 @@ class SesnController {
     }
 
     /**
-     * Acción
+     * Acción que muestra un formulario para el ingreso o modificación de una sesión
      */
     def form = {
         def title
@@ -50,7 +50,7 @@ class SesnController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona a form
      */
     def create = {
         params.source = "create"
@@ -58,7 +58,9 @@ class SesnController {
     }
 
     /**
-     * Acción
+     * Acción que guarda una nueva sesión
+     * @param id es el identificador de la sesión en el caso de edición
+     * @param params es un mapa con los nombres de los campos del dominio sesión y los valores ingresados por el usuario
      */
     def save = {
         def title
@@ -93,7 +95,9 @@ class SesnController {
     }
 
     /**
-     * Acción
+     * Acción que actualiza los datos de una sesión
+     * @param id es el identificador de la sesión
+     * @param params es un mapa con los nombres de los campos del dominio sesión y los valores ingresados por el usuario
      */
     def update = {
         def sesnInstance = Sesn.get(params.id)
@@ -123,7 +127,8 @@ class SesnController {
     }
 
     /**
-     * Acción
+     * Acción que muestra los datos de una sesión
+     * @param id es el identificador de la sesión
      */
     def show = {
         def sesnInstance = Sesn.get(params.id)
@@ -140,7 +145,7 @@ class SesnController {
     }
 
     /**
-     * Acción
+     * Acción que redirecciona a form
      */
     def edit = {
         params.source = "edit"
@@ -148,7 +153,8 @@ class SesnController {
     }
 
     /**
-     * Acción
+     * Acción que borra una sesión
+     * @param id es el identificador de la sesión
      */
     def delete = {
         def sesnInstance = Sesn.get(params.id)
