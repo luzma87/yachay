@@ -35,7 +35,7 @@ class PdfController {
                 def urlFin = url.replaceAll("W", "&")
                 def pathFonts = ""
 //                def pathFonts = servletContext.getRealPath("/") + "fontPdf/"
-                // println "url en pdf link "+urlFin
+                println "url en pdf link "+urlFin
                 b = pdfService.buildPdf(urlFin, pathFonts)
             }
             response.setContentType("application/pdf")
