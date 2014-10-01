@@ -7,6 +7,7 @@ import yachay.parametros.geografia.Provincia
  */
 class ProvinciaController {
 
+
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
     /**
@@ -21,7 +22,7 @@ class ProvinciaController {
      */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Provincia"], default: "Provincia List")
-//        <g:message code="default.list.label" args="[entityName]" />
+//        <g:message code="default.list.Userlabel" args="[entityName]" />
 
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 
@@ -45,7 +46,7 @@ class ProvinciaController {
                 flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'provincia.label', default: 'Provincia'), params.id])}"
                 redirect(action: "list")
             }
-            title = g.message(code: "default.edit.label", args: ["Provincia"], default: "editarProvincia")
+            title = g.message(code: "default.edit.label", args: ["Provincia"], default: "editarProvpruebaincia")
         }
 
         return [provinciaInstance: provinciaInstance, title: title, source: params.source]
