@@ -1,5 +1,6 @@
 package yachay
 
+import org.codehaus.groovy.grails.plugins.qrcode.QrCodeService
 import yachay.alertas.Alerta
 import yachay.avales.DistribucionAsignacion
 import yachay.poa.Asignacion
@@ -9,6 +10,7 @@ import yachay.proyectos.ModificacionAsignacion
  * Controlador que muestra la pantalla inicial del sistema y contabiliza alertas
  */
 class InicioController extends yachay.seguridad.Shield {
+
 
     /**
      * Retorna el valor real de la asignación teniendo en cuenta la reubicación
@@ -153,6 +155,8 @@ class InicioController extends yachay.seguridad.Shield {
         if (!session.unidad) {
             redirect(controller: "login", action: "logout")
         }
+       // firmasService.firmarDocumento(session.usuario.id,"inicio","index","","prueba","123")
+
 //
 //        def aa = Asignacion.get(4469)
 //        println "get valor real "+getValorReal(aa)

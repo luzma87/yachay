@@ -1,6 +1,7 @@
 package yachay.avales
 
 import yachay.parametros.UnidadEjecutora
+import yachay.seguridad.Firma
 import yachay.seguridad.Usro
 
 /**
@@ -62,7 +63,7 @@ class SolicitudAval {
     /**
      * Número de la solicitud
      */
-    String numero
+    int numero
     /**
      * Tipo de solicitud: <br/>
      * &nbsp;&nbsp;&nbsp;&nbsp; : aprobación
@@ -71,17 +72,9 @@ class SolicitudAval {
     String tipo /*A--> anulacion*/
 
     /**
-     * Usuario que firma la solicitud
+     * Firma de la solicitud
      */
-    Usro firma1
-    /**
-     * Usuario que firma la solicitud
-     */
-    Usro firma2
-    /**
-     * Usuario que firma la solicitud
-     */
-    Usro firma3
+    Firma firma
 
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
@@ -109,9 +102,7 @@ class SolicitudAval {
             observaciones type: 'text'
             numero column: 'slavnmro'
             tipo column: 'slavtipo'
-            firma1 column: 'usro_id1'
-            firma2 column: 'usro_id2'
-            firma3 column: 'usro_id3'
+            firma column: 'frma__id'
             unidad column: 'unej__id'
         }
     }
@@ -129,11 +120,9 @@ class SolicitudAval {
         contrato(blank: true, nullable: true, size: 1..30)
         memo(blank: true, nullable: true, size: 1..30)
         observaciones(blank: true, nullable: true)
-        numero(blank: true, nullable: true, size: 1..30)
+        numero(blank: true, nullable: true)
         tipo(blank: true, nullable: true, size: 1..1)
-        firma1(blank: true, nullable: true)
-        firma2(blank: true, nullable: true)
-        firma3(blank: true, nullable: true)
+        firma(blank: true, nullable: true)
         unidad(nullable: true, blank: true)
     }
 }

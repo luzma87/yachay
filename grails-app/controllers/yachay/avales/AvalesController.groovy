@@ -1,11 +1,13 @@
 package yachay.avales
 
+import yachay.parametros.Unidad
 import yachay.parametros.poaPac.Anio
 import yachay.poa.Asignacion
 import yachay.proyectos.MarcoLogico
 import yachay.proyectos.Proyecto
 import yachay.parametros.UnidadEjecutora
 import yachay.alertas.Alerta
+import yachay.seguridad.Firma
 import yachay.seguridad.Usro
 
 /**
@@ -215,6 +217,23 @@ class AvalesController extends yachay.seguridad.Shield {
         def procesos = ProcesoAval.list([sort: "id"])
         [procesos: procesos]
     }
+    /**
+     * Acción que muestra una pantalla con la lista de procesos por unidad
+     */
+    def listaProcesosUnidad = {
+        def user = Usro.get(session.usuario.id)
+        def proyectos=[]
+        def unidad = user.unidad
+        Asignacion.findAllByUnidad(unidad).each {
+            def p = it.marcoLogico.proyecto
+            if (!proyectos.contains(p)) {
+                proyectos.add(p)
+            }
+        }
+        proyectos.sort { it.nombre }
+        def procesos = ProcesoAval.findAllByProyectoInList(proyectos,[sort: "id"])
+        [procesos: procesos]
+    }
 
     /**
      * Acción que muestra una pantalla con la lista de avales de un proceso
@@ -232,7 +251,7 @@ class AvalesController extends yachay.seguridad.Shield {
      * @param id el id del proceso
      */
     def solicitarAval = {
-        println "solicictar aval"
+        //println "solicictar aval"
         def unidad = UnidadEjecutora.get(session.unidad.id)
         def personasFirma = Usro.findAllByUnidad(unidad)
         def numero = null
@@ -255,10 +274,10 @@ class AvalesController extends yachay.seguridad.Shield {
         }
 
         def avales = Aval.findAllByProcesoAndEstadoInList(proceso, [EstadoAval.findByCodigo("E02"), EstadoAval.findByCodigo("E05")])
-        def solicitudes = SolicitudAval.findAllByProcesoAndEstado(proceso, EstadoAval.findByCodigo("E01"))
+        def solicitudes = SolicitudAval.findAllByProcesoAndEstadoInList(proceso, [EstadoAval.findByCodigo("E01"),EstadoAval.findByCodigo("EF4")])
         def disponible = proceso.getMonto()
-        println "aval " + avales
-        println "sols " + solicitudes
+//        println "aval " + avales
+//        println "sols " + solicitudes
         avales.each {
             band = false
             disponible -= it.monto
@@ -267,7 +286,7 @@ class AvalesController extends yachay.seguridad.Shield {
             band = false
             disponible -= it.monto
         }
-        println "band " + band
+//        println "band " + band
         if (!band) {
             flash.message = "Este proceso ya tiene un aval vigente o tiene una solicitud pendiente, no puede solicitar otro."
             redirect(controller: "avales", action: "avalesProceso", id: proceso?.id)
@@ -288,10 +307,10 @@ class AvalesController extends yachay.seguridad.Shield {
     /**
      * Acción que guarda la solicitud de aval.<br/>
      * Si la solicitud se guarda correctamente redirecciona a la acción avalesProceso, caso contrario redirecciona a la acción solicitarAval
-     * @params los parámetros enviados por el submit del formulario
+     * @param params los parámetros enviados por el submit del formulario
      */
     def guardarSolicitud = {
-        println "solicitud aval " + params
+       // println "solicitud aval " + params
         /*TODO enviar alertas*/
 
         if (params.monto) {
@@ -340,6 +359,7 @@ class AvalesController extends yachay.seguridad.Shield {
             try {
                 f.transferTo(new File(pathFile)) // guarda el archivo subido al nuevo path
                 def proceso = ProcesoAval.get(params.proceso)
+                def usuFirma = Usro.get(params.firma1)
 
                 def monto = params.monto
                 monto = monto.toDouble()
@@ -350,19 +370,32 @@ class AvalesController extends yachay.seguridad.Shield {
                 if (params.aval)
                     sol.aval = Aval.get(params.aval)
                 sol.usuario = session.usuario
-                sol.numero = params.numero
+                sol.numero = params.numero?.toInteger()
                 sol.monto = monto
                 sol.concepto = concepto
                 sol.memo = momorando
                 sol.path = nombre
-                sol.firma1 = Usro.get(params.firma1)
+                def firma = new Firma()
+                firma.usuario=usuFirma
+                firma.accionVer="imprimirSolicitudAval"
+                firma.controladorVer="reporteSolicitud"
+                firma.accion="firmarSolicitud"
+                firma.controlador="avales"
+                firma.documento="SolicitudDeAval_"+ sol.numero
+                firma.concepto="Solicitud de aval del proceso: "+proceso.nombre
+                firma.save(flush: true)
+                sol.firma = firma
                 sol.unidad = session.usuario.unidad
                 if (params.tipo)
                     sol.tipo = params.tipo
                 sol.fecha = new Date();
-                sol.estado = EstadoAval.findByCodigo("E01")
+                sol.estado = EstadoAval.findByCodigo("EF4")
                 if (!sol.save(flush: true)) {
                     println "eror save " + sol.errors
+                }else{
+                    firma.idAccion=sol.id
+                    firma.idAccionVer=sol.id
+                    firma.save(flush: true)
                 }
                 def usuarios = Usro.findAllByUnidad(UnidadEjecutora.findByCodigo("DPI"))
                 usuarios.each { usu ->
@@ -391,6 +424,24 @@ class AvalesController extends yachay.seguridad.Shield {
             redirect(action: 'solicitarAval', params: [asg: params.asgn])
         }
         /* fin del upload */
+    }
+
+    /**
+     * Acción que permite firmar electronicamente la solicitud
+     * @param key de la firma
+     */
+    def firmarSolicitud = {
+        def firma = Firma.findByKey(params.key)
+        if(!firma)
+            response.sendError(403)
+        else{
+            def sol = SolicitudAval.findByFirma(firma)
+            sol.estado=EstadoAval.findByCodigo("E01")
+            sol.save(flush: true)
+//            redirect(controller: "pdf",action: "pdfLink",params: [url:g.createLink(controller: firma.controladorVer,action: firma.accionVer,id: firma.idAccionVer)])
+            def url =g.createLink(controller: "pdf",action: "pdfLink",params: [url:g.createLink(controller: firma.controladorVer,action: firma.accionVer,id: firma.idAccionVer)])
+            render "${url}"
+        }
     }
 
     /**

@@ -229,13 +229,16 @@
     <div class="texto">
         Elaborado por: ${solicitud?.usuario?.sigla}
     </div>
-    <g:if test="${solicitud.firma1}">
+    <g:if test="${solicitud.firma.estado=='F'}">
         <table width="100%" style="margin-top: 1.5cm;">
-            <td width="33%"></td>
-            <td width="33%" style="border-top: solid 1px black; text-align: center;">
-                ${solicitud.firma1.persona.nombre} ${solicitud.firma1.persona.apellido}
+            <td width="33%" style=" text-align: center;">
+                <img src="${resource(dir: 'firmas',file: solicitud.firma.path)}"/><br/>
+                ${solicitud.firma.usuario.persona.nombre} ${solicitud.firma.usuario.persona.apellido}<br/>
+                ${solicitud.firma.usuario.cargoPersonal}<br/>
+                ${solicitud.firma.fecha.format("dd-MM-yyyy hh:mm")}
             </td>
-            <td width="33%"></td>
+            <td width="33%" style=" text-align: center;"></td>
+            <td width="33%" style=" text-align: center;"></td>
         </table>
     </g:if>
 </div>

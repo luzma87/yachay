@@ -34,13 +34,13 @@
 <div class="fila">
     <g:link controller="avales" action="listaProcesos" class="btn">Procesos</g:link>
 </div>
-<div id="tabs" style="width: 1050px;margin-top: 10px;">
+<div id="tabs" style="width: 1250px;margin-top: 10px;">
     <ul>
         <li><a href="#solicitudes">Solicitudes pendientes</a></li>
         <li><a href="#historial">Historial Solicitudes</a></li>
         %{--<li><a href="#solicitudes">Historial</a></li>--}%
     </ul>
-    <div id="solicitudes" style="width: 1000px;">
+    <div id="solicitudes" style="width: 1200px;">
         <g:if test="${solicitudes.size()>0}">
             <table style="width: 100%;margin-top: 10px;font-size: 10px;" >
                 <thead>
@@ -91,7 +91,7 @@
             </table>
         </g:if>
     </div>
-    <div id="historial" style="width: 1000px;">
+    <div id="historial" style="width: 1200px;">
         <div class="fila" style="font-size: 10px">
             <div class="labelSvt" style="width:40px;">Año:</div>
             <div class="fieldSvt-small" style="width: 80px">

@@ -1,5 +1,7 @@
 package yachay.avales
 
+import yachay.seguridad.Firma
+
 /**
  * Clase para conectar con la tabla 'aval' de la base de datos
  */
@@ -66,6 +68,14 @@ class Aval {
      * Número de la certificación para el aval
      */
     String certificacion
+    /**
+     * Firma del director
+     */
+    Firma firma1
+    /**
+     * Firma del gerente
+     */
+    Firma firma2
 
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
@@ -93,6 +103,8 @@ class Aval {
             numero column: 'avalnmro'
             concepto column: 'avalcpto'
             certificacion column: 'avalcert'
+            firma1 column: 'frmadire'
+            firma2 column: 'frmagert'
         }
     }
     /**
@@ -112,5 +124,7 @@ class Aval {
         numero(blank: true, nullable: true, size: 1..10)
         concepto(blank: true, nullable: true, size: 1..500)
         certificacion(blank: true, nullable: true, size: 1..50)
+        firma1(blank: true, nullable: true)
+        firma2(blank: true, nullable: true)
     }
 }
