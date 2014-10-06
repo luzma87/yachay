@@ -33,7 +33,8 @@
         <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/select', file: 'jquery.ui.selectmenu.css')}"/>
 
         <title>
-            Pol&iacute;ticas de agenda social del proyecto ${proyecto.nombre}
+            %{--Pol&iacute;ticas de agenda social del proyecto ${proyecto.nombre}--}%
+            Pol&iacute;ticas de agenda social - ${proyecto.nombre.size() > 30 ? proyecto.nombre[0..28]+"..." : proyecto.nombre}
         </title>
     </head>
 

@@ -26,7 +26,8 @@
         <link rel="stylesheet" href="${resource(dir: 'css/menuSemplades', file: 'flow_menu_green.css')}"/>
 
         <title>
-            Pol&iacute;ticas del proyecto ${proyecto.nombre}
+            Objetivos Estratégicos Inst.. - ${proyecto.nombre.size() > 30 ? proyecto.nombre[0..28]+"..." : proyecto.nombre}
+
         </title>
     </head>
 
@@ -47,7 +48,7 @@
                                     <input type="checkbox" name="selAll" id="selAll"/>
                                 </th>
                                 <th style="padding: 5px;" class="ui-widget-header ui-corner-tr">
-                                    Pol&iacute;tica
+                                    Objetivos Estratégicos Institucionales
                                 </th>
                             </tr>
                         </thead>
