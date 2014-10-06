@@ -58,7 +58,7 @@ class EjecucionUE implements Serializable {
         id generator: 'identity'
         version false
         columns {
-            sief column: 'sigf__id'
+            sigef column: 'sigf__id'
             presupuesto column: 'prsp__id'
             programa column: 'pgps__id'
             fuente column: 'fnte__id'
