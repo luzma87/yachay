@@ -171,16 +171,16 @@ class ReportesController {
 
         println "certiificacion aaaa " + params
         def solicitud = SolicitudAval.get(params.id)
-        def user = Usro.get(params.usu)
+        def aval = solicitud.aval
+        println "aval "+aval
         def anio = Anio.findByAnio(new Date().format("yyyy"))
-        //println "mes "+cer.fecha.format("MM").toInteger()
         def mes = Mes.findByNumero(solicitud.fecha.format("MM").toInteger())
         def anterior = null
 //        anterior=Certificacion.findByAsignacionAndFechaLessThan(cer.asignacion,new Date().parse("dd-MM-yyyy HH:mm","01-01-${anio} 00:00"))
         mes = mes?.descripcion
 
 
-        [sol: solicitud, anio: anio, mes: mes, usuario: user,anterior:anterior]
+        [sol: solicitud, anio: anio, mes: mes,anterior:anterior,aval:aval]
 
     }
 

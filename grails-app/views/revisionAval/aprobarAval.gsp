@@ -22,6 +22,7 @@
             th{
                 background-color: #363636;
             }
+
         </style>
 
 
@@ -94,51 +95,52 @@
                 <div class="fieldSvt-xxxl">
                     <g:select from="${personas}" optionKey="id" optionValue="${{
                         it.persona.nombre + ' ' + it.persona.apellido
-                    }}" name="firma2"/>
+                    }}" name="firma2"  class="ui-widget-content ui-corner-all"/>
                     <g:select from="${personas}" optionKey="id" optionValue="${{
                         it.persona.nombre + ' ' + it.persona.apellido
-                    }}" name="firma3"/>
+                    }}" name="firma3" style="margin-left:10px" class="ui-widget-content ui-corner-all"/>
                 </div>
             </div>
 
             <div class="fila" style="margin-top: 20px">
                 <div class="labelSvt">
                     <a href="#" class="btn" id="guardarDatosDoc">Guardar</a>
-
                 </div>
-
-                <div class="labelSvt">
-                    <a href="#" class="btn" id="descargaForm" style="display: inline-block;width: 140px">Imp. Solicitud</a>
+                <div class="labelSvt" style=";width: 140px">
+                    <a href="#" class="btn" id="descargaForm" style="display: inline-block">Ver solicitud</a>
+                </div>
+                <div class="labelSvt" style="margin-left: 30px;width: 150px">
+                    <a href="#" class="btn" id="solicitarFirma">Solicitar fima</a>
                 </div>
             </div>
 
         </fieldset>
-        <fieldset style="width: 95%;padding-bottom: 10px" class="ui-corner-all">
-            <legend>Aprobación</legend>
+        %{--<fieldset style="width: 95%;padding-bottom: 10px" class="ui-corner-all">--}%
+            %{--<legend>Aprobación</legend>--}%
 
-            <h3>Descargue el formulario, firmelo y subalo</h3>
-            <g:form action="guardarAprobacion" class="frmAprobar" enctype="multipart/form-data">
+            %{--<h3>Descargue el formulario, firmelo y subalo</h3>--}%
+            %{--<g:form action="guardarAprobacion" class="frmAprobar" enctype="multipart/form-data">--}%
 
-                <input type="hidden" name="id" value="${solicitud.id}">
+                %{--<input type="hidden" name="id" value="${solicitud.id}">--}%
 
-                <div class="fila">
-                    <div class="labelSvt" style="width: 180px">Documento firmado:</div>
+                %{--<div class="fila">--}%
+                    %{--<div class="labelSvt" style="width: 180px">Documento firmado:</div>--}%
 
-                    <div class="fieldSvt-medium">
-                        <input type="file" id="archivo" name="archivo" style="display: inline-block">
-                    </div>
-                </div>
+                    %{--<div class="fieldSvt-medium">--}%
+                        %{--<input type="file" id="archivo" name="archivo" style="display: inline-block">--}%
+                    %{--</div>--}%
+                %{--</div>--}%
 
             %{--Ingrese el número del aval y descargue el formulario con un clic  </br>--}%
             %{--Después de llenar y firmar el documento del Aval súbalo al sistema. </br> </br>--}%
-                <div class="fila">
-                    <div class="labelSvt">
-                        <a href="#" class="btn" id="aprobar">Aprobar</a>
-                    </div>
-                </div>
+                %{--<div class="fila">--}%
+                    %{--<div class="labelSvt">--}%
+                        %{--<a href="#" class="btn" id="aprobar">Aprobar</a>--}%
+                    %{--</div>--}%
+                %{--</div>--}%
 
-            </g:form>
-        </fieldset>
+            %{--</g:form>--}%
+        %{--</fieldset>--}%
         <script>
             $(function () {
                 $('#richText').ckeditor(function () { /* callback code */
@@ -203,7 +205,7 @@
                         success : function (msg) {
                             $.box({
                                 title  : "Resultado",
-                                text   : "Datos guardados",
+                                text   : "Datos guardados.",
                                 dialog : {
                                     resizable : false,
                                     buttons   : {
@@ -217,7 +219,41 @@
                         }
                     });
                 });
+                $("#solicitarFirma").click(function(){
+                   if(confirm("Está seguro? Una vez solicitada la firma no podrá modificar el documento ")){
+                       var aval = $("#numero").val()
+                       var obs = $("#richText").val()
+                       $.ajax({
+                           type    : "POST", url : "${createLink(action:'guarDatosDoc', controller: 'revisionAval')}",
+                           data    : {
+                               id     : "${solicitud.id}",
+                               aval   : aval,
+                               obs    : obs,
+                               firma2 : $("#firma2").val(),
+                               firma3 : $("#firma3").val(),
+                               enviar : "true"
+                           },
+                           success : function (msg) {
+                               $("#guardarDatosDoc").remove()
+                               $.box({
+                                   title  : "Resultado",
+                                   text   : "Datos guardados. Solciitud de firmas enviada para aprobación",
+                                   dialog : {
+                                       resizable : false,
+                                       buttons   : {
+                                           "Cerrar" : function () {
+                                                location.href="${g.createLink(controller: 'revisionAval',action: 'pendientes')}"
+                                           }
+                                       }
+                                   }
+                               });
+
+                           }
+                       });
+                   }
+                });
             });
+
         </script>
     </body>
 

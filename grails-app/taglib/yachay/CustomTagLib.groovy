@@ -32,7 +32,7 @@ class CustomTagLib {
             num = aval.numero
         }
         if (sol)
-            num = sol.numero
+            num = sol.numero.toString()
         if (num) {
             (3 - num.length()).times {
                 output += "0"

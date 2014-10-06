@@ -105,7 +105,7 @@
                 <a href="#" id="buscar">Filtrar</a>
             </div>
         </div>
-        <div id="detalle" style="width: 100%;height: 500px;overflow: auto"></div>
+        <div id="detalle" style="width: 100%;height: 400px;overflow: auto"></div>
     </div>
 
 </div>

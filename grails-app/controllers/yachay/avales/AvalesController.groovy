@@ -273,7 +273,7 @@ class AvalesController extends yachay.seguridad.Shield {
             return
         }
 
-        def avales = Aval.findAllByProcesoAndEstadoInList(proceso, [EstadoAval.findByCodigo("E02"), EstadoAval.findByCodigo("E05")])
+        def avales = Aval.findAllByProcesoAndEstadoInList(proceso, [EstadoAval.findByCodigo("E02"), EstadoAval.findByCodigo("E05"), EstadoAval.findByCodigo("EF1")])
         def solicitudes = SolicitudAval.findAllByProcesoAndEstadoInList(proceso, [EstadoAval.findByCodigo("E01"),EstadoAval.findByCodigo("EF4")])
         def disponible = proceso.getMonto()
 //        println "aval " + avales

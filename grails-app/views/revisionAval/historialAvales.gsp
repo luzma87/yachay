@@ -21,22 +21,23 @@
     </thead>
     <tbody>
     <g:each in="${datos}" var="aval">
+        <g:set var="sol" value="${yachay.avales.SolicitudAval.findByAval(aval)}"></g:set>
         <tr>
-            <td>${aval.fechaAprobacion.format("yyyy")}-GP No.<tdn:imprimeNumero aval="${aval.id}"/></td>
+            <td>${aval.fechaAprobacion?.format("yyyy")}-GP No.<tdn:imprimeNumero aval="${aval.id}"/></td>
             <td style="text-align: center">${aval.proceso.proyecto}</td>
             <td>${aval.proceso.nombre}</td>
             <td style="text-align: right">
                 <g:formatNumber number="${aval.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
                 </td>
-            <td>${yachay.avales.SolicitudAval.findAll("from SolicitudAval where estado="+ estado.id+" and tipo is null and aval="+aval.id)?.pop()?.usuario}</td>
+            <td>${sol?.usuario}</td>
             <td>
-                ${aval.fechaAprobacion.format("dd-MM-yyyy")}
+                ${aval.fechaAprobacion?.format("dd-MM-yyyy")}
             </td>
             <td style="text-align: center" class="${aval.estado?.codigo}">
                 ${aval.estado?.descripcion}
             </td>
             <td style="text-align: center">
-                <a href="#" class="imprimiAval" iden="${aval.id}">Imprimir</a>
+                <a href="#" class="imprimiAval" iden="${sol.id}">Imprimir</a>
             </td>
             <td style="text-align: center">
                 <g:if test="${aval.estado.codigo=='E02'}">
@@ -192,7 +193,9 @@
     })
 
     $(".imprimiAval").button({icons:{ primary:"ui-icon-print"},text:false}).click(function(){
-        location.href = "${createLink(controller:'avales',action:'descargaAval')}/"+$(this).attr("iden")
+        //location.href = "${createLink(controller:'avales',action:'descargaAval')}/"+$(this).attr("iden")
+        var url = "${g.createLink(controller: 'reportes',action: 'certificacion')}/?id="+$(this).attr("iden")
+        location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url+"&filename=aval.pdf"
     })
     $(".imprimiSolicitud").button({icons:{ primary:"ui-icon-print"},text:false}).click(function(){
         var url = "${g.createLink(controller: 'reporteSolicitud',action: 'imprimirSolicitudAval')}/?id="+$(this).attr("iden")

@@ -132,7 +132,7 @@
     var id
     $(".aprobar").button({icons:{ primary:"ui-icon-check"},text:false}).click(function(){
         id = $(this).attr("iden")
-        if(confirm("Está seguro? esta acción no puede revertice")){
+        if(confirm("Está seguro? esta acción no puede revertirce")){
             +$("#atrz").val("")
             $("#firmarDlg").dialog("open")
         }

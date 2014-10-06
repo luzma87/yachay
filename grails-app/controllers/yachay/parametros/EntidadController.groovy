@@ -4,6 +4,7 @@ import yachay.parametros.poaPac.Anio
 import yachay.proyectos.Documento
 import yachay.proyectos.Proyecto
 import yachay.proyectos.ResponsableProyecto
+import yachay.seguridad.Persona
 import yachay.seguridad.Sesn
 import yachay.seguridad.Usro
 

@@ -35,17 +35,22 @@
             </td>
             <td>
                 <g:if test="${sol.aval}">
-                    ${sol.aval.fechaAprobacion.format("yyyy")}-GP No.<tdn:imprimeNumero aval="${sol.aval.id}"/>
+                    <g:if test="${sol.aval.fechaAprobacion}">
+                    ${sol.aval.fechaAprobacion?.format("yyyy")}-GP No.<tdn:imprimeNumero aval="${sol.aval.id}"/>
+                    </g:if>
+                    <g:else>
+                        ${sol.fecha.format("yyyy")}-GP No.<tdn:imprimeNumero aval="${sol.aval.id}"/>
+                    </g:else>
                 </g:if>
             </td>
             <td>
                 <g:if test="${sol.aval}">
-                    ${sol.aval.fechaAprobacion.format("dd-MM-yyyy")}
+                    ${sol.aval.fechaAprobacion?.format("dd-MM-yyyy")}
                 </g:if>
             </td>
             <td style="text-align: center">
                 <g:if test="${sol.aval}">
-                    <a href="#" class="imprimiAval" iden="${sol.aval.id}">Imprimir</a>
+                    <a href="#" class="imprimiAval" iden="${sol?.id}">Imprimir</a>
                 </g:if>
             </td>
         </tr>
@@ -54,7 +59,9 @@
 </table>
 <script>
     $(".imprimiAval").button({icons:{ primary:"ui-icon-print"},text:false}).click(function(){
-        location.href = "${createLink(controller:'avales',action:'descargaAval')}/"+$(this).attr("iden")
+        %{--location.href = "${createLink(controller:'avales',action:'descargaAval')}/"+$(this).attr("iden")--}%
+        var url = "${g.createLink(controller: 'reportes',action: 'certificacion')}/?id="+$(this).attr("iden")
+        location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url+"&filename=aval.pdf"
     })
     $(".imprimiSolicitud").button({icons:{ primary:"ui-icon-print"},text:false}).click(function(){
         var url = "${g.createLink(controller: 'reporteSolicitud',action: 'imprimirSolicitudAval')}/?id="+$(this).attr("iden")

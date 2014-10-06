@@ -92,11 +92,15 @@ class FirmaController {
  * @param ky es la llave de la firma
  */
     def verDocumento = {
-        def key = params.key
-        def firma = Firma.findAllByKey(params.ky)
+//        println "ver doc "+params
+        def firma = Firma.findByKey(params.ky)
+
         if(firma){
+            //println "firma "+firma+" "+firma.esPdf+" "+firma.controladorVer+"/"+firma.accionVer+"/"+firma.idAccion
             if(firma.esPdf=="S"){
                 redirect(controller: "pdf",action: "pdfLink",params: [url:g.createLink(controller: firma.controladorVer,action: firma.accionVer,id: firma.idAccionVer)])
+            }else{
+                redirect(controller: firma.controladorVer,action: firma.accionVer,id: firma.idAccionVer)
             }
         }else{
             render "No se encontro ninguna firma"

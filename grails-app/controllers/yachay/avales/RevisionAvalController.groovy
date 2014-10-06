@@ -2,6 +2,7 @@ package yachay.avales
 
 import yachay.parametros.poaPac.Anio
 import yachay.parametros.UnidadEjecutora
+import yachay.seguridad.Firma
 import yachay.seguridad.Usro
 
 /**
@@ -280,12 +281,102 @@ class RevisionAvalController {
 
         }
         sol.observaciones = obs
-        sol.numero = params.aval
-        sol.firma2 = Usro.get(params.firma2)
-        sol.firma3 = Usro.get(params.firma3)
+//        sol.firma2 = Usro.get(params.firma2)
+//        sol.firma3 = Usro.get(params.firma3)
         sol.save(flush: true)
+        if(params.enviar){
+            println "si env"
+            if(params.enviar=="true"){
+                println "enviar =true"
+                def band = false
+                def usuario = Usro.get(session.usuario.id)
+                /*Todo aqui validar quien puede*/
+                band = true
+                if (band) {
+                    def aval = new Aval()
+                    aval.proceso = sol.proceso
+                    aval.concepto = sol.concepto
+                    aval.path = " "
+                    aval.memo = sol.memo
+                    aval.numero = sol.numero
+                    aval.estado = EstadoAval.findByCodigo("EF1")
+                    aval.monto = sol.monto
+                    def firma1 = new Firma()
+                    firma1.usuario=Usro.get(params.firma2)
+                    firma1.accionVer="certificacion"
+                    firma1.controladorVer="reportes"
+                    firma1.idAccionVer=sol.id
+                    firma1.accion="firmarAval"
+                    firma1.controlador="revisionAval"
+                    firma1.documento="aval_"+ aval.numero
+                    firma1.concepto="Aprobación del aval ${aval.numero}"
+                    firma1.esPdf="S"
+                    if(!firma1.save(flush: true))
+                        println "error firma1 "+firma1.errors
+                    def firma2 = new Firma()
+                    firma2.usuario=Usro.get(params.firma3)
+                    firma2.accionVer="certificacion"
+                    firma2.controladorVer="reportes"
+                    firma2.idAccionVer=sol.id
+                    firma2.accion="firmarAval"
+                    firma2.controlador="revisionAval"
+                    firma2.documento="aval_"+ aval.numero
+                    firma2.concepto="Aprobación del aval ${aval.numero}"
+                    firma2.esPdf="S"
+                    if(!firma2.save(flush: true))
+                        println "error firma1 "+firma2.errors
+                    aval.firma1=firma1
+                    aval.firma2=firma2
+                    if(!aval.save(flush: true))
+                        println "error save aval"
+                    firma1.idAccion=aval.id
+                    firma2.idAccion=aval.id
+                    firma1.save()
+                    firma2.save()
+                    sol.aval = aval;
+                    sol.estado = aval.estado
+                    sol.save(flush: true)
+                    //flash.message = "Solciitud de firmas enviada para aprobación"
+                } else {
+                    def msn = "Usted no tiene permisos para aprobar esta solicitud"
+                    if (params.tipo)
+                        redirect(action: "listaCertificados", params: [cer: cer, id: cer.asignacion.unidad.id])
+                    else
+                        redirect(action: 'listaSolicitudes', params: [msn: msn])
+                }
+            }
+        }
+
         render "ok"
     }
+
+
+    /**
+     * Acción que permite firmar electrónicamente un Aval
+     * @params id es el identificador del aval
+     */
+    def firmarAval = {
+        def firma = Firma.findByKey(params.key)
+        if(!firma)
+            response.sendError(403)
+        else{
+            def aval = Aval.findByFirma1OrFirma2(firma,firma)
+            if(aval.firma1.key!=null && aval.firma2.key!=null){
+                aval.fechaAprobacion=new Date()
+                aval.estado=EstadoAval.findByCodigo("E02")
+                aval.save(flush: true)
+                def sol = SolicitudAval.findByAval(aval)
+                sol.estado=aval.estado
+                sol.save(flush: true)
+//            redirect(controller: "pdf",action: "pdfLink",params: [url:g.createLink(controller: firma.controladorVer,action: firma.accionVer,id: firma.idAccionVer)])
+
+            }
+            def url =g.createLink(controller: "pdf",action: "pdfLink",params: [url:g.createLink(controller: firma.controladorVer,action: firma.accionVer,id: firma.idAccionVer)])
+            render "${url}"
+
+        }
+    }
+
 
     /**
      * Acción que permite guardar la liberación de un aval

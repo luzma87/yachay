@@ -145,15 +145,6 @@
             </table>
         </g:each>
 
-    %{--<g:if test="${anterior}">--}%
-    %{--<tr>--}%
-    %{--<td style="font-weight: bold">Valor ${anio.toInteger()-1}</td>--}%
-    %{--<td>${anterior.monto} (Fuente: 998)</td>--}%
-    %{--</tr>--}%
-    %{--</g:if>--}%
-
-
-
         <p style="border: 1px solid black;padding: 5px;font-size: 8px;text-align: left">
             <b style="text-decoration: underline">OBSERVACIONES:</b><br/>
             ${sol.observaciones}
@@ -163,23 +154,49 @@
             Es importante señalar que la Gerencia Administrativa Financiera en el marco de sus competencias verificará la disponibilidad presupuestaria.
         </p>
     </div>
+    <div style="text-align: justify;float: left;font-size: 10pt;width: 100%">
+        <g:if test="${aval}">
 
+            <table width="100%" style="margin-top: 1.5cm; border: none" border="none">
+                <td width="33%" style=" text-align: center;border: none">
+                    <g:if test="${aval.firma1?.estado=='F'}">
 
-    <div style="width:6cm; margin-top: 100px;float: left;font-size: 10pt;text-align: center; border-top: solid, 1px #000000;">
-        <p>${sol.firma2.persona.nombre} ${sol.firma2.persona.apellido}</p>
+                        <img src="${resource(dir: 'firmas',file: aval.firma1.path)}"/><br/>
+                        ${aval.firma1.usuario.persona.nombre} ${aval.firma1.usuario.persona.apellido}<br/>
+                        ${aval.firma1.usuario.cargoPersonal}<br/>
+                        ${aval.firma1.fecha.format("dd-MM-yyyy hh:mm")}
+                    </g:if>
+                </td>
+                <td width="33%" style=" text-align: center;;border: none">
+                    <g:if test="${aval.firma2?.estado=='F'}">
 
-        %{--<p>--}%
-        %{--<b>Director de Planificación</b>--}%
-        %{--</p>--}%
+                        <img src="${resource(dir: 'firmas',file: aval.firma2.path)}"/><br/>
+                        ${aval.firma2.usuario.persona.nombre} ${aval.firma2.usuario.persona.apellido}<br/>
+                        ${aval.firma2.usuario.cargoPersonal}<br/>
+                        ${aval.firma2.fecha.format("dd-MM-yyyy hh:mm")}
+                    </g:if>
+                </td>
+                <td width="33%" style=" text-align: center;border: none"></td>
+            </table>
+        </g:if>
     </div>
 
-    <div style="width:6cm;margin-top: 100px;float: left;font-size: 10pt;margin-left: 3cm;text-align: center;border-top: solid, 1px #000000;">
-        <p>${sol.firma3.persona.nombre} ${sol.firma3.persona.apellido}</p>
 
-        %{--<p>--}%
-        %{--<b>Gerente de Planificación</b>--}%
-        %{--</p>--}%
-    </div>
+%{--<div style="width:6cm; margin-top: 100px;float: left;font-size: 10pt;text-align: center; border-top: solid, 1px #000000;">--}%
+%{--<p>${sol.firma2.persona.nombre} ${sol.firma2.persona.apellido}</p>--}%
+
+%{--<p>--}%
+%{--<b>Director de Planificación</b>--}%
+%{--</p>--}%
+%{--</div>--}%
+
+%{--<div style="width:6cm;margin-top: 100px;float: left;font-size: 10pt;margin-left: 3cm;text-align: center;border-top: solid, 1px #000000;">--}%
+%{--<p>${sol.firma3.persona.nombre} ${sol.firma3.persona.apellido}</p>--}%
+
+%{--<p>--}%
+%{--<b>Gerente de Planificación</b>--}%
+%{--</p>--}%
+%{--</div>--}%
 
 </div>
 
