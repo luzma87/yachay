@@ -394,8 +394,8 @@ class SolicitudController extends yachay.seguridad.Shield {
 
         params.max = Math.min(params.max ? params.int('max') : 25, 100)
 
-        def list = Solicitud.findAllByIncluirReunion("S", params)
-        def count = Solicitud.countByIncluirReunion("S")
+        def list = Solicitud.findAllByAprobacionIsNullAndIncluirReunion("S", params)
+        def count = Solicitud.countByAprobacionIsNullAndIncluirReunion("S")
 
         [solicitudInstanceList: list, solicitudInstanceTotal: count, title: title, params: params]
     }
@@ -909,12 +909,12 @@ class SolicitudController extends yachay.seguridad.Shield {
             return
         }
         Aprobacion aprobacion = new Aprobacion()
-        if (solicitud) {
-            aprobacion = Aprobacion.findBySolicitud(solicitud)
-            if (!aprobacion) {
-                aprobacion = new Aprobacion()
-            }
-        }
+//        if (solicitud) {
+//            aprobacion = Aprobacion.findBySolicitud(solicitud)
+//            if (!aprobacion) {
+//                aprobacion = new Aprobacion()
+//            }
+//        }
 
         def unidadGerenciaPlan = UnidadEjecutora.findByCodigo("DRPL") // GERENCIA DE PLANIFICACIÓN
         def unidadDireccionPlan = UnidadEjecutora.findByCodigo("DPI") // DIRECCIÓN DE PLANIFICACIÓN E INVERSIÓN
@@ -986,4 +986,6 @@ class SolicitudController extends yachay.seguridad.Shield {
         def aprobacion = Aprobacion.get(params.id.toLong())
         downloadFile("acta", aprobacion)
     }
+
+
 }

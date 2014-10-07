@@ -71,7 +71,7 @@
                                             <g:message code="default.button.update.label" default="Edit"/>
                                         </g:link>
                                     </g:if>
-                                    %{--<g:if test="${session.perfil.codigo == 'GAF' || session.perfil.codigo == 'GJ'/* || session.perfil.codigo == 'GDP'*/}">--}%
+                                %{--<g:if test="${session.perfil.codigo == 'GAF' || session.perfil.codigo == 'GJ'/* || session.perfil.codigo == 'GDP'*/}">--}%
                                     <g:if test="${session.perfil.codigo == 'ASAF' || session.perfil.codigo == 'ASGJ'/* || session.perfil.codigo == 'GDP'*/}">
                                         <g:link class="button revision" action="revision" id="${solicitud?.id}">
                                             Revisar
@@ -83,13 +83,13 @@
                                                 Validar
                                             </g:link>
                                         </g:if>
-                                        <g:if test="${session.perfil.codigo == 'GP'}">
-                                            <g:if test="${solicitud.incluirReunion == 'S'}">
-                                                <g:link class="button aprobacion" action="aprobacion" id="${solicitud?.id}">
-                                                    Reunión de aprobación
-                                                </g:link>
-                                            </g:if>
-                                        </g:if>
+                                    %{--<g:if test="${session.perfil.codigo == 'GP'}">--}%
+                                    %{--<g:if test="${solicitud.incluirReunion == 'S'}">--}%
+                                    %{--<g:link class="button aprobacion" action="aprobacion" id="${solicitud?.id}">--}%
+                                    %{--Reunión de aprobación--}%
+                                    %{--</g:link>--}%
+                                    %{--</g:if>--}%
+                                    %{--</g:if>--}%
                                     </g:if>
                                 </g:if>
                                 <g:elseif test="${solicitud.estado == 'A'}">

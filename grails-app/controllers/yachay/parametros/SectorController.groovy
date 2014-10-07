@@ -145,10 +145,10 @@ class SectorController {
         redirect(action: "form", params: params)
     }
 
-/**
- * Acción que permite eliminar un sector y redirecciona a la acción List
- * @param id id del elemento a ser eliminado
- */
+    /**
+     * Acción que permite eliminar un sector y redirecciona a la acción List
+     * @param id id del elemento a ser eliminado
+     */
     def delete = {
         def sectorInstance = Sector.get(params.id)
         if (sectorInstance) {

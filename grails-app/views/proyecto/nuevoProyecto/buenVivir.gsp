@@ -33,12 +33,14 @@
         <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/select', file: 'jquery.ui.selectmenu.css')}"/>
 
         <title>
-            Metas del buen vivir del proyecto ${proyecto.nombre}
+            %{--Metas del PNBV - ${proyecto.nombre[0..30]}--}%
+            Metas del PNBV - ${proyecto.nombre.size() > 30 ? proyecto.nombre[0..28]+"..." : proyecto.nombre}
         </title>
     </head>
 
     <body>
 
+        %{--<div class="dialog" title="Financiamiento del proyecto ${proyecto.nombre}">--}%
         <div class="dialog" title="Financiamiento del proyecto ${proyecto.nombre}">
 
             <div style="padding: 0.7em; margin: 0.7em;" class="ui-state-error ui-corner-all ui-helper-hidden"

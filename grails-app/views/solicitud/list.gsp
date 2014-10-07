@@ -25,6 +25,12 @@
                 <g:link controller="reporteSolicitud" action="solicitudesXls" class="button xls">
                     XLS
                 </g:link>
+
+                <g:if test="${session.perfil.codigo == 'GP'}">
+                    <g:link class="button aprobacion" controller="aprobacion" action="reunion">
+                        Reunión de aprobación
+                    </g:link>
+                </g:if>
             </div> <!-- toolbar -->
 
             <div class="body">

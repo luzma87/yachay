@@ -685,7 +685,7 @@ class ProyectoController extends yachay.seguridad.Shield {
 
                 items[3] = [:]
                 items[3].link = ["controller": "proyecto", "action": "nuevoProyecto", "event": "click", "params": ["evento": "politicasProyecto"]]
-                items[3].text = "Políticas"
+                items[3].text = "Objetivos Estratégicos"
                 items[3].evento = "politicasProyecto"
 
                 flow.items = items

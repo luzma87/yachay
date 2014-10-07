@@ -1,7 +1,7 @@
 package yachay.parametros
 
 /**
- * Controlador
+ * Controlador que muestra las pantallas de manejo de subsecretarías
  */
 class SubSecretariaController {
 
