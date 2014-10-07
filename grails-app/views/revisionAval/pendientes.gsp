@@ -17,10 +17,10 @@
 
     <style type="text/css">
 
-        th{
-            background-color: #363636;
+    th{
+        background-color: #363636;
 
-        }
+    }
 
     </style>
 
@@ -68,7 +68,9 @@
                         <td style="text-align: right"> <g:formatNumber number="${p.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber></td>
                         <td style="text-align: center" class="${p.estado?.codigo}">${p.estado?.descripcion}</td>
                         <td style="text-align: center">
-                            <a href="#" class="btn descRespaldo" iden="${p.id}">Ver</a>
+                            <g:if test="${p.path}">
+                                <a href="#" class="btn descRespaldo" iden="${p.id}">Ver</a>
+                            </g:if>
                         </td>
                         <td style="text-align: center">
                             <g:if test="${p.tipo!='A'}">
@@ -125,7 +127,7 @@
                 proceso:proceso
             },
             success:function (msg) {
-               $("#detalle").html(msg)
+                $("#detalle").html(msg)
 
             }
         });

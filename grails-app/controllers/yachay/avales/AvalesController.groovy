@@ -1,5 +1,6 @@
 package yachay.avales
 
+import yachay.parametros.Auxiliar
 import yachay.parametros.Unidad
 import yachay.parametros.poaPac.Anio
 import yachay.poa.Asignacion
@@ -254,6 +255,14 @@ class AvalesController extends yachay.seguridad.Shield {
         //println "solicictar aval"
         def unidad = UnidadEjecutora.get(session.unidad.id)
         def personasFirma = Usro.findAllByUnidad(unidad)
+        def aux = Auxiliar.list()
+        def referencial = 7000
+        if(aux.size()>0){
+            aux=aux.pop()
+            referencial=aux.presupuesto*(2*Math.pow(10,-7))
+            referencial=referencial.round(2)
+            println "referencial "+referencial
+        }
         def numero = null
         def band = true
         numero = SolicitudAval.findAllByUnidad(session.usuario.unidad, [sort: "numero", order: "desc", max: 1])
@@ -292,7 +301,7 @@ class AvalesController extends yachay.seguridad.Shield {
             redirect(controller: "avales", action: "avalesProceso", id: proceso?.id)
             return
         } else {
-            [proceso: proceso, disponible: disponible, personas: personasFirma, numero: numero]
+            [proceso: proceso, disponible: disponible, personas: personasFirma, numero: numero,refencial:referencial]
         }
     }
 
@@ -310,120 +319,181 @@ class AvalesController extends yachay.seguridad.Shield {
      * @param params los parámetros enviados por el submit del formulario
      */
     def guardarSolicitud = {
-       // println "solicitud aval " + params
+       println "solicitud aval " + params
         /*TODO enviar alertas*/
 
         if (params.monto) {
             params.monto = params.monto.replaceAll("\\.", "")
             params.monto = params.monto.replaceAll(",", ".")
         }
+        def referencial = params.referencial?.toDouble()
+        def montoProceso = params.monto?.toDouble()
+        println "ref "+referencial+" monto "+montoProceso
+        if(montoProceso>referencial){
+            def path = servletContext.getRealPath("/") + "pdf/solicitudAval/"
+            new File(path).mkdirs()
+            def f = request.getFile('file')
+            def okContents = [
+                    'application/pdf'     : 'pdf',
+                    'application/download': 'pdf'
+            ]
+            def nombre = ""
+            def pathFile
+            if (f && !f.empty) {
+                def fileName = f.getOriginalFilename() //nombre original del archivo
+                def ext
 
-        def path = servletContext.getRealPath("/") + "pdf/solicitudAval/"
-        new File(path).mkdirs()
-        def f = request.getFile('file')
-        def okContents = [
-                'application/pdf'     : 'pdf',
-                'application/download': 'pdf'
-        ]
-        def nombre = ""
-        def pathFile
-        if (f && !f.empty) {
-            def fileName = f.getOriginalFilename() //nombre original del archivo
-            def ext
-
-            def parts = fileName.split("\\.")
-            fileName = ""
-            parts.eachWithIndex { obj, i ->
-                if (i < parts.size() - 1) {
-                    fileName += obj
-                }
-            }
-
-            ext = okContents[f.getContentType()]
-            fileName = fileName.size() < 40 ? fileName : fileName[0..39]
-            fileName = fileName.tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
-            if (!ext) {
-                ext = "pdf"
-            }
-            nombre = fileName + "." + ext
-            pathFile = path + nombre
-            def fn = fileName
-            def src = new File(pathFile)
-            def i = 1
-            while (src.exists()) {
-                nombre = fn + "_" + i + "." + ext
-                pathFile = path + nombre
-                src = new File(pathFile)
-                i++
-            }
-            try {
-                f.transferTo(new File(pathFile)) // guarda el archivo subido al nuevo path
-                def proceso = ProcesoAval.get(params.proceso)
-                def usuFirma = Usro.get(params.firma1)
-
-                def monto = params.monto
-                monto = monto.toDouble()
-                def concepto = params.concepto
-                def momorando = params.memorando
-                def sol = new SolicitudAval()
-                sol.proceso = proceso
-                if (params.aval)
-                    sol.aval = Aval.get(params.aval)
-                sol.usuario = session.usuario
-                sol.numero = params.numero?.toInteger()
-                sol.monto = monto
-                sol.concepto = concepto
-                sol.memo = momorando
-                sol.path = nombre
-                def firma = new Firma()
-                firma.usuario=usuFirma
-                firma.accionVer="imprimirSolicitudAval"
-                firma.controladorVer="reporteSolicitud"
-                firma.accion="firmarSolicitud"
-                firma.controlador="avales"
-                firma.documento="SolicitudDeAval_"+ sol.numero
-                firma.concepto="Solicitud de aval del proceso: "+proceso.nombre
-                firma.save(flush: true)
-                sol.firma = firma
-                sol.unidad = session.usuario.unidad
-                if (params.tipo)
-                    sol.tipo = params.tipo
-                sol.fecha = new Date();
-                sol.estado = EstadoAval.findByCodigo("EF4")
-                if (!sol.save(flush: true)) {
-                    println "eror save " + sol.errors
-                }else{
-                    firma.idAccion=sol.id
-                    firma.idAccionVer=sol.id
-                    firma.save(flush: true)
-                }
-                def usuarios = Usro.findAllByUnidad(UnidadEjecutora.findByCodigo("DPI"))
-                usuarios.each { usu ->
-                    def alerta = new Alerta()
-                    alerta.from = session.usuario
-                    alerta.usro = usu
-                    alerta.fec_envio = new Date()
-                    alerta.mensaje = "Nueva solicitud de aval"
-                    alerta.controlador = "revisionAval"
-                    alerta.accion = "pendientes"
-                    alerta.id_remoto = sol.id
-                    if (!alerta.save(flush: true)) {
-                        println "error alerta: " + alerta.errors
+                def parts = fileName.split("\\.")
+                fileName = ""
+                parts.eachWithIndex { obj, i ->
+                    if (i < parts.size() - 1) {
+                        fileName += obj
                     }
                 }
-                flash.message = "Solicitud enviada"
-                redirect(action: 'avalesProceso', params: [id: params.proceso])
-                //println pathFile
-            } catch (e) {
-                println "????????\n" + e + "\n???????????"
+
+                ext = okContents[f.getContentType()]
+                fileName = fileName.size() < 40 ? fileName : fileName[0..39]
+                fileName = fileName.tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
+                if (!ext) {
+                    ext = "pdf"
+                }
+                nombre = fileName + "." + ext
+                pathFile = path + nombre
+                def fn = fileName
+                def src = new File(pathFile)
+                def i = 1
+                while (src.exists()) {
+                    nombre = fn + "_" + i + "." + ext
+                    pathFile = path + nombre
+                    src = new File(pathFile)
+                    i++
+                }
+                try {
+                    f.transferTo(new File(pathFile)) // guarda el archivo subido al nuevo path
+                    def proceso = ProcesoAval.get(params.proceso)
+                    def usuFirma = Usro.get(params.firma1)
+
+                    def monto = params.monto
+                    monto = monto.toDouble()
+                    def concepto = params.concepto
+                    def momorando = params.memorando
+                    def sol = new SolicitudAval()
+                    sol.proceso = proceso
+                    if (params.aval)
+                        sol.aval = Aval.get(params.aval)
+                    sol.usuario = session.usuario
+                    sol.numero = params.numero?.toInteger()
+                    sol.monto = monto
+                    sol.concepto = concepto
+                    sol.memo = momorando
+                    sol.path = nombre
+                    def firma = new Firma()
+                    firma.usuario=usuFirma
+                    firma.accionVer="imprimirSolicitudAval"
+                    firma.controladorVer="reporteSolicitud"
+                    firma.accion="firmarSolicitud"
+                    firma.controlador="avales"
+                    firma.documento="SolicitudDeAval_"+ sol.numero
+                    firma.concepto="Solicitud de aval del proceso: "+proceso.nombre
+                    firma.save(flush: true)
+                    sol.firma = firma
+                    sol.unidad = session.usuario.unidad
+                    if (params.tipo)
+                        sol.tipo = params.tipo
+                    sol.fecha = new Date();
+                    sol.estado = EstadoAval.findByCodigo("EF4")
+                    if (!sol.save(flush: true)) {
+                        println "eror save " + sol.errors
+                    }else{
+                        firma.idAccion=sol.id
+                        firma.idAccionVer=sol.id
+                        firma.save(flush: true)
+                    }
+                    def usuarios = Usro.findAllByUnidad(UnidadEjecutora.findByCodigo("DPI"))
+                    usuarios.each { usu ->
+                        def alerta = new Alerta()
+                        alerta.from = session.usuario
+                        alerta.usro = usu
+                        alerta.fec_envio = new Date()
+                        alerta.mensaje = "Nueva solicitud de aval"
+                        alerta.controlador = "revisionAval"
+                        alerta.accion = "pendientes"
+                        alerta.id_remoto = sol.id
+                        if (!alerta.save(flush: true)) {
+                            println "error alerta: " + alerta.errors
+                        }
+                    }
+                    flash.message = "Solicitud enviada"
+                    redirect(action: 'avalesProceso', params: [id: params.proceso])
+                    //println pathFile
+                } catch (e) {
+                    println "????????\n" + e + "\n???????????"
+                }
+
+
+            } else {
+                flash.message = "Error: Seleccione un archivo valido"
+                redirect(action: 'solicitarAval', params: [asg: params.asgn])
             }
-
-
-        } else {
-            flash.message = "Error: Seleccione un archivo valido"
-            redirect(action: 'solicitarAval', params: [asg: params.asgn])
+            /* fin del upload */
+        }else{
+            def proceso = ProcesoAval.get(params.proceso)
+            def usuFirma = Usro.get(params.firma1)
+            def monto = params.monto
+            monto = monto.toDouble()
+            def concepto = params.concepto
+            def momorando = params.memorando
+            def sol = new SolicitudAval()
+            sol.proceso = proceso
+            if (params.aval)
+                sol.aval = Aval.get(params.aval)
+            sol.usuario = session.usuario
+            sol.numero = params.numero?.toInteger()
+            sol.monto = monto
+            sol.concepto = concepto
+            sol.memo = momorando
+            def firma = new Firma()
+            firma.usuario=usuFirma
+            firma.accionVer="imprimirSolicitudAval"
+            firma.controladorVer="reporteSolicitud"
+            firma.accion="firmarSolicitud"
+            firma.controlador="avales"
+            firma.documento="SolicitudDeAval_"+ sol.numero
+            firma.concepto="Solicitud de aval del proceso: "+proceso.nombre
+            firma.save(flush: true)
+            sol.firma = firma
+            sol.unidad = session.usuario.unidad
+            if (params.tipo)
+                sol.tipo = params.tipo
+            sol.fecha = new Date();
+            sol.estado = EstadoAval.findByCodigo("EF4")
+            if (!sol.save(flush: true)) {
+                println "eror save " + sol.errors
+            }else{
+                firma.idAccion=sol.id
+                firma.idAccionVer=sol.id
+                firma.save(flush: true)
+            }
+            def usuarios = Usro.findAllByUnidad(UnidadEjecutora.findByCodigo("DPI"))
+            usuarios.each { usu ->
+                def alerta = new Alerta()
+                alerta.from = session.usuario
+                alerta.usro = usu
+                alerta.fec_envio = new Date()
+                alerta.mensaje = "Nueva solicitud de aval"
+                alerta.controlador = "revisionAval"
+                alerta.accion = "pendientes"
+                alerta.id_remoto = sol.id
+                if (!alerta.save(flush: true)) {
+                    println "error alerta: " + alerta.errors
+                }
+            }
+            flash.message = "Solicitud enviada"
+            redirect(action: 'avalesProceso', params: [id: params.proceso])
         }
-        /* fin del upload */
+
+
+
     }
 
     /**
