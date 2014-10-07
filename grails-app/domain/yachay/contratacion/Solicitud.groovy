@@ -1,5 +1,6 @@
 package yachay.contratacion
 
+import yachay.parametros.TipoAprobacion
 import yachay.parametros.UnidadEjecutora
 import yachay.parametros.TipoContrato
 import yachay.proyectos.MarcoLogico
@@ -98,7 +99,7 @@ class Solicitud {
     /**
      * Estado de la solicitud:<br/>
      * &nbsp;&nbsp;&nbsp;&nbsp;P: pendiente, se puede modificar y revisar
-     * &nbsp;&nbsp;&nbsp;&nbsp;A: ya se realizó ;a reunión de aprobación, ya no se pueden modificar los datos ni las fechas/observaciones de revisión
+     * &nbsp;&nbsp;&nbsp;&nbsp;A: ya se realizó la reunión de aprobación, ya no se pueden modificar los datos ni las fechas/observaciones de revisión
      */
     String estado = "P" // P->pendiente, se puede modificar y revisar
     // A->ya se hizo la reunion de aprobacion, ya no se pueden modificar los datos ni las fechas/observaciones de revision
@@ -150,6 +151,23 @@ class Solicitud {
      * Fecha en la que se solicitó la inclusión en la reunión de aprovación
      */
     Date fechaPeticionReunion
+
+    /**
+     * El objeto aprobación ligado a la solicitud
+     */
+    Aprobacion aprobacion
+    /**
+     * Tipo de aprobacion (aprobada, negada, ...)
+     */
+    TipoAprobacion tipoAprobacion
+    /**
+     * Observaciones de la aprobación
+     */
+    String observacionesAprobacion
+    /**
+     * Path del documento de aprobación
+     */
+    String pathAprobacion
 
     /**
      * Define las relaciones uno a varios
@@ -212,6 +230,11 @@ class Solicitud {
             validadoJuridica column: 'slctvljr'
 
             fechaPeticionReunion column: 'slctfcrn'
+
+            aprobacion column: 'aprb__id'
+            tipoAprobacion column: 'tpap__id'
+            observacionesAprobacion column: 'slctobap'
+            pathAprobacion column: 'slctptap'
         }
     }
 
@@ -247,5 +270,10 @@ class Solicitud {
         validadoJuridica(blank: true, nullable: true)
 
         fechaPeticionReunion(blank: true, nullable: true)
+
+        aprobacion(blank: true, nullable: true)
+        tipoAprobacion(blank: true, nullable: true)
+        observacionesAprobacion(blank: true, nullable: true)
+        pathAprobacion(blank: true, nullable: true)
     }
 }

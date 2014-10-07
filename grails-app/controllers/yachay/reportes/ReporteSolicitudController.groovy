@@ -13,17 +13,12 @@ import jxl.write.WritableSheet
 import jxl.write.WritableWorkbook
 
 /**
- * Controlador
+ * Controlador que permite generar reportes relacionados con solicitudes y sus aprobaciones
  */
 class ReporteSolicitudController {
 
     /**
-     * Acción
-     */
-    def index = {}
-
-    /**
-     * Acción
+     * Acción que genera un archivo XLS de las solicitudes
      */
     def solicitudesXls = {
 
@@ -161,7 +156,7 @@ class ReporteSolicitudController {
     }
 
     /**
-     * Acción
+     * Acción que genera un archivo PDF de las solicitudes
      */
     def solicitudes = {
         println "solicitudes"
@@ -199,7 +194,7 @@ class ReporteSolicitudController {
     }
 
     /**
-     * Acción
+     * Acción que genera un archivo PDF de las solicitudes aprobadas
      */
     def aprobadas = {
         println "aprobadas"
@@ -236,7 +231,7 @@ class ReporteSolicitudController {
     }
 
     /**
-     * Acción
+     * Acción que genera un archivo PDF de las solicitudes listas para la reunión de aprobación
      */
     def solicitudesReunion = {
         def list = []
@@ -255,7 +250,7 @@ class ReporteSolicitudController {
     }
 
     /**
-     * Acción
+     * Acción que genera un archivo PDF de una solicitud
      */
     def imprimirSolicitud = {
         def solicitud = Solicitud.get(params.id)
@@ -269,8 +264,10 @@ class ReporteSolicitudController {
     }
 
     /**
-     * Acción
+     * Acción que muestra un pdf de la aprobacion de la solicitud
+     * @deprecated ya no se usa, se usa imprimirActaReunionAprobacion
      */
+    @Deprecated
     def imprimirActaAprobacion = {
 //        println "Acta aprobacion:::: " + params
         def solicitud = Solicitud.get(params.id)
@@ -319,12 +316,16 @@ class ReporteSolicitudController {
     }
 
     /**
-     * Acción
+     * Acción que genera un archivo PDF de la solicitud de aval
      */
     def imprimirSolicitudAval = {
         println "impr sol " + params
         def solicitud = SolicitudAval.get(params.id)
         println "solcitud " + solicitud
         return [solicitud: solicitud]
+    }
+
+    def imprimirActaReunionAprobacion = {
+        def reunion = Aprobacion.get(params.id.toLong())
     }
 }

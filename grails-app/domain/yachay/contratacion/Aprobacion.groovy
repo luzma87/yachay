@@ -1,26 +1,19 @@
 package yachay.contratacion
 
-import yachay.parametros.TipoAprobacion
-import yachay.contratacion.Solicitud
-
 /**
- * Clase para conectar con la tabla 'aprb' de la base de datos
+ * Clase para conectar con la tabla 'aprb' de la base de datos<br/>
+ * Reunión de aprobación: puede tener una o varias solicitudes ligadas
  */
 class Aprobacion {
 
     /**
-     * Solicitud que va a ser aprobada o negada
-     */
-    Solicitud solicitud
-    /**
-     * Tipo de aprobacion (aprobada, negada, ...)
-     */
-    TipoAprobacion tipoAprobacion
-//    Fuente fuente
-    /**
-     * Fecha de aprobación
+     * Fecha planificada para la reunion
      */
     Date fecha
+    /**
+     * Fecha de realizacion de la reunion
+     */
+    Date fechaRealizacion
     /**
      * Observaciones de la aprobación
      */
@@ -29,11 +22,15 @@ class Aprobacion {
      * Path del documento de aprobación
      */
     String pathPdf
-
     /**
      * Asistentes a la reunión de aprobación
      */
     String asistentes
+
+    /**
+     * Define las relaciones uno a varios
+     */
+    static hasMany = [solicitudes: Solicitud]
 
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
@@ -51,9 +48,6 @@ class Aprobacion {
         version false
         columns {
             id column: 'aprb__id'
-            solicitud column: 'slct__id'
-            tipoAprobacion column: 'tpap__id'
-//            fuente column: 'fnte__id'
             fecha column: 'aprbfcha'
             observaciones column: 'aprbobsr'
             pathPdf column: 'aprb_pdf'
@@ -65,6 +59,7 @@ class Aprobacion {
      * Define las restricciones de cada uno de los campos
      */
     static constraints = {
+        fechaRealizacion(blank: true, nullable: true)
         observaciones(blank: true, nullable: true, maxSize: 1023)
         asistentes(blank: true, nullable: true, maxSize: 1023)
         pathPdf(blank: true, nullable: true, maxSize: 255)

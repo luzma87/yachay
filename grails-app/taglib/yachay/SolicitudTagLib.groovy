@@ -176,8 +176,8 @@ class SolicitudTagLib {
 
             html += '</table>'
 
-            html += revisiones(solicitud: solicitud, editable: editable, perfil: perfil)
-            html += aprobaciones(solicitud: solicitud, editable: aprobacion, perfil: perfil)
+            html += revisiones(solicitud: solicitud, editable: editable, perfil: perfil, multiple: attrs.multiple)
+            html += aprobaciones(solicitud: solicitud, editable: aprobacion, perfil: perfil, multiple: attrs.multiple)
         }
 //        if (solicitud) {
 //            html = '<table style="width: ' + w + ';">'
@@ -369,7 +369,11 @@ class SolicitudTagLib {
                     '});'
             js += "</script>"
         }
-        out << html + js
+        if (!attrs.multiple) {
+            out << html + js
+        } else {
+            out << html
+        }
     }
 
     /**
@@ -513,7 +517,8 @@ class SolicitudTagLib {
             editable = false
         }
 
-        def aprobacion = Aprobacion.findBySolicitud(solicitud)
+//        def aprobacion = Aprobacion.findBySolicitud(solicitud)
+        def aprobacion = solicitud.aprobacion
         if (!aprobacion) {
             aprobacion = new Aprobacion()
         }
@@ -528,10 +533,14 @@ class SolicitudTagLib {
             html += '<td class="label">Estado</td>'
             html += '<td>'
             if (editable) {
-                html += g.select(from: TipoAprobacion.list(), name: "tipoAprobacion.id", id: "tipoAprobacion",
-                        optionKey: "id", optionValue: "descripcion", value: aprobacion.tipoAprobacionId)
+                def name = "tipoAprobacion.id"
+                if (attrs.multiple) {
+                    name = solicitud.id + "_" + name
+                }
+                html += g.select(from: TipoAprobacion.list(), name: name, id: "tipoAprobacion", "class": "tipoAprobacion",
+                        optionKey: "id", optionValue: "descripcion", value: solicitud.tipoAprobacionId)
             } else {
-                html += (aprobacion.tipoAprobacion ? aprobacion.tipoAprobacion.descripcion : "-Sin tipo de aprobación-")
+                html += (solicitud.tipoAprobacion ? solicitud.tipoAprobacion.descripcion : "-Sin tipo de aprobación-")
             }
             html += '</td>'
 //            html += '<td class="label">Fondos</td>'
@@ -551,54 +560,62 @@ class SolicitudTagLib {
             }
             html += '</td>'
 
-            html += '<td class="label">Fecha</td>'
-            html += '<td>'
-            if (editable) {
-                html += g.textField(name: "fecha", class: "required datepicker field wide short ui-widget-content ui-corner-all",
-                        value: aprobacion.fecha ? aprobacion.fecha.format("dd-MM-yyyy") : new Date().format("dd-MM-yyyy"))
-                html += "<script type='text/javascript'>"
-                html += "   \$('#fecha').datepicker({\n" +
-                        "                    changeMonth : true,\n" +
-                        "                    changeYear  : true,\n" +
-                        "                    dateFormat  : 'dd-mm-yy'\n" +
-                        "                });"
-                html += "</script>"
-            } else {
-                html += aprobacion.fecha.format("dd-MM-yyyy")
-            }
-            html += '</td>'
+//            html += '<td class="label">Fecha</td>'
+//            html += '<td>'
+//            if (editable) {
+//                def name = "fecha"
+//                if (attrs.multiple) {
+//                    name = solicitud.id + "_" + name
+//                }
+//                html += g.textField(name: name, class: "required datepicker field wide short ui-widget-content ui-corner-all",
+//                        value: aprobacion.fecha ? aprobacion.fecha.format("dd-MM-yyyy") : new Date().format("dd-MM-yyyy"))
+//                html += "<script type='text/javascript'>"
+//                html += "   \$('#fecha').datepicker({\n" +
+//                        "                    changeMonth : true,\n" +
+//                        "                    changeYear  : true,\n" +
+//                        "                    dateFormat  : 'dd-mm-yy'\n" +
+//                        "                });"
+//                html += "</script>"
+//            } else {
+//                html += aprobacion.fecha.format("dd-MM-yyyy")
+//            }
+//            html += '</td>'
 
             html += '</tr>'
             html += '<tr>'
             html += '<td class="label">Observaciones</td>'
             html += '<td colspan="4">'
             if (editable) {
-                html += g.textArea(name: "observaciones", rows: "5", cols: "5", value: aprobacion.observaciones)
+                def name = "observaciones"
+                if (attrs.multiple) {
+                    name = solicitud.id + "_" + name
+                }
+                html += g.textArea(name: name, rows: "5", cols: "5", value: aprobacion.observaciones)
             } else {
                 html += (aprobacion.observaciones ?: '-Sin observaciones-')
             }
             html += '</td>'
             html += '</tr>'
-            html += '<tr>'
-            html += '<td class="label">Asistentes</td>'
-            html += '<td colspan="4">'
-            if (editable) {
-                html += g.textArea(name: "asistentes", rows: "5", cols: "5", value: aprobacion.asistentes)
-            } else {
-                html += (aprobacion.asistentes ?: '-Sin asistentes-')
-            }
-            html += '</td>'
-            html += '</tr>'
-            if (aprobacion.pathPdf) {
-                html += '<tr>'
-                html += '<td class="label">Archivo</td>'
-                html += '<td colspan="4">'
-                html += g.link(controller: 'solicitud', action: "downloadActa", id: aprobacion.id) {
-                    aprobacion.pathPdf
-                }
-                html += '</td>'
-                html += '</tr>'
-            }
+//            html += '<tr>'
+//            html += '<td class="label">Asistentes</td>'
+//            html += '<td colspan="4">'
+//            if (editable) {
+//                html += g.textArea(name: "asistentes", rows: "5", cols: "5", value: aprobacion.asistentes)
+//            } else {
+//                html += (aprobacion.asistentes ?: '-Sin asistentes-')
+//            }
+//            html += '</td>'
+//            html += '</tr>'
+//            if (aprobacion.pathPdf) {
+//                html += '<tr>'
+//                html += '<td class="label">Archivo</td>'
+//                html += '<td colspan="4">'
+//                html += g.link(controller: 'solicitud', action: "downloadActa", id: aprobacion.id) {
+//                    aprobacion.pathPdf
+//                }
+//                html += '</td>'
+//                html += '</tr>'
+//            }
             html += '</table>'
         }
         out << html
