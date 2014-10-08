@@ -34,7 +34,7 @@ environments {
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:postgresql://127.0.0.1:5432/yachay"
+            url = "jdbc:postgresql://127.0.0.1:5432/yachay2"
             username = "postgres"
             //password = "postgres"
             password = "steinsgate"
