@@ -61,7 +61,7 @@ class AprobacionController extends yachay.seguridad.Shield {
      * @param ids los ids de las solicitudes que se tratarán en esta reunión separados por _ (guión bajo)
      */
     def agendarReunion = {
-        println params
+//        println params
         def f = params.fecha
         def h = params.horas.toString().toInteger()
         def m = params.minutos.toString().toInteger() * 5
@@ -126,6 +126,33 @@ class AprobacionController extends yachay.seguridad.Shield {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'aprobacion.label', default: 'Aprobacion'), params.id])}"
             redirect(action: "list")
         }
+    }
+
+    /**
+     * Acción que muestra una lista de las actas subidas
+     */
+    def listaActas = {
+        /*
+        Gerencia de Planificación, Dirección Planificación y  Dirección de Seguimiento,
+                GP
+        Dirección de Contratación Pública y la Dirección Administrativa, Gerencia Técnica
+            TODAS
+         */
+
+        def perfil = session.perfil
+        def usuario = Usro.get(session.usuario.id)
+        def unidad = usuario.unidad
+        def todos = ["GP"]
+        def aprobaciones = []
+        def a = Aprobacion.withCriteria {
+            isNotNull("fechaRealizacion")
+            isNotNull("pathPdf")
+        }
+        if (todos.contains(perfil.codigo)) {
+            aprobaciones = a
+        }
+
+        return [aprobaciones: aprobaciones]
     }
 
     /**
