@@ -59,9 +59,16 @@
                             <g:formatNumber number="${solicitud.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"></g:formatNumber>
                         </td>
                         <td style="">${solicitud.estado?.descripcion}</td>
-                        <td style="text-align: center">
-                            <a href="#" class="btn descRespaldo" iden="${solicitud.id}">Ver</a>
-                        </td>
+                        <g:if test="${solicitud.path}">
+                            <td style="text-align: center">
+                                <a href="#" class="btn descRespaldo" iden="${solicitud.id}">Ver</a>
+                            </td>
+                        </g:if>
+                        <g:else>
+                            <td style="text-align: center">
+
+                            </td>
+                        </g:else>
                         <td style="text-align: center">
                             <a href="#" class="imprimiSolicitud " iden="${solicitud.id}">Ver</a>
                         </td>
