@@ -139,6 +139,10 @@ class AprobacionController extends yachay.seguridad.Shield {
             TODAS
          */
 
+        /*
+       TODO: crear los perfiles y poner en la lista todos
+        */
+
         def perfil = session.perfil
         def usuario = Usro.get(session.usuario.id)
         def unidad = usuario.unidad

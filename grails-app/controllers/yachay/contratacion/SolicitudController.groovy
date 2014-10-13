@@ -375,6 +375,10 @@ class SolicitudController extends yachay.seguridad.Shield {
         el resto -> solo de su ue
          */
 
+        /*
+        TODO: crear los perfiles y poner en la lista todos
+         */
+
         def todos = ["GP"]
 
         def c = Solicitud.createCriteria()
