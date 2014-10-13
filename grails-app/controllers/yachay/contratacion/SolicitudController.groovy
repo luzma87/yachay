@@ -371,15 +371,11 @@ class SolicitudController extends yachay.seguridad.Shield {
 
         /*
         Gerencia de Planificación, Dirección Planificación y  Dirección de Seguimiento - > todas
-            GP
+            GP                              DP                      DS
         el resto -> solo de su ue
          */
 
-        /*
-        TODO: crear los perfiles y poner en la lista todos
-         */
-
-        def todos = ["GP"]
+        def todos = ["GP", "DP", "DS"]
 
         def c = Solicitud.createCriteria()
         def lista = c.list(params) {

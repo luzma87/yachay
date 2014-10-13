@@ -134,19 +134,16 @@ class AprobacionController extends yachay.seguridad.Shield {
     def listaActas = {
         /*
         Gerencia de Planificación, Dirección Planificación y  Dirección de Seguimiento,
-                GP
+                GP                      DP                          DS
         Dirección de Contratación Pública y la Dirección Administrativa, Gerencia Técnica
+                DCP                                  DA                      GT
             TODAS
          */
-
-        /*
-       TODO: crear los perfiles y poner en la lista todos
-        */
 
         def perfil = session.perfil
         def usuario = Usro.get(session.usuario.id)
         def unidad = usuario.unidad
-        def todos = ["GP"]
+        def todos = ["GP", "DP", "DS", "DCP", "DA", "GT"]
         def aprobaciones = []
         def a = Aprobacion.withCriteria {
             isNotNull("fechaRealizacion")
