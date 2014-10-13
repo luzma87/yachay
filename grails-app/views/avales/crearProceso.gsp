@@ -232,6 +232,8 @@
         monto = monto.replace(new RegExp(",", 'g'), ".");
 
         var max = $("#max").html();
+        max = max.replace(new RegExp("\\.", 'g'), "");
+        max = max.replace(new RegExp(",", 'g'), ".");
         var asg = $("#asignacion").val();
         var proceso = "${proceso?.id}";
 

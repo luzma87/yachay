@@ -62,7 +62,7 @@ class AvalesController extends yachay.seguridad.Shield {
 
             aval.each {
                 //println "aval "+it.estado.descripcion+"  "+it.estado.codigo
-                if (it.estado?.codigo == "E01" || it.estado?.codigo == "E02" || it.estado.codigo == "E05" || it.estado.codigo == "E06") {
+                if (it.estado?.codigo == "E01" || it.estado?.codigo == "E02" || it.estado.codigo == "E05" || it.estado.codigo == "E06" || it.estado.codigo == "EF1" || it.estado.codigo == "EF4") {
                     band = false
                 }
             }
