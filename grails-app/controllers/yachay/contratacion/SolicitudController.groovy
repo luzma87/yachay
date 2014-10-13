@@ -361,13 +361,27 @@ class SolicitudController extends yachay.seguridad.Shield {
      */
     def list = {
 
+        def perfil = session.perfil
+        def usuario = Usro.get(session.usuario.id)
+        def unidad = usuario.unidad
+
         params.max = Math.min(params.max ? params.int('max') : 25, 100)
 
 //        def unidad = UnidadEjecutora.get(session.unidad.id)
 
+        /*
+        Gerencia de Planificación, Dirección Planificación y  Dirección de Seguimiento - > todas
+            GP
+        el resto -> solo de su ue
+         */
+
+        def todos = ["GP"]
+
         def c = Solicitud.createCriteria()
         def lista = c.list(params) {
-//            eq("unidadEjecutora", unidad)
+            if (!todos.contains(perfil.codigo)) {
+                eq("unidadEjecutora", unidad)
+            }
             if (params.search) {
                 ilike("nombreProceso", "%" + params.search + "%")
             }
@@ -964,7 +978,7 @@ class SolicitudController extends yachay.seguridad.Shield {
     def uploadActa = {
         def aprobacion = Aprobacion.get(params.id.toLong())
         uploadFile("acta", request.getFile('pdf'), aprobacion)
-        redirect(action: "show", id: aprobacion.solicitudId)
+        redirect(controller: 'aprobacion', action: "listaActas")
     }
 
     /**

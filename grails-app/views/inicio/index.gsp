@@ -10,7 +10,7 @@
     }
     .item{
         width: 470px;
-        height: 270px;
+        height: 216px;
         float: left;
         /*margin: 10px;*/
         /*margin: 8px;*/
@@ -19,8 +19,8 @@
 
     }
     .imagen{
-        width: 200px;
-        height: 270px;
+        width: 160px;
+        height: 216px;
         float: right;
     }
     .texto{
@@ -47,8 +47,8 @@
 %{-- TODO: Cambiar a: proyectos, biblioteca, entidades, asiganaciones, alertas, informes, --}%
 <div class="dialog">
     %{--<div style="text-align: center;"><h1>SISTEMA DE GESTIÓN DE PLANIFICACIÓN INSTITUCIONAL</h1></div>--}%
-    <div class="body" style="width: 1000px;height: 680px;position: relative;">
-        <div style="width: 100%;height: 85%;float: left;padding-left: 15px;  margin-top: 0px; background-color: #e9e9e9">
+    <div class="body" style="width: 1000px;height: 600px;position: relative;">
+        <div style="width: 100%;height: 80%;float: left;padding-left: 15px;  margin-top: 0px; background-color: #e9e9e9">
             <g:link  controller="proyecto" action="list" title="Gestión de proyectos">
                 <div  class="item fuera">
                     <div  class="item">
@@ -97,8 +97,8 @@
             </g:link>
 
         </div>
-    <div style="text-align: center; font-size: 14px; font-family: 'Arial'; color: #fff;
-        height: 50px; width: 100%; display: block; position: absolute; bottom: 40px">
+    <div style="text-align: center; color: #fff;
+        height: 40px; width: 100%; display: block; position: absolute; bottom: 40px">
         <img src="${resource(dir: 'images', file: 'escudo.jpg')}"/>
         <img src="${resource(dir: 'images', file: 'ecuador-ama.jpg')}"/>
     </div>

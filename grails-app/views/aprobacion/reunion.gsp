@@ -165,6 +165,17 @@
             </table>
         </div>
 
+        <div id="dialogUpload" title="Seleccione un archivo" class="ui-helper-hidden">
+            <p>
+                <g:uploadForm id="${reunion.id}" name="frmPdf" controller="solicitud" action="uploadActa">
+                    <input type="file" name="pdf" class="required"/>
+                    <g:if test="${reunion.pathPdf}">
+                        <br/>Archivo cargado: ${reunion.pathPdf}
+                    </g:if>
+                </g:uploadForm>
+            </p>
+        </div>
+
         <script type="text/javascript">
             $(function () {
 
@@ -179,6 +190,21 @@
 //                            accept : "Por favor seleccione un archivo PDF"
 //                        }
 //                    }
+                });
+
+                $("#dialogUpload").dialog({
+                    autoOpen  : false,
+                    modal     : true,
+                    resizable : false,
+                    buttons   : {
+                        "Cancelar"      : function () {
+                            $(this).dialog("close");
+                        },
+                        "Subir archivo" : function () {
+                            $("#frmPdf").submit();
+                            $(this).dialog("close");
+                        }
+                    }
                 });
 
                 $("#dialogFirmas").dialog({
@@ -244,43 +270,6 @@
 
                 });
 
-                $("#dialog").dialog({
-                    autoOpen  : false,
-                    modal     : true,
-                    resizable : false,
-                    buttons   : {
-                        "Cancelar"      : function () {
-                            $(this).dialog("close");
-                        },
-                        "Subir archivo" : function () {
-                            $("#frmPdf").submit();
-                            $(this).dialog("close");
-                        }
-                    }
-                });
-
-                %{--$("#dialogFirmas").dialog({--}%
-                %{--autoOpen  : false,--}%
-                %{--modal     : true,--}%
-                %{--resizable : false,--}%
-                %{--width     : 400,--}%
-                %{--buttons   : {--}%
-                %{--"Cancelar" : function () {--}%
-                %{--$(this).dialog("close");--}%
-                %{--},--}%
-                %{--"Imprimir" : function () {--}%
-                %{--var url = "${createLink(controller: 'reporteSolicitud', action: 'imprimirActaAprobacion')}/?id=${solicitud.id}";--}%
-                %{--var firmaGP = $("#firmaGP").val();--}%
-                %{--var firmaDP = $("#firmaDP").val();--}%
-                %{--var firmaGT = $("#firmaGT").val();--}%
-                %{--var firmaRQ = $("#firmaRQ").val();--}%
-                %{--url += "Wfgp=" + firmaGP + "Wfdp=" + firmaDP + "Wfgt=" + firmaGT + "Wfrq=" + firmaRQ;--}%
-                %{--//                            console.log(url);--}%
-                %{--location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename=acta_aprobacion.pdf";--}%
-                %{--}--}%
-                %{--}--}%
-                %{--});--}%
-
                 $("#frmPdf").validate({
 //                    rules    : {
 //                        pdf : {
@@ -295,7 +284,7 @@
                 });
 
                 $("#uploadActa").click(function () {
-                    $("#dialog").dialog("open");
+                    $("#dialogUpload").dialog("open");
                     return false;
                 });
 

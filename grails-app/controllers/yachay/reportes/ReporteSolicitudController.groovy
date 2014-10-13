@@ -327,5 +327,36 @@ class ReporteSolicitudController {
 
     def imprimirActaReunionAprobacion = {
         def reunion = Aprobacion.get(params.id.toLong())
+        def solicitudes = Solicitud.findAllByAprobacion(reunion)
+        def firmas = []
+        def anios = []
+        if (params.fgp != "null") {
+            def gerentePlanificacion = Usro.get(params.fgp)
+            if (gerentePlanificacion) {
+                firmas += [cargo: "Gerente de planificación", usuario: gerentePlanificacion]
+            }
+        }
+        if (params.fdp != "null") {
+            def directorPlanificacion = Usro.get(params.fdp)
+            if (directorPlanificacion) {
+                firmas += [cargo: "Director de planificación", usuario: directorPlanificacion]
+            }
+        }
+        if (params.fgt != "null") {
+            def gerenteTec = Usro.get(params.fgt)
+            if (gerenteTec) {
+                firmas += [cargo: "Gerente técnico", usuario: gerenteTec]
+            }
+        }
+
+        solicitudes.each { sol ->
+            DetalleMontoSolicitud.findAllBySolicitud(sol, [sort: "anio"]).each { d ->
+                if (!anios.contains(d.anio)) {
+                    anios.add(d.anio)
+                }
+            }
+        }
+
+        return [reunion: reunion, solicitudes: solicitudes, firmas: firmas, anios: anios]
     }
 }
