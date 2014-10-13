@@ -42,7 +42,7 @@
 
         %{--<div class="esquinas" style="width: 800px;height: 500px; margin: auto;margin-top:100px;background: #ffffff; border:medium solid #262626; background-image: \"${resource(dir: 'images', file: 'yachay-logo.png')}\"">--}%
         %{--<div class="esquinas" style="width: 1360px;height: 884px; margin: auto;margin-top:100px;border:medium solid #262626; ">--}%
-        <div class="esquinas" style="width: 780px;height: 340px; margin-top:110px; margin-right: 60px; background: #1e4f5a; float: right; opacity: 0.9">
+    <div class="esquinas" style="width: 780px;height: 340px; margin-top:110px; margin-right: 60px; background: #1e4f5a; float: right; opacity: 0.9">
 
 
             <div style="margin-left: 30px;margin-top: 15px;float: left;width: 440px; height: 320px; font-size: 12px;text-align: justify; color: #fff" class="ui-corner-all">
@@ -95,12 +95,10 @@
                 </div>
 
         </div>
-            <div style="position: absolute; margin-top:410px; margin-left:580px; text-align: left; font-size: 12px;">
-            %{--&copy; TEDEIN S.A. Versión ${message(code: 'version', default: '1.1.0x')}</div>--}%
-            Versión ${message(code: 'version', default: '1.1.0x')}</div>
-        </div>
+
+    </div>
     <div style="text-align: center; font-size: 12px; font-family: 'Arial'; color: #fff;
-    background-color: #1b97a7; height: 14px; padding: 5px; width: 100%; display: block; position: absolute; bottom: 0 ">2014 Todos los derechos reservados. Empresa Pública Yachay</div>
+    background-color: #1b97a7; height: 14px; padding: 5px; width: 100%; display: block; position: absolute; bottom: 0 ">2014 Todos los derechos reservados. Empresa Pública Yachay - versión ${message(code: 'version', default: '1.1.0x')}</div>
         <script>
             $(document).ready(function () {
                 if ($("#psw").val() != "")

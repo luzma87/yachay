@@ -101,6 +101,10 @@
         height: 40px; width: 100%; display: block; position: absolute; bottom: 40px">
         <img src="${resource(dir: 'images', file: 'escudo.jpg')}"/>
         <img src="${resource(dir: 'images', file: 'ecuador-ama.jpg')}"/>
+
+    </div>
+    <div style="font-size: 10px; color: #363636">
+    Versión ${message(code: 'version', default: '1.1.0x')}
     </div>
 
 <script type="text/javascript">
