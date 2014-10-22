@@ -359,4 +359,35 @@ class ReporteSolicitudController {
 
         return [reunion: reunion, solicitudes: solicitudes, firmas: firmas, anios: anios]
     }
+
+
+    def solicitudReformaPdf =  {
+
+        def fecha = new Date().format("dd-MM-yyyy")
+        def nmroMemo = 'YACHAY-GAF-2014-0102-MI'
+        def para = 'Srta Econ.Rocio Elizabeth Gavilanes Reyes'
+        def cargo = 'Gerente de Planificación'
+        def asunto = 'solicitud de reforma del poa'
+        def nombreFirma = 'Abg. Gabriela Valeria Diaz Peñafiel'
+        def cargofirma= 'GERENTE ADMINISTRATIVA FINANCIERA'
+
+        return [fecha: fecha, numero: nmroMemo, para: para, cargo: cargo, asunto: asunto, nombreFirma: nombreFirma, cargoFirma: cargofirma]
+
+
+    }
+
+    def respuestaSolicitudReforma = {
+
+        def fecha = new Date().format("dd-MM-yyyy")
+        def nmroMemo = 'YACHAY-GAF-2014-0102-MI'
+        def para = 'Srta Abg. Gabriela Valeria Diaz Peñafiel'
+        def cargo = 'Gerente de Planificación'
+        def asunto = 'solicitud de reforma del poa'
+        def nombreFirma = 'Abg. Gabriela Valeria Diaz Peñafiel'
+        def cargofirma= 'GERENTE ADMINISTRATIVA FINANCIERA'
+
+        return [fecha: fecha, numero: nmroMemo, para: para, cargo: cargo, asunto: asunto, nombreFirma: nombreFirma, cargoFirma: cargofirma]
+    }
+
+
 }
