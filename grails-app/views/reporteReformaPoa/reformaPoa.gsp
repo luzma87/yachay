@@ -21,7 +21,7 @@
 
         .hoja {
             /*background  : #e6e6fa;*/
-            height      : 24.7cm; /*29.7-(1.5*2)*/
+            /*height      : 24.7cm; *//*29.7-(1.5*2)*/
             font-family : arial;
             font-size   : 9pt;
         }
@@ -87,7 +87,7 @@
         }
 
         .table {
-            border-collapse : collapse;
+            /*border-collapse : collapse;*/
         }
 
         .center {
