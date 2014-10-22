@@ -158,6 +158,23 @@ class Proyecto implements Serializable {
     String codigoEsigef
 
     /**
+     * Unidad administradora
+     */
+    UnidadEjecutora unidadAdministradora
+    /**
+     * Protafolio
+     */
+    Portafolio portafolio
+    /**
+     Código
+     */
+    String codigo
+    /**
+     * Estrategia
+     */
+    Estrategia estrategia
+
+    /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
     static auditable = [ignore: []]
@@ -211,6 +228,12 @@ class Proyecto implements Serializable {
             programaPresupuestario column: 'pgps__id'
 
             codigoEsigef column: 'proysigf'
+
+            unidadAdministradora column: 'proyunad'
+            portafolio column: 'prtf__id'
+            codigo column: 'proycdgo'
+            estrategia column: 'estr__id'
+
         }
     }
 
@@ -251,11 +274,16 @@ class Proyecto implements Serializable {
         lineaBase(size: 0..1023, blank: true, nullable: true, attributes: [mensaje: 'Línea Base del proyecto'])
         poblacionObjetivo(size: 0..1023, blank: true, nullable: true, attributes: [mensaje: 'Población objetivo del proyecto'])
 
-        objetivoGobiernoResultado(blank: false, nullable: false, attributes: [mensaje: 'Objetivos de gobierno por resultados'])
+        objetivoGobiernoResultado(blank: true, nullable: true, attributes: [mensaje: 'Objetivos de gobierno por resultados'])
 
-        programaPresupuestario(blank: false, nullable: false, attributes: [mensaje: 'Programa presupuestario'])
+        programaPresupuestario(blank: true, nullable: true, attributes: [mensaje: 'Programa presupuestario'])
 
         codigoEsigef(size: 0..3, blank: true, nullable: true, attributes: [mensaje: 'Número proyecto eSIGEF'])
+
+        unidadAdministradora(blank: true, nullable: true, attributes: [mensaje: 'Unidad administradora'])
+        portafolio(blank: true, nullable: true, attributes: [mensaje: 'Portafolio'])
+        codigo(blank: true, nullable: true, attributes: [mensaje: 'Código'])
+        estrategia(blank: true, nullable: true, attributes: [mensaje: 'Estrategia'])
     }
 
     /**

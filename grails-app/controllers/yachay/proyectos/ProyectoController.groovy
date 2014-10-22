@@ -48,7 +48,10 @@ class ProyectoController extends yachay.seguridad.Shield {
             params.order = "asc"
         }
 
+        println params
+
         def offset = params.offset?.toInteger() ?: 0
+        def prog = params.prog?.trim()
         def busca = params.busca?.trim()
         def desde = params.desde?.trim()
         def hasta = params.hasta?.trim()
@@ -64,72 +67,40 @@ class ProyectoController extends yachay.seguridad.Shield {
             hasta = ""
         }
 
-        def ifBusca = params.busca && busca != ""
-        def ifNotBusca = !params.busca || busca == ""
-
-        def ifDesde = params.desde && desde != ""
-        def ifNotDesde = !params.desde || desde == ""
-
-        def ifHasta = params.hasta && hasta != ""
-        def ifNotHasta = !params.hasta || hasta == ""
-
-        def c = Proyecto.createCriteria()
-        def proyectoInstanceList = c.list {
-            if (ifBusca && ifDesde && ifHasta) {
-                and {
-                    ilike("nombre", "%" + busca + "%")
-                    between("monto", desde, hasta)
+        def proyectoInstanceList = Proyecto.withCriteria {
+            if (params.prog && prog != "") {
+                programa {
+                    ilike("descripcion", "%" + prog + "%")
                 }
-            } else if (ifBusca && ifDesde && ifNotHasta) {
-                and {
-                    ilike("nombre", "%" + busca + "%")
-                    ge("monto", desde)
-                }
-            } else if (ifBusca && ifNotDesde && ifHasta) {
-                and {
-                    ilike("nombre", "%" + busca + "%")
-                    le("monto", hasta)
-                }
-            } else if (ifNotBusca && ifDesde && ifHasta) {
-                between("monto", desde, hasta)
-            } else if (ifNotBusca && ifNotDesde && ifHasta) {
-                le("monto", hasta)
-            } else if (ifNotBusca && ifDesde && ifNotHasta) {
-                ge("monto", desde)
-            } else if (ifBusca && ifNotDesde && ifNotHasta) {
+            }
+            if (params.busca && busca != "") {
                 ilike("nombre", "%" + busca + "%")
             }
-
+            if (params.desde && desde != "") {
+                ge("monto", desde)
+            }
+            if (params.hasta && hasta != "") {
+                le("monto", hasta)
+            }
             maxResults(params.max)
             firstResult offset
             order(params.sort, params.order)
         }
 
-        c = Proyecto.createCriteria()
-        def lista = c.list {
-            if (ifBusca && ifDesde && ifHasta) {
-                and {
-                    ilike("nombre", "%" + busca + "%")
-                    between("monto", desde, hasta)
+        def lista = Proyecto.withCriteria {
+            if (params.prog && prog != "") {
+                programa {
+                    ilike("descripcion", "%" + prog + "%")
                 }
-            } else if (ifBusca && ifDesde && ifNotHasta) {
-                and {
-                    ilike("nombre", "%" + busca + "%")
-                    ge("monto", desde)
-                }
-            } else if (ifBusca && ifNotDesde && ifHasta) {
-                and {
-                    ilike("nombre", "%" + busca + "%")
-                    le("monto", hasta)
-                }
-            } else if (ifNotBusca && ifDesde && ifHasta) {
-                between("monto", desde, hasta)
-            } else if (ifNotBusca && ifNotDesde && ifHasta) {
-                le("monto", hasta)
-            } else if (ifNotBusca && ifDesde && ifNotHasta) {
-                ge("monto", desde)
-            } else if (ifBusca && ifNotDesde && ifNotHasta) {
+            }
+            if (params.busca && busca != "") {
                 ilike("nombre", "%" + busca + "%")
+            }
+            if (params.desde && desde != "") {
+                ge("monto", desde)
+            }
+            if (params.hasta && hasta != "") {
+                le("monto", hasta)
             }
         }
 
@@ -137,7 +108,6 @@ class ProyectoController extends yachay.seguridad.Shield {
 
         [proyectoInstanceList: proyectoInstanceList, proyectoInstanceTotal: proyectoInstanceTotal, title: title, params: params]
     }
-
 
     /**
      * Acción
@@ -186,12 +156,10 @@ class ProyectoController extends yachay.seguridad.Shield {
                 if (!proyectoInstance.hasErrors() && proyectoInstance.save(flush: true)) {
                     flash.message = "${message(code: 'default.updated.message', args: [message(code: 'proyecto.label', default: 'Proyecto'), proyectoInstance.id])}"
                     redirect(action: "show", id: proyectoInstance.id)
-                }
-                else {
+                } else {
                     render(view: "form", model: [proyectoInstance: proyectoInstance, title: title, source: "edit"])
                 }
-            }
-            else {
+            } else {
                 flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'proyecto.label', default: 'Proyecto'), params.id])}"
                 redirect(action: "list")
             }
@@ -201,8 +169,7 @@ class ProyectoController extends yachay.seguridad.Shield {
             if (proyectoInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.created.message', args: [message(code: 'proyecto.label', default: 'Proyecto'), proyectoInstance.id])}"
                 redirect(action: "show", id: proyectoInstance.id)
-            }
-            else {
+            } else {
                 render(view: "form", model: [proyectoInstance: proyectoInstance, title: title, source: "create"])
             }
         }
@@ -227,17 +194,14 @@ class ProyectoController extends yachay.seguridad.Shield {
             if (!proyectoInstance.hasErrors() && proyectoInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'proyecto.label', default: 'Proyecto'), proyectoInstance.id])}"
                 redirect(action: "show", id: proyectoInstance.id)
-            }
-            else {
+            } else {
                 render(view: "edit", model: [proyectoInstance: proyectoInstance])
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'proyecto.label', default: 'Proyecto'), params.id])}"
             redirect(action: "list")
         }
     }
-
 
     /**
      * Acción
@@ -260,7 +224,6 @@ class ProyectoController extends yachay.seguridad.Shield {
         [proyectos: proyectos, total: proyectos.count(), parametro: params.parametro]
     }
 
-
     /**
      * Acción
      */
@@ -279,7 +242,6 @@ class ProyectoController extends yachay.seguridad.Shield {
             redirect(controller: "shield", action: "ataques")
         }
     }
-
 
     /**
      * Acción
@@ -351,7 +313,7 @@ class ProyectoController extends yachay.seguridad.Shield {
                 tabla += tablasEsp[i]
                 tabla += "</td>"
 
-                def domain = grailsApplication.domainClasses.find {it.name == tbl}
+                def domain = grailsApplication.domainClasses.find { it.name == tbl }
                 def clazz = domain.clazz
                 def loader = clazz.getClassLoader()
                 def nomb = clazz.getName()
@@ -544,8 +506,7 @@ class ProyectoController extends yachay.seguridad.Shield {
         if (!proyectoInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'proyecto.label', default: 'Proyecto'), params.id])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
             def title = g.message(code: "default.show.label", args: ["Proyecto"], default: "Show Proyecto")
 
             def metasProyecto = MetaBuenVivirProyecto.findAllByProyecto(proyectoInstance)
@@ -585,8 +546,7 @@ class ProyectoController extends yachay.seguridad.Shield {
                 flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'proyecto.label', default: 'Proyecto'), params.id])}"
                 redirect(action: "show", id: params.id)
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'proyecto.label', default: 'Proyecto'), params.id])}"
             redirect(action: "list")
         }
@@ -596,7 +556,7 @@ class ProyectoController extends yachay.seguridad.Shield {
      * Acción
      */
     def loadCombo = {
-        println "aaa "+params
+        println "aaa " + params
         def str = ""
         switch (params.tipo) {
             case "politica":
@@ -678,15 +638,15 @@ class ProyectoController extends yachay.seguridad.Shield {
                 items[1].text = "Objetivos del Buen Vivir"
                 items[1].evento = "buenVivir"
 
-                items[2] = [:]
-                items[2].link = ["controller": "proyecto", "action": "nuevoProyecto", "event": "click", "params": ["evento": "politicasAgenda"]]
-                items[2].text = "Políticas Agenda Social"
-                items[2].evento = "politicasAgenda"
+//                items[2] = [:]
+//                items[2].link = ["controller": "proyecto", "action": "nuevoProyecto", "event": "click", "params": ["evento": "politicasAgenda"]]
+//                items[2].text = "Políticas Agenda Social"
+//                items[2].evento = "politicasAgenda"
 
-                items[3] = [:]
-                items[3].link = ["controller": "proyecto", "action": "nuevoProyecto", "event": "click", "params": ["evento": "politicasProyecto"]]
-                items[3].text = "Objetivos Estratégicos"
-                items[3].evento = "politicasProyecto"
+//                items[3] = [:]
+//                items[3].link = ["controller": "proyecto", "action": "nuevoProyecto", "event": "click", "params": ["evento": "politicasProyecto"]]
+//                items[3].text = "Objetivos Estratégicos"
+//                items[3].evento = "politicasProyecto"
 
                 flow.items = items
                 flow.links = false
@@ -736,11 +696,14 @@ class ProyectoController extends yachay.seguridad.Shield {
             }.to("validarProyecto")
 //            on("lista").to("lista")
             on("salir").to("salir")
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
         } //proyecto
 
         validarProyecto {
             action {
+                println "AQUIIII"
+                println params
+                println "**************"
                 if (!flow.proyecto.validate()) {
                     if (flow.proyecto.errors.getErrorCount() != 0) {
                         flow.proyecto.errors.getAllErrors().each {
@@ -820,7 +783,7 @@ class ProyectoController extends yachay.seguridad.Shield {
             }.to("redirect")//.to("politicasAgenda")
             on("salir").to("salir")
 //            on("datos").to("proyecto")
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
         }//buen vivir
 
         politicasAgenda {
@@ -867,7 +830,7 @@ class ProyectoController extends yachay.seguridad.Shield {
             }.to("checkpoint0")
 //            on("buenVivir").to("buenVivir")
             on("salir").to("salir")
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
         }
 
         checkpoint0 {
@@ -944,7 +907,7 @@ class ProyectoController extends yachay.seguridad.Shield {
 //            on("lista").to("lista")
             on("salir").to("salir")
             on("plas").to("politicasAgenda")
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
         } //politicas proyecto
 
         checkpoint1 {
@@ -1077,8 +1040,7 @@ class ProyectoController extends yachay.seguridad.Shield {
         if (!documentoInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'documento.label', default: 'Documento'), params.id])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
 
             def title = g.message(code: "documento.show", default: "Show Documento")
 
@@ -1189,7 +1151,7 @@ class ProyectoController extends yachay.seguridad.Shield {
                     "N": "[Ñ]",
                     "C": "[Ç]",
 
-                    "": "[\\!@#\\\$%\\^&*()-='\"\\/<>:;\\.,\\?]",
+                    "" : "[\\!@#\\\$%\\^&*()-='\"\\/<>:;\\.,\\?]",
 
                     "_": "[\\s]"
             ]
@@ -2196,7 +2158,7 @@ response.outputStream << file.newInputStream()
         error {} //error
 
         indice {
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
         } //indice
 
         redirect {
@@ -2209,7 +2171,7 @@ response.outputStream << file.newInputStream()
         }
 
         indicadoresSemplades {
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
             on("guardarIndicadores").to("guardarIndicadores")
         } //indicadores semplades
         guardarIndicadores {
@@ -2238,7 +2200,7 @@ response.outputStream << file.newInputStream()
         }
 
         beneficiosSemplades {
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
             on("guardarBeneficios") { println "???? " + params }.to "guardarBeneficios"
         } //beneficios semplades
         guardarBeneficios {
@@ -2268,28 +2230,28 @@ response.outputStream << file.newInputStream()
         }
 
         estudiosTecnicos {
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
         } //estudios tecnicos
 
         objetivosEstrategicos {
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
         } //objetivos estrategicos
 
         gruposDeAtencion {
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
         } //grupos de atencion
 
         entidadesProyecto {
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
         } //entidades proyecto
 
         intervenciones {
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
 
         } //intervenciones
 
         adquisiciones {
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
         } //adquisiciones
 
         salir {
@@ -2320,9 +2282,8 @@ response.outputStream << file.newInputStream()
         ws.setEncoding("ISO-8859-1");
 
 
-        Workbook workbook = Workbook.getWorkbook(f.inputStream,ws)
+        Workbook workbook = Workbook.getWorkbook(f.inputStream, ws)
         Sheet sheet = workbook.getSheet(0)
-
 
 //        println("columnas: " + sheet.getColumns())
 //        println("3 " + sheet.getColumn(3))
@@ -2336,8 +2297,8 @@ response.outputStream << file.newInputStream()
         def ids = []
         def numero = []
 
-        def n =[]
-        def m =[]
+        def n = []
+        def m = []
 
         byte b
 
@@ -2346,14 +2307,14 @@ response.outputStream << file.newInputStream()
 
         def ext
 
-        if(f && !f.empty){
+        if (f && !f.empty) {
             def nombre = f.getOriginalFilename()
             def parts = nombre.split("\\.")
             nombre = ""
-            parts.eachWithIndex{obj, i->
-                if(i < parts.size() -1){
+            parts.eachWithIndex { obj, i ->
+                if (i < parts.size() - 1) {
                     nombre += obj
-                }else{
+                } else {
                     ext = obj
                 }
             }
@@ -2377,7 +2338,7 @@ response.outputStream << file.newInputStream()
                     "N": "[Ñ]",
                     "C": "[Ç]",
 
-                    "": "[\\!@#\\\$%\\^&*()-='\"\\/<>:;\\.,\\?]",
+                    "" : "[\\!@#\\\$%\\^&*()-='\"\\/<>:;\\.,\\?]",
 
                     "_": "[\\s]"
             ]
@@ -2390,7 +2351,7 @@ response.outputStream << file.newInputStream()
             def pathFile = path + File.separatorChar + nombre
             def src = new File(pathFile)
 
-            def arreglo =[]
+            def arreglo = []
             def varios = []
 
             def proyecto
@@ -2405,21 +2366,20 @@ response.outputStream << file.newInputStream()
             def fechaFi
             def mto = 0
 
-
 //            println("path " + pathFile )
 
-            if(ext == 'xls'){
-                if(src.exists()){
+            if (ext == 'xls') {
+                if (src.exists()) {
                     flash.message = 'Ya existe un archivo con ese nombre. Por favor cambielo o elimine el otro archivo primero.'
                     flash.estado = "error"
                     flash.icon = "alert"
                     redirect(action: 'cargarExcel')
                     return
-                }else{
+                } else {
 
-                    for(int r = 2; r < sheet.rows; r++ ){
-                        DateCell dCell=null;
-                        DateCell dCellF=null;
+                    for (int r = 2; r < sheet.rows; r++) {
+                        DateCell dCell = null;
+                        DateCell dCellF = null;
 //                        ids += sheet.getCell(4, r).contents
 //                        comp += sheet.getCell(2, r).contents
 //                        act += sheet.getCell(10, r).contents
@@ -2428,32 +2388,30 @@ response.outputStream << file.newInputStream()
 //                        totales += sheet.getCell(16, r).contents
 //                        numero += sheet.getCell(7, r).contents
 
-                        if(sheet.getCell(19, r).type == CellType.DATE)
-                           dCell = (DateCell)sheet.getCell(19, r);
-                           TimeZone gmtZone = TimeZone.getTimeZone("GMT");
-                           java.text.DateFormat destFormat = new SimpleDateFormat("dd-MM-yyyy")
-                           destFormat.setTimeZone(gmtZone)
+                        if (sheet.getCell(19, r).type == CellType.DATE)
+                            dCell = (DateCell) sheet.getCell(19, r);
+                        TimeZone gmtZone = TimeZone.getTimeZone("GMT");
+                        java.text.DateFormat destFormat = new SimpleDateFormat("dd-MM-yyyy")
+                        destFormat.setTimeZone(gmtZone)
 
 
-                        if(dCell){
+                        if (dCell) {
                             println("fechaInicio " + destFormat.format(dCell.getDate()))
                             fechaI = destFormat.format(dCell.getDate())
                             fechaIni = new Date().parse("dd-MM-yyyy", fechaI)
                         }
 
-                        if(sheet.getCell(20, r).type == CellType.DATE)
-                            dCellF = (DateCell)sheet.getCell(20, r);
-                            TimeZone gmtZone1 = TimeZone.getTimeZone("GMT");
-                            java.text.DateFormat destFormat1 = new SimpleDateFormat("dd-MM-yyyy")
-                            destFormat1.setTimeZone(gmtZone1)
+                        if (sheet.getCell(20, r).type == CellType.DATE)
+                            dCellF = (DateCell) sheet.getCell(20, r);
+                        TimeZone gmtZone1 = TimeZone.getTimeZone("GMT");
+                        java.text.DateFormat destFormat1 = new SimpleDateFormat("dd-MM-yyyy")
+                        destFormat1.setTimeZone(gmtZone1)
 
-                        if(dCellF){
+                        if (dCellF) {
                             println("fechaFin " + destFormat1.format(dCellF.getDate()))
                             fechaF = destFormat1.format(dCellF.getDate())
                             fechaFi = new Date().parse("dd-MM-yyyy", fechaF)
                         }
-
-
 
 //ejemplo de correción de fecha al salir del excel
 
@@ -2475,54 +2433,54 @@ response.outputStream << file.newInputStream()
                         def nmro = sheet.getCell(9, r).contents // columna J: numero de la actividad
 
 
-                        if(nmro){
+                        if (nmro) {
                             arreglo = nmro.split('-')
                             println("numero: " + arreglo[1])
                             codigo = arreglo[1].toInteger()
-                        }else{
+                        } else {
                             codigo = 0
                         }
 
-                        mto = t.replace(',','.')
+                        mto = t.replace(',', '.')
 
 //                        println("-->" + sheet.getCell(24, r).contents)
 //                        println("-->" + sheet.getCell(12, r).contents)
 //                        System.out.println("Today's date is " + new java.util.Date(System.currentTimeMillis()));
 
 
-                        if(i != ''){
+                        if (i != '') {
                             proyecto = Proyecto.findByCodigoEsigef(i)
-                            println("i: " + i  + " Proyecto: " + proyecto)
+                            println("i: " + i + " Proyecto: " + proyecto)
                             println("comp-->> " + c)
                             println("act-->> " + a)
                             println("monto-->> " + mto)
 
-                            if(proyecto){
-                                componentes = MarcoLogico.findAllByProyectoAndTipoElemento(proyecto,tipoEl)
-                                actividades = MarcoLogico.findAllByProyectoAndTipoElemento(proyecto,tipoUno)
+                            if (proyecto) {
+                                componentes = MarcoLogico.findAllByProyectoAndTipoElemento(proyecto, tipoEl)
+                                actividades = MarcoLogico.findAllByProyectoAndTipoElemento(proyecto, tipoUno)
 
                                 println("componentes " + componentes)
                                 println("actividades " + actividades)
 
-                                if(componentes){
-                                        if(componentes.objeto.contains(c)){
-                                            println("Ya existe componente!")
+                                if (componentes) {
+                                    if (componentes.objeto.contains(c)) {
+                                        println("Ya existe componente!")
 
-                                                if(actividades.numero.contains(codigo)){
-                                                    println("ya existe actividad!")
-                                                }else{
-                                                    println("Nueva actividad!")
-                                                    println("padre " + MarcoLogico.findByObjeto(c))
-                                                    def nuevaAct = new MarcoLogico()
-                                                    nuevaAct.proyecto = proyecto
-                                                    nuevaAct.objeto = a
-                                                    nuevaAct.tipoElemento = tipoUno
-                                                    nuevaAct.numero = codigo
-                                                    nuevaAct.fechaInicio = fechaIni
-                                                    nuevaAct.fechaFin = fechaFi
-                                                    nuevaAct.monto = mto.toDouble()
-                                                    nuevaAct.marcoLogico = MarcoLogico.findByObjeto(c)
-                                                    if(nuevaAct.save(flush: true)){
+                                        if (actividades.numero.contains(codigo)) {
+                                            println("ya existe actividad!")
+                                        } else {
+                                            println("Nueva actividad!")
+                                            println("padre " + MarcoLogico.findByObjeto(c))
+                                            def nuevaAct = new MarcoLogico()
+                                            nuevaAct.proyecto = proyecto
+                                            nuevaAct.objeto = a
+                                            nuevaAct.tipoElemento = tipoUno
+                                            nuevaAct.numero = codigo
+                                            nuevaAct.fechaInicio = fechaIni
+                                            nuevaAct.fechaFin = fechaFi
+                                            nuevaAct.monto = mto.toDouble()
+                                            nuevaAct.marcoLogico = MarcoLogico.findByObjeto(c)
+                                            if (nuevaAct.save(flush: true)) {
 
 //                                                        flash.message = 'Datos Cargados'
 //                                                        flash.estado = "error"
@@ -2530,126 +2488,125 @@ response.outputStream << file.newInputStream()
 //                                                        redirect(action: 'cargarExcel')
 //                                                        return
 
-                                                    }else{
-                                                        flash.message = 'Error al generar actividades' + errors
-                                                        flash.estado = "error"
-                                                        flash.icon = "alert"
-                                                        redirect(action: 'cargarExcel')
-                                                        return
-                                                    }
-                                                }
-                                        }else{
-                                            println("Nuevo componente")
-                                            def nuevoCom = new MarcoLogico()
-                                            nuevoCom.proyecto = proyecto
-                                            nuevoCom.objeto = c
-                                            nuevoCom.tipoElemento = tipoEl
-                                            if(nuevoCom.save(flush: true)){
-//                                                flash.message = 'Datos Cargados'
-//                                                flash.estado = "error"
-//                                                flash.icon = "alert"
-//                                                redirect(action: 'cargarExcel')
-//                                                return
-                                            }else{
-                                                flash.message = 'Error al generar componentes!' + errors
+                                            } else {
+                                                flash.message = 'Error al generar actividades' + errors
                                                 flash.estado = "error"
                                                 flash.icon = "alert"
                                                 redirect(action: 'cargarExcel')
                                                 return
                                             }
+                                        }
+                                    } else {
+                                        println("Nuevo componente")
+                                        def nuevoCom = new MarcoLogico()
+                                        nuevoCom.proyecto = proyecto
+                                        nuevoCom.objeto = c
+                                        nuevoCom.tipoElemento = tipoEl
+                                        if (nuevoCom.save(flush: true)) {
+//                                                flash.message = 'Datos Cargados'
+//                                                flash.estado = "error"
+//                                                flash.icon = "alert"
+//                                                redirect(action: 'cargarExcel')
+//                                                return
+                                        } else {
+                                            flash.message = 'Error al generar componentes!' + errors
+                                            flash.estado = "error"
+                                            flash.icon = "alert"
+                                            redirect(action: 'cargarExcel')
+                                            return
+                                        }
 
 
-                                                if(actividades.numero.contains(codigo)){
-                                                    println("ya existe actividad!")
-                                                }else{
-                                                    println("Nueva actividad!")
-                                                    println("Padre " + nuevoCom)
-                                                    def nuevaAct = new MarcoLogico()
-                                                    nuevaAct.proyecto = proyecto
-                                                    nuevaAct.objeto = a
-                                                    nuevaAct.tipoElemento = tipoUno
-                                                    nuevaAct.numero = codigo
-                                                    nuevaAct.fechaInicio = fechaIni
-                                                    nuevaAct.fechaFin = fechaFi
-                                                    nuevaAct.monto = mto.toDouble()
-                                                    nuevaAct.marcoLogico= nuevoCom
-                                                    if(nuevaAct.save(flush: true)){
+                                        if (actividades.numero.contains(codigo)) {
+                                            println("ya existe actividad!")
+                                        } else {
+                                            println("Nueva actividad!")
+                                            println("Padre " + nuevoCom)
+                                            def nuevaAct = new MarcoLogico()
+                                            nuevaAct.proyecto = proyecto
+                                            nuevaAct.objeto = a
+                                            nuevaAct.tipoElemento = tipoUno
+                                            nuevaAct.numero = codigo
+                                            nuevaAct.fechaInicio = fechaIni
+                                            nuevaAct.fechaFin = fechaFi
+                                            nuevaAct.monto = mto.toDouble()
+                                            nuevaAct.marcoLogico = nuevoCom
+                                            if (nuevaAct.save(flush: true)) {
 //                                                        flash.message = 'Datos Cargados'
 //                                                        flash.estado = "error"
 //                                                        flash.icon = "alert"
 //                                                        redirect(action: 'cargarExcel')
 //                                                        return
-                                                    }else{
-                                                        flash.message = 'Error al generar actividades' + errors
-                                                        flash.estado = "error"
-                                                        flash.icon = "alert"
-                                                        redirect(action: 'cargarExcel')
-                                                        return
-                                                    }
-                                                }
-
+                                            } else {
+                                                flash.message = 'Error al generar actividades' + errors
+                                                flash.estado = "error"
+                                                flash.icon = "alert"
+                                                redirect(action: 'cargarExcel')
+                                                return
+                                            }
                                         }
+
+                                    }
                                     println("-----------------------------")
-                                }else{
+                                } else {
                                     println("NINGUN componente! -  creando nuevo componente")
                                     def nuevoCom = new MarcoLogico()
-                                            nuevoCom.proyecto = proyecto
-                                            nuevoCom.objeto = c
-                                            nuevoCom.tipoElemento = tipoEl
-                                            if(nuevoCom.save(flush: true)){
+                                    nuevoCom.proyecto = proyecto
+                                    nuevoCom.objeto = c
+                                    nuevoCom.tipoElemento = tipoEl
+                                    if (nuevoCom.save(flush: true)) {
 //                                                flash.message = 'Datos Cargados'
 //                                                flash.estado = "error"
 //                                                flash.icon = "alert"
 //                                                redirect(action: 'cargarExcel')
 //                                                return
 
-                                            }else{
-                                                flash.message = 'Error al generar componentes!' + errors
-                                                flash.estado = "error"
-                                                flash.icon = "alert"
-                                                redirect(action: 'cargarExcel')
-                                                return
-                                            }
+                                    } else {
+                                        flash.message = 'Error al generar componentes!' + errors
+                                        flash.estado = "error"
+                                        flash.icon = "alert"
+                                        redirect(action: 'cargarExcel')
+                                        return
+                                    }
 
 
 
-                                    if(actividades){
+                                    if (actividades) {
 
-                                    }else{
+                                    } else {
                                         println("NINGUNA actividad! - creando nueva actividad")
                                         println("padre " + nuevoCom)
-                                                 def nuevaAct = new MarcoLogico()
-                                                    nuevaAct.proyecto = proyecto
-                                                    nuevaAct.objeto = a
-                                                    nuevaAct.tipoElemento = tipoUno
-                                                    nuevaAct.numero = codigo
-                                                    nuevaAct.fechaInicio = fechaIni
-                                                    nuevaAct.fechaFin = fechaFi
-                                                    nuevaAct.monto = mto.toDouble()
-                                                    nuevaAct.marcoLogico = nuevoCom
-                                                     println("padre " + nuevaAct.marcoLogico)
-                                                    if(nuevaAct.save(flush: true)){
-                                                        println("-->")
+                                        def nuevaAct = new MarcoLogico()
+                                        nuevaAct.proyecto = proyecto
+                                        nuevaAct.objeto = a
+                                        nuevaAct.tipoElemento = tipoUno
+                                        nuevaAct.numero = codigo
+                                        nuevaAct.fechaInicio = fechaIni
+                                        nuevaAct.fechaFin = fechaFi
+                                        nuevaAct.monto = mto.toDouble()
+                                        nuevaAct.marcoLogico = nuevoCom
+                                        println("padre " + nuevaAct.marcoLogico)
+                                        if (nuevaAct.save(flush: true)) {
+                                            println("-->")
 //                                                        flash.message = 'Datos Cargados'
 //                                                        flash.estado = "error"
 //                                                        flash.icon = "alert"
 //                                                        redirect(action: 'cargarExcel')
 //                                                        return
-                                                    }else{
-                                                        println("error " + nuevaAct.errors )
-                                                        flash.message = 'Error al generar actividades' + errors
-                                                        flash.estado = "error"
-                                                        flash.icon = "alert"
-                                                        redirect(action: 'cargarExcel')
-                                                        return
-                                                    }
+                                        } else {
+                                            println("error " + nuevaAct.errors)
+                                            flash.message = 'Error al generar actividades' + errors
+                                            flash.estado = "error"
+                                            flash.icon = "alert"
+                                            redirect(action: 'cargarExcel')
+                                            return
+                                        }
 
                                     }
                                     println("-----------------------------")
                                 }
                             }
-                        }
-                        else{
+                        } else {
                             println("---------ERROR--------")
                         }
                     }
@@ -2666,7 +2623,7 @@ response.outputStream << file.newInputStream()
                     redirect(controller: 'proyecto', action: 'list')
                     return
                 }
-            }else{
+            } else {
                 flash.message = 'El archivo a cargar debe ser del tipo EXCEL con extensión XLS.'
                 flash.estado = "error"
                 flash.icon = "alert"
@@ -2675,9 +2632,7 @@ response.outputStream << file.newInputStream()
             }
 
 
-
-        }
-        else{
+        } else {
             flash.message = 'No se ha seleccionado ningun archivo para cargar'
             flash.estado = "error"
             flash.icon = "alert"

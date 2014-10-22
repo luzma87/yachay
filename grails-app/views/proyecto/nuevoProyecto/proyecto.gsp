@@ -105,12 +105,27 @@
                                          style="width:240px;"
                                          value="${proyecto?.codigoProyecto}"/>
                         </td>
+                        <td class="label " valign="middle">
+                            Código
+                        </td>
+
+                        <td class="indicator">
+                            &nbsp;
+                        </td>
+
+                        <td class="campo" valign="middle">
+                            <g:textField name="codigo" id="codigo"
+                                         title="${Proyecto.constraints.codigo.attributes.mensaje}"
+                                         class="ui-widget-content ui-corner-all" minLenght="1" maxLenght="20"
+                                         style="width:240px;"
+                                         value="${proyecto?.codigo}"/>
+                        </td>
                     </tr>
 
                     <tr class="prop ${hasErrors(bean: proyecto, field: 'unidadEjecutora', 'error')}">
 
                         <td class="label " valign="middle">
-                            Ejecutor
+                            U. Administradora
                         </td>
 
                         <td class="indicator mandatory">
@@ -119,28 +134,28 @@
 
                         <td class="campo" valign="middle">
                             <g:select class="required requiredCmb ui-widget-content ui-corner-all" name="unidadEjecutora.id"
-                                      title="${Proyecto.constraints.unidadEjecutora.attributes.mensaje}"
+                                      title="${Proyecto.constraints.unidadAdministradora.attributes.mensaje}"
                                       style="width: 360px;"
                                       from="${yachay.parametros.UnidadEjecutora.list()}" optionKey="id"
-                                      value="${proyecto?.unidadEjecutora?.id}"/>
+                                      value="${proyecto?.unidadAdministradora?.id}"/>
                         </td>
 
-                        <td class="label  mandatory" valign="middle">
-                            Programa presupuestario
-                        </td>
+                        %{--<td class="label  mandatory" valign="middle">--}%
+                            %{--Programa presupuestario--}%
+                        %{--</td>--}%
 
-                        <td class="indicator mandatory">
-                            <span class="indicator">*</span>
-                        </td>
+                        %{--<td class="indicator mandatory">--}%
+                            %{--<span class="indicator">*</span>--}%
+                        %{--</td>--}%
 
-                        <td class="campo mandatory" valign="middle">
-                            <g:select class="field ui-widget-content ui-corner-all programaPresupuestario"
-                                      name="programaPresupuestario.id"
-                                      title="${Proyecto.constraints.programaPresupuestario.attributes.mensaje}"
-                                      style="width: 380px;" optionKey="id"
-                                      from="${yachay.parametros.poaPac.ProgramaPresupuestario.list()}"
-                                      value="${proyecto?.programaPresupuestario?.id}"/>
-                        </td>
+                        %{--<td class="campo mandatory" valign="middle">--}%
+                            %{--<g:select class="field ui-widget-content ui-corner-all programaPresupuestario"--}%
+                                      %{--name="programaPresupuestario.id"--}%
+                                      %{--title="${Proyecto.constraints.programaPresupuestario.attributes.mensaje}"--}%
+                                      %{--style="width: 380px;" optionKey="id"--}%
+                                      %{--from="${yachay.parametros.poaPac.ProgramaPresupuestario.list()}"--}%
+                                      %{--value="${proyecto?.programaPresupuestario?.id}"/>--}%
+                        %{--</td>--}%
                     </tr>
 
                     <tr class="prop ${hasErrors(bean: proyecto, field: 'monto', 'error')} ${hasErrors(bean: proyecto, field: 'informacionDias', 'error')}">
@@ -208,7 +223,7 @@
                         </td>
 
                         <td class="label " valign="middle">
-                            <g:message code="proyecto.fechaInicio.label" default="Fecha Inicio"/>
+                            <g:message code="proyecto.fechaInicio.label" default="Fecha Inicio Ejecución"/>
                         </td>
 
                         <td class="indicator">
@@ -267,7 +282,7 @@
                         </td>
 
                         <td class="label " valign="middle">
-                            <g:message code="proyecto.fechaFin.label" default="Fecha Fin"/>
+                            <g:message code="proyecto.fechaFin.label" default="Fecha Fin Ejecución"/>
                         </td>
 
                         <td class="indicator">
@@ -294,43 +309,43 @@
 
                     </tr>
 
-%{--
-                    <tr>
-                        <td class="label" valign="middle">
-                            <g:message code="proyecto.ejeProgramatico.label"
-                                       default="Eje Programático"/>
-                        </td>
+                    %{--
+                                        <tr>
+                                            <td class="label" valign="middle">
+                                                <g:message code="proyecto.ejeProgramatico.label"
+                                                           default="Eje Programático"/>
+                                            </td>
 
-                        <td class="indicator">
-                            &nbsp;
-                        </td>
+                                            <td class="indicator">
+                                                &nbsp;
+                                            </td>
 
-                        <td>
+                                            <td>
 
-                            <g:select class="field ui-widget-content ui-corner-all" name="ejeProgramatico.id"
-                                      title="${Proyecto.constraints.ejeProgramatico.attributes.mensaje}"
-                                      from="${yachay.proyectos.EjeProgramatico.list()}" optionKey="id" style="width: 360px;"
-                                      value="${proyecto?.ejeProgramatico?.id}" noSelection="['null': '']"/>
-                        </td> <!-- campo -->
+                                                <g:select class="field ui-widget-content ui-corner-all" name="ejeProgramatico.id"
+                                                          title="${Proyecto.constraints.ejeProgramatico.attributes.mensaje}"
+                                                          from="${yachay.proyectos.EjeProgramatico.list()}" optionKey="id" style="width: 360px;"
+                                                          value="${proyecto?.ejeProgramatico?.id}" noSelection="['null': '']"/>
+                                            </td> <!-- campo -->
 
-                        <td class="label " valign="middle">
-                            <g:message code="proyecto.cobertura.label" default="Cobertura"/>
-                        </td>
+                                            <td class="label " valign="middle">
+                                                <g:message code="proyecto.cobertura.label" default="Cobertura"/>
+                                            </td>
 
-                        <td class="indicator">
-                            &nbsp;
-                        </td>
+                                            <td class="indicator">
+                                                &nbsp;
+                                            </td>
 
-                        <td class="campo" valign="middle">
-                            <g:select class="field ui-widget-content ui-corner-all" name="cobertura.id"
-                                      title="${Proyecto.constraints.cobertura.attributes.mensaje}"
-                                      style="width: 360px;"
-                                      from="${yachay.parametros.Cobertura.list()}" optionKey="id" value="${proyecto?.cobertura?.id}"
-                                      noSelection="['null': '']"/>
-                        </td>
+                                            <td class="campo" valign="middle">
+                                                <g:select class="field ui-widget-content ui-corner-all" name="cobertura.id"
+                                                          title="${Proyecto.constraints.cobertura.attributes.mensaje}"
+                                                          style="width: 360px;"
+                                                          from="${yachay.parametros.Cobertura.list()}" optionKey="id" value="${proyecto?.cobertura?.id}"
+                                                          noSelection="['null': '']"/>
+                                            </td>
 
-                    </tr>
---}%
+                                        </tr>
+                    --}%
 
                     <tr>
                         <td class="label " valign="middle">
@@ -370,45 +385,45 @@
                         </td>
                     </tr>
 
-%{--
-                    <tr>
-                        <td class="label " valign="middle">
-                            Lineamiento Senplades
-                        </td>
+                    %{--
+                                        <tr>
+                                            <td class="label " valign="middle">
+                                                Lineamiento Senplades
+                                            </td>
 
-                        <td class="indicator">
-                            &nbsp;
-                        </td>
+                                            <td class="indicator">
+                                                &nbsp;
+                                            </td>
 
-                        <td colspan="4" valign="middle">
-                            <g:select class="field ui-widget-content ui-corner-all" name="linea.id"
-                                      title="${Proyecto.constraints.linea.attributes.mensaje}" style="width: 900px;"
-                                      from="${yachay.parametros.Linea.list()}" optionKey="id" value="${proyecto?.linea?.id}"
-                                      noSelection="['null': '']"/>
-                        </td>
-                    </tr>
---}%
+                                            <td colspan="4" valign="middle">
+                                                <g:select class="field ui-widget-content ui-corner-all" name="linea.id"
+                                                          title="${Proyecto.constraints.linea.attributes.mensaje}" style="width: 900px;"
+                                                          from="${yachay.parametros.Linea.list()}" optionKey="id" value="${proyecto?.linea?.id}"
+                                                          noSelection="['null': '']"/>
+                                            </td>
+                                        </tr>
+                    --}%
 
-%{--
-                    <tr>
-                        <td class="label" valign="middle">
-                            Poblaci&oacute;n Objetivo
-                        </td>
+                    %{--
+                                        <tr>
+                                            <td class="label" valign="middle">
+                                                Poblaci&oacute;n Objetivo
+                                            </td>
 
-                        <td class="indicator">
-                            &nbsp;
-                        </td>
+                                            <td class="indicator">
+                                                &nbsp;
+                                            </td>
 
-                        <td colspan="4" class="" colspan="3">
-                            <g:textArea class="field ui-widget-content ui-corner-all" minLenght="1" maxLenght="1024"
-                                        name="poblacionObjetivo"
-                                        id="poblacionObjetivo"
-                                        title="${Proyecto.constraints.poblacionObjetivo.attributes.mensaje}"
-                                        cols="40" rows="2"
-                                        style="width: 900px;" value="${proyecto?.poblacionObjetivo}"/>
-                        </td> <!-- campo -->
-                    </tr>
---}%
+                                            <td colspan="4" class="" colspan="3">
+                                                <g:textArea class="field ui-widget-content ui-corner-all" minLenght="1" maxLenght="1024"
+                                                            name="poblacionObjetivo"
+                                                            id="poblacionObjetivo"
+                                                            title="${Proyecto.constraints.poblacionObjetivo.attributes.mensaje}"
+                                                            cols="40" rows="2"
+                                                            style="width: 900px;" value="${proyecto?.poblacionObjetivo}"/>
+                                            </td> <!-- campo -->
+                                        </tr>
+                    --}%
 
                     <tr>
                         <td class="label" valign="middle">
@@ -430,26 +445,26 @@
                         </td> <!-- campo -->
                     </tr>
 
-                    <tr class="prop ${hasErrors(bean: proyecto, field: 'subPrograma', 'error')} ${hasErrors(bean: proyecto, field: 'programa', 'error')}">
-                        <td class="label " valign="middle">
-                            Objetivo GPR
-                        </td>
+                    %{--<tr class="prop ${hasErrors(bean: proyecto, field: 'subPrograma', 'error')} ${hasErrors(bean: proyecto, field: 'programa', 'error')}">--}%
+                        %{--<td class="label " valign="middle">--}%
+                            %{--Objetivo GPR--}%
+                        %{--</td>--}%
 
-                        <td class="indicator">
-                            &nbsp;
-                        </td>
+                        %{--<td class="indicator">--}%
+                            %{--&nbsp;--}%
+                        %{--</td>--}%
 
-                        <td colspan="4" valign="middle">
-                            <g:select class="field ui-widget-content ui-corner-all objetivoGobiernoResultado"
-                                      name="objetivoGobiernoResultado.id"
-                                      title="${Proyecto.constraints.objetivoGobiernoResultado.attributes.mensaje}"
-                                      style="width: 900px;" from="${yachay.parametros.proyectos.ObjetivoGobiernoResultado.list()}"
-                                      programaPresupuestario
-                                      optionKey="id" optionValue="descripcion"
-                                      value="${proyecto?.objetivoGobiernoResultado?.id}"/>
-                        </td>
+                        %{--<td colspan="4" valign="middle">--}%
+                            %{--<g:select class="field ui-widget-content ui-corner-all objetivoGobiernoResultado"--}%
+                                      %{--name="objetivoGobiernoResultado.id"--}%
+                                      %{--title="${Proyecto.constraints.objetivoGobiernoResultado.attributes.mensaje}"--}%
+                                      %{--style="width: 900px;" from="${yachay.parametros.proyectos.ObjetivoGobiernoResultado.list()}"--}%
+                                      %{--programaPresupuestario--}%
+                                      %{--optionKey="id" optionValue="descripcion"--}%
+                                      %{--value="${proyecto?.objetivoGobiernoResultado?.id}"/>--}%
+                        %{--</td>--}%
 
-                    </tr>
+                    %{--</tr>--}%
 
                     <tr class="prop ${hasErrors(bean: proyecto, field: 'subPrograma', 'error')} ${hasErrors(bean: proyecto, field: 'programa', 'error')}">
                         <td class="label " valign="middle">
@@ -515,10 +530,10 @@
         <script type="text/javascript">
             $(function () {
 
-                $(".programaPresupuestario").selectmenu({width:370});
-                $(".objetivoGobiernoResultado").selectmenu({width:900});
-                $(".objetivoEstrategico").selectmenu({width:900});
-                $(".programaId").selectmenu({width:900});
+                $(".programaPresupuestario").selectmenu({width : 370});
+                $(".objetivoGobiernoResultado").selectmenu({width : 900});
+                $(".objetivoEstrategico").selectmenu({width : 900});
+                $(".programaId").selectmenu({width : 900});
 
                 $("#porcentajeNacional, #porcentajeExtranjero").keyup(function (evt) {
 
@@ -551,11 +566,11 @@
 
                 /******************* DATEPICKERS ***********************************/
                 $('#fechaModificacion').datepicker({
-                    changeMonth:true,
-                    changeYear:true,
-                    dateFormat:'dd-mm-yy',
-                    maxDate:new Date(),
-                    onClose:function (dateText, inst) {
+                    changeMonth : true,
+                    changeYear  : true,
+                    dateFormat  : 'dd-mm-yy',
+                    maxDate     : new Date(),
+                    onClose     : function (dateText, inst) {
                         var date = $(this).datepicker('getDate');
                         var day, month, year;
                         if (date != null) {
@@ -574,11 +589,11 @@
                     }
                 });
                 $('#fechaRegistro').datepicker({
-                    changeMonth:true,
-                    changeYear:true,
-                    dateFormat:'dd-mm-yy',
-                    maxDate:new Date(),
-                    onClose:function (dateText, inst) {
+                    changeMonth : true,
+                    changeYear  : true,
+                    dateFormat  : 'dd-mm-yy',
+                    maxDate     : new Date(),
+                    onClose     : function (dateText, inst) {
                         var date = $(this).datepicker('getDate');
                         var day, month, year;
                         if (date != null) {
@@ -595,16 +610,16 @@
                         $('#' + id + '_month').val(month);
                         $('#' + id + '_year').val(year);
 
-                        var nd = Date.today().set({ year:year, month:month - 1, day:day });
+                        var nd = Date.today().set({ year : year, month : month - 1, day : day });
                         $('#fechaModificacion').datepicker("option", "minDate", nd);
                     }
                 });
 
                 $('#fechaFinPlanificada').datepicker({
-                    changeMonth:true,
-                    changeYear:true,
-                    dateFormat:'dd-mm-yy',
-                    onClose:function (dateText, inst) {
+                    changeMonth : true,
+                    changeYear  : true,
+                    dateFormat  : 'dd-mm-yy',
+                    onClose     : function (dateText, inst) {
                         var date = $(this).datepicker('getDate');
                         var day, month, year;
                         if (date != null) {
@@ -623,10 +638,10 @@
                     }
                 });
                 $('#fechaInicioPlanificada').datepicker({
-                    changeMonth:true,
-                    changeYear:true,
-                    dateFormat:'dd-mm-yy',
-                    onClose:function (dateText, inst) {
+                    changeMonth : true,
+                    changeYear  : true,
+                    dateFormat  : 'dd-mm-yy',
+                    onClose     : function (dateText, inst) {
                         var date = $(this).datepicker('getDate');
                         var day, month, year;
                         if (date != null) {
@@ -643,16 +658,16 @@
                         $('#' + id + '_month').val(month);
                         $('#' + id + '_year').val(year);
 
-                        var nd = Date.today().set({ year:year, month:month - 1, day:day });
+                        var nd = Date.today().set({ year : year, month : month - 1, day : day });
                         $('#fechaFinPlanificada').datepicker("option", "minDate", nd);
                     }
                 });
 
                 $('#fechaFin').datepicker({
-                    changeMonth:true,
-                    changeYear:true,
-                    dateFormat:'dd-mm-yy',
-                    onClose:function (dateText, inst) {
+                    changeMonth : true,
+                    changeYear  : true,
+                    dateFormat  : 'dd-mm-yy',
+                    onClose     : function (dateText, inst) {
                         var date = $(this).datepicker('getDate');
                         var day, month, year;
                         if (date != null) {
@@ -671,10 +686,10 @@
                     }
                 });
                 $('#fechaInicio').datepicker({
-                    changeMonth:true,
-                    changeYear:true,
-                    dateFormat:'dd-mm-yy',
-                    onClose:function (dateText, inst) {
+                    changeMonth : true,
+                    changeYear  : true,
+                    dateFormat  : 'dd-mm-yy',
+                    onClose     : function (dateText, inst) {
                         var date = $(this).datepicker('getDate');
                         var day, month, year;
                         if (date != null) {
@@ -691,7 +706,7 @@
                         $('#' + id + '_month').val(month);
                         $('#' + id + '_year').val(year);
 
-                        var nd = Date.today().set({ year:year, month:month - 1, day:day });
+                        var nd = Date.today().set({ year : year, month : month - 1, day : day });
                         $('#fechaFin').datepicker("option", "minDate", nd);
                     }
                 });
@@ -707,40 +722,40 @@
                         .removeAttr('title');
                 $('<div />').qtip(
                         {
-                            content:' ', // Can use any content here :)
-                            position:{
-                                target:'event' // Use the triggering element as the positioning target
+                            content  : ' ', // Can use any content here :)
+                            position : {
+                                target : 'event' // Use the triggering element as the positioning target
                             },
-                            show:{
-                                target:elems,
-                                event:'click mouseenter focus'
+                            show     : {
+                                target : elems,
+                                event  : 'click mouseenter focus'
                             },
-                            hide:{
-                                target:elems,
-                                delay:0,
-                                leave:false
+                            hide     : {
+                                target : elems,
+                                delay  : 0,
+                                leave  : false
                             },
-                            events:{
-                                show:function (event, api) {
+                            events   : {
+                                show : function (event, api) {
                                     // Update the content of the tooltip on each show
                                     var target = $(event.originalEvent.target);
                                     api.set('content.text', target.attr('title'));
                                 }
                             },
-                            style:{
-                                classes:'ui-tooltip-rounded ui-tooltip-cream'
+                            style    : {
+                                classes : 'ui-tooltip-rounded ui-tooltip-cream'
                             }
                         });
                 // fin del codigo para los tooltips
 
                 // Validacion del formulario
                 myForm.validate({
-                    errorClass:"errormessage",
-                    onkeyup:false,
-                    errorElement:"em",
-                    errorClass:'error',
-                    validClass:'valid',
-                    errorPlacement:function (error, element) {
+                    errorClass     : "errormessage",
+                    onkeyup        : false,
+                    errorElement   : "em",
+                    errorClass     : 'error',
+                    validClass     : 'valid',
+                    errorPlacement : function (error, element) {
                         // Set positioning based on the elements position in the form
                         var elem = $(element),
                                 corners = ['right center', 'left center'],
@@ -750,24 +765,24 @@
                         if (!error.is(':empty')) {
                             // Apply the tooltip only if it isn't valid
                             elem.filter(':not(.valid)').qtip({
-                                overwrite:false,
-                                content:error,
-                                position:{
-                                    my:corners[ flipIt ? 0 : 1 ],
-                                    at:corners[ flipIt ? 1 : 0 ],
-                                    viewport:$(window)
+                                overwrite : false,
+                                content   : error,
+                                position  : {
+                                    my       : corners[ flipIt ? 0 : 1 ],
+                                    at       : corners[ flipIt ? 1 : 0 ],
+                                    viewport : $(window)
                                 },
-                                show:{
-                                    event:false,
-                                    ready:true
+                                show      : {
+                                    event : false,
+                                    ready : true
                                 },
-                                hide:{
-                                    target:elems,
-                                    delay:0,
-                                    leave:false
+                                hide      : {
+                                    target : elems,
+                                    delay  : 0,
+                                    leave  : false
                                 },
-                                style:{
-                                    classes:'ui-tooltip-rounded ui-tooltip-red' // Make it red... the classic error colour!
+                                style     : {
+                                    classes : 'ui-tooltip-rounded ui-tooltip-red' // Make it red... the classic error colour!
                                 }
                             })
 
@@ -780,14 +795,14 @@
                             elem.qtip('destroy');
                         }
                     },
-                    success:$.noop // Odd workaround for errorPlacement not firing!
+                    success        : $.noop // Odd workaround for errorPlacement not firing!
                 })
                 ;
                 //fin de la validacion del formulario
 
                 $(".button").button();
 
-                $(".saveOnly").button("option", "icons", {primary:'ui-icon-disk'}).click(function () {
+                $(".saveOnly").button("option", "icons", {primary : 'ui-icon-disk'}).click(function () {
                     if (myForm.valid()) {
                         $("#goto").val("proyecto");
                         myForm.submit();
@@ -795,22 +810,22 @@
                     return false;
                 });
 
-                $(".salir").button("option", "icons", {primary:'ui-icon-arrowreturnthick-1-w'}).click(function () {
+                $(".salir").button("option", "icons", {primary : 'ui-icon-arrowreturnthick-1-w'}).click(function () {
                     if (confirm("Si sale perderá los cambios no guardados. Continuar?")) {
                         return true;
                     } else {
                         return false;
                     }
                 });
-                $(".home").button("option", "icons", {primary:'ui-icon-home'});
-                $(".list").button("option", "icons", {primary:'ui-icon-clipboard'});
-                $(".show").button("option", "icons", {primary:'ui-icon-bullet'});
-                $(".save").button("option", "icons", {secondary:'ui-icon-arrowthick-1-e'}).click(function () {
+                $(".home").button("option", "icons", {primary : 'ui-icon-home'});
+                $(".list").button("option", "icons", {primary : 'ui-icon-clipboard'});
+                $(".show").button("option", "icons", {primary : 'ui-icon-bullet'});
+                $(".save").button("option", "icons", {secondary : 'ui-icon-arrowthick-1-e'}).click(function () {
                     $("#goto").val("buenVivir");
                     myForm.submit();
                     return false;
                 });
-                $(".delete").button("option", "icons", {primary:'ui-icon-trash'}).click(function () {
+                $(".delete").button("option", "icons", {primary : 'ui-icon-trash'}).click(function () {
                     if (confirm("${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}")) {
                         return true;
                     }

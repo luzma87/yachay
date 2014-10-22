@@ -519,7 +519,7 @@ class SolicitudController extends yachay.seguridad.Shield {
     def getComponentesByProyecto = {
         def tipoComponente = TipoElemento.get(2)
 
-        def proyecto = Proyecto.get(params.id.toLong())
+        def proyecto = Proyecto.get(params.id?.toLong())
         def componentes = MarcoLogico.findAllByProyectoAndTipoElemento(proyecto, tipoComponente)
 
         def parms = [from     : componentes, name: "componente.id", id: "selComponente", class: "requiredCmb ui-widget-content ui-corner-all",
