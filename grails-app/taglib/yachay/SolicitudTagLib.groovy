@@ -854,14 +854,14 @@ class SolicitudTagLib {
      */
     def aprobacionesReporte = { attrs ->
         Solicitud solicitud = attrs.solicitud
-        Aprobacion aprobacion = Aprobacion.findBySolicitud(solicitud)
+        Aprobacion aprobacion = solicitud.aprobacion
         def html = ""
         if (solicitud && aprobacion) {
             html += '<table width="100%">'
             html += '<tr>'
             html += '<td style="width:5.5cm;" class="label">Estado</td>'
             html += '<td>'
-            html += (aprobacion.tipoAprobacion?.descripcion ?: "")
+            html += (solicitud.tipoAprobacion?.descripcion ?: "")
             html += '</td>'
             html += '</tr>'
 //            html += '<tr>'
