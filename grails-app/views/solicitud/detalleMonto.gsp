@@ -151,7 +151,7 @@
                     } else {
                         $("#divError").addClass("ui-state-highlight").removeClass("ui-state-error").show();
                         maximo = val;
-                        $("#spanMax").text(number_format(maximo, 2, ",", "."));
+                        $("#spanMax").text(number_format(maximo, 2, ",", ".")).attr("max", maximo);
                     }
                 }
             });
