@@ -1,8 +1,11 @@
 package yachay.reportes
 
 import yachay.contratacion.Aprobacion
+import yachay.modificaciones.SolicitudModPoa
 import yachay.poa.Asignacion
 import yachay.contratacion.Solicitud
+import yachay.seguridad.Prfl
+import yachay.seguridad.Sesn
 import yachay.seguridad.Usro
 import yachay.contratacion.DetalleMontoSolicitud
 import yachay.avales.SolicitudAval
@@ -362,16 +365,19 @@ class ReporteSolicitudController {
 
 
     def solicitudReformaPdf =  {
-
-        def fecha = new Date().format("dd-MM-yyyy")
-        def nmroMemo = 'YACHAY-GAF-2014-0102-MI'
+        def sol = SolicitudModPoa.get(params.id)
+        def fecha = sol.fecha.format("dd-MM-yyyy")
+        def nmroMemo = ''
         def para = 'Srta Econ.Rocio Elizabeth Gavilanes Reyes'
         def cargo = 'Gerente de Planificación'
-        def asunto = 'solicitud de reforma del poa'
-        def nombreFirma = 'Abg. Gabriela Valeria Diaz Peñafiel'
-        def cargofirma= 'GERENTE ADMINISTRATIVA FINANCIERA'
-
-        return [fecha: fecha, numero: nmroMemo, para: para, cargo: cargo, asunto: asunto, nombreFirma: nombreFirma, cargoFirma: cargofirma]
+        def asunto = 'Solicitud de reforma del poa'
+        def nombreFirma =sol.usuario.persona
+        def cargofirma= ''
+        def gerente = Sesn.findByPerfil(Prfl.findByCodigo("GP"))
+        if(gerente){
+            gerente=gerente.usuario
+        }
+        return [fecha: fecha, numero: nmroMemo, para: para, cargo: cargo, asunto: asunto, nombreFirma: nombreFirma, cargoFirma: cargofirma,gerente:gerente]
 
 
     }

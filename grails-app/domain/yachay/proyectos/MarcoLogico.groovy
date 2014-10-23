@@ -1,5 +1,6 @@
 package yachay.proyectos
 
+import app.Cuantificable
 import yachay.parametros.UnidadEjecutora
 import yachay.parametros.TipoElemento
 
@@ -58,10 +59,7 @@ class MarcoLogico implements Serializable {
      * Unidad ejecutora responsable del marco lógico
      */
     UnidadEjecutora responsable
-    /**
-     * Valor de aporte del marco lógico
-     */
-    double aporte = 0;
+
     /**
      * Indica si tiene o no asignación en el POA (S: sí, N: no)
      */
@@ -103,7 +101,6 @@ class MarcoLogico implements Serializable {
             fechaInicio column: 'mrlgfcin'
             fechaFin column: 'mrlgfcfn'
             responsable column: 'unej__id'
-            aporte column: 'mrlgaprt'
             tieneAsignacion column: 'mrlgtnas'
             numero column: 'mrlgnmro'
             numeroComp column: 'mrlgnmcm'

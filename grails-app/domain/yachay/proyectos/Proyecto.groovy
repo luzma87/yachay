@@ -1,5 +1,6 @@
 package yachay.proyectos
 
+import app.Cuantificable
 import yachay.parametros.Calificacion
 import yachay.parametros.Cobertura
 import yachay.proyectos.EjeProgramatico
@@ -19,7 +20,7 @@ import yachay.parametros.proyectos.Programa
 /**
  * Clase para conectar con la tabla 'proy' de la base de datos
  */
-class Proyecto implements Serializable {
+class Proyecto  implements Serializable {
     /**
      * Unidad ejecutora del proyecto
      */

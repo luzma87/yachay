@@ -1,5 +1,6 @@
 package yachay.avales
 
+import app.Cuantificable
 import yachay.proyectos.Proyecto
 
 /**

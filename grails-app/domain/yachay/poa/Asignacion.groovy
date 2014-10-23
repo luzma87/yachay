@@ -1,5 +1,6 @@
 package yachay.poa
 
+import app.Cuantificable
 import yachay.avales.DistribucionAsignacion
 import yachay.parametros.UnidadEjecutora
 import yachay.parametros.poaPac.Anio

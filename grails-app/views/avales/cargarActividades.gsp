@@ -7,12 +7,13 @@
     $("#actividad").change(function(){
         $.ajax({
             type: "POST",
-            url: "${createLink(action:'cargarAsignaciones')}",
+            url: "${createLink(action:'cargarAsignaciones',controller: 'avales')}",
             data: {
                 id:$("#actividad").val(),
                 anio:$("#anio").val()
             },
             success: function(msg) {
+
                 $("#divAsg").html(msg)
             }
         });

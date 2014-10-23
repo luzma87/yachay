@@ -1,12 +1,13 @@
 package yachay.avales
 
+
 import yachay.poa.Asignacion
 import yachay.avales.ProcesoAval
 
 /**
  * Clase para conectar con la tabla 'poas' de la base de datos
  */
-class ProcesoAsignacion {
+class ProcesoAsignacion  {
     /**
      * Proceso
      */
@@ -34,6 +35,7 @@ class ProcesoAsignacion {
             proceso column: 'prco__id'
             asignacion column: 'asgn__id'
             monto column: 'poasmnto'
+
         }
     }
 

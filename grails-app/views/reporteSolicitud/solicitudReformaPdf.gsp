@@ -52,7 +52,7 @@
 <body>
         <div class="hoja">
             <div>
-                <div style="text-align: right" class="label">Memorando Nro. ${numero}</div>
+                %{--<div style="text-align: right" class="label">Memorando Nro. ${numero}</div>--}%
                 <div style="text-align: right" class="label">Quito, D.M., ${fecha}</div>
             </div>
 
@@ -64,7 +64,7 @@
                     <th>
                         PARA:
                     </th>
-                     <th>${para}</th>
+                     <th>${gerente?.persona}</th>
                      </tr>
                     <tr>
                         <th></th>

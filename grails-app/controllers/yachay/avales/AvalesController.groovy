@@ -188,9 +188,10 @@ class AvalesController extends yachay.seguridad.Shield {
      * @param anio el id del año
      */
     def cargarAsignaciones = {
-        println "cargar asg " + params
+//        println "cargar asg " + params
         def act = MarcoLogico.get(params.id)
         def anio = Anio.get(params.anio)
+//        println "asgs "+ Asignacion.findAllByMarcoLogicoAndAnio(act, anio)
         [asgs: Asignacion.findAllByMarcoLogicoAndAnio(act, anio)]
     }
 
