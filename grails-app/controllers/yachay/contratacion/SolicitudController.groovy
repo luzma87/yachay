@@ -375,7 +375,7 @@ class SolicitudController extends yachay.seguridad.Shield {
         el resto -> solo de su ue
          */
 
-        def todos = ["GP", "DP", "DS"]
+        def todos = ["GP", "DP", "DS", "ASAF", "ASPL", "ASGJ"]
 
         def c = Solicitud.createCriteria()
         def lista = c.list(params) {
@@ -817,7 +817,15 @@ class SolicitudController extends yachay.seguridad.Shield {
                 }
             }
             title += " solicitud"
-            return [unidadRequirente: unidadEjecutora, solicitud: solicitud, title: title,
+
+            def proys = MarcoLogico.withCriteria {
+                eq("responsable", session.unidad)
+                projections {
+                    distinct("proyecto")
+                }
+            }
+
+            return [unidadRequirente: unidadEjecutora, solicitud: solicitud, title: title, proyectos: proys,
                     asignado        : formatNumber(number: asignado, type: "currency"), perfil: session.perfil]
         } else {
             if (params.id) {
