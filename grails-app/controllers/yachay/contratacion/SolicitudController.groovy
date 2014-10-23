@@ -822,7 +822,14 @@ class SolicitudController extends yachay.seguridad.Shield {
             def asignado = 0
             if (params.id) {
                 solicitud = solicitud.get(params.id)
-                if (session.unidad != solicitud.unidadEjecutora) {
+/*
+                println session.unidad.id
+                println solicitud.unidadEjecutora.id
+                println session.unidad.id != solicitud.unidadEjecutora.id
+*/
+
+                if (session.unidad.id != solicitud.unidadEjecutora.id) {
+//                    println "se fue a list"
                     redirect(action: "list")
                     return
                 }

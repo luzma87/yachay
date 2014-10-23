@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
-        <title>Finix - app</title>
+        <title>Planificación - Yachay</title>
         <link rel="shortcut icon" href="${resource(dir: 'images', file: 'logo-1.jpg')}" type="image/x-icon"/>
         <script type="text/javascript" src="${resource(dir: 'js/jquery/js', file: 'jquery-1.5.1.min.js')}"></script>
         <script type="text/javascript"
