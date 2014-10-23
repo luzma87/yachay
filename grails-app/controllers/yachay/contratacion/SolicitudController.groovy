@@ -355,27 +355,24 @@ class SolicitudController extends yachay.seguridad.Shield {
         redirect(action: 'list')
     }
 
-    /*Listado de solicitudes*/
     /**
-     * Acción que muestra el listado de solicitudes de contratación
+     * Acción que muestra el listado de solicitudes de contratación. El listado cambia según el perfil:<br/>
+     * - solamente se muestran las solicitudes con estado P (no han sido tratadas en una reunión de aprobación)<br/>
+     * - si es Gerencia de Planificación (GP), Dirección de Planificación (DP), Dirección de Seguimiento (DS), Analista de administración (ASAF),
+     * Analista Jurídico (ASGJ), Gerencia Administrativa (GAF), Gerencia Jurídica (GJ) -> puede ver solicitudes de cualquier unidad; caso contrario
+     * solo las solicitudes de su unidad<br/>
+     * - si es ASAF o ASGJ -> puede ver todas las que no hayan sido ya validadas<br/>
+     * - si es GAF o GJ -> puede ver las que ya han sido revisadas por su analista<br/>
+     * - si es Director requirente (DRRQ) puede ver las ya validadas (solamente de su unidad)
      */
     def list = {
-
         def perfil = session.perfil
         def usuario = Usro.get(session.usuario.id)
         def unidad = usuario.unidad
 
         params.max = Math.min(params.max ? params.int('max') : 25, 100)
 
-//        def unidad = UnidadEjecutora.get(session.unidad.id)
-
-        /*
-        Gerencia de Planificación, Dirección Planificación y  Dirección de Seguimiento - > todas
-            GP                              DP                      DS
-        el resto -> solo de su ue
-         */
-
-        def todos = ["GP", "DP", "DS", "ASAF", "ASPL", "ASGJ"]
+        def todos = ["GP", "DP", "DS", "ASAF", "ASGJ", "ASPL", "GAF", "GJ"]
 
         def c = Solicitud.createCriteria()
         def lista = c.list(params) {
@@ -385,18 +382,41 @@ class SolicitudController extends yachay.seguridad.Shield {
             if (params.search) {
                 ilike("nombreProceso", "%" + params.search + "%")
             }
-        }
-        def list2 = Solicitud.withCriteria {
-//            eq("unidadEjecutora", unidad)
-            if (params.search) {
-                ilike("nombreProceso", "%" + params.search + "%")
+            //puede ver todas las no aprobadas aun
+//            if (["ASAF", "ASGJ", ""].contains(perfil.codigo)) {
+            eq("estado", "P")
+//            }
+            //si es Analista admin. o Analista juridico -> puede ver todas las que no hayan sido ya validadas
+            if (perfil.codigo == "ASAF") {
+                isNull("validadoAdministrativaFinanciera")
+            }
+            if (perfil.codigo == "ASGJ") {
+                isNull("validadoJuridica")
+            }
+            //si es Gerencia admin o Gerencia juridica -> puede ver las que ya han sido revisadas por su analista
+            if (perfil.codigo == "GAF") {
+                isNotNull("revisadoAdministrativaFinanciera")
+            }
+            if (perfil.codigo == "GJ") {
+                isNotNull("revisadoJuridica")
+            }
+            //si es Director requirente puede ver las ya validadas
+            if (perfil.codigo == "DRRQ") {
+                isNotNull("validadoAdministrativaFinanciera")
+                isNotNull("validadoJuridica")
             }
         }
+//        def list2 = Solicitud.withCriteria {
+////            eq("unidadEjecutora", unidad)
+//            if (params.search) {
+//                ilike("nombreProceso", "%" + params.search + "%")
+//            }
+//        }
 
         def title = g.message(code: "default.list.label", args: ["Solicitud"], default: "Solicitud List")
 //        <g:message code="default.list.label" args="[entityName]" />
 
-        [solicitudInstanceList: lista, solicitudInstanceTotal: list2.size(), title: title, params: params]
+        [solicitudInstanceList: lista, /*solicitudInstanceTotal: list2.size(),*/ title: title, params: params]
     }
 
     /**
@@ -802,6 +822,10 @@ class SolicitudController extends yachay.seguridad.Shield {
             def asignado = 0
             if (params.id) {
                 solicitud = solicitud.get(params.id)
+                if (session.unidad != solicitud.unidadEjecutora) {
+                    redirect(action: "list")
+                    return
+                }
                 if (solicitud.estado == 'A') {
                     redirect(action: "show", id: solicitud.id)
                     return

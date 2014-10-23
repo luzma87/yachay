@@ -62,7 +62,7 @@ class SolicitudTagLib {
             html += '</td>'
 
             html += '<td class="label">Componente</td>'
-            html += '<td  id="tdComponente">'
+            html += '<td>'
             html += (solicitud.actividad?.marcoLogico?.objeto ?: "")
             html += '</td>'
             html += "</tr>"
@@ -74,7 +74,7 @@ class SolicitudTagLib {
             html += '</td>'
 
             html += '<td class="label">Actividad</td>'
-            html += '<td id="tdActividad">'
+            html += '<td>'
             html += solicitud.actividad?.objeto
             def anio = Anio.findByAnio(new Date().format('yyyy'))
             def tieneAsignacion = Asignacion.countByMarcoLogicoAndAnio(solicitud.actividad, anio) > 0

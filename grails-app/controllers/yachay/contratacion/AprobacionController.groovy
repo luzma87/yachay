@@ -246,6 +246,7 @@ class AprobacionController extends yachay.seguridad.Shield {
                 }
             }
             solicitudes.each { id, solicitud ->
+                solicitud.estado = "A" // --> ya fue tratada en una reunión, ya no se puede modificar...
                 if (!solicitud.save(flush: true)) {
                     println "error al guardar la solicitud: " + solicitud.errors
                 }

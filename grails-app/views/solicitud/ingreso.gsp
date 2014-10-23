@@ -119,11 +119,11 @@
                             <g:else>
                                 Solicitar la inclusión de la actividad en la próxima reunión de planificación de contratación
 
-                                <g:if test="${solicitud.revisadoAdministrativaFinanciera && solicitud.revisadoJuridica}">
+                                <g:if test="${solicitud.validadoAdministrativaFinanciera && solicitud.validadoJuridica}">
                                     <a href="#" class="button" id="btnIncluir" data-tipo="S">Solicitar</a>
                                 </g:if>
                                 <g:else>
-                                    (podrá incluirla después de que sea revisada)
+                                    (podrá incluirla después de que sea revisada y validada)
                                 </g:else>
                             </g:else>
                         </td>
@@ -131,11 +131,14 @@
                 </g:if>
             </g:if>
 
+            <g:set var="js" value="${false}"/>
+
             <g:if test="${solicitud.validadoAdministrativaFinanciera && solicitud.validadoJuridica}">
                 </table>
                 <slc:showSolicitud solicitud="${solicitud}" editable="true" perfil="${perfil}"/>
             </g:if>
             <g:else>
+                <g:set var="js" value="${true}"/>
                 <tr>
                     <td class="label">Unidad requirente</td>
                     <td colspan="3">
@@ -658,10 +661,12 @@
                     }
                 });
 
+                <g:if test="${js}" >
                 $("#selProyecto").change(function () {
                     loadComponentes();
                 }).selectmenu({width : widthProyecto});
                 loadComponentes();
+                </g:if>
 
                 $("#nuevaCategoria").selectmenu({width : 150});
                 $("#selContrato").selectmenu({width : 150});

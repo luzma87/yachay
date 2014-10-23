@@ -96,9 +96,9 @@
                     </table>
                 </div>
 
-                <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bottom ui-helper-clearfix paginateButtons">
-                    <tdn:paginate total="${solicitudInstanceTotal}"/>
-                </div>
+                %{--<div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bottom ui-helper-clearfix paginateButtons">--}%
+                %{--<tdn:paginate total="${solicitudInstanceTotal}"/>--}%
+                %{--</div>--}%
             </div> <!-- body -->
         </div> <!-- dialog -->
 
