@@ -457,6 +457,8 @@ class SolicitudController extends yachay.seguridad.Shield {
         def usuario = Usro.get(session.usuario.id)
         def unidadEjecutora = usuario.unidad
 
+        println "UNEJ:::: " + unidadEjecutora
+
         def solicitud = new Solicitud()
         if (params.id) {
             solicitud = Solicitud.get(params.id.toLong())

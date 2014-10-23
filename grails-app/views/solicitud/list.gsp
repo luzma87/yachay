@@ -16,9 +16,11 @@
         <div class="dialog">
 
             <div class="toolbar ui-widget-header ui-corner-all">
-                <g:link class="button create" action="ingreso">
-                    Nueva solicitud
-                </g:link>
+                <g:if test="${session.perfil.codigo == 'RQ'}">
+                    <g:link class="button create" action="ingreso">
+                        Nueva solicitud
+                    </g:link>
+                </g:if>
                 <a href="#" class="button print">
                     PDF
                 </a>

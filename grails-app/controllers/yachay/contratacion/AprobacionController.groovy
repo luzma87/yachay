@@ -31,6 +31,15 @@ class AprobacionController extends yachay.seguridad.Shield {
     }
 
     /**
+     * Acción llamada con ajax que muestra la lista de las solicitudes agendadas para una reunión de aprobación
+     */
+    def solicitudes_ajax = {
+        def reunion = Aprobacion.get(params.id)
+        def solicitudes = Solicitud.findAllByAprobacion(reunion)
+        return [aprobacion: reunion, solicitudes: solicitudes]
+    }
+
+    /**
      * Acción que muestra una pantalla donde se pueden seleccionar las solicitudes que se van a tratar en la reunión de aprobación
      */
     def prepararReunionAprobacion = {

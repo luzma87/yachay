@@ -60,19 +60,21 @@
         </g:if>
         <g:set var="solicitudes" value="${Solicitud.findAllByAprobacion(reunion, [sort: 'fecha'])}"/>
         <div id="" class="toolbar ui-widget-header ui-corner-all" style="margin-bottom: 15px;">
-            <g:link class="button list" controller="solicitud" action="list">
-                Lista de solicitudes
-            </g:link>
             <g:link class="button create" action="list">
                 Lista de reuniones de aprobación
+            </g:link>
+            <g:link class="button list" controller="solicitud" action="list">
+                Lista de solicitudes
             </g:link>
             <g:if test="${puedeEditar}">
                 <a href="#" id="btnSave" class="button" style="float: right;">Guardar</a>
             </g:if>
-            <a href="#" class="button upload" id="uploadActa" style="float: right;">
-                Archivar acta
-            </a>
-            <a href="#" id="btnPrint" class="button" style="float: right;">Imprimir</a>
+            <g:if test="${params.show.toString() == '1'}">
+                <a href="#" class="button upload" id="uploadActa" style="float: right;">
+                    Archivar acta
+                </a>
+                <a href="#" id="btnPrint" class="button" style="float: right;">Imprimir</a>
+            </g:if>
         </div> <!-- toolbar -->
 
         <g:form action="saveAprobacion" name="frmAprobacion" id="${reunion.id}">

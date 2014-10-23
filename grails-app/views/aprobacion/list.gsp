@@ -64,7 +64,17 @@
                                     <td>
                                         ${aprobacionInstance.fecha.format("dd-MM-yyyy HH:mm")}
                                     </td>
-                                    <td>${aprobacionInstance.solicitudes.size()}</td>
+                                    <td>
+                                        <g:set var="solicitudes" value="${aprobacionInstance.solicitudes.size()}"/>
+                                        <g:if test="${solicitudes > 0}">
+                                            <a href="#" class="button btnVerSolicitudes" id="${aprobacionInstance.id}" title="Ver solicitudes a tratar">
+                                                ${solicitudes} solicitud${solicitudes == 1 ? '' : 'es'}
+                                            </a>
+                                        </g:if>
+                                        <g:else>
+                                            - Sin solicitudes -
+                                        </g:else>
+                                    </td>
                                     <td>${aprobacionInstance.fechaRealizacion?.format("dd-MM-yyyy HH:mm")}</td>
 
                                     <td>${fieldValue(bean: aprobacionInstance, field: "observaciones")}</td>
@@ -110,6 +120,27 @@
                 $(".button").button();
                 $(".home").button("option", "icons", {primary : 'ui-icon-home'});
                 $(".create").button("option", "icons", {primary : 'ui-icon-document'});
+
+                $(".btnVerSolicitudes").click(function () {
+                    $.ajax({
+                        type    : "POST",
+                        url     : "${createLink(action:'solicitudes_ajax')}/" + $(this).attr("id"),
+                        success : function (msg) {
+                            $.box({
+                                imageClass : false,
+                                title      : "Solicitudes",
+                                text       : msg,
+                                dialog     : {
+                                    width   : 600,
+                                    buttons : {
+                                        "Aceptar" : function (r) {
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    });
+                });
 
                 $(".edit").button("option", "icons", {primary : 'ui-icon-pencil'});
                 $(".delete").button("option", "icons", {primary : 'ui-icon-trash'}).click(function () {
