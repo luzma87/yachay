@@ -56,7 +56,7 @@
 <th width="155">Descripci&oacute;n</th>
 <th width="100">Unidad</th>
 <th width="85">Codigo CPC</th>
-<th width="107">Tipo</th>
+<th width="80">Tipo</th>
 <th width="48">Cant.</th>
 <th width="78">Costo</th>
 <th width="22">C1</th>

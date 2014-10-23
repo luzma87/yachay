@@ -31,13 +31,13 @@ class LoginController {
      * @para perfil es el perfil escogido
      */
     def login = {
-        println "login "+params
+        println "login " + params
         def user   = params.usuario
         def pass   = params.password
         def perfil = params.perfil
 
         if(params.usuario && params.password) {
-            println "usuario: ${user} password: ${pass.encodeAsMD5().size()}"
+            //println "usuario: ${user} password: ${pass.encodeAsMD5().size()}"
             def usuario = loginService.login(user, pass)
             println "---> usuario: ${usuario}"
             if(usuario){
@@ -57,19 +57,19 @@ class LoginController {
                 def permisos=yachay.seguridad.Prms.findAllByPerfil(session.perfil)
                 def hp=[:]
                 permisos.each{
-                    hp.put(it.accion.accnNombre,it.accion.control.ctrlNombre)
+                    hp.put(it.accion.accnNombre, it.accion.control.ctrlNombre)
                 }
                 session.permisos=hp
                 session.color='cafe'
 
                 if(session.an && session.cn){
-                    redirect(controller:session.cn, action:session.an,params: session.pr)
+                    redirect(controller:session.cn, action:session.an, params: session.pr)
                 }else{
                     redirect(controller:"inicio", action:"index")
                 }
             }
             else{
-                session.usuario=null
+                session.usuario = null
                 redirect(action:"index")
             }
         }
