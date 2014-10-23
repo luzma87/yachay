@@ -68,7 +68,7 @@
                                 <g:if test="${solicitud.estado == 'P'}">
                                     <g:if test="${session.perfil.codigo == 'RQ' || session.perfil.codigo == 'DRRQ'}">
                                         <g:link class="button edit" action="ingreso" id="${solicitud?.id}">
-                                            <g:message code="default.button.update.label" default="Edit"/>
+                                            Actualizar
                                         </g:link>
                                     </g:if>
                                 %{--<g:if test="${session.perfil.codigo == 'GAF' || session.perfil.codigo == 'GJ'/* || session.perfil.codigo == 'GDP'*/}">--}%

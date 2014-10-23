@@ -147,7 +147,7 @@
 
                     <td class="label">Proyecto</td>
                     <td colspan="6">
-                        <g:select from="${Proyecto.list()}" name="proyecto.id" id="selProyecto" class="requiredCmb ui-widget-content ui-corner-all"
+                        <g:select from="${proyectos}" name="proyecto.id" id="selProyecto" class="requiredCmb ui-widget-content ui-corner-all"
                                   optionKey="id" optionValue="nombre" value="${solicitud.actividad?.proyectoId}"/>
                     </td>
                 </tr>

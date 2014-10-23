@@ -20,7 +20,7 @@ class GrupoProcesos implements Serializable {
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
     static mapping = {
-        table 'grpr'
+        table 'c_grpr'
         cache usage: 'read-write', include: 'non-lazy'
         id column: 'grpr__id'
         id generator: 'identity'
