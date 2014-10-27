@@ -612,6 +612,24 @@ class ProyectoController extends yachay.seguridad.Shield {
     }
 
     /**
+     * Acción llamada con ajax que carga un combo box de estrategias de un objetivo estratégico en particular
+     */
+    def estrategiaPorObjetivo_ajax = {
+        def estrategias = []
+        if (params.id != "null") {
+            println params
+            def obj = ObjetivoEstrategico.get(params.id.toLong())
+            println "OBJ: " + obj
+            estrategias = Estrategia.findAllByObjetivoEstrategico(obj)
+        }
+        def select = g.select(from: estrategias, name: "estrateia.id", class: "estrategia")
+        def js = "<script type='text/javascript'>"
+        js += "\$(\".estrategia\").selectmenu({width : 900});"
+        js += "</script>"
+        render select.toString() + js
+    }
+
+    /**
      * Acción
      */
     def nuevoProyectoFlow = {

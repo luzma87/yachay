@@ -197,7 +197,8 @@ class CustomTagLib {
         // determine and add sorting order for this column to link params
         attrs.class = (attrs.class ? "${attrs.class} sortable" : "sortable")
         if (property == sort) {
-            attrs.class = attrs.class + " sorted ui-state-highlight " + order
+//            attrs.class = attrs.class + " sorted ui-state-highlight " + order
+            attrs.class = attrs.class + " sorted " + order
             if (order == "asc") {
                 linkParams.order = "desc"
             } else {

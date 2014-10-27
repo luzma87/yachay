@@ -50,6 +50,15 @@
             padding : 5px;
             cursor  : pointer;
         }
+
+        .info {
+            font-size     : larger;
+            padding       : 10px;
+            background    : #d9edf7;
+            margin-bottom : 15px;
+            color         : #31708f;
+            border        : solid 1px #bce8f1;
+        }
         </style>
     </head>
 
@@ -77,6 +86,11 @@
             </g:if>
         </div> <!-- toolbar -->
 
+        <div class="info ui-corner-all">
+            Reunión de Planificación de contrataciones <strong>número ${reunion.numero}</strong>
+            planificada para el <strong>${reunion.fecha.format("dd-MM-yyyy HH:mm")}</strong>
+        </div>
+
         <g:form action="saveAprobacion" name="frmAprobacion" id="${reunion.id}">
             <g:each in="${solicitudes}" var="solicitud" status="i">
                 <div class="solicitud ui-corner-all">
@@ -91,17 +105,17 @@
             </g:each>
 
             <table>
-                <tr>
-                    <td class="label">Asistentes</td>
-                    <td colspan="4">
-                        <g:if test="${puedeEditar}">
-                            <g:textArea class="ui-widget-content ui-corner-all required" name="asistentes" rows="5" cols="5" value="${reunion.asistentes}"/>
-                        </g:if>
-                        <g:else>
-                            ${reunion.asistentes ?: '-Sin asistentes-'}
-                        </g:else>
-                    </td>
-                </tr>
+                %{--<tr>--}%
+                %{--<td class="label">Asistentes</td>--}%
+                %{--<td colspan="4">--}%
+                %{--<g:if test="${puedeEditar}">--}%
+                %{--<g:textArea class="ui-widget-content ui-corner-all required" name="asistentes" rows="5" cols="5" value="${reunion.asistentes}"/>--}%
+                %{--</g:if>--}%
+                %{--<g:else>--}%
+                %{--${reunion.asistentes ?: '-Sin asistentes-'}--}%
+                %{--</g:else>--}%
+                %{--</td>--}%
+                %{--</tr>--}%
                 <tr>
                     <td class="label">Observaciones</td>
                     <td colspan="4">
@@ -295,7 +309,17 @@
                 $(".button").button();
 
                 $("#btnSave").button("option", "icons", {primary : 'ui-icon-disk'}).click(function () {
-                    $("#frmAprobacion").submit();
+                    if ($("#frmAprobacion").valid()) {
+                        $("#frmAprobacion").submit();
+                    } else {
+                        $(".solicitudHeader").each(function () {
+                            var $body = $(this).siblings(".solicitudBody");
+                            if ($body.hasClass("escondido")) {
+                                $body.show();
+                                $body.removeClass("escondido");
+                            }
+                        });
+                    }
                 });
                 $("#btnPrint").button("option", "icons", {primary : 'ui-icon-print'}).click(function () {
                     $("#dialogFirmas").dialog("open");

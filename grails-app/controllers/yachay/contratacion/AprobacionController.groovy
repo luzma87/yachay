@@ -24,7 +24,8 @@ class AprobacionController extends yachay.seguridad.Shield {
     def list = {
         def title = g.message(code: "aprobacion.list", default: "Aprobacion List")
 //        <g:message code="default.list.label" args="[entityName]" />
-
+        params.sort = "fecha"
+        params.order = "desc"
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 
         [aprobacionInstanceList: Aprobacion.list(params), aprobacionInstanceTotal: Aprobacion.count(), title: title, params: params]
@@ -37,6 +38,29 @@ class AprobacionController extends yachay.seguridad.Shield {
         def reunion = Aprobacion.get(params.id)
         def solicitudes = Solicitud.findAllByAprobacion(reunion)
         return [aprobacion: reunion, solicitudes: solicitudes]
+    }
+
+    /**
+     * Acción llamada con ajax que muestra el diálogo para agendar reunión de contratación: fecha, hora, comentarios para cada solicitud
+     */
+    def agendarReunion_ajax = {
+        def reunion = new Aprobacion()
+        if (params.id) {
+            reunion = Aprobacion.get(params.id.toLong())
+            if (!reunion) {
+                reunion = new Aprobacion()
+            }
+        }
+
+        def ids = params.ids.split("_")
+        if (ids instanceof String) {
+            ids = [ids]
+        }
+        ids = ids*.toLong()
+
+        def solicitudes = Solicitud.findAllByIdInListOrAprobacion(ids, reunion)
+
+        return [reunion: reunion, solicitudes: solicitudes]
     }
 
     /**
@@ -64,10 +88,6 @@ class AprobacionController extends yachay.seguridad.Shield {
 
     /**
      * Acción llamada con ajax que crea una reunión de aprobación asignando una lista de solicitudes a tratar
-     * @param fecha la fecha de la reunión
-     * @param horas la hora de la reunión
-     * @param minutos los minutos de la reunión (hay que multiplicar por 5, por facilidad de creación del g:select)
-     * @param ids los ids de las solicitudes que se tratarán en esta reunión separados por _ (guión bajo)
      */
     def agendarReunion = {
 //        println params
@@ -75,7 +95,7 @@ class AprobacionController extends yachay.seguridad.Shield {
         def h = params.horas.toString().toInteger()
         def m = params.minutos.toString().toInteger() * 5
         def fecha = new Date().parse("dd-MM-yyyy HH:mm", f + " " + h + ":" + m)
-        def ids = params.ids.split("_")
+
         def ok = true
         def aprobacion = Aprobacion.findByFecha(fecha)
         if (!aprobacion) {
@@ -87,14 +107,29 @@ class AprobacionController extends yachay.seguridad.Shield {
             }
         }
         if (ok) {
-            ids.each { id ->
-                def solicitud = Solicitud.get(id)
-                solicitud.aprobacion = aprobacion
-                if (!solicitud.save(flush: true)) {
-                    ok = false
-                    println "Error asignando aprobacion a la solicitud: " + solicitud.errors
+            params.each { k, v ->
+                if (k.toString().startsWith("revision")) {
+                    def parts = k.split("_");
+                    if (parts.size() == 2) {
+                        def id = parts[1].toLong()
+                        def solicitud = Solicitud.get(id)
+                        solicitud.aprobacion = aprobacion
+                        solicitud.revisionDireccionPlanificacionInversion = v
+                        if (!solicitud.save(flush: true)) {
+                            ok = false
+                            println "Error asignando aprobacion a la solicitud: " + solicitud.errors
+                        }
+                    }
                 }
             }
+//            ids.each { id ->
+//                def solicitud = Solicitud.get(id)
+//                solicitud.aprobacion = aprobacion
+//                if (!solicitud.save(flush: true)) {
+//                    ok = false
+//                    println "Error asignando aprobacion a la solicitud: " + solicitud.errors
+//                }
+//            }
         }
         render(ok ? "OK" : "NO")
     }
@@ -185,6 +220,24 @@ class AprobacionController extends yachay.seguridad.Shield {
         }
         if (reuniones.size() == 1) {
 
+            reunion = reuniones.first()
+            if (reunion.fechaRealizacion) {
+                params.show = 1
+            }
+
+            if (!reunion.numero) {
+//                println "Generar numero de reunion"
+                def numero = 1
+                def maxNum = Aprobacion.list().numero*.toInteger().max()
+                if (maxNum) {
+                    numero = maxNum.toInteger() + 1
+                }
+                reunion.numero = numero.toString()
+                if (!reunion.save(flush: true)) {
+                    println "error al asignar numero a la reunion::: " + reunion.errors
+                }
+            }
+
             def unidadGerenciaPlan = UnidadEjecutora.findByCodigo("DRPL") // GERENCIA DE PLANIFICACIÓN
             def unidadDireccionPlan = UnidadEjecutora.findByCodigo("DPI") // DIRECCIÓN DE PLANIFICACIÓN E INVERSIÓN
             def unidadGerenciaTec = UnidadEjecutora.findByCodigo("GT") // GERENCIA TÉCNICA
@@ -195,10 +248,6 @@ class AprobacionController extends yachay.seguridad.Shield {
             def firmaGerenciaTec = Usro.findAllByUnidad(unidadGerenciaTec)
 //            def firmaRequirente = Usro.findAllByUnidad(unidadRequirente)
 
-            reunion = reuniones.first()
-            if (reunion.fechaRealizacion) {
-                params.show = 1
-            }
 
             return [reunion             : reunion, params: params, perfil: perfil, firmaGerenciaPlanif: firmaGerenciaPlanif,
                     firmaDireccionPlanif: firmaDireccionPlanif, firmaGerenciaTec: firmaGerenciaTec/*, firmaRequirente: firmaRequirente*/]
@@ -217,23 +266,29 @@ class AprobacionController extends yachay.seguridad.Shield {
      * Acción que guarda los datos de la reunión de aprobación
      */
     def saveAprobacion = {
+        println "SAVE APROBACION>>>>> " + params
         /*
-        [12_observaciones:,
-        observaciones:,
-        13_tipoAprobacion.id:1,
-        13_tipoAprobacion:[id:1],
-        13_observaciones:,
-        asistentes:ASFD asdf asdf asdf,
-        12_tipoAprobacion.id:1,
-        12_tipoAprobacion:[id:1],
-        id:10,
-        action:saveAprobacion,
-        controller:aprobacion]
+            [
+            10_observaciones:bbbbbbbbbbbbbbbbb,
+            12_asistentes:cccccccccccccccccccccccccccc3,
+            1_tipoAprobacion.id:1,
+            1_tipoAprobacion:[id:1],
+            12_observaciones:cccccccccccccccccccccccccccccc,
+            10_tipoAprobacion.id:1,
+            10_tipoAprobacion:[id:1],
+            10_asistentes:bbbbbbbbbbbbbbbbbbb2,
+            observaciones:a fsd fasd,
+            1_observaciones:aaaaaaaa,
+            12_tipoAprobacion.id:1,
+            12_tipoAprobacion:[id:1],
+            1_asistentes:aaaaaaaaaaaaaaaaaa1,
+            id:9,
+            action:saveAprobacion, controller:aprobacion]
          */
 
         def reunion = Aprobacion.get(params.id.toLong())
         reunion.observaciones = params.observaciones.trim()
-        reunion.asistentes = params.asistentes.trim()
+//        reunion.asistentes = params.asistentes.trim()
         reunion.fechaRealizacion = new Date()
         if (!reunion.save(flush: true)) {
             println "Error al guardar la reunion: " + reunion.errors
@@ -248,7 +303,10 @@ class AprobacionController extends yachay.seguridad.Shield {
                         solicitudes[id] = Solicitud.get(id)
                     }
                     if (campo == "observaciones") {
-                        solicitudes[id].observaciones = solicitudes[id].observaciones ? solicitudes[id].observaciones + "; " + v.trim() : v.trim()
+                        solicitudes[id].observacionesAprobacion = solicitudes[id].observacionesAprobacion ?
+                                solicitudes[id].observacionesAprobacion + "; " + v.trim() : v.trim()
+                    } else if (campo == "asistentes") {
+                        solicitudes[id].asistentesAprobacion = v.trim()
                     } else if (campo == "tipoAprobacion.id") {
                         solicitudes[id].tipoAprobacion = TipoAprobacion.get(v.toLong())
                     }

@@ -170,6 +170,15 @@ class Solicitud {
     String pathAprobacion
 
     /**
+     * Comentarios al momento de agendar la reunión de aprobación
+     */
+    String revisionDireccionPlanificacionInversion
+    /**
+     * Asistentes a la reunión de aprobación
+     */
+    String asistentesAprobacion
+
+    /**
      * Define las relaciones uno a varios
      */
     static hasMany = [detallesMonto: DetalleMontoSolicitud]
@@ -235,6 +244,10 @@ class Solicitud {
             tipoAprobacion column: 'tpap__id'
             observacionesAprobacion column: 'slctobap'
             pathAprobacion column: 'slctptap'
+
+            revisionDireccionPlanificacionInversion column: 'slctrdpi'
+            revisionDireccionPlanificacionInversion type: "text"
+            asistentesAprobacion column: "slctasap"
         }
     }
 
@@ -275,5 +288,8 @@ class Solicitud {
         tipoAprobacion(blank: true, nullable: true)
         observacionesAprobacion(blank: true, nullable: true)
         pathAprobacion(blank: true, nullable: true)
+
+        revisionDireccionPlanificacionInversion(blank: true, nullable: true)
+        asistentesAprobacion(blank: true, nullable: true, maxSize: 1023)
     }
 }

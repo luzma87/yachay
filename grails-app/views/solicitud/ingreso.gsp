@@ -81,255 +81,248 @@
     </head>
 
     <body>
-        %{--
-                <div class="">
-                    <p>
-                        Seleccione un proyecto para cargar sus componentes, seleccione un componente para cargar sus actividades.
-                    </p>
 
-                    <p>
-                        Las actividades marcadas con un <strong>(*)</strong> no se encuentran en el POA y serán automáticamente ingresadas.
-                    </p>
+        <div class="dialog" title="${title}">
+            <div id="" class="toolbar ui-widget-header ui-corner-all">
+                <g:link class="button list" action="list">
+                    Lista de solicitudes
+                </g:link>
+                <g:link class="button create" action="ingreso">
+                    Nueva solicitud
+                </g:link>
 
-                    <p>
-                        Puede también crear una nueva actividad.
-                    </p>
+                <a href="#" id="btnPrint" class="button" style="float: right;">Imprimir</a>
+            </div> <!-- toolbar -->
+
+            <div class="body">
+                <div class="ui-widget-content ui-state-error ui-corner-all ui-helper-hidden" id="divPoa" style="padding:5px; margin-bottom: 10px;">
+                    <p>La actividad seleccionada no se encuentra en el POA</p>
                 </div>
-        --}%
+                <g:uploadForm action="save" method="post" name="frmSolicitud" id="${solicitud.id}">
+                    <table width="100%" border="0">
+                    <g:if test="${solicitud.id}">
+                        <g:if test="${perfil.codigo == 'DRRQ'}">
+                            <tr>
+                                <td colspan="6" style="padding-bottom: 15px; font-size: larger; font-weight: bold;">
+                                    <g:if test="${solicitud.incluirReunion == 'S'}">
+                                        Se incluirá en la próxima reunión de aprobación
 
-        <div class="ui-widget-content ui-state-error ui-corner-all ui-helper-hidden" id="divPoa" style="padding:5px; margin-bottom: 10px;">
-            <p>La actividad seleccionada no se encuentra en el POA</p>
-        </div>
+                                        <a href="#" class="button" id="btnIncluir" data-tipo="N">No incluir</a>
+                                    </g:if>
+                                    <g:else>
+                                        Solicitar la inclusión de la actividad en la próxima reunión de planificación de contratación
 
-    %{--*${solicitud.validadoAdministrativaFinanciera}*--}%
-    %{--*${solicitud.validadoJuridica}*--}%
-    %{--*${solicitud.validadoAdministrativaFinanciera && solicitud.validadoJuridica}*--}%
+                                        <g:if test="${solicitud.validadoAdministrativaFinanciera && solicitud.validadoJuridica}">
+                                            <a href="#" class="button" id="btnIncluir" data-tipo="S">Solicitar</a>
+                                        </g:if>
+                                        <g:else>
+                                            (podrá incluirla después de que sea revisada y validada)
+                                        </g:else>
+                                    </g:else>
+                                </td>
+                            </tr>
+                        </g:if>
+                    </g:if>
 
-        <g:uploadForm action="save" method="post" name="frmSolicitud" id="${solicitud.id}">
-            <table width="100%" border="0">
-            <g:if test="${solicitud.id}">
-                <g:if test="${perfil.codigo == 'DRRQ'}">
-                    <tr>
-                        <td colspan="6" style="padding-bottom: 15px; font-size: larger; font-weight: bold;">
-                            <g:if test="${solicitud.incluirReunion == 'S'}">
-                                Se incluirá en la próxima reunión de aprobación
+                    <g:set var="js" value="${false}"/>
 
-                                <a href="#" class="button" id="btnIncluir" data-tipo="N">No incluir</a>
-                            </g:if>
-                            <g:else>
-                                Solicitar la inclusión de la actividad en la próxima reunión de planificación de contratación
+                    <g:if test="${solicitud.validadoAdministrativaFinanciera && solicitud.validadoJuridica}">
+                        </table>
+                        <slc:showSolicitud solicitud="${solicitud}" editable="true" perfil="${perfil}"/>
+                    </g:if>
+                    <g:else>
+                        <g:set var="js" value="${true}"/>
+                        <tr>
+                            <td class="label">Unidad requirente</td>
+                            <td colspan="3">
+                                ${unidadRequirente.nombre}
+                            </td>
+                        </tr>
 
-                                <g:if test="${solicitud.validadoAdministrativaFinanciera && solicitud.validadoJuridica}">
-                                    <a href="#" class="button" id="btnIncluir" data-tipo="S">Solicitar</a>
+                        <tr>
+
+                            <td class="label">Proyecto</td>
+                            <td colspan="6">
+                                <g:select from="${proyectos}" name="proyecto.id" id="selProyecto" class="requiredCmb ui-widget-content ui-corner-all"
+                                          optionKey="id" optionValue="nombre" value="${solicitud.actividad?.proyectoId}"/>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="label">Componente</td>
+                            <td colspan="6" id="tdComponente">
+                                %{--<g:select from="${Componente.list()}" name="componente.id" id="selComponente" class="ui-widget-content ui-corner-all"/>--}%
+                            </td>
+                        </tr>
+
+                        <tr>
+
+                            <td class="label">Actividad</td>
+                            <td colspan="6" id="tdActividad">
+                                %{--<g:select from="${Actividad.list()}" name="proyecto.id" id="selActividad" class="ui-widget-content ui-corner-all"/>--}%
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="label">Nombre del proceso</td>
+                            <td colspan="6">
+                                <g:textField class="required field wide ui-widget-content ui-corner-all"
+                                             name="nombreProceso" title="Nombre del proceso" value="${solicitud.nombreProceso}" style="width:960px;"/>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="label">Forma de pago</td>
+                            <td>
+                                <g:textField class="required wide field ui-widget-content ui-corner-all"
+                                             name="formaPago" title="Forma de pago" value="${solicitud.formaPago}"/>
+                            </td>
+
+                            <td class="label">Plazo de ejecución</td>
+                            <td>
+                                <g:textField class="required digits field wide tiny ui-widget-content ui-corner-all"
+                                             name="plazoEjecucion" title="Plazo de ejecución" value="${solicitud.plazoEjecucion}"/> días
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="label">Fecha</td>
+                            <td colspan="1">
+                                <g:textField class="required datepicker field wide short ui-widget-content ui-corner-all"
+                                             name="fecha" title="Fecha" autocomplete="off" value="${solicitud.fecha?.format('dd-MM-yyyy') ?: new Date().format('dd-MM-yyyy')}"/>
+                            </td>
+
+                            <td class="label">Monto solicitado</td>
+                            <td>
+                                <g:if test="${solicitud.id}">
+                                    <g:textField class="required number2 field wide short ui-widget-content ui-corner-all"
+                                                 name="montoSolicitado" title="Monto solicitado" autocomplete="off"
+                                                 value="${solicitud.montoSolicitado}" readonly="readonly"/>
+                                    <a href="#" id="btnMontoDetalle">Detalle</a>
                                 </g:if>
                                 <g:else>
-                                    (podrá incluirla después de que sea revisada y validada)
+                                    <g:textField class="required number2 field wide short ui-widget-content ui-corner-all"
+                                                 name="montoSolicitado" title="Monto solicitado" autocomplete="off"
+                                                 value="${solicitud.montoSolicitado}"/>
                                 </g:else>
-                            </g:else>
-                        </td>
-                    </tr>
-                </g:if>
-            </g:if>
+                                (Detallado: <span id="spanAsg">${asignado}</span>)
+                            </td>
 
-            <g:set var="js" value="${false}"/>
+                            <td class="label">Modalidad de contratación</td>
+                            <td>
+                                <g:select name="tipoContrato.id" id="selContrato" from="${TipoContrato.list()}"
+                                          optionKey="id" optionValue="descripcion" class="requiredCmb" value="${solicitud.tipoContratoId}"/>
+                            </td>
+                        </tr>
 
-            <g:if test="${solicitud.validadoAdministrativaFinanciera && solicitud.validadoJuridica}">
-                </table>
-                <slc:showSolicitud solicitud="${solicitud}" editable="true" perfil="${perfil}"/>
-            </g:if>
-            <g:else>
-                <g:set var="js" value="${true}"/>
-                <tr>
-                    <td class="label">Unidad requirente</td>
-                    <td colspan="3">
-                        ${unidadRequirente.nombre}
-                    </td>
-                </tr>
+                        <tr>
+                            <td class="label">Objeto del contrato</td>
+                            <td colspan="7">
+                                <g:textArea name="objetoContrato" rows="4" cols="115" class="ta required ui-widget-content ui-corner-all"
+                                            value="${solicitud.objetoContrato}"/>
+                            </td>
+                        </tr>
 
-                <tr>
+                    %{--<tr>--}%
+                    %{--<td class="label">Observaciones</td>--}%
+                    %{--<td colspan="7">--}%
+                    %{--<g:textArea name="observaciones" rows="4" cols="115" class="ta ui-widget-content ui-corner-all"--}%
+                    %{--value="${solicitud.observaciones}"/>--}%
+                    %{--</td>--}%
+                    %{--</tr>--}%
 
-                    <td class="label">Proyecto</td>
-                    <td colspan="6">
-                        <g:select from="${proyectos}" name="proyecto.id" id="selProyecto" class="requiredCmb ui-widget-content ui-corner-all"
-                                  optionKey="id" optionValue="nombre" value="${solicitud.actividad?.proyectoId}"/>
-                    </td>
-                </tr>
+                        <tr>
+                            <td colspan="2" class="label">T.D.R.</td>
+                            <td colspan="6">
+                                <input type="file" name="tdr" class="${solicitud.pathPdfTdr ? '' : 'required'}"/>
+                                <g:if test="${solicitud.pathPdfTdr}">
+                                    <br/>
+                                    Archivo actual:
+                                    ${solicitud.pathPdfTdr}
+                                </g:if>
+                            </td>
+                        </tr>
 
-                <tr>
-                    <td class="label">Componente</td>
-                    <td colspan="6" id="tdComponente">
-                        %{--<g:select from="${Componente.list()}" name="componente.id" id="selComponente" class="ui-widget-content ui-corner-all"/>--}%
-                    </td>
-                </tr>
+                        <tr>
+                            <td colspan="2" class="label">Oferta 1</td>
+                            <td colspan="6">
+                                <input type="file" name="oferta1"/>
+                                <g:if test="${solicitud.pathOferta1}">
+                                    <br/>
+                                    Archivo actual:
+                                    ${solicitud.pathOferta1}
+                                </g:if>
+                            </td>
+                        </tr>
 
-                <tr>
+                        <tr>
+                            <td colspan="2" class="label">Oferta 2</td>
+                            <td colspan="6">
+                                <input type="file" name="oferta2"/>
+                                <g:if test="${solicitud.pathOferta2}">
+                                    <br/>
+                                    Archivo actual:
+                                    ${solicitud.pathOferta2}
+                                </g:if>
+                            </td>
+                        </tr>
 
-                    <td class="label">Actividad</td>
-                    <td colspan="6" id="tdActividad">
-                        %{--<g:select from="${Actividad.list()}" name="proyecto.id" id="selActividad" class="ui-widget-content ui-corner-all"/>--}%
-                    </td>
-                </tr>
+                        <tr>
+                            <td colspan="2" class="label">Oferta 3</td>
+                            <td colspan="6">
+                                <input type="file" name="oferta3"/>
+                                <g:if test="${solicitud.pathOferta3}">
+                                    <br/>
+                                    Archivo actual:
+                                    ${solicitud.pathOferta3}
+                                </g:if>
+                            </td>
+                        </tr>
 
-                <tr>
-                    <td class="label">Nombre del proceso</td>
-                    <td colspan="6">
-                        <g:textField class="required field wide ui-widget-content ui-corner-all"
-                                     name="nombreProceso" title="Nombre del proceso" value="${solicitud.nombreProceso}" style="width:960px;"/>
-                    </td>
-                </tr>
+                        <tr>
+                            <td colspan="2" class="label">Cuadro comparativo</td>
+                            <td colspan="6">
+                                <input type="file" name="comparativo"/>
+                                <g:if test="${solicitud.pathCuadroComparativo}">
+                                    <br/>
+                                    Archivo actual:
+                                    ${solicitud.pathCuadroComparativo}
+                                </g:if>
+                            </td>
+                        </tr>
 
-                <tr>
-                    <td class="label">Forma de pago</td>
-                    <td>
-                        <g:textField class="required wide field ui-widget-content ui-corner-all"
-                                     name="formaPago" title="Forma de pago" value="${solicitud.formaPago}"/>
-                    </td>
+                        <tr>
+                            <td colspan="2" class="label">Análisis de costos</td>
+                            <td colspan="6">
+                                <input type="file" name="analisis"/>
+                                <g:if test="${solicitud.pathAnalisisCostos}">
+                                    <br/>
+                                    Archivo actual:
+                                    ${solicitud.pathAnalisisCostos}
+                                </g:if>
+                            </td>
+                        </tr>
 
-                    <td class="label">Plazo de ejecución</td>
-                    <td>
-                        <g:textField class="required digits field wide tiny ui-widget-content ui-corner-all"
-                                     name="plazoEjecucion" title="Plazo de ejecución" value="${solicitud.plazoEjecucion}"/> días
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="label">Fecha</td>
-                    <td colspan="1">
-                        <g:textField class="required datepicker field wide short ui-widget-content ui-corner-all"
-                                     name="fecha" title="Fecha" autocomplete="off" value="${solicitud.fecha?.format('dd-MM-yyyy') ?: new Date().format('dd-MM-yyyy')}"/>
-                    </td>
-
-                    <td class="label">Monto solicitado</td>
-                    <td>
-                        <g:if test="${solicitud.id}">
-                            <g:textField class="required number2 field wide short ui-widget-content ui-corner-all"
-                                         name="montoSolicitado" title="Monto solicitado" autocomplete="off"
-                                         value="${solicitud.montoSolicitado}" readonly="readonly"/>
-                            <a href="#" id="btnMontoDetalle">Detalle</a>
-                        </g:if>
-                        <g:else>
-                            <g:textField class="required number2 field wide short ui-widget-content ui-corner-all"
-                                         name="montoSolicitado" title="Monto solicitado" autocomplete="off"
-                                         value="${solicitud.montoSolicitado}"/>
-                        </g:else>
-                        (Detallado: <span id="spanAsg">${asignado}</span>)
-                    </td>
-
-                    <td class="label">Modalidad de contratación</td>
-                    <td>
-                        <g:select name="tipoContrato.id" id="selContrato" from="${TipoContrato.list()}"
-                                  optionKey="id" optionValue="descripcion" class="requiredCmb" value="${solicitud.tipoContratoId}"/>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="label">Objeto del contrato</td>
-                    <td colspan="7">
-                        <g:textArea name="objetoContrato" rows="4" cols="115" class="ta required ui-widget-content ui-corner-all"
-                                    value="${solicitud.objetoContrato}"/>
-                    </td>
-                </tr>
-
-            %{--<tr>--}%
-            %{--<td class="label">Observaciones</td>--}%
-            %{--<td colspan="7">--}%
-            %{--<g:textArea name="observaciones" rows="4" cols="115" class="ta ui-widget-content ui-corner-all"--}%
-            %{--value="${solicitud.observaciones}"/>--}%
-            %{--</td>--}%
-            %{--</tr>--}%
-
-                <tr>
-                    <td colspan="2" class="label">T.D.R.</td>
-                    <td colspan="6">
-                        <input type="file" name="tdr" class="${solicitud.pathPdfTdr ? '' : 'required'}"/>
-                        <g:if test="${solicitud.pathPdfTdr}">
-                            <br/>
-                            Archivo actual:
-                            ${solicitud.pathPdfTdr}
-                        </g:if>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td colspan="2" class="label">Oferta 1</td>
-                    <td colspan="6">
-                        <input type="file" name="oferta1"/>
-                        <g:if test="${solicitud.pathOferta1}">
-                            <br/>
-                            Archivo actual:
-                            ${solicitud.pathOferta1}
-                        </g:if>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td colspan="2" class="label">Oferta 2</td>
-                    <td colspan="6">
-                        <input type="file" name="oferta2"/>
-                        <g:if test="${solicitud.pathOferta2}">
-                            <br/>
-                            Archivo actual:
-                            ${solicitud.pathOferta2}
-                        </g:if>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td colspan="2" class="label">Oferta 3</td>
-                    <td colspan="6">
-                        <input type="file" name="oferta3"/>
-                        <g:if test="${solicitud.pathOferta3}">
-                            <br/>
-                            Archivo actual:
-                            ${solicitud.pathOferta3}
-                        </g:if>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td colspan="2" class="label">Cuadro comparativo</td>
-                    <td colspan="6">
-                        <input type="file" name="comparativo"/>
-                        <g:if test="${solicitud.pathCuadroComparativo}">
-                            <br/>
-                            Archivo actual:
-                            ${solicitud.pathCuadroComparativo}
-                        </g:if>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td colspan="2" class="label">Análisis de costos</td>
-                    <td colspan="6">
-                        <input type="file" name="analisis"/>
-                        <g:if test="${solicitud.pathAnalisisCostos}">
-                            <br/>
-                            Archivo actual:
-                            ${solicitud.pathAnalisisCostos}
-                        </g:if>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td colspan="8" style="text-align: right;">
-                        <g:if test="${solicitud.id}">
-                            <g:link action="show" id="${solicitud.id}" class="button">
-                                Cancelar
-                            </g:link>
-                        </g:if>
-                        <g:else>
-                            <g:link action="list" class="button">
-                                Cancelar
-                            </g:link>
-                        </g:else>
-                        <a href="#" id="btnSave">Guardar</a>
-                    </td>
-                </tr>
-                </table>
-            </g:else>
-        </g:uploadForm>
-
-
+                        <tr>
+                            <td colspan="8" style="text-align: right;">
+                                <g:if test="${solicitud.id}">
+                                    <g:link action="show" id="${solicitud.id}" class="button">
+                                        Cancelar
+                                    </g:link>
+                                </g:if>
+                                <g:else>
+                                    <g:link action="list" class="button">
+                                        Cancelar
+                                    </g:link>
+                                </g:else>
+                                <a href="#" id="btnSave">Guardar</a>
+                            </td>
+                        </tr>
+                        </table>
+                    </g:else>
+                </g:uploadForm>
+            </div>
+        </div>
 
         <div id="dlgDetalleMonto" title="Detalle anual del monto solicitado">
             <div id="dlgDetalleMontoContent">
@@ -503,8 +496,20 @@
             }
 
             $(function () {
-                var myForm = $("#frmSolicitud");
+
+                $("#btnPrint").button("option", "icons", {primary : 'ui-icon-print'}).click(function () {
+                    var url = "${createLink(controller: 'reporteSolicitud', action: 'imprimirSolicitud')}/?id=${solicitud.id}";
+//                    console.log(url);
+                    location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename=solicitud.pdf";
+                    return false;
+                });
+
                 $(".button").button();
+                $(".home").button("option", "icons", {primary : 'ui-icon-home'});
+                $(".list").button("option", "icons", {primary : 'ui-icon-clipboard'});
+                $(".create").button("option", "icons", {primary : 'ui-icon-document'});
+
+                var myForm = $("#frmSolicitud");
                 $("#btnSave").button({
                     icons : {
                         primary : "ui-icon-disk"

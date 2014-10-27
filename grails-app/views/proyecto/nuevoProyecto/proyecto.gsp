@@ -7,7 +7,7 @@
 --%>
 
 
-<%@ page import="yachay.proyectos.Proyecto" %>
+<%@ page import="yachay.proyectos.ObjetivoEstrategico; yachay.proyectos.ObjetivoEstrategicoProyecto; yachay.proyectos.Proyecto" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -141,20 +141,20 @@
                         </td>
 
                         %{--<td class="label  mandatory" valign="middle">--}%
-                            %{--Programa presupuestario--}%
+                        %{--Programa presupuestario--}%
                         %{--</td>--}%
 
                         %{--<td class="indicator mandatory">--}%
-                            %{--<span class="indicator">*</span>--}%
+                        %{--<span class="indicator">*</span>--}%
                         %{--</td>--}%
 
                         %{--<td class="campo mandatory" valign="middle">--}%
-                            %{--<g:select class="field ui-widget-content ui-corner-all programaPresupuestario"--}%
-                                      %{--name="programaPresupuestario.id"--}%
-                                      %{--title="${Proyecto.constraints.programaPresupuestario.attributes.mensaje}"--}%
-                                      %{--style="width: 380px;" optionKey="id"--}%
-                                      %{--from="${yachay.parametros.poaPac.ProgramaPresupuestario.list()}"--}%
-                                      %{--value="${proyecto?.programaPresupuestario?.id}"/>--}%
+                        %{--<g:select class="field ui-widget-content ui-corner-all programaPresupuestario"--}%
+                        %{--name="programaPresupuestario.id"--}%
+                        %{--title="${Proyecto.constraints.programaPresupuestario.attributes.mensaje}"--}%
+                        %{--style="width: 380px;" optionKey="id"--}%
+                        %{--from="${yachay.parametros.poaPac.ProgramaPresupuestario.list()}"--}%
+                        %{--value="${proyecto?.programaPresupuestario?.id}"/>--}%
                         %{--</td>--}%
                     </tr>
 
@@ -427,7 +427,7 @@
 
                     <tr>
                         <td class="label" valign="middle">
-                            Objetivos Estrat&eacute;gicos
+                            Objetivo Estrat&eacute;gico
                         </td>
 
                         <td class="indicator">
@@ -439,30 +439,44 @@
                                       name="objetivoEstrategico.id"
                                       title="${Proyecto.constraints.objetivoEstrategico.attributes.mensaje}"
                                       style="width: 360px;"
-                                      from="${yachay.proyectos.ObjetivoEstrategicoProyecto.list()}" optionKey="id"
+                                      from="${ObjetivoEstrategico.list()}" optionKey="id"
                                       value="${proyecto?.objetivoEstrategico?.id}"
                                       noSelection="['null': '']"/>
                         </td> <!-- campo -->
                     </tr>
 
+                    <tr>
+                        <td class="label" valign="middle">
+                            Estrategia
+                        </td>
+
+                        <td class="indicator">
+                            &nbsp;
+                        </td>
+
+                        <td colspan="4" class="" colspan="3" id="tdEstrategia">
+                            ...
+                        </td> <!-- campo -->
+                    </tr>
+
                     %{--<tr class="prop ${hasErrors(bean: proyecto, field: 'subPrograma', 'error')} ${hasErrors(bean: proyecto, field: 'programa', 'error')}">--}%
-                        %{--<td class="label " valign="middle">--}%
-                            %{--Objetivo GPR--}%
-                        %{--</td>--}%
+                    %{--<td class="label " valign="middle">--}%
+                    %{--Objetivo GPR--}%
+                    %{--</td>--}%
 
-                        %{--<td class="indicator">--}%
-                            %{--&nbsp;--}%
-                        %{--</td>--}%
+                    %{--<td class="indicator">--}%
+                    %{--&nbsp;--}%
+                    %{--</td>--}%
 
-                        %{--<td colspan="4" valign="middle">--}%
-                            %{--<g:select class="field ui-widget-content ui-corner-all objetivoGobiernoResultado"--}%
-                                      %{--name="objetivoGobiernoResultado.id"--}%
-                                      %{--title="${Proyecto.constraints.objetivoGobiernoResultado.attributes.mensaje}"--}%
-                                      %{--style="width: 900px;" from="${yachay.parametros.proyectos.ObjetivoGobiernoResultado.list()}"--}%
-                                      %{--programaPresupuestario--}%
-                                      %{--optionKey="id" optionValue="descripcion"--}%
-                                      %{--value="${proyecto?.objetivoGobiernoResultado?.id}"/>--}%
-                        %{--</td>--}%
+                    %{--<td colspan="4" valign="middle">--}%
+                    %{--<g:select class="field ui-widget-content ui-corner-all objetivoGobiernoResultado"--}%
+                    %{--name="objetivoGobiernoResultado.id"--}%
+                    %{--title="${Proyecto.constraints.objetivoGobiernoResultado.attributes.mensaje}"--}%
+                    %{--style="width: 900px;" from="${yachay.parametros.proyectos.ObjetivoGobiernoResultado.list()}"--}%
+                    %{--programaPresupuestario--}%
+                    %{--optionKey="id" optionValue="descripcion"--}%
+                    %{--value="${proyecto?.objetivoGobiernoResultado?.id}"/>--}%
+                    %{--</td>--}%
 
                     %{--</tr>--}%
 
@@ -528,11 +542,36 @@
         </div>
 
         <script type="text/javascript">
+
+            function loadEstrategias() {
+                var spinnerUrl = "${resource(dir:'images', file:'spinner.gif')}";
+                var spinner = "<img src='" + spinnerUrl + "'/>";
+                $("#tdEstrategia").html(spinner);
+                var id = $(".objetivoEstrategico").val();
+                $.ajax({
+                    type    : "POST",
+                    url     : "${createLink(action:'estrategiaPorObjetivo_ajax')}",
+                    data    : {
+                        id : id
+                    },
+                    success : function (msg) {
+                        $("#tdEstrategia").html(msg);
+                    },
+                    error   : function (jqXHR, textStatus, errorThrown) {
+                        $("#tdEstrategia").html("Ha ocurrido un error: <strong>" + errorThrown + "</strong>. Por favor inténtelo nuevamente.");
+                    }
+                });
+            }
+
             $(function () {
+
+                loadEstrategias();
 
                 $(".programaPresupuestario").selectmenu({width : 370});
                 $(".objetivoGobiernoResultado").selectmenu({width : 900});
-                $(".objetivoEstrategico").selectmenu({width : 900});
+                $(".objetivoEstrategico").selectmenu({width : 900}).change(function () {
+                    loadEstrategias();
+                });
                 $(".programaId").selectmenu({width : 900});
 
                 $("#porcentajeNacional, #porcentajeExtranjero").keyup(function (evt) {

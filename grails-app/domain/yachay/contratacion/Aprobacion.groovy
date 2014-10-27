@@ -26,6 +26,10 @@ class Aprobacion {
      * Asistentes a la reunión de aprobación
      */
     String asistentes
+    /**
+     * Número de reunión de aprobación (secuencial generado al empezar una reunión y no al agendar)
+     */
+    String numero
 
     /**
      * Define las relaciones uno a varios
@@ -52,6 +56,7 @@ class Aprobacion {
             observaciones column: 'aprbobsr'
             pathPdf column: 'aprb_pdf'
             asistentes column: 'aprbasst'
+            numero column: 'aprbnmro'
         }
     }
 
@@ -63,5 +68,6 @@ class Aprobacion {
         observaciones(blank: true, nullable: true, maxSize: 1023)
         asistentes(blank: true, nullable: true, maxSize: 1023)
         pathPdf(blank: true, nullable: true, maxSize: 255)
+        numero(blank: true, nullable: true)
     }
 }

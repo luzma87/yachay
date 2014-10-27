@@ -590,9 +590,23 @@ class SolicitudTagLib {
                 if (attrs.multiple) {
                     name = solicitud.id + "_" + name
                 }
-                html += g.textArea(name: name, rows: "5", cols: "5", value: aprobacion.observaciones)
+                html += g.textArea(name: name, rows: "5", cols: "5", value: solicitud.observacionesAprobacion)
             } else {
-                html += (aprobacion.observaciones ?: '-Sin observaciones-')
+                html += (solicitud.observacionesAprobacion ?: '-Sin observaciones-')
+            }
+            html += '</td>'
+            html += '</tr>'
+            html += '<tr>'
+            html += '<td class="label">Asistentes</td>'
+            html += '<td colspan="4">'
+            if (editable) {
+                def name = "asistentes"
+                if (attrs.multiple) {
+                    name = solicitud.id + "_" + name
+                }
+                html += g.textArea(name: name, rows: "5", cols: "5", value: solicitud.asistentesAprobacion, class: "required")
+            } else {
+                html += (solicitud.asistentesAprobacion ?: '-Sin asistentes-')
             }
             html += '</td>'
             html += '</tr>'

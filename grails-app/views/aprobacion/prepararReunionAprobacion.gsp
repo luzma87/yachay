@@ -20,7 +20,19 @@
         }
 
         .tiny {
-            width : 45px;
+            width : 50px;
+        }
+
+        .check {
+            width      : 22px;
+            height     : 22px;
+            padding    : 3px;
+            background : #aaa;
+            cursor     : pointer;
+        }
+
+        .original {
+            color : antiquewhite !important;
         }
         </style>
 
@@ -101,7 +113,13 @@
                                                 "No agendado"}
                                     </td>
                                     <td style="text-align: center;">
-                                        <input type="checkbox" class="chkReunion" id="${solicitudInstance.id}"/>
+                                        <g:set var="checked" value="${solicitudInstance.aprobacionId == reunion?.id}"/>
+                                        <div id="${solicitudInstance.id}" class="check ${checked ? 'checked original' : ''} ui-corner-all">
+                                            <span class="fa fa-2x ${checked ? 'fa-check-square' : 'fa-square-o'}"></span>
+                                        </div>
+                                        %{--${solicitudInstance.aprobacionId == reunion?.id ? 'checked="checked"' : 'nope'}--}%
+                                        %{--<input type="checkbox" class="chkReunion" id="${solicitudInstance.id}"--}%
+                                        %{--${solicitudInstance.aprobacionId == reunion?.id ? 'checked' : ''}/>--}%
                                     </td>
                                 </tr>
                             </g:each>
@@ -115,66 +133,56 @@
             </div> <!-- body -->
         </div> <!-- dialog -->
 
-        <div id="dlgReunion" title="Agendar reunión">
-            <p>Agendar reunión de aprobación con <span id="spanSolicitudes">0 solicitudes</span> para la fecha y hora:
-            </p>
-            <g:textField name="fechaReunion" class="datepicker wide short ui-widget-content ui-corner-all"
-                         value="${reunion?.fecha ? reunion.fecha.format('dd-MM-yyyy') : new Date().format('dd-MM-yyyy')}"/>
-            <g:select from="${7..18}" name="horaReunion" class=" wide tiny ui-widget-content ui-corner-all"
-                      optionValue="${{ it.toString().padLeft(2, '0') }}"
-                      value="${reunion?.fecha ? reunion.fecha.format('HH') : new Date().format('HH')}"/>
-            <g:select from="${0..11}" name="minutoReunion" class=" wide tiny ui-widget-content ui-corner-all"
-                      optionValue="${{ (it * 5).toString().padLeft(2, '0') }}"
-                      value="${reunion?.fecha ? reunion.fecha.format('mm').toInteger() / 5 : new Date().format('mm').toInteger() / 5}"/>
-        </div>
+    %{--<div id="dlgReunion" title="Agendar reunión">--}%
+    %{--<p>Agendar reunión de aprobación con <span id="spanSolicitudes">0 solicitudes</span> para la fecha y hora:--}%
+    %{--</p>--}%
+    %{--<g:textField name="fechaReunion" class="datepicker wide short ui-widget-content ui-corner-all"--}%
+    %{--value="${reunion?.fecha ? reunion.fecha.format('dd-MM-yyyy') : new Date().format('dd-MM-yyyy')}"/>--}%
+    %{--<g:select from="${7..18}" name="horaReunion" class=" wide tiny ui-widget-content ui-corner-all"--}%
+    %{--optionValue="${{ it.toString().padLeft(2, '0') }}"--}%
+    %{--value="${reunion?.fecha ? reunion.fecha.format('HH') : new Date().format('HH')}"/>--}%
+    %{--<g:select from="${0..11}" name="minutoReunion" class=" wide tiny ui-widget-content ui-corner-all"--}%
+    %{--optionValue="${{ (it * 5).toString().padLeft(2, '0') }}"--}%
+    %{--value="${reunion?.fecha ? reunion.fecha.format('mm').toInteger() / 5 : new Date().format('mm').toInteger() / 5}"/>--}%
+    %{--</div>--}%
 
         <script type=" text/javascript">
-            $(function () {
-                $("#dlgReunion").dialog({
-                    modal     : true,
-                    autoOpen  : false,
-                    resizable : false,
-                    buttons   : {
-                        "Cancelar" : function () {
-                            $("#dlgReunion").dialog("close");
-                        },
-                        "Guardar"  : function () {
-                            $("#dlgReunion").dialog("close");
-                            $.box({
-                                imageClass    : "box_info",
-                                title         : "Espere",
-                                text          : "Por favor espere",
-                                iconClose     : false,
-                                closeOnEscape : false,
-                                dialog        : {
-                                    resizable     : false,
-                                    draggable     : false,
-                                    closeOnEscape : false,
-                                    buttons       : null
+            function validarSols() {
+                var ids = "";
+                $(".checked").each(function () {
+                    ids += $(this).attr("id") + "_";
+                });
+                if (ids == "") {
+                    $("#dlgAgendar").dialog("close");
+                    $.box({
+                        imageClass : "box_info",
+                        title      : "Alerta",
+                        text       : "Seleccione al menos una solicitud para agendar en la reunión",
+                        iconClose  : false,
+                        dialog     : {
+                            resizable     : false,
+                            draggable     : false,
+                            closeOnEscape : false,
+                            buttons       : {
+                                "Aceptar" : function () {
                                 }
-                            });
-                            var solicitudes = "";
-                            $(".chkReunion:checked").each(function () {
-                                if (solicitudes != "") {
-                                    solicitudes += "_";
-                                }
-                                solicitudes += $(this).attr("id");
-                            });
-                            $.ajax({
-                                type    : "POST",
-                                url     : "${createLink(action: 'agendarReunion')}",
-                                data    : {
-                                    fecha   : $.trim($("#fechaReunion").val()),
-                                    horas   : $("#horaReunion").val(),
-                                    minutos : $("#minutoReunion").val(),
-                                    ids     : solicitudes
-                                },
-                                success : function (msg) {
-//                                    console.log(msg);
-                                    location.reload(true);
-                                }
-                            });
+                            }
                         }
+                    });
+                }
+                return ids;
+            }
+            $(function () {
+
+                $(".check").click(function () {
+                    var $div = $(this);
+                    var $check = $div.find("span");
+                    if ($check.hasClass("fa-check-square")) {
+                        $check.removeClass("fa-check-square").addClass("fa-square-o");
+                        $div.removeClass("checked");
+                    } else if ($check.hasClass("fa-square-o")) {
+                        $check.removeClass("fa-square-o").addClass("fa-check-square");
+                        $div.addClass("checked");
                     }
                 });
 
@@ -185,9 +193,6 @@
                     minDate     : "+0"
                 });
 
-                $(".chkReunion:checked").each(function () {
-                    $(this).prop("checked", false);
-                });
                 $(".btnList").button({
                     icons : {
                         primary : "ui-icon-clipboard"
@@ -198,29 +203,82 @@
                         primary : "ui-icon-note"
                     }
                 }).click(function () {
-                    var c = $(".chkReunion:checked").length;
-                    if (c == 0) {
-                        $.box({
-                            imageClass : "box_info",
-                            title      : "Alerta",
-                            text       : "Seleccione al menos una solicitud para agendar en la reunión",
-                            iconClose  : false,
-                            dialog     : {
-                                resizable     : false,
-                                draggable     : false,
-                                closeOnEscape : false,
-                                buttons       : {
-                                    "Aceptar" : function () {
+                    var ids = validarSols();
+                    if (ids != "") {
+                        var id = "${reunion.id}";
+
+                        $.ajax({
+                            type    : "POST",
+                            url     : "${createLink(action:'agendarReunion_ajax')}",
+                            data    : {
+                                id  : id,
+                                ids : ids
+                            },
+                            success : function (msg) {
+                                $.box({
+                                    id         : 'dlgAgendar',
+                                    imageClass : false,
+                                    title      : "Agendar reunión",
+                                    text       : msg,
+                                    dialog     : {
+                                        position : "top",
+                                        width    : 700,
+                                        buttons  : {
+                                            "Aceptar"  : function (r) {
+                                                $("#dlgReunion").dialog("close");
+                                                $.box({
+                                                    imageClass    : "box_info",
+                                                    title         : "Espere",
+                                                    text          : "Por favor espere",
+                                                    iconClose     : false,
+                                                    closeOnEscape : false,
+                                                    dialog        : {
+                                                        resizable     : false,
+                                                        draggable     : false,
+                                                        closeOnEscape : false,
+                                                        buttons       : null
+                                                    }
+                                                });
+                                                var data = {
+                                                    fecha   : $.trim($("#fechaReunion").val()),
+                                                    horas   : $("#horaReunion").val(),
+                                                    minutos : $("#minutoReunion").val()
+                                                };
+                                                $(".txtRevision").each(function () {
+                                                    data[$(this).attr("name")] = $(this).val();
+                                                });
+//                                                console.log(data);
+                                                $.ajax({
+                                                    type    : "POST",
+                                                    url     : "${createLink(action: 'agendarReunion')}",
+                                                    data    : data,
+                                                    success : function (msg) {
+                                                        //                                    console.log(msg);
+                                                        location.reload(true);
+                                                    }
+                                                });
+                                            },
+                                            "Cancelar" : function () {
+                                            }
+                                        }
                                     }
-                                }
+                                });
                             }
                         });
-                    } else {
-                        $("#dlgReunion").dialog("open");
-                        $("#spanSolicitudes").text(c + " solicitud" + (c == 1 ? "" : "es"));
+
+////                        $("#dlgReunion").dialog("open");
+////                        $("#spanSolicitudes").text(c + " solicitud" + (c == 1 ? "" : "es"));
                     }
                     return false;
                 });
+
+//                console.log("BBBBBBBBBBBBBBBB", 2, $(".warning"));
+//                $(".warning").click(function () {
+//                    console.log("ASDFAs");
+//                    console.log($(this).attr("id"));
+//                    return false;
+//                });
+
             });
         </script>
 

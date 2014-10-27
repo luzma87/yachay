@@ -104,7 +104,7 @@
 
     <body>
         <div class="hoja">
-            <slc:headerReporte title="Acta de reunión de aprobación"/>
+            <slc:headerReporte title="Acta de la Reunión de Planificación de contrataciones"/>
 
             <table class="tbl" border="1">
                 <thead>
@@ -115,7 +115,7 @@
                         <th colspan="3">Actividad</th>
                         <th rowspan="2">TDR's</th>
                         <th colspan="${anios.size() + 1}">Monto solicitado (aval)</th>
-                        <th rowspan="2">Revisión dirección de planificación e inversión</th>
+                        <th rowspan="2">Revisión Dirección de Planificación e Inversión</th>
                         <th rowspan="2">Aprobación</th>
                         <th rowspan="2">Observaciones</th>
                     </tr>
@@ -152,7 +152,7 @@
                                 </g:else>
                             </g:each>
                             <td><g:formatNumber number="${total}" type="currency"/></td>
-                            <td></td>
+                            <td>${solicitud.revisionDireccionPlanificacionInversion}</td>
                             <td>${solicitud.tipoAprobacion.descripcion}</td>
                             <td>${solicitud.observacionesAprobacion}</td>
                         </tr>

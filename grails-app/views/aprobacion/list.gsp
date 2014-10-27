@@ -40,12 +40,12 @@
                     <table border="1">
                         <thead>
                             <tr>
-                                <tdn:sortableColumn property="fecha" class="ui-state-default"
-                                                    title="${message(code: 'aprobacion.fecha.label', default: 'Fecha')}"/>
+                                <th class="ui-state-default">N.</th>
                                 <th class="ui-state-default">Solicitudes a tratar</th>
                                 <tdn:sortableColumn property="fechaRealizacion" class="ui-state-default"
                                                     title="${message(code: 'aprobacion.fechaRealizacion.label', default: 'Fecha Realizacion')}"/>
-
+                                <tdn:sortableColumn property="fecha" class="ui-state-default"
+                                                    title="${message(code: 'aprobacion.fecha.label', default: 'Fecha')}"/>
                                 <tdn:sortableColumn property="observaciones" class="ui-state-default"
                                                     title="${message(code: 'aprobacion.observaciones.label', default: 'Observaciones')}"/>
 
@@ -60,10 +60,7 @@
                         <tbody>
                             <g:each in="${aprobacionInstanceList}" status="i" var="aprobacionInstance">
                                 <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-
-                                    <td>
-                                        ${aprobacionInstance.fecha.format("dd-MM-yyyy HH:mm")}
-                                    </td>
+                                    <td>${aprobacionInstance.numero}</td>
                                     <td>
                                         <g:set var="solicitudes" value="${aprobacionInstance.solicitudes.size()}"/>
                                         <g:if test="${solicitudes > 0}">
@@ -76,7 +73,9 @@
                                         </g:else>
                                     </td>
                                     <td>${aprobacionInstance.fechaRealizacion?.format("dd-MM-yyyy HH:mm")}</td>
-
+                                    <td>
+                                        ${aprobacionInstance.fecha.format("dd-MM-yyyy HH:mm")}
+                                    </td>
                                     <td>${fieldValue(bean: aprobacionInstance, field: "observaciones")}</td>
 
                                     <td>${fieldValue(bean: aprobacionInstance, field: "asistentes")}</td>
@@ -87,13 +86,25 @@
                                         <g:if test="${!aprobacionInstance.fechaRealizacion}">
                                             <g:if test="${aprobacionInstance.solicitudes.size() > 0}">
                                                 <g:link class="button" action="reunion" id="${aprobacionInstance.id}">
-                                                    Empezar
+                                                    <g:if test="${!aprobacionInstance.numero}">
+                                                        Empezar
+                                                    </g:if>
+                                                    <g:else>
+                                                        Continuar
+                                                    </g:else>
                                                 </g:link>
+                                                <g:if test="${!aprobacionInstance.numero}">
+                                                    <g:link class="button" action="prepararReunionAprobacion" id="${aprobacionInstance.id}">
+                                                        Preparar
+                                                    </g:link>
+                                                </g:if>
                                             </g:if>
                                             <g:else>
-                                                <g:link class="button" action="prepararReunionAprobacion" id="${aprobacionInstance.id}">
-                                                    Preparar
-                                                </g:link>
+                                                <g:if test="${!aprobacionInstance.numero}">
+                                                    <g:link class="button" action="prepararReunionAprobacion" id="${aprobacionInstance.id}">
+                                                        Preparar
+                                                    </g:link>
+                                                </g:if>
                                             </g:else>
                                         </g:if>
                                         <g:else>

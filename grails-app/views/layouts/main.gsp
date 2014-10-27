@@ -19,6 +19,9 @@
         <link rel="stylesheet/less" type="text/css" href="${resource(dir: 'js/jquery/kendo/styles', file: 'kendo_twit.css.less')}">
 
 
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="${resource(dir: 'css/font-awesome-4.2.0/css', file: 'font-awesome.min.css')}">
+
         %{--
 
                 <g:if test="${session.color}">
@@ -86,7 +89,7 @@
 
 
         <div class="ui-dialog ui-widget ui-widget-content ui-corner-all"
-            style="height: 740px;  width: 1100px; margin-left:10px; position: absolute; left: 20px; top:2px;overflow-y: hidden">
+             style="height: 740px;  width: 1100px; margin-left:10px; position: absolute; left: 20px; top:2px;overflow-y: hidden">
             <div class=" ui-helper-clearfix" style="background-color: #1b97a7; color: #fff; height: 21px; font-size: 14px; font-weight: bold; padding: 1px; margin-top: -1px;">
                 <span class="ui-dialog-title" style="float: left; text-align: left">SISTEMA DE GESTIÓN DE PLANIFICACIÓN INSTITUCIONAL</span>
                 <span class="ui-dialog-title" style="float: right; text-align: center; width: 50%">- <g:layoutTitle default=""/> -</span>

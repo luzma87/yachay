@@ -11,23 +11,23 @@ function extendRemove(target, props) {
     $.box = $.fn.box = function (settings) {
 
         var defaults = {
-            text:"text",
-            title:"Title",
-            imageClass:"box_alert",
-            input:false,
-            html:false,
-            remote:false,
-            iconClose:true,
-            dialog:{
-                modal:true,
-                title:"Title",
-                buttons:{
-                    "OK":function () {
+            text       : "text",
+            title      : "Title",
+            imageClass : "box_alert",
+            input      : false,
+            html       : false,
+            remote     : false,
+            iconClose  : true,
+            dialog     : {
+                modal   : true,
+                title   : "Title",
+                buttons : {
+                    "OK" : function () {
                         div.dialog("close");
                     }
                 }
             },
-            id:"boxHiddenDlg"
+            id         : "boxHiddenDlg"
         };
 
         var dlg_opts = defaults.dialog;
@@ -67,7 +67,6 @@ function extendRemove(target, props) {
 //            }
         }
 
-
         var div = $("#" + defaults.id);
         if (div.length == 0) {
             div = $("<div id='" + defaults.id + "' style=\"display:none\">");
@@ -95,9 +94,9 @@ function extendRemove(target, props) {
             div.append(defaults.html.clone());
         } else if (defaults.remote) {
             $.ajax({
-                type:"POST",
-                url:defaults.remote,
-                success:function (msg) {
+                type    : "POST",
+                url     : defaults.remote,
+                success : function (msg) {
                     div.append(msg);
                 }
             });
