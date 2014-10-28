@@ -269,7 +269,7 @@ class RevisionAvalController {
         def sol = SolicitudAval.get(params.id)
         def obs = params.obs
         if(obs) {
-            obs = obs.replaceAll("&nbsp", "")
+            obs = obs.replaceAll("&nbsp", " ")
             obs = obs.replaceAll("&Oacute;", "Ó")
             obs = obs.replaceAll("&oacute;", "ó")
             obs = obs.replaceAll("&Aacute;", "Á")
@@ -280,6 +280,12 @@ class RevisionAvalController {
             obs = obs.replaceAll("&iacute;", "í")
             obs = obs.replaceAll("&Uacute;", "Ú")
             obs = obs.replaceAll("&uacute;", "ú")
+            obs = obs.replaceAll("&ntilde;", "ñ")
+            obs = obs.replaceAll("&Ntilde;", "Ñ")
+            obs = obs.replaceAll("&ldquo;", '"')
+            obs = obs.replaceAll("&rdquo;", '"')
+            obs = obs.replaceAll("&lquo;", "'")
+            obs = obs.replaceAll("&rquo;", "'")
 
         }
         sol.observaciones = obs

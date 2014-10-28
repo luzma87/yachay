@@ -18,7 +18,8 @@
     }
 
     .hoja {
-        width : 15cm;
+        width     : 15cm;
+        font-size : 12pt;
     }
 
     .titulo {
@@ -26,47 +27,76 @@
     }
 
     .hoja {
-        /*background  : #e6e6fa;*/
+        /*background  : #fedcba;*/
         height      : 24.7cm; /*29.7-(1.5*2)*/
         font-family : arial;
-        font-size   : 12pt;
+        font-size   : 10pt;
     }
 
     .titulo {
-        height        : 40px;
+        height        : 130px;
         font-size     : 12pt;
         /*font-weight   : bold;*/
         text-align    : center;
         margin-bottom : 5px;
-        width         : 100%;
-        border-bottom : 1px solid black;
+        width         : 95%;
     }
 
-    th {
-        background : #cccccc;
+    .totales {
+        font-weight : bold;
     }
 
-    tbody tr:nth-child(2n+1) {
-        background : none repeat scroll 0 0 #E1F1F7;
+    .num {
+        text-align : right;
     }
 
-    tbody tr:nth-child(2n) {
-        background : none repeat scroll 0 0 #F5F5F5;
+    .header {
+        background : #333333 !important;
+        color      : #AAAAAA;
     }
 
-    tr {
-        margin : 0px;
+    .total {
+        background : #000000 !important;
+        color      : #FFFFFF !important;
     }
 
-    td {
-        border  : 1px solid #000000;
-        margin  : 0px;
-        padding : 5px;
+    .label {
+        font-weight : bold;
     }
 
-    table {
+    .ui-widget-header {
+        font-weight : bold;
+    }
+
+    .ttl {
+        text-align  : center;
+        font-weight : bold;
+    }
+
+    .numeracion {
+        float   : right;
+        /*background : #bbb;*/
+        padding : 7px;
+    }
+
+    .tbl {
         border-collapse : collapse;
-        border-spacing  : 0px 0px;
+    }
+
+    .tbl th {
+        /*background  : #bbb;*/
+        font-weight : bold;
+        text-align  : left;
+        width       : 5cm;
+    }
+
+    .tbl td, .tbl th {
+        padding-left  : 5px;
+        padding-right : 5px;
+    }
+
+    .bold {
+        font-weight : bold;
     }
     </style>
 
@@ -74,11 +104,11 @@
 
 <body>
 <div class="hoja">
+    <slc:headerReporte title="AVAL DE POA"/>
+    %{--<div class="titulo" style="">--}%
+        %{--<p><b>AVAL DE POA</b></p>--}%
 
-    <div class="titulo" style="">
-        <p><b>AVAL DE POA</b></p>
-
-    </div>
+    %{--</div>--}%
 
     <div style="float: right;font-size: 10pt;">
         <p>Numeración: ${anio}-GP No. <tdn:imprimeNumero solicitud="${sol.id}"/></p>
