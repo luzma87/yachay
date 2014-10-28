@@ -104,7 +104,7 @@
 
     <body>
         <div class="hoja">
-            <slc:headerReporte title="Acta de la Reunión de Planificación de contrataciones"/>
+            <slc:headerReporte title="Acta de la Reunión de Planificación de Contrataciones"/>
 
             <table class="tbl" border="1">
                 <thead>

@@ -47,7 +47,7 @@
                     Lista de reuniones
                 </g:link>
                 <a href="#" id="btnReunion">
-                    Agendar reunión
+                    Ingresar la revisión de la DPI y Agendar reunión
                 </a>
             </div> <!-- toolbar -->
             <div class="body">
@@ -218,7 +218,7 @@
                                 $.box({
                                     id         : 'dlgAgendar',
                                     imageClass : false,
-                                    title      : "Agendar reunión",
+                                    title      : "Agendar reunión - Revisión",
                                     text       : msg,
                                     dialog     : {
                                         position : "top",

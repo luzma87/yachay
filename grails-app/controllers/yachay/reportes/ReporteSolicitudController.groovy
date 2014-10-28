@@ -293,25 +293,25 @@ class ReporteSolicitudController {
         if (params.fgp != "null") {
             def gerentePlanificacion = Usro.get(params.fgp)
             if (gerentePlanificacion) {
-                firmas += [cargo: "Gerente de planificación", usuario: gerentePlanificacion]
+                firmas += [cargo: "GERENTE DE PLANIFICACIÓN", usuario: gerentePlanificacion]
             }
         }
         if (params.fdp != "null") {
             def directorPlanificacion = Usro.get(params.fdp)
             if (directorPlanificacion) {
-                firmas += [cargo: "Director de planificación", usuario: directorPlanificacion]
+                firmas += [cargo: "DIRECTOR DE PLANIFICACIÓN", usuario: directorPlanificacion]
             }
         }
         if (params.fgt != "null") {
             def gerenteTec = Usro.get(params.fgt)
             if (gerenteTec) {
-                firmas += [cargo: "Gerente técnico", usuario: gerenteTec]
+                firmas += [cargo: "GERENTE TÉCNICO", usuario: gerenteTec]
             }
         }
         if (params.frq != "null") {
             def req = Usro.get(params.frq)
             if (req) {
-                firmas += [cargo: "Requirente", usuario: req]
+                firmas += [cargo: "REQUIRENTE", usuario: req]
             }
         }
 
@@ -336,19 +336,19 @@ class ReporteSolicitudController {
         if (params.fgp != "null") {
             def gerentePlanificacion = Usro.get(params.fgp)
             if (gerentePlanificacion) {
-                firmas += [cargo: "Gerente de planificación", usuario: gerentePlanificacion]
+                firmas += [cargo: "GERENTE DE PLANIFICACIÓN", usuario: gerentePlanificacion]
             }
         }
         if (params.fdp != "null") {
             def directorPlanificacion = Usro.get(params.fdp)
             if (directorPlanificacion) {
-                firmas += [cargo: "Director de planificación", usuario: directorPlanificacion]
+                firmas += [cargo: "DIRECTOR DE PLANIFICACIÓN", usuario: directorPlanificacion]
             }
         }
         if (params.fgt != "null") {
             def gerenteTec = Usro.get(params.fgt)
             if (gerenteTec) {
-                firmas += [cargo: "Gerente técnico", usuario: gerenteTec]
+                firmas += [cargo: "GERENTE TÉCNICO", usuario: gerenteTec]
             }
         }
 
@@ -368,9 +368,9 @@ class ReporteSolicitudController {
         def sol = SolicitudModPoa.get(params.id)
         def fecha = sol.fecha.format("dd-MM-yyyy")
         def nmroMemo = ''
-        def para = 'Srta Econ.Rocio Elizabeth Gavilanes Reyes'
-        def cargo = 'Gerente de Planificación'
-        def asunto = 'Solicitud de reforma del poa'
+        def para = 'Srta Econ. Rocio Elizabeth Gavilanes Reyes'
+        def cargo = 'GERENTE DE PLANIFICACIÓN'
+        def asunto = 'Solicitud de reforma del POA'
         def nombreFirma =sol.usuario.persona
         def cargofirma= ''
         def gerente = Sesn.findByPerfil(Prfl.findByCodigo("GP"))

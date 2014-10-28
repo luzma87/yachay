@@ -16,7 +16,7 @@ class Estrategia {
     /**
      * Objetivo estratégico
      */
-    ObjetivoEstrategico objetivoEstrategico
+    ObjetivoEstrategicoProyecto objetivoEstrategico
 
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
@@ -35,7 +35,7 @@ class Estrategia {
         columns {
             orden column: "estrordn"
             descripcion column: 'estrdscr'
-            objetivoEstrategico column: "obet__id"
+            objetivoEstrategico column: "obes__id"
         }
     }
 

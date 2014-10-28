@@ -21,10 +21,10 @@ class TipoElemento implements Serializable {
     static mapping = {
 //        table 'c_tpel'
         table 'tpel'
+        version false
         cache usage: 'read-write', include: 'non-lazy'
         id column: 'tpel__id'
         id generator: 'identity'
-        version false
         columns {
             id column: 'tpel__id'
             descripcion column: 'tpeldscr'

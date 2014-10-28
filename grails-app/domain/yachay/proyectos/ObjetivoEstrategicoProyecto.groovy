@@ -23,6 +23,7 @@ class ObjetivoEstrategicoProyecto implements Serializable {
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
     static mapping = {
+//        table 'c_obes'
         table 'obes'
         cache usage: 'read-write', include: 'non-lazy'
         id column: 'obes__id'
