@@ -1536,7 +1536,7 @@ class AsignacionController extends yachay.seguridad.Shield {
             asgn.priorizado -= valor
             asgn = kerberosService.saveObject(asgn, Asignacion, session.perfil, session.usuario, "agregaAsignacionPrio", "asignacion", session)
             if (asgn.errors.getErrorCount() == 0) {
-                resultado += guardarPras(asgn)
+                resultado += guardarPrasPrio(asgn)
             } else {
                 resultado = 0
             }

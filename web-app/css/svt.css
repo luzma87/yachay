@@ -88,7 +88,18 @@ h3{
     background: #d5c96f;
     font-weight: bold;
 }
-
+.aprobado{
+    background: #c3d5a6;
+    font-weight: bold;
+}
+.solicitado{
+    background: #51aec6;
+    font-weight: bold;
+}
+.negado{
+    background: #d5a09d;
+    font-weight: bold;
+}
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
     background-color: #1B97A7 !important;

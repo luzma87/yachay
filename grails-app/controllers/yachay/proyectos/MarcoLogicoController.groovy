@@ -498,7 +498,7 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
             act.categoria = Categoria.get(params.cat)
         act.fechaInicio = nuevaFechaInicio
         act.fechaFin = nuevaFechaFin
-        act.aporte = params.aporte.toDouble()
+//        act.aporte = params.aporte.toDouble()
         if (act.save(flush: true))
             render "ok"
         else {
@@ -520,11 +520,14 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
                     actividad = MarcoLogico.get(params.id)
                     actividad.objeto = params.datos
                 } else {
-                    def maxNum = MarcoLogico.list([sort: "numero", order: "desc", max: 1])?.pop()?.numero
-                    if (maxNum)
-                        maxNum = maxNum + 1
-                    else
+                    def maxNum = MarcoLogico.list([sort: "numero", order: "desc", max: 1])
+                    if(maxNum.size()>0){
+                        maxNum = maxNum?.pop()?.numero
+                        if (maxNum)
+                            maxNum = maxNum + 1
+                    }else{
                         maxNum = 1
+                    }
                     actividad = new MarcoLogico([proyecto: componente.proyecto, tipoElemento: TipoElemento.findByDescripcion("Actividad"), objeto: params.datos, marcoLogico: componente, numero: maxNum])
                 }
                 actividad = kerberosService.saveObject(actividad, MarcoLogico, session.perfil, session.usuario, "guadarDatosActividades", "marcoLogico", session)

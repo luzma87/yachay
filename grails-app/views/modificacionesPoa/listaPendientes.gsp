@@ -22,6 +22,7 @@
 
     }
 
+
     </style>
 
 </head>
@@ -43,6 +44,7 @@
                 <thead>
                 <tr>
                     <th># Sol.</th>
+                    <th>Fecha</th>
                     <th>Unidad</th>
                     <th>Proyecto</th>
                     <th>Concepto</th>
@@ -56,6 +58,7 @@
                 <g:each in="${solicitudes}" var="p">
                     <tr>
                         <td>${p.id}</td>
+                        <td>${p.fecha.format("dd-MM-yyyy")}</td>
                         <td>${p.usuario.unidad}</td>
                         <td>${p.origen.marcoLogico.proyecto}</td>
                         <td>${p.concepto}</td>
@@ -112,11 +115,11 @@
                     <td>${p.origen.marcoLogico.proyecto}</td>
                     <td>${p.concepto}</td>
                     %{--<td style="text-align: right"> <g:formatNumber number="${p.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber></td>--}%
-                    <td style="text-align: center" class="E0${p.estado}">
+                    <td style="text-align: center" class="${(p.estado==0)?'solicitado':(p.estado==1 || p.estado==3)?'aprobado':'negado'}">
                         <g:if test="${p.estado==0}">
                             Solicitado
                         </g:if>
-                        <g:if test="${p.estado==1}">
+                        <g:if test="${p.estado==1 || p.estado==3}">
                             Aprobado
                         </g:if>
                         <g:if test="${p.estado==2}">
@@ -130,7 +133,7 @@
                         <a href="#" class="btn matriz" iden="${p.id}">Ver</a>
                     </td>
                     <td style="text-align: center">
-                        <g:if test="${p.estado==1}">
+                        <g:if test="${p.estado==3}">
                             <a href="#" class="btn reforma" iden="${p.id}">Ver</a>
                         </g:if>
                     </td>

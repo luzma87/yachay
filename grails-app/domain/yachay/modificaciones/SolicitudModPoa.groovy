@@ -61,13 +61,13 @@ class SolicitudModPoa {
     String concepto
 
     /*
-    * Estado de la solicitud 0--> solicitado, 1--> aprobado, 2--> negado
+    * Estado de la solicitud 0--> solicitado, 1--> aprobado, 2--> negado 3--> ejecutado
     * */
     int estado = 0
     /*
     * Usuario que crea la solicitud
      */
-     Usro usuario
+    Usro usuario
     /*
    * usuario que revisa la solicitud
     */
@@ -80,7 +80,34 @@ class SolicitudModPoa {
     * Observaciones
      */
     String observaciones
-
+    /*
+    * Nombre de la actividad en caso de crear una nueva
+    */
+    String actividad
+    /*
+    * Fecha de inicio
+     */
+    Date inicio
+    /*
+    * Fecha de fin
+     */
+    Date fin
+    /*
+    * Valor de la asignación de origen al momento de ejecutar la modificación
+     */
+    double valorOrigen = 0
+    /*
+    * Valor de la asignación de destino al momento de ejecutar la modificación
+     */
+    double valorDestino = 0
+    /*
+   * Valor de la asignación de origen al momento de ejecutar la modificación
+    */
+    double valorOrigenSolicitado = 0
+    /*
+    * Valor de la asignación de destino al momento de ejecutar la modificación
+     */
+    double valorDestinoSolicitado = 0
 
     static mapping = {
         table 'slma'
@@ -105,22 +132,33 @@ class SolicitudModPoa {
             revisor column: 'usrorvid'
             tipo column: 'slmatipo'
             observaciones column: 'slmaobsr'
+            actividad column: 'slmaactv'
+            inicio column: 'slmafcin'
+            fin column: 'slmafcfn'
+            valorOrigen column: 'slmavlog'
+            valorDestino column: 'slmavlds'
+            valorOrigenSolicitado column: 'slmavogs'
+            valorDestinoSolicitado column: 'slmavdss'
         }
     }
-    static constraints = {
-        fechaRevision(blank:true,nullable: true)
-        origen(blank:false,nullable: false)
-        destino(blank:true,nullable: true)
-        anio(blank:true,nullable: true)
-        fuente(blank:true,nullable: true)
-        marcoLogico(blank:true,nullable: true)
-        presupuesto(blank:true,nullable: true)
-        valor(blank:false,nullable: false)
-        concepto(blank:false,nullable: false,size:1..1024)
-        estado(blank:false,nullable: false)
-        usuario(blank:false,nullable: false)
-        revisor(blank:true,nullable: true)
-        tipo(blank: false,nullable: false,size: 1..1)
-        observaciones(blank: true,nullable: true,size: 1..1024)
+
+        static constraints = {
+            fechaRevision(blank:true,nullable: true)
+            origen(blank:false,nullable: false)
+            destino(blank:true,nullable: true)
+            anio(blank:true,nullable: true)
+            fuente(blank:true,nullable: true)
+            marcoLogico(blank:true,nullable: true)
+            presupuesto(blank:true,nullable: true)
+            valor(blank:false,nullable: false)
+            concepto(blank:false,nullable: false,size:1..1024)
+            estado(blank:false,nullable: false)
+            usuario(blank:false,nullable: false)
+            revisor(blank:true,nullable: true)
+            tipo(blank: false,nullable: false,size: 1..1)
+            observaciones(blank: true,nullable: true,size: 1..1024)
+            actividad(blank: true,nullable: true,size: 1..1024)
+            inicio(blank:true,nullable: true)
+            fin(blank:true,nullable: true)
+        }
     }
-}

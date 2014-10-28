@@ -185,23 +185,23 @@
                 <td>${sol.origen.marcoLogico}</td>
                 <td>${sol.origen.presupuesto.numero}</td>
                 <td class="valor">
-                    <g:formatNumber number="${sol.origen.priorizado}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
-                    <g:set var="ti" value="${ti+sol.origen.priorizado}"></g:set>
+                    <g:formatNumber number="${sol.valorOrigen}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                    <g:set var="ti" value="${ti+sol.valorOrigen}"></g:set>
                 </td>
                 <g:if test="${sol.tipo!='E'}">
                     <td class="valor"> <g:formatNumber number="${sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber></td>
                     <g:set var="tvi" value="${tvi+sol.valor}"></g:set>
                 </g:if>
                 <g:else>
-                    <td class="valor"> <g:formatNumber number="${sol.origen.priorizado}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber></td>
+                    <td class="valor"> <g:formatNumber number="${sol.valorOrigen}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber></td>
                 </g:else>
                 <td  class="valor">
                     <g:formatNumber number="${0}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
                 </td>
                 <td class="valor">
                     <g:if test="${sol.tipo!='E'}">
-                        <g:formatNumber number="${sol.origen.priorizado-sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
-                        <g:set var="tf" value="${tvf+(sol.origen.priorizado-sol.valor)}"></g:set>
+                        <g:formatNumber number="${sol.valorOrigen-sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                        <g:set var="tf" value="${tvf+(sol.valorOrigen-sol.valor)}"></g:set>
                     </g:if>
                     <g:else>
                         <g:formatNumber number="${0}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
@@ -218,8 +218,8 @@
                         <td>${sol.destino.marcoLogico}</td>
                         <td>${sol.destino.presupuesto.numero}</td>
                         <td class="valor">
-                            <g:formatNumber number="${sol.destino.priorizado}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
-                            <g:set var="ti" value="${ti+sol.destino.priorizado}"></g:set>
+                            <g:formatNumber number="${sol.valorDestino}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                            <g:set var="ti" value="${ti+sol.valorDestino}"></g:set>
                         </td>
                         <td class="valor">
                             <g:formatNumber number="${0}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
@@ -229,8 +229,8 @@
                             <g:set var="tvf" value="${tvf+sol.valor}"></g:set>
                         </td>
                         <td class="valor">
-                            <g:formatNumber number="${sol.destino.priorizado+sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
-                            <g:set var="tf" value="${tf+(sol.destino.priorizado+sol.valor)}"></g:set>
+                            <g:formatNumber number="${sol.valorDestino+sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                            <g:set var="tf" value="${tf+(sol.valorDestino+sol.valor)}"></g:set>
                         </td>
                     </g:if>
                     <g:else>

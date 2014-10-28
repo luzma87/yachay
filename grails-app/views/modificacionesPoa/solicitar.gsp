@@ -89,10 +89,10 @@
 </fieldset>
 <div id="tabs" style="width: 1025px;margin-top: 10px;">
     <ul>
-        <li><a href="#reasignar">Reasignar a una existente</a></li>
-        <li><a href="#nueva">Reasignar a una nueva asignación</a></li>
-        <li><a href="#derivada">Crear asignación derivada</a></li>
-        <li><a href="#elimiar">Eliminar la asignación</a></li>
+        <li><a href="#reasignar">Actividad existente</a></li>
+        <li><a href="#nueva">Nueva actividad</a></li>
+        <li><a href="#derivada">Nueva partida</a></li>
+        %{--<li><a href="#elimiar">Eliminar la asignación</a></li>--}%
     </ul>
 
     <div id="reasignar" style="width: 960px;">
@@ -136,7 +136,7 @@
         </div>
     </div>
     <div id="nueva" style="width: 960px;">
-        <fieldset style="width: 95%;height: 250px;" class="ui-corner-all">
+        <fieldset style="width: 95%;height: 280px;" class="ui-corner-all">
             <legend>Nueva asignación.</legend>
 
             <div class="fila">
@@ -145,12 +145,32 @@
                     <g:select from="${yachay.parametros.poaPac.Anio.list([sort: 'anio'])}" value="${actual?.id}" optionKey="id" optionValue="anio" id="anio_nueva" name="anio" ></g:select>
                 </div>
             </div>
-            <div class="fila">
+            <div class="fila" style="height: 60px">
                 <div class="labelSvt">Actividad:</div>
-                <div class="fieldSvt-xxxl" id="divAct_nueva">
-                    <g:select from="${[]}" id="actividad_nueva" name="actividad" style="width:100%" noSelection="['-1': 'Seleccione']"></g:select>
+                <div class="fieldSvt-xxxl" style="width: 700px" id="divAct_nueva_">
+                    %{--<g:select from="${[]}" id="actividad_nueva" name="actividad" style="width:100%" noSelection="['-1': 'Seleccione']"></g:select>--}%
+                    <textarea id="actividad_nueva" style="width: 100%;height: 50px;resize: none"></textarea>
                 </div>
             </div>
+            <div class="fila">
+                <div class="labelSvt">Incio</div>
+                <div class="fieldSvt-medium">
+                    <g:textField class="datepicker field ui-widget-content ui-corner-all fechaInicio"
+                                 name="fechaInicio"
+                                 style="width: 90%"
+                                 title="Fecha de inicio de la actividad"
+                                 id="inicio" autocomplete="off"                    />
+                </div>
+                <div class="labelSvt">Fin</div>
+                <div class="fieldSvt-medium">
+                    <g:textField class="datepicker field ui-widget-content ui-corner-all fechaFin"
+                                 name="fechaFin"
+                                 style="width: 90%"
+                                 title="Fecha de fin de la actividad"
+                                 id="fin" autocomplete="off"                    />
+                </div>
+            </div>
+
             <div class="fila">
                 <div class="labelSvt">Fuente</div>
                 <div class="fieldSvt-xxxl" >
@@ -187,17 +207,17 @@
             <a  href="#" id="guardar3" class="btn">Guardar</a>
         </div>
     </div>
-    <div id="elimiar" style="width: 960px;">
-        <fieldset style="width: 95%;height: 150px;" class="ui-corner-all">
-            <legend>Concepto</legend>
-            <div class="fila">
-                <textarea id="concepto_eliminar" style="width: 95%;height: 80px" class="ui-corner-all ui-widget-content"></textarea>
-            </div>
-        </fieldset>
-        <div class="fila">
-            <a  href="#" id="guardar4" class="btn">Guardar</a>
-        </div>
-    </div>
+    %{--<div id="elimiar" style="width: 960px;">--}%
+    %{--<fieldset style="width: 95%;height: 150px;" class="ui-corner-all">--}%
+    %{--<legend>Concepto</legend>--}%
+    %{--<div class="fila">--}%
+    %{--<textarea id="concepto_eliminar" style="width: 95%;height: 80px" class="ui-corner-all ui-widget-content"></textarea>--}%
+    %{--</div>--}%
+    %{--</fieldset>--}%
+    %{--<div class="fila">--}%
+    %{--<a  href="#" id="guardar4" class="btn">Guardar</a>--}%
+    %{--</div>--}%
+    %{--</div>--}%
 </div>
 <div id="buscar">
     <input type="hidden" id="id_txt">
@@ -259,7 +279,7 @@
         });
     }
     function combosInternos(){
-        comboNuevo()
+//        comboNuevo()
         $.ajax({
             type    : "POST",
             url     : "${createLink(action:'cargarActividades',controller: 'modificacionesPoa')}",
@@ -325,6 +345,9 @@
         if(concepto.trim().length==0){
             msg+="<br>Por favor, ingrese concepto"
         }
+        if(asgDest==asgOrigen){
+            msg+="<br>La asignación de destino debe ser diferente a la de origen"
+        }
         if(msg==""){
             $("#load").dialog("open")
             $.ajax({
@@ -356,6 +379,29 @@
         }
 
     });
+    $('.datepicker').datepicker({
+        changeMonth:true,
+        changeYear:true,
+        dateFormat:'dd-mm-yy',
+        minDate:new Date(),
+        onClose:function (dateText, inst) {
+            var date = $(this).datepicker('getDate');
+            var day, month, year;
+            if (date != null) {
+                day = date.getDate();
+                month = parseInt(date.getMonth()) + 1;
+                year = date.getFullYear();
+            } else {
+                day = '';
+                month = '';
+                year = '';
+            }
+            var id = $(this).attr('id');
+            $('#' + id + '_day').val(day);
+            $('#' + id + '_month').val(month);
+            $('#' + id + '_year').val(year);
+        }
+    });
     $("#guardar2").click(function(){
         var asgOrigen = $("#asignacion").val()
         var monto = $("#monto").val();
@@ -369,6 +415,8 @@
         var presupuesto = $("#prsp_id").val()
         var anio = $("#anio_nueva").val()
         var actividad = $("#actividad_nueva").val()
+        var inicio = $("#inicio").val()
+        var fin = $("#fin").val()
         if(asgOrigen=="-1"){
             msg+="<br>Por favor, seleccione una asignación de origen"
         }
@@ -388,11 +436,20 @@
         if(concepto.trim().length==0){
             msg+="<br>Por favor, ingrese concepto"
         }
-        if(actividad=="-1"){
-            msg+="<br>Por favor, seleccione una actividad para la nueva asignación"
+        if(actividad.trim().length==0){
+            msg+="<br>Por favor, insgrese una actividad para la nueva asignación"
+        }
+        if(actividad.trim().length==1023){
+            msg+="<br>La actividad debe tener un máximo de 1023 caracteres"
         }
         if(presupuesto==""){
             msg+="<br>Por favor, seleccione partida presupuestaria"
+        }
+        if(inicio==""){
+            msg+="<br>Por favor, ingrese una fecha de inicio"
+        }
+        if(fin==""){
+            msg+="<br>Por favor, ingrese una fecha de fin"
         }
         if(msg==""){
             $("#load").dialog("open")
@@ -405,7 +462,9 @@
                     concepto:concepto,
                     fuente:fuente,
                     presupuesto:presupuesto,
-                    actividad:actividad
+                    actividad:actividad,
+                    inicio:inicio,
+                    fin:fin
                 },
                 success:function (msg) {
                     location.reload(true)
@@ -594,7 +653,7 @@
     $("#actividad_dest").selectmenu({width : 600});
     $("#asignacion_dest").selectmenu({width : 600});
     $("#comp_nueva").selectmenu({width : 600});
-    $("#actividad_nueva").selectmenu({width : 600});
+    //    $("#actividad_nueva").selectmenu({width : 600});
     $("#tabs").tabs()
     $("#load").dialog({
         width:100,

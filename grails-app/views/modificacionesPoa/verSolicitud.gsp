@@ -88,12 +88,7 @@
                 ${sol.tipo=='D'?'X':''}
             </td>
         </tr>
-        <tr>
-            <td>Reforma por eliminación de una nueva actividad</td>
-            <td class="center">
-                ${sol.tipo=='E'?'X':''}
-            </td>
-        </tr>
+
 
         </tbody>
     </table>
@@ -128,23 +123,23 @@
         <td>${sol.origen.marcoLogico}</td>
         <td>${sol.origen.presupuesto.numero}</td>
         <td class="valor">
-            <g:formatNumber number="${sol.origen.priorizado}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
-            <g:set var="ti" value="${ti+sol.origen.priorizado}"></g:set>
+            <g:formatNumber number="${sol.valorOrigenSolicitado}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+            <g:set var="ti" value="${ti+sol.valorOrigenSolicitado}"></g:set>
         </td>
         <g:if test="${sol.tipo!='E'}">
             <td class="valor"> <g:formatNumber number="${sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber></td>
             <g:set var="tvi" value="${tvi+sol.valor}"></g:set>
         </g:if>
         <g:else>
-            <td class="valor"> <g:formatNumber number="${sol.origen.priorizado}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber></td>
+            <td class="valor"> <g:formatNumber number="${sol.valorOrigenSolicitado}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber></td>
         </g:else>
         <td  class="valor">
             <g:formatNumber number="${0}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
         </td>
         <td class="valor">
             <g:if test="${sol.tipo!='E'}">
-                <g:formatNumber number="${sol.origen.priorizado-sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
-                <g:set var="tf" value="${tvf+(sol.origen.priorizado-sol.valor)}"></g:set>
+                <g:formatNumber number="${sol.valorOrigenSolicitado-sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                <g:set var="tf" value="${tvf+(sol.valorOrigenSolicitado-sol.valor)}"></g:set>
             </g:if>
             <g:else>
                 <g:formatNumber number="${0}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
@@ -161,8 +156,8 @@
                 <td>${sol.destino.marcoLogico}</td>
                 <td>${sol.destino.presupuesto.numero}</td>
                 <td class="valor">
-                    <g:formatNumber number="${sol.destino.priorizado}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
-                    <g:set var="ti" value="${ti+sol.destino.priorizado}"></g:set>
+                    <g:formatNumber number="${sol.valorDestinoSolicitado}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                    <g:set var="ti" value="${ti+sol.valorDestinoSolicitado}"></g:set>
                 </td>
                 <td class="valor">
                     <g:formatNumber number="${0}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
@@ -172,8 +167,8 @@
                     <g:set var="tvf" value="${tvf+sol.valor}"></g:set>
                 </td>
                 <td class="valor">
-                    <g:formatNumber number="${sol.destino.priorizado+sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
-                    <g:set var="tf" value="${tf+(sol.destino.priorizado+sol.valor)}"></g:set>
+                    <g:formatNumber number="${sol.valorDestinoSolicitado+sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                    <g:set var="tf" value="${tf+(sol.valorDestinoSolicitado+sol.valor)}"></g:set>
                 </td>
             </g:if>
             <g:else>
@@ -248,14 +243,14 @@
         <textarea id="obs" style="width: 95%;height: 80px" class="ui-corner-all ui-widget-content" ${(sol.estado!=0)?'disabled':''}>${sol.observaciones}</textarea>
     </div>
 </fieldset>
-<g:if test="${sol.estado==0}">
-    <div class="message ui-corner-all" style="background: rgba(255, 0, 0, 0.37);width: 95%">
-        Después de aprobar la solicitud, use las opciones del menú para realizar la modificación del P.O.A.
-    </div>
-</g:if>
+%{--<g:if test="${sol.estado==0}">--}%
+    %{--<div class="message ui-corner-all" style="background: rgba(255, 0, 0, 0.37);width: 95%">--}%
+        %{--Después de aprobar la solicitud, use las opciones del menú para realizar la modificación del P.O.A.--}%
+    %{--</div>--}%
+%{--</g:if>--}%
 <div class="fila" style="margin-top: 40px;">
     <g:if test="${sol.estado==0}">
-        <a href="#" class="btn" id="aprobar" iden="${sol.id}">Aprobar</a>
+        <a href="#" class="btn" id="aprobar" iden="${sol.id}">Aprobar y ejecutar</a>
         <a href="#" style="margin-left: 20px" class="btn" id="negar" iden="${sol.id}">Negar</a>
     </g:if>
 </div>

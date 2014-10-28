@@ -23,8 +23,9 @@ class ReporteReformaPoaController {
      * Genera el reporte PDF de la reforma al POA
      */
     def reformaPoa = {
+//        println "llego "+params
         def sol = SolicitudModPoa.get(params.id)
-        if(sol.estado!=1)
+        if(sol.estado!=3)
             response.sendError(403)
         def director = Sesn.findByPerfil(Prfl.findByCodigo("DP"))
         if(director){

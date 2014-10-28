@@ -213,7 +213,9 @@ class RevisionAvalController {
             datos = datosTemp
 //            println "datos proceso "+datos
         }
-        [datos: datos.sort { it.fecha }]
+        datos = datos.sort { it.fecha }
+        datos = datos.reverse()
+        [datos: datos]
     }
 
     /**
@@ -225,7 +227,7 @@ class RevisionAvalController {
         def personasFirmas = Usro.findAllByUnidad(unidad)
         def numero = 0
         def max = Aval.list([sort: "numero", order: "desc", max: 1])
-        println "max " + max.numero
+//        println "max " + max.numero
         if (max.size() > 0)
             numero = max[0].numero + 1
         def solicitud = SolicitudAval.get(params.id)
