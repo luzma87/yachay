@@ -32,6 +32,11 @@ class Aprobacion {
     String numero
 
     /**
+     * Indica si ya se aprobó la reunión de aprobación. Una vez este estado esté en A ya no se podrán modificar los datos
+     */
+    String aprobada
+
+    /**
      * Define las relaciones uno a varios
      */
     static hasMany = [solicitudes: Solicitud]
@@ -57,6 +62,7 @@ class Aprobacion {
             pathPdf column: 'aprb_pdf'
             asistentes column: 'aprbasst'
             numero column: 'aprbnmro'
+            aprobada column: 'aprbaprb'
         }
     }
 
@@ -69,5 +75,6 @@ class Aprobacion {
         asistentes(blank: true, nullable: true, maxSize: 1023)
         pathPdf(blank: true, nullable: true, maxSize: 255)
         numero(blank: true, nullable: true)
+        aprobada(blank: true, nullable: true)
     }
 }

@@ -6,6 +6,16 @@
         <g:set var="entityName"
                value="${message(code: 'aprobacion.label', default: 'Aprobacion')}"/>
         <title>Reuniones de aprobación</title>
+
+        <style type="text/css">
+        .btnSmall {
+            font-size : 10px !important;
+        }
+
+        .btnSmall + .btnSmall {
+            margin-top : 5px;
+        }
+        </style>
     </head>
 
     <body>
@@ -54,7 +64,8 @@
 
                                 <tdn:sortableColumn property="pathPdf" class="ui-state-default"
                                                     title="${message(code: 'aprobacion.pathPdf.label', default: 'Path Pdf')}"/>
-                                <th class="ui-state-default">Empezar reunión</th>
+                                <th class="ui-state-default">Estado</th>
+                                <th class="ui-state-default">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -81,11 +92,12 @@
                                     <td>${fieldValue(bean: aprobacionInstance, field: "asistentes")}</td>
 
                                     <td>${fieldValue(bean: aprobacionInstance, field: "pathPdf")}</td>
-
-                                    <td>
-                                        <g:if test="${!aprobacionInstance.fechaRealizacion}">
+                                    <td>${aprobacionInstance.aprobada == 'A' ? 'Aprobada' : 'Pendiente'}</td>
+                                    <td style="text-align: center;">
+                                        %{--<g:if test="${!aprobacionInstance.fechaRealizacion}">--}%
+                                        <g:if test="${aprobacionInstance.aprobada != 'A'}">
                                             <g:if test="${aprobacionInstance.solicitudes.size() > 0}">
-                                                <g:link class="button" action="reunion" id="${aprobacionInstance.id}">
+                                                <g:link class="button btnSmall" action="reunion" id="${aprobacionInstance.id}">
                                                     <g:if test="${!aprobacionInstance.numero}">
                                                         Empezar
                                                     </g:if>
@@ -94,24 +106,24 @@
                                                     </g:else>
                                                 </g:link>
                                                 <g:if test="${!aprobacionInstance.numero}">
-                                                    <g:link class="button" action="prepararReunionAprobacion" id="${aprobacionInstance.id}">
+                                                    <g:link class="button btnSmall" action="prepararReunionAprobacion" id="${aprobacionInstance.id}">
                                                         Preparar
                                                     </g:link>
                                                 </g:if>
                                             </g:if>
                                             <g:else>
                                                 <g:if test="${!aprobacionInstance.numero}">
-                                                    <g:link class="button" action="prepararReunionAprobacion" id="${aprobacionInstance.id}">
+                                                    <g:link class="button btnSmall" action="prepararReunionAprobacion" id="${aprobacionInstance.id}">
                                                         Preparar
                                                     </g:link>
                                                 </g:if>
                                             </g:else>
                                         </g:if>
-                                        <g:else>
-                                            <g:link class="button" action="reunion" id="${aprobacionInstance.id}">
-                                                Ver
-                                            </g:link>
-                                        </g:else>
+                                        %{--<g:else>--}%
+                                        <g:link class="button btnSmall" action="reunion" id="${aprobacionInstance.id}" params="[show: 1]">
+                                            Ver
+                                        </g:link>
+                                        %{--</g:else>--}%
                                     </td>
 
                                 </tr>

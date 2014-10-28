@@ -59,6 +59,11 @@
             color         : #31708f;
             border        : solid 1px #bce8f1;
         }
+
+        .important {
+            font-size   : larger;
+            font-weight : bold;
+        }
         </style>
     </head>
 
@@ -77,21 +82,30 @@
             </g:link>
             <g:if test="${puedeEditar}">
                 <a href="#" id="btnSave" class="button" style="float: right;">Guardar</a>
+                <a href="#" id="btnAprobar" class="button" style="float: right;">Aprobar</a>
             </g:if>
             <g:if test="${params.show.toString() == '1'}">
-                <a href="#" class="button upload" id="uploadActa" style="float: right;">
-                    Archivar acta
-                </a>
-                <a href="#" id="btnPrint" class="button" style="float: right;">Imprimir</a>
+                <g:if test="${reunion.aprobada == 'A'}">
+                    <a href="#" class="button upload" id="uploadActa" style="float: right;">
+                        Archivar acta
+                    </a>
+                    <a href="#" id="btnPrint" class="button" style="float: right;">Imprimir</a>
+                </g:if>
+                <g:else>
+                    <g:link class="button" action="reunion" id="${reunion.id}" style="float: right;">
+                        Editar
+                    </g:link>
+                </g:else>
             </g:if>
         </div> <!-- toolbar -->
 
         <div class="info ui-corner-all">
-            Reunión de Planificación de contrataciones <strong>número ${reunion.numero}</strong>
+            Reunión de Planificación de contrataciones
             planificada para el <strong>${reunion.fecha.format("dd-MM-yyyy HH:mm")}</strong>
         </div>
 
         <g:form action="saveAprobacion" name="frmAprobacion" id="${reunion.id}">
+            <g:hiddenField name="aprobada" value=""/>
             <g:each in="${solicitudes}" var="solicitud" status="i">
                 <div class="solicitud ui-corner-all">
                     <div class="ui-widget ui-widget-header ui-corner-all solicitudHeader" title="Clic para ocultar/mostrar">
@@ -193,6 +207,32 @@
         </div>
 
         <script type="text/javascript">
+
+            function validacion() {
+                if ($("#frmAprobacion").valid()) {
+                    return true;
+                } else {
+                    $(".solicitudHeader").each(function () {
+                        var $body = $(this).siblings(".solicitudBody");
+                        if ($body.hasClass("escondido")) {
+                            $body.show();
+                            $body.removeClass("escondido");
+
+                            setTimeout(function () {
+                                var $target = $(".error")[0];
+                                $('#divDlgBody').scrollTo($target);
+                            }, 200);
+                        }
+                    });
+                    return false;
+                }
+            }
+
+            function doSave(aprobada) {
+                $("#aprobada").val(aprobada);
+                $("#frmAprobacion").submit();
+            }
+
             $(function () {
 
                 $("#frmAprobacion").validate({
@@ -309,14 +349,32 @@
                 $(".button").button();
 
                 $("#btnSave").button("option", "icons", {primary : 'ui-icon-disk'}).click(function () {
-                    if ($("#frmAprobacion").valid()) {
-                        $("#frmAprobacion").submit();
-                    } else {
-                        $(".solicitudHeader").each(function () {
-                            var $body = $(this).siblings(".solicitudBody");
-                            if ($body.hasClass("escondido")) {
-                                $body.show();
-                                $body.removeClass("escondido");
+                    if (validacion()) {
+                        doSave("");
+                    }
+                });
+                $("#btnAprobar").button("option", "icons", {primary : 'ui-icon-check'}).click(function () {
+                    if (validacion()) {
+                        $.box({
+                            imageClass : "box_info",
+                            title      : "Alerta",
+                            text       : "Una vez aprobada la reunión de planificación de contrataciones " +
+                                         "<span class='important'>se le asignará un número</span> y " +
+                                         "<span class='important'>ya no podrá modificar sus datos</span>.<br/><br/>" +
+                                         "<span class='important'>¿Desea continuar?</span>",
+                            iconClose  : false,
+                            dialog     : {
+                                width         : 400,
+                                resizable     : false,
+                                draggable     : false,
+                                closeOnEscape : false,
+                                buttons       : {
+                                    "Aprobar"  : function () {
+                                        doSave("A");
+                                    },
+                                    "Cancelar" : function () {
+                                    }
+                                }
                             }
                         });
                     }
@@ -330,6 +388,7 @@
                 $(".revision").button("option", "icons", {primary : 'ui-icon-check'});
 
             });
+
         </script>
     </body>
 </html>

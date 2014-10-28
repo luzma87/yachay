@@ -221,22 +221,23 @@ class AprobacionController extends yachay.seguridad.Shield {
         if (reuniones.size() == 1) {
 
             reunion = reuniones.first()
-            if (reunion.fechaRealizacion) {
+            if (reunion.aprobada == 'A') {
                 params.show = 1
             }
 
-            if (!reunion.numero) {
-//                println "Generar numero de reunion"
-                def numero = 1
-                def maxNum = Aprobacion.list().numero*.toInteger().max()
-                if (maxNum) {
-                    numero = maxNum.toInteger() + 1
-                }
-                reunion.numero = numero.toString()
-                if (!reunion.save(flush: true)) {
-                    println "error al asignar numero a la reunion::: " + reunion.errors
-                }
-            }
+            //MOVIDO AL SAVE (aprobar)
+//            if (!reunion.numero) {
+////                println "Generar numero de reunion"
+//                def numero = 1
+//                def maxNum = Aprobacion.list().numero*.toInteger().max()
+//                if (maxNum) {
+//                    numero = maxNum.toInteger() + 1
+//                }
+//                reunion.numero = numero.toString()
+//                if (!reunion.save(flush: true)) {
+//                    println "error al asignar numero a la reunion::: " + reunion.errors
+//                }
+//            }
 
             def unidadGerenciaPlan = UnidadEjecutora.findByCodigo("DRPL") // GERENCIA DE PLANIFICACIÓN
             def unidadDireccionPlan = UnidadEjecutora.findByCodigo("DPI") // DIRECCIÓN DE PLANIFICACIÓN E INVERSIÓN
@@ -266,7 +267,7 @@ class AprobacionController extends yachay.seguridad.Shield {
      * Acción que guarda los datos de la reunión de aprobación
      */
     def saveAprobacion = {
-        println "SAVE APROBACION>>>>> " + params
+//        println "SAVE APROBACION>>>>> " + params
         /*
             [
             10_observaciones:bbbbbbbbbbbbbbbbb,
@@ -290,6 +291,21 @@ class AprobacionController extends yachay.seguridad.Shield {
         reunion.observaciones = params.observaciones.trim()
 //        reunion.asistentes = params.asistentes.trim()
         reunion.fechaRealizacion = new Date()
+        reunion.aprobada = params.aprobada
+
+        if (!reunion.numero) {
+//                println "Generar numero de reunion"
+            def numero = 1
+            def maxNum = Aprobacion.list().numero*.toInteger().max()
+            if (maxNum) {
+                numero = maxNum.toInteger() + 1
+            }
+            reunion.numero = numero.toString()
+            if (!reunion.save(flush: true)) {
+                println "error al asignar numero a la reunion::: " + reunion.errors
+            }
+        }
+
         if (!reunion.save(flush: true)) {
             println "Error al guardar la reunion: " + reunion.errors
         } else {
@@ -320,7 +336,11 @@ class AprobacionController extends yachay.seguridad.Shield {
             }
         }
         flash.message = "Datos guardados correctamente"
-        redirect(action: "reunion", id: reunion.id, params: [show: 1])
+        if (params.aprobada == 'A') {
+            redirect(action: "reunion", id: reunion.id, params: [show: 1])
+        } else {
+            redirect(action: "reunion", id: reunion.id)
+        }
     }
 
 }
