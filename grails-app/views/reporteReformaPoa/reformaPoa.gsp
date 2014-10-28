@@ -330,7 +330,7 @@
         </div>
 
         <div>
-            <strong>Director de Planificación</strong>
+            <strong>DIRECTOR DE PLANIFICACION</strong>
         </div>
     </div>
 
@@ -348,7 +348,7 @@
         </div>
 
         <div>
-            <strong>Gerente de Planificación</strong>
+            <strong>GERENTE DE PLANIFICACION</strong>
         </div>
     </div>
 </div>
