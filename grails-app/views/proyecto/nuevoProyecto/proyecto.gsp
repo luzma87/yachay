@@ -439,7 +439,7 @@
                                       name="objetivoEstrategico.id"
                                       title="${Proyecto.constraints.objetivoEstrategico.attributes.mensaje}"
                                       style="width: 360px;"
-                                      from="${ObjetivoEstrategico.list()}" optionKey="id"
+                                      from="${ObjetivoEstrategicoProyecto.list()}" optionKey="id"
                                       value="${proyecto?.objetivoEstrategico?.id}"
                                       noSelection="['null': '']"/>
                         </td> <!-- campo -->

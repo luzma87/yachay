@@ -618,11 +618,11 @@ class ProyectoController extends yachay.seguridad.Shield {
         def estrategias = []
         if (params.id != "null") {
             println params
-            def obj = ObjetivoEstrategico.get(params.id.toLong())
+            def obj = ObjetivoEstrategicoProyecto.get(params.id.toLong())
             println "OBJ: " + obj
             estrategias = Estrategia.findAllByObjetivoEstrategico(obj)
         }
-        def select = g.select(from: estrategias, name: "estrateia.id", class: "estrategia")
+        def select = g.select(from: estrategias, optionKey: "id", optionValue: "descripcion", name: "estrateia.id", class: "estrategia")
         def js = "<script type='text/javascript'>"
         js += "\$(\".estrategia\").selectmenu({width : 900});"
         js += "</script>"
