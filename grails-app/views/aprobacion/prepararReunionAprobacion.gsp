@@ -205,7 +205,7 @@
                 }).click(function () {
                     var ids = validarSols();
                     if (ids != "") {
-                        var id = "${reunion.id}";
+                        var id = "${reunion?.id}";
 
                         $.ajax({
                             type    : "POST",
