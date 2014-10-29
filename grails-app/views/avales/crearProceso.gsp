@@ -209,6 +209,10 @@
     getDetalle();
     </g:if>
 
+    $("#anio").change(function(){
+        location.href="${g.createLink(controller: 'avales',action: 'crearProceso')}?id=${proceso?.id}&anio="+$(this).val()
+    });
+
     $(".decimal").setMask("decimal");
 
     $('.datepicker').datepicker({

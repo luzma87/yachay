@@ -157,6 +157,10 @@
                     <td>${pa.asignacion.marcoLogico.marcoLogico}</td>
                 </tr>
                 <tr>
+                    <td style="font-weight: bold">Año</td>
+                    <td>${pa.asignacion.anio.anio}</td>
+                </tr>
+                <tr>
                     <td style="font-weight: bold">Número de la actividad</td>
                     <td>${pa.asignacion.marcoLogico.numero} (${anio})</td>
                 </tr>
@@ -168,6 +172,7 @@
                     <td style="font-weight: bold">Actividad</td>
                     <td>${pa.asignacion.marcoLogico}</td>
                 </tr>
+
                 <tr>
                     <td style="font-weight: bold">Monto solicitado</td>
                     <td><g:formatNumber number="${pa.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"></g:formatNumber></td>
