@@ -261,7 +261,7 @@ class ReporteSolicitudController {
         def firmas = []
 
         if (solicitud.usuario) {
-            firmas += [cargo: "Responsable unidad", usuario: solicitud.usuario]
+            firmas += [cargo: solicitud.usuario.cargoPersonal.descripcion, usuario: solicitud.usuario]
         }
         return [solicitud: solicitud, firmas: firmas]
     }
@@ -364,20 +364,20 @@ class ReporteSolicitudController {
     }
 
 
-    def solicitudReformaPdf =  {
+    def solicitudReformaPdf = {
         def sol = SolicitudModPoa.get(params.id)
         def fecha = sol.fecha.format("dd-MM-yyyy")
         def nmroMemo = ''
         def para = 'Srta Econ. Rocio Elizabeth Gavilanes Reyes'
         def cargo = 'GERENTE DE PLANIFICACIÓN'
         def asunto = 'Solicitud de reforma del POA'
-        def nombreFirma =sol.usuario.persona
-        def cargofirma= ''
+        def nombreFirma = sol.usuario.persona
+        def cargofirma = ''
         def gerente = Sesn.findByPerfil(Prfl.findByCodigo("GP"))
-        if(gerente){
-            gerente=gerente.usuario
+        if (gerente) {
+            gerente = gerente.usuario
         }
-        return [fecha: fecha, numero: nmroMemo, para: para, cargo: cargo, asunto: asunto, nombreFirma: nombreFirma, cargoFirma: cargofirma,gerente:gerente]
+        return [fecha: fecha, numero: nmroMemo, para: para, cargo: cargo, asunto: asunto, nombreFirma: nombreFirma, cargoFirma: cargofirma, gerente: gerente]
 
 
     }
@@ -390,7 +390,7 @@ class ReporteSolicitudController {
         def cargo = 'Gerente de Planificación'
         def asunto = 'solicitud de reforma del poa'
         def nombreFirma = 'Abg. Gabriela Valeria Diaz Peñafiel'
-        def cargofirma= 'GERENTE ADMINISTRATIVA FINANCIERA'
+        def cargofirma = 'GERENTE ADMINISTRATIVA FINANCIERA'
 
         return [fecha: fecha, numero: nmroMemo, para: para, cargo: cargo, asunto: asunto, nombreFirma: nombreFirma, cargoFirma: cargofirma]
     }
