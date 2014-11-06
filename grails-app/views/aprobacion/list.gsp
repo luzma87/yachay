@@ -20,12 +20,17 @@
 
     <body>
 
+        <g:set var="editables" value="${['ASPL', 'DP', 'GP']}"/> <!-- Asistente, Director, Gerente de Planificacion son los que pueden editar -->
+
         <div class="dialog" title="${title}">
-            <div id="" class="toolbar ui-widget-header ui-corner-all">
-                <g:link class="button create" action="prepararReunionAprobacion">
-                    Nueva reunión
-                </g:link>
-            </div> <!-- toolbar -->
+            <g:if test="${editables.contains(session.perfil.codigo)}">
+                <div id="" class="toolbar ui-widget-header ui-corner-all">
+                    <g:link class="button create" action="prepararReunionAprobacion">
+                        Nueva reunión
+                    </g:link>
+                </div> <!-- toolbar -->
+            </g:if>
+
             <div class="body">
                 <g:if test="${flash.message}">
                     <div class="message">${flash.message}</div>
@@ -97,25 +102,31 @@
                                         %{--<g:if test="${!aprobacionInstance.fechaRealizacion}">--}%
                                         <g:if test="${aprobacionInstance.aprobada != 'A'}">
                                             <g:if test="${aprobacionInstance.solicitudes.size() > 0}">
-                                                <g:link class="button btnSmall" action="reunion" id="${aprobacionInstance.id}">
-                                                    <g:if test="${!aprobacionInstance.numero}">
-                                                        Empezar
-                                                    </g:if>
-                                                    <g:else>
-                                                        Continuar
-                                                    </g:else>
-                                                </g:link>
-                                                <g:if test="${!aprobacionInstance.numero}">
-                                                    <g:link class="button btnSmall" action="prepararReunionAprobacion" id="${aprobacionInstance.id}">
-                                                        Preparar
+                                                <g:if test="${editables.contains(session.perfil.codigo)}">
+                                                    <g:link class="button btnSmall" action="reunion" id="${aprobacionInstance.id}">
+                                                        <g:if test="${!aprobacionInstance.numero}">
+                                                            Empezar
+                                                        </g:if>
+                                                        <g:else>
+                                                            Continuar
+                                                        </g:else>
                                                     </g:link>
+                                                </g:if>
+                                                <g:if test="${!aprobacionInstance.numero}">
+                                                    <g:if test="${editables.contains(session.perfil.codigo)}">
+                                                        <g:link class="button btnSmall" action="prepararReunionAprobacion" id="${aprobacionInstance.id}">
+                                                            Preparar
+                                                        </g:link>
+                                                    </g:if>
                                                 </g:if>
                                             </g:if>
                                             <g:else>
-                                                <g:if test="${!aprobacionInstance.numero}">
-                                                    <g:link class="button btnSmall" action="prepararReunionAprobacion" id="${aprobacionInstance.id}">
-                                                        Preparar
-                                                    </g:link>
+                                                <g:if test="${editables.contains(session.perfil.codigo)}">
+                                                    <g:if test="${!aprobacionInstance.numero}">
+                                                        <g:link class="button btnSmall" action="prepararReunionAprobacion" id="${aprobacionInstance.id}">
+                                                            Preparar
+                                                        </g:link>
+                                                    </g:if>
                                                 </g:if>
                                             </g:else>
                                         </g:if>

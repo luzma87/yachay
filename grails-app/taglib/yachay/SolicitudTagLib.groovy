@@ -343,6 +343,16 @@ class SolicitudTagLib {
         def editableASGJ = editable && perfil.codigo == "ASGJ"
 //        def editableGDP = editable && perfil.codigo == "GDP"
 
+        def colorGAF = ""
+        def colorGJ = ""
+
+        if (perfil.codigo == "GAF" || perfil.codigo == "ASAF") {
+            colorGAF = "background: #1b97a7!important; color: #fff;"
+        }
+        if (perfil.codigo == "GJ" || perfil.codigo == "ASGJ") {
+            colorGJ = "background: #1b97a7!important; color: #fff;"
+        }
+
         def js = ""
         def html = "No se encontró la solicitud a mostrar"
         if (solicitud) {
@@ -352,8 +362,8 @@ class SolicitudTagLib {
                     "}"
             html += "</style>"
 
-            html += revisionFragment(solicitud: solicitud, editable: editableGAF, editableA: editableASAF, tipo: "GAF")
-            html += revisionFragment(solicitud: solicitud, editable: editableGJ, editableA: editableASGJ, tipo: "GJ")
+            html += revisionFragment(solicitud: solicitud, editable: editableGAF, editableA: editableASAF, tipo: "GAF", color: colorGAF)
+            html += revisionFragment(solicitud: solicitud, editable: editableGJ, editableA: editableASGJ, tipo: "GJ", color: colorGJ)
 //            html += revisionFragment(solicitud: solicitud, editable: editableGDP, tipo: "GDP")
 
             js = "<script type='text/javascript'>"
@@ -394,7 +404,7 @@ class SolicitudTagLib {
             case "GAF":
                 name = "gaf"
                 nameV = "vgaf"
-                title = 'Gerencia Administrativa Financiera'
+                title = 'Dirección Administrativa'
                 revisado = " (" + (solicitud.revisadoAdministrativaFinanciera ?
                         'Revisado el ' + solicitud.revisadoAdministrativaFinanciera.format('dd-MM-yyyy HH:mm') :
                         'No revisado') + ")"
@@ -409,7 +419,7 @@ class SolicitudTagLib {
             case "GJ":
                 name = "gj"
                 nameV = "vgj"
-                title = 'Gerencia Jurídica'
+                title = 'Dirección de contratación pública'
                 revisado = " (" + (solicitud.revisadoJuridica ?
                         'Revisado el ' + solicitud.revisadoJuridica.format('dd-MM-yyyy HH:mm') :
                         'No revisado') + ")"
@@ -438,7 +448,9 @@ class SolicitudTagLib {
         html += '<table width="100%" class="ui-widget-content ui-corner-all">'
         html += '<thead>'
         html += '<tr>'
-        html += '<td colspan="3" class="collapsible ' + (editableA || editableG ? "" : "collapsed") + ' ui-widget ui-widget-header ui-corner-all" style="padding: 3px;" title="Click para ver las observaciones">'
+        html += '<td colspan="3" class="collapsible ' + (editableA || editableG ? "" : "collapsed") + ' ui-widget ui-widget-header ui-corner-all" ' +
+                'style="padding: 3px; ' + attrs.color + '" ' +
+                'title="Click para ver las observaciones">'
         html += title
 //        if (!editableA && !editableG) {
         html += revisado

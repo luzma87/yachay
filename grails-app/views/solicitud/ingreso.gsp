@@ -76,6 +76,12 @@
             width  : 965px;
             height : 85px;
         }
+
+        .boton-color {
+            background : #1B97A7 !important;
+            /*background-image : none !important;*/
+            color      : white !important;
+        }
         </style>
 
     </head>
@@ -107,13 +113,13 @@
                                     <g:if test="${solicitud.incluirReunion == 'S'}">
                                         Se incluirá en la próxima reunión de aprobación
 
-                                        <a href="#" class="button" id="btnIncluir" data-tipo="N">No incluir</a>
+                                        <a href="#" class="button boton-color" id="btnIncluir" data-tipo="N">No incluir</a>
                                     </g:if>
                                     <g:else>
                                         Solicitar la inclusión de la actividad en la próxima reunión de planificación de contratación
 
                                         <g:if test="${solicitud.validadoAdministrativaFinanciera && solicitud.validadoJuridica}">
-                                            <a href="#" class="button" id="btnIncluir" data-tipo="S">Solicitar</a>
+                                            <a href="#" class="button boton-color" id="btnIncluir" data-tipo="S">Solicitar</a>
                                         </g:if>
                                         <g:else>
                                             (podrá incluirla después de que sea revisada y validada)

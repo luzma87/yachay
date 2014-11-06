@@ -34,7 +34,7 @@
 
         <title>
             %{--Metas del PNBV - ${proyecto.nombre[0..30]}--}%
-            Metas del PNBV - ${proyecto.nombre.size() > 30 ? proyecto.nombre[0..28]+"..." : proyecto.nombre}
+            Metas del PNBV - ${proyecto.nombre.size() > 30 ? proyecto.nombre[0..28] + "..." : proyecto.nombre}
         </title>
     </head>
 
@@ -62,7 +62,7 @@
                         Objetivo:
                     </strong>
                     <g:select from="${ObjetivoBuenVivir.list()}" name="objetivo" id="objetivo" optionKey="id"
-                              style="width: ${w}px;" noSelection="${['null':'..-- Seleccione un objetivo --..']}"/>
+                              style="width: ${w}px;" noSelection="${['null': '..-- Seleccione un objetivo --..']}"/>
                 </div>
 
                 <div style="float: left; margin-left: 5px;" id="pols" class="ui-helper-hidden">
@@ -143,9 +143,6 @@
                                 title="A datos generales">
                             Atr&aacute;s
                         </g:link>
-                        <a href="#" class="button continue" title="A políticas de agenda social">
-                            Continuar
-                        </a>
                     </div>
 
                     <div class="botones left">
@@ -170,36 +167,35 @@
                 $("#objetivo").val("null");
 
                 $('#objetivo').selectmenu({
-                    width: ${w}
+                    width : ${w}
                 }).change(function () {
-                            var obj = $(this).val();
+                    var obj = $(this).val();
 
-                            $.ajax({
-                                type:"POST",
-                                url:"${createLink(action:'loadCombo')}",
-                                data:{
-                                    tipo:"politica",
-                                    padre:obj
-                                },
-                                success:function (msg) {
-                                    $("#pols").html(msg).show();
-                                    $("#mets, #bntAdd").hide();
-                                }
-                            });
-                        });
-
+                    $.ajax({
+                        type    : "POST",
+                        url     : "${createLink(action:'loadCombo')}",
+                        data    : {
+                            tipo  : "politica",
+                            padre : obj
+                        },
+                        success : function (msg) {
+                            $("#pols").html(msg).show();
+                            $("#mets, #bntAdd").hide();
+                        }
+                    });
+                });
 
                 $("#dialog-confirm").dialog({
-                    resizable:false,
-                    height:150,
-                    modal:true,
-                    autoOpen:false,
-                    buttons:{
-                        "Sí, Eliminar":function () {
+                    resizable : false,
+                    height    : 150,
+                    modal     : true,
+                    autoOpen  : false,
+                    buttons   : {
+                        "Sí, Eliminar" : function () {
                             deleteRow($("#dialog-confirm").attr("sid"));
                             $(this).dialog("close");
                         },
-                        "No, Cancelar":function () {
+                        "No, Cancelar" : function () {
                             $(this).dialog("close");
                         }
                     }
@@ -227,13 +223,13 @@
                             var btnDel = $("<a href='#' class='button del' id='fnm_'" + metId + ">Eliminar</a>");
 
                             btnDel.button({
-                                icons:{
-                                    primary:"ui-icon-trash"
+                                icons : {
+                                    primary : "ui-icon-trash"
                                 },
-                                text:false
+                                text  : false
                             }).click(function () {
-                                        $(this).parent().parent().remove();
-                                    });
+                                $(this).parent().parent().remove();
+                            });
 
                             tdD.append(btnDel);
 
@@ -270,45 +266,45 @@
                 }
 
                 $("#btnAdd").button({
-                    icons:{
-                        primary:'ui-icon-plusthick'
+                    icons : {
+                        primary : 'ui-icon-plusthick'
                     },
-                    text:false
+                    text  : false
                 }).click(function () {
-                            addRow();
-                            return false;
-                        });
+                    addRow();
+                    return false;
+                });
 
                 $(".elim").button({
-                    icons:{
-                        primary:"ui-icon-trash"
+                    icons : {
+                        primary : "ui-icon-trash"
                     },
-                    text:false
+                    text  : false
                 }).click(function () {
-                            $("#dialog-confirm").attr("sid", $(this).attr("id"));
-                            $("#dialog-confirm").dialog("open");
-                        });
+                    $("#dialog-confirm").attr("sid", $(this).attr("id"));
+                    $("#dialog-confirm").dialog("open");
+                });
 
                 var myForm = $(".frmFinanciamiento");
 
                 $(".button").button();
 
-                $(".saveOnly").button("option", "icons", {primary:'ui-icon-disk'}).click(function () {
+                $(".saveOnly").button("option", "icons", {primary : 'ui-icon-disk'}).click(function () {
                     $("#goto").val("buenVivir");
                     myForm.submit();
                     return false;
                 });
-                $(".continue").button("option", "icons", {secondary:'ui-icon-arrowthick-1-e'}).click(function () {
+                $(".continue").button("option", "icons", {secondary : 'ui-icon-arrowthick-1-e'}).click(function () {
                     $("#goto").val("politicasAgenda");
                     myForm.submit();
                     return false;
                 });
-                $(".back").button("option", "icons", {primary:'ui-icon-arrowthick-1-w'}).click(function () {
+                $(".back").button("option", "icons", {primary : 'ui-icon-arrowthick-1-w'}).click(function () {
                     $("#goto").val("proyecto");
                     myForm.submit();
                     return false;
                 });
-                $(".salir").button("option", "icons", {primary:'ui-icon-arrowreturnthick-1-w'}).click(function () {
+                $(".salir").button("option", "icons", {primary : 'ui-icon-arrowreturnthick-1-w'}).click(function () {
                     if (confirm("Si sale perderá los cambios no guardados. Continuar?")) {
                         return true;
                     } else {
