@@ -10,7 +10,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="layout" content="main"/>
-    <title>Solicitar modificación de P.O.A.</title>
+    <title>Solicitar Reforma del P.O.A.</title>
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}"
           type="text/css"/>
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'BreadCrumb.css')}"
@@ -87,16 +87,26 @@
 
     </g:form>
 </fieldset>
+<fieldset style="width: 95%;height: 100px;" class="ui-corner-all">
+<legend>Firma</legend>
+    <div class="fila">
+        <div class="labelSvt">Firma:</div>
+
+        <div class="fieldSvt-small">
+            <g:select from="${yachay.seguridad.Usro.findAllByUnidad(session.usuario.unidad,[sort:'persona'])}" optionKey="id"  optionValue="persona"  id="firma" name="firma" ></g:select>
+        </div>
+    </div>
+</fieldset>
 <div id="tabs" style="width: 1025px;margin-top: 10px;">
     <ul>
         <li><a href="#reasignar">Actividad existente</a></li>
         <li><a href="#nueva">Nueva actividad</a></li>
         <li><a href="#derivada">Nueva partida</a></li>
-        %{--<li><a href="#elimiar">Eliminar la asignación</a></li>--}%
+        <li><a href="#aumentar">Incremento</a></li>
     </ul>
 
     <div id="reasignar" style="width: 960px;">
-        <fieldset style="width: 95%;height: 200px;" class="ui-corner-all">
+        <fieldset style="width: 95%;height: 270px;" class="ui-corner-all">
             <legend>Asignación de destino.</legend>
 
             <div class="fila">
@@ -106,6 +116,22 @@
                     <g:select from="${yachay.parametros.poaPac.Anio.list([sort: 'anio'])}" value="${actual?.id}" optionKey="id" optionValue="anio" id="anio_dest" name="anio" ></g:select>
                 </div>
             </div>
+
+            <div class="fila">
+                <div class="labelSvt">Proyecto:</div>
+
+                <div class="fieldSvt-xxxl">
+                    <g:select from="${yachay.proyectos.Proyecto.list([sort: 'nombre'])}" optionKey="id" optionValue="nombre" name="proyecto.id" id="proyectoDest" style="width:100%" class="ui-corner-all ui-widget-content" value="${proceso?.proyecto?.id}"  noSelection="['-1': 'Seleccione...']" ></g:select>
+                </div>
+            </div>
+            <div class="fila">
+                <div class="labelSvt">Componente:</div>
+
+                <div class="fieldSvt-xxxl" id="div_comp_dest">
+                    <g:select from="${[]}"  name="comp" id="compDest" noSelection="['-1': 'Seleccione...']" style="width: 100%"></g:select>
+                </div>
+            </div>
+
 
             <div class="fila">
                 <div class="labelSvt">Actividad:</div>
@@ -207,6 +233,17 @@
             <a  href="#" id="guardar3" class="btn">Guardar</a>
         </div>
     </div>
+    <div id="aumentar" style="width: 960px;">
+        <fieldset style="width: 95%;height: 150px;" class="ui-corner-all">
+            <legend>Concepto</legend>
+            <div class="fila">
+                <textarea id="concepto_aumentar" style="width: 95%;height: 80px" class="ui-corner-all ui-widget-content"></textarea>
+            </div>
+        </fieldset>
+        <div class="fila">
+            <a  href="#" id="guardar4" class="btn">Guardar</a>
+        </div>
+    </div>
     %{--<div id="elimiar" style="width: 960px;">--}%
     %{--<fieldset style="width: 95%;height: 150px;" class="ui-corner-all">--}%
     %{--<legend>Concepto</legend>--}%
@@ -273,7 +310,7 @@
                 id : asg
             },
             success : function (msg) {
-                combosInternos()
+//                combosInternos()
                 $("#valor").val(msg);
             }
         });
@@ -357,10 +394,11 @@
                     origen:asgOrigen,
                     destino:asgDest,
                     monto:monto,
-                    concepto:concepto
+                    concepto:concepto,
+                    firma:$("#firma").val()
                 },
                 success:function (msg) {
-                    location.reload(true)
+                    location.href="${g.createLink(controller: 'modificacionesPoa',action: 'historialUnidad')}"
                 }
             });
         }else{
@@ -464,10 +502,11 @@
                     presupuesto:presupuesto,
                     actividad:actividad,
                     inicio:inicio,
-                    fin:fin
+                    fin:fin,
+                    firma:$("#firma").val()
                 },
                 success:function (msg) {
-                    location.reload(true)
+                    location.href="${g.createLink(controller: 'modificacionesPoa',action: 'historialUnidad')}"
                 }
             });
         }else{
@@ -525,10 +564,11 @@
                 data:{
                     origen:asgOrigen,
                     monto:monto,
-                    concepto:concepto
+                    concepto:concepto,
+                    firma:$("#firma").val()
                 },
                 success:function (msg) {
-                    location.reload(true)
+                    location.href="${g.createLink(controller: 'modificacionesPoa',action: 'historialUnidad')}"
                 }
             });
         }else{
@@ -556,30 +596,45 @@
         var max = $("#max").attr("valor")
         var valor = $("#valor").val()
         var msg =""
-        var concepto = $("#concepto_eliminar").val()
+        var monto = $("#monto").val();
+        monto = monto.replace(new RegExp("\\.", 'g'), "");
+        monto = monto.replace(new RegExp(",", 'g'), ".");
+        var concepto = $("#concepto_aumentar").val()
 //        console.log("dest ",asgDest,monto,max,"!"+concepto+"!")
         if(asgOrigen=="-1"){
             msg+="<br>Por favor, seleccione una asignación de origen"
         }
+        if(monto==""){
+            msg+="<br>Por favor, ingrese un monto válido"
+        }
+        if(isNaN(monto)){
+            msg+="<br>Por favor, ingrese un monto válido"
+        }else{
+            if(monto*1<=0){
+                msg+="<br>El monto debe ser un número positivo mayor a cero"
+            }
 
+        }
 
         if(concepto.trim().length==0){
             msg+="<br>Por favor, ingrese concepto"
         }
-        if(max!=valor){
-            msg+="No puede eliminar la asignación seleccionada porque tiene avales o solicitudes pendientes."
-        }
+//        if(max!=valor){
+//            msg+="No puede eliminar la asignación seleccionada porque tiene avales o solicitudes pendientes."
+//        }
         if(msg==""){
             $("#load").dialog("open")
             $.ajax({
                 type:"POST",
-                url:"${createLink(action:'guardarSolicitudEliminar',controller:'modificacionesPoa')}",
+                url:"${createLink(action:'guardarSolicitudAumentar',controller:'modificacionesPoa')}",
                 data:{
                     origen:asgOrigen,
-                    concepto:concepto
+                    monto:monto,
+                    concepto:concepto,
+                    firma:$("#firma").val()
                 },
                 success:function (msg) {
-                    location.reload(true)
+                    location.href="${g.createLink(controller: 'modificacionesPoa',action: 'historialUnidad')}"
                 }
             });
         }else{
@@ -598,6 +653,7 @@
         }
 
     });
+
 
     $(".buscar").click(function () {
         $("#id_txt").val($(this).attr("id"))
@@ -649,9 +705,11 @@
     $("#comp").selectmenu({width : 600});
     $("#actividad").selectmenu({width : 600});
     $("#asignacion").selectmenu({width : 600});
-    $("#comp_dest").selectmenu({width : 600});
+    $("#compDest").selectmenu({width : 600});
+    $("#proyectoDest").selectmenu({width : 600});
     $("#actividad_dest").selectmenu({width : 600});
     $("#asignacion_dest").selectmenu({width : 600});
+    $("#firma").selectmenu({width : 300});
     $("#comp_nueva").selectmenu({width : 600});
     //    $("#actividad_nueva").selectmenu({width : 600});
     $("#tabs").tabs()
@@ -667,6 +725,21 @@
             $(event.target).parent().find(".ui-dialog-titlebar-close").remove()
         }
     });
+
+    $("#proyectoDest").change(function () {
+        $.ajax({
+            type    : "POST",
+            url     : "${createLink(action:'componentesProyecto')}",
+            data    : {
+                id     : $("#proyectoDest").val(),
+                idCombo: "compDest",
+                div: "divAct_dest"
+            },
+            success : function (msg) {
+                $("#div_comp_dest").html(msg)
+            }
+        });
+    })
 </script>
 </body>
 </html>

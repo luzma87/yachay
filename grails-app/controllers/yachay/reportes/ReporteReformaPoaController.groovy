@@ -25,7 +25,7 @@ class ReporteReformaPoaController {
     def reformaPoa = {
 //        println "llego "+params
         def sol = SolicitudModPoa.get(params.id)
-        if(sol.estado!=3)
+        if(sol.estado!=3 && sol.estado!=5)
             response.sendError(403)
         def director = Sesn.findByPerfil(Prfl.findByCodigo("DP"))
         if(director){

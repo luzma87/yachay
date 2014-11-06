@@ -173,7 +173,7 @@
                 </th>
                 <th>Valor inicial</th>
                 <th>Disminución</th>
-                <th>Aumneto</th>
+                <th>Aumento</th>
                 <th>Valor final</th>
             </tr>
             </thead>
@@ -184,32 +184,52 @@
                 <td>${sol.fecha.format("yyyy")+'-'+sol.origen.marcoLogico.marcoLogico.numero}</td>
                 <td>${sol.origen.marcoLogico}</td>
                 <td>${sol.origen.presupuesto.numero}</td>
-                <td class="valor">
-                    <g:formatNumber number="${sol.valorOrigen}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
-                    <g:set var="ti" value="${ti+sol.valorOrigen}"></g:set>
-                </td>
-                <g:if test="${sol.tipo!='E'}">
-                    <td class="valor"> <g:formatNumber number="${sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber></td>
-                    <g:set var="tvi" value="${tvi+sol.valor}"></g:set>
-                </g:if>
-                <g:else>
-                    <td class="valor"> <g:formatNumber number="${sol.valorOrigen}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber></td>
-                </g:else>
-                <td  class="valor">
-                    <g:formatNumber number="${0}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
-                </td>
-                <td class="valor">
+                <g:if test="${sol.tipo!='A'}">
+                    <td class="valor">
+                        <g:formatNumber number="${sol.valorOrigenSolicitado}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                        <g:set var="ti" value="${ti+sol.valorOrigenSolicitado}"></g:set>
+                    </td>
                     <g:if test="${sol.tipo!='E'}">
-                        <g:formatNumber number="${sol.valorOrigen-sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
-                        <g:set var="tf" value="${tvf+(sol.valorOrigen-sol.valor)}"></g:set>
+                        <td class="valor"> <g:formatNumber number="${sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber></td>
+                        <g:set var="tvi" value="${tvi+sol.valor}"></g:set>
                     </g:if>
                     <g:else>
-                        <g:formatNumber number="${0}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
-                    %{--<g:set var="tf" value="${tf}"></g:set>--}%
+                        <td class="valor"> <g:formatNumber number="${sol.valorOrigenSolicitado}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber></td>
                     </g:else>
-                </td>
+                    <td  class="valor">
+                        <g:formatNumber number="${0}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                    </td>
+                    <td class="valor">
+                        <g:if test="${sol.tipo!='E'}">
+                            <g:formatNumber number="${sol.valorOrigenSolicitado-sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                            <g:set var="tf" value="${tvf+(sol.valorOrigenSolicitado-sol.valor)}"></g:set>
+                        </g:if>
+                        <g:else>
+                            <g:formatNumber number="${0}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                        %{--<g:set var="tf" value="${tf}"></g:set>--}%
+                        </g:else>
+                    </td>
+                </g:if>
+                <g:else>
+                    <td class="valor">
+                        <g:formatNumber number="${sol.valorOrigenSolicitado}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                        <g:set var="ti" value="${ti+sol.valorOrigenSolicitado}"></g:set>
+                    </td>
+                    <td class="valor">
+                        <g:formatNumber number="${0}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                    </td>
+                    <td class="valor">
+                        <g:formatNumber number="${sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                        <g:set var="tvf" value="${tvf+sol.valor}"></g:set>
+                    </td>
+
+                    <td class="valor">
+                        <g:formatNumber number="${sol.valorOrigenSolicitado+sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                        <g:set var="tf" value="${tf+sol.valorOrigenSolicitado}"></g:set>
+                    </td>
+                </g:else>
             </tr>
-            <g:if test="${sol.tipo!='E'}">
+            <g:if test="${sol.tipo!='A'}">
                 <tr>
                     <g:if test="${sol.destino}">
                         <td>${sol.destino.marcoLogico.proyecto}</td>
@@ -218,8 +238,8 @@
                         <td>${sol.destino.marcoLogico}</td>
                         <td>${sol.destino.presupuesto.numero}</td>
                         <td class="valor">
-                            <g:formatNumber number="${sol.valorDestino}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
-                            <g:set var="ti" value="${ti+sol.valorDestino}"></g:set>
+                            <g:formatNumber number="${sol.valorDestinoSolicitado}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                            <g:set var="ti" value="${ti+sol.valorDestinoSolicitado}"></g:set>
                         </td>
                         <td class="valor">
                             <g:formatNumber number="${0}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
@@ -229,8 +249,8 @@
                             <g:set var="tvf" value="${tvf+sol.valor}"></g:set>
                         </td>
                         <td class="valor">
-                            <g:formatNumber number="${sol.valorDestino+sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
-                            <g:set var="tf" value="${tf+(sol.valorDestino+sol.valor)}"></g:set>
+                            <g:formatNumber number="${sol.valorDestinoSolicitado+sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                            <g:set var="tf" value="${tf+(sol.valorDestinoSolicitado+sol.valor)}"></g:set>
                         </td>
                     </g:if>
                     <g:else>
@@ -238,7 +258,7 @@
                             <td>${sol.origen.marcoLogico.proyecto}</td>
                             <td>${sol.origen.marcoLogico.marcoLogico}</td>
                             <td>${sol.fecha.format("yyyy")+'-'+sol.origen.marcoLogico.marcoLogico.numero}</td>
-                            <td>${sol.marcoLogico}</td>
+                            <td>${sol.actividad}</td>
                             <td>${sol.presupuesto.numero}</td>
                             <td class="valor">
                                 <g:formatNumber number="${0}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
@@ -248,10 +268,10 @@
                             </td>
                             <td class="valor">
                                 <g:formatNumber number="${sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                                <g:set var="tvf" value="${tvf+sol.valor}"></g:set>
                             </td>
                             <td class="valor">
                                 <g:formatNumber number="${sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
-                                <g:set var="tvf" value="${tvf+sol.valor}"></g:set>
                             </td>
                             <g:set var="tf" value="${tf+sol.valor}"></g:set>
                         </g:if>
@@ -280,6 +300,28 @@
 
                 </tr>
             </g:if>
+            <g:else>
+                <tr>
+                    <td colspan="5">
+                        Redistribución de fondos
+                    </td>
+                    <td class="valor">
+                        <g:set var="ti" value="${ti+sol.valor}"></g:set>
+                        <g:formatNumber number="${sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                    </td>
+                    <td class="valor">
+                        <g:formatNumber number="${sol.valor}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                        <g:set var="tvi" value="${tvi+sol.valor}"></g:set>
+                    </td>
+                    <td class="valor">
+                        <g:formatNumber number="${0}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                    </td>
+                    <td class="valor">
+                        <g:formatNumber number="${0}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>
+                        <g:set var="tf" value="${tf+sol.valor}"></g:set>
+                    </td>
+                </tr>
+            </g:else>
             %{--<g:else>--}%
             %{--<g:set var="ti" value="${0}"></g:set>--}%
             %{--<g:set var="tvi" value="${0}"></g:set>--}%
@@ -287,10 +329,7 @@
             %{--<g:set var="tf" value="${0}"></g:set>--}%
             %{--</g:else>--}%
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td colspan="4"></td>
                 <td style="font-weight: bold">TOTAL</td>
                 <td style="font-weight: bold" class="valor"> <g:formatNumber number="${ti}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber></td>
                 <td  style="font-weight: bold" class="valor"> <g:formatNumber number="${tvi}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber></td>
@@ -317,39 +356,54 @@
 
 <div class="firmas">
     <div class="firma center">
-        <div style="text-align: left; margin-bottom: 1.5cm">
+        <div style="text-align: left; ">
             <strong>Revisado por:</strong>
         </div>
 
         <div>
-            <strong>f)</strong><span class="spanFirma">_____________________________________</span>
+            <span class="spanFirma">
+            <g:if test="${sol.firma1.estado=='F'}">
+                <img src="${resource(dir: 'firmas',file: sol.firma1.path)}"/><br/>
+                ${sol.firma1.usuario.persona.nombre} ${sol.firma1.usuario.persona.apellido}<br/>
+                ${sol.firma1.usuario.cargoPersonal?.toString()?.toUpperCase()}<br/>
+                ${sol.firma1.fecha.format("dd-MM-yyyy hh:mm")}
+            </g:if>
+            </span>
         </div>
 
-        <div>
-            ${director?.persona}
-        </div>
+        %{--<div>--}%
+            %{--${director?.persona}--}%
+        %{--</div>--}%
 
-        <div>
-            <strong>DIRECTOR DE PLANIFICACIÓN</strong>
-        </div>
+        %{--<div>--}%
+            %{--<strong>DIRECTOR DE PLANIFICACIÓN</strong>--}%
+        %{--</div>--}%
     </div>
 
     <div class="firma center">
-        <div style="text-align: left; margin-bottom: 1.5cm">
+        <div style="text-align: left;">
             <strong>Aprobado por:</strong>
         </div>
-
         <div>
-            <strong>f)</strong><span class="spanFirma">_____________________________________</span>
+            <g:if test="${sol.firma2.estado=='F'}">
+                <img src="${resource(dir: 'firmas',file: sol.firma2.path)}"/><br/>
+                ${sol.firma2.usuario.persona.nombre} ${sol.firma2.usuario.persona.apellido}<br/>
+                ${sol.firma2.usuario.cargoPersonal?.toString()?.toUpperCase()}<br/>
+                ${sol.firma2.fecha.format("dd-MM-yyyy hh:mm")}
+            </g:if>
         </div>
 
-        <div>
-            ${gerente?.persona}
-        </div>
+        %{--<div>--}%
+            %{--<strong>f)</strong><span class="spanFirma">_____________________________________</span>--}%
+        %{--</div>--}%
 
-        <div>
-            <strong>GERENTE DE PLANIFICACIÓN</strong>
-        </div>
+        %{--<div>--}%
+            %{--${gerente?.persona}--}%
+        %{--</div>--}%
+
+        %{--<div>--}%
+            %{--<strong>GERENTE DE PLANIFICACIÓN</strong>--}%
+        %{--</div>--}%
     </div>
 </div>
 </div>

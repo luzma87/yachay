@@ -377,7 +377,7 @@ class ReporteSolicitudController {
         if(gerente){
             gerente=gerente.usuario
         }
-        return [fecha: fecha, numero: nmroMemo, para: para, cargo: cargo, asunto: asunto, nombreFirma: nombreFirma, cargoFirma: cargofirma,gerente:gerente]
+        return [fecha: fecha, numero: nmroMemo, para: para, cargo: cargo, asunto: asunto, nombreFirma: nombreFirma, cargoFirma: cargofirma,gerente:gerente,solicitud:sol]
 
 
     }

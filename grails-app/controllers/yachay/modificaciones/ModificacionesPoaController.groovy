@@ -10,6 +10,8 @@ import yachay.poa.Asignacion
 import yachay.poa.ProgramacionAsignacion
 import yachay.proyectos.MarcoLogico
 import yachay.proyectos.Proyecto
+import yachay.seguridad.Firma
+import yachay.seguridad.Usro
 
 class ModificacionesPoaController {
 
@@ -20,8 +22,9 @@ class ModificacionesPoaController {
         def unidad = session.usuario.unidad
         def actual
         Asignacion.findAllByUnidad(unidad).each {
+//            println "p "+proyectos
             def p = it.marcoLogico.proyecto
-            if (!proyectos.contains(p)) {
+            if (!proyectos?.id.contains(p.id)) {
                 proyectos.add(p)
             }
         }
@@ -29,6 +32,7 @@ class ModificacionesPoaController {
             actual = Anio.get(params.anio)
         else
             actual = Anio.findByAnio(new Date().format("yyyy"))
+//        println "pro "+proyectos
         [proyectos:proyectos,actual:actual]
     }
 
@@ -37,7 +41,7 @@ class ModificacionesPoaController {
 //        println "comp "+params
         def proyecto = Proyecto.get(params.id)
         def comps = yachay.proyectos.MarcoLogico.findAllByProyectoAndTipoElemento(proyecto, TipoElemento.get(2))
-        [comps:comps]
+        [comps:comps,idCombo:params.idCombo,div:params.div]
     }
 
     def getValor = {
@@ -61,6 +65,7 @@ class ModificacionesPoaController {
         solicitud.concepto=params.concepto
         solicitud.usuario=session.usuario
         solicitud.tipo="R"
+        solicitud.estado=4
         solicitud.origen=Asignacion.get(params.origen)
         solicitud.destino=Asignacion.get(params.destino)
         solicitud.valorOrigenSolicitado=solicitud.origen.priorizado
@@ -68,9 +73,40 @@ class ModificacionesPoaController {
         solicitud.valor=params.monto?.toDouble()
         if(!solicitud.save(flush: true)){
             println "error save sol mod poa "+solicitud.errors
+        }else{
+            def firma = new Firma()
+            firma.usuario=Usro.get(params.firma)
+            firma.accionVer="solicitudReformaPdf"
+            firma.controladorVer="reporteSolicitud"
+            firma.accion="firmarSolicitud"
+            firma.idAccion=solicitud.id
+            firma.idAccionVer=solicitud.id
+            firma.controlador="modificacionesPoa"
+            firma.documento="SolicitudDeModificacionPoa_"+ solicitud.id
+            firma.concepto="Solicitud de modificación del P.O.A. "
+            if(!firma.save(flush: true))
+                println "error firma save "+firma.errors
+            else{
+                solicitud.firmaSol = firma
+                solicitud.save(flush: true)
+            }
+
         }
         flash.message="Solicitud enviada"
         render "ok"
+    }
+    def firmarSolicitud = {
+        def firma = Firma.findByKey(params.key)
+        if(!firma)
+            response.sendError(403)
+        else{
+            def sol = SolicitudModPoa.findByFirmaSol(firma)
+            sol.estado=0
+            sol.save(flush: true)
+//            redirect(controller: "pdf",action: "pdfLink",params: [url:g.createLink(controller: firma.controladorVer,action: firma.accionVer,id: firma.idAccionVer)])
+            def url =g.createLink(controller: "pdf",action: "pdfLink",params: [url:g.createLink(controller: firma.controladorVer,action: firma.accionVer,id: firma.idAccionVer)])
+            render "${url}"
+        }
     }
 
     def guardarSolicitudNueva = {
@@ -88,11 +124,26 @@ class ModificacionesPoaController {
         solicitud.actividad=params.actividad
         solicitud.valorOrigenSolicitado=solicitud.origen.priorizado
         solicitud.valorDestinoSolicitado=0
+        solicitud.estado=4
 //        solicitud.marcoLogico = MarcoLogico.get(params.actividad)
         solicitud.presupuesto = Presupuesto.get(params.presupuesto)
         solicitud.valor=params.monto?.toDouble()
         if(!solicitud.save(flush: true)){
             println "error save sol mod poa "+solicitud.errors
+        }else{
+            def firma = new Firma()
+            firma.usuario=Usro.get(params.firma)
+            firma.accionVer="solicitudReformaPdf"
+            firma.controladorVer="reporteSolicitud"
+            firma.accion="firmarSolicitud"
+            firma.controlador="modificacionesPoa"
+            firma.idAccion=solicitud.id
+            firma.idAccionVer=solicitud.id
+            firma.documento="SolicitudDeModificacionPoa_"+ solicitud.id
+            firma.concepto="Solicitud de modificación del P.O.A. "
+            firma.save(flush: true)
+            solicitud.firmaSol = firma
+            solicitud.save(flush: true)
         }
         flash.message="Solicitud enviada"
         render "ok"
@@ -107,10 +158,56 @@ class ModificacionesPoaController {
         solicitud.tipo="D"
         solicitud.origen=Asignacion.get(params.origen)
         solicitud.valor=params.monto?.toDouble()
+        solicitud.estado=4
         solicitud.valorOrigenSolicitado=solicitud.origen.priorizado
         solicitud.valorDestinoSolicitado=0
         if(!solicitud.save(flush: true)){
             println "error save sol mod poa "+solicitud.errors
+        }else{
+            def firma = new Firma()
+            firma.usuario=Usro.get(params.firma)
+            firma.accionVer="solicitudReformaPdf"
+            firma.controladorVer="reporteSolicitud"
+            firma.accion="firmarSolicitud"
+            firma.controlador="modificacionesPoa"
+            firma.idAccion=solicitud.id
+            firma.idAccionVer=solicitud.id
+            firma.documento="SolicitudDeModificacionPoa_"+ solicitud.id
+            firma.concepto="Solicitud de modificación del P.O.A. "
+            firma.save(flush: true)
+            solicitud.firmaSol = firma
+            solicitud.save(flush: true)
+        }
+        flash.message="Solicitud enviada"
+        render "ok"
+    }
+
+    def guardarSolicitudAumentar = {
+        def solicitud = new SolicitudModPoa()
+        solicitud.concepto=params.concepto
+        solicitud.usuario=session.usuario
+        solicitud.tipo="A"
+        solicitud.origen=Asignacion.get(params.origen)
+        solicitud.valor=params.monto?.toDouble()
+        solicitud.valorOrigenSolicitado=solicitud.origen.priorizado
+        solicitud.valorDestinoSolicitado=0
+        solicitud.estado=4
+        if(!solicitud.save(flush: true)){
+            println "error save sol mod poa "+solicitud.errors
+        }else{
+            def firma = new Firma()
+            firma.usuario=Usro.get(params.firma)
+            firma.accionVer="solicitudReformaPdf"
+            firma.controladorVer="reporteSolicitud"
+            firma.accion="firmarSolicitud"
+            firma.controlador="modificacionesPoa"
+            firma.idAccion=solicitud.id
+            firma.idAccionVer=solicitud.id
+            firma.documento="SolicitudDeModificacionPoa_"+ solicitud.id
+            firma.concepto="Solicitud de Reforma del P.O.A. "
+            firma.save(flush: true)
+            solicitud.firmaSol = firma
+            solicitud.save(flush: true)
         }
         flash.message="Solicitud enviada"
         render "ok"
@@ -146,7 +243,9 @@ class ModificacionesPoaController {
 
     def verSolicitud = {
         def sol = SolicitudModPoa.get(params.id)
-        [sol:sol]
+        def unidad = UnidadEjecutora.findByCodigo("DPI") // DIRECCIÓN DE PLANIFICACIÓN E INVERSIÓN
+        def personasFirmas = Usro.findAllByUnidad(unidad)
+        [sol:sol,personas:personasFirmas]
     }
 
 
@@ -163,14 +262,78 @@ class ModificacionesPoaController {
     }
     def aprobar = {
         def sol = SolicitudModPoa.get(params.id)
-        sol.estado=1
+        sol.estado=5
         sol.fechaRevision=new Date()
         sol.observaciones=params.obs
         sol.revisor=session.usuario
+
+        def firma1 = new Firma()
+        firma1.usuario=Usro.get(params.firma1)
+        firma1.accionVer="reformaPoa"
+        firma1.controladorVer="reporteReformaPoa"
+        firma1.idAccionVer=sol.id
+        firma1.accion="firmarModificacion"
+        firma1.controlador="modificacionesPoa"
+        firma1.documento="reformaPoa_"+ sol.id
+        firma1.concepto="Aprobación de la reforma del P.O.A. No${sol.id}"
+        firma1.esPdf="S"
+        if(!firma1.save(flush: true))
+            println "error firma1 "+firma1.errors
+        def firma2 = new Firma()
+        firma2.usuario=Usro.get(params.firma2)
+        firma2.accionVer="reformaPoa"
+        firma2.controladorVer="reporteReformaPoa"
+        firma2.idAccionVer=sol.id
+        firma2.accion="firmarModificacion"
+        firma2.controlador="modificacionesPoa"
+        firma2.documento="reformaPoa_"+ sol.id
+        firma2.concepto="Aprobación de la reforma del P.O.A. No${sol.id}"
+        firma2.esPdf="S"
+        if(!firma2.save(flush: true))
+            println "error firma2 "+firma2.errors
+        sol.firma1=firma1
+        sol.firma2=firma2
+
         sol.save(flush: true)
-        ejecutarSolicitud(sol)
+//        ejecutarSolicitud(sol)
+        /*Aqui guardar firmas*/
         flash.message="Solicitud aprobada"
         render "ok"
+    }
+
+    /**
+     * Acción que permite firmar electrónicamente un Aval
+     * @params id es el identificador del aval
+     */
+    def firmarModificacion = {
+        def firma = Firma.findByKey(params.key)
+        if(!firma)
+            response.sendError(403)
+        else{
+            def sol = SolicitudModPoa.findByFirma1OrFirma2(firma,firma)
+            if(sol.firma1.key!=null && sol.firma2.key!=null){
+                sol.estado=1
+                sol.save(flush: true)
+                ejecutarSolicitud(sol)
+//            redirect(controller: "pdf",action: "pdfLink",params: [url:g.createLink(controller: firma.controladorVer,action: firma.accionVer,id: firma.idAccionVer)])
+
+            }
+            def url =g.createLink(controller: "pdf",action: "pdfLink",params: [url:g.createLink(controller: firma.controladorVer,action: firma.accionVer,id: firma.idAccionVer)])
+            render "${url}"
+
+        }
+    }
+
+    def historialUnidad = {
+        def sols = []
+        def unidad = session.usuario.unidad
+       SolicitudModPoa.list().each {
+           if(it.usuario.unidad.id==unidad.id){
+               sols.add(it)
+           }
+       }
+        [sols:sols,unidad:unidad]
+
     }
 
     def ejecutarSolicitud(SolicitudModPoa solicitud){
@@ -311,6 +474,11 @@ class ModificacionesPoaController {
                 }
 
                 break;
+            case "A":
+                solicitud.estado=3
+                solicitud.save(flush: true)
+                return [true,""]
+                break
             default:
                 println "wtf tipo--> "+ solicitud.tipo+"  "+solicitud.id+" "+new Date()
                 msg="Error interno"

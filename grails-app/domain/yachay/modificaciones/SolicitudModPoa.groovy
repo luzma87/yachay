@@ -7,6 +7,7 @@ import yachay.parametros.poaPac.Presupuesto
 import yachay.poa.Asignacion
 import yachay.poa.Componente
 import yachay.proyectos.MarcoLogico
+import yachay.seguridad.Firma
 import yachay.seguridad.Usro
 
 /**
@@ -61,7 +62,7 @@ class SolicitudModPoa {
     String concepto
 
     /*
-    * Estado de la solicitud 0--> solicitado, 1--> aprobado, 2--> negado 3--> ejecutado
+    * Estado de la solicitud 0--> solicitado, 1--> aprobado, 2--> negado 3--> ejecutado 4-->solicitado sin firma 5-->Aprobado sin firma
     * */
     int estado = 0
     /*
@@ -108,6 +109,18 @@ class SolicitudModPoa {
     * Valor de la asignación de destino al momento de ejecutar la modificación
      */
     double valorDestinoSolicitado = 0
+    /*
+    * Firma de revision de la solicitud
+    */
+    Firma firmaSol
+    /*
+    * Firnma de aprobacion 1
+    */
+    Firma firma1
+    /*
+  * Firnma de aprobacion 2
+  */
+    Firma firma2
 
     static mapping = {
         table 'slma'
@@ -139,6 +152,9 @@ class SolicitudModPoa {
             valorDestino column: 'slmavlds'
             valorOrigenSolicitado column: 'slmavogs'
             valorDestinoSolicitado column: 'slmavdss'
+            firmaSol column: 'frmaslid'
+            firma1 column: 'frma1_id'
+            firma2 column: 'frma2_id'
         }
     }
 
@@ -160,5 +176,8 @@ class SolicitudModPoa {
             actividad(blank: true,nullable: true,size: 1..1024)
             inicio(blank:true,nullable: true)
             fin(blank:true,nullable: true)
+            firmaSol(blank:true,nullable: true)
+            firma1(blank:true,nullable: true)
+            firma2(blank:true,nullable: true)
         }
     }

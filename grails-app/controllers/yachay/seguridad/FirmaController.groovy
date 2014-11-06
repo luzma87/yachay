@@ -10,7 +10,7 @@ class FirmaController {
      */
     def firmasPendientes = {
 
-        def firmas = Firma.findAllByUsuarioAndEstado(session.usuario,"S")
+        def firmas = Firma.findAllByUsuarioAndEstado(session.usuario,"S",[sort:"id"])
         def actual
         if (params.anio)
             actual = Anio.get(params.anio)

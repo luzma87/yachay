@@ -125,6 +125,9 @@
                         <g:if test="${p.estado==2}">
                             Negado
                         </g:if>
+                        <g:if test="${p.estado==5}">
+                            Aprobado sin firmas
+                        </g:if>
                     </td>
                     <td style="text-align: center">
                         <a href="#" class="btn imprimiSolicitud" iden="${p.id}">Ver</a>
@@ -133,7 +136,7 @@
                         <a href="#" class="btn matriz" iden="${p.id}">Ver</a>
                     </td>
                     <td style="text-align: center">
-                        <g:if test="${p.estado==3}">
+                        <g:if test="${p.estado==3 || p.estado==5}">
                             <a href="#" class="btn reforma" iden="${p.id}">Ver</a>
                         </g:if>
                     </td>

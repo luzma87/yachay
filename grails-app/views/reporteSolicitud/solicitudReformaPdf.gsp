@@ -50,66 +50,71 @@
 
 
 <body>
-        <div class="hoja">
-            <div>
-                %{--<div style="text-align: right" class="label">Memorando Nro. ${numero}</div>--}%
-                <div style="text-align: right" class="label">Quito, D.M., ${fecha}</div>
-            </div>
+<div class="hoja">
+    <div>
+        %{--<div style="text-align: right" class="label">Memorando Nro. ${numero}</div>--}%
+        <div style="text-align: right" class="label">Quito, D.M., ${fecha}</div>
+    </div>
 
-            <div style="margin-top: 30px">
+    <div style="margin-top: 30px">
 
-            <div>
-                <table width="80%">
-                    <tr>
+        <div>
+            <table width="80%">
+                <tr>
                     <th>
                         PARA:
                     </th>
-                     <th>${gerente?.persona}</th>
-                     </tr>
-                    <tr>
-                        <th></th>
-                        <th>${cargo}</th>
-                    </tr>
-                    <tr style="margin-top: 10px">
-                        <th>ASUNTO:</th>
-                        <th>${asunto.toUpperCase()}</th>
-                    </tr>
-                 </table>
-            </div>
+                    <th>${gerente?.persona}</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>${cargo}</th>
+                </tr>
+                <tr style="margin-top: 10px">
+                    <th>ASUNTO:</th>
+                    <th>${asunto.toUpperCase()}</th>
+                </tr>
+            </table>
+        </div>
 
-            <div style="margin-top: 40px">
-                De mi consideración:
-
-            </div>
-
-            <div style="margin-top: 15px">
-                Con el proposito de mejorar la ejecución de la planificación operativa institucional,
-                adjunto al presente sírvase encontrar la solicitud de reforma al Plan Operativo - POA 2014
-
-            </div>
-
-            <div style="margin-top: 15px">
-                Particular que pongo en su conocimiento para los fines pertinentes.
-            </div>
-
-            <div style="margin-top: 20px">
-                Con sentimientos de distinguida consideración.
-            </div>
-
-            <div style="margin-top: 10px">
-                    Atentamente,
-            </div>
-
-            <div style="margin-top: 70px">
-                ${nombreFirma}
-            </div>
-            <div class="label">
-                ${cargoFirma}
-            </div>
-
-            </div>
+        <div style="margin-top: 40px">
+            De mi consideración:
 
         </div>
+
+        <div style="margin-top: 15px">
+            Con el proposito de mejorar la ejecución de la planificación operativa institucional,
+            adjunto al presente sírvase encontrar la solicitud de reforma al Plan Operativo - POA 2014
+
+        </div>
+
+        <div style="margin-top: 15px">
+            Particular que pongo en su conocimiento para los fines pertinentes.
+        </div>
+
+        <div style="margin-top: 20px">
+            Con sentimientos de distinguida consideración.
+        </div>
+
+        <div style="margin-top: 10px">
+            Atentamente,
+        </div>
+        <g:if test="${solicitud.firmaSol.estado=='F'}">
+            <img src="${resource(dir: 'firmas',file: solicitud.firmaSol.path)}"/><br/>
+            ${solicitud.firmaSol.usuario.persona.nombre} ${solicitud.firmaSol.usuario.persona.apellido}<br/>
+            ${solicitud.firmaSol.usuario.cargoPersonal?.toString()?.toUpperCase()}<br/>
+            ${solicitud.firmaSol.fecha.format("dd-MM-yyyy hh:mm")}
+        </g:if>
+    %{--<div style="margin-top: 70px">--}%
+    %{--${nombreFirma}--}%
+    %{--</div>--}%
+    %{--<div class="label">--}%
+    %{--${cargoFirma}--}%
+    %{--</div>--}%
+
+    </div>
+
+</div>
 
 </body>
 </html>
