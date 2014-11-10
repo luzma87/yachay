@@ -1961,8 +1961,11 @@ class AsignacionController extends yachay.seguridad.Shield {
         acts.each {
             def a = Asignacion.findAllByMarcoLogico(it)
             a.each { asignacion ->
-                asgn.add(asignacion)
-                totalUnidad += asignacion.getValorReal()
+                if(asignacion.anio.id==actual.id){
+                    asgn.add(asignacion)
+                    totalUnidad += asignacion.getValorReal()
+                }
+
             }
 
 

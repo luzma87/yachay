@@ -437,7 +437,7 @@
                 });
 
         $("#anio_asg, #programa").change(function () {
-            location.href = "${createLink(controller:'asignacion',action:'asignacionesCorrientesv2')}?id=${unidad.id}&anio=" + $("#anio_asg").val() + "&programa=" + $("#programa").val();
+            location.href = "${createLink(controller:'asignacion',action:'agregarAsignacionInv')}?id=${proy.id}&anio=" + $("#anio_asg").val() + "&programa=" + $("#programa").val();
         });
 
         $(".guardar").click(function () {
