@@ -29,8 +29,8 @@
                 </g:link>
 
                 <g:if test="${session.perfil.codigo == 'GP'}">
-                    <g:link class="button aprobacion" controller="aprobacion" action="reunion">
-                        Reunión de aprobación
+                    <g:link class="button aprobacion" controller="aprobacion" action="list">
+                        Reuniones de aprobación
                     </g:link>
                 </g:if>
             </div> <!-- toolbar -->

@@ -28,6 +28,14 @@
                     <g:link class="button create" action="prepararReunionAprobacion">
                         Nueva reunión
                     </g:link>
+
+                    <a href="#" class="button print">
+                        PDF aprobadas
+                    </a>
+
+                    <g:link controller="reporteSolicitud" action="aprobadasXLS" class="button xls">
+                        XLS aprobadas
+                    </g:link>
                 </div> <!-- toolbar -->
             </g:if>
 
@@ -154,6 +162,13 @@
                 $(".button").button();
                 $(".home").button("option", "icons", {primary : 'ui-icon-home'});
                 $(".create").button("option", "icons", {primary : 'ui-icon-document'});
+                $(".xls").button("option", "icons", {primary : 'ui-icon-note'});
+
+                $(".print").button("option", "icons", {primary : 'ui-icon-print'}).click(function () {
+                    var url = "${createLink(controller: 'reporteSolicitud', action: 'aprobadas')}";
+                    location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename=solicitudes.pdf";
+                    return false;
+                });
 
                 $(".btnVerSolicitudes").click(function () {
                     $.ajax({

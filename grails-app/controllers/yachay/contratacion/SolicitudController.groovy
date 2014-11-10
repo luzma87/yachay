@@ -457,7 +457,7 @@ class SolicitudController extends yachay.seguridad.Shield {
         def usuario = Usro.get(session.usuario.id)
         def unidadEjecutora = usuario.unidad
 
-        println "UNEJ:::: " + unidadEjecutora
+//        println "UNEJ:::: " + unidadEjecutora
 
         def solicitud = new Solicitud()
         if (params.id) {
@@ -487,11 +487,11 @@ class SolicitudController extends yachay.seguridad.Shield {
             println solicitud.formaPago
             def perfilGAF = Prfl.findByCodigo("GAF")
             def perfilGJ = Prfl.findByCodigo("GJ")
-            def perfilGDP = Prfl.findByCodigo("GDP")
+//            def perfilGDP = Prfl.findByCodigo("GDP")
 
             def usuariosGAF = Sesn.findAllByPerfil(perfilGAF).usuario
             def usuariosGJ = Sesn.findAllByPerfil(perfilGJ).usuario
-            def usuariosGDP = Sesn.findAllByPerfil(perfilGDP).usuario
+//            def usuariosGDP = Sesn.findAllByPerfil(perfilGDP).usuario
 
             def from = Usro.get(session.usuario.id)
             def envio = new Date()
@@ -500,7 +500,7 @@ class SolicitudController extends yachay.seguridad.Shield {
             def action = "revision"
             def idRemoto = solicitud.id
 
-            (usuariosGAF + usuariosGJ + usuariosGDP).each { usu ->
+            (usuariosGAF + usuariosGJ /*+ usuariosGDP*/).each { usu ->
                 def alerta = new Alerta()
                 alerta.from = from
                 alerta.usro = usu
