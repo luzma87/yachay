@@ -419,7 +419,7 @@ class SolicitudTagLib {
             case "GJ":
                 name = "gj"
                 nameV = "vgj"
-                title = 'Dirección de contratación pública'
+                title = 'Dirección de Contratación Pública'
                 revisado = " (" + (solicitud.revisadoJuridica ?
                         'Revisado el ' + solicitud.revisadoJuridica.format('dd-MM-yyyy HH:mm') :
                         'No revisado') + ")"

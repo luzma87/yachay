@@ -168,7 +168,7 @@ class PrflController {
         params.actionName = "save"
         prflInstance = kerberosService.save(params, Prfl, session.perfil, session.usuario)
         if (prflInstance.properties.errors.getErrorCount() > 0) {
-          //println "---- save ${bancoInstance}"
+          println "---- save ${prflInstance.errors}"
           render("El perfil no ha podido crearse")
         } else {
           if (prflInstance.padre) {
