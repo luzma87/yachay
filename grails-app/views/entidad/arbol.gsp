@@ -268,23 +268,26 @@
                             }
                         };
                     }
-                    items.documentos = {
-                        "label"            : "Documentos entidad",
-                        "_disabled"        : false, // clicking the item won't do a thing
-                        "_class"           : "class", // class is applied to the item LI node
-                        "separator_before" : false, // Insert a separator before the item
-                        "separator_after"  : false, // Insert a separator after the item
-                        "icon"             : icons.documentos,
-                        // The function to execute upon a click
-                        "action"           : function (obj) {
-                            var tipo = $(obj).attr("rel");
-                            var str = $(obj).attr("id");
-                            var parts = str.split("_");
-                            var id = parts[1];
-                            var url = "${createLink(action: 'docsFromTree')}/" + id;
-                            location.href = url;
-                        }
-                    }; //presupuesto entidad
+                    if(tipoNode != "padre"){
+                        items.documentos = {
+                            "label"            : "Documentos entidad",
+                            "_disabled"        : false, // clicking the item won't do a thing
+                            "_class"           : "class", // class is applied to the item LI node
+                            "separator_before" : false, // Insert a separator before the item
+                            "separator_after"  : false, // Insert a separator after the item
+                            "icon"             : icons.documentos,
+                            // The function to execute upon a click
+                            "action"           : function (obj) {
+                                var tipo = $(obj).attr("rel");
+                                var str = $(obj).attr("id");
+                                var parts = str.split("_");
+                                var id = parts[1];
+                                var url = "${createLink(action: 'docsFromTree')}/" + id;
+                                location.href = url;
+                            }
+                        }; //presupuesto entidad
+                    }
+
                     if (tipoNode != "padre") {
 
                         var sep = true;
