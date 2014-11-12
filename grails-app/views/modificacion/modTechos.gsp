@@ -28,10 +28,11 @@
 
 <div style="margin-left: 10px;">
 
-    <g:link class="btn_arbol" controller="entidad" action="arbol">Unidades ejecutoras</g:link>
+    <g:link class="btn_arbol" controller="entidad" action="arbol">Estructura Institucional</g:link>
 
+%{--
     <fieldset style="" class="ui-corner-all">
-        <legend>Gastos correintes</legend>
+        <legend>Gastos corrientes</legend>
         <g:if test="${techo.aprobadoCorrientes==1}">
 
             Presupuesto de gasto corrientes: <input type="text" style="width: 120px;text-align: right" class="ui-corner-all" id="maxCor" value="${formatNumber(number:techo.maxCorrientes,format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}">
@@ -42,6 +43,7 @@
             El presupuesto para la unidad ${unidad} de gastos corrientes del año ${actual} aun no ha sido aprobado.
         </g:else>
     </fieldset>
+--}%
     <fieldset class="ui-corner-all">
         <legend>Inversiones</legend>
 
