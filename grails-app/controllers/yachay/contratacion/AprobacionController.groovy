@@ -44,6 +44,7 @@ class AprobacionController extends yachay.seguridad.Shield {
      * Acción llamada con ajax que muestra el diálogo para agendar reunión de contratación: fecha, hora, comentarios para cada solicitud
      */
     def agendarReunion_ajax = {
+        println "Agendar reunion:::: " + params
         def reunion = new Aprobacion()
         if (params.id) {
             reunion = Aprobacion.get(params.id.toLong())
@@ -58,7 +59,10 @@ class AprobacionController extends yachay.seguridad.Shield {
         }
         ids = ids*.toLong()
 
-        def solicitudes = Solicitud.findAllByIdInListOrAprobacion(ids, reunion)
+        def solicitudes = Solicitud.findAllByIdInList(ids)
+        if (reunion.id) {
+            solicitudes = Solicitud.findAllByIdInListOrAprobacion(ids, reunion)
+        }
 
         return [reunion: reunion, solicitudes: solicitudes]
     }

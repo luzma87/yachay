@@ -343,14 +343,15 @@ class SolicitudTagLib {
         def editableASGJ = editable && perfil.codigo == "ASGJ"
 //        def editableGDP = editable && perfil.codigo == "GDP"
 
+        def color = "background: #75bec6!important; color: #114247;"
         def colorGAF = ""
         def colorGJ = ""
 
         if (perfil.codigo == "GAF" || perfil.codigo == "ASAF") {
-            colorGAF = "background: #1b97a7!important; color: #fff;"
+            colorGAF = color
         }
         if (perfil.codigo == "GJ" || perfil.codigo == "ASGJ") {
-            colorGJ = "background: #1b97a7!important; color: #fff;"
+            colorGJ = color
         }
 
         def js = ""
