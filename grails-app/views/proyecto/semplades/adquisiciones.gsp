@@ -42,7 +42,7 @@
     </g:hasErrors>
 
 
-    <mf:menuSemplades items='${items}'/>
+    <mf:menuSemplades_flow items='${items}'/>
 
 
     <div style="margin-top: 10px;">

@@ -21,7 +21,7 @@
 
         <div id="" class="toolbar ui-widget-header ui-corner-all">
             <span class="menuButton"><g:link class="create btn"
-                                             action="nuevoProyecto">Nuevo Proyecto</g:link></span>
+                                             action="formProyecto">Nuevo Proyecto</g:link></span>
             <span class="menuButton"><g:link class="create btn"
                                              action="cargarExcel">Cargar Excel</g:link></span>
         </div>

@@ -54,7 +54,7 @@
                 <g:hiddenField name="version" value="${proyecto?.version}"/>
                 <input type="hidden" name="goto" id="goto" value="validarProyecto"/>
 
-                <mf:menuSemplades items='${items}' links="${links}"/>
+                <mf:menuSemplades_flow items='${items}' links="${links}"/>
 
 
                 <table width="100%" class="ui-widget-content ui-corner-all">
@@ -133,7 +133,8 @@
                         </td>
 
                         <td class="campo" valign="middle">
-                            <g:select class="required requiredCmb ui-widget-content ui-corner-all" name="unidadEjecutora.id"
+                            <g:select class="required requiredCmb ui-widget-content ui-corner-all"
+                                      name="unidadAdministradora.id"
                                       title="${Proyecto.constraints.unidadAdministradora.attributes.mensaje}"
                                       style="width: 360px;"
                                       from="${yachay.parametros.UnidadEjecutora.list()}" optionKey="id"

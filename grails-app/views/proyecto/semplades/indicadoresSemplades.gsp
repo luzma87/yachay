@@ -38,7 +38,7 @@
 <g:hiddenField name="id" value="${indicadoresSempladesInstance?.id}"/>
 <g:hiddenField name="version" value="${indicadoresSempladesInstance?.version}"/>
 
-<mf:menuSemplades items='${items}'/>
+<mf:menuSemplades_flow items='${items}'/>
 
 <div style="margin: 10px 0 10px 0; padding: 5px;"
      class="${saved ? 'ui-state-highlight' : (error ? 'ui-state-error' : '')} ui-corner-all ${(saved || error) ? '' : 'ui-helper-hidden'}"

@@ -102,7 +102,7 @@
                 <g:generarMenuHorizontal/>
             </div>
 
-            <div id="divDlgBody" class="ui-dialog-content ui-widget-content" style="height: 620px;width: 100%">
+            <div id="divDlgBody" class="ui-dialog-content ui-widget-content" style="height: 620px;width: 98%">
                 <g:layoutBody/>
 
             </div>

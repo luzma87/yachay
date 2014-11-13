@@ -39,7 +39,7 @@
                 <input type="hidden" name="goto" id="goto" value="politicasAgenda" />
                 <div class="ui-widget-content ui-corner-all" style="padding: 3px;">
 
-                    <mf:menuSemplades items='${items}' links="${links}"/>
+                    <mf:menuSemplades_flow items='${items}' links="${links}"/>
 
                     <table>
                         <thead>

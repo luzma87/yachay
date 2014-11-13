@@ -23,7 +23,7 @@
 
 <div class="dialog" title="Datos Semplades del proyecto ${proyecto.nombre}">
 
-    <mf:menuSemplades items='${items}'/>
+    <mf:menuSemplades_flow items='${items}'/>
 
 </div>
 

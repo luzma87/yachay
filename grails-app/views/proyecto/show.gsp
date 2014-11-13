@@ -241,7 +241,7 @@
                     </g:link>
                 </g:if>
                 <g:else>
-                    <g:link class="button edit" action="nuevoProyecto" id="${proyectoInstance?.id}">
+                    <g:link class="button edit" action="formProyecto" id="${proyectoInstance?.id}">
                         Editar
                     </g:link>
                 </g:else>
@@ -509,23 +509,23 @@
                     </table>
                 </div>
 
-                <div style="width: 1040px;float: left; margin-top: 5px;">
-                    <div class="sectionHeader ui-widget-header ui-corner-all" title="Mostrar" data-object="politicasAS">
-                        Pol&iacute;ticas de agenda sectorial (social)
-                        <span class="ui-icon ui-icon-triangle-1-s" style="float: right;"></span>
-                    </div>
-                    <table width="1040px" class="ui-widget-content ui-corner-bottom ui-helper-hidden" id="politicasAS">
-                        <tbody>
-                            <g:each in="${plas}" status="i" var="plas">
-                                <tr class="${i % 2 == 0 ? 'even' : 'odd'}">
-                                    <td>
-                                        ${plas.politicaAgendaSocial.descripcion}
-                                    </td>
-                                </tr>
-                            </g:each>
-                        </tbody>
-                    </table>
-                </div>
+                %{--<div style="width: 1040px;float: left; margin-top: 5px;">--}%
+                %{--<div class="sectionHeader ui-widget-header ui-corner-all" title="Mostrar" data-object="politicasAS">--}%
+                %{--Pol&iacute;ticas de agenda sectorial (social)--}%
+                %{--<span class="ui-icon ui-icon-triangle-1-s" style="float: right;"></span>--}%
+                %{--</div>--}%
+                %{--<table width="1040px" class="ui-widget-content ui-corner-bottom ui-helper-hidden" id="politicasAS">--}%
+                %{--<tbody>--}%
+                %{--<g:each in="${plas}" status="i" var="plas">--}%
+                %{--<tr class="${i % 2 == 0 ? 'even' : 'odd'}">--}%
+                %{--<td>--}%
+                %{--${plas.politicaAgendaSocial.descripcion}--}%
+                %{--</td>--}%
+                %{--</tr>--}%
+                %{--</g:each>--}%
+                %{--</tbody>--}%
+                %{--</table>--}%
+                %{--</div>--}%
 
                 %{--<div style="width: 1040px;float: left; margin-top: 5px;">--}%
                 %{--<div class="sectionHeader ui-widget-header ui-corner-all" title="Mostrar" data-object="politicas">--}%
