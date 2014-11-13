@@ -211,8 +211,8 @@ class ReporteSolicitudController {
         def anios = []
 
         list2.each { s ->
-            def aprobaciones = Aprobacion.findBySolicitud(s)
-            if (aprobaciones && aprobaciones.tipoAprobacion.codigo != "NA") {
+            def aprobaciones = s.aprobacion
+            if (aprobaciones && s.tipoAprobacion?.codigo != "NA") {
                 list01 += s
             } else {
                 list02 += s
