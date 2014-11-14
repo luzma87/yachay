@@ -175,7 +175,7 @@
             $("#firmarDlg").dialog({
                 autoOpen  : false,
                 resizable : false,
-                title     : 'Firmar',
+                title     : 'Autorización Electrónica',
                 modal     : true,
                 draggable : true,
                 width     : 500,
