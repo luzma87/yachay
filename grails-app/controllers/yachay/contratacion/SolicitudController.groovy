@@ -361,9 +361,9 @@ class SolicitudController extends yachay.seguridad.Shield {
      * - si es Gerencia de Planificación (GP), Dirección de Planificación (DP), Dirección de Seguimiento (DS), Analista de administración (ASAF),
      * Analista Jurídico (ASGJ), Gerencia Administrativa (GAF), Gerencia Jurídica (GJ) -> puede ver solicitudes de cualquier unidad; caso contrario
      * solo las solicitudes de su unidad<br/>
-     * - si es ASAF o ASGJ -> puede ver todas las que no hayan sido ya validadas<br/>
+     * - si es ASAF o ASGJ -> puede ver todas las que no hayan sido ya validadas y que ya hayan sido marcadas para revisión<br/>
      * - si es GAF o GJ -> puede ver las que ya han sido revisadas por su analista<br/>
-     * - si es Director requirente (DRRQ) puede ver las ya validadas (solamente de su unidad)
+     * - si es Director requirente (DRRQ) puede ver las de su unidad
      */
     def list = {
         def perfil = session.perfil
@@ -371,6 +371,8 @@ class SolicitudController extends yachay.seguridad.Shield {
         def unidad = usuario.unidad
 
         params.max = Math.min(params.max ? params.int('max') : 25, 100)
+
+        println "AQUI::: " + perfil.codigo
 
         def todos = ["GP", "DP", "DS", "ASAF", "ASGJ", "ASPL", "GAF", "GJ"]
 
@@ -386,12 +388,14 @@ class SolicitudController extends yachay.seguridad.Shield {
 //            if (["ASAF", "ASGJ", ""].contains(perfil.codigo)) {
             eq("estado", "P")
 //            }
-            //si es Analista admin. o Analista juridico -> puede ver todas las que no hayan sido ya validadas
+            //si es Analista admin. o Analista juridico -> puede ver todas las que no hayan sido ya validadas y q ya estén marcadas para revisión
             if (perfil.codigo == "ASAF") {
                 isNull("validadoAdministrativaFinanciera")
+                isNotNull("fechaParaRevision")
             }
             if (perfil.codigo == "ASGJ") {
                 isNull("validadoJuridica")
+                isNotNull("fechaParaRevision")
             }
             //si es Gerencia admin o Gerencia juridica -> puede ver las que ya han sido revisadas por su analista
             if (perfil.codigo == "GAF") {
@@ -400,11 +404,11 @@ class SolicitudController extends yachay.seguridad.Shield {
             if (perfil.codigo == "GJ") {
                 isNotNull("revisadoJuridica")
             }
-            //si es Director requirente puede ver las ya validadas
-            if (perfil.codigo == "DRRQ") {
-                isNotNull("validadoAdministrativaFinanciera")
-                isNotNull("validadoJuridica")
-            }
+//            //si es Director requirente puede ver las ya validadas
+//            if (perfil.codigo == "DRRQ") {
+//                isNotNull("validadoAdministrativaFinanciera")
+//                isNotNull("validadoJuridica")
+//            }
         }
 //        def list2 = Solicitud.withCriteria {
 ////            eq("unidadEjecutora", unidad)
@@ -447,6 +451,20 @@ class SolicitudController extends yachay.seguridad.Shield {
             def title = g.message(code: "default.show.label", args: ["Solicitud"], default: "Show Solicitud")
             [solicitud: solicitud, title: title]
         }
+    }
+
+    /**
+     * Acción que marca a una solicitud de contratación como lista para ser revisada
+     */
+    def paraRevision = {
+        def solicitud = Solicitud.get(params.id)
+        solicitud.fechaParaRevision = new Date()
+        if (!solicitud.save(flush: true)) {
+            flash.message = "Ha ocurrido un error: " + renderErrors(bean: solicitud)
+            println solicitud.errors
+        }
+        flash.message = "Solicitud marcada para revisión"
+        redirect(action: "show", id: solicitud.id)
     }
 
     /*Función para guardar una nueva solicitud*/

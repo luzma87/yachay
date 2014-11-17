@@ -30,6 +30,13 @@
                     </td>
                     <td>
                         <g:formatNumber number="${sol.montoSolicitado}" type="currency"/>
+                        <g:each in="${anios}" var="a">
+                            <g:set var="valor" value="${yachay.contratacion.DetalleMontoSolicitud.findByAnioAndSolicitud(a, sol)}"/>
+                            <br/>${a.anio} :
+                            <g:if test="${valor}">
+                                <g:formatNumber number="${valor.monto}" type="currency"/>
+                            </g:if>
+                        </g:each>
                     </td>
                     <td>
                         ${sol.nombreProceso}

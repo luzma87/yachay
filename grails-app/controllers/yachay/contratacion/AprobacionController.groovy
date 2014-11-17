@@ -37,7 +37,15 @@ class AprobacionController extends yachay.seguridad.Shield {
     def solicitudes_ajax = {
         def reunion = Aprobacion.get(params.id)
         def solicitudes = Solicitud.findAllByAprobacion(reunion)
-        return [aprobacion: reunion, solicitudes: solicitudes]
+        def anios = []
+        solicitudes.each { sol ->
+            DetalleMontoSolicitud.findAllBySolicitud(sol, [sort: "anio"]).each { d ->
+                if (!anios.contains(d.anio)) {
+                    anios.add(d.anio)
+                }
+            }
+        }
+        return [aprobacion: reunion, solicitudes: solicitudes, anios: anios]
     }
 
     /**

@@ -47,12 +47,13 @@ span.warning, a.warning {
                     <div class="warning ui-corner-all">
                         <span class="fa fa-warning warning"></span>
                         Se moverá esta solicitud de la reunión de ${solicitud.aprobacion.fecha.format("dd-MM-yyyy HH:mm")} a la reunión actual
-                            <a class="warning" href="#" id="${solicitud.id}" style="margin-left: 40px; color: #07A; font-weight: bold">No mover</a>
+                        <a class="warning" href="#" id="${solicitud.id}" style="margin-left: 40px; color: #07A; font-weight: bold">No mover</a>
                     </div>
                 </g:if>
                 <p>
-                   Proceso: <strong>${solicitud.nombreProceso}</strong>
+                    Proceso: <strong>${solicitud.nombreProceso}</strong>
                 </p>
+
                 <p style="font-size: 14px; font-weight: bold">Revisión de la Dirección de Planificación e Inversión</p>
                 <g:textArea name="revision_${solicitud.id}" rows="5" cols="78"
                             class="ui-widget-content ui-corner-all txtRevision"
@@ -68,6 +69,12 @@ span.warning, a.warning {
         // Do something after 5 seconds
         $(".loading").hide();
         $(".loaded").show();
+        $(".datepicker").datepicker({
+            changeMonth : true,
+            changeYear  : true,
+            dateFormat  : 'dd-mm-yy',
+            minDate     : "+0"
+        });
         $("a.warning").click(function () {
             var id = $(this).attr("id");
             var $chk = $("#" + id + ".check");

@@ -268,8 +268,6 @@ class ReporteSolicitudController {
                 if (!anios.contains(d.anio)) {
                     anios.add(d.anio)
                 }
-
-
             }
         }
         return [solicitudInstanceList: list, anios: anios]

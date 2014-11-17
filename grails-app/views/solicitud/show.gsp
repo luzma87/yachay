@@ -5,7 +5,7 @@
   Time: 01:25 PM
 --%>
 
-<%@ page import="yachay.seguridad.Prfl; yachay.proyectos.Proyecto" contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.contratacion.DetalleMontoSolicitud; yachay.seguridad.Prfl; yachay.proyectos.Proyecto" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -45,7 +45,23 @@
                     <tbody>
                         <g:if test="${solicitud}">
                             <tr>
-                                <td colspan="4" style="padding-bottom: 15px; font-size: larger; font-weight: bold;">
+                                <td colspan="4" style="font-size: larger; font-weight: bold;">
+                                    <g:if test="${yachay.contratacion.DetalleMontoSolicitud.countBySolicitud(solicitud) == 0}">
+                                        <div class="ui-widget-content ui-corner-all ui-state-error" style="padding: 10px 10px 10px 10px; ">
+                                            No ha detallado los montos anuales de la solicitud
+                                        </div>
+                                    </g:if>
+                                    <g:else>
+                                        <g:if test="${solicitud.fechaParaRevision}">
+                                            <div style="padding: 10px 10px 5px 10px; ">
+                                                Solicitud marcada para revisión
+                                            </div>
+                                        </g:if>
+                                    </g:else>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" style="padding: 10px 10px 15px 10px; font-size: larger; font-weight: bold;">
                                     <g:if test="${solicitud.incluirReunion == 'S'}">
                                         Se incluirá en la próxima reunión de aprobación
                                         (Solicitado el ${solicitud.fechaPeticionReunion?.format("dd-MM-yyyy HH:mm")})
@@ -70,6 +86,11 @@
                                         <g:link class="button edit" action="ingreso" id="${solicitud?.id}">
                                             Actualizar
                                         </g:link>
+                                        <g:if test="${session.perfil.codigo == 'DRRQ' && DetalleMontoSolicitud.countBySolicitud(solicitud) > 0 && !solicitud.fechaParaRevision}">
+                                            <g:link class="button paraRevision" action="paraRevision" id="${solicitud?.id}">
+                                                Para revisión
+                                            </g:link>
+                                        </g:if>
                                     </g:if>
                                 %{--<g:if test="${session.perfil.codigo == 'GAF' || session.perfil.codigo == 'GJ'/* || session.perfil.codigo == 'GDP'*/}">--}%
                                     <g:if test="${session.perfil.codigo == 'ASAF' || session.perfil.codigo == 'ASGJ'/* || session.perfil.codigo == 'GDP'*/}">
@@ -125,6 +146,12 @@
 
                 $(".edit").button("option", "icons", {primary : 'ui-icon-pencil'});
                 $(".revision").button("option", "icons", {primary : 'ui-icon-check'});
+                $(".paraRevision").button("option", "icons", {primary : 'ui-icon-check'}).click(function () {
+                    if (confirm("Está seguro de querer marcar esta solicitud de contratación para revisión?")) {
+                        return true;
+                    }
+                    return false;
+                });
                 $(".delete").button("option", "icons", {primary : 'ui-icon-trash'}).click(function () {
                     if (confirm("${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}")) {
                         return true;

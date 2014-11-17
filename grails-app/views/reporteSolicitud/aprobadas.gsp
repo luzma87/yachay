@@ -133,19 +133,18 @@
                                     ${solicitudInstance.unidadEjecutora?.codigo}
                                 </td>
                                 <g:each in="${anios}" var="a">
-                                    <g:set var="valor" value="${yachay.contratacion.DetalleMontoSolicitud.findByAnioAndSolicitud(a,solicitudInstance)}"/>
-                                    <g:if test="${valor}">
-                                        <td><g:formatNumber number="${valor.monto}" type="currency"/></td>
-                                    </g:if>
-                                    <g:else>
-                                        <td></td>
-                                    </g:else>
-
+                                    <td>
+                                        <g:set var="valor" value="${yachay.contratacion.DetalleMontoSolicitud.findByAnioAndSolicitud(a, solicitudInstance)}"/>
+                                        <g:if test="${valor}">
+                                            <g:formatNumber number="${valor.monto}" type="currency"/>
+                                        </g:if>
+                                    </td>
                                 </g:each>
                                 <td><g:formatNumber number="${solicitudInstance.montoSolicitado}" type="currency"/></td>
                                 <g:set var="estado" value="${solicitudInstance.aprobacion}"/>
                                 <g:if test="${estado}">
-                                    <td>${solicitudInstance?.tipoAprobacion?.descripcion}<br/>${estado.fecha.format("dd-MM-yyyy")}</td>
+                                    <td>${solicitudInstance?.tipoAprobacion?.descripcion}<br/>${estado.fecha.format("dd-MM-yyyy")}
+                                    </td>
                                 %{--<td>Acta</td>--}%
                                 </g:if>
                                 <g:else>
