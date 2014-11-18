@@ -189,6 +189,7 @@
     })
     $(".matriz").button({icons:{ primary:"ui-icon-print"},text:false}).click(function(){
         var url = "${g.createLink(controller: 'reporteReformaPoa',action: 'solicitudReformaPoa')}/?id="+$(this).attr("iden")
+//        location.href = url
         location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url+"&filename=matriz.pdf"
     })
     $(".imprimiSolicitud").button({icons:{ primary:"ui-icon-print"},text:false}).click(function(){

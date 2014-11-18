@@ -111,13 +111,19 @@
     .valor{
         text-align: right;
     }
+    .ttl {
+        text-align  : center;
+        font-weight : bold;
+    }
+
     </style>
 </head>
 
 <body>
 <div style="margin-left: 10px;">
 <div class="hoja">
-<div class="titulo">SOLICITUD DE REFORMA AL POA</div>
+    <slc:headerReporte title="SOLICITUD DE REFORMA AL POA"/>
+%{--<div class="titulo">SOLICITUD DE REFORMA AL POA</div>--}%
 
 <div>
 <ol>

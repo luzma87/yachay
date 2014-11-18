@@ -44,6 +44,10 @@
     .label {
         font-weight : bold;
     }
+    .ttl {
+        text-align  : center;
+        font-weight : bold;
+    }
 
     </style>
 </head>
@@ -51,6 +55,7 @@
 
 <body>
 <div class="hoja">
+    <slc:headerReporte title=""/>
     <div>
         %{--<div style="text-align: right" class="label">Memorando Nro. ${numero}</div>--}%
         <div style="text-align: right" class="label">Quito, D.M., ${fecha}</div>
