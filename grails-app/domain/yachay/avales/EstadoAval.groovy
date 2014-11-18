@@ -17,7 +17,8 @@ class EstadoAval {
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
     static mapping = {
-        table 'edav'
+//        table 'edav'
+        table 'c_edav'
         cache usage: 'read-write', include: 'non-lazy'
         id column: 'edav__id'
         id generator: 'identity'

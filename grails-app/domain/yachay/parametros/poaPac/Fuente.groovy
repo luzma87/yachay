@@ -23,8 +23,8 @@ class Fuente implements Serializable {
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
     static mapping = {
-//        table 'c_fnte'
-        table 'fnte'
+//        table 'fnte'
+        table 'c_fnte'
         cache usage: 'read-write', include: 'non-lazy'
         id column: 'fnte__id'
         id generator: 'identity'

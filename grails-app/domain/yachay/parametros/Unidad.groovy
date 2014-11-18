@@ -25,7 +25,8 @@ class Unidad implements Serializable {
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
     static mapping = {
-        table 'undd'
+//        table 'undd'
+        table 'c_undd'
         cache usage: 'read-write', include: 'non-lazy'
         id column: 'undd__id'
         id generator: 'identity'

@@ -10,7 +10,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="layout" content="main"/>
-    <title>Solicitar Reforma del P.O.A.</title>
+    <title>Solicitar Reforma del POA</title>
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}"
           type="text/css"/>
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'BreadCrumb.css')}"
@@ -38,7 +38,7 @@
     <legend>Asignación de origen.</legend>
     <g:form action="save" class="frmProceso">
         <div class="fila">
-            <div class="labelSvt">Año:</div>
+            <div class="labelSvt">POA año:</div>
 
             <div class="fieldSvt-small" id="">
                 <g:select from="${yachay.parametros.poaPac.Anio.list([sort: 'anio'])}" value="${actual?.id}" optionKey="id" optionValue="anio" id="anio" name="anio" ></g:select>
@@ -111,7 +111,7 @@
             <legend>Asignación de destino.</legend>
 
             <div class="fila">
-                <div class="labelSvt">Año:</div>
+                <div class="labelSvt">POA año:</div>
 
                 <div class="fieldSvt-small">
                     <g:select from="${yachay.parametros.poaPac.Anio.list([sort: 'anio'])}" value="${actual?.id}" optionKey="id" optionValue="anio" id="anio_dest" name="anio" ></g:select>
@@ -167,7 +167,7 @@
             <legend>Nueva asignación.</legend>
 
             <div class="fila">
-                <div class="labelSvt">Año:</div>
+                <div class="labelSvt">POA año:</div>
                 <div class="fieldSvt-small">
                     <g:select from="${yachay.parametros.poaPac.Anio.list([sort: 'anio'])}" value="${actual?.id}" optionKey="id" optionValue="anio" id="anio_nueva" name="anio" ></g:select>
                 </div>

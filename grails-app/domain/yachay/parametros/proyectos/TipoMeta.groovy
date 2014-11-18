@@ -23,7 +23,8 @@ class TipoMeta implements Serializable {
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
     static mapping = {
-        table 'tpmt'
+//        table 'tpmt'
+        table 'c_tpmt'
         cache usage: 'read-write', include: 'non-lazy'
         id column: 'tpmt__id'
         id generator: 'identity'

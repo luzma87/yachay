@@ -16,7 +16,8 @@ class Portafolio {
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
     static mapping = {
-        table 'prtf'
+//        table 'prtf'
+        table 'c_prtf'
         cache usage: 'read-write', include: 'non-lazy'
         id column: 'prtf__id'
         id generator: 'identity'

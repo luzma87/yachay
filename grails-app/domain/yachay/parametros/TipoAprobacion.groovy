@@ -22,7 +22,8 @@ class TipoAprobacion {
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
     static mapping = {
-        table 'tpap'
+//        table 'tpap'
+        table 'c_tpap'
         cache usage: 'read-write', include: 'non-lazy'
         id column: 'tpap__id'
         id generator: 'identity'

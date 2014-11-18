@@ -22,7 +22,8 @@ class ObjetivoUnidad {
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
     static mapping = {
-        table 'obun'
+//        table 'obun'
+        table 'c_obun'
         cache usage: 'read-write', include: 'non-lazy'
         id column: 'obun__id'
         id generator: 'identity'

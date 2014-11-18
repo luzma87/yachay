@@ -25,7 +25,8 @@ class TipoResponsable implements Serializable {
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
     static mapping = {
-        table 'tprp'
+//        table 'tprp'
+        table 'c_tprp'
         cache usage: 'read-write', include: 'non-lazy'
         id column: 'tprp__id'
         id generator: 'identity'

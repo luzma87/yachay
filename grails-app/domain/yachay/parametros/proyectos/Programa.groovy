@@ -23,7 +23,8 @@ class Programa implements Serializable {
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
     static mapping = {
-        table 'prgr'
+//        table 'prgr'
+        table 'c_prgr'
         cache usage: 'read-write', include: 'non-lazy'
         id column: 'prgr__id'
         id generator: 'identity'

@@ -19,8 +19,8 @@ class TipoElemento implements Serializable {
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
     static mapping = {
-//        table 'c_tpel'
-        table 'tpel'
+//        table 'tpel'
+        table 'c_tpel'
         version false
         cache usage: 'read-write', include: 'non-lazy'
         id column: 'tpel__id'
