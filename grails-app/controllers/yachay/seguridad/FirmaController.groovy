@@ -16,7 +16,7 @@ class FirmaController {
             actual = Anio.get(params.anio)
         else
             actual = Anio.findByAnio(new Date().format("yyyy"))
-        [firmas:firmas,actual:actual]
+        [firmas:firmas, actual:actual]
 
     }
 /**
