@@ -26,6 +26,14 @@ class ComposicionHito  {
     * Fecha de creación
     */
     Date fecha = new Date()
+    /*
+ * avance físico
+ */
+    double avanceFisico = 0
+    /*
+  * avance financiero
+  */
+    double avanceFinanciero = 0
 
 
     /**
@@ -44,6 +52,8 @@ class ComposicionHito  {
             proyecto column: 'proy__id'
             proceso column: 'poas__id'
             fecha column: 'cmhtfcha'
+            avanceFisico column: 'cmhtavfs'
+            avanceFinanciero column: 'cmhtavfi'
         }
     }
 /**
