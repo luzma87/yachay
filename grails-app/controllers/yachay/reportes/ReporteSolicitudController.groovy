@@ -211,8 +211,8 @@ class ReporteSolicitudController {
         def anios = []
 
         list2.each { s ->
-            def aprobaciones = Aprobacion.findBySolicitud(s)
-            if (aprobaciones && aprobaciones.tipoAprobacion.codigo != "NA") {
+            def aprobaciones = s.aprobacion
+            if (aprobaciones && s.tipoAprobacion?.codigo != "NA") {
                 list01 += s
             } else {
                 list02 += s
@@ -268,8 +268,6 @@ class ReporteSolicitudController {
                 if (!anios.contains(d.anio)) {
                     anios.add(d.anio)
                 }
-
-
             }
         }
         return [solicitudInstanceList: list, anios: anios]
@@ -449,7 +447,7 @@ class ReporteSolicitudController {
         def firmas = []
 
         if (solicitud.usuario) {
-            firmas += [cargo: "Responsable unidad", usuario: solicitud.usuario]
+            firmas += [cargo: solicitud?.usuario?.cargoPersonal?.descripcion ?: "Responsable unidad", usuario: solicitud.usuario]
         }
         return [solicitud: solicitud, firmas: firmas]
     }
@@ -481,19 +479,22 @@ class ReporteSolicitudController {
         if (params.fgp != "null") {
             def gerentePlanificacion = Usro.get(params.fgp)
             if (gerentePlanificacion) {
-                firmas += [cargo: "GERENTE DE PLANIFICACIÓN", usuario: gerentePlanificacion]
+//                firmas += [cargo: "GERENTE DE PLANIFICACIÓN", usuario: gerentePlanificacion]
+                firmas += [cargo: gerentePlanificacion?.cargoPersonal?.descripcion ?: "GERENTE DE PLANIFICACIÓN", usuario: gerentePlanificacion]
             }
         }
         if (params.fdp != "null") {
             def directorPlanificacion = Usro.get(params.fdp)
             if (directorPlanificacion) {
-                firmas += [cargo: "DIRECTOR DE PLANIFICACIÓN", usuario: directorPlanificacion]
+//                firmas += [cargo: "DIRECTOR DE PLANIFICACIÓN", usuario: directorPlanificacion]
+                firmas += [cargo: directorPlanificacion?.cargoPersonal?.descripcion ?: "DIRECTOR DE PLANIFICACIÓN", usuario: directorPlanificacion]
             }
         }
         if (params.fgt != "null") {
             def gerenteTec = Usro.get(params.fgt)
             if (gerenteTec) {
-                firmas += [cargo: "GERENTE TÉCNICO", usuario: gerenteTec]
+//                firmas += [cargo: "GERENTE TÉCNICO", usuario: gerenteTec]
+                firmas += [cargo: gerenteTec?.cargoPersonal?.descripcion ?: "GERENTE TÉCNICO", usuario: gerenteTec]
             }
         }
         if (params.frq != "null") {
@@ -524,19 +525,22 @@ class ReporteSolicitudController {
         if (params.fgp != "null") {
             def gerentePlanificacion = Usro.get(params.fgp)
             if (gerentePlanificacion) {
-                firmas += [cargo: "GERENTE DE PLANIFICACIÓN", usuario: gerentePlanificacion]
+                firmas += [cargo: gerentePlanificacion?.cargoPersonal?.descripcion ?: "GERENTE DE PLANIFICACIÓN", usuario: gerentePlanificacion]
+//                firmas += [cargo: "GERENTE DE PLANIFICACIÓN", usuario: gerentePlanificacion]
             }
         }
         if (params.fdp != "null") {
             def directorPlanificacion = Usro.get(params.fdp)
             if (directorPlanificacion) {
-                firmas += [cargo: "DIRECTOR DE PLANIFICACIÓN", usuario: directorPlanificacion]
+//                firmas += [cargo: "DIRECTOR DE PLANIFICACIÓN", usuario: directorPlanificacion]
+                firmas += [cargo: directorPlanificacion?.cargoPersonal?.descripcion ?: "DIRECTOR DE PLANIFICACIÓN", usuario: directorPlanificacion]
             }
         }
         if (params.fgt != "null") {
             def gerenteTec = Usro.get(params.fgt)
             if (gerenteTec) {
-                firmas += [cargo: "GERENTE TÉCNICO", usuario: gerenteTec]
+//                firmas += [cargo: "GERENTE TÉCNICO", usuario: gerenteTec]
+                firmas += [cargo: gerenteTec?.cargoPersonal?.descripcion ?: "GERENTE TÉCNICO", usuario: gerenteTec]
             }
         }
 

@@ -12,6 +12,7 @@ import yachay.parametros.poaPac.Fuente
 import yachay.parametros.poaPac.Mes
 import yachay.parametros.poaPac.Presupuesto
 import yachay.parametros.poaPac.ProgramaPresupuestario
+import yachay.proyectos.Cronograma
 import yachay.proyectos.Financiamiento
 import yachay.proyectos.MarcoLogico
 import yachay.proyectos.ModificacionAsignacion
@@ -1069,6 +1070,35 @@ class AsignacionController extends yachay.seguridad.Shield {
         }
     }
 
+    def validarCronograma_ajax = {
+        println "validar crono " + params
+
+        def planificado = params.planificado.replaceAll("\\.", "")
+        planificado = planificado.replaceAll(",", "\\.")
+        planificado = planificado.toDouble()
+
+        def marco = MarcoLogico.get(params.marco)
+        def anio = Anio.get(params.anio)
+
+        def cronos = Cronograma.findAllByMarcoLogicoAndAnio(marco, anio)
+        def total = cronos.sum { it.valor }
+
+        if (cronos.size() == 0) {
+            render "La actividad no tiene valores programados para este año."
+        } else {
+            if (planificado > total) {
+                /*
+              <g:formatNumber number="${(asg.redistribucion == 0) ? asg.planificado.toDouble() : asg.redistribucion.toDouble()}"
+                                                format="###,##0"
+                                                minFractionDigits="2" maxFractionDigits="2"/>
+             */
+                render "No puede asignar un valor superior a " + g.formatNumber(number: total, format: "###,##0", maxFractionDigits: 2, minFractionDigits: 2)
+            } else {
+                render "true"
+            }
+        }
+    }
+
     /**
      * Acción
      */
@@ -1078,6 +1108,8 @@ class AsignacionController extends yachay.seguridad.Shield {
         params.planificado = params.planificado.replaceAll("\\.", "")
         params.planificado = params.planificado.replaceAll(",", "\\.")
         params.planificado = params.planificado.toDouble()
+
+        params.priorizado = params.planificado
         def marco = MarcoLogico.get(params.marcoLogico.id)
         def band = true
         if (params?.componente?.id == "-1") {
@@ -1961,7 +1993,7 @@ class AsignacionController extends yachay.seguridad.Shield {
         acts.each {
             def a = Asignacion.findAllByMarcoLogico(it)
             a.each { asignacion ->
-                if(asignacion.anio.id==actual.id){
+                if (asignacion.anio.id == actual.id) {
                     asgn.add(asignacion)
                     totalUnidad += asignacion.getValorReal()
                 }
@@ -1981,8 +2013,12 @@ class AsignacionController extends yachay.seguridad.Shield {
         else
             maxUnidad = 0
 
+        def totalPriorizado = asgn.sum { it.priorizado }
+        def financiamientos = Financiamiento.findAllByProyectoAndAnio(proy, actual)
+        def totalAnio = financiamientos.sum { it.monto }
 
-        [proy: proy, comp: comp, fuentes: fuentes, unidad: unidad, actual: actual, cmp: cmp, acts: acts, asgn: asgn, totalUnidad: totalUnidad, maxUnidad: maxUnidad]
+        [proy       : proy, comp: comp, fuentes: fuentes, unidad: unidad, actual: actual, cmp: cmp, acts: acts, asgn: asgn,
+         totalUnidad: totalUnidad, maxUnidad: maxUnidad, totalPriorizado: totalPriorizado, totalAnio: totalAnio]
 
     }
 

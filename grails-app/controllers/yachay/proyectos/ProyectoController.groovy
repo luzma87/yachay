@@ -27,15 +27,146 @@ class ProyectoController extends yachay.seguridad.Shield {
     def dbConnectionService
 
     /**
-     * Acción
+     * Acción que redirecciona a la lista de proyectos
      */
     def index = {
         redirect(action: "list", params: params)
     }
 
-    /*Listado de los proyectos*/
     /**
-     * Acción
+     * Acción que muestra el formulario para crear/editar proyecto
+     */
+    def formProyecto = {
+        def proyecto = new Proyecto()
+        params.links = false
+        params.type = "create"
+
+        if (params.id) {
+            params.type = "edit"
+            proyecto = Proyecto.get(params.id)
+            params.links = true
+        }//if params.id
+
+        def items = []
+        items[0] = [:]
+        items[0].link = ["controller": "proyecto", "action": "formProyecto",
+                         "params"    : ["id": proyecto.id]]
+        items[0].text = "Proyecto"
+        items[0].evento = "proyecto"
+
+        items[1] = [:]
+        items[1].link = ["controller": "proyecto", "action": "objetivosBuenVivir",
+                         "params"    : ["id": proyecto.id]]
+        items[1].text = "Objetivos del Buen Vivir"
+        items[1].evento = "buenVivir"
+        return [items: items, proyecto: proyecto, params: params]
+    }
+
+    /**
+     * Acción que guarda los datos ingresados en el formulario de proyecto
+     */
+    def saveProyecto = {
+        if (params.mes) {
+            params.mes = (params.mes).toInteger()
+        }
+        def proyecto = new Proyecto()
+        if (params.id) {
+            proyecto = Proyecto.get(params.id)
+        }
+        proyecto.properties = params
+        proyecto.unidadEjecutora = UnidadEjecutora.findByCodigo("343") //YACHAY EP
+        if (proyecto.validate()) {
+            kerberosService.saveObject(proyecto, Proyecto, session.perfil, session.usuario, "saveProyecto", controllerName, session)
+            redirect(action: "objetivosBuenVivir", id: proyecto.id)
+        } else {
+            proyecto.errors.getAllErrors().each {
+                println "erroresDeInsercion !!! " + it.field + " " + it.defaultMessage
+            }
+            flash.message = renderErrors(bean: proyecto)
+            redirect(action: "formProyecto", id: proyecto.id)
+        }
+    }
+
+    /**
+     * Acción que muestra una pantalla de selección de objetivos del buen vivir del proyecto
+     */
+    def objetivosBuenVivir = {
+        def proyecto = Proyecto.get(params.id)
+        if (!proyecto) {
+            redirect(action: "list")
+            return
+        }
+        params.type = "edit"
+        params.links = true
+
+        def metasProyecto = MetaBuenVivirProyecto.findAllByProyecto(proyecto)
+
+        def items = []
+        items[0] = [:]
+        items[0].link = ["controller": "proyecto", "action": "formProyecto",
+                         "params"    : ["id": proyecto.id]]
+        items[0].text = "Proyecto"
+        items[0].evento = "proyecto"
+
+        items[1] = [:]
+        items[1].link = ["controller": "proyecto", "action": "objetivosBuenVivir",
+                         "params"    : ["id": proyecto.id]]
+        items[1].text = "Objetivos del Buen Vivir"
+        items[1].evento = "buenVivir"
+
+        return [items: items, proyecto: proyecto, params: params, metasProyecto: metasProyecto]
+    }
+
+    /**
+     * Acción llamada con ajax que permite agregar objetivos del buen vivir al proyecto
+     */
+    def addObjetivo_ajax = {
+//        println "ADD OBJ"
+        def proyecto = Proyecto.get(params.id)
+        def meta = MetaBuenVivir.get(params.meta)
+        def existe = MetaBuenVivirProyecto.findAllByProyectoAndMetaBuenVivir(proyecto, meta)
+        if (existe.size() == 0) {
+            def nm = new MetaBuenVivirProyecto()
+            nm.proyecto = proyecto
+            nm.metaBuenVivir = meta
+            if (nm.validate()) {
+                kerberosService.saveObject(nm, MetaBuenVivirProyecto, session.perfil, session.usuario, "addObjetivo_ajax", controllerName, session)
+                render "OK"
+            } else {
+                println nm.errors
+                render "Ocurrió un error al guardar"
+            }
+        } else {
+            render "Ya existe ese objetivo en el proyecto"
+        }
+    }
+
+    /**
+     * Acción llamada con ajax que elimina un objetivo del buen vivir de un proyecto
+     */
+    def deleteObjetivo_ajax = {
+        println "DELETE " + params
+        def proyecto = Proyecto.get(params.id.toLong())
+        def meta = MetaBuenVivir.get(params.meta.toLong())
+        def existe = MetaBuenVivirProyecto.findAllByProyectoAndMetaBuenVivir(proyecto, meta)
+        if (existe.size() == 0) {
+            render "NO_No existe el objetivo a eliminar"
+        } else {
+            if (existe.size() == 1) {
+                existe[0].delete(flush: true)
+                render "OK"
+            } else {
+                def msg = "OK_Eliminados " + existe.size() + " objetivos"
+                for (int i = existe.size() - 1; i >= 0; i--) {
+                    existe[i].delete(flush: true)
+                }
+                render msg
+            }
+        }
+    }
+
+    /**
+     * Acción que muestra el listado de los proyectos
      */
     def list = {
         def title = g.message(code: "default.list.label", args: ["Proyecto"], default: "Proyecto List")
@@ -47,8 +178,6 @@ class ProyectoController extends yachay.seguridad.Shield {
         if (!params.order) {
             params.order = "asc"
         }
-
-        println params
 
         def offset = params.offset?.toInteger() ?: 0
         def prog = params.prog?.trim()
@@ -710,7 +839,6 @@ class ProyectoController extends yachay.seguridad.Shield {
                     flow.proyecto.properties = params
                 }
 //                println flow.proyecto.objetivoGobiernoResultado
-                println "WTF"
             }.to("validarProyecto")
 //            on("lista").to("lista")
             on("salir").to("salir")
@@ -729,12 +857,10 @@ class ProyectoController extends yachay.seguridad.Shield {
                         }
                         no()
                     } else {
-                        println "WTF 1"
                         kerberosService.saveObject(flow.proyecto, /*MetaBuenVivir*/ Proyecto, session.perfil, session.usuario, "nuevoProyectoFlow>validarProyecto", controllerName, session)
                         yes()
                     }
                 } else {
-                    println "WTF 2"
                     println flow.proyecto.monto
                     println session
 

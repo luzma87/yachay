@@ -37,13 +37,22 @@ class AprobacionController extends yachay.seguridad.Shield {
     def solicitudes_ajax = {
         def reunion = Aprobacion.get(params.id)
         def solicitudes = Solicitud.findAllByAprobacion(reunion)
-        return [aprobacion: reunion, solicitudes: solicitudes]
+        def anios = []
+        solicitudes.each { sol ->
+            DetalleMontoSolicitud.findAllBySolicitud(sol, [sort: "anio"]).each { d ->
+                if (!anios.contains(d.anio)) {
+                    anios.add(d.anio)
+                }
+            }
+        }
+        return [aprobacion: reunion, solicitudes: solicitudes, anios: anios]
     }
 
     /**
      * Acción llamada con ajax que muestra el diálogo para agendar reunión de contratación: fecha, hora, comentarios para cada solicitud
      */
     def agendarReunion_ajax = {
+        println "Agendar reunion:::: " + params
         def reunion = new Aprobacion()
         if (params.id) {
             reunion = Aprobacion.get(params.id.toLong())
@@ -58,7 +67,10 @@ class AprobacionController extends yachay.seguridad.Shield {
         }
         ids = ids*.toLong()
 
-        def solicitudes = Solicitud.findAllByIdInListOrAprobacion(ids, reunion)
+        def solicitudes = Solicitud.findAllByIdInList(ids)
+        if (reunion.id) {
+            solicitudes = Solicitud.findAllByIdInListOrAprobacion(ids, reunion)
+        }
 
         return [reunion: reunion, solicitudes: solicitudes]
     }

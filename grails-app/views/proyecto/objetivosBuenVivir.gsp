@@ -54,7 +54,7 @@
 
             <g:set var="w" value="250"/>
 
-            <mf:menuSemplades_flow items='${items}' links="${links}"/>
+            <mf:menuSemplades items='${items}' links="${params.links}" actual="buenVivir"/>
 
             <div class="ui-widget-content ui-corner-all" style="padding: 3px; height: 30px;">
                 <div style="float:left; margin-left: 5px;">
@@ -87,66 +87,58 @@
 
             <div class="ui-widget-content ui-corner-all" style="padding: 10px;">
 
-            %{--
-            TODO: esta hecho solo en el caso de la insercion, falta hacer en la modificacion
-            --}%
-                <g:form class="frmFinanciamiento" method="post" action="nuevoProyecto" event="saveMetas">
-                    <input type="hidden" name="goto" id="goto" value="politicasAgenda"/>
-
-                    <input type="hidden" name="deleted" id="deleted"/>
-                    <table id="tblFinanciamiento">
-                        <thead>
-                            <tr style="padding: 5px;">
-                                <th style="padding: 5px;" class="ui-widget-header ui-corner-tl" width="310px;">
-                                    Objetivo
-                                </th>
-                                <th style="padding: 5px;" class="ui-widget-header" width="310px;">
-                                    Pol&iacute;tica
-                                </th>
-                                <th style="padding: 5px;" class="ui-widget-header" width="310px;">
-                                    Meta
-                                </th>
-                                <th style="padding: 5px;" class="ui-widget-header ui-corner-tr" width="50px;">
-                                    Eliminar
-                                </th>
+                <table id="tblFinanciamiento">
+                    <thead>
+                        <tr style="padding: 5px;">
+                            <th style="padding: 5px;" class="ui-widget-header ui-corner-tl" width="310px;">
+                                Objetivo
+                            </th>
+                            <th style="padding: 5px;" class="ui-widget-header" width="310px;">
+                                Pol&iacute;tica
+                            </th>
+                            <th style="padding: 5px;" class="ui-widget-header" width="310px;">
+                                Meta
+                            </th>
+                            <th style="padding: 5px;" class="ui-widget-header ui-corner-tr" width="50px;">
+                                Eliminar
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <g:each in="${metasProyecto}" status="i" var="meta">
+                            <tr class="${i % 2 == 0 ? 'even' : 'odd'}">
+                                <td>
+                                    ${meta.metaBuenVivir.politica.objetivo}
+                                </td>
+                                <td>
+                                    ${meta.metaBuenVivir.politica}
+                                </td>
+                                <td>
+                                    ${meta.metaBuenVivir}
+                                </td>
+                                <td style="text-align: center;">
+                                    <a href="#" class="button del elim" meta="${meta.metaBuenVivir.id}" id="mtp_${meta.id}">Eliminar</a>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <g:each in="${metasProyecto}" status="i" var="meta">
-                                <tr class="${i % 2 == 0 ? 'even' : 'odd'}">
-                                    <td>
-                                        ${meta.metaBuenVivir.politica.objetivo}
-                                    </td>
-                                    <td>
-                                        ${meta.metaBuenVivir.politica}
-                                    </td>
-                                    <td>
-                                        ${meta.metaBuenVivir}
-                                    </td>
-                                    <td style="text-align: center;">
-                                        <a href="#" class="button del elim" id="mtp_${meta.id}">Eliminar</a>
-                                    </td>
-                                </tr>
-                            </g:each>
-                        </tbody>
-                    </table>
-                </g:form>
+                        </g:each>
+                    </tbody>
+                </table>
 
                 <br/>
 
                 <div class="botones">
                     <div class="botones right">
-                        <a href="#" class="button saveOnly" title="Guardar los cambios">
-                            Guardar
-                        </a>
-                        <g:link action="nuevoProyecto" event="datos" class="button back"
+                        <g:link action="formProyecto" id="${proyecto.id}" class="button back"
                                 title="A datos generales">
                             Atr&aacute;s
+                        </g:link>
+                        <g:link action="show" id="${proyecto.id}" class="button saveOnly" title="Guardar los cambios">
+                            Guardar y Salir
                         </g:link>
                     </div>
 
                     <div class="botones left">
-                        <g:link action="nuevoProyecto" event="salir" class="button salir">Salir</g:link>
+                        <g:link action="show" id="${proyecto.id}" class="button salir">Salir</g:link>
                     </div>
                 </div>
             </div>
@@ -214,31 +206,64 @@
 
                     if (objId != "null" && polId != "null" && metId != "null") {
                         if ($("td:icontains('" + metTx + "')").length == 0) {
-                            var tr = $("<tr style='border: solid 1px #285589;'>");
-                            var tdO = $("<td style='border-bottom: solid 1px #285589;'>" + objTx + "</td>");
-                            var tdP = $("<td style='border-bottom: solid 1px #285589;'>" + polTx + "</td>");
-                            var tdM = $("<td style='border-bottom: solid 1px #285589;'><input type='hidden' name='meta' value='" + metId + "'/>" + metTx + "</td>");
-                            var tdD = $("<td style='border-bottom: solid 1px #285589; text-align: center;'>");
-
-                            var btnDel = $("<a href='#' class='button del' id='fnm_'" + metId + ">Eliminar</a>");
-
-                            btnDel.button({
-                                icons : {
-                                    primary : "ui-icon-trash"
+                            $.ajax({
+                                type    : "POST",
+                                url     : "${createLink(action:'addObjetivo_ajax')}",
+                                data    : {
+                                    id   : "${proyecto.id}",
+                                    meta : metId
                                 },
-                                text  : false
-                            }).click(function () {
-                                $(this).parent().parent().remove();
+                                success : function (msg) {
+                                    if (msg == "OK") {
+                                        var tr = $("<tr style='border: solid 1px #285589;'>");
+                                        var tdO = $("<td style='border-bottom: solid 1px #285589;'>" + objTx + "</td>");
+                                        var tdP = $("<td style='border-bottom: solid 1px #285589;'>" + polTx + "</td>");
+                                        var tdM = $("<td style='border-bottom: solid 1px #285589;'><input type='hidden' name='meta' value='" + metId + "'/>" + metTx + "</td>");
+                                        var tdD = $("<td style='border-bottom: solid 1px #285589; text-align: center;'>");
+
+                                        var btnDel = $("<a href='#' class='button del' id='fnm_'" + metId + ">Eliminar</a>");
+
+                                        btnDel.button({
+                                            icons : {
+                                                primary : "ui-icon-trash"
+                                            },
+                                            text  : false
+                                        }).click(function () {
+                                            var $btn = $(this);
+                                            $.ajax({
+                                                type    : "POST",
+                                                url     : "${createLink(action:'deleteObjetivo_ajax')}",
+                                                data    : {
+                                                    id   : "${proyecto.id}",
+                                                    meta : metId
+                                                },
+                                                success : function (msg) {
+                                                    var parts = msg.split("_");
+                                                    if (parts[0] == "OK") {
+                                                        $btn.parents("tr").remove();
+                                                        if (parts.length > 1) {
+                                                            alert(parts[1])
+                                                        }
+                                                    } else {
+                                                        alert(parts[1])
+                                                    }
+                                                }
+                                            });
+                                        });
+
+                                        tdD.append(btnDel);
+
+                                        tr.append(tdO);
+                                        tr.append(tdP);
+                                        tr.append(tdM);
+                                        tr.append(tdD);
+
+                                        $("#tblFinanciamiento tbody").append(tr);
+                                    } else {
+                                        alert(msg);
+                                    }
+                                }
                             });
-
-                            tdD.append(btnDel);
-
-                            tr.append(tdO);
-                            tr.append(tdP);
-                            tr.append(tdM);
-                            tr.append(tdD);
-
-                            $("#tblFinanciamiento tbody").prepend(tr);
                         } else {
                             alert("Seleccione una meta que no haya sido agregada aun");
                         }
@@ -281,36 +306,38 @@
                     },
                     text  : false
                 }).click(function () {
-                    $("#dialog-confirm").attr("sid", $(this).attr("id"));
-                    $("#dialog-confirm").dialog("open");
+                    var id = $(this).attr("meta");
+                    var $btn = $(this);
+                    $.ajax({
+                        type    : "POST",
+                        url     : "${createLink(action:'deleteObjetivo_ajax')}",
+                        data    : {
+                            id   : "${proyecto.id}",
+                            meta : id
+                        },
+                        success : function (msg) {
+                            var parts = msg.split("_");
+                            if (parts[0] == "OK") {
+                                $btn.parents("tr").remove();
+                                if (parts.length > 1) {
+                                    alert(parts[1])
+                                }
+                            } else {
+                                alert(parts[1])
+                            }
+                        }
+                    });
                 });
 
                 var myForm = $(".frmFinanciamiento");
 
                 $(".button").button();
 
-                $(".saveOnly").button("option", "icons", {primary : 'ui-icon-disk'}).click(function () {
-                    $("#goto").val("buenVivir");
-                    myForm.submit();
-                    return false;
-                });
-                $(".continue").button("option", "icons", {secondary : 'ui-icon-arrowthick-1-e'}).click(function () {
-                    $("#goto").val("politicasAgenda");
-                    myForm.submit();
-                    return false;
-                });
-                $(".back").button("option", "icons", {primary : 'ui-icon-arrowthick-1-w'}).click(function () {
-                    $("#goto").val("proyecto");
-                    myForm.submit();
-                    return false;
-                });
-                $(".salir").button("option", "icons", {primary : 'ui-icon-arrowreturnthick-1-w'}).click(function () {
-                    if (confirm("Si sale perderá los cambios no guardados. Continuar?")) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                });
+                $(".saveOnly").button("option", "icons", {primary : 'ui-icon-disk'});
+
+                $(".back").button("option", "icons", {primary : 'ui-icon-arrowthick-1-w'});
+
+                $(".salir").button("option", "icons", {primary : 'ui-icon-arrowreturnthick-1-w'});
 
                 $("#selAll").click(function () {
                     $(".sel").attr("checked", $("#selAll").is(":checked"));

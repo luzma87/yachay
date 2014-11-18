@@ -44,7 +44,7 @@
             </div>
 
 
-            <mf:menuSemplades items='${items}' links="${links}"/>
+            <mf:menuSemplades_flow items='${items}' links="${links}"/>
 
             <div class="ui-widget-content ui-corner-all" style="padding: 3px;">
                 <div style="display: inline; margin-left: 5px;">

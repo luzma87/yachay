@@ -177,6 +177,10 @@ class Solicitud {
      * Asistentes a la reunión de aprobación
      */
     String asistentesAprobacion
+    /**
+     * Fecha en la cual el director requirente aprueba la solicitud para revision
+     */
+    Date fechaParaRevision
 
     /**
      * Define las relaciones uno a varios
@@ -248,6 +252,8 @@ class Solicitud {
             revisionDireccionPlanificacionInversion column: 'slctrdpi'
             revisionDireccionPlanificacionInversion type: "text"
             asistentesAprobacion column: "slctasap"
+
+            fechaParaRevision column: 'slctfcpr'
         }
     }
 
@@ -291,5 +297,7 @@ class Solicitud {
 
         revisionDireccionPlanificacionInversion(blank: true, nullable: true)
         asistentesAprobacion(blank: true, nullable: true, maxSize: 1023)
+
+        fechaParaRevision(blank: true, nullable: true)
     }
 }

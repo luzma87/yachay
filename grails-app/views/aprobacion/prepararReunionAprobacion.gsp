@@ -176,13 +176,15 @@
 
                 $(".check").click(function () {
                     var $div = $(this);
-                    var $check = $div.find("span");
-                    if ($check.hasClass("fa-check-square")) {
-                        $check.removeClass("fa-check-square").addClass("fa-square-o");
-                        $div.removeClass("checked");
-                    } else if ($check.hasClass("fa-square-o")) {
-                        $check.removeClass("fa-square-o").addClass("fa-check-square");
-                        $div.addClass("checked");
+                    if (!$div.hasClass("original")) {
+                        var $check = $div.find("span");
+                        if ($check.hasClass("fa-check-square")) {
+                            $check.removeClass("fa-check-square").addClass("fa-square-o");
+                            $div.removeClass("checked");
+                        } else if ($check.hasClass("fa-square-o")) {
+                            $check.removeClass("fa-square-o").addClass("fa-check-square");
+                            $div.addClass("checked");
+                        }
                     }
                 });
 

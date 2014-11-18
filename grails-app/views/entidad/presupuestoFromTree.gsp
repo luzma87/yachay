@@ -29,7 +29,7 @@
             </tr>
 
             <tr class="prop">
-                <td class="label">Max. Inversi&oacute;n:</td>
+                <td class="label" style="width: 240px;">Max. Inversi&oacute;n:</td>
 
                 <td class="indicator">
                     &nbsp;
@@ -64,7 +64,7 @@
             --}%
             </tr>
             <tr class="prop">
-                <td class="label">Original inversión:</td>
+                <td class="label">Inversión Original:</td>
 
                 <td class="indicator">
                     &nbsp;

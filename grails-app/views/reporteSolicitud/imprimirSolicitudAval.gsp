@@ -101,7 +101,7 @@
 
 <body>
 <div class="hoja">
-    <slc:headerReporte title="Solicitud de aval de POA"/>
+    <slc:headerReporte title="Solicitud de Aval de POA"/>
 
     <div style="width: 100%; height: 1.5cm;">
         <div class="numeracion">

@@ -89,10 +89,10 @@
                 </div>
             </div>
 
-            <div class="fila" style="height: 300px;position: relative">
+            <div class="fila" style="height: 280px;position: relative; top:-20px;">
                 <div class="labelSvt" style="width: 180px;position: absolute;top: 10px">Observaciones:</div>
 
-                <div style="width: 700px;height: 280px;display: inline-block;position: absolute;top: 10px;left: 190px">
+                <div style="width: 700px;height: 260px;display: inline-block;position: absolute;top: 10px;left: 190px">
                     <g:if test="${solicitud.observaciones && solicitud.observaciones.trim() != ''}">
                         <textarea id="richText" style="width: 100%;height: 100%;resize: none;display: inline-block">${solicitud.observaciones}</textarea>
                     </g:if>
@@ -102,10 +102,9 @@
                 </div>
             </div>
 
-            <div class="fila" style="">
+            <div class="fila" style="top:-10px;">
                 <div class="labelSvt" style="">Autorizaciones electrónicas:</div>
-
-                <div class="fieldSvt-xxxl">
+                <div class="fieldSvt-xxxl" style="top:-20px;">
                     <g:select from="${personas}" optionKey="id" optionValue="${{
                         it.persona.nombre + ' ' + it.persona.apellido
                     }}" name="firma2" class="ui-widget-content ui-corner-all"/>

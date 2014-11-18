@@ -305,4 +305,5 @@ class Reportes2Controller {
 //        render(contentType: "text/ csv ", text: "${arch}");
     }
 
+
 }

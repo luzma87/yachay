@@ -52,7 +52,7 @@
 
             <g:set var="w" value="900"/>
 
-            <mf:menuSemplades items='${items}' links="${links}"/>
+            <mf:menuSemplades_flow items='${items}' links="${links}"/>
 
             <div class="ui-widget-content ui-corner-all" style="padding: 3px; height: 30px;">
                 <div style="float:left; margin-left: 5px;">

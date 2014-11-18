@@ -34,7 +34,7 @@
         ${flash.message}
     </div>
 </g:if>
-<fieldset style="width: 95%;height: 300px;" class="ui-corner-all">
+<fieldset style="width: 95%;height: 260px; margin-top: -10px;" class="ui-corner-all">
     <legend>Asignación de origen.</legend>
     <g:form action="save" class="frmProceso">
         <div class="fila">
@@ -83,11 +83,12 @@
                 Máximo: <span id="max" style="display: inline-block"></span> $
 
             </div>
+            <span style="color: #008; background: #ddd">En caso de incremento registre aquí el valor a incrementar la asignación</span>
         </div>
 
     </g:form>
 </fieldset>
-<fieldset style="width: 95%;height: 100px;" class="ui-corner-all">
+<fieldset style="width: 95%;height: 70px;" class="ui-corner-all">
 <legend>Firma</legend>
     <div class="fila">
         <div class="labelSvt">Firma:</div>
