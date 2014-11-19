@@ -130,6 +130,8 @@ class ItemCatalogoController {
         } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'itemCatalogo.label', default: 'ItemCatalogo'), params.id])}"
             redirect(action: "list")
+
+
         }
     }
 
