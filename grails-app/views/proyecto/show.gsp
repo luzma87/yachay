@@ -430,6 +430,7 @@
                                 </td> <!-- campo -->
                             </tr>
 
+%{--
                             <tr class="prop">
                                 <td class="labelshow">
                                     <g:message code="proyecto.linea.label" default="Lineamiento Senplades"/>
@@ -449,6 +450,7 @@
                                     ${proyectoInstance?.poblacionObjetivo?.encodeAsHTML()}
                                 </td> <!-- campo -->
                             </tr>
+--}%
 
                             <tr class="prop">
                                 <td class="labelshow">
@@ -463,11 +465,11 @@
 
                             <tr class="prop">
                                 <td class="labelshow">
-                                    Objetivos de gobierno por resultado
+                                    Estrategia
                                 </td>
 
                                 <td class="" colspan="3">
-                                    ${proyectoInstance?.objetivoGobiernoResultado?.descripcion?.encodeAsHTML()}
+                                    ${proyectoInstance?.estrategia?.descripcion?.encodeAsHTML()}
                                 </td> <!-- campo -->
                             </tr>
 

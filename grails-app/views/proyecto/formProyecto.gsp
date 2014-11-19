@@ -432,7 +432,8 @@
                     type    : "POST",
                     url     : "${createLink(action:'estrategiaPorObjetivo_ajax')}",
                     data    : {
-                        id : id
+                        id : id,
+                        proy__id: $("#id").val()
                     },
                     success : function (msg) {
                         $("#tdEstrategia").html(msg);
