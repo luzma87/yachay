@@ -26,11 +26,12 @@
     </head>
 
     <body>
+    <g:if test="${session.perfil.codigo == 'DRRQ'}">
     <div class="fila" style="height: 35px;">
         <g:link controller="avales" action="listaProcesos" class="btn">Ver Solicitudes de Avales</g:link>
         <g:link controller="modificacionesPoa" action="historialUnidad" class="btn">Ver Solicitudes de Reformas al POA</g:link>
     </div>
-
+    </g:if>
 
         <g:if test="${flash.message}">
             <div class="message ui-state-highlight ui-corner-all">

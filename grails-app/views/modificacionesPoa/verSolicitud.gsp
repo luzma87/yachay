@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="layout" content="main"/>
-    <title>Solicitudes pendientes</title>
+    <title>Porcesar Solicitud de Reforma</title>
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}"
           type="text/css"/>
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'BreadCrumb.css')}"
@@ -292,6 +292,8 @@
         <textarea id="obs" style="width: 95%;height: 80px" class="ui-corner-all ui-widget-content" ${(sol.estado!=0)?'disabled':''}>${sol.observaciones}</textarea>
     </div>
 </fieldset>
+
+<g:if test="${sol.estado < 2}">
 <fieldset style="width: 95%;height: 100px;" class="ui-corner-all">
     <legend>Firmas para la aprobación</legend>
     <div class="fila">
@@ -305,6 +307,7 @@
         </div>
     </div>
 </fieldset>
+</g:if>
 %{--<g:if test="${sol.estado==0}">--}%
     %{--<div class="message ui-corner-all" style="background: rgba(255, 0, 0, 0.37);width: 95%">--}%
         %{--Después de aprobar la solicitud, use las opciones del menú para realizar la modificación del P.O.A.--}%

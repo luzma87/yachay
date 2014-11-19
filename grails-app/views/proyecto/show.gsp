@@ -282,7 +282,23 @@
                                 </td>
 
                                 <td class="">
+                                    ${fieldValue(bean: proyectoInstance, field: "codigo")}
+                                </td> <!-- campo -->
+                                <td class="label">
+                                    CUP
+                                </td>
+
+                                <td class="">
                                     ${fieldValue(bean: proyectoInstance, field: "codigoProyecto")}
+                                </td> <!-- campo -->
+                            </tr>
+                            <tr class="prop">
+                                <td class="label">
+                                    <g:message code="proyecto.codigoProyecto.label" default="Pertenece a:"/>
+                                </td>
+
+                                <td class="">
+                                    ${proyectoInstance?.unidadEjecutora?.encodeAsHTML()}
                                 </td> <!-- campo -->
                                 <td class="label">
                                     Aprobado
@@ -295,13 +311,14 @@
 
                             <tr class="prop">
                                 <td class="labelshow">
-                                    <g:message code="proyecto.unidadEjecutora.label" default="Unidad Ejecutora"/>
+                                    <g:message code="proyecto.unidadEjecutora.label" default="Unidad Administradora"/>
                                 </td>
 
-                                <td class="">
-                                    ${proyectoInstance?.unidadEjecutora?.encodeAsHTML()}
+                                <td colspan="3" class="">
+                                    ${proyectoInstance?.unidadAdministradora?.encodeAsHTML()}
                                 </td> <!-- campo -->
 
+%{--
                                 <td class="labelshow">
                                     Programa presupuestario
                                 </td>
@@ -309,6 +326,7 @@
                                 <td class="">
                                     ${fieldValue(bean: proyectoInstance, field: "programaPresupuestario")}
                                 </td> <!-- campo -->
+--}%
                             </tr>
 
                             <tr class="prop">

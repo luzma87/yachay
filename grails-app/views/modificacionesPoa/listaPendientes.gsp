@@ -51,7 +51,7 @@
                     <th>Estado</th>
                     <th>Solicitud</th>
                     <th>Matriz</th>
-                    <th>Ver</th>
+                    <th>Acción</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -81,7 +81,7 @@
                             <a href="#" class="btn matriz" iden="${p.id}">Ver</a>
                         </td>
                         <td style="text-align: center">
-                            <a href="${g.createLink(controller: 'modificacionesPoa',action: 'verSolicitud',id:p.id)}" class="btn " iden="${p.id}">Ver</a>
+                            <a href="${g.createLink(controller: 'modificacionesPoa',action: 'verSolicitud',id:p.id)}" class="btn " iden="${p.id}" title="Aprobar o Negar">Procesar</a>
 
                         </td>
 
