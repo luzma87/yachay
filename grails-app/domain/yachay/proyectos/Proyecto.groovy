@@ -3,6 +3,7 @@ package yachay.proyectos
 import app.Cuantificable
 import yachay.parametros.Calificacion
 import yachay.parametros.Cobertura
+import yachay.poa.Asignacion
 import yachay.proyectos.EjeProgramatico
 import yachay.parametros.EstadoProyecto
 import yachay.parametros.Etapa
@@ -357,4 +358,20 @@ class Proyecto  implements Serializable {
         }
         return [metasCoords: metasCoords, metasTotal: metas]
     }
+
+    def getValorPriorizado(){
+        def total = 0
+        def marcos = MarcoLogico.findAllByProyectoAndTipoElemento(this,TipoElemento.get(3))
+        if(marcos.size()>0){
+            Asignacion.findAllByMarcoLogicoInList(marcos).each {a->
+                total+=a.priorizado
+            }
+            return total
+        }else{
+            return 0
+        }
+
+
+    }
+
 }

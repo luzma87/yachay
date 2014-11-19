@@ -301,7 +301,7 @@
         </div>
         <div class="labelSvt">Aprobado por:</div>
         <div class="fieldSvt-medium">
-            <g:select from="${personas}"  optionKey="id"  optionValue="persona"  id="firma2" name="firma" ></g:select>
+            <g:select from="${perGerencia}"  optionKey="id"  optionValue="persona"  id="firma2" name="firma" ></g:select>
         </div>
     </div>
 </fieldset>

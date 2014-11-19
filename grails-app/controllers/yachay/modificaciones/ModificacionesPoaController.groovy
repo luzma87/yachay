@@ -245,7 +245,9 @@ class ModificacionesPoaController {
         def sol = SolicitudModPoa.get(params.id)
         def unidad = UnidadEjecutora.findByCodigo("DPI") // DIRECCIÓN DE PLANIFICACIÓN E INVERSIÓN
         def personasFirmas = Usro.findAllByUnidad(unidad)
-        [sol:sol,personas:personasFirmas]
+        unidad = UnidadEjecutora.findByCodigo("DRPL")
+        def perGerencia = Usro.findAllByUnidad(unidad)
+        [sol:sol,personas:personasFirmas,perGerencia:perGerencia]
     }
 
 

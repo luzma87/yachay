@@ -7,9 +7,11 @@
     <th>Componente</th>
     <th>Actividad</th>
     <th>Proceso</th>
+    <th>Valor</th>
     <th></th>
     </thead>
     <tbody>
+    <g:set var="total" value="${0}"></g:set>
     <g:each in="${comp}" var="c">
         <tr>
             <td>${c.fecha.format("dd-MM-yyyy")}</td>
@@ -19,6 +21,8 @@
                 <td></td>
                 <td></td>
                 <td></td>
+                <td style="text-align: right"><g:formatNumber number="${c.proyecto.valorPriorizado}" type="currency"/></td>
+                <g:set var="total" value="${total+c.proyecto.valorPriorizado}"></g:set>
             </g:if>
             <g:if test="${c.marcoLogico}">
 
@@ -28,6 +32,8 @@
                     <td>${c.marcoLogico}</td>
                     <td></td>
                     <td></td>
+                    <td style="text-align: right"><g:formatNumber number="${c.marcoLogico.totalPriorizado}" type="currency"/></td>
+
                 </g:if>
                 <g:else>
                     <td class="tipo">Actividad</td>
@@ -35,7 +41,9 @@
                     <td>${c.marcoLogico.marcoLogico}</td>
                     <td>${c.marcoLogico}</td>
                     <td></td>
+                    <td style="text-align: right"><g:formatNumber number="${c.marcoLogico.totalPriorizado}" type="currency"/></td>
                 </g:else>
+                <g:set var="total" value="${total+c.marcoLogico.totalPriorizado}"></g:set>
             </g:if>
             <g:if test="${c.proceso}">
                 <td class="tipo">Proceso</td>
@@ -43,12 +51,18 @@
                 <td></td>
                 <td></td>
                 <td>${c.proceso?.nombre}</td>
+                <td style="text-align: right"><g:formatNumber number="${c.proceso.monto}" type="currency"/></td>
+                <g:set var="total" value="${total+c.proceso.monto}"></g:set>
             </g:if>
             <td>
                 <a href="#" class="borrar" iden="${c.id}">Borrar</a>
             </td>
         </tr>
     </g:each>
+    <tr>
+        <td style="font-weight: bold" colspan="6">TOTAL</td>
+        <td style="text-align: right;font-weight: bold"><g:formatNumber number="${total}" type="currency"/></td>
+    </tr>
     </tbody>
 </table>
 <script>

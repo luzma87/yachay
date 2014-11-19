@@ -3,6 +3,7 @@ package yachay.proyectos
 import app.Cuantificable
 import yachay.parametros.UnidadEjecutora
 import yachay.parametros.TipoElemento
+import yachay.poa.Asignacion
 
 /*Marco lógico con cada uno de sus componentes */
 
@@ -159,4 +160,25 @@ class MarcoLogico implements Serializable {
         }
         return total
     }
+
+    def getTotalPriorizado(){
+        def total = 0
+        if(this.tipoElemento.id==3){
+            Asignacion.findAllByMarcoLogico(this).each {
+                total+=it.priorizado
+            }
+            return total
+        }else{
+            def marcos = MarcoLogico.findAllByMarcoLogico(this)
+            if(marcos.size()>0){
+                Asignacion.findAllByMarcoLogicoInList(marcos).each {a->
+                    total+=a.priorizado
+                }
+                return total
+            }else{
+                return 0
+            }
+        }
+    }
+
 }

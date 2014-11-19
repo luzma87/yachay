@@ -89,5 +89,10 @@ class HitoController {
         render "ok"
     }
 
+    def lista = {
+        def hitos = Hito.list([sort: "fecha"])
+        [hitos:hitos]
+    }
+
 
 }
