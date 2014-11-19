@@ -1,5 +1,8 @@
 package yachay.hitos
 
+import jxl.Sheet
+import jxl.Workbook
+import jxl.WorkbookSettings
 import yachay.avales.ProcesoAval
 import yachay.parametros.TipoElemento
 import yachay.proyectos.MarcoLogico
@@ -94,5 +97,133 @@ class HitoController {
         [hitos:hitos]
     }
 
+    def cargarExcelHitos ={
+
+    }
+    /*Función para cargar un archivo excel de hitos financiero*/
+    /**
+     * Acción
+     */
+
+    def subirExcelHitos ={
+
+        println("entro excel hitos")
+
+        def path = servletContext.getRealPath("/") + "excel/"
+        new File(path).mkdirs()
+        def f = request.getFile('file')
+
+
+        WorkbookSettings ws = new WorkbookSettings();
+        ws.setEncoding("ISO-8859-1");
+
+
+        Workbook workbook = Workbook.getWorkbook(f.inputStream, ws)
+        Sheet sheet = workbook.getSheet(0)
+
+        def numeroContrato =[]
+        def anticipo = []
+        def devengado = []
+        def monto = []
+        def n = []
+        def m = []
+        byte b
+        def ext
+
+        if(f && !f.empty){
+            def nombre = f.getOriginalFilename()
+            def parts = nombre.split("\\.")
+            nombre = ""
+            parts.eachWithIndex { obj, i ->
+                if (i < parts.size() - 1) {
+                    nombre += obj
+                } else {
+                    ext = obj
+                }
+            }
+
+            def reps = [
+                    "a": "[àáâãäåæ]",
+                    "e": "[èéêë]",
+                    "i": "[ìíîï]",
+                    "o": "[òóôõöø]",
+                    "u": "[ùúûü]",
+
+                    "A": "[ÀÁÂÃÄÅÆ]",
+                    "E": "[ÈÉÊË]",
+                    "I": "[ÌÍÎÏ]",
+                    "O": "[ÒÓÔÕÖØ]",
+                    "U": "[ÙÚÛÜ]",
+
+                    "n": "[ñ]",
+                    "c": "[ç]",
+
+                    "N": "[Ñ]",
+                    "C": "[Ç]",
+
+                    "" : "[\\!@#\\\$%\\^&*()-='\"\\/<>:;\\.,\\?]",
+
+                    "_": "[\\s]"
+            ]
+
+            reps.each { k, v ->
+                nombre = (nombre.trim()).replaceAll(v, k)
+            }
+
+            nombre = nombre + "." + ext
+            def pathFile = path + File.separatorChar + nombre
+            def src = new File(pathFile)
+
+            if(ext == 'xls'){
+                if(src.exists()){
+                    flash.message = 'Ya existe un archivo con ese nombre. Por favor cambielo o elimine el otro archivo primero.'
+                    flash.estado = "error"
+                    flash.icon = "alert"
+                    redirect(action: 'cargarExcelHitos')
+                    return
+                }else{
+
+                    println("entro!")
+                    for(int r =1; r < sheet.rows; r++){
+
+                        def nc = sheet.getCell(1,r).contents //columna de número de contrato
+                        def an = sheet.getCell(2,r).contents //columna de anticipo
+                        def dv = sheet.getCell(3,r).contents //columna de devengado
+                        def mc = sheet.getCell(4,r).contents //columna de monto contrato
+
+                        println("numero contrato " + nc)
+                        println("anticipo " + an)
+                        println("devengado " + dv)
+                        println("monto contrato " + mc)
+
+                    }
+
+                    flash.message = 'Archivo cargado existosamente.'
+                    flash.estado = "error"
+                    flash.icon = "alert"
+                    redirect(action: 'cargarExcelHitos')
+                    return
+                }
+            }else{
+                flash.message = 'El archivo a cargar debe ser del tipo EXCEL con extensión XLS.'
+                flash.estado = "error"
+                flash.icon = "alert"
+                redirect(action: 'cargarExcelHitos')
+                return
+            }
+
+
+        }else{
+            flash.message = 'No se ha seleccionado ningun archivo para cargar'
+            flash.estado = "error"
+            flash.icon = "alert"
+            redirect(action: 'cargarExcelHitos')
+            return
+        }
+
+
+
+    }
+    
 
 }

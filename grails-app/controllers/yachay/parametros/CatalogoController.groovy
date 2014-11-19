@@ -9,7 +9,7 @@ class CatalogoController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 
     def index = {
-        redirect(action: "list", params: params)
+        redirect(action: "lsta", params: params)
     }
 
     def list = {
@@ -168,7 +168,7 @@ class CatalogoController {
         }
         cn.close()
         //println "-------------------------" + resultado
-        render(view: 'lsta', model: [datos: resultado, mdlo__id: ids])
+        render(view: 'lsta', model: [datos: resultado, mdlo__id: ids, catalogo: params.ctlg])
     }
 
     /**
@@ -188,6 +188,11 @@ class CatalogoController {
 //      println "------editCatalogo: " + params
         def catalogoInstance = Catalogo.get(params.id.toInteger())
         render(view: 'crear', model: ['catalogoInstance': catalogoInstance])
+    }
+
+
+    def saveItems = {
+
     }
 
     /**
