@@ -66,25 +66,32 @@ class ProyectoController extends yachay.seguridad.Shield {
      * Acción que guarda los datos ingresados en el formulario de proyecto
      */
     def saveProyecto = {
+        println "save proyecto " + params
         if (params.mes) {
             params.mes = (params.mes).toInteger()
         }
         def proyecto = new Proyecto()
         if (params.id) {
             proyecto = Proyecto.get(params.id)
+            println ">>> " + proyecto
         }
         proyecto.properties = params
         proyecto.unidadEjecutora = UnidadEjecutora.findByCodigo("343") //YACHAY EP
-        if (proyecto.validate()) {
-            kerberosService.saveObject(proyecto, Proyecto, session.perfil, session.usuario, "saveProyecto", controllerName, session)
+//        if (proyecto.validate()) {
+//            kerberosService.saveObject(proyecto, Proyecto, session.perfil, session.usuario, "saveProyecto", controllerName, session)
+        if (proyecto.save(flush: true)) {
             redirect(action: "objetivosBuenVivir", id: proyecto.id)
         } else {
-            proyecto.errors.getAllErrors().each {
-                println "erroresDeInsercion !!! " + it.field + " " + it.defaultMessage
-            }
             flash.message = renderErrors(bean: proyecto)
             redirect(action: "formProyecto", id: proyecto.id)
         }
+//        } else {
+//            proyecto.errors.getAllErrors().each {
+//                println "erroresDeInsercion !!! " + it.field + " " + it.defaultMessage
+//            }
+//            flash.message = renderErrors(bean: proyecto)
+//            redirect(action: "formProyecto", id: proyecto.id)
+//        }
     }
 
     /**
