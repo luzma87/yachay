@@ -2,6 +2,7 @@ package yachay.hitos
 
 import app.Cuantificable
 import yachay.avales.ProcesoAsignacion
+import yachay.avales.ProcesoAval
 import yachay.proyectos.MarcoLogico
 import yachay.proyectos.Proyecto
 
@@ -21,7 +22,7 @@ class ComposicionHito  {
     /*
     * Proceso
     */
-    ProcesoAsignacion proceso
+    ProcesoAval proceso
     /*
     * Fecha de creación
     */

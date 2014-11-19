@@ -52,6 +52,6 @@ class Hito {
 
         fecha(blank: false, nullable: false)
         fechaCumplimiento(blank: true, nullable: true)
-        descripcion(blank: false, nullable: false)
+        descripcion(blank: false, nullable: false,size: 1..1024)
     }
 }
