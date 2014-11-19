@@ -88,7 +88,7 @@
                                         </g:link>
                                         <g:if test="${session.perfil.codigo == 'DRRQ' && DetalleMontoSolicitud.countBySolicitud(solicitud) > 0 && !solicitud.fechaParaRevision}">
                                             <g:link class="button paraRevision" action="paraRevision" id="${solicitud?.id}">
-                                                Para revisión
+                                                Aprobar para revisión
                                             </g:link>
                                         </g:if>
                                     </g:if>
