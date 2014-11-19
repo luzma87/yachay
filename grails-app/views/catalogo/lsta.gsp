@@ -62,7 +62,7 @@ a:link, a:visited, a:hover {
                 <tbody>
                 <!-- <hr>Hola ${lista}</hr> -->
                 <g:each in="${datos}" status="i" var="d">
-                    <tr class="${(i % 2) == 0 ? 'odd' : 'even'}" style="height: 27px;">
+                    <tr class="${(i % 2) == 0 ? 'odd' : 'even'}" iden="${d[0]}"  style="height: 27px;">
                     %{--<tr class="${(i % 2) == 0 ? 'odd' : 'even'}" style="background: ${(d[0]) ? '#a0c9e2' : ''}">--}%
                         <td>${d[1]?.encodeAsHTML()}</td>
                         <td>${d[2]?.encodeAsHTML()}</td>
@@ -70,8 +70,10 @@ a:link, a:visited, a:hover {
                         <td>${d[4]?.encodeAsHTML()}</td>
                         <td>${d[5]?.encodeAsHTML()}</td>
                         <td width="150px;">
-                            <g:link class="boton edit" action="edit" id="${catalogoInstance?.id}">Editar</g:link>
-                            <g:link class="boton borrar" action="edit" id="${catalogoInstance?.id}">Borrar</g:link>
+                            %{--<g:link class="boton edit" action="edit" id="${catalogoInstance?.id}">Editar</g:link>--}%
+                            %{--<g:link class="boton borrar" action="edit" id="${catalogoInstance?.id}">Borrar</g:link>--}%
+                            <input class="modulo editar" type="button" id="editar1" iden="${d[0]}" cata="${catalogo}" value="Editar"/>
+                            <input class="modulo borrar" type="button" id="borrar1" iden="${d[0]}" value="Borrar"/>
                         </td>
                     </tr>
                 </g:each>
@@ -82,6 +84,54 @@ a:link, a:visited, a:hover {
     %{--<input id="aceptaAJX" type="button" class="grabaPrms" value="Fijar permisos del Menú">--}%
 
 </g:form>
+
+<div id="editar_dlg">
+    <table>
+        <tbody>
+        <tr class="prop">
+            <td valign="top" class="codigo">
+                <label for="codigo">Código</label>
+            </td>
+            <td valign="top">
+                <g:textField  name="codigo" id="codigo" title="Código del item" class="field required ui-widget-content ui-corner-all" minLenght="1" maxLenght="255" value="" />
+            </td>
+        </tr>
+        <tr class="prop">
+            <td valign="top" class="descripcion">
+                <label for="descripcion">Descripción</label>
+            </td>
+            <td valign="top">
+                <g:textField  name="descripcion" id="descripcion" title="Descripción del item" class="field required ui-widget-content ui-corner-all" minLenght="1" maxLenght="255" value="" />
+            </td>
+        </tr>
+        <tr class="prop">
+            <td valign="top" class="estado">
+                <label for="estado">Estado</label>
+            </td>
+            <td valign="top">
+                <g:textField  name="estado" id="estado" title="Estado del item" class="field required ui-widget-content ui-corner-all" minLenght="1" maxLenght="1" value="" />
+            </td>
+        </tr>
+        <tr class="prop">
+            <td valign="top" class="orden">
+                <label for="orden">Orden</label>
+            </td>
+            <td valign="top">
+                <g:textField  name="orden" id="orden" title="Orden del item" class="field required ui-widget-content ui-corner-all" minLenght="1" maxLenght="255" value="" />
+            </td>
+        </tr>
+        <tr class="prop">
+            <td valign="top" class="original">
+                <label for="original">Original</label>
+            </td>
+            <td valign="top">
+                <g:textField  name="original" id="original" title="Original del item" class="field required ui-widget-content ui-corner-all" minLenght="1" maxLenght="255" value="" />
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -138,6 +188,57 @@ a:link, a:visited, a:hover {
         }
     });
 
+    //editar item
+
+    $("#editar_dlg").dialog({
+        autoOpen: false,
+        resizable:false,
+        title: 'Editar un Item',
+        modal:true,
+        draggable:false,
+        width:420,
+        position: 'center',
+        open: function(event, ui) {
+            $(".ui-dialog-titlebar-close").hide();
+        },
+        buttons: {
+            "Grabar": function() {
+                $(this).dialog("close");
+                $.ajax({
+                    type: "POST", url:  "${createLink(action:'saveItem',controller:'itemCatalogo')}",
+                    data: "&id=" + $('#editar').attr("iden") + "&cata=" + $("#catalogo").val(),
+                    success: function(msg) {
+                        location.reload(true);
+                    }
+                });
+            },
+            "Cancelar": function() {
+                $(this).dialog("close");
+            }
+        }
+    });
+
+    $(".editar").button().click(function() {
+        %{--console.log("entro!!" + $("#editar").attr("iden") + " cata "  + $('#catalogo').val())--}%
+        var $btn = $(this);
+        var $tr = $btn.parents('tr');
+        var $td = $tr.children('td')
+        var codigo = $td[0]
+        var descripcion = $td[1]
+        var estado = $td[2]
+        var orden = $td[3]
+        var original = $td[4]
+        var idFila = $("#editar").attr("iden")
+        var catalogo = $("#catalogo").val()
+        $("#editar_dlg").dialog("open")
+    });
+
+    $(".borrar").button().click(function () {
+       console.log("entro borrar!");
+
+
+    });
+
 
     function armarAccn() {
         var datos = new Array()
@@ -150,7 +251,7 @@ a:link, a:visited, a:hover {
         datos += "&menu=" + $('#mdlo__id').val() + "&grabar=S"
         return datos
     }
-    ;
+
 
 
 

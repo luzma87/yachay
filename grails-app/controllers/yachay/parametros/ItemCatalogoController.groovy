@@ -43,6 +43,7 @@ class ItemCatalogoController {
     }
 
     def save = {
+        println("params " + params)
         def title
         if (params.id) {
             title = g.message(code: "itemcatalogo.edit", default: "Edit ItemCatalogo")
@@ -140,6 +141,21 @@ class ItemCatalogoController {
         def itemCatalogoInstance = new ItemCatalogo()
         //catalogoInstance.properties = params
         render(view: 'crear', model: ['itemCatalogoInstance': itemCatalogoInstance])
+    }
+
+    /*Acción de edición de items*/
+
+    def editarItem = {
+        println("params " + params)
+
+        def catalogo = Catalogo.findById(params.cata)
+        def item = ItemCatalogo.findByCatalogoAndId(catalogo, params.id)
+        return [item: item]
+    }
+
+    def saveItem = {
+
+
     }
 
 }
