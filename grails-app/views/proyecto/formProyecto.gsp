@@ -379,6 +379,26 @@
 
                         </tr>
 
+                        <tr class="prop ${hasErrors(bean: proyecto, field: 'portafolio', 'error')} ${hasErrors(bean: proyecto, field: 'portafolio', 'error')}">
+                            <td class="label " valign="middle">
+                                <g:message code="portafolio.programa.label" default="Portafolio"/>
+                            </td>
+
+                            <td class="indicator">
+                                &nbsp;
+                            </td>
+
+                            <td colspan="4" valign="middle">
+                                <g:select class="field ui-widget-content ui-corner-all portafolioId" name="portafolio.id"
+                                          title="${Proyecto.constraints.portafolio.attributes.mensaje}"
+                                          style="width: 900px;"
+                                          from="${yachay.proyectos.Portafolio.list()}" optionKey="id"
+                                          optionValue="descripcion" value="${proyecto?.portafolio?.id}"
+                                          noSelection="['null': '']"/>
+                            </td>
+
+                        </tr>
+
                     </tbody>
                     <tfoot>
                         <tr>
@@ -433,6 +453,7 @@
                     loadEstrategias();
                 });
                 $(".programaId").selectmenu({width : 900});
+                $(".portafolioId").selectmenu({width : 900});
 
                 $("#porcentajeNacional, #porcentajeExtranjero").keyup(function (evt) {
 

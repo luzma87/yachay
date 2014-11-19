@@ -2,7 +2,7 @@ package yachay.hitos
 
 import yachay.avales.ProcesoAval
 
-class AvanceFisicoController {
+class AvanceFisicoController extends yachay.seguridad.Shield {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 

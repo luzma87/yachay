@@ -318,15 +318,15 @@
                                     ${proyectoInstance?.unidadAdministradora?.encodeAsHTML()}
                                 </td> <!-- campo -->
 
-%{--
-                                <td class="labelshow">
-                                    Programa presupuestario
-                                </td>
+                            %{--
+                                                            <td class="labelshow">
+                                                                Programa presupuestario
+                                                            </td>
 
-                                <td class="">
-                                    ${fieldValue(bean: proyectoInstance, field: "programaPresupuestario")}
-                                </td> <!-- campo -->
---}%
+                                                            <td class="">
+                                                                ${fieldValue(bean: proyectoInstance, field: "programaPresupuestario")}
+                                                            </td> <!-- campo -->
+                            --}%
                             </tr>
 
                             <tr class="prop">
@@ -478,6 +478,16 @@
 
                                 <td class="" colspan="3">
                                     ${proyectoInstance?.programa?.encodeAsHTML()}
+                                </td> <!-- campo -->
+                            </tr>
+
+                            <tr class="prop">
+                                <td class="labelshow">
+                                    <g:message code="proyecto.portafolio.label" default="Portafolio"/>
+                                </td>
+
+                                <td class="" colspan="3">
+                                    ${proyectoInstance?.portafolio?.descripcion?.encodeAsHTML()}
                                 </td> <!-- campo -->
                             </tr>
 
