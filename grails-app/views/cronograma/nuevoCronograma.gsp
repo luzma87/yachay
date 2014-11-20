@@ -418,7 +418,7 @@
     %{--${totOtroAnioProyecto}--}%
     %{--</b>--}%
     %{--</td>--}%
-    <td style="text-align: center;background: #363636">
+    <td style="text-align: center;background: #c8c8c8">
         <b>
             <div id="totGeneral">
                 <g:formatNumber number="${(totProy.toDouble() - (totProyAsig.toDouble()))}"

@@ -71,18 +71,20 @@
                             <th class="ui-state-default" style="width: 90px;">Unidad Administradora</th>
                             %{--<th class="ui-state-default">Cobertura</th>--}%
                             <th class="ui-state-default">Monto</th>
+%{--
                             <g:sortableColumn property="fechaRegistro"
                                               title="${message(code: 'proyecto.fechaRegistro.label', default: 'Fecha')}"
                                               class="ui-state-default"/>
                             <g:sortableColumn property="aprobado"
                                               title="${message(code: 'proyecto.aprobado.label', default: 'Aprobado')}"
                                               class="ui-state-default"/>
+--}%
                             <g:sortableColumn property="descripcion"
                                               title="${message(code: 'proyecto.aprobado.label', default: 'Descripcion')}"
-                                              class="ui-state-default" colspan="2"/>
+                                              class="ui-state-default" />
                             <g:sortableColumn property="programa"
                                               title="${message(code: 'proyecto.programa.label', default: 'Programa')}"
-                                              class="ui-state-default" colspan="2"/>
+                                              class="ui-state-default" />
                         </tr>
                     </thead>
                     <tbody>
@@ -100,8 +102,10 @@
                                 <td align="right"><g:formatNumber number="${proyectoInstance.monto?.toDouble()}"
                                                                   format="###,##0"
                                                                   minFractionDigits="2" maxFractionDigits="2"/></td>
+%{--
                                 <td>${proyectoInstance.fechaRegistro?.format("dd/MM/yyyy")}</td>
                                 <td>${proyectoInstance.aprobado?.trim() == "a" ? "Sí" : "No"}</td>
+--}%
                                 %{--<td>${proyectoInstance.descripcion}</td>--}%
                                 <td><div style="width: 160px;">
                                     ${(proyectoInstance.descripcion?.length() > 70) ? proyectoInstance.descripcion?.substring(0, 70) + "..." : proyectoInstance.descripcion}</div>

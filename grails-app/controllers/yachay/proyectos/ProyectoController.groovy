@@ -651,14 +651,16 @@ class ProyectoController extends yachay.seguridad.Shield {
 
             def metasProyecto = MetaBuenVivirProyecto.findAllByProyecto(proyectoInstance)
             def politicas = PoliticasProyecto.findAllByProyecto(proyectoInstance)
-            def financiamientos = Financiamiento.findAllByProyecto(proyectoInstance)
+            def financiamientos = Financiamiento.findAllByProyecto(proyectoInstance, [sort: "anio"])
             def plas = PoliticasAgendaProyecto.findAllByProyecto(proyectoInstance)
 
             def entidades = EntidadesProyecto.findAllByProyecto(proyectoInstance)
 
+/*
             if (financiamientos.size() > 0) {
                 financiamientos = financiamientos.sort { it?.anio?.anio }
             }
+*/
             [proyectoInstance: proyectoInstance, title: title, metas: metasProyecto, politicas: politicas, financiamientos: financiamientos, plas: plas, entidades: entidades]
         }
     }
@@ -2106,7 +2108,7 @@ response.outputStream << file.newInputStream()
      */
     def verFinanciamiento = {
         def proyecto = Proyecto.get(params.id)
-        def financiamientos = Financiamiento.findAllByProyecto(proyecto)
+        def financiamientos = Financiamiento.findAllByProyecto(proyecto, [sort: "anio"])
         [proyecto: proyecto, financiamientos: financiamientos]
     }
     /*Permite editar o borrar un financiamiento*/
@@ -2115,7 +2117,7 @@ response.outputStream << file.newInputStream()
      */
     def editarFinanciamiento = {
         def proyecto = Proyecto.get(params.id)
-        def financiamientos = Financiamiento.findAllByProyecto(proyecto)
+        def financiamientos = Financiamiento.findAllByProyecto(proyecto, [sort: "anio"])
         [proyecto: proyecto, financiamientos: financiamientos]
     }
 

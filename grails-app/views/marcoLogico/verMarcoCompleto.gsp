@@ -33,6 +33,15 @@
         position    : relative;
 
     }
+    .cmpComponente {
+        width       : 800px;
+        margin      : 5px;
+        float       : left;
+        padding     : 5px;
+        padding-top : 0px;
+        position    : relative;
+
+    }
 
     .cmpDoble {
         width      : 470px;
@@ -91,7 +100,7 @@
 
     .texto {
         width      : 90%;
-        min-height : 115px;
+        min-height : 35px;
         margin     : 5%;
         font-size  : 11px
     }
@@ -152,15 +161,15 @@
      style="overflow-y: auto;float: left;margin-left: -20px;overflow-x: hidden;width: 1030px;">
 <ul>
 
-    <li><a href="#tabs-1">Fin</a></li>
+    %{--<li><a href="#tabs-1">Fin</a></li>--}%
 
-    <li><a href="#tabs-2">Prop&oacute;sito</a></li>
+    %{--<li><a href="#tabs-2">Prop&oacute;sito</a></li>--}%
 
     <li><a href="#tabs-3">Componentes</a></li>
 
     <li><a href="#tabs-4">Actividades</a></li>
 
-    <li><a href="#tabs-5">Metas</a></li>
+    %{--<li><a href="#tabs-5">Metas</a></li>--}%
 
 </ul>
 
@@ -169,6 +178,7 @@
      style="width: 990px;float: left;border: 1px solid  rgba(145, 192, 95,0.6);margin-top: 5px;margin-left: 1px"
      class="ui-corner-all">
 
+%{--
     <div class="matriz ui-corner-all campo cmp datos " ml="Fin" div="div_fin"
          identificador="${fin?.id}"
          style="margin-left: -10px;">
@@ -225,8 +235,10 @@
         </div>
     </g:if>
 
-</div>%{--end del fin--}%
+</div>
+--}%
 
+%{--
 <div id="tabs-2"
      style="width: 990px;float: left;border: 1px solid  rgba(110, 182, 213,0.6);margin-top: 5px;margin-left: 1px"
      class="ui-corner-all">
@@ -284,26 +296,27 @@
         </div>
     </g:if>
 
-</div>%{--end del proposito--}%
+</div>
+--}%
 
 <div id="tabs-3" style="width: 1030px;float: left;margin-top: 5px;" class="ui-corner-all">
     <g:each in="${componentes}" var="comp" status="k">
         <fieldset
                 style="width: 1000px;float: left;margin-top: 5px;margin-left: -10px;;border: 1px solid  rgba(150, 150, 150,0.6)"
                 class="ui-corner-all fl">
-            <legend>Componente ${k + 1}</legend>
+            <legend>Componente ${comp?.numeroComp}</legend>
 
-            <div class="matriz ui-corner-all campo2 cmp datos " ml="1" div="cmp_${k}">
-                <div class="titulo">Componente</div>
+            <div class="matriz ui-corner-all cmpComponente" ml="1" div="cmp_${k}">
+                %{--<div class="titulo">Componente</div>--}%
 
                 <div class="texto agregado ui-corner-all proposito comp " id="cmp_${k}" ml="1"
-                     style="min-height: 115px;" id="rn_${k}">
+                     style="min-height: 35px;" id="rn_${k}">
                     ${comp?.objeto}
                 </div>
-
             </div>
+
             %{--inicio de indicadores--}%
-            <div class="matriz ui-corner-all campo2 cmpDoble " id="div_indi_medios_fin">
+%{--            <div class="matriz ui-corner-all campo2 cmpDoble " id="div_indi_medios_fin">
                 <div class="filaMedio" style="min-height: 25px;margin-top: 0px">
                     <div class="titulo">Indicadores</div>
                 </div>
@@ -332,7 +345,7 @@
                     </div>
                 </g:each>
 
-            </div>%{--Fin de indicadores--}%
+            </div>--}%%{--Fin de indicadores--}%%{--
             <div class="matriz ui-corner-all campo2 cmp">
                 <div class="titulo">Supuestos</div>
 
@@ -341,7 +354,7 @@
                         <div class="agregado ui-corner-all proposito varios">${su.descripcion}</div>
                     </g:each>
                 </div>
-            </div>
+            </div>--}%
         </fieldset>
     </g:each>
 
@@ -352,9 +365,11 @@
 
 </div>
 %{--fin actividades--}%
+%{--
 <div id="tabs-5" style="width: 1030px;float: left;margin-top: 5px;margin-left: -15px;" class="ui-corner-all ">
     <g:link action="buscadorMetas" controller="meta" class="boton" style="margin-bottom: 5px;">Buscador</g:link>
 </div>
+--}%
 %{--fin metas--}%
 
 </div>
@@ -371,25 +386,25 @@
 
         <div>
             <g:set var="total" value="${0}"></g:set>
-            <g:each in="${yachay.proyectos.MarcoLogico.findAllByMarcoLogicoAndEstado(comp,0,[sort:'id'])}" var="act" status="l">
+            <g:each in="${yachay.proyectos.MarcoLogico.findAllByMarcoLogicoAndEstado(comp,0,[sort:'numero'])}" var="act" status="l">
                 <fieldset
                         style="width: 970px;float: left;margin-top: 5px;margin-left: -10px;;border: 1px solid  rgba(150, 150, 150,0.6)"
                         class="ui-corner-all">
-                    <legend>Actividad ${l + 1}</legend>
+                    <legend>Actividad ${act?.numero}</legend>
 
-                    <div class="matriz ui-corner-all campo3 cmp datos actividades">
+                    <div class="matriz ui-corner-all campo3 cmp datos actividades" style="width: 500px;">
                         <div class="titulo">Actividad</div>
 
-                        <div class="texto agregado ui-corner-all proposito" ml="1" style="min-height: 115px;">
+                        <div class="texto agregado ui-corner-all proposito" ml="1" style="min-height: 35px;">
                             ${act?.objeto}
                         </div>
                     </div>
 
-                    <div class="matriz ui-corner-all campo3 cmp datos actividades" style="width:170px">
+                    <div class="matriz ui-corner-all campo3 cmp datos actividades" style="width:160px">
                         <div class="titulo">Monto</div>
 
                         <div class="texto agregado ui-corner-all proposito" ml="1"
-                             style="height: 115px;text-align: center;line-height: 115px;">
+                             style="height: 35px;text-align: center;line-height: 35px;">
                             $<g:formatNumber number="${act?.monto}" format="###,##0"
                                              minFractionDigits="2" maxFractionDigits="2"/>
 
@@ -397,24 +412,18 @@
                         </div>
                     </div>
 
-                    <div class="matriz ui-corner-all campo3 cmp datos actividades">
-                        <div class="titulo">Indicadores</div>
-                        <g:each in="${yachay.proyectos.Indicador.findAllByMarcoLogicoAndEstado(act,0)}" var="indicador"
-                                status="i">
-                            <div class="texto agregado ui-corner-all proposito" ml="1"
-                                 style="min-height: 30px;">
-                                ${indicador?.descripcion}
+                    <div class="matriz ui-corner-all campo3 cmp datos actividades" style="width: 100px;">
+                        <div class="titulo">Inicia</div>
+                            <div class="texto agregado ui-corner-all proposito" ml="1" style="min-height: 30px;">
+                                ${act?.fechaInicio?.format('dd-MMM-yyyy')}
                             </div>
-                        </g:each>
                     </div>
 
-                    <div class="matriz ui-corner-all campo3 cmp">
-                        <div class="titulo">Supuestos</div>
+                    <div class="matriz ui-corner-all campo3 cmp" style="width: 100px;">
+                        <div class="titulo">Fin</div>
 
-                        <div class="texto" style=" min-height: 115px;">
-                            <g:each in="${yachay.proyectos.Supuesto.findAllByMarcoLogicoAndEstado(act,0)}" var="su">
-                                <div class="agregado ui-corner-all proposito varios">${su.descripcion}</div>
-                            </g:each>
+                        <div class="texto agregado ui-corner-all proposito" style=" min-height: 35px;">
+                            ${act?.fechaFin?.format('dd-MMM-yyyy')}
                         </div>
                     </div>
 
@@ -432,6 +441,7 @@
 
 </div>
 
+%{--
 <div class="accordion_metas">
     <table width="790px" class="ui-corner-all">
         <tbody>
@@ -439,13 +449,13 @@
         <g:set var="totalInversion" value="0"></g:set>
         <g:each in="${componentes}" var="comp" status="k">
             <tr>
-                %{--<th colspan="7" style="background: #EFB64F">--}%
+                <th colspan="7" style="background: #EFB64F">
                 <th colspan="7" style="background: #d0d0d0">
                     Componente ${k + 1} : ${(comp?.objeto.length() > 70) ? comp?.objeto.substring(0, 70) + "..." : comp.objeto}
                 </th>
             </tr>
 
-                %{--<tr style="background: #8FBF5C">--}%
+                <tr style="background: #8FBF5C">
                 <tr style="background: #e8e8e8">
                     <th style="width: 300px;">
                         Ubicación
@@ -462,9 +472,9 @@
                     <th>
                         Meta
                     </th>
-                    %{--<th style="width: 100px">--}%
-                        %{--Inversión--}%
-                    %{--</th>--}%
+                    <th style="width: 100px">
+                        Inversión
+                    </th>
                     <th>Mapa</th>
                 </tr>
 
@@ -477,13 +487,13 @@
                         <td>${meta.tipoMeta}</td>
                         <td>${meta.unidad}</td>
                         <td style="text-align: right">${meta.indicador}</td>
-                        %{--<td style="width: 100px;text-align: right">--}%
-                            %{--<g:formatNumber number="${meta.inversion}"--}%
-                                            %{--format="###,##0"--}%
-                                            %{--minFractionDigits="2" maxFractionDigits="2"/>--}%
-                            %{--<g:set var="totalMetas" value="${totalMetas.toDouble()+meta.indicador}"></g:set>--}%
-                            %{--<g:set var="totalInversion" value="${totalInversion.toDouble()+meta.inversion}"></g:set>--}%
-                        %{--</td>--}%
+                        <td style="width: 100px;text-align: right">
+                            <g:formatNumber number="${meta.inversion}"
+                                            format="###,##0"
+                                            minFractionDigits="2" maxFractionDigits="2"/>
+                            <g:set var="totalMetas" value="${totalMetas.toDouble()+meta.indicador}"></g:set>
+                            <g:set var="totalInversion" value="${totalInversion.toDouble()+meta.inversion}"></g:set>
+                        </td>
                         <td>
                             <a href="${g.createLink(controller: 'marcoLogico',action: 'mapaMeta')}/${meta.id}" class="mapa">Mapa</a>
                         </td>
@@ -491,28 +501,29 @@
                 </g:each>
 
         </g:each>
-        %{--<tr>--}%
-            %{--<td>--}%
-               %{--<b> TOTAL</b>--}%
-            %{--</td>--}%
-            %{--<td></td>--}%
-            %{--<td></td>--}%
-            %{--<td></td>--}%
-            %{--<td style="text-align: right">--}%
-                %{--<g:formatNumber number="${totalMetas}"--}%
-                                %{--format="###,##0"--}%
-                                %{--minFractionDigits="2" maxFractionDigits="2"/>--}%
-            %{--</td>--}%
-            %{--<td style="text-align: right">--}%
-                %{--<g:formatNumber number="${totalInversion}"--}%
-                                %{--format="###,##0"--}%
-                                %{--minFractionDigits="2" maxFractionDigits="2"/>--}%
-            %{--</td>--}%
-        %{--</tr>--}%
+        <tr>
+            <td>
+               <b> TOTAL</b>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right">
+                <g:formatNumber number="${totalMetas}"
+                                format="###,##0"
+                                minFractionDigits="2" maxFractionDigits="2"/>
+            </td>
+            <td style="text-align: right">
+                <g:formatNumber number="${totalInversion}"
+                                format="###,##0"
+                                minFractionDigits="2" maxFractionDigits="2"/>
+            </td>
+        </tr>
         </tbody>
     </table>
 
 </div>
+--}%
 
 <div style="width: 970px;height: 40px;float: left;margin-top: 15px;border: 1px red solid;line-height: 40px;padding-left: 20px;margin-left: 28px"
      id="total" class="ui-corner-all"><b>Total:&nbsp;&nbsp;

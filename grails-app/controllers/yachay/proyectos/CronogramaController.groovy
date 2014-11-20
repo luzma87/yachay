@@ -325,7 +325,7 @@ class CronogramaController extends yachay.seguridad.Shield{
     def verCronograma = {
         println "nuevo cronograma "+params
 //        def colores= ["#DD7B42","#FFAB48","#FFE7AD","#A7C9AE","#888A63"]
-        def colores= ["#7871BE","#7871BE","#7871BE","#7871BE","#7871BE"]
+        def colores= ["#90C7D7","#90C7D7","#90C7D7","#90C7D7","#90C7D7"]
         def proyecto = Proyecto.get(params.id)
         def componentes = MarcoLogico.findAll("from MarcoLogico where proyecto=${proyecto.id} and tipoElemento=2 and estado=0 order by id")
         def fuentes = Financiamiento.findAllByProyecto(proyecto).fuente
