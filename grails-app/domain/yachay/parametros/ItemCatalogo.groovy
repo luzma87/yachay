@@ -45,18 +45,18 @@ class ItemCatalogo implements Serializable {
      * Define las restricciones de cada uno de los campos
      */
     static constraints = {
-        nombre(size: 1..255, blank: false, attributes: [mensaje: 'Nombre del item'])
-        nombre(size: 1..15, blank: true, attributes: [mensaje: 'Código del item'])
-        nombre(size: 1..255, blank: true, attributes: [mensaje: 'Descripción del item'])
+        nombre(size: 1..255, blank: true, nullable: true, attributes: [mensaje: 'Nombre del item'])
+        nombre(size: 1..15, blank: true, nullable: true, attributes: [mensaje: 'Código del item'])
+        nombre(size: 1..255, blank: false, nullable: false, attributes: [mensaje: 'Descripción del item'])
     }
 
     /**
      * Genera un string para mostrar
      * @return el id y el mensaje concatenados
      */
-    String toString() {
-        "${this.nombre}"
-    }
+//    String toString() {
+//        "${this.nombre}"
+//    }
 
 
 }

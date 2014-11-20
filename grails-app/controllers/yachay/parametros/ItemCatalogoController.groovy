@@ -148,16 +148,79 @@ class ItemCatalogoController {
     /*Acción de edición de items*/
 
     def editarItem = {
-        println("params " + params)
 
-        def catalogo = Catalogo.findById(params.cata)
-        def item = ItemCatalogo.findByCatalogoAndId(catalogo, params.id)
-        return [item: item]
     }
 
     def saveItem = {
 
+        println("params " + params)
 
+        def catalogo = Catalogo.findById(params.cata)
+        def itemInstance = ItemCatalogo.get(params.id)
+
+        if(itemInstance){
+            println("item " +  itemInstance)
+
+            if(params.codigo){
+                itemInstance.codigo = params.codigo.toInteger()
+            }else{
+                itemInstance.codigo = ''
+            }
+
+            itemInstance.descripcion = params.descripcion
+            if(params.estado){
+                itemInstance.estado = params.estado.toInteger()
+            }else{
+                itemInstance.estado = 1
+            }
+
+            if(params.orden){
+                itemInstance.orden = params.orden.toInteger()
+            }else{
+                itemInstance.orden = 0
+            }
+
+            if(params.original){
+                itemInstance.original = params.original.toInteger()
+            }else{
+                itemInstance.original = 0
+            }
+
+            itemInstance.nombre = params.descripcion
+
+            if(itemInstance.save(flush: true)){
+                println("grabo")
+                render("ok_Item actualizado correctamente")
+
+            }else{
+                println("error" + itemInstance.errors)
+                render("no_Error al actualizar los datos")
+            }
+
+        }
+
+
+
+    }
+
+    def borrarItem = {
+
+        println("params borrado " + params)
+        def itemInstance = ItemCatalogo.get(params.id)
+
+        println("por borrar " + itemInstance)
+
+        if(itemInstance){
+            if(itemInstance.delete(flush: true)){
+                println("borro")
+                render("ok_Item borrado correctamente")
+            }else{
+                println("error" + itemInstance.errors)
+                render("no_Error al borrar los datos")
+            }
+        }else{
+            println("error")
+        }
     }
 
 }

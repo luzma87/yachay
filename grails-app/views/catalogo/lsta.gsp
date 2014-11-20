@@ -70,10 +70,8 @@ a:link, a:visited, a:hover {
                         <td>${d[4]?.encodeAsHTML()}</td>
                         <td>${d[5]?.encodeAsHTML()}</td>
                         <td width="150px;">
-                            %{--<g:link class="boton edit" action="edit" id="${catalogoInstance?.id}">Editar</g:link>--}%
-                            %{--<g:link class="boton borrar" action="edit" id="${catalogoInstance?.id}">Borrar</g:link>--}%
-                            <input class="modulo editar" type="button" id="editar1" iden="${d[0]}" cata="${catalogo}" value="Editar"/>
-                            <input class="modulo borrar" type="button" id="borrar1" iden="${d[0]}" value="Borrar"/>
+                            <input class="modulo editar" type="button"  iden="${d[0]}" cata="${catalogo}" value="Editar"/>
+                            <input class="modulo borrar" type="button"  iden="${d[0]}" value="Borrar"/>
                         </td>
                     </tr>
                 </g:each>
@@ -85,7 +83,7 @@ a:link, a:visited, a:hover {
 
 </g:form>
 
-<div id="editar_dlg">
+<div id="editar_dlg" class="grabar">
     <table>
         <tbody>
         <tr class="prop">
@@ -93,7 +91,7 @@ a:link, a:visited, a:hover {
                 <label for="codigo">Código</label>
             </td>
             <td valign="top">
-                <g:textField  name="codigo" id="codigo" title="Código del item" class="field required ui-widget-content ui-corner-all" minLenght="1" maxLenght="255" value="" />
+                <g:textField  name="codigo" id="id1" title="Código del item" class="field required ui-widget-content ui-corner-all" minLenght="1" maxLenght="255" value="" />
             </td>
         </tr>
         <tr class="prop">
@@ -101,7 +99,7 @@ a:link, a:visited, a:hover {
                 <label for="descripcion">Descripción</label>
             </td>
             <td valign="top">
-                <g:textField  name="descripcion" id="descripcion" title="Descripción del item" class="field required ui-widget-content ui-corner-all" minLenght="1" maxLenght="255" value="" />
+                <g:textField  name="descripcion" id="id2" title="Descripción del item" class="field required ui-widget-content ui-corner-all" minLenght="1" maxLenght="255" value="" />
             </td>
         </tr>
         <tr class="prop">
@@ -109,7 +107,7 @@ a:link, a:visited, a:hover {
                 <label for="estado">Estado</label>
             </td>
             <td valign="top">
-                <g:textField  name="estado" id="estado" title="Estado del item" class="field required ui-widget-content ui-corner-all" minLenght="1" maxLenght="1" value="" />
+                <g:textField  name="estado" id="id3" title="Estado del item" class="field required ui-widget-content ui-corner-all" minLenght="1" maxLenght="1" value="" />
             </td>
         </tr>
         <tr class="prop">
@@ -117,7 +115,7 @@ a:link, a:visited, a:hover {
                 <label for="orden">Orden</label>
             </td>
             <td valign="top">
-                <g:textField  name="orden" id="orden" title="Orden del item" class="field required ui-widget-content ui-corner-all" minLenght="1" maxLenght="255" value="" />
+                <g:textField  name="orden" id="id4" title="Orden del item" class="field required ui-widget-content ui-corner-all" minLenght="1" maxLenght="3" value="" />
             </td>
         </tr>
         <tr class="prop">
@@ -125,12 +123,16 @@ a:link, a:visited, a:hover {
                 <label for="original">Original</label>
             </td>
             <td valign="top">
-                <g:textField  name="original" id="original" title="Original del item" class="field required ui-widget-content ui-corner-all" minLenght="1" maxLenght="255" value="" />
+                <g:textField  name="original" id="id5" title="Original del item" class="field required ui-widget-content ui-corner-all" minLenght="1" maxLenght="3" value="" />
             </td>
         </tr>
 
         </tbody>
     </table>
+</div>
+
+<div id="borrar_dlg" class="borrado">
+Está seguro de eliminar este item?
 </div>
 
 <script type="text/javascript">
@@ -206,8 +208,16 @@ a:link, a:visited, a:hover {
                 $(this).dialog("close");
                 $.ajax({
                     type: "POST", url:  "${createLink(action:'saveItem',controller:'itemCatalogo')}",
-                    data: "&id=" + $('#editar').attr("iden") + "&cata=" + $("#catalogo").val(),
+                    data: "&cata=" + $("#catalogo").val() + "&codigo=" + $("#id1").val() + "&descripcion=" + $("#id2").val()
+                            + "&estado=" + $("#id3").val() + "&orden=" + $("#id4").val() + "&original=" + $("#id5").val() + "&id=" + $("#editar_dlg").val(),
                     success: function(msg) {
+                        var men = []
+                        men = msg.split("_")
+                        if(men[0] == 'ok'){
+                            alert(men[1])
+                        }else{
+                            alert(men[1])
+                        }
                         location.reload(true);
                     }
                 });
@@ -219,23 +229,71 @@ a:link, a:visited, a:hover {
     });
 
     $(".editar").button().click(function() {
-        %{--console.log("entro!!" + $("#editar").attr("iden") + " cata "  + $('#catalogo').val())--}%
+//        console.log("entro!!" + $("#editar1").attr("iden") + " cata "  + $('#catalogo').val())
         var $btn = $(this);
         var $tr = $btn.parents('tr');
         var $td = $tr.children('td')
-        var codigo = $td[0]
-        var descripcion = $td[1]
-        var estado = $td[2]
-        var orden = $td[3]
-        var original = $td[4]
-        var idFila = $("#editar").attr("iden")
+        var codigo = $($td[0]).text()
+        var descripcion = $($td[1]).text()
+        var estado = $($td[2]).text()
+        var orden = $($td[3]).text()
+        var original = $($td[4]).text()
+        var idFila = $($tr).attr("iden")
         var catalogo = $("#catalogo").val()
         $("#editar_dlg").dialog("open")
+        $("#id1").val(codigo)
+        $("#id2").val(descripcion)
+        $("#id3").val(estado)
+        $("#id4").val(orden)
+        $("#id5").val(original)
+        $("#editar_dlg").val(idFila)
+    });
+
+
+    $("#borrar_dlg").dialog({
+        autoOpen: false,
+        resizable:false,
+        title: 'Borrar un Item',
+        modal:true,
+        draggable:false,
+        width:420,
+        position: 'center',
+        open: function(event, ui) {
+            $(".ui-dialog-titlebar-close").hide();
+        },
+        buttons: {
+            "Borrar": function() {
+                $(this).dialog("close");
+                $.ajax({
+                    type: "POST", url:  "${createLink(action:'borrarItem',controller:'itemCatalogo')}",
+                    data: "&cata=" + $("#catalogo").val() + "&id=" + $("#borrar_dlg").val(),
+                    success: function(msg) {
+                        var men = []
+                        men = msg.split("_")
+                        if(men[0] == 'ok'){
+                            alert(men[1])
+                        }else{
+                            alert(men[1])
+                        }
+                        location.reload(true);
+                    }
+                });
+            },
+            "Cancelar": function() {
+                $(this).dialog("close");
+            }
+        }
     });
 
     $(".borrar").button().click(function () {
-       console.log("entro borrar!");
 
+        var $btn = $(this);
+        var $tr = $btn.parents('tr');
+        var $td = $tr.children('td')
+        var idFila = $($tr).attr("iden")
+        var catalogo = $("#catalogo").val()
+        $("#borrar_dlg").val(idFila)
+        $("#borrar_dlg").dialog("open")
 
     });
 
