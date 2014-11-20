@@ -430,27 +430,27 @@
                                 </td> <!-- campo -->
                             </tr>
 
-%{--
-                            <tr class="prop">
-                                <td class="labelshow">
-                                    <g:message code="proyecto.linea.label" default="Lineamiento Senplades"/>
-                                </td>
+                            %{--
+                                                        <tr class="prop">
+                                                            <td class="labelshow">
+                                                                <g:message code="proyecto.linea.label" default="Lineamiento Senplades"/>
+                                                            </td>
 
-                                <td class="" colspan="3">
-                                    ${proyectoInstance?.linea?.encodeAsHTML()}
-                                </td> <!-- campo -->
-                            </tr>
+                                                            <td class="" colspan="3">
+                                                                ${proyectoInstance?.linea?.encodeAsHTML()}
+                                                            </td> <!-- campo -->
+                                                        </tr>
 
-                            <tr class="prop">
-                                <td class="labelshow">
-                                    <g:message code="proyecto.poblacionObjetivo.label" default="Población Objetivo"/>
-                                </td>
+                                                        <tr class="prop">
+                                                            <td class="labelshow">
+                                                                <g:message code="proyecto.poblacionObjetivo.label" default="Población Objetivo"/>
+                                                            </td>
 
-                                <td class="" colspan="3">
-                                    ${proyectoInstance?.poblacionObjetivo?.encodeAsHTML()}
-                                </td> <!-- campo -->
-                            </tr>
---}%
+                                                            <td class="" colspan="3">
+                                                                ${proyectoInstance?.poblacionObjetivo?.encodeAsHTML()}
+                                                            </td> <!-- campo -->
+                                                        </tr>
+                            --}%
 
                             <tr class="prop">
                                 <td class="labelshow">
@@ -972,8 +972,7 @@
                                                             },
                                                             "Cancelar" : function () {
                                                             }
-                                                        },
-                                                        resizable : false
+                                                        }
                                                     }
                                                 });
                                             } else if (msg == "NO_1") {
@@ -981,7 +980,7 @@
                                                 $.box({
                                                     imageClass : "box_error",
                                                     title      : "Error",
-                                                    text       : "Usuario incorrecto",
+                                                    text       : "El usuario actual no puede eliminar el proyecto",
                                                     iconClose  : false,
                                                     dialog     : {
                                                         resizable : false,
@@ -997,7 +996,7 @@
                                                 $.box({
                                                     imageClass : "box_error",
                                                     title      : "Error",
-                                                    text       : "Autorización incorrecta",
+                                                    text       : "Autorización incorrecta, no puede eliminar el proyecto",
                                                     iconClose  : false,
                                                     dialog     : {
                                                         resizable : false,

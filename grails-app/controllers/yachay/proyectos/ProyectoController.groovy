@@ -622,13 +622,17 @@ class ProyectoController extends yachay.seguridad.Shield {
      * Acción
      */
     def validarAutorizacion = {
-        if (session.usuario.id.toLong() == Usro.findByUsroLogin("ruth").id.toLong()) {
+        println "valida aut"
+        if (session.usuario.id.toLong() == Usro.findByUsroLogin("admin")?.id?.toLong()) {
             if (session.usuario.autorizacion == params.auth.encodeAsMD5()) {
+                println "ok"
                 render "OK"
             } else {
+                println "no2"
                 render "NO_2"
             }
         } else {
+            println "no1"
             render "NO_1"
         }
     }
@@ -754,7 +758,7 @@ class ProyectoController extends yachay.seguridad.Shield {
 //        println "params...: " + params
         def estrategias = []
         def estr = new Estrategia()
-        if (params.proy__id){
+        if (params.proy__id) {
             if (Proyecto.get(params.proy__id).estrategia?.id)
                 estr = Estrategia.get(Proyecto.get(params.proy__id).estrategia.id)
         }
