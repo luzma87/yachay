@@ -13,20 +13,36 @@
 <div style="float:left; width:700px;">
     <div id="info">
         <ul id="info-nav">
-            <li><a href="#proy">Proyectos</a></li>
+            <li><a href="#proy">Parámetros del Sistema</a></li>
             %{--<li><a href="#snpl">Proyectos Senplades</a></li>--}%
-            <li><a href="#papp">POA y PAC</a></li>
-            <li><a href="#grgf">Generales</a></li>
+            %{--<li><a href="#papp">POA y PAC</a></li>--}%
+            %{--<li><a href="#grgf">Generales</a></li>--}%
         </ul>
 
         <div>
             <div id="proy" class="ui-widget-content" style="height: 440px">
+%{--
                 <div class="item" texto="grpr">
                     <g:link  controller="grupoProcesos" action="list">Grupo de Procesos del Proyecto</g:link> se les suele conocer también como etapas del proyecto
                 </div><br>
-                %{--<div class="item" texto="obes">--}%
-                    %{--<g:link  controller="objetivoEstrategicoProyecto" action="list">Objetivos Estratégicos</g:link> con los cuales se alinean los proyectos--}%
-                %{--</div><br>--}%
+--}%
+                <div class="item" texto="ctlg">
+                    <g:link  controller="catalogo" action="items">Catálogo del Sistema</g:link> datos tipo y parámetros que se usan en el sistema
+                </div><br>
+                <div class="item" texto="prsp">
+                    <g:link  controller="presupuesto" action="tree">Plan de cuentas Presupuestario</g:link> o partidas presupuestarias para la asignación de gasto corriente y de inversión
+                </div><br>
+                <div class="item" texto="cgpr">
+                    <g:link  controller="cargoPersonal" action="list">Cargos del Personal de las Unidades</g:link> que se aplican a los responsables del ingreso y seguimiento del proyecto
+                </div><br>
+                <div class="item" texto="tpin">
+                    <g:link  controller="tipoInstitucion" action="list">Area de Gestión</g:link> que se aplica a las distintas entidades y unidades responsables
+                </div><br>
+                <div class="item" texto="estr">
+                    <g:link  controller="estrategia" action="list">Estrategia</g:link> que se aplica de acuerdo al objetivo estratégico
+                </div><br>
+
+%{--
                 <div class="item" texto="obgr">
                     <g:link  controller="objetivoGobiernoResultado" action="list">Objetivos del Gobierno por Resultados</g:link> de acuerdo al sistema de Gobierno por Resultados
                 </div><br>
@@ -39,6 +55,7 @@
                 <div class="item" texto="plas">
                     <g:link  controller="politicaAgendaSocial" action="list">Políticas de la Agenda Social</g:link> que pueden aplicarse a un proyecto
                 </div><br>
+--}%
 %{--
                 <div class="item" texto="tpel">
                     <g:link  controller="tipoElemento" action="list">Tipo de Elemento del Marco Lógico</g:link> para identificar los diferentes componentes del Marco L&oacute;gico
@@ -50,12 +67,16 @@
                     <g:link  controller="tipoModificacion" action="list">Tipo de Modificaci&oacute;n</g:link> que puede realizarse en el proyecto
                 </div><br>
 --}%
+%{--
                 <div class="item" texto="tpmt">
                     <g:link  controller="tipoMeta" action="list">Tipo de Meta</g:link> para la desagregaci&oacute;n de las metas a modo de unidad de medida.
                 </div><br>
                 <div class="item" texto="obun">
                     <g:link  controller="objetivoUnidad" action="list">Objetivo de la áreas de gestión</g:link> para el registro de las distintas áres.
                 </div><br>
+--}%
+                %{--adicionales--}%
+
             </div>
 
 %{--
@@ -119,9 +140,11 @@
                     <g:link  controller="actividad" action="list">Actividades de Gasto Corriente</g:link> que figuran en el PAPP
                 </div><br>
 --}%
+%{--
                 <div class="item" texto="anio">
                     <g:link  controller="anio" action="list">A&ntilde;o Fiscal</g:link> Año al cual corresponde el PAPP. Es similar al período contable o año fiscal.
                 </div><br>
+--}%
 %{--
                 <div class="item" texto="ctrm">
                     <g:link  controller="cuatrimestre" action="list">Cuatrimestre</g:link> para la programación de la ejecución presupuestaria y del PAC
@@ -132,18 +155,19 @@
                     <g:link  controller="componente" action="list">Componente</g:link> Componentes, usados en el registro de asignaciones corrientes.
                 </div><br>
 --}%
+%{--
                 <div class="item" texto="fnte">
                     <g:link  controller="fuente" action="list">Fuente de Financiamiento</g:link> Posibles fuentes de financiamiento que puede tener un proyecto
                 </div><br>
-                <div class="item" texto="prsp">
-                    <g:link  controller="presupuesto" action="list">Plan de cuentas Presupuestario</g:link> o partidas presupuestarias para la asignación de gasto corriente y de inversión
-                </div><br>
+--}%
+%{--
                 <div class="item" texto="pgps">
                     <g:link  controller="programaPresupuestario" action="list">Programa Presupuestario</g:link> o dependencia a la cual se carga el POA o PAPP
                 </div><br>
                 <div class="item" texto="tpcp">
                     <g:link  controller="tipoCompra" action="list">Tipo de Compra o adquisici&oacute;n</g:link> seg&uacute;n el INCOP
                 </div><br>
+--}%
 %{--
                 <div class="item" texto="tpgs">
                     <g:link  controller="tipoGasto" action="list">Tipo de Gasto</g:link> de las asignaciones presupuestarias para los distintos proyectos y el PAPP
@@ -152,9 +176,6 @@
             </div>
 
             <div id="grgf" class="ui-widget-content" style="height: 440px">
-                <div class="item" texto="cgpr">
-                    <g:link  controller="cargoPersonal" action="list">Cargos del Personal de las Unidades</g:link> que se aplican a los responsables del ingreso y seguimiento del proyecto
-                </div><br>
 %{--
                 <div class="item" texto="mess">
                     <g:link  controller="mes" action="list">Mes del a&ntilde;o</g:link> para la planificaci&oacute;n del cronograma valorado
@@ -173,15 +194,16 @@
                     <g:link  controller="distrito" action="list">Distritos</g:link> divisi&oacute;n del territorio ecuatoriano en distritos
                 </div><br>
 --}%
+%{--
                 <div class="item" texto="tpcn">
                     <g:link  controller="tipoContrato" action="list">Tipo de Contrato</g:link> que se aplica a los distintos procesos de contratación.
                 </div><br>
-                <div class="item" texto="tpin">
-                    <g:link  controller="tipoInstitucion" action="list">Area de Gestión</g:link> que se aplica a las distintas entidades y unidades responsables
-                </div><br>
+--}%
+%{--
                 <div class="item" texto="undd">
                     <g:link  controller="unidad" action="list">Unidad de Medida</g:link> Unidad de control o conteo de obras para el plan anual de adquisiciones (PAC) y para fijar las metas.
                 </div>
+--}%
             </div>
 
         </div>
@@ -193,6 +215,12 @@
      class="ui-widget-content ui-corner-all">
 </div>
 
+<div id="ctlg" style="display:none">
+    <h1>Catálogo del Sistema</h1><br>
+    <p>Valores de las tablas tipo del sistema y parámetros en general.</p>
+    <p>Entre losparámetros más importantes tenemos a: grupo de procesos, tipos de elemento, fuentes de recursos, tipo de compra,
+    año presupuestario, unidades de medida, programas, portafolios, etc..</p>
+</div>
 <div id="cgpr" style="display:none">
     <h1>Cargos del Personal</h1><br>
     <p>Cargos del personal de la Unidad Ejecutora y de la planta central del app.</p>
@@ -426,6 +454,10 @@
 <div id="plas" style="display:none">
     <h1>Políticas de la Agenda Social</h1><br>
     <p>Políticas de la agenda social que pueden aplicarse a un proyecto</p>
+</div>
+<div id="estr" style="display:none">
+    <h1>Estratagia</h1><br>
+    <p>Estrategia específica edntro del objetivo estratégico con la cual se alinea uno o varios proyectos</p>
 </div>
 
 </div>%{-- cierra el div de contenedor --}%

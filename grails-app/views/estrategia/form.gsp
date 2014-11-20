@@ -24,7 +24,9 @@
             <div class="dialog" title="${title}">
 
 
-
+                <div id="" class="toolbar ui-widget-header ui-corner-all">
+                    <g:link class="button create" action="list"> Lista de Estrategias </g:link>
+                </div>
 
                 <div class="body">
                     <g:if test="${flash.message}">
@@ -42,33 +44,33 @@
                         <g:hiddenField name="id" value="${estrategiaInstance?.id}" />
                         <g:hiddenField name="version" value="${estrategiaInstance?.version}" />
                     <div>
-                        <fieldset class="ui-corner-all">
+                        <fieldset class="ui-corner-all" style="width: 1000px;">
                             <legend class="ui-widget ui-widget-header ui-corner-all">
                                 <g:if test="${source == 'edit'}">
-                                    <g:message code="estrategia.edit.legend" default="Edit Estrategia details"/>
+                                    <g:message code="estrategia.edit.legend" default="Editar Estrategia"/>
                                 </g:if>
                                 <g:else>
-                                    <g:message code="estrategia.create.legend" default="Enter Estrategia details"/>
+                                    <g:message code="estrategia.create.legend" default="Estrategia"/>
                                 </g:else>
-                </legend>
+                            </legend>
                     
                     <div class="prop mandatory ${hasErrors(bean: estrategiaInstance, field: 'orden', 'error')}">
                         <label for="orden">
                             <g:message code="estrategia.orden.label" default="Orden" />
                             <span class="indicator">*</span>
                         </label>
-                        <div class="campo">
-                            <g:textField class="field number required ui-widget-content ui-corner-all" name="orden" title="Orden" id="orden" value="${fieldValue(bean: estrategiaInstance, field: 'orden')}" />
+                        <div class="campo" >
+                            <g:textField class="field number required ui-widget-content ui-corner-all" name="orden" title="Orden" id="orden" value="${fieldValue(bean: estrategiaInstance, field: 'orden')}" style="width: 80px;"/>
                         </div>
                     </div>
                     
                     <div class="prop mandatory ${hasErrors(bean: estrategiaInstance, field: 'descripcion', 'error')}">
                         <label for="descripcion">
-                            <g:message code="estrategia.descripcion.label" default="Descripcion" />
+                            <g:message code="estrategia.descripcion.label" default="Descripción de la estrategia" />
                             <span class="indicator">*</span>
                         </label>
-                        <div class="campo">
-                            <g:textArea class="field required ui-widget-content ui-corner-all" maxLenght="511" name="descripcion" id="descripcion" title="Descripcion" cols="40" rows="5" value="${estrategiaInstance?.descripcion}" />
+                        <div class="campo" >
+                            <g:textArea class="field required ui-widget-content ui-corner-all" maxLenght="511" name="descripcion" id="descripcion" title="Descripcion" cols="40" rows="5" value="${estrategiaInstance?.descripcion}" style="width: 800px;" />
                         </div>
                     </div>
                     
@@ -78,7 +80,7 @@
                             <span class="indicator">*</span>
                         </label>
                         <div class="campo">
-                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="objetivoEstrategico.id" title="ObjetivoEstrategico" from="${yachay.proyectos.ObjetivoEstrategicoProyecto.list()}" optionKey="id" value="${estrategiaInstance?.objetivoEstrategico?.id}"  />
+                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" name="objetivoEstrategico.id" title="ObjetivoEstrategico" from="${yachay.proyectos.ObjetivoEstrategicoProyecto.list()}" optionKey="id" value="${estrategiaInstance?.objetivoEstrategico?.id}" style="width: 820px;" />
                         </div>
                     </div>
                     
@@ -86,7 +88,7 @@
                     <div class="buttons">
                         <g:if test="${source == 'edit'}">
                             <a href="#" class="button save">
-                                <g:message code="update" default="Update" />
+                                <g:message code="update" default="Actualizar" />
                             </a>
                             <g:link class="button delete" action="delete" id="${estrategiaInstance?.id}">
                                 <g:message code="default.button.delete.label" default="Delete" />
@@ -97,7 +99,7 @@
                         </g:if>
                         <g:else>
                             <a href="#" class="button save">
-                                <g:message code="create" default="Create" />
+                                <g:message code="create" default="Crear" />
                             </a>
                         </g:else>
                     </div>

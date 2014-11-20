@@ -19,12 +19,10 @@
                     <div class="message">${flash.message}</div>
                 </g:if>
                 <div id="" class="toolbar ui-widget-header ui-corner-all">
-                    <g:link class="button create" action="create">
-                        Nueva Estrategia
-                    </g:link>
+                    <g:link class="button create" action="create"> Nueva Estrategia </g:link>
                 </div> <!-- toolbar -->
 
-                <div class="list" style="width: 600px;">
+                <div class="list" style="width: 1000px;">
                     <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-top ui-helper-clearfix">
                         %{--<div id="example_length" class="dataTables_length">--}%
                             %{--<g:message code="show" default="Show" />&nbsp;--}%
@@ -41,7 +39,7 @@
                                 %{--class="ui-widget-content ui-corner-all"/>--}%
                         %{--</div>--}%
                     </div>
-                    <table style="width: 600px;">
+                    <table style="width: 1000px;">
                         <thead>
                             <tr>
                                 
@@ -52,10 +50,10 @@
                                                   title="${message(code: 'estrategia.orden.label', default: 'Orden')}" />
                                 
                                 <tdn:sortableColumn property="descripcion" class="ui-state-default"
-                                                  title="${message(code: 'estrategia.descripcion.label', default: 'Descripcion')}" />
+                                                  title="${message(code: 'estrategia.descripcion.label', default: 'Estrategia')}" />
                                 
                                 <th class="ui-state-default"><g:message code="estrategia.objetivoEstrategico.label"
-                                               default="Objetivo Estrategico" /></th>
+                                               default="Objetivo Estratégico" /></th>
                                 
                             </tr>
                         </thead>

@@ -19,11 +19,14 @@
                     <div class="message ui-state-highlight ui-corner-all">${flash.message}</div>
                 </g:if>
                 <div>
+                    <div id="" class="toolbar ui-widget-header ui-corner-all">
+                        <g:link class="button create" action="list"> Lista de Estrategias </g:link>
+                    </div> <!-- toolbar -->
 
                     <fieldset class="ui-corner-all">
                         <legend class="ui-widget ui-widget-header ui-corner-all">
                             <g:message code="estrategia.show.legend"
-                                       default="Estrategia details" />
+                                       default="Estrategia" />
                         </legend>
 
                         
@@ -59,7 +62,7 @@
                             <div class="prop">
                                 <label>
                                     <g:message code="estrategia.descripcion.label"
-                                               default="Descripcion" />
+                                               default="Descripción de la estrategia" />
                                 </label>
 
                                 <div class="campo">

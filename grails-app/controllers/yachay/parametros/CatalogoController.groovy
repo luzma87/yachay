@@ -12,6 +12,10 @@ class CatalogoController {
         redirect(action: "lsta", params: params)
     }
 
+    def items = {
+
+    }
+
     def list = {
         def title = g.message(code: "catalogo.list", default: "Catalogo List")
 //        <g:message code="default.list.label" args="[entityName]" />
