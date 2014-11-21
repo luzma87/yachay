@@ -20,6 +20,19 @@ class AvanceFisicoController extends yachay.seguridad.Shield {
             minDate = (ua.fecha + 1).format("dd-MM-yyyy")
         }
         def maxAvance = 100 - minAvance
+
+        def totalAvance = AvanceFisico.findAllByProceso(proceso).sum { it.avance }
+        maxAvance = 100 - totalAvance
+
+        def tot = 0
+        AvanceFisico.findAllByProceso(proceso).each {
+            println "\t" + it.avance
+            tot += it.avance
+        }
+        println "????? " + tot
+
+        println ">>>>>>>>>>>>>>> " + totalAvance + " max " + maxAvance
+
         return [proceso: proceso, minAvance: minAvance, maxAvance: maxAvance, minDate: minDate]
     }
 
@@ -43,6 +56,8 @@ class AvanceFisicoController extends yachay.seguridad.Shield {
         avance.proceso = proceso
         if (avance.save(flush: true)) {
             def max = 100 - avance.avance
+            def totalAvance = AvanceFisico.findAllByProceso(proceso).sum { it.avance }
+            max = 100 - totalAvance
             def minDate = (avance.fecha + 1).format("dd-MM-yyyy")
             render "OK_" + avance.avance + "_" + max + "_" + minDate
         } else {
@@ -68,7 +83,8 @@ class AvanceFisicoController extends yachay.seguridad.Shield {
                 minDate = (ua.fecha + 1).format("dd-MM-yyyy")
             }
             def maxAvance = 100 - minAvance
-
+            def totalAvance = AvanceFisico.findAllByProceso(proceso).sum { it.avance }
+            maxAvance = 100 - totalAvance
             render "OK_" + minAvance + "_" + maxAvance + "_" + minDate
         } catch (Exception e) {
             e.printStackTrace()
@@ -78,8 +94,8 @@ class AvanceFisicoController extends yachay.seguridad.Shield {
 
     def completar = {
         def avance = AvanceFisico.get(params.id)
-        avance.completado=new Date()
-        avance.save(flash:true)
+        avance.completado = new Date()
+        avance.save(flash: true)
         render "OK"
     }
 

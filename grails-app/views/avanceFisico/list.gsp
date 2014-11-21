@@ -103,7 +103,7 @@
         </g:if>
 
         <script type="text/javascript">
-            var max = 100;
+            var max = parseFloat("${maxAvance}");
             var min = parseFloat("${minAvance}");
 
             function loadTabla() {
@@ -120,19 +120,19 @@
             }
 
             function setMinDate(minDate) {
-                var date = Date.parse(minDate, "dd-MM-yyyy");
-                if (minDate != "") {
-                    $(".datepicker").datepicker("option", "minDate", date);
-                } else {
-                    $(".datepicker").datepicker("option", "minDate", new Date(1900, 0, 1));
-                }
+//                var date = Date.parse(minDate, "dd-MM-yyyy");
+//                if (minDate != "") {
+//                    $(".datepicker").datepicker("option", "minDate", date);
+//                } else {
+//                    $(".datepicker").datepicker("option", "minDate", new Date(1900, 0, 1));
+//                }
             }
 
             function updateAll(msg) {
                 var parts = msg.split("_");
                 if (parts[0] == "OK") {
                     min = parseFloat(parts[1]);
-//                    max = parseFloat(parts[2]);
+                    max = parseFloat(parts[2]);
                     setMinDate(parts[3]);
                     loadTabla();
                 }
@@ -155,7 +155,7 @@
                             var fecha = $.trim($("#fecha").val());
                             var obs = $.trim($("#observaciones").val());
                             var id = "${proceso.id}";
-                            if (avance == "" || fecha == "" || obs.length<1) {
+                            if (avance == "" || fecha == "" || obs.length < 1) {
                                 $.box({
                                     imageClass : "box_info",
                                     text       : "Por favor ingrese el porcentaje de aportación, la fecha y la descripción de la sub actividad",
@@ -190,10 +190,11 @@
                                     });
                                 } else {
                                     avance = parseFloat(avance);
-                                    if (avance > max || avance < min) {
+//                                    if (avance > max || avance < min) {
+                                    if (avance > max) {
                                         $.box({
                                             imageClass : "box_info",
-                                            text       : "Por favor ingrese un número entre " + min + " y " + max,
+                                            text       : "Por favor ingrese un número menor a " + max,
                                             title      : "Alerta",
                                             iconClose  : false,
                                             dialog     : {
