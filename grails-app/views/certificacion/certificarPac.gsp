@@ -31,7 +31,7 @@
             <th width="75">Presupuesto</th>
             <th width="270">Descripci&oacute;n</th>
             <th width="100">Unidad</th>
-            <th width="85">Codigo CPC</th>
+            <th width="85">Código CPC</th>
             <th width="107">Tipo</th>
             <th width="48">Cant.</th>
             <th width="78">Costo</th>

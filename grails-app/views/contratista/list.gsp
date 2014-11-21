@@ -60,7 +60,7 @@
 
 
                                 <tdn:sortableColumn property="direccion" class="ui-state-default"
-                                                    title="${message(code: 'contratista.direccion.label', default: 'Direccion')}" />
+                                                    title="${message(code: 'contratista.direccion.label', default: 'Dirección')}" />
                                 <tdn:sortableColumn property="mail" class="ui-state-default"
                                                     title="${message(code: 'contratista.mail.label', default: 'Mail')}" />
 
