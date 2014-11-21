@@ -30,7 +30,7 @@
         <div class="fila">
             <g:link controller="avales" action="listaProcesos" class="btn">Lista de procesos</g:link>
         </div>
-        <fieldset style="width: 95%;height: 170px;" class="ui-corner-all">
+        <fieldset style="width: 95%;height: 160px;" class="ui-corner-all">
             <legend>Proceso</legend>
 
             <div class="fila">
@@ -64,20 +64,20 @@
                 </div>
             </div>
         </fieldset>
-        <fieldset style="width: 95%;height: 300px;overflow: auto" class="ui-corner-all">
-            <legend>Avances</legend>
+        <fieldset style="width: 95%;height: 350px;overflow: auto" class="ui-corner-all">
+            <legend>Sub actividades</legend>
 
             <div class="fila" style="margin-bottom: 10px;">
                 <a href="#" class="btn" id="btnOpenDlg">Agregar</a>
             </div>
 
-            <div id="detalle" style="width: 95%; height: 220px; overflow: auto;"></div>
+            <div id="detalle" style="width: 95%; height: 260px; overflow: auto;"></div>
         </fieldset>
 
         <g:if test="${proceso}">
             <div id="dlgNuevo">
                 <div class="fila">
-                    <div class="labelSvt">Avance:</div>
+                    <div class="labelSvt">Aporte:</div>
 
                     <div class="fieldSvt-small">
                         <g:textField name="avance" class="ui-widget-content ui-corner-all" style="width: 50px;"/> %
@@ -91,7 +91,7 @@
                 </div>
 
                 <div class="fila" style="height: 95px;">
-                    <div class="labelSvt">Observaciones:</div>
+                    <div class="labelSvt">Descripción:</div>
 
                     <div class="fieldSvt-xxl">
                         <g:if test="${proceso}">
@@ -142,8 +142,8 @@
                 $("#dlgNuevo").dialog({
                     autoOpen : false,
                     modal    : true,
-                    width    : 700,
-                    title    : "Nuevo avance físico",
+                    width    : 750,
+                    title    : "Nueva sub actividad",
                     close    : function (event, ui) {
                         $("#avance").val("");
                         $("#fecha").val("");
@@ -155,10 +155,10 @@
                             var fecha = $.trim($("#fecha").val());
                             var obs = $.trim($("#observaciones").val());
                             var id = "${proceso.id}";
-                            if (avance == "" || fecha == "") {
+                            if (avance == "" || fecha == "" || obs.length<1) {
                                 $.box({
                                     imageClass : "box_info",
-                                    text       : "Por favor ingrese el porcentaje de avance y la fecha",
+                                    text       : "Por favor ingrese el porcentaje de aportación, la fecha y la descripción de la sub actividad",
                                     title      : "Alerta",
                                     iconClose  : false,
                                     dialog     : {

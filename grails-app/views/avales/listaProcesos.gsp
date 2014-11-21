@@ -59,7 +59,7 @@
                             <a href="${g.createLink(action: 'avalesProceso', id: p.id)}" class="btn">Avales</a>
                         </td>
                         <td style="text-align: center">
-                            <a href="${g.createLink(controller: 'avanceFisico', action: 'list', id: p.id)}" class="btn">Avances</a>
+                            <a href="${g.createLink(controller: 'avanceFisico', action: 'list', id: p.id)}" class="btn">Actividades</a>
                         </td>
                     </tr>
                 </g:each>

@@ -20,6 +20,10 @@ class AvanceFisico {
    * Observaciones
    */
     String observaciones
+    /*
+    * Fecha en la que se completo la actividad
+    */
+    Date completado
 
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
@@ -36,6 +40,7 @@ class AvanceFisico {
             proceso column: 'prco__id'
             avance column: 'avfsavnc'
             observaciones column: 'avfsobsv'
+            completado column: 'avfsfccm'
         }
     }
 /**
@@ -44,5 +49,6 @@ class AvanceFisico {
     static constraints = {
         proceso(nullable: false,blank:false)
         observaciones(blank: true,nullable: true,size: 1..1024)
+        completado(blank:true,nullable: true)
     }
 }
