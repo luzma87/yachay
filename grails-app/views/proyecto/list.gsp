@@ -9,7 +9,7 @@
         <style type="text/css">
         .clean {
             background : none;
-            width      : 50px;
+            width      : 80px;
         }
         </style>
 
@@ -40,10 +40,10 @@
 
                             <div class="botones right">
                                 <g:form action="list" class="frm_busca">
-                                    <label class="clean" for="desde">Desde</label>
+                                    <label class="clean" for="desde">Desde USD</label>
                                     <input name="desde" id="desde" value="${params.desde}"
                                            class="ui-widget-content ui-corner-all busca" style="width: 80px;"/>
-                                    <label class="clean" for="hasta">Hasta</label>
+                                    <label class="clean" for="hasta">Hasta USD</label>
                                     <input name="hasta" id="hasta" value="${params.hasta}"
                                            class="ui-widget-content ui-corner-all busca" style="width: 80px;"/>
                                     <label class="clean" for="busca">Nombre</label>

@@ -266,7 +266,24 @@
                     <table width="1040px" class="ui-widget-content ui-corner-bottom" id="detalles">
                         <tbody>
 
-                            <tr class="prop">
+                        <tr class="prop">
+                            <td class="label">
+                                <g:message code="proyecto.codigoProyecto.label" default="Pertenece a:"/>
+                            </td>
+
+                            <td class="">
+                                ${proyectoInstance?.unidadEjecutora?.encodeAsHTML()}
+                            </td> <!-- campo -->
+                            <td class="label">
+                                Aprobado
+                            </td>
+
+                            <td class="">
+                                ${(proyectoInstance.aprobado == "a") ? "Si" : "No"}
+                            </td> <!-- campo -->
+                        </tr>
+
+                        <tr class="prop">
                                 <td class="labelshow">
                                     <g:message code="proyecto.nombre.label" default="Nombre"/>
                                 </td>
@@ -276,7 +293,27 @@
                                 </td> <!-- campo -->
                             </tr>
 
-                            <tr class="prop">
+                        <tr class="prop">
+                            <td class="labelshow">
+                                <g:message code="proyecto.unidadEjecutora.label" default="Unidad Administradora"/>
+                            </td>
+
+                            <td colspan="3" class="">
+                                ${proyectoInstance?.unidadAdministradora?.encodeAsHTML()}
+                            </td> <!-- campo -->
+
+                        %{--
+                                                        <td class="labelshow">
+                                                            Programa presupuestario
+                                                        </td>
+
+                                                        <td class="">
+                                                            ${fieldValue(bean: proyectoInstance, field: "programaPresupuestario")}
+                                                        </td> <!-- campo -->
+                        --}%
+                        </tr>
+
+                        <tr class="prop">
                                 <td class="label">
                                     <g:message code="proyecto.codigoProyecto.label" default="Código del Proyecto"/>
                                 </td>
@@ -292,42 +329,7 @@
                                     ${fieldValue(bean: proyectoInstance, field: "codigoProyecto")}
                                 </td> <!-- campo -->
                             </tr>
-                            <tr class="prop">
-                                <td class="label">
-                                    <g:message code="proyecto.codigoProyecto.label" default="Pertenece a:"/>
-                                </td>
 
-                                <td class="">
-                                    ${proyectoInstance?.unidadEjecutora?.encodeAsHTML()}
-                                </td> <!-- campo -->
-                                <td class="label">
-                                    Aprobado
-                                </td>
-
-                                <td class="">
-                                    ${(proyectoInstance.aprobado == "a") ? "Si" : "No"}
-                                </td> <!-- campo -->
-                            </tr>
-
-                            <tr class="prop">
-                                <td class="labelshow">
-                                    <g:message code="proyecto.unidadEjecutora.label" default="Unidad Administradora"/>
-                                </td>
-
-                                <td colspan="3" class="">
-                                    ${proyectoInstance?.unidadAdministradora?.encodeAsHTML()}
-                                </td> <!-- campo -->
-
-                            %{--
-                                                            <td class="labelshow">
-                                                                Programa presupuestario
-                                                            </td>
-
-                                                            <td class="">
-                                                                ${fieldValue(bean: proyectoInstance, field: "programaPresupuestario")}
-                                                            </td> <!-- campo -->
-                            --}%
-                            </tr>
 
                             <tr class="prop">
                                 <td class="labelshow">
@@ -362,7 +364,7 @@
                                 </td> <!-- campo -->
 
                                 <td class="labelshow">
-                                    <g:message code="proyecto.fechaInicio.label" default="Fecha Inicio"/>
+                                    <g:message code="proyecto.fechaInicio.label" default="Fecha Inicio Ejecución"/>
                                 </td>
 
                                 <td class="">
@@ -381,7 +383,7 @@
                                 </td> <!-- campo -->
 
                                 <td class="labelshow">
-                                    <g:message code="proyecto.fechafin?.label" default="Fecha Fin"/>
+                                    <g:message code="proyecto.fechafin?.label" default="Fecha Fin Ejecución"/>
                                 </td>
 
                                 <td class="">
@@ -389,6 +391,7 @@
                                 </td> <!-- campo -->
                             </tr>
 
+%{--
                             <tr>
                                 <td class="labelshow">
                                     <g:message code="proyecto.ejeProgramatico.label"
@@ -409,13 +412,16 @@
                                 </td> <!-- campo -->
 
                             </tr>
+--}%
 
+                            <tr><td class="labelshow">&nbsp;</td> </tr>
+                            <tr> </tr>
                             <tr>
                                 <td class="labelshow">
                                     <g:message code="proyecto.descripcion.label" default="Descripción"/>
                                 </td>
 
-                                <td class="" colspan="3">
+                                <td class="" colspan="3" >
                                     ${fieldValue(bean: proyectoInstance, field: "descripcion")}
                                 </td> <!-- campo -->
                             </tr>
@@ -451,7 +457,8 @@
                                                             </td> <!-- campo -->
                                                         </tr>
                             --}%
-
+                        <tr><td class="labelshow">&nbsp;</td> </tr>
+                        <tr> </tr>
                             <tr class="prop">
                                 <td class="labelshow">
                                     <g:message code="proyecto.objetivoEstrategico.label"
@@ -472,6 +479,15 @@
                                     ${proyectoInstance?.estrategia?.descripcion?.encodeAsHTML()}
                                 </td> <!-- campo -->
                             </tr>
+                        <tr class="prop">
+                            <td class="labelshow">
+                                <g:message code="proyecto.portafolio.label" default="Portafolio"/>
+                            </td>
+
+                            <td class="" colspan="3">
+                                ${proyectoInstance?.portafolio?.descripcion?.encodeAsHTML()}
+                            </td> <!-- campo -->
+                        </tr>
 
                             <tr class="prop">
                                 <td class="labelshow">
@@ -483,15 +499,6 @@
                                 </td> <!-- campo -->
                             </tr>
 
-                            <tr class="prop">
-                                <td class="labelshow">
-                                    <g:message code="proyecto.portafolio.label" default="Portafolio"/>
-                                </td>
-
-                                <td class="" colspan="3">
-                                    ${proyectoInstance?.portafolio?.descripcion?.encodeAsHTML()}
-                                </td> <!-- campo -->
-                            </tr>
 
                         </tbody>
                     </table>

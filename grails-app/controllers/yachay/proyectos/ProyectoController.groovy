@@ -57,7 +57,7 @@ class ProyectoController extends yachay.seguridad.Shield {
         items[1] = [:]
         items[1].link = ["controller": "proyecto", "action": "objetivosBuenVivir",
                          "params"    : ["id": proyecto.id]]
-        items[1].text = "Objetivos del Buen Vivir"
+        items[1].text = "Plan Nacional de Desarrollo"
         items[1].evento = "buenVivir"
         return [items: items, proyecto: proyecto, params: params]
     }
@@ -118,7 +118,7 @@ class ProyectoController extends yachay.seguridad.Shield {
         items[1] = [:]
         items[1].link = ["controller": "proyecto", "action": "objetivosBuenVivir",
                          "params"    : ["id": proyecto.id]]
-        items[1].text = "Objetivos del Buen Vivir"
+        items[1].text = "Plan Nacional de Desarrollo"
         items[1].evento = "buenVivir"
 
         return [items: items, proyecto: proyecto, params: params, metasProyecto: metasProyecto]
@@ -801,7 +801,7 @@ class ProyectoController extends yachay.seguridad.Shield {
 
                 items[1] = [:]
                 items[1].link = ["controller": "proyecto", "action": "nuevoProyecto", "event": "click", "params": ["evento": "buenVivir"]]
-                items[1].text = "Objetivos del Buen Vivir"
+                items[1].text = "Plan Nacional de Desarrollo"
                 items[1].evento = "buenVivir"
 
 //                items[2] = [:]

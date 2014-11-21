@@ -34,14 +34,14 @@
 
         <title>
             %{--Metas del PNBV - ${proyecto.nombre[0..30]}--}%
-            Metas del PNBV - ${proyecto.nombre.size() > 30 ? proyecto.nombre[0..28] + "..." : proyecto.nombre}
+            Metas del PND - ${proyecto.nombre.size() > 30 ? proyecto.nombre[0..28] + "..." : proyecto.nombre}
         </title>
     </head>
 
     <body>
 
         %{--<div class="dialog" title="Financiamiento del proyecto ${proyecto.nombre}">--}%
-        <div class="dialog" title="Financiamiento del proyecto ${proyecto.nombre}">
+        <div class="dialog">
 
             <div style="padding: 0.7em; margin: 0.7em;" class="ui-state-error ui-corner-all ui-helper-hidden"
                  id="divError">

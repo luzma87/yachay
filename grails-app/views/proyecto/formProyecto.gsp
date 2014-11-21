@@ -83,23 +83,28 @@
                             </td>
                         </tr>
 
-                        <tr class="prop ${hasErrors(bean: proyecto, field: 'codigoProyecto', 'error')}">
+                    <tr class="prop ${hasErrors(bean: proyecto, field: 'unidadEjecutora', 'error')}">
 
-                            <td class="label " valign="middle">
-                                CUP
-                            </td>
+                        <td class="label " valign="middle">
+                            U. Administradora
+                        </td>
 
-                            <td class="indicator">
-                                &nbsp;
-                            </td>
+                        <td class="indicator mandatory">
+                            <span class="indicator">*</span>
+                        </td>
 
-                            <td class="campo" valign="middle">
-                                <g:textField name="codigoProyecto" id="codigoProyecto"
-                                             title="${Proyecto.constraints.codigoProyecto.attributes.mensaje}"
-                                             class="ui-widget-content ui-corner-all" minLenght="1" maxLenght="20"
-                                             style="width:240px;"
-                                             value="${proyecto?.codigoProyecto}"/>
-                            </td>
+                        <td colspan="4" valign="middle">
+                            <g:select class="required requiredCmb ui-widget-content ui-corner-all"
+                                      name="unidadAdministradora.id"
+                                      title="${Proyecto.constraints.unidadAdministradora.attributes.mensaje}"
+                                      style="width: 900px;"
+                                      from="${yachay.parametros.UnidadEjecutora.list()}" optionKey="id"
+                                      value="${proyecto?.unidadAdministradora?.id}"/>
+                        </td>
+                    </tr>
+
+                    <tr class="prop ${hasErrors(bean: proyecto, field: 'codigoProyecto', 'error')}">
+
                             <td class="label " valign="middle">
                                 Código
                             </td>
@@ -115,27 +120,23 @@
                                              style="width:240px;"
                                              value="${proyecto?.codigo}"/>
                             </td>
-                        </tr>
-
-                        <tr class="prop ${hasErrors(bean: proyecto, field: 'unidadEjecutora', 'error')}">
-
                             <td class="label " valign="middle">
-                                U. Administradora
+                                CUP
                             </td>
 
-                            <td class="indicator mandatory">
-                                <span class="indicator">*</span>
+                            <td class="indicator">
+                                &nbsp;
                             </td>
 
                             <td class="campo" valign="middle">
-                                <g:select class="required requiredCmb ui-widget-content ui-corner-all"
-                                          name="unidadAdministradora.id"
-                                          title="${Proyecto.constraints.unidadAdministradora.attributes.mensaje}"
-                                          style="width: 360px;"
-                                          from="${yachay.parametros.UnidadEjecutora.list()}" optionKey="id"
-                                          value="${proyecto?.unidadAdministradora?.id}"/>
+                                <g:textField name="codigoProyecto" id="codigoProyecto"
+                                             title="${Proyecto.constraints.codigoProyecto.attributes.mensaje}"
+                                             class="ui-widget-content ui-corner-all" minLenght="1" maxLenght="20"
+                                             style="width:240px;"
+                                             value="${proyecto?.codigoProyecto}"/>
                             </td>
                         </tr>
+
 
                         <tr class="prop ${hasErrors(bean: proyecto, field: 'monto', 'error')} ${hasErrors(bean: proyecto, field: 'informacionDias', 'error')}">
                             <td class="label  mandatory" valign="middle">
@@ -155,7 +156,7 @@
 
                             <td class="label" valign="middle">
                                 <g:message code="proyecto.codigoEsigef.label"
-                                           default="Número proyecto"/>
+                                           default="Código Financiero"/>
                             </td>
 
                             <td class="indicator">
@@ -360,7 +361,28 @@
                             </td> <!-- campo -->
                         </tr>
 
-                        <tr class="prop ${hasErrors(bean: proyecto, field: 'subPrograma', 'error')} ${hasErrors(bean: proyecto, field: 'programa', 'error')}">
+                    <tr class="prop ${hasErrors(bean: proyecto, field: 'portafolio', 'error')} ${hasErrors(bean: proyecto, field: 'portafolio', 'error')}">
+                        <td class="label " valign="middle">
+                            <g:message code="portafolio.programa.label" default="Portafolio"/>
+                        </td>
+
+                        <td class="indicator">
+                            &nbsp;
+                        </td>
+
+                        <td colspan="4" valign="middle">
+                            <g:select class="field ui-widget-content ui-corner-all portafolioId" name="portafolio.id"
+                                      title="${Proyecto.constraints.portafolio.attributes.mensaje}"
+                                      style="width: 900px;"
+                                      from="${yachay.proyectos.Portafolio.list()}" optionKey="id"
+                                      optionValue="descripcion" value="${proyecto?.portafolio?.id}"
+                                      noSelection="['null': '']"/>
+                        </td>
+
+                    </tr>
+
+
+                    <tr class="prop ${hasErrors(bean: proyecto, field: 'subPrograma', 'error')} ${hasErrors(bean: proyecto, field: 'programa', 'error')}">
                             <td class="label " valign="middle">
                                 <g:message code="proyecto.programa.label" default="Programa"/>
                             </td>
@@ -379,25 +401,6 @@
 
                         </tr>
 
-                        <tr class="prop ${hasErrors(bean: proyecto, field: 'portafolio', 'error')} ${hasErrors(bean: proyecto, field: 'portafolio', 'error')}">
-                            <td class="label " valign="middle">
-                                <g:message code="portafolio.programa.label" default="Portafolio"/>
-                            </td>
-
-                            <td class="indicator">
-                                &nbsp;
-                            </td>
-
-                            <td colspan="4" valign="middle">
-                                <g:select class="field ui-widget-content ui-corner-all portafolioId" name="portafolio.id"
-                                          title="${Proyecto.constraints.portafolio.attributes.mensaje}"
-                                          style="width: 900px;"
-                                          from="${yachay.proyectos.Portafolio.list()}" optionKey="id"
-                                          optionValue="descripcion" value="${proyecto?.portafolio?.id}"
-                                          noSelection="['null': '']"/>
-                            </td>
-
-                        </tr>
 
                     </tbody>
                     <tfoot>
@@ -409,7 +412,7 @@
                                     </div>
 
                                     <div class="botones right">
-                                        <a href="#" class="button save" title="A objetivos del buen vivir">
+                                        <a href="#" class="button save" title="A Plan Nacional de Desarrollo">
                                             Guardar y Continuar
                                         </a>
                                     </div>
