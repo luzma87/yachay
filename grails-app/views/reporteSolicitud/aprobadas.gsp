@@ -111,7 +111,7 @@
                                 <th>Valor ${a.anio}</th>
                             </g:each>
                             <th>Monto</th>
-                            <th>Aprobacion</th>
+                            <th>Aprobación</th>
                             %{--<th>Acta</th>--}%
                             <th>
                                 Fecha<br/>
