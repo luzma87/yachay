@@ -48,7 +48,7 @@
         <thead>
         %{--<th>#</th>--}%
 
-        <th style="width: 200px">Programa</th>
+        %{--<th style="width: 200px">Programa</th>--}%
         <th style="width: 200px">Proyecto</th>
         <th style="width: 200px">Componente</th>
         <th style="width: 280px">Actividad</th>
@@ -72,10 +72,10 @@
                 </g:else>
             </g:if>
             <tr class="${(i % 2) == 0 ? 'odd' : 'even'}"  style='${(asg.reubicada=='S')?"background: #d5f0d4":""}'>
-                <td class="prog" style="width: 200px;"
-                    title="">
-                    ${asg.marcoLogico?.proyecto?.programaPresupuestario.descripcion}
-                </td>
+                %{--<td class="prog" style="width: 200px;"--}%
+                    %{--title="">--}%
+                    %{--${asg.marcoLogico?.proyecto?.programaPresupuestario.descripcion}--}%
+                %{--</td>--}%
                 <td class="dscr" style="width: 200px;">
                     ${asg.marcoLogico.proyecto}
                 </td>

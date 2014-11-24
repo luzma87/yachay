@@ -32,20 +32,20 @@
             %{--<g:link class="btn" controller="asignacion" action="programacionInversion" params="[id:unidad.id,anio:actual.id]">Programación</g:link>--}%
             <div style="margin-top: 15px;">
 
-                <table width="600">
+                <table width="700">
                     <tr>
                         <th>Año</th>
-                        <th>Programa</th>
+                        %{--<th>Programa</th>--}%
                         <th>Componente</th>
                     </tr>
 
                     <tr>
                         <td><g:select from="${Anio.list([sort: 'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/></td>
-
-                        <td>
-                            <input type="hidden" id="programa" name="programa" class="cronograma" value="${proy.programaPresupuestario.id}">
-                            ${proy.programaPresupuestario}
-                        </td>
+                        <input type="hidden" id="programa" name="programa" class="cronograma" value="${proy.programaPresupuestario.id}">
+                        %{--<td>--}%
+                            %{----}%
+                            %{--${proy.programaPresupuestario}--}%
+                        %{--</td>--}%
 
                         <td>
 
@@ -119,7 +119,7 @@
             <table style="width: 100%; margin-bottom: 10px;">
                 <thead>
                     %{--<th style="width: 40px;">ID</th>--}%
-                    <th style="width: 220px">Programa</th>
+                    %{--<th style="width: 220px">Programa</th>--}%
                     <th style="width: 120px">Componente</th>
                     <th style="width: 240px">Actividad</th>
                     <th style="width: 60px;">Partida</th>
@@ -136,9 +136,9 @@
                             %{--<td>--}%
                             %{--${asg.id}--}%
                             %{--</td>--}%
-                            <td class="programa">
-                                ${asg.marcoLogico.proyecto.programaPresupuestario}
-                            </td>
+                            %{--<td class="programa">--}%
+                                %{--${asg.marcoLogico.proyecto.programaPresupuestario}--}%
+                            %{--</td>--}%
 
                             <td>
                                 ${asg.marcoLogico.marcoLogico}
@@ -377,7 +377,7 @@
                     }
                 });
 
-                $("#componente").selectmenu({width : 340, height : 50}).change(function () {
+                $("#componente").selectmenu({width : 600, height : 50}).change(function () {
                     location.href = "${g.createLink(action: 'agregarAsignacionInv')}?id=${proy.id}&anio=" + $("#anio_asg").val() + "&comp=" + $("#componente").val();
                 });
                 $("#actv").selectmenu({width : 315, height : 50});
