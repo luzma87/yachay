@@ -75,17 +75,21 @@
             primary : "ui-icon-check"
         }
     }).click(function () {
-        var id = $(this).attr("id");
-        $.ajax({
-            type    : "POST",
-            url     : "${createLink(action:'completar')}",
-            data    : {
-                id : id
-            },
-            success : function (msg) {
-                updateAll(msg);
-            }
-        });
+        if(confirm("Está seguro?")){
+            var id = $(this).attr("id");
+            $.ajax({
+                type    : "POST",
+                url     : "${createLink(action:'completar')}",
+                data    : {
+                    id : id
+                },
+                success : function (msg) {
+                    updateAll(msg);
+                }
+            });
+            return false
+        }
+
         return false;
     });
 </script>
