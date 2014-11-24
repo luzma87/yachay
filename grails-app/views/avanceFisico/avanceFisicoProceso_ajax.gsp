@@ -75,7 +75,7 @@
             primary : "ui-icon-check"
         }
     }).click(function () {
-        if(confirm("Está seguro?")){
+        if(confirm("    Está seguro? \n\nEstá por registrar esta subactividad como ejecutada al 100%")){
             var id = $(this).attr("id");
             $.ajax({
                 type    : "POST",

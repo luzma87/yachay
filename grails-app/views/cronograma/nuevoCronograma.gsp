@@ -95,7 +95,7 @@
             <input type="hidden" id="fuente_${ta.key}" value="${ta.value}">
         </g:each>
         <th colspan="16">
-            <g:select from="${yachay.parametros.poaPac.Anio.list()}" optionKey="id" optionValue="anio"
+            <g:select from="${yachay.parametros.poaPac.Anio.list([sort:'anio'])}" optionKey="id" optionValue="anio"
                       name="anio" id="anio" value="${anio.id}"
                       style="width: 80px"/>
         </th>
