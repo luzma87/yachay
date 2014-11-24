@@ -24,8 +24,7 @@ class Anio implements Serializable {
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
     static mapping = {
-//        table 'anio'
-        table 'c_anio'
+        table 'anio'
         cache usage: 'read-write', include: 'non-lazy'
         id column: 'anio__id'
         id generator: 'identity'

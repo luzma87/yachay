@@ -234,6 +234,7 @@
                                 </a>
                 --}%
 
+%{--
                 <g:if test="${proyectoInstance.aprobado == 'a'}">
                     <g:link class="button list" action="solicitarModificacion" controller="modificacionProyecto"
                             id="${proyectoInstance.id}">
@@ -245,6 +246,10 @@
                         Editar
                     </g:link>
                 </g:else>
+--}%
+                <g:link class="button edit" action="formProyecto" id="${proyectoInstance?.id}">
+                    Editar
+                </g:link>
 
 
                 <g:link class="button delete" action="deleteProyecto" id="${proyectoInstance?.id}">

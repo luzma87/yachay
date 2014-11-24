@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="layout" content="main"/>
+    <meta name="layout" content="mainw"/>
     <title>Cronograma</title>
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}"
           type="text/css"/>
@@ -125,7 +125,7 @@
 %{--<g:set var="totOtroAnioComp" value="0"></g:set>--}%
     <tr>
         <td class="colGrande componente" style="background: ${colores[indice.toInteger()]}"
-            colspan="17"><b>Componente ${j + 1}</b>: ${(comp.objeto.length() > 100) ? comp.objeto.substring(0, 100) + "..." : comp.objeto}
+            colspan="17"><b>Componente ${j + 1}</b>: ${(comp.objeto.length() > 80) ? comp.objeto.substring(0, 80) + "..." : comp.objeto}
         </td>
     </tr>
     <g:each in="${yachay.proyectos.MarcoLogico.findAllByMarcoLogicoAndEstado(comp,0,[sort:'id'])}" var="act" status="i">
