@@ -39,18 +39,27 @@
         <table style="width: 100%">
             <thead>
             <tr>
-                <th>Fecha</th>
+
                 <th>Descripción</th>
+                <th>
+                    Fecha Planificada<br>
+                    de cumplimiento
+                </th>
+                <th></th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <g:each in="${hitos}" var="h">
                 <tr>
-                    <td>${h.fecha.format("dd-MM-yyyy")}</td>
+
                     <td>${h.descripcion}</td>
+                    <td>${h.fechaPlanificada?.format("dd-MM-yyyy")}</td>
                     <td style="text-align: center">
-                        <g:link controller="hito" action="crearHito" id="${h.id}" class="btn" >Ver</g:link>
+                        <g:link controller="hito" action="verHito" id="${h.id}" class="btn" >Ver ejecucíon</g:link>
+                    </td>
+                    <td style="text-align: center">
+                        <g:link controller="hito" action="crearHito" id="${h.id}" class="btn" >Editar</g:link>
                     </td>
                 </tr>
             </g:each>

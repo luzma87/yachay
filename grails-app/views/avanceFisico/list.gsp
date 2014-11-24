@@ -242,9 +242,7 @@
                     return false;
                 });
                 $(".btn").button();
-                $(".datepicker").datepicker({
-                    maxDate : "+0"
-                });
+                $(".datepicker").datepicker();
                 loadTabla();
                 setMinDate("${minDate}")
             });

@@ -45,71 +45,19 @@
                 Fecha planificada de cumplimiento
             </div>
             <div class="fieldSvt-medium" >
-                <g:textField name="fechaPlanificada" class="datepicker ui-widget-content ui-corner-all" style="width: 100px;" value="${hito?.fechaPlanificada?.format('dd/MM/yyyy')}"/>
+                ${hito?.fechaPlanificada?.format('dd/MM/yyyy')}
             </div>
         </div>
         <div class="fila" style="height: 110px">
             <div class="labelSvt">Descripción:</div>
             <div class="fieldSvt-xxxl" style="width: 800px">
-                <textarea name="descripcion" style="width:100%;height: 100px" id="descripcion">${hito?.descripcion}</textarea>
+                ${hito?.descripcion}
             </div>
         </div>
-        <div class="fila" >
-            <div class="fieldSvt-small" style="margin-left: 30px;">
-                <a href="#" id="guardar" class="btn">Guardar</a>
-            </div>
-        </div>
+
     </g:form>
 </fieldset>
-<fieldset style="width: 95%;height: 230px;" class="ui-corner-all">
-    <legend>Elementos</legend>
-    <div class="fila">
-        <div class="labelSvt">Proyecto:</div>
 
-        <div class="fieldSvt-xxxl">
-            <g:select from="${proyectos}" optionKey="id" optionValue="nombre" name="proyecto.id" id="proy" style="width:100%" class="ui-corner-all ui-widget-content cmb" value="${proceso?.proyecto?.id}" noSelection="['-1': 'Seleccione...']"></g:select>
-        </div>
-        <div class="labelSvt">
-            <a href="#" class="btn" id="ag_proy">Agregar</a>
-        </div>
-    </div>
-    <div class="fila">
-        <div class="labelSvt">Componente:</div>
-
-        <div class="fieldSvt-xxxl" id="div_comp">
-            <g:select  class="cmb" from="${[]}" optionValue="objeto" optionKey="id" name="comp" id="comp" noSelection="['-1': 'Seleccione...']" style="width: 100%"></g:select>
-            %{--<g:select  class="cmb" from="${yachay.proyectos.MarcoLogico.findAllByProyectoAndTipoElemento(proceso?.proyecto, yachay.parametros.TipoElemento.get(2))}" optionValue="objeto" optionKey="id" name="comp" id="comp" noSelection="['-1': 'Seleccione...']" style="width: 100%"></g:select>--}%
-
-        </div>
-        <div class="labelSvt">
-            <a href="#" class="btn" id="ag_comp">Agregar</a>
-        </div>
-    </div>
-
-    <div class="fila">
-        <div class="labelSvt">Actividad:</div>
-
-        <div class="fieldSvt-xxxl" id="divAct">
-            <g:select class="cmb" from="${[]}" id="actividad" name="actividad" style="width:100%" noSelection="['-1': 'Seleccione']"></g:select>
-        </div>
-        <div class="labelSvt">
-            <a href="#" class="btn" id="ag_act">Agregar</a>
-        </div>
-    </div>
-    <div class="fila" style="height: 2px;margin-top: 20px;margin-bottom: 20px">
-        <div style="width: 100%;border-bottom: 1px solid black"></div>
-    </div>
-    <div class="fila">
-        <div class="labelSvt">Proceso:</div>
-
-        <div class="fieldSvt-xxxl" >
-            <g:select class="cmb" from="${yachay.avales.ProcesoAval.list([sort: 'nombre'])}" id="proceso" name="proceso" optionKey="id" optionValue="nombre" style="width:100%" noSelection="['-1': 'Seleccione']"></g:select>
-        </div>
-        <div class="labelSvt">
-            <a href="#" class="btn" id="ag_proc">Agregar</a>
-        </div>
-    </div>
-</fieldset>
 <fieldset style="width: 95%;height: 300px;overflow: auto" class="ui-corner-all">
     <legend>Composición</legend>
     <div id="detalle" style="width: 95%"></div>
@@ -120,7 +68,8 @@
             type    : "POST",
             url     : "${createLink(action:'composicion')}",
             data    : {
-                id : "${hito?.id}"
+                id : "${hito?.id}",
+                ver: "true"
             },
             success : function (msg) {
                 $("#detalle").html(msg)
@@ -132,14 +81,10 @@
     </g:if>
     $(".btn").button()
     $(".cmb").selectmenu({width : 600});
-    $(".datepicker").datepicker();
     $("#guardar").click(function(){
         var msg =""
         if($("#descripcion").val().length==0){
             msg+="<br>Por favor, ingrese una descripción"
-        }
-        if($(".datepicker").val().length==0){
-            msg+="<br>Por favor, seleccione una fecha de cumplimiento"
         }
         if(msg==""){
             $(".frmHito").submit()
@@ -159,7 +104,6 @@
         }
     })
     $("#ag_proy").click(function(){
-        <g:if test="${hito}">
         var  msg =""
         if($("#proy").val()=="-1"){
             msg="Seleccione un proyecto"
@@ -191,24 +135,8 @@
                 }
             });
         }
-        </g:if>
-        <g:else>
-        $.box({
-            title  : "Error",
-            text   : "Primero guarde el hito con el botón Guardar",
-            dialog : {
-                resizable : false,
-                buttons   : {
-                    "Cerrar" : function () {
-
-                    }
-                }
-            }
-        });
-        </g:else>
     });
     $("#ag_comp").click(function(){
-        <g:if test="${hito}">
         var  msg =""
         if($("#comp").val()=="-1"){
             msg="Seleccione un componente"
@@ -240,24 +168,8 @@
                 }
             });
         }
-        </g:if>
-        <g:else>
-        $.box({
-            title  : "Error",
-            text   : "Primero guarde el hito con el botón Guardar",
-            dialog : {
-                resizable : false,
-                buttons   : {
-                    "Cerrar" : function () {
-
-                    }
-                }
-            }
-        });
-        </g:else>
     });
     $("#ag_act").click(function(){
-        <g:if test="${hito}">
         var  msg =""
         if($("#actividad").val()=="-1"){
             msg="Seleccione una actividad"
@@ -289,24 +201,8 @@
                 }
             });
         }
-        </g:if>
-        <g:else>
-        $.box({
-            title  : "Error",
-            text   : "Primero guarde el hito con el botón Guardar",
-            dialog : {
-                resizable : false,
-                buttons   : {
-                    "Cerrar" : function () {
-
-                    }
-                }
-            }
-        });
-        </g:else>
     });
     $("#ag_proc").click(function(){
-        <g:if test="${hito}">
         var  msg =""
         if($("#proceso").val()=="-1"){
             msg="Seleccione un proceso"
@@ -338,21 +234,6 @@
                 }
             });
         }
-        </g:if>
-        <g:else>
-        $.box({
-            title  : "Error",
-            text   : "Primero guarde el hito con el botón Guardar",
-            dialog : {
-                resizable : false,
-                buttons   : {
-                    "Cerrar" : function () {
-
-                    }
-                }
-            }
-        });
-        </g:else>
     });
 
     $("#proy").change(function(){

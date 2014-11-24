@@ -21,13 +21,21 @@ class HitoController {
 
     }
 
+    def verHito = {
+        def hito = Hito.get(params.id)
+        [hito:hito]
+    }
+
     def saveHito = {
+        println "params "+params
         def hito
         if(params.id)
             hito = Hito.get(params.id)
         else
             hito = new Hito()
+        def fechaP = new Date().parse("dd/MM/yyyy",params.fechaPlanificada)
         hito.descripcion = params.descripcion
+        hito.fechaPlanificada = fechaP
         if(!hito.fecha)
             hito.fecha=new Date()
         hito.tipo="A"
@@ -58,7 +66,8 @@ class HitoController {
                 def comp = new ComposicionHito()
                 comp.hito=hito
                 comp.proceso = ProcesoAval.get(params.componente)
-                comp.save(flush: true)
+                if(!comp.save(flush: true))
+                    println "errores save "+comp.errors
                 break;
             default:
                 println "wtf"
@@ -67,10 +76,10 @@ class HitoController {
         redirect(action: "composicion",id: hito.id)
 
     }
-    
+
     def composicion = {
         def hito = Hito.get(params.id)
-        return [comp:ComposicionHito.findAllByHito(hito,[sort: "id"])]
+        return [comp:ComposicionHito.findAllByHito(hito,[sort: "id"]),ver:params.ver,hito:hito]
     }
 
     def componentesProyecto = {
@@ -224,6 +233,6 @@ class HitoController {
 
 
     }
-    
+
 
 }

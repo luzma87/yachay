@@ -1,6 +1,7 @@
 package yachay.avales
 
 import app.Cuantificable
+import yachay.hitos.AvanceFisico
 import yachay.proyectos.Proyecto
 
 /**
@@ -60,5 +61,12 @@ class ProcesoAval {
             monto += it.monto
         }
         return monto
+    }
+    def getAvanceFisico(){
+        def avance = 0
+        AvanceFisico.findAllByProcesoAndCompletadoIsNotNull(this).each {
+            avance+=it.avance
+        }
+        return avance
     }
 }

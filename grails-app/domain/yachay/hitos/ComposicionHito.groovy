@@ -3,6 +3,7 @@ package yachay.hitos
 import app.Cuantificable
 import yachay.avales.ProcesoAsignacion
 import yachay.avales.ProcesoAval
+import yachay.poa.Asignacion
 import yachay.proyectos.MarcoLogico
 import yachay.proyectos.Proyecto
 
@@ -68,5 +69,78 @@ class ComposicionHito  {
         fecha(blank: false, nullable: false)
 
     }
+
+    def calcularAvanceFisico(){
+        def avance = 0
+        def tot = 0
+        def avanceTotal = 0
+        if(this.proyecto){
+            println "--->proyecto!!!! "+this.proyecto
+            def procesos = ProcesoAval.findAllByProyecto(this.proyecto)
+            if(procesos.size()==0)
+                return 0
+            else{
+                tot = procesos.sum{it.getMonto()}
+
+                println "total procesos "+tot
+                procesos.each {p->
+                    avance=0
+                    def representacion = p.getMonto()*100/tot
+                    println "-----------------------"
+                    println "proceso "+p.nombre+" representacion "+representacion
+                    def avfs = AvanceFisico.findAllByProcesoAndCompletadoIsNotNull(p)
+                    avfs.each {av->
+                        avance+=av.avance
+                    }
+                    println "avance  "+(representacion*avance/100)
+                    avanceTotal+=representacion*avance/100
+                }
+                avance=avanceTotal
+            }
+
+
+        }
+        if(this.proceso){
+            println "-->proceso!!!!"
+            avance = this.proceso.avanceFisico
+            println "avance  "+avance
+
+        }
+        if(this.marcoLogico){
+
+            if(this.marcoLogico.tipoElemento.id==3){
+                return this.marcoLogico.getAvanceFisico()
+            }else{
+                println "-->Componente!!!! "
+                def totalP = this.marcoLogico.totalPriorizado
+                println "total p "+totalP
+                def acts = MarcoLogico.findAllByMarcoLogico(this.marcoLogico)
+                def representcion = 0
+                acts.each {a->
+                    representcion = a.getTotalPriorizado()*100/totalP
+                    def avanceA = a.getAvanceFisico()
+                    println "representacion "+representcion+" avance "+avanceA
+                    avance+= representcion*avanceA/100
+                }
+
+            }
+        }
+        println "return "+avance
+        return avance
+    }
+
+    def getPriorizado(){
+        if(this.proyecto){
+            return this.proyecto.getValorPriorizado()
+        }
+        if(proceso){
+            return this.proceso.monto
+        }
+        if(marcoLogico){
+            return this.marcoLogico.getTotalPriorizado()
+        }
+
+    }
+
 
 }

@@ -16,6 +16,11 @@ class Hito {
    */
     Date fechaCumplimiento
     /*
+      /*
+   * Fecha de esperada de cumpliento
+   */
+    Date fechaPlanificada
+    /*
   * Tipo de hito, financiero o físico
   */
     String tipo /* F--> fisico  I--> financiero  */
@@ -41,6 +46,7 @@ class Hito {
             descripcion column: 'hitodscr'
             fecha column: 'hitofcha'
             fechaCumplimiento column: 'hitofccm'
+            fechaPlanificada column: 'hitofcpl'
             avanceFisico column: 'hitoavfs'
             avanceFinanciero column: 'hitoavfi'
         }
@@ -52,6 +58,28 @@ class Hito {
 
         fecha(blank: false, nullable: false)
         fechaCumplimiento(blank: true, nullable: true)
+        fechaPlanificada(blank: true, nullable: true)
         descripcion(blank: false, nullable: false,size: 1..1024)
+    }
+
+    def getAvaneFisico(){
+        def avance = 0
+        def total = 0
+        def comps = ComposicionHito.findAllByHito(this)
+        if(comps.size()>0){
+            total=comps.sum{it.getPriorizado()}
+            println "total  hito "+total
+        }else{
+            return 0
+        }
+        comps.each {c->
+            def representacion = c.getPriorizado()*100/total
+            def avanceF=c.calcularAvanceFisico()
+            println "comp "+c.id+" "+c.getPriorizado()+" representacion "+representacion+"  "+avanceF
+            avance+=representacion*avanceF/100
+            println "avance "+representacion*avanceF/100
+        }
+        println avance
+        return avance
     }
 }

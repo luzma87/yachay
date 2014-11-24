@@ -8,10 +8,16 @@
     <th>Actividad</th>
     <th>Proceso</th>
     <th>Valor</th>
-    <th></th>
+    <g:if test="${params.ver!='true'}">
+        <th></th>
+    </g:if>
+    <g:else>
+        <th>Avance Físico (%)</th>
+    </g:else>
     </thead>
     <tbody>
     <g:set var="total" value="${0}"></g:set>
+    <g:set var="totalAvance" value="${0}"></g:set>
     <g:each in="${comp}" var="c">
         <tr>
             <td>${c.fecha.format("dd-MM-yyyy")}</td>
@@ -54,14 +60,28 @@
                 <td style="text-align: right"><g:formatNumber number="${c.proceso.monto}" type="currency"/></td>
                 <g:set var="total" value="${total+c.proceso.monto}"></g:set>
             </g:if>
-            <td>
-                <a href="#" class="borrar" iden="${c.id}">Borrar</a>
-            </td>
+
+            <g:if test="${params.ver!='true'}">
+                <td>
+                    <a href="#" class="borrar" iden="${c.id}">Borrar</a>
+                </td>
+            </g:if>
+            <g:else>
+                <td style="text-align: right">
+                    <g:set var="av" value="${c.calcularAvanceFisico().toDouble().round(2)}"></g:set>
+                    ${av}
+
+                </td>
+            </g:else>
+
         </tr>
     </g:each>
     <tr>
         <td style="font-weight: bold" colspan="6">TOTAL</td>
         <td style="text-align: right;font-weight: bold"><g:formatNumber number="${total}" type="currency"/></td>
+        <g:if test="${params.ver=='true'}">
+            <td style="text-align: right;font-weight: bold"><g:formatNumber number="${hito.getAvaneFisico()}" maxFractionDigits="2" minFractionDigits="2"/>%</td>
+        </g:if>
     </tr>
     </tbody>
 </table>

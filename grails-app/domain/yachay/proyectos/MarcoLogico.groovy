@@ -1,6 +1,8 @@
 package yachay.proyectos
 
 import app.Cuantificable
+import yachay.avales.ProcesoAsignacion
+import yachay.hitos.AvanceFisico
 import yachay.parametros.UnidadEjecutora
 import yachay.parametros.TipoElemento
 import yachay.poa.Asignacion
@@ -178,6 +180,28 @@ class MarcoLogico implements Serializable {
             }else{
                 return 0
             }
+        }
+    }
+
+    def getAvanceFisico(){
+        if(this.tipoElemento.id==3){
+            /*actividad*/
+            println "-->actividad!!! "
+            def  avance = 0
+            def totalP = this.getTotalPriorizado()
+            println "total marco "+totalP
+            def asgs = Asignacion.findAllByMarcoLogicoAndPriorizadoGreaterThan(this,0)
+            def representacion = 0
+            asgs.each {a->
+                representacion = a.priorizado*100/totalP
+                def avanceAsig = a.getAvanceFisico()
+                println "Asignacion "+a.marcoLogico+"representacion "+representacion+" avance "+avanceAsig
+                avance+=representacion*avanceAsig/100
+            }
+            println "return "+avance
+            return avance
+        }else{
+            return 0
         }
     }
 

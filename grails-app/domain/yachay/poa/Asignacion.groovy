@@ -2,6 +2,7 @@ package yachay.poa
 
 import app.Cuantificable
 import yachay.avales.DistribucionAsignacion
+import yachay.avales.ProcesoAsignacion
 import yachay.parametros.UnidadEjecutora
 import yachay.parametros.poaPac.Anio
 import yachay.parametros.TipoGasto
@@ -276,5 +277,21 @@ class Asignacion implements Serializable {
 //        println "valor mods  "+asg.id+"  --> "+valor
 
         return valor
+    }
+
+    def getAvanceFisico(){
+        println "-->Asignacion!!!"
+        def avance = 0
+        if(this.priorizado==0)
+            return 0
+        ProcesoAsignacion.findAllByAsignacion(this).each {pa->
+            def representacion = pa.monto*100/this.priorizado
+            println "a "+this.id+" priorizado  "+this.priorizado+" representacion "+representacion
+            def avp = pa.proceso.getAvanceFisico()
+            println "avance proceso "+pa.proceso.nombre+"  "+avp
+            avance+=representacion*avp/100
+        }
+        println "return "+avance
+        return avance
     }
 }

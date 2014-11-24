@@ -66,6 +66,9 @@
         });
         return false;
     });
+
+
+
     $(".btnCompletar").button({
         text  : false,
         icons : {
