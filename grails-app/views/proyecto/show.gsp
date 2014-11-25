@@ -300,6 +300,49 @@
 
                         <tr class="prop">
                             <td class="labelshow">
+                                <g:message code="proyecto.objetivoEstrategico.label"
+                                           default="Objetivo Estratégico"/>
+                            </td>
+
+                            <td class="" colspan="3">
+                                ${proyectoInstance?.objetivoEstrategico?.encodeAsHTML()}
+                            </td> <!-- campo -->
+                        </tr>
+
+                        <tr class="prop">
+                            <td class="labelshow">
+                                Estrategia
+                            </td>
+
+                            <td class="" colspan="3">
+                                ${proyectoInstance?.estrategia?.descripcion?.encodeAsHTML()}
+                            </td> <!-- campo -->
+                        </tr>
+                        <tr class="prop">
+                            <td class="labelshow">
+                                <g:message code="proyecto.portafolio.label" default="Portafolio"/>
+                            </td>
+
+                            <td class="" colspan="3">
+                                ${proyectoInstance?.portafolio?.descripcion?.encodeAsHTML()}
+                            </td> <!-- campo -->
+                        </tr>
+
+                        <tr class="prop">
+                            <td class="labelshow">
+                                <g:message code="proyecto.programa.label" default="Programa"/>
+                            </td>
+
+                            <td class="" colspan="3">
+                                ${proyectoInstance?.programa?.encodeAsHTML()}
+                            </td> <!-- campo -->
+                        </tr>
+
+                        <tr><td class="labelshow">&nbsp;</td> </tr>
+                        <tr> </tr>
+
+                        <tr class="prop">
+                            <td class="labelshow">
                                 <g:message code="proyecto.unidadEjecutora.label" default="Unidad Administradora"/>
                             </td>
 
@@ -462,47 +505,6 @@
                                                             </td> <!-- campo -->
                                                         </tr>
                             --}%
-                        <tr><td class="labelshow">&nbsp;</td> </tr>
-                        <tr> </tr>
-                            <tr class="prop">
-                                <td class="labelshow">
-                                    <g:message code="proyecto.objetivoEstrategico.label"
-                                               default="Objetivo Estratégico"/>
-                                </td>
-
-                                <td class="" colspan="3">
-                                    ${proyectoInstance?.objetivoEstrategico?.encodeAsHTML()}
-                                </td> <!-- campo -->
-                            </tr>
-
-                            <tr class="prop">
-                                <td class="labelshow">
-                                    Estrategia
-                                </td>
-
-                                <td class="" colspan="3">
-                                    ${proyectoInstance?.estrategia?.descripcion?.encodeAsHTML()}
-                                </td> <!-- campo -->
-                            </tr>
-                        <tr class="prop">
-                            <td class="labelshow">
-                                <g:message code="proyecto.portafolio.label" default="Portafolio"/>
-                            </td>
-
-                            <td class="" colspan="3">
-                                ${proyectoInstance?.portafolio?.descripcion?.encodeAsHTML()}
-                            </td> <!-- campo -->
-                        </tr>
-
-                            <tr class="prop">
-                                <td class="labelshow">
-                                    <g:message code="proyecto.programa.label" default="Programa"/>
-                                </td>
-
-                                <td class="" colspan="3">
-                                    ${proyectoInstance?.programa?.encodeAsHTML()}
-                                </td> <!-- campo -->
-                            </tr>
 
 
                         </tbody>

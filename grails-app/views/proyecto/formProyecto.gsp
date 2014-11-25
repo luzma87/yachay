@@ -82,6 +82,79 @@
                                             value="${proyecto?.nombre}"/>
                             </td>
                         </tr>
+                    <tr>
+                        <td class="label" valign="middle">
+                            Objetivo Estrat&eacute;gico
+                        </td>
+
+                        <td class="indicator">
+                            &nbsp;
+                        </td>
+
+                        <td colspan="4" class="" colspan="3">
+                            <g:select class="ui-widget-content ui-corner-all objetivoEstrategico"
+                                      name="objetivoEstrategico.id"
+                                      title="${Proyecto.constraints.objetivoEstrategico.attributes.mensaje}"
+                                      style="width: 360px;"
+                                      from="${ObjetivoEstrategicoProyecto.list()}" optionKey="id"
+                                      value="${proyecto?.objetivoEstrategico?.id}"
+                                      noSelection="['null': '']"/>
+                        </td> <!-- campo -->
+                    </tr>
+
+                    <tr>
+                        <td class="label" valign="middle">
+                            Estrategia
+                        </td>
+
+                        <td class="indicator">
+                            &nbsp;
+                        </td>
+
+                        <td colspan="4" class="" colspan="3" id="tdEstrategia">
+                            ...
+                        </td> <!-- campo -->
+                    </tr>
+
+                    <tr class="prop ${hasErrors(bean: proyecto, field: 'portafolio', 'error')} ${hasErrors(bean: proyecto, field: 'portafolio', 'error')}">
+                        <td class="label " valign="middle">
+                            <g:message code="portafolio.programa.label" default="Portafolio"/>
+                        </td>
+
+                        <td class="indicator">
+                            &nbsp;
+                        </td>
+
+                        <td colspan="4" valign="middle">
+                            <g:select class="field ui-widget-content ui-corner-all portafolioId" name="portafolio.id"
+                                      title="${Proyecto.constraints.portafolio.attributes.mensaje}"
+                                      style="width: 900px;"
+                                      from="${yachay.proyectos.Portafolio.list()}" optionKey="id"
+                                      optionValue="descripcion" value="${proyecto?.portafolio?.id}"
+                                      noSelection="['null': '']"/>
+                        </td>
+
+                    </tr>
+
+
+                    <tr class="prop ${hasErrors(bean: proyecto, field: 'subPrograma', 'error')} ${hasErrors(bean: proyecto, field: 'programa', 'error')}">
+                        <td class="label " valign="middle">
+                            <g:message code="proyecto.programa.label" default="Programa"/>
+                        </td>
+
+                        <td class="indicator">
+                            &nbsp;
+                        </td>
+
+                        <td colspan="4" valign="middle">
+                            <g:select class="field ui-widget-content ui-corner-all programaId" name="programa.id"
+                                      title="${Proyecto.constraints.programa.attributes.mensaje}"
+                                      style="width: 900px;"
+                                      from="${yachay.parametros.proyectos.Programa.list()}" optionKey="id" value="${proyecto?.programa?.id}"
+                                      noSelection="['null': '']"/>
+                        </td>
+
+                    </tr>
 
                     <tr class="prop ${hasErrors(bean: proyecto, field: 'unidadEjecutora', 'error')}">
 
@@ -327,79 +400,6 @@
                             </td>
                         </tr>
 
-                        <tr>
-                            <td class="label" valign="middle">
-                                Objetivo Estrat&eacute;gico
-                            </td>
-
-                            <td class="indicator">
-                                &nbsp;
-                            </td>
-
-                            <td colspan="4" class="" colspan="3">
-                                <g:select class="ui-widget-content ui-corner-all objetivoEstrategico"
-                                          name="objetivoEstrategico.id"
-                                          title="${Proyecto.constraints.objetivoEstrategico.attributes.mensaje}"
-                                          style="width: 360px;"
-                                          from="${ObjetivoEstrategicoProyecto.list()}" optionKey="id"
-                                          value="${proyecto?.objetivoEstrategico?.id}"
-                                          noSelection="['null': '']"/>
-                            </td> <!-- campo -->
-                        </tr>
-
-                        <tr>
-                            <td class="label" valign="middle">
-                                Estrategia
-                            </td>
-
-                            <td class="indicator">
-                                &nbsp;
-                            </td>
-
-                            <td colspan="4" class="" colspan="3" id="tdEstrategia">
-                                ...
-                            </td> <!-- campo -->
-                        </tr>
-
-                    <tr class="prop ${hasErrors(bean: proyecto, field: 'portafolio', 'error')} ${hasErrors(bean: proyecto, field: 'portafolio', 'error')}">
-                        <td class="label " valign="middle">
-                            <g:message code="portafolio.programa.label" default="Portafolio"/>
-                        </td>
-
-                        <td class="indicator">
-                            &nbsp;
-                        </td>
-
-                        <td colspan="4" valign="middle">
-                            <g:select class="field ui-widget-content ui-corner-all portafolioId" name="portafolio.id"
-                                      title="${Proyecto.constraints.portafolio.attributes.mensaje}"
-                                      style="width: 900px;"
-                                      from="${yachay.proyectos.Portafolio.list()}" optionKey="id"
-                                      optionValue="descripcion" value="${proyecto?.portafolio?.id}"
-                                      noSelection="['null': '']"/>
-                        </td>
-
-                    </tr>
-
-
-                    <tr class="prop ${hasErrors(bean: proyecto, field: 'subPrograma', 'error')} ${hasErrors(bean: proyecto, field: 'programa', 'error')}">
-                            <td class="label " valign="middle">
-                                <g:message code="proyecto.programa.label" default="Programa"/>
-                            </td>
-
-                            <td class="indicator">
-                                &nbsp;
-                            </td>
-
-                            <td colspan="4" valign="middle">
-                                <g:select class="field ui-widget-content ui-corner-all programaId" name="programa.id"
-                                          title="${Proyecto.constraints.programa.attributes.mensaje}"
-                                          style="width: 900px;"
-                                          from="${yachay.parametros.proyectos.Programa.list()}" optionKey="id" value="${proyecto?.programa?.id}"
-                                          noSelection="['null': '']"/>
-                            </td>
-
-                        </tr>
 
 
                     </tbody>
