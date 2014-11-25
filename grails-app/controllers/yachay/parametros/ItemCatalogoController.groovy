@@ -162,7 +162,7 @@ class ItemCatalogoController {
             println("item " +  itemInstance)
 
             if(params.codigo){
-                itemInstance.codigo = params.codigo.toInteger()
+                itemInstance.codigo = params.codigo
             }else{
                 itemInstance.codigo = ''
             }

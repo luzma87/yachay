@@ -42,20 +42,24 @@
                     <g:link  controller="estrategia" action="list">Estrategia</g:link> que se aplica de acuerdo al objetivo estratégico
                 </div><br>
 
-%{--
-                <div class="item" texto="obgr">
-                    <g:link  controller="objetivoGobiernoResultado" action="list">Objetivos del Gobierno por Resultados</g:link> de acuerdo al sistema de Gobierno por Resultados
+                <div class="item" texto="anio">
+                    <g:link  controller="anio" action="list">A&ntilde;o Fiscal</g:link> Año al cual corresponde el PAPP. Es similar al período contable o año fiscal.
                 </div><br>
-                <div class="item" texto="pltc">
-                    <g:link  controller="politica" action="list">Pol&iacute;ticas que aplica el proyecto</g:link> Distintas políticas que pueden ser aplicadas en un proyecto
-                </div><br>
-                <div class="item" texto="prgr">
-                    <g:link  controller="programa" action="list">Programa</g:link> del cual forma parte un proyecto
-                </div><br>
-                <div class="item" texto="plas">
-                    <g:link  controller="politicaAgendaSocial" action="list">Políticas de la Agenda Social</g:link> que pueden aplicarse a un proyecto
-                </div><br>
---}%
+
+                %{--
+                                <div class="item" texto="obgr">
+                                    <g:link  controller="objetivoGobiernoResultado" action="list">Objetivos del Gobierno por Resultados</g:link> de acuerdo al sistema de Gobierno por Resultados
+                                </div><br>
+                                <div class="item" texto="pltc">
+                                    <g:link  controller="politica" action="list">Pol&iacute;ticas que aplica el proyecto</g:link> Distintas políticas que pueden ser aplicadas en un proyecto
+                                </div><br>
+                                <div class="item" texto="prgr">
+                                    <g:link  controller="programa" action="list">Programa</g:link> del cual forma parte un proyecto
+                                </div><br>
+                                <div class="item" texto="plas">
+                                    <g:link  controller="politicaAgendaSocial" action="list">Políticas de la Agenda Social</g:link> que pueden aplicarse a un proyecto
+                                </div><br>
+                --}%
 %{--
                 <div class="item" texto="tpel">
                     <g:link  controller="tipoElemento" action="list">Tipo de Elemento del Marco Lógico</g:link> para identificar los diferentes componentes del Marco L&oacute;gico
@@ -134,15 +138,10 @@
             </div>
 --}%
 
-            <div id="papp" class="ui-widget-content" style="height: 440px">
+            %{--<div id="papp" class="ui-widget-content" style="height: 440px">--}%
 %{--
                 <div class="item" texto="actv">
                     <g:link  controller="actividad" action="list">Actividades de Gasto Corriente</g:link> que figuran en el PAPP
-                </div><br>
---}%
-%{--
-                <div class="item" texto="anio">
-                    <g:link  controller="anio" action="list">A&ntilde;o Fiscal</g:link> Año al cual corresponde el PAPP. Es similar al período contable o año fiscal.
                 </div><br>
 --}%
 %{--
@@ -173,9 +172,9 @@
                     <g:link  controller="tipoGasto" action="list">Tipo de Gasto</g:link> de las asignaciones presupuestarias para los distintos proyectos y el PAPP
                 </div><br>
 --}%
-            </div>
+            %{--</div>--}%
 
-            <div id="grgf" class="ui-widget-content" style="height: 440px">
+            %{--<div id="grgf" class="ui-widget-content" style="height: 440px">--}%
 %{--
                 <div class="item" texto="mess">
                     <g:link  controller="mes" action="list">Mes del a&ntilde;o</g:link> para la planificaci&oacute;n del cronograma valorado
@@ -204,7 +203,7 @@
                     <g:link  controller="unidad" action="list">Unidad de Medida</g:link> Unidad de control o conteo de obras para el plan anual de adquisiciones (PAC) y para fijar las metas.
                 </div>
 --}%
-            </div>
+            %{--</div>--}%
 
         </div>
     </div>
