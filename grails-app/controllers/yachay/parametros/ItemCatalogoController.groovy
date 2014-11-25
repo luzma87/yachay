@@ -197,6 +197,47 @@ class ItemCatalogoController {
                 render("no_Error al actualizar los datos")
             }
 
+        } else {
+
+            itemInstance = new ItemCatalogo()
+            itemInstance.catalogo = Catalogo.get(params.cata.toInteger())
+
+            if(params.codigo){
+                itemInstance.codigo = params.codigo
+            }else{
+                itemInstance.codigo = ''
+            }
+
+            itemInstance.descripcion = params.descripcion
+            if(params.estado){
+                itemInstance.estado = params.estado.toInteger()
+            }else{
+                itemInstance.estado = 1
+            }
+
+            if(params.orden){
+                itemInstance.orden = params.orden.toInteger()
+            }else{
+                itemInstance.orden = 0
+            }
+
+            if(params.original){
+                itemInstance.original = params.original.toInteger()
+            }else{
+                itemInstance.original = 0
+            }
+
+            itemInstance.nombre = params.descripcion
+
+            if(itemInstance.save(flush: true)){
+                println("grabo")
+                render("ok_Item actualizado correctamente")
+
+            }else{
+                println("error" + itemInstance.errors)
+                render("no_Error al actualizar los datos")
+            }
+
         }
 
 
