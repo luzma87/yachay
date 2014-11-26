@@ -60,7 +60,7 @@
                                      id="fechaInicio" autocomplete="off"/>
                     </div>
 
-                    <div class="labelSvt">Fecha fin:</div>
+                    <div class="labelSvt" style="margin-left: 25px">Fecha fin:</div>
 
                     <div class="fieldSvt-small">
                         <g:textField class="datepicker field ui-widget-content ui-corner-all fechaFin"
@@ -69,6 +69,10 @@
                                      title="Fecha de finalización"
                                      value="${proceso?.fechaFin?.format('dd-MM-yyyy')}"
                                      id="fechaFin" autocomplete="off"/>
+                    </div>
+                    <div class="labelSvt" style="margin-left: 25px">Informar cada:</div>
+                    <div class="fieldSvt-medium">
+                        <input type="text" name="informar" id="informar" value="${proceso?.informar}" class="ui-corner-all ui-widget-content" style="width: 80px;text-align: right"> Días
                     </div>
                 </div>
 
@@ -225,7 +229,47 @@
                 }
             });
             $("#guardar").button().click(function () {
+                var dias = $("#informar").val()
+                var nombre =$("#nombre").val()
+                var inicio = $("#fechaInicio").val()
+                var fin = $("#fechaFin").val()
+                var msg =""
+                if(dias==""){
+                    msg+="<br>Ingrese un número entero positivo en el campo informar"
+                }else{
+                    if(isNaN(dias)){
+                        msg+="<br>Ingrese un número entero positivo en el campo informar"
+                    }else{
+                        if(dias*1<0)
+                            msg+="<br>Ingrese un número entero positivo en el campo informar"
+                    }
+                }
+
+                if(inicio==""){
+                    msg+="<br>Ingrese la fecha de inicio"
+                }
+                if(fin==""){
+                    msg+="<br>Ingrese la fecha de fin"
+                }
+                if(nombre==""){
+                    msg+="<br>Ingrese el nombre del proceso"
+                }
+                if(msg=="")
                 $(".frmProceso").submit()
+                else{
+                    $.box({
+                        title  : "Error",
+                        text   : msg,
+                        dialog : {
+                            resizable : false,
+                            buttons   : {
+                                "Cerrar" : function () {
+
+                                }
+                            }
+                        }
+                    });
+                }
             });
             $(".btn").button();
             $("#agregar").button().click(function () {

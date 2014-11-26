@@ -41,10 +41,8 @@
             <tr>
 
                 <th>Descripción</th>
-                <th>
-                    Fecha Planificada<br>
-                    de cumplimiento
-                </th>
+                <th>Inicio</th>
+                <th>Fin</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -53,8 +51,9 @@
             <g:each in="${hitos}" var="h">
                 <tr>
 
-                    <td>${h.descripcion}</td>
-                    <td>${h.fechaPlanificada?.format("dd-MM-yyyy")}</td>
+                    <td >${h.descripcion}</td>
+                    <td style="text-align: center">${h.inicio?.format("dd-MM-yyyy")}</td>
+                    <td style="text-align: center">${h.fechaPlanificada?.format("dd-MM-yyyy")}</td>
                     <td style="text-align: center">
                         <g:link controller="hito" action="verHito" id="${h.id}" class="btn" >Ver ejecucíon</g:link>
                     </td>

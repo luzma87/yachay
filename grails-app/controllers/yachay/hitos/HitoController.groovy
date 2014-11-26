@@ -34,8 +34,10 @@ class HitoController {
         else
             hito = new Hito()
         def fechaP = new Date().parse("dd/MM/yyyy",params.fechaPlanificada)
+        def inicio = new Date().parse("dd/MM/yyyy",params.inicio)
         hito.descripcion = params.descripcion
         hito.fechaPlanificada = fechaP
+        hito.inicio = inicio
         if(!hito.fecha)
             hito.fecha=new Date()
         hito.tipo="A"
@@ -83,13 +85,11 @@ class HitoController {
     }
 
     def componentesProyecto = {
-
         def proyecto = Proyecto.get(params.id)
         def comps = yachay.proyectos.MarcoLogico.findAllByProyectoAndTipoElemento(proyecto, TipoElemento.get(2))
         [comps:comps]
     }
     def cargarActividades = {
-
         def comp = MarcoLogico.get(params.id)
         def acts = MarcoLogico.findAllByMarcoLogico(comp)
         [acts:acts]

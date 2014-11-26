@@ -41,8 +41,14 @@
     <g:form action="saveHito" class="frmHito">
         <input type="hidden" name="id" value="${hito?.id}">
         <div class="fila" >
-            <div class="fieldSvt-large" style="font-weight: bold;margin-left: 10px">
-                Fecha planificada de cumplimiento
+            <div class="labelSvt" style="font-weight: bold;margin-left: 10px">
+                Inicio
+            </div>
+            <div class="labelSvt" >
+                <g:textField name="inicio" class="datepicker ui-widget-content ui-corner-all" style="width: 100px;" value="${hito?.inicio?.format('dd/MM/yyyy')}"/>
+            </div>
+            <div class="labelSvt" style="font-weight: bold;margin-left: 10px">
+                Fin
             </div>
             <div class="fieldSvt-medium" >
                 <g:textField name="fechaPlanificada" class="datepicker ui-widget-content ui-corner-all" style="width: 100px;" value="${hito?.fechaPlanificada?.format('dd/MM/yyyy')}"/>
@@ -139,7 +145,7 @@
             msg+="<br>Por favor, ingrese una descripción"
         }
         if($(".datepicker").val().length==0){
-            msg+="<br>Por favor, seleccione una fecha de cumplimiento"
+            msg+="<br>Por favor, seleccione las fechas de inicio y fin"
         }
         if(msg==""){
             $(".frmHito").submit()
