@@ -142,7 +142,7 @@ class AsignacionController extends yachay.seguridad.Shield {
     }
 
     def asignacionProyectov2 = {
-//        println "params " + params
+        println "params " + params
         def proyecto = Proyecto.get(params.id)
         def asignaciones = []
         def actual
