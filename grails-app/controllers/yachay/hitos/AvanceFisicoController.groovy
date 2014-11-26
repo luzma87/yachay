@@ -46,7 +46,7 @@ class AvanceFisicoController extends yachay.seguridad.Shield {
      */
     def avanceFisicoProceso_ajax = {
         def proceso = ProcesoAval.get(params.id)
-        def avances = AvanceFisico.findAllByProceso(proceso,[sort: "id"])
+        def avances = AvanceFisico.findAllByProceso(proceso,[sort: "inicio"])
         return [proceso: proceso, avances: avances]
     }
     /**
@@ -55,7 +55,8 @@ class AvanceFisicoController extends yachay.seguridad.Shield {
     def addAvanceFisicoProceso_ajax = {
         def proceso = ProcesoAval.get(params.id)
         def avance = new AvanceFisico()
-        params.fecha = new Date().parse("dd/MM/yyyy", params.fecha)
+        params.inicio = new Date().parse("dd/MM/yyyy", params.inicio)
+        params.fin = new Date().parse("dd/MM/yyyy", params.fin)
         params.avance = params.avance.toString().toDouble()
         avance.properties = params
         avance.proceso = proceso
@@ -68,6 +69,20 @@ class AvanceFisicoController extends yachay.seguridad.Shield {
         } else {
             render "NO"
         }
+    }
+
+    def agregarAvance = {
+        def avance = AvanceFisico.get(params.id)
+        def av = new AvanceAvance()
+        av.avanceFisico=avance
+        av.avance=params.avance.toDouble()
+        av.save(flush: true)
+        render "ok"
+    }
+
+    def detalleAv = {
+        def av = AvanceFisico.get(params.id)
+        [av:av,avances:AvanceAvance.findAllByAvanceFisico(av,[sort:"id"])]
     }
 
     /**

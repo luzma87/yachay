@@ -15,12 +15,16 @@ class Hito {
    * Fecha de cumplimiento
    */
     Date fechaCumplimiento
-    /*
-      /*
-   * Fecha de esperada de cumpliento
+
+   /*
+   * Fecha de esperada de inicio
    */
-    Date fechaPlanificada
+    Date inicio
     /*
+  * Fecha de esperada de cumpliento
+  */
+    Date fechaPlanificada
+  /*
   * Tipo de hito, financiero o físico
   */
     String tipo /* F--> fisico  I--> financiero  */
@@ -45,6 +49,7 @@ class Hito {
             id column: 'cmht__id'
             descripcion column: 'hitodscr'
             fecha column: 'hitofcha'
+            inicio column: 'hitofcin'
             fechaCumplimiento column: 'hitofccm'
             fechaPlanificada column: 'hitofcpl'
             avanceFisico column: 'hitoavfs'
@@ -59,6 +64,7 @@ class Hito {
         fecha(blank: false, nullable: false)
         fechaCumplimiento(blank: true, nullable: true)
         fechaPlanificada(blank: true, nullable: true)
+        inicio(blank: true, nullable: true)
         descripcion(blank: false, nullable: false,size: 1..1024)
     }
 

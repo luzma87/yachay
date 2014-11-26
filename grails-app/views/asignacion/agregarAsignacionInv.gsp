@@ -124,7 +124,6 @@
                     <th style="width: 240px">Actividad</th>
                     <th style="width: 60px;">Partida</th>
                     <th style="width: 200px">Desc. Presupuestaria</th>
-
                     <th>Fuente</th>
                     <th>Presupuesto</th>
                     <th></th>

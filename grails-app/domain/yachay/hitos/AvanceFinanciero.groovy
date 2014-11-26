@@ -1,5 +1,6 @@
 package yachay.hitos
 
+import yachay.avales.Aval
 import yachay.avales.ProcesoAval
 
 class AvanceFinanciero {
@@ -9,6 +10,10 @@ class AvanceFinanciero {
     */
     ProcesoAval proceso
     /*
+    * aval al que pertenece
+    */
+    Aval aval
+    /*
     * Número de contrato
     */
     String contrato
@@ -17,9 +22,13 @@ class AvanceFinanciero {
     */
     String certificado
     /*
-    * Monto del avance
+    * Monto del contrato
     */
     Double monto = 0
+    /*
+    * valor Devengado
+    */
+    Double valor = 0
     /*
     * Fecha de registro
     */
@@ -44,8 +53,10 @@ class AvanceFinanciero {
             proceso column: 'prco__id'
             contrato column: 'avficnto'
             monto column: 'avfimnto'
+            valor column: 'avfivlor'
             observaciones column: 'avfiobsr'
             certificado column: 'avficrtf'
+            aval column: 'aval__id'
         }
     }
 /**
@@ -56,5 +67,6 @@ class AvanceFinanciero {
         observaciones(blank: true,nullable: true,size: 1..1024)
         contrato(blank: false,nullable: false,size: 1..30)
         certificado(blank: false,nullable: false,size: 1..30)
+        aval(nullable: false,blank:false)
     }
 }
