@@ -23,10 +23,10 @@
 
             <div id="" class="toolbar ui-widget-header ui-corner-all">
                 <g:link class="button list" action="list">
-                    <g:message code="anio.list" default="Anio List" />
+                    <g:message code="anio.list" default="Listado de Años" />
                 </g:link>
                 <g:link class="button create" action="create">
-                    <g:message code="default.new.label" args="[entityName]" />
+                    Crear Año
                 </g:link>
             </div> <!-- toolbar -->
 

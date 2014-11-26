@@ -181,52 +181,6 @@
             }
         });
 
-        //módulos
-        $("#creaModulo").button().click(function() {
-            if (confirm("Crear un nuevo módulo \n")) {
-                $.ajax({
-                    type: "POST", url: "../creaMdlo",
-                    data: "&pdre=0",
-                    success: function(msg) {
-                        $("#ajx_menu").dialog("option","title","Crear Módulo")
-                        $("#ajx_menu").html(msg).show("puff", 100)
-                    }
-                });
-                $("#ajx_menu").dialog("open");
-            }
-        });
-
-        $("#editModulo").button().click(function() {
-            var datos = armar()
-            //alert(datos + "longitud: " + datos.length)
-            if(datos.length > 0) {
-              $.ajax({
-                  type: "POST", url: "../editMdlo",
-                  data: "&id=" + datos,
-                  success: function(msg) {
-                      $("#ajx_menu").dialog("option","title","Editar Módulo")
-                      $("#ajx_menu").html(msg).show("puff", 100)
-                  }
-              });
-              $("#ajx_menu").dialog("open");
-            } else alert ("Selecione un módulo")
-        });
-
-        $("#borraModulo").button().click(function() {
-            if($('.modulo:checked').attr('nombre') == undefined ) alert ("Seleccione un Modulo")
-            else {
-              if (confirm("Seguro que desea Borrar el Módulo: " + $('.modulo:checked').attr('nombre'))) {
-                $.ajax({
-                    type: "POST", url: "../borraMdlo",
-                    data: "&id=" + $('.modulo:checked').val(),
-                    success: function(msg) {
-                        location.reload(true);
-                    }
-                });
-              }
-            }
-        });
-
 
         $("#ajx_menu").dialog({
             autoOpen: false,

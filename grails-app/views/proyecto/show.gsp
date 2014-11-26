@@ -175,7 +175,7 @@
 
                 <!-- FLYOUT MENU MARCO -->
                 <a tabindex="0" href="#" id="menuMarco">
-                    Marco lógico
+                    Componentes y Actividades
                 </a>
 
                 <div id="items-menuMarco" class="hidden">
@@ -476,7 +476,7 @@
 
                             <tr class="prop">
                                 <td class="labelshow">
-                                    <g:message code="proyecto.problema.label" default="Problema"/>
+                                    <g:message code="proyecto.problema.label" default="Alcance"/>
                                 </td>
 
                                 <td class="" colspan="3">

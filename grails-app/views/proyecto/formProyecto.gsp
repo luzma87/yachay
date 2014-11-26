@@ -384,7 +384,7 @@
                         <tr class="prop ${hasErrors(bean: proyecto, field: 'problema', 'error')}">
 
                             <td class="label " valign="middle">
-                                <g:message code="proyecto.problema.label" default="Problema"/>
+                                <g:message code="proyecto.problema.label" default="Alcance"/>
                             </td>
 
                             <td class="indicator">

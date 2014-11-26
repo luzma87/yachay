@@ -144,51 +144,19 @@ Está seguro de eliminar este item?
     });
 
     $(".nuevo").click(function() {
-        if (confirm("Actualizar los permisos.. \n Seguro??")) {
-            var data = armarAccn()
-            alert("armado: " + data);
-            $.ajax({
-                type: "POST", url: "${createLink(action:'creaItem',controller:'itemCatalogo')}",
-                data: "&ids=" + data + "&ctlg=" + $('#catalogo').val(),
-                success: function(msg) {
-                    $("#ajx_item").dialog("option","title","Editar Item")
-                    $("#ajx_item").html(msg).show("puff", 100)
-                }
-            });
-            $("#ajx_item").dialog("open");
+        if (confirm("Crear un nuevo Item del Catálogo?")) {
+
+
+            $("#editar_dlg").dialog("open")
+            $("#id1").val("")
+            $("#id2").val("")
+            $("#id3").val("")
+            $("#id4").val("")
+            $("#id5").val("")
+            $("#editar_dlg").val(idFila)
         }
     });
 
-    $("#ajx_item").dialog({
-        autoOpen: false,
-        resizable:false,
-        title: 'Crear un Item',
-        modal:true,
-        draggable:false,
-        width:420,
-        position: 'center',
-        open: function(event, ui) {
-            $(".ui-dialog-titlebar-close").hide();
-        },
-        buttons: {
-            "Grabar": function() {
-                $(this).dialog("close");
-                $.ajax({
-                    type: "POST", url:  "${createLink(action:'grabaCtlg',controller:'catalogo')}",
-                    data: "&nombre=" + $('#nombre').val() + "&codigo=" + $('#codigo').val() +
-                    "&estado=" + $('#estado').val() + "&id=" + $('#id_ctlg').val(),
-                    success: function(msg) {
-                        //$("#ajx").html(msg)
-                        location.reload(true);
-
-                    }
-                });
-            },
-            "Cancelar": function() {
-                $(this).dialog("close");
-            }
-        }
-    });
 
     //editar item
 
