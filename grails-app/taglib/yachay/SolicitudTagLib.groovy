@@ -114,6 +114,13 @@ class SolicitudTagLib {
             html += solicitud.plazoEjecucion + " días"
             html += '</td>'
 
+            html += '<td class="label">Tipo de bien</td>'
+            html += '<td>'
+            html += (solicitud.tipoBien?.descripcion ?: "")
+            html += '</td>'
+            html += '</tr>'
+
+            html += '<tr>'
             html += '<td class="label">Modalidad de contratación</td>'
             html += '<td>'
             html += (solicitud.tipoContrato?.descripcion ?: "")

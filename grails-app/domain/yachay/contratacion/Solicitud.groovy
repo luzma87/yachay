@@ -1,6 +1,7 @@
 package yachay.contratacion
 
 import yachay.parametros.TipoAprobacion
+import yachay.parametros.TipoBien
 import yachay.parametros.UnidadEjecutora
 import yachay.parametros.TipoContrato
 import yachay.proyectos.MarcoLogico
@@ -79,6 +80,10 @@ class Solicitud {
      * Tipo de contrato
      */
     TipoContrato tipoContrato
+    /**
+     * Tipo de bien
+     */
+    TipoBien tipoBien
     /**
      * Nombre de proceso
      */
@@ -218,6 +223,7 @@ class Solicitud {
 
             montoSolicitado column: 'slctmnsl'
             tipoContrato column: 'tpcn__id'
+            tipoBien column: 'tpbn__id'
             nombreProceso column: 'slctnmpr'
             objetoContrato column: 'slctobcn'
             objetoContrato type: 'text'
