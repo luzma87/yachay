@@ -579,6 +579,7 @@ class RevisionAvalController {
                     aval.pathAnulacion = fileName
 //                    aval.memo=sol.memo
                     aval.estado = EstadoAval.findByCodigo("E04")
+                    aval.fechaAnulacion=new Date()
 //                    aval.monto=sol.monto
                     aval.save(flush: true)
                     sol.estado = EstadoAval.findByCodigo("E02")

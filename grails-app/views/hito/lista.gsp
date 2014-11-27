@@ -39,7 +39,6 @@
         <table style="width: 100%">
             <thead>
             <tr>
-
                 <th>Descripción</th>
                 <th>Inicio</th>
                 <th>Fin</th>
@@ -50,7 +49,6 @@
             <tbody>
             <g:each in="${hitos}" var="h">
                 <tr>
-
                     <td >${h.descripcion}</td>
                     <td style="text-align: center">${h.inicio?.format("dd-MM-yyyy")}</td>
                     <td style="text-align: center">${h.fechaPlanificada?.format("dd-MM-yyyy")}</td>

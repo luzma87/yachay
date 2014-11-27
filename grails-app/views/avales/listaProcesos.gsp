@@ -29,7 +29,7 @@
         <div class="fila">
             <g:link controller="avales" action="crearProceso" class="btn">Crear nuevo Proceso de contratación</g:link>
         </div>
-        <table style="width: 95%;margin-top: 10px">
+        <table style="width: 95%;margin-top: 10px;font-size: 11px">
             <thead>
                 <tr>
                     <th>Proyecto</th>
@@ -37,6 +37,7 @@
                     <th>Inicio</th>
                     <th>Fin</th>
                     <th>Monto</th>
+                    <th></th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -53,13 +54,16 @@
                             <g:formatNumber number="${p.getMonto()}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"></g:formatNumber>
                         </td>
                         <td style="text-align: center">
-                            <a href="${g.createLink(action: 'crearProceso', id: p.id)}" class="btn">Editar</a>
+                            <a href="${g.createLink(action: 'crearProceso', id: p.id)}" class="btn editar">Editar</a>
                         </td>
                         <td style="text-align: center">
                             <a href="${g.createLink(action: 'avalesProceso', id: p.id)}" class="btn">Avales</a>
                         </td>
                         <td style="text-align: center">
                             <a href="${g.createLink(controller: 'avanceFisico', action: 'list', id: p.id)}" class="btn">Actividades</a>
+                        </td>
+                        <td style="text-align: center">
+                            <a href="${g.createLink(controller: 'hito', action: 'avancesFinancieros', id: p.id)}" class="btn">Av. Financiero</a>
                         </td>
                     </tr>
                 </g:each>
@@ -68,6 +72,12 @@
         </table>
         <script>
             $(".btn").button()
+            $(".editar").button({
+                text  : false,
+                icons : {
+                    primary : "ui-icon-pencil"
+                }
+            })
         </script>
 
     </body>

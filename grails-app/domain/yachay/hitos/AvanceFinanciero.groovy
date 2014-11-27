@@ -63,10 +63,14 @@ class AvanceFinanciero {
  * Define las restricciones de cada uno de los campos
  */
     static constraints = {
-        proceso(nullable: false,blank:false)
+        proceso(nullable: true,blank:true)
         observaciones(blank: true,nullable: true,size: 1..1024)
         contrato(blank: false,nullable: false,size: 1..30)
-        certificado(blank: false,nullable: false,size: 1..30)
-        aval(nullable: false,blank:false)
+        certificado(blank: true,nullable: true,size: 1..30)
+        aval(nullable: true,blank:true)
+    }
+
+    String toString(){
+        return "${this.fecha.format('dd/MM/yyyy')}, Devengado: ${this.valor.round(2)}"
     }
 }

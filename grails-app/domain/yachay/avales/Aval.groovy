@@ -1,5 +1,6 @@
 package yachay.avales
 
+import yachay.hitos.AvanceFinanciero
 import yachay.seguridad.Firma
 
 /**
@@ -127,4 +128,57 @@ class Aval {
         firma1(blank: true, nullable: true)
         firma2(blank: true, nullable: true)
     }
+
+    def getColorSemaforo(){
+        def dias = proceso.fechaFin - proceso.fechaInicio
+        def fechaInicio = proceso.fechaInicio
+        def fechaFin = proceso.fechaFin
+        println "dias "+dias
+        def esperado = 0
+        def now = new Date()
+        if(now>fechaFin){
+            if(this.getAvanceFinanciero()<this.monto){
+                return [this.monto,this.getAvanceFinanciero(),"red",this.getUltimoAvance()]
+            }else{
+                return [this.monto,this.getAvanceFinanciero(),"green",this.getUltimoAvance()]
+            }
+        }else{
+            if(now<fechaInicio)
+                return [0,this.getAvanceFinanciero(),"green",this.getUltimoAvance()]
+            else{
+                esperado = this.monto*(now - fechaInicio)/dias
+//                esperado=esperado*this.monto
+                def verde = esperado*0.8
+                def amarillo = esperado*0.5
+                def avance = this.getAvanceFinanciero()
+                if(avance>=verde)
+                    return [esperado,this.getAvanceFinanciero(),"green",this.getUltimoAvance()]
+                if(avance>=amarillo)
+                    return [esperado,this.getAvanceFinanciero(),"yellow",this.getUltimoAvance()]
+                else
+                    return [esperado,this.getAvanceFinanciero(),"red",this.getUltimoAvance()]
+            }
+        }
+
+    }
+
+    def getAvanceFinanciero(){
+        def avances = AvanceFinanciero.findAllByAval(this,[sort:"id"])
+        if(avances.size()==0)
+            return 0
+        else{
+            return avances.pop().valor
+        }
+    }
+
+    def getUltimoAvance(){
+        def avances = AvanceFinanciero.findAllByAval(this,[sort:"id"])
+        if(avances.size()==0)
+            return null
+        else{
+            return avances.pop()
+        }
+    }
+
+
 }

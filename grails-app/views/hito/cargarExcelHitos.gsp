@@ -10,7 +10,9 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Subir archivo Excel</title>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'svt.css')}"
+          type="text/css"/>
+    <title>Cargar avances finan   cieros</title>
 
     <style type="text/css">
     .colorf {
@@ -22,18 +24,22 @@
 
 <body>
 <g:if test="${flash.message}">
-    <div class="message">${flash.message}</div>
+    <div class="message ui-state-highlight ui-corner-all">${flash.message}</div>
 </g:if>
-<div style="width: 800px; margin-bottom:5px; margin-top:10px; padding: 4px;" class="ui-corner-all ui-widget-content">
+<fieldset style="width: 800px; margin-bottom:5px; margin-top:10px; " class="ui-corner-all ui-widget-content">
+    <legend>Cargar avances financieros</legend>
     <g:form name="frmUpload" enctype="multipart/form-data" method="post" action="subirExcelHitos">
         <div class="container ui-corner-all" style="min-height: 100px; width: 800px;">
-            Archivo Excel: <input type="file" class="ui-corner-all" name="file" id="file" size="70"/>
+           <b>Archivo Excel:</b>  <input type="file" class="ui-corner-all" name="file" id="file" size="70"/>
         </div>
-        <div>
+        <div style="margin-bottom: 10px">
             <a href="#" id="btnUpload">Cargar archivo excel</a>
         </div>
     </g:form>
-</div>
+</fieldset>
+<g:if test="${flash.message}">
+    <div class="message ui-state-highlight ui-corner-all">${msg}</div>
+</g:if>
 <div class="colorf">
     * El archivo a cargar solo puede ser de tipo XLS
 </div>

@@ -3,9 +3,11 @@ package yachay.hitos
 import jxl.Sheet
 import jxl.Workbook
 import jxl.WorkbookSettings
+import yachay.avales.Aval
 import yachay.avales.ProcesoAval
 import yachay.parametros.TipoElemento
 import yachay.proyectos.MarcoLogico
+import yachay.proyectos.Proceso
 import yachay.proyectos.Proyecto
 
 class HitoController {
@@ -107,7 +109,8 @@ class HitoController {
     }
 
     def cargarExcelHitos ={
-
+        if(params.msg)
+            return [msg: params.msg]
     }
     /*Función para cargar un archivo excel de hitos financiero*/
     /**
@@ -118,8 +121,8 @@ class HitoController {
 
         println("entro excel hitos")
 
-        def path = servletContext.getRealPath("/") + "excel/"
-        new File(path).mkdirs()
+//        def path = servletContext.getRealPath("/") + "excel/"
+//        new File(path).mkdirs()
         def f = request.getFile('file')
 
 
@@ -130,14 +133,12 @@ class HitoController {
         Workbook workbook = Workbook.getWorkbook(f.inputStream, ws)
         Sheet sheet = workbook.getSheet(0)
 
-        def numeroContrato =[]
-        def anticipo = []
-        def devengado = []
-        def monto = []
+
         def n = []
         def m = []
         byte b
         def ext
+        def msg = ""
 
         if(f && !f.empty){
             def nombre = f.getOriginalFilename()
@@ -151,68 +152,55 @@ class HitoController {
                 }
             }
 
-            def reps = [
-                    "a": "[àáâãäåæ]",
-                    "e": "[èéêë]",
-                    "i": "[ìíîï]",
-                    "o": "[òóôõöø]",
-                    "u": "[ùúûü]",
-
-                    "A": "[ÀÁÂÃÄÅÆ]",
-                    "E": "[ÈÉÊË]",
-                    "I": "[ÌÍÎÏ]",
-                    "O": "[ÒÓÔÕÖØ]",
-                    "U": "[ÙÚÛÜ]",
-
-                    "n": "[ñ]",
-                    "c": "[ç]",
-
-                    "N": "[Ñ]",
-                    "C": "[Ç]",
-
-                    "" : "[\\!@#\\\$%\\^&*()-='\"\\/<>:;\\.,\\?]",
-
-                    "_": "[\\s]"
-            ]
-
-            reps.each { k, v ->
-                nombre = (nombre.trim()).replaceAll(v, k)
-            }
-
-            nombre = nombre + "." + ext
-            def pathFile = path + File.separatorChar + nombre
-            def src = new File(pathFile)
-
             if(ext == 'xls'){
-                if(src.exists()){
-                    flash.message = 'Ya existe un archivo con ese nombre. Por favor cambielo o elimine el otro archivo primero.'
-                    flash.estado = "error"
-                    flash.icon = "alert"
-                    redirect(action: 'cargarExcelHitos')
-                    return
-                }else{
 
-                    println("entro!")
-                    for(int r =1; r < sheet.rows; r++){
 
-                        def nc = sheet.getCell(1,r).contents //columna de número de contrato
-                        def an = sheet.getCell(2,r).contents //columna de anticipo
-                        def dv = sheet.getCell(3,r).contents //columna de devengado
-                        def mc = sheet.getCell(4,r).contents //columna de monto contrato
+                println("entro!")
+                for(int r =1; r < sheet.rows; r++){
 
-                        println("numero contrato " + nc)
-                        println("anticipo " + an)
-                        println("devengado " + dv)
-                        println("monto contrato " + mc)
+                    def aval = sheet.getCell(0,r).contents
+                    def contrato = sheet.getCell(1,r).contents
+                    def  monto = sheet.getCell(2,r).contents
+                    def anticipo = sheet.getCell(3,r).contents
+                    def devengado = sheet.getCell(3,r).contents
+                    println "------------------------------ "
+                    println " aval "+aval
+                    println " conrato "+contrato
+                    println " monto "+monto
+                    println " anticipo "+anticipo
+                    println " devengado "+devengado
+                    def av = Aval.findByNumero(aval)
+                    if(av){
+                        println "aval "+av.id+"  "+av.numero+"  "+av.estado.descripcion+"  "+av.estado.id+"  "+av.estado.codigo+"  "+av.fechaAnulacion
+                        if(av.estado.codigo!="E04"){
+                            def avance = new AvanceFinanciero()
+                            avance.aval=av
+                            avance.monto=monto.toDouble()
+                            avance.contrato=contrato
+                            avance.fecha = new Date()
+                            avance.valor = devengado.toDouble()
+                            if(!avance.save(flush: true)){
+                                println "error save avance "+avance.errors
+                            }else{
+                                msg +="<br>Se registro un avance para el aval número ${aval}"
+                            }
+                        }else{
+                            msg +="<br>El aval número ${aval} está anulado, no se registro su avance"
+                        }
 
+
+                    }else{
+                        msg +="<br>No se econtro el aval número ${aval}"
                     }
 
-                    flash.message = 'Archivo cargado existosamente.'
-                    flash.estado = "error"
-                    flash.icon = "alert"
-                    redirect(action: 'cargarExcelHitos')
-                    return
                 }
+
+                flash.message = 'Archivo cargado existosamente.'
+                flash.estado = "error"
+                flash.icon = "alert"
+                redirect(action: 'cargarExcelHitos',params: [msg:msg])
+                return
+
             }else{
                 flash.message = 'El archivo a cargar debe ser del tipo EXCEL con extensión XLS.'
                 flash.estado = "error"
@@ -232,6 +220,16 @@ class HitoController {
 
 
 
+    }
+
+    def avancesFinancieros = {
+        println "params "+params
+        def proceso = ProcesoAval.get(params.id)
+        def aval = Aval.findByProceso(proceso)
+        def avances=[]
+        if(aval)
+            avances  = AvanceFinanciero.findAllByAval(aval)
+        [avances:avances,proceso:proceso,aval:aval]
     }
 
 
