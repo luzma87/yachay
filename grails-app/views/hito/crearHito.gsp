@@ -42,13 +42,13 @@
         <input type="hidden" name="id" value="${hito?.id}">
         <div class="fila" >
             <div class="labelSvt" style="font-weight: bold;margin-left: 10px">
-                Inicio
+                Fecha de Inicio
             </div>
             <div class="labelSvt" >
                 <g:textField name="inicio" class="datepicker ui-widget-content ui-corner-all" style="width: 100px;" value="${hito?.inicio?.format('dd/MM/yyyy')}"/>
             </div>
             <div class="labelSvt" style="font-weight: bold;margin-left: 10px">
-                Fin
+                Fecha de Fin
             </div>
             <div class="fieldSvt-medium" >
                 <g:textField name="fechaPlanificada" class="datepicker ui-widget-content ui-corner-all" style="width: 100px;" value="${hito?.fechaPlanificada?.format('dd/MM/yyyy')}"/>

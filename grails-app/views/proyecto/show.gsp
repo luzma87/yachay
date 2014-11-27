@@ -175,7 +175,7 @@
 
                 <!-- FLYOUT MENU MARCO -->
                 <a tabindex="0" href="#" id="menuMarco">
-                    Componentes y Actividades
+                    Plan de Proyecto
                 </a>
 
                 <div id="items-menuMarco" class="hidden">
@@ -247,10 +247,11 @@
                     </g:link>
                 </g:else>
 --}%
+                <g:if test="${proyectoInstance.aprobado != 'a'}">
                 <g:link class="button edit" action="formProyecto" id="${proyectoInstance?.id}">
                     Editar
                 </g:link>
-
+                </g:if>
 
                 <g:link class="button delete" action="deleteProyecto" id="${proyectoInstance?.id}">
                     Eliminar
