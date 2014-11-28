@@ -97,7 +97,7 @@
 
         </fieldset>
         <fieldset style="width: 95%;height: 350px;overflow: auto" class="ui-corner-all">
-            <legend>Sub actividades</legend>
+            <legend>Subactividades</legend>
 
             <div class="fila" style="margin-bottom: 10px;">
                 <a href="#" class="btn" id="btnOpenDlg">Agregar</a>
