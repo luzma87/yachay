@@ -24,6 +24,8 @@
                                              action="formProyecto">Nuevo Proyecto</g:link></span>
             <span class="menuButton"><g:link class="create btn"
                                              action="cargarExcel">Cargar Excel</g:link></span>
+
+            <a class="btn" id="reporte">Reporte de Total de Priorización</a>
         </div>
 
         <div class="body">
@@ -143,6 +145,21 @@
                     return false;
                 });
             });
+
+
+
+            $("#reporte").click(function(){
+                var url = "${createLink(controller: 'reportes2', action: 'reporteTotalPriorizacion')}";
+                location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url;
+            })
+
+            $("#reporte").button({
+
+                icons: {
+                    primary: "ui-icon-print"
+                }
+            });
+
         </script>
     </body>
 

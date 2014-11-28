@@ -1,8 +1,10 @@
 package yachay.reportes
 
 import yachay.parametros.PresupuestoUnidad
+import yachay.parametros.TipoElemento
 import yachay.parametros.UnidadEjecutora
 import yachay.parametros.poaPac.Anio
+import yachay.poa.Actividad
 import yachay.poa.Asignacion
 import yachay.proyectos.MarcoLogico
 import yachay.proyectos.Proyecto
@@ -423,6 +425,33 @@ class Reportes2Controller {
             [asignaciones: asignaciones, actual: actual, proyecto: proyecto, total: total, totalUnidad: totalUnidad, maxInv: maxInv]
 
         }
+
+    }
+
+
+    def reporteTotalPriorizacion = {
+
+
+        def proyectos = Proyecto.list()
+        def actividades
+        def marcos
+        def elemento = TipoElemento.get(3)
+        def montos = []
+        def priorizados = []
+
+        proyectos.each {
+           marcos = MarcoLogico.findAllByProyectoAndTipoElemento(it,elemento)
+//            marcos.each {m->
+//                montos += m.monto
+//                priorizados += m.getTotalPriorizado()
+//            }
+        }
+
+
+//        println("-->" + marcos)
+
+       return [marcos: marcos, proyectos: proyectos]
+
 
     }
 
