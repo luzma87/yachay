@@ -7,12 +7,27 @@ package yachay.seguridad
 class LoginController {
 
     def loginService
-
+    def mailService
     /**
      * Acción que muestra la pantalla de ingreso al sistema
      */
     def index = {
         //println "index login"
+    }
+
+    def pruebaMail = {
+        try{
+            mailService.sendMail {
+                to "valentinsvt@hotmail.com"
+                subject "Hello Fred"
+                body 'How are you?'
+            }
+            render "ok"
+        }catch (e){
+            render "${e.printStackTrace()}"
+        }
+
+
     }
 
 
