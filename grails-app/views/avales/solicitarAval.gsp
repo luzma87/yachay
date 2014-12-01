@@ -142,16 +142,16 @@
 //                if (memorando.trim().length < 1) {
 //                    msg += "<br>Por favor ingrese un número de memorando.";
 //                }
-                <g:if test="${disponible>refencial}">
-                if (file.length < 1) {
-                    msg += "<br>Por favor seleccione un archivo.";
-                } else {
-                    var ext = file.split('.').pop();
-                    if (ext != "pdf") {
-                        msg += "<br>Por favor seleccione un archivo de formato pdf. El formato " + ext + " no es aceptado por el sistema";
-                    }
-                }
-                </g:if>
+                %{--<g:if test="${disponible>refencial}">--}%
+                %{--if (file.length < 1) {--}%
+                    %{--msg += "<br>Por favor seleccione un archivo.";--}%
+                %{--} else {--}%
+                    %{--var ext = file.split('.').pop();--}%
+                    %{--if (ext != "pdf") {--}%
+                        %{--msg += "<br>Por favor seleccione un archivo de formato pdf. El formato " + ext + " no es aceptado por el sistema";--}%
+                    %{--}--}%
+                %{--}--}%
+                %{--</g:if>--}%
                 if (msg == "") {
                     $("form").submit()
                 } else {

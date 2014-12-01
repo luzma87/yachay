@@ -5,8 +5,8 @@
     <meta name="layout" content="main"/>
     <title>Asignaciones del proyecto: ${proyecto}</title>
 
-    <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}"
-          type="text/css"/>
+    <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'svt.css')}" type="text/css"/>
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'BreadCrumb.css')}"
           type="text/css"/>
 
@@ -14,18 +14,29 @@
             language="JavaScript"></script>
     <script src="${resource(dir: 'js/jquery/plugins/jBreadCrumb/js', file: 'jquery.jBreadCrumb.1.1.js')}"
             type="text/javascript" language="JavaScript"></script>
+    <style type="text/css">
+
+    th {
+        background-color : #363636 !important;
+        color: white;
+    }
+    .btn{
+        font-size: 11px !important;
+    }
+
+    </style>
 </head>
 
 <body>
 <div style="margin-left: 10px;">
-%{--<g:if test="${actual.estado!=0}">--}%
-%{--<g:link class="btn" controller="modificacionProyecto" action="solicitarModificacionUnidad"--}%
-%{--params="${[unidad:proyecto.unidadEjecutora.id,anio:actual.id]}">Solicitar modificación</g:link>--}%
-%{--</g:if>--}%
+    %{--<g:if test="${actual.estado!=0}">--}%
+    %{--<g:link class="btn" controller="modificacionProyecto" action="solicitarModificacionUnidad"--}%
+    %{--params="${[unidad:proyecto.unidadEjecutora.id,anio:actual.id]}">Solicitar modificación</g:link>--}%
+    %{--</g:if>--}%
     <g:link class="btn" controller="asignacion" action="programacionAsignacionesInversion" id="${proyecto?.id}">Programación</g:link>
-%{--<g:link class="btn" controller="reportes" action="poaInversionesReporteWeb" id="${proyecto.unidadEjecutora.id}" target="_blank">Reporte</g:link>--}%
-%{--<g:link class="btn" controller="cronograma" action="verCronograma" id="${proyecto.id}">Cronograma</g:link>--}%
-%{--<g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades</g:link>--}%
+    %{--<g:link class="btn" controller="reportes" action="poaInversionesReporteWeb" id="${proyecto.unidadEjecutora.id}" target="_blank">Reporte</g:link>--}%
+    %{--<g:link class="btn" controller="cronograma" action="verCronograma" id="${proyecto.id}">Cronograma</g:link>--}%
+    %{--<g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades</g:link>--}%
     <g:link class="btn" controller="asignacion" action="agregarAsignacionInv" id="${proyecto?.id}">Agregar asignaciones</g:link>
     <a class="btn" id="reporte">Reporte Asignaciones</a>
     <g:if test="${actual?.estado==1}">
@@ -38,25 +49,27 @@
             <a href="#" id="aprobPrio">Aprobar priorización</a>
         </g:if>
     </g:if>
-&nbsp;&nbsp;&nbsp;<b>Año:</b><g:select from="${yachay.parametros.poaPac.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual?.id}"/>
-&nbsp;&nbsp;&nbsp; <b>Filtro: </b><g:select from="${['Todos','Componente', 'Responsable']}" name="filtro"/>
-<div id="filtrados" style="margin-left: 375px"></div>
+&nbsp;&nbsp;&nbsp;<b style="font-size: 11px">Año:</b><g:select from="${yachay.parametros.poaPac.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual?.id}" style="font-size: 11px"/>
+&nbsp;&nbsp;&nbsp; <b style="font-size: 11px">Filtro: </b><g:select from="${['Todos','Componente', 'Responsable']}" name="filtro" style="font-size: 11px"/>
+    <div id="filtrados" style="margin-left: 375px"></div>
 
-%{--<g:link class="btn" controller="reportes2" action="reporteAsignacionProyecto" id="${proyecto?.id}">Reporte Asignaciones</g:link>--}%
+    %{--<g:link class="btn" controller="reportes2" action="reporteAsignacionProyecto" id="${proyecto?.id}">Reporte Asignaciones</g:link>--}%
 
 
 </div>
 <fieldset class="ui-corner-all" style="width: 98%;margin-top: 40px;">
     <legend>Asignaciones para el año ${actual}</legend>
-    <table style="width: 1040px;">
+    <table style="width: 1040px;font-size: 10px">
         <thead>
         %{--<th>#</th>--}%
 
         %{--<th style="width: 200px">Programa</th>--}%
-        <th style="width: 200px">Proyecto</th>
-        <th style="width: 200px">Componente</th>
-        <th style="width: 280px">Actividad</th>
-        <th style="width: 280px">Reponsable</th>
+        <th>Proyecto</th>
+        <th style="">Componente</th>
+        <th>#</th>
+        <th style="">Actividad</th>
+        <th>Fechas</th>
+        <th style="">Reponsable</th>
         <th style="width: 60px;">Partida</th>
         <th>Presupuesto</th>
         <g:if test="${actual?.estado==1}">
@@ -75,19 +88,26 @@
                     <g:set var="total" value="${total.toDouble()+asg.priorizado}"></g:set>
                 </g:else>
             </g:if>
-            <tr class="${(i % 2) == 0 ? 'odd' : 'even'}"  style='${(asg.reubicada=='S')?"background: #d5f0d4":""}'>
+            <tr>
                 %{--<td class="prog" style="width: 200px;"--}%
-                    %{--title="">--}%
-                    %{--${asg.marcoLogico?.proyecto?.programaPresupuestario.descripcion}--}%
+                %{--title="">--}%
+                %{--${asg.marcoLogico?.proyecto?.programaPresupuestario.descripcion}--}%
                 %{--</td>--}%
-                <td class="dscr" style="width: 200px;">
+                <td class="" >
                     ${asg.marcoLogico.proyecto}
                 </td>
-                <td class="dscr" style="width: 200px;"
+                <td class=""
                     title="${asg.marcoLogico.marcoLogico.toStringCompleto()}">${asg.marcoLogico.marcoLogico}
                 </td>
-                <td class="dscr" style="width: 200px;" title="${asg.marcoLogico.toStringCompleto()}">
-                    ${asg.marcoLogico.numero} - ${asg.marcoLogico}
+                <td>
+                    ${asg.marcoLogico.numero}
+                </td>
+                <td class=""  title="${asg.marcoLogico.toStringCompleto()}">
+                    ${asg.marcoLogico}
+                </td>
+                <td>
+                    <b>Inicio: </b>${asg.marcoLogico.fechaInicio?.format("dd-MM-yyyy")}<br/>
+                    <b>Fin: </b>${asg.marcoLogico.fechaFin?.format("dd-MM-yyyy")}
                 </td>
                 <td>
                     ${asg.unidad}
@@ -160,7 +180,7 @@
     <div id="reporteDialogo" style="width:250px;">
         <div>Seleccione el año para generar el reporte.</div>
         <div style="margin-left: 100px; margin-top: 30px">
-        <b>Año:</b><g:select from="${yachay.parametros.poaPac.Anio.list([sort:'anio'])}" id="anio-asg" name="anio" optionKey="id" optionValue="anio" value="${actual?.id}"/>
+            <b>Año:</b><g:select from="${yachay.parametros.poaPac.Anio.list([sort:'anio'])}" id="anio-asg" name="anio" optionKey="id" optionValue="anio" value="${actual?.id}"/>
         </div>
     </div>
 
@@ -228,8 +248,8 @@
     })
 
     %{--function loadTodos () {--}%
-        %{--var aniof = new Date().format('yyyy')--}%
-        %{--location.href = "${createLink(controller:'asignacion',action:'asignacionProyectov2')}?id=${proyecto.id}&anio=" + aniof--}%
+    %{--var aniof = new Date().format('yyyy')--}%
+    %{--location.href = "${createLink(controller:'asignacion',action:'asignacionProyectov2')}?id=${proyecto.id}&anio=" + aniof--}%
     %{--}--}%
 
 
