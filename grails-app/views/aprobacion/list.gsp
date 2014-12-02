@@ -15,6 +15,11 @@
         .btnSmall + .btnSmall {
             margin-top : 5px;
         }
+
+        .ulSolicitudes {
+            margin       : 0;
+            padding-left : 20px;
+        }
         </style>
     </head>
 
@@ -45,6 +50,11 @@
                 </g:if>
                 <div class="list">
                     <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-top ui-helper-clearfix">
+                        <div id="example_length" class="dataTables_length">
+                            Buscar (nombre del proceso)
+                            <g:textField name="txtBuscar" class="ui-widget-content ui-corner-all" value="${params.search}"/>
+                            <a href="#" class="button" id="btnBuscar">Buscar</a>
+                        </div>
                         %{--<div id="example_length" class="dataTables_length">--}%
                         %{--<g:message code="show" default="Show" />&nbsp;--}%
                         %{--<g:select from="${[10,20,30,40,50,60,70,80,90,100]}" name="max" value="${params.max}" />&nbsp;--}%
@@ -65,18 +75,13 @@
                             <tr>
                                 <th class="ui-state-default">N.</th>
                                 <th class="ui-state-default">Solicitudes a tratar</th>
-                                <tdn:sortableColumn property="fechaRealizacion" class="ui-state-default"
-                                                    title="${message(code: 'aprobacion.fechaRealizacion.label', default: 'Fecha Realizacion')}"/>
-                                <tdn:sortableColumn property="fecha" class="ui-state-default"
+                                <tdn:sortableColumn property="fecha" class="ui-state-default" style="width:65px;"
                                                     title="${message(code: 'aprobacion.fecha.label', default: 'Fecha')}"/>
                                 <tdn:sortableColumn property="observaciones" class="ui-state-default"
                                                     title="${message(code: 'aprobacion.observaciones.label', default: 'Observaciones')}"/>
 
                                 <tdn:sortableColumn property="asistentes" class="ui-state-default"
                                                     title="${message(code: 'aprobacion.asistentes.label', default: 'Asistentes')}"/>
-
-                                <tdn:sortableColumn property="pathPdf" class="ui-state-default"
-                                                    title="${message(code: 'aprobacion.pathPdf.label', default: 'Path Pdf')}"/>
                                 <th class="ui-state-default">Estado</th>
                                 <th class="ui-state-default">Acciones</th>
                             </tr>
@@ -86,25 +91,35 @@
                                 <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                                     <td>${aprobacionInstance.numero}</td>
                                     <td>
-                                        <g:set var="solicitudes" value="${aprobacionInstance.solicitudes.size()}"/>
-                                        <g:if test="${solicitudes > 0}">
-                                            <a href="#" class="button btnVerSolicitudes" id="${aprobacionInstance.id}" title="Ver solicitudes a tratar">
-                                                ${solicitudes} solicitud${solicitudes == 1 ? '' : 'es'}
-                                            </a>
+                                        <g:set var="solicitudes" value="${yachay.contratacion.Solicitud.findAllByAprobacion(aprobacionInstance, [sort: 'nombreProceso'])}"/>
+                                        <g:if test="${solicitudes.size() > 0}">
+                                        %{--<a href="#" class="button btnVerSolicitudes" id="${aprobacionInstance.id}" title="Ver solicitudes a tratar">--}%
+                                        %{--${solicitudes} solicitud${solicitudes == 1 ? '' : 'es'}--}%
+                                        %{--</a>--}%
+                                            <ul class="ulSolicitudes">
+                                                <g:each in="${solicitudes}" var="sol">
+                                                    <li>${sol.unidadEjecutora.nombre} - ${sol.nombreProceso}</li>
+                                                </g:each>
+                                            </ul>
                                         </g:if>
                                         <g:else>
                                             - Sin solicitudes -
                                         </g:else>
                                     </td>
-                                    <td>${aprobacionInstance.fechaRealizacion?.format("dd-MM-yyyy HH:mm")}</td>
                                     <td>
-                                        ${aprobacionInstance.fecha.format("dd-MM-yyyy HH:mm")}
+                                        <g:if test="${aprobacionInstance.fecha}">
+                                            ${aprobacionInstance.fecha.format("dd-MM-yyyy HH:mm")}
+                                        </g:if>
+                                        <g:else>
+                                            <a href="#" class="button btnSmall btnSetFecha" id="${aprobacionInstance.id}">
+                                                Establecer
+                                            </a>
+                                        </g:else>
                                     </td>
                                     <td>${fieldValue(bean: aprobacionInstance, field: "observaciones")}</td>
 
                                     <td>${fieldValue(bean: aprobacionInstance, field: "asistentes")}</td>
 
-                                    <td>${fieldValue(bean: aprobacionInstance, field: "pathPdf")}</td>
                                     <td>${aprobacionInstance.aprobada == 'A' ? 'Aprobada' : 'Pendiente'}</td>
                                     <td style="text-align: center;">
                                         %{--<g:if test="${!aprobacionInstance.fechaRealizacion}">--}%
@@ -164,31 +179,80 @@
                 $(".create").button("option", "icons", {primary : 'ui-icon-document'});
                 $(".xls").button("option", "icons", {primary : 'ui-icon-note'});
 
+                $("#btnBuscar").button({
+                    icons : {primary : 'ui-icon-search'},
+                    text  : false
+                }).click(function () {
+                    var search = $.trim($("#txtBuscar").val());
+                    location.href = "${createLink(controller: 'aprobacion', action:'list')}?search=" + search;
+                    return false;
+                });
+                $("#txtBuscar").keyup(function (ev) {
+                    if (ev.keyCode == 13) {
+                        var search = $.trim($("#txtBuscar").val());
+                        location.href = "${createLink(controller: 'aprobacion', action:'list')}?search=" + search;
+                    }
+                });
+
                 $(".print").button("option", "icons", {primary : 'ui-icon-print'}).click(function () {
                     var url = "${createLink(controller: 'reporteSolicitud', action: 'aprobadas')}";
                     location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename=solicitudes.pdf";
                     return false;
                 });
 
-                $(".btnVerSolicitudes").click(function () {
-                    $.ajax({
-                        type    : "POST",
-                        url     : "${createLink(action:'solicitudes_ajax')}/" + $(this).attr("id"),
-                        success : function (msg) {
-                            $.box({
-                                imageClass : false,
-                                title      : "Solicitudes",
-                                text       : msg,
-                                dialog     : {
-                                    width   : 600,
-                                    buttons : {
-                                        "Aceptar" : function (r) {
+                $(".btnSetFecha").click(function () {
+                    var id = $(this).attr("id");
+                    var $html = $("<div>");
+                    var $input = $("<input type='text' readonly='readonly' style='width: 80px;' value='${new Date().format('dd-MM-yyyy')}' " +
+                                   "class='datepicker ui-widget-content ui-corner-all' name='fecha' id='fecha' />");
+                    $input.datepicker({
+                        dateFormat : 'dd-mm-yy',
+                        minDate    : "+0"
+                    });
+                    var $selH = $("<select name='horas' class='ui-widget-content ui-corner-all' style='margin-left: 10px;'>");
+                    for (var i = 7; i < 19; i++) {
+                        var str = "" + i;
+                        var pad = "00";
+                        str = pad.substring(0, pad.length - str.length) + str;
+                        var $opt = $("<option value='" + i + "'>" + str + "</option>");
+                        $selH.append($opt);
+                    }
+                    var $selM = $("<select name='minutos' class='ui-widget-content ui-corner-all'>");
+                    for (i = 0; i < 60; i += 5) {
+                        str = "" + i;
+                        pad = "00";
+                        str = pad.substring(0, pad.length - str.length) + str;
+                        $opt = $("<option value='" + i + "'>" + str + "</option>");
+                        $selM.append($opt);
+                    }
+                    $html.append($input).append($selH).append(":").append($selM);
+                    $.box({
+                        imageClass : "box_alert",
+                        input      : $html,
+                        type       : "prompt",
+                        title      : "Fecha",
+                        text       : "Ingrese la fecha deseada para la reunión seleccionada",
+                        dialog     : {
+                            buttons : {
+                                "Aceptar" : function () {
+                                    $.ajax({
+                                        type    : "POST",
+                                        url     : "${createLink(action:'setFechaReunion_ajax')}",
+                                        data    : {
+                                            id      : id,
+                                            fecha   : $input.val(),
+                                            horas   : $selH.val(),
+                                            minutos : $selM.val()
+                                        },
+                                        success : function (msg) {
+                                            location.reload(true);
                                         }
-                                    }
+                                    });
                                 }
-                            });
+                            }
                         }
                     });
+                    return false;
                 });
 
                 $(".edit").button("option", "icons", {primary : 'ui-icon-pencil'});

@@ -183,7 +183,7 @@ class SolicitudTagLib {
 
             html += '</table>'
 
-            html += revisiones(solicitud: solicitud, editable: editable, perfil: perfil, multiple: attrs.multiple)
+//            html += revisiones(solicitud: solicitud, editable: editable, perfil: perfil, multiple: attrs.multiple)
             html += aprobaciones(solicitud: solicitud, editable: aprobacion, perfil: perfil, multiple: attrs.multiple)
         }
 //        if (solicitud) {

@@ -101,7 +101,9 @@
 
         <div class="info ui-corner-all">
             Reunión de Planificación de contrataciones
-            planificada para el <strong>${reunion.fecha.format("dd-MM-yyyy HH:mm")}</strong>
+            <g:if test="${reunion.fecha}">
+                planificada para el <strong>${reunion.fecha.format("dd-MM-yyyy HH:mm")}</strong>
+            </g:if>
         </div>
 
         <g:form action="saveAprobacion" name="frmAprobacion" id="${reunion.id}">
@@ -155,6 +157,14 @@
         </g:form>
 
         <div id="dialogFirmas" title="Seleccione las firmas para el acta" class="ui-helper-hidden">
+            <g:set var="editable" value="${false}"/>
+
+            <g:if test="${!reunion.firmaDireccionPlanificacion && !reunion.firmaGerenciaPlanificacion && !reunion.firmaGerenciaTecnica}">
+                <g:set var="editable" value="${true}"/>
+                <p>
+                    Recuerde que una vez generada el acta no podrá cambiar las firmas.
+                </p>
+            </g:if>
             <p>
                 Firmas para el acta:
             </p>
@@ -163,25 +173,40 @@
                 <tr>
                     <th>Gerencia de Planificación</th>
                     <td>
-                        <g:select from="${firmaGerenciaPlanif}" optionKey="id" optionValue="${{
-                            it.persona.nombre + ' ' + it.persona.apellido
-                        }}" name="firmaGP"/>
+                        <g:if test="${editable}">
+                            <g:select from="${firmaGerenciaPlanif}" optionKey="id" optionValue="${{
+                                it.persona.nombre + ' ' + it.persona.apellido
+                            }}" name="firmaGP"/>
+                        </g:if>
+                        <g:else>
+                            ${reunion.firmaGerenciaPlanificacion?.persona?.nombre} ${reunion.firmaGerenciaPlanificacion?.persona?.apellido}
+                        </g:else>
                     </td>
                 </tr>
                 <tr>
                     <th>Dirección de Planificación</th>
                     <td>
-                        <g:select from="${firmaDireccionPlanif}" optionKey="id" optionValue="${{
-                            it.persona.nombre + ' ' + it.persona.apellido
-                        }}" name="firmaDP"/>
+                        <g:if test="${editable}">
+                            <g:select from="${firmaDireccionPlanif}" optionKey="id" optionValue="${{
+                                it.persona.nombre + ' ' + it.persona.apellido
+                            }}" name="firmaDP"/>
+                        </g:if>
+                        <g:else>
+                            ${reunion.firmaDireccionPlanificacion?.persona?.nombre} ${reunion.firmaDireccionPlanificacion?.persona?.apellido}
+                        </g:else>
                     </td>
                 </tr>
                 <tr>
                     <th>Gerencia Técnica</th>
                     <td>
-                        <g:select from="${firmaGerenciaTec}" optionKey="id" optionValue="${{
-                            it.persona.nombre + ' ' + it.persona.apellido
-                        }}" name="firmaGT"/>
+                        <g:if test="${editable}">
+                            <g:select from="${firmaGerenciaTec}" optionKey="id" optionValue="${{
+                                it.persona.nombre + ' ' + it.persona.apellido
+                            }}" name="firmaGT"/>
+                        </g:if>
+                        <g:else>
+                            ${reunion.firmaGerenciaTecnica?.persona?.nombre} ${reunion.firmaGerenciaTecnica?.persona?.apellido}
+                        </g:else>
                     </td>
                 </tr>
                 %{--<tr>--}%
@@ -359,9 +384,9 @@
                             imageClass : "box_info",
                             title      : "Alerta",
                             text       : "Una vez aprobada la reunión de planificación de contrataciones " +
-                                         "<span class='important'>se le asignará un número</span> y " +
-                                         "<span class='important'>ya no podrá modificar sus datos</span>.<br/><br/>" +
-                                         "<span class='important'>¿Desea continuar?</span>",
+                                       "<span class='important'>se le asignará un número</span> y " +
+                                       "<span class='important'>ya no podrá modificar sus datos</span>.<br/><br/>" +
+                                       "<span class='important'>¿Desea continuar?</span>",
                             iconClose  : false,
                             dialog     : {
                                 width         : 400,

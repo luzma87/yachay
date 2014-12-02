@@ -106,38 +106,29 @@
 
             <g:uploadForm action="save" method="post" name="frmSolicitud" id="${solicitud.id}">
                 <table width="100%" border="0">
-                <g:if test="${solicitud.id}">
-                    <g:if test="${perfil.codigo == 'DRRQ'}">
+                    <g:if test="${solicitud.id}">
                         <tr>
                             <td colspan="6" style="padding-bottom: 15px; font-size: larger; font-weight: bold;">
                                 <g:if test="${solicitud.incluirReunion == 'S'}">
                                     Se incluirá en la próxima reunión de aprobación
-
-                                    <a href="#" class="button boton-color" id="btnIncluir" data-tipo="N">No incluir</a>
+                                    <g:if test="${perfil.codigo == 'DRRQ'}">
+                                        <a href="#" class="button boton-color" id="btnIncluir" data-tipo="N">No incluir</a>
+                                    </g:if>
                                 </g:if>
                                 <g:else>
-                                    Solicitar la inclusión de la actividad en la próxima reunión de planificación de contratación
-
-                                    <g:if test="${solicitud.validadoAdministrativaFinanciera && solicitud.validadoJuridica}">
-                                        <a href="#" class="button boton-color" id="btnIncluir" data-tipo="S">Solicitar</a>
+                                    <g:if test="${perfil.codigo == 'DRRQ'}">
+                                        Solicitar la inclusión de la actividad en la próxima reunión de planificación de contratación
+                                        <g:if test="${yachay.contratacion.DetalleMontoSolicitud.countBySolicitud(solicitud) > 0}">
+                                            <a href="#" class="button boton-color" id="btnIncluir" data-tipo="S">Solicitar</a>
+                                        </g:if>
                                     </g:if>
                                     <g:else>
-                                        (podrá incluirla después de que sea revisada y validada)
+                                        No se incluirá en la próxima reunión de aprobación
                                     </g:else>
                                 </g:else>
                             </td>
                         </tr>
                     </g:if>
-                </g:if>
-
-                <g:set var="js" value="${false}"/>
-
-                <g:if test="${solicitud.validadoAdministrativaFinanciera && solicitud.validadoJuridica}">
-                    </table>
-                    <slc:showSolicitud solicitud="${solicitud}" editable="true" perfil="${perfil}"/>
-                </g:if>
-                <g:else>
-                    <g:set var="js" value="${true}"/>
                     <tr>
                         <td class="label">Unidad requirente</td>
                         <td colspan="3">
@@ -236,13 +227,13 @@
                         </td>
                     </tr>
 
-                %{--<tr>--}%
-                %{--<td class="label">Observaciones</td>--}%
-                %{--<td colspan="7">--}%
-                %{--<g:textArea name="observaciones" rows="4" cols="115" class="ta ui-widget-content ui-corner-all"--}%
-                %{--value="${solicitud.observaciones}"/>--}%
-                %{--</td>--}%
-                %{--</tr>--}%
+                    %{--<tr>--}%
+                    %{--<td class="label">Observaciones</td>--}%
+                    %{--<td colspan="7">--}%
+                    %{--<g:textArea name="observaciones" rows="4" cols="115" class="ta ui-widget-content ui-corner-all"--}%
+                    %{--value="${solicitud.observaciones}"/>--}%
+                    %{--</td>--}%
+                    %{--</tr>--}%
 
                     <tr>
                         <td colspan="2" class="label">T.D.R.</td>
@@ -331,11 +322,9 @@
                             <a href="#" id="btnSave">Guardar</a>
                         </td>
                     </tr>
-                    </table>
-                </g:else>
+                </table>
             </g:uploadForm>
         </div>
-    </div>
 
         <div id="dlgDetalleMonto" title="Detalle anual del monto solicitado">
             <div id="dlgDetalleMontoContent">
@@ -397,410 +386,409 @@
                     </table>
                 </form>
             </div>
+        </div>
 
-            <script type="text/javascript">
+        <script type="text/javascript">
 
-                var widthProyecto = 900;
-                var widthComponente = 900;
-                var widthActividad = 900;
+            var widthProyecto = 900;
+            var widthComponente = 900;
+            var widthActividad = 900;
 
-                function loadComponentes() {
-                    $.ajax({
-                        type    : "POST",
-                        url     : "${createLink(action: 'getComponentesByProyecto')}",
-                        data    : {
-                            id    : $("#selProyecto").val(),
-                            width : widthComponente,
-                            val   : "${solicitud.actividad?.marcoLogicoId}"
-                        },
-                        success : function (msg) {
-                            $("#tdComponente").html(msg);
-                            loadActividades();
-                        }
-                    });
-                }
-                function loadActividades() {
-                    $.ajax({
-                        type    : "POST",
-                        url     : "${createLink(action: 'getActividadesByComponente')}",
-                        data    : {
-                            id    : $("#selComponente").val(),
-                            width : widthActividad,
-                            val   : "${solicitud.actividadId}"
-                        },
-                        success : function (msg) {
-                            $("#tdActividad").html(msg);
-                            loadDatosActividad();
-                        }
-                    });
-                }
-
-                function loadDatosActividad() {
-                    var actividadId = $("#selActividad").val();
-                    if ("${solicitud.actividadId}" == actividadId) {
-                        $("#nombreProceso").val("${solicitud.nombreProceso}");
-                        $("#montoSolicitado").val(number_format("${solicitud.montoSolicitado}", 2, '.', ''))
-                                .attr("max2", number_format("${solicitud.montoSolicitado}", 2, '.', ''))
-                                .setMask('decimal');
-                    } else {
-                        $.ajax({
-                            type    : "POST",
-                            url     : "${createLink(action: 'getDatosActividad')}",
-                            data    : {
-                                id : actividadId
-                            },
-                            success : function (msg) {
-                                var parts = msg.split("||");
-                                $("#nombreProceso").val(parts[0]);
-                                $("#montoSolicitado").val(number_format(parts[1], 2, '.', ''))
-                                        .attr("max2", number_format(parts[1], 2, '.', ''))
-                                        .setMask('decimal');
-                                if (parts[2] == "0") {
-                                    $("#divPoa").show();
-                                } else {
-                                    $("#divPoa").hide();
-                                }
-                                $("#plazoEjecucion").val(parts[3]).setMask("integer");
-                            }
-                        });
+            function loadComponentes() {
+                $.ajax({
+                    type    : "POST",
+                    url     : "${createLink(action: 'getComponentesByProyecto')}",
+                    data    : {
+                        id    : $("#selProyecto").val(),
+                        width : widthComponente,
+                        val   : "${solicitud.actividad?.marcoLogicoId}"
+                    },
+                    success : function (msg) {
+                        $("#tdComponente").html(msg);
+                        loadActividades();
                     }
-                }
+                });
+            }
+            function loadActividades() {
+                $.ajax({
+                    type    : "POST",
+                    url     : "${createLink(action: 'getActividadesByComponente')}",
+                    data    : {
+                        id    : $("#selComponente").val(),
+                        width : widthActividad,
+                        val   : "${solicitud.actividadId}"
+                    },
+                    success : function (msg) {
+                        $("#tdActividad").html(msg);
+                        loadDatosActividad();
+                    }
+                });
+            }
 
-                function crearActividad() {
-                    var proySt = $("#selProyecto").find("option:selected").text();
-                    var compSt = $("#selComponente").find("option:selected").text();
-
-                    $("#proyectoLabel").text(proySt);
-                    $("#componenteLabel").text(compSt);
-
-                    $("#dlgActividad").dialog('option', 'title', 'Crea nueva Actividad').dialog('open');
-                }
-
-                function resetActividadForm() {
-                    $("#nuevaActividad").val("");
-                    $("#nuevaCategoria").val("");
-                    $("#fechaInicio").val("");
-                    $("#fechaFin").val("");
-                    $("#nuevoMonto").val("");
-                    $("#nuevoAporte").val("");
-                }
-
-                function dayDiff(d1, d2) {
-                    var t2 = d2.getTime();
-                    var t1 = d1.getTime();
-
-                    return parseInt((t2 - t1) / (24 * 3600 * 1000));
-                }
-
-                function editarMonto() {
+            function loadDatosActividad() {
+                var actividadId = $("#selActividad").val();
+                if ("${solicitud.actividadId}" == actividadId) {
+                    $("#nombreProceso").val("${solicitud.nombreProceso}");
+                    $("#montoSolicitado").val(number_format("${solicitud.montoSolicitado}", 2, '.', ''))
+                            .attr("max2", number_format("${solicitud.montoSolicitado}", 2, '.', ''))
+                            .setMask('decimal');
+                } else {
                     $.ajax({
                         type    : "POST",
-                        url     : "${createLink(action:'detalleMonto')}",
+                        url     : "${createLink(action: 'getDatosActividad')}",
                         data    : {
-                            id        : "${solicitud.id}",
-                            actividad : $("#selActividad").val()
+                            id : actividadId
                         },
                         success : function (msg) {
-                            $("#dlgDetalleMontoContent").html(msg);
-                            $("#dlgDetalleMonto").dialog("open");
+                            var parts = msg.split("||");
+                            $("#nombreProceso").val(parts[0]);
+                            $("#montoSolicitado").val(number_format(parts[1], 2, '.', ''))
+                                    .attr("max2", number_format(parts[1], 2, '.', ''))
+                                    .setMask('decimal');
+                            if (parts[2] == "0") {
+                                $("#divPoa").show();
+                            } else {
+                                $("#divPoa").hide();
+                            }
+                            $("#plazoEjecucion").val(parts[3]).setMask("integer");
                         }
                     });
                 }
+            }
 
-                $(function () {
+            function crearActividad() {
+                var proySt = $("#selProyecto").find("option:selected").text();
+                var compSt = $("#selComponente").find("option:selected").text();
 
-                    $("#btnPrint").button("option", "icons", {primary : 'ui-icon-print'}).click(function () {
-                        var url = "${createLink(controller: 'reporteSolicitud', action: 'imprimirSolicitud')}/?id=${solicitud.id}";
+                $("#proyectoLabel").text(proySt);
+                $("#componenteLabel").text(compSt);
+
+                $("#dlgActividad").dialog('option', 'title', 'Crea nueva Actividad').dialog('open');
+            }
+
+            function resetActividadForm() {
+                $("#nuevaActividad").val("");
+                $("#nuevaCategoria").val("");
+                $("#fechaInicio").val("");
+                $("#fechaFin").val("");
+                $("#nuevoMonto").val("");
+                $("#nuevoAporte").val("");
+            }
+
+            function dayDiff(d1, d2) {
+                var t2 = d2.getTime();
+                var t1 = d1.getTime();
+
+                return parseInt((t2 - t1) / (24 * 3600 * 1000));
+            }
+
+            function editarMonto() {
+                $.ajax({
+                    type    : "POST",
+                    url     : "${createLink(action:'detalleMonto')}",
+                    data    : {
+                        id        : "${solicitud.id}",
+                        actividad : $("#selActividad").val()
+                    },
+                    success : function (msg) {
+                        $("#dlgDetalleMontoContent").html(msg);
+                        $("#dlgDetalleMonto").dialog("open");
+                    }
+                });
+            }
+
+            $(function () {
+
+                $("#btnPrint").button("option", "icons", {primary : 'ui-icon-print'}).click(function () {
+                    var url = "${createLink(controller: 'reporteSolicitud', action: 'imprimirSolicitud')}/?id=${solicitud.id}";
 //                    console.log(url);
-                        location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename=solicitud.pdf";
-                        return false;
-                    });
+                    location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename=solicitud.pdf";
+                    return false;
+                });
 
-                    $(".button").button();
-                    $(".home").button("option", "icons", {primary : 'ui-icon-home'});
-                    $(".list").button("option", "icons", {primary : 'ui-icon-clipboard'});
-                    $(".create").button("option", "icons", {primary : 'ui-icon-document'});
+                $(".button").button();
+                $(".home").button("option", "icons", {primary : 'ui-icon-home'});
+                $(".list").button("option", "icons", {primary : 'ui-icon-clipboard'});
+                $(".create").button("option", "icons", {primary : 'ui-icon-document'});
 
-                    var myForm = $("#frmSolicitud");
-                    $("#btnSave").button({
-                        icons : {
-                            primary : "ui-icon-disk"
-                        }
-                    }).click(function () {
-                        myForm.submit();
-                        return false;
-                    });
+                var myForm = $("#frmSolicitud");
+                $("#btnSave").button({
+                    icons : {
+                        primary : "ui-icon-disk"
+                    }
+                }).click(function () {
+                    myForm.submit();
+                    return false;
+                });
 
-                    <g:if test="${solicitud.id}">
-                    $("#btnMontoDetalle").button({
-                        icons : {
-                            primary : "ui-icon-folder-open"
-                        },
-                        text  : false
-                    }).click(function () {
-                        editarMonto();
-                        return false;
-                    });
-                    $("#montoSolicitado").click(function () {
-                        editarMonto();
-                    });
-                    </g:if>
+                <g:if test="${solicitud.id}">
+                $("#btnMontoDetalle").button({
+                    icons : {
+                        primary : "ui-icon-folder-open"
+                    },
+                    text  : false
+                }).click(function () {
+                    editarMonto();
+                    return false;
+                });
+                $("#montoSolicitado").click(function () {
+                    editarMonto();
+                });
+                </g:if>
 
-                    $("#btnIncluir").click(function () {
-                        var txt = "¿Está seguro de querer ";
-                        if ($(this).data("tipo") == "S") {
-                            txt += "incluir esta solicitud en la próxima reunión de aprobación?";
-                        } else {
-                            txt += "quitar esta solicitud de la próxima reunión de aprobación?";
-                        }
-                        $.box({
-                            imageClass : "box_info",
-                            text       : txt,
-                            title      : "Confirmación",
-                            iconClose  : false,
-                            dialog     : {
-                                resizable     : false,
-                                draggable     : false,
-                                closeOnEscape : false,
-                                buttons       : {
-                                    "Aceptar"  : function () {
-                                        location.href = "${createLink(action:'incluirReunion')}/${solicitud.id}"
-                                    },
-                                    "Cancelar" : function () {
-                                    }
+                $("#btnIncluir").click(function () {
+                    var txt = "¿Está seguro de querer ";
+                    if ($(this).data("tipo") == "S") {
+                        txt += "incluir esta solicitud en la próxima reunión de aprobación?";
+                    } else {
+                        txt += "quitar esta solicitud de la próxima reunión de aprobación?";
+                    }
+                    $.box({
+                        imageClass : "box_info",
+                        text       : txt,
+                        title      : "Confirmación",
+                        iconClose  : false,
+                        dialog     : {
+                            resizable     : false,
+                            draggable     : false,
+                            closeOnEscape : false,
+                            buttons       : {
+                                "Aceptar"  : function () {
+                                    location.href = "${createLink(action:'incluirReunion')}/${solicitud.id}"
+                                },
+                                "Cancelar" : function () {
                                 }
+                            }
+                        }
+                    });
+                    return false;
+                });
+
+                $("#dlgDetalleMonto").dialog({
+                    modal     : true,
+                    resizable : false,
+                    autoOpen  : false,
+                    width     : 350,
+                    buttons   : {
+                        "Guardar" : function () {
+                            var $dlg = $(this);
+                            var total = 0;
+                            var maximo = parseFloat($("#spanMax").attr("max"));
+                            var data = "";
+                            $("#tb").children().each(function () {
+                                var val = parseFloat($(this).attr("val"));
+                                var anio = parseFloat($(this).attr("class"));
+                                data += anio + "_" + val + ";";
+                                total += val;
+                            });
+                            if (total != maximo) {
+                                $("#spanError").text("Por favor ingrese valores cuya sumatoria sea igual a $" + number_format(maximo, 2, ",", "."));
+                                $("#divError").removeClass("ui-state-highlight").addClass("ui-state-error").show();
+                            } else {
+                                $("#divError").hide();
+                                $.ajax({
+                                    type    : "POST",
+                                    url     : "${createLink(action:'updateDetalleMonto_ajax')}",
+                                    data    : {
+                                        id      : "${solicitud.id}",
+                                        valores : data
+                                    },
+                                    success : function (msg) {
+                                        var parts = msg.split("_");
+                                        if (parts[0] == "OK") {
+                                            $(this).dialog("close");
+                                            var solicitado = parts[1];
+                                            var asignado = parts[2];
+
+                                            $("#spanAsg").text(asignado);
+                                            $("#montoSolicitado").val(solicitado).setMask("decimal");
+                                            $dlg.dialog("close");
+                                        } else {
+                                            $("#spanError").html(parts[1]);
+                                            $("#divError").removeClass("ui-state-highlight").addClass("ui-state-error").show();
+                                        }
+                                    }
+                                });
+                            }
+                        },
+                        "Cerrar"  : function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+
+                $("#dlgActividad").dialog({
+                    modal         : true,
+                    resizable     : false,
+                    autoOpen      : false,
+                    closeOnEscape : false,
+                    width         : 500,
+                    buttons       : {
+                        "Guardar"  : function () {
+                            if ($("#frmNuevaActividad").valid()) {
+                                var proyecto = $("#selProyecto").val();
+                                var componente = $("#selComponente").val();
+                                var actividad = $("#nuevaActividad").val();
+                                var categoria = $("#nuevaCategoria").val();
+                                var fechaIni = $("#fechaInicio").val();
+                                var fechaFin = $("#fechaFin").val();
+                                var monto = $("#nuevoMonto").val();
+                                var aporte = $("#nuevoAporte").val();
+
+                                var dateIni = $("#fechaInicio").datepicker("getDate");
+                                var dateFin = $("#fechaFin").datepicker("getDate");
+
+                                $(this).dialog("close");
+                                $.ajax({
+                                    type    : "POST",
+                                    url     : "${createLink(action:'newActividad_ajax')}",
+                                    data    : {
+                                        proy      : proyecto,
+                                        comp      : componente,
+                                        cat       : categoria,
+                                        fechaIni  : fechaIni,
+                                        fechaFin  : fechaFin,
+                                        actividad : actividad,
+                                        monto     : monto,
+                                        aporte    : aporte,
+                                        width     : widthActividad
+                                    },
+                                    success : function (msg) {
+                                        $("#tdActividad").html(msg);
+                                        $("#montoSolicitado").val(monto).setMask('decimal');
+                                        $("#plazoEjecucion").val(dayDiff(dateIni, dateFin));
+                                        resetActividadForm();
+                                    }
+                                });
+                            }
+                        },
+                        "Cancelar" : function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+
+                $("#selProyecto").change(function () {
+                    loadComponentes();
+                }).selectmenu({width : widthProyecto});
+                loadComponentes();
+
+                $("#nuevaCategoria").selectmenu({width : 150});
+                $("#selContrato").selectmenu({width : 150});
+                $("#selBien").selectmenu({width : 150});
+                $("#selFormaPago").selectmenu({width : 150});
+
+                $('#fecha').datepicker({
+                    changeMonth : true,
+                    changeYear  : true,
+                    dateFormat  : 'dd-mm-yy',
+                    minDate     : "+0"
+                });
+                $('#fechaInicio').datepicker({
+                    changeMonth : true,
+                    changeYear  : true,
+                    dateFormat  : 'dd-mm-yy',
+                    minDate     : "+0",
+                    onSelect    : function (dateText, inst) {
+                        $("#fechaFin").datepicker("option", "minDate", new Date(inst.selectedYear, inst.selectedMonth, parseInt(inst.selectedDay) + 1));
+                    }
+                });
+                $('#fechaFin').datepicker({
+                    changeMonth : true,
+                    changeYear  : true,
+                    dateFormat  : 'dd-mm-yy',
+                    minDate     : "+0"
+                });
+
+                $("#montoSolicitado").setMask('decimal');
+                $("#plazoEjecucion").setMask('integer');
+
+                $("#nuevoMonto").setMask('decimal');
+                $("#nuevoAporte").setMask('decimal');
+
+                $("#frmNuevaActividad").validate();
+
+                // Tooltip de informacion para cada field (utiliza el atributo title del textfield)
+                var elems = $('.field')
+                        .each(function (i) {
+                            $.attr(this, 'oldtitle', $.attr(this, 'title'));
+                        })
+                        .removeAttr('title');
+                $('<div />').qtip(
+                        {
+                            content  : ' ', // Can use any content here :)
+                            position : {
+                                target : 'event' // Use the triggering element as the positioning target
+                            },
+                            show     : {
+                                target : elems,
+                                event  : 'click mouseenter focus'
+                            },
+                            hide     : {
+                                target : elems
+                            },
+                            events   : {
+                                show : function (event, api) {
+                                    // Update the content of the tooltip on each show
+                                    var target = $(event.originalEvent.target);
+                                    api.set('content.text', target.attr('title'));
+                                }
+                            },
+                            style    : {
+                                classes : 'ui-tooltip-rounded ui-tooltip-cream'
                             }
                         });
-                        return false;
-                    });
+                // fin del codigo para los tooltips
 
-                    $("#dlgDetalleMonto").dialog({
-                        modal     : true,
-                        resizable : false,
-                        autoOpen  : false,
-                        width     : 350,
-                        buttons   : {
-                            "Guardar" : function () {
-                                var $dlg = $(this);
-                                var total = 0;
-                                var maximo = parseFloat($("#spanMax").attr("max"));
-                                var data = "";
-                                $("#tb").children().each(function () {
-                                    var val = parseFloat($(this).attr("val"));
-                                    var anio = parseFloat($(this).attr("class"));
-                                    data += anio + "_" + val + ";";
-                                    total += val;
-                                });
-                                if (total != maximo) {
-                                    $("#spanError").text("Por favor ingrese valores cuya sumatoria sea igual a $" + number_format(maximo, 2, ",", "."));
-                                    $("#divError").removeClass("ui-state-highlight").addClass("ui-state-error").show();
-                                } else {
-                                    $("#divError").hide();
-                                    $.ajax({
-                                        type    : "POST",
-                                        url     : "${createLink(action:'updateDetalleMonto_ajax')}",
-                                        data    : {
-                                            id      : "${solicitud.id}",
-                                            valores : data
-                                        },
-                                        success : function (msg) {
-                                            var parts = msg.split("_");
-                                            if (parts[0] == "OK") {
-                                                $(this).dialog("close");
-                                                var solicitado = parts[1];
-                                                var asignado = parts[2];
+                // Validacion del formulario
+                myForm.validate({
+                    onkeyup        : false,
+                    errorElement   : "em",
+                    errorClass     : 'error',
+                    validClass     : 'valid',
+                    errorPlacement : function (error, element) {
+                        // Set positioning based on the elements position in the form
+                        var elem = $(element),
+                                corners = ['right center', 'left center'],
+                                flipIt = elem.parents('span.right').length > 0;
 
-                                                $("#spanAsg").text(asignado);
-                                                $("#montoSolicitado").val(solicitado).setMask("decimal");
-                                                $dlg.dialog("close");
-                                            } else {
-                                                $("#spanError").html(parts[1]);
-                                                $("#divError").removeClass("ui-state-highlight").addClass("ui-state-error").show();
-                                            }
-                                        }
-                                    });
+                        // Check we have a valid error message
+                        if (!error.is(':empty')) {
+                            // Apply the tooltip only if it isn't valid
+                            elem.filter(':not(.valid)').qtip({
+                                overwrite : false,
+                                content   : error,
+                                position  : {
+                                    my       : corners[flipIt ? 0 : 1],
+                                    at       : corners[flipIt ? 1 : 0],
+                                    viewport : $(window)
+                                },
+                                show      : {
+                                    event : false,
+                                    ready : true
+                                },
+                                hide      : false,
+                                style     : {
+                                    classes : 'ui-tooltip-rounded ui-tooltip-red' // Make it red... the classic error colour!
                                 }
-                            },
-                            "Cerrar"  : function () {
-                                $(this).dialog("close");
-                            }
-                        }
-                    });
-
-                    $("#dlgActividad").dialog({
-                        modal         : true,
-                        resizable     : false,
-                        autoOpen      : false,
-                        closeOnEscape : false,
-                        width         : 500,
-                        buttons       : {
-                            "Guardar"  : function () {
-                                if ($("#frmNuevaActividad").valid()) {
-                                    var proyecto = $("#selProyecto").val();
-                                    var componente = $("#selComponente").val();
-                                    var actividad = $("#nuevaActividad").val();
-                                    var categoria = $("#nuevaCategoria").val();
-                                    var fechaIni = $("#fechaInicio").val();
-                                    var fechaFin = $("#fechaFin").val();
-                                    var monto = $("#nuevoMonto").val();
-                                    var aporte = $("#nuevoAporte").val();
-
-                                    var dateIni = $("#fechaInicio").datepicker("getDate");
-                                    var dateFin = $("#fechaFin").datepicker("getDate");
-
-                                    $(this).dialog("close");
-                                    $.ajax({
-                                        type    : "POST",
-                                        url     : "${createLink(action:'newActividad_ajax')}",
-                                        data    : {
-                                            proy      : proyecto,
-                                            comp      : componente,
-                                            cat       : categoria,
-                                            fechaIni  : fechaIni,
-                                            fechaFin  : fechaFin,
-                                            actividad : actividad,
-                                            monto     : monto,
-                                            aporte    : aporte,
-                                            width     : widthActividad
-                                        },
-                                        success : function (msg) {
-                                            $("#tdActividad").html(msg);
-                                            $("#montoSolicitado").val(monto).setMask('decimal');
-                                            $("#plazoEjecucion").val(dayDiff(dateIni, dateFin));
-                                            resetActividadForm();
-                                        }
-                                    });
-                                }
-                            },
-                            "Cancelar" : function () {
-                                $(this).dialog("close");
-                            }
-                        }
-                    });
-
-                    <g:if test="${js}" >
-                    $("#selProyecto").change(function () {
-                        loadComponentes();
-                    }).selectmenu({width : widthProyecto});
-                    loadComponentes();
-                    </g:if>
-
-                    $("#nuevaCategoria").selectmenu({width : 150});
-                    $("#selContrato").selectmenu({width : 150});
-                    $("#selBien").selectmenu({width : 150});
-                    $("#selFormaPago").selectmenu({width : 150});
-
-                    $('#fecha').datepicker({
-                        changeMonth : true,
-                        changeYear  : true,
-                        dateFormat  : 'dd-mm-yy',
-                        minDate     : "+0"
-                    });
-                    $('#fechaInicio').datepicker({
-                        changeMonth : true,
-                        changeYear  : true,
-                        dateFormat  : 'dd-mm-yy',
-                        minDate     : "+0",
-                        onSelect    : function (dateText, inst) {
-                            $("#fechaFin").datepicker("option", "minDate", new Date(inst.selectedYear, inst.selectedMonth, parseInt(inst.selectedDay) + 1));
-                        }
-                    });
-                    $('#fechaFin').datepicker({
-                        changeMonth : true,
-                        changeYear  : true,
-                        dateFormat  : 'dd-mm-yy',
-                        minDate     : "+0"
-                    });
-
-                    $("#montoSolicitado").setMask('decimal');
-                    $("#plazoEjecucion").setMask('integer');
-
-                    $("#nuevoMonto").setMask('decimal');
-                    $("#nuevoAporte").setMask('decimal');
-
-                    $("#frmNuevaActividad").validate();
-
-                    // Tooltip de informacion para cada field (utiliza el atributo title del textfield)
-                    var elems = $('.field')
-                            .each(function (i) {
-                                $.attr(this, 'oldtitle', $.attr(this, 'title'));
                             })
-                            .removeAttr('title');
-                    $('<div />').qtip(
-                            {
-                                content  : ' ', // Can use any content here :)
-                                position : {
-                                    target : 'event' // Use the triggering element as the positioning target
-                                },
-                                show     : {
-                                    target : elems,
-                                    event  : 'click mouseenter focus'
-                                },
-                                hide     : {
-                                    target : elems
-                                },
-                                events   : {
-                                    show : function (event, api) {
-                                        // Update the content of the tooltip on each show
-                                        var target = $(event.originalEvent.target);
-                                        api.set('content.text', target.attr('title'));
-                                    }
-                                },
-                                style    : {
-                                    classes : 'ui-tooltip-rounded ui-tooltip-cream'
-                                }
-                            });
-                    // fin del codigo para los tooltips
 
-                    // Validacion del formulario
-                    myForm.validate({
-                        onkeyup        : false,
-                        errorElement   : "em",
-                        errorClass     : 'error',
-                        validClass     : 'valid',
-                        errorPlacement : function (error, element) {
-                            // Set positioning based on the elements position in the form
-                            var elem = $(element),
-                                    corners = ['right center', 'left center'],
-                                    flipIt = elem.parents('span.right').length > 0;
+                                // If we have a tooltip on this element already, just update its content
+                                    .qtip('option', 'content.text', error);
+                        }
 
-                            // Check we have a valid error message
-                            if (!error.is(':empty')) {
-                                // Apply the tooltip only if it isn't valid
-                                elem.filter(':not(.valid)').qtip({
-                                    overwrite : false,
-                                    content   : error,
-                                    position  : {
-                                        my       : corners[flipIt ? 0 : 1],
-                                        at       : corners[flipIt ? 1 : 0],
-                                        viewport : $(window)
-                                    },
-                                    show      : {
-                                        event : false,
-                                        ready : true
-                                    },
-                                    hide      : false,
-                                    style     : {
-                                        classes : 'ui-tooltip-rounded ui-tooltip-red' // Make it red... the classic error colour!
-                                    }
-                                })
+                        // If the error is empty, remove the qTip
+                        else {
+                            elem.qtip('destroy');
+                        }
+                    },
+                    success        : $.noop // Odd workaround for errorPlacement not firing!
+                });
+                //fin de la validacion del formulario
 
-                                    // If we have a tooltip on this element already, just update its content
-                                        .qtip('option', 'content.text', error);
-                            }
-
-                            // If the error is empty, remove the qTip
-                            else {
-                                elem.qtip('destroy');
-                            }
-                        },
-                        success        : $.noop // Odd workaround for errorPlacement not firing!
-                    });
-                    //fin de la validacion del formulario
-
-                })
-                ;
-            </script>
+            })
+            ;
+        </script>
 
     </body>
 </html>

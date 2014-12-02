@@ -80,21 +80,19 @@
                         </thead>
                         <tbody>
                             <g:each in="${solicitudInstanceList}" status="i" var="solicitudInstance">
-                                <g:if test="${session.perfil.codigo != 'GP' || (session.perfil.codigo == 'GP' && yachay.contratacion.DetalleMontoSolicitud.countBySolicitud(solicitudInstance) > 0)}">
-                                    <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                                        <td>
-                                            <g:link action="show" id="${solicitudInstance.id}">
-                                                ${solicitudInstance.unidadEjecutora?.nombre}
-                                            </g:link>
-                                        </td>
-                                        <td>${solicitudInstance.actividad?.objeto}</td>
-                                        <td>${solicitudInstance.fecha?.format('dd-MM-yyyy')}</td>
-                                        <td style="text-align: right"><g:formatNumber number="${solicitudInstance.montoSolicitado}" type="currency"/></td>
-                                        <td>${solicitudInstance.tipoContrato?.descripcion}</td>
-                                        <td>${solicitudInstance.nombreProceso}</td>
-                                        <td><g:formatNumber number="${solicitudInstance.plazoEjecucion}" maxFractionDigits="0"/> días</td>
-                                    </tr>
-                                </g:if>
+                                <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+                                    <td>
+                                        <g:link action="show" id="${solicitudInstance.id}">
+                                            ${solicitudInstance.unidadEjecutora?.nombre}
+                                        </g:link>
+                                    </td>
+                                    <td>${solicitudInstance.actividad?.objeto}</td>
+                                    <td>${solicitudInstance.fecha?.format('dd-MM-yyyy')}</td>
+                                    <td style="text-align: right"><g:formatNumber number="${solicitudInstance.montoSolicitado}" type="currency"/></td>
+                                    <td>${solicitudInstance.tipoContrato?.descripcion}</td>
+                                    <td>${solicitudInstance.nombreProceso}</td>
+                                    <td><g:formatNumber number="${solicitudInstance.plazoEjecucion}" maxFractionDigits="0"/> días</td>
+                                </tr>
                             </g:each>
                         </tbody>
                     </table>
