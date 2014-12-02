@@ -187,7 +187,7 @@ grails {
         username = "planificacion@yachay.gob.ec"
         password = "Yachay2014"
         props = ["mail.smtp.auth":"true",
-                 "mail.smtp.socketFactory.port":"465",
+                 "mail.smtp.socketFactory.port":"25",
                  "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
                  "mail.smtp.socketFactory.fallback":"false",
                  "mail.debug": "true"]
