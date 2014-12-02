@@ -26,19 +26,21 @@ span.warning, a.warning {
 </div>
 
 <div class="loaded ui-helper-hidden">
+    %{--<p>--}%
+    %{--Agendar reunión de aprobación con <span id="spSolicitudes">${solicitudes.size()} solicitud${solicitudes.size() == 1 ? '' : 'es'}</span>--}%
+    %{--para la fecha y hora:--}%
+    %{--</p>--}%
+    %{--<g:textField name="fechaReunion" class="datepicker wide short ui-widget-content ui-corner-all"--}%
+    %{--value="${reunion?.fecha ? reunion.fecha.format('dd-MM-yyyy') : new Date().format('dd-MM-yyyy')}"/>--}%
+    %{--<g:select from="${7..18}" name="horaReunion" class=" wide tiny ui-widget-content ui-corner-all"--}%
+    %{--optionValue="${{ it.toString().padLeft(2, '0') }}"--}%
+    %{--value="${reunion?.fecha ? reunion.fecha.format('HH') : new Date().format('HH')}"/>--}%
+    %{--<g:select from="${0..11}" name="minutoReunion" class=" wide tiny ui-widget-content ui-corner-all"--}%
+    %{--optionValue="${{ (it * 5).toString().padLeft(2, '0') }}"--}%
+    %{--value="${reunion?.fecha ? reunion.fecha.format('mm').toInteger() / 5 : new Date().format('mm').toInteger() / 5}"/>--}%
     <p>
-        Agendar reunión de aprobación con <span id="spSolicitudes">${solicitudes.size()} solicitud${solicitudes.size() == 1 ? '' : 'es'}</span>
-        para la fecha y hora:
+        Agendar reunión de aprobación con <span id="spSolicitudes">${solicitudes.size()} solicitud${solicitudes.size() == 1 ? '' : 'es'}</span>:
     </p>
-    <g:textField name="fechaReunion" class="datepicker wide short ui-widget-content ui-corner-all"
-                 value="${reunion?.fecha ? reunion.fecha.format('dd-MM-yyyy') : new Date().format('dd-MM-yyyy')}"/>
-    <g:select from="${7..18}" name="horaReunion" class=" wide tiny ui-widget-content ui-corner-all"
-              optionValue="${{ it.toString().padLeft(2, '0') }}"
-              value="${reunion?.fecha ? reunion.fecha.format('HH') : new Date().format('HH')}"/>
-    <g:select from="${0..11}" name="minutoReunion" class=" wide tiny ui-widget-content ui-corner-all"
-              optionValue="${{ (it * 5).toString().padLeft(2, '0') }}"
-              value="${reunion?.fecha ? reunion.fecha.format('mm').toInteger() / 5 : new Date().format('mm').toInteger() / 5}"/>
-
 
     <div class="revisiones">
         <g:each in="${solicitudes}" var="solicitud">
@@ -46,7 +48,12 @@ span.warning, a.warning {
                 <g:if test="${solicitud.aprobacion && solicitud.aprobacionId != reunion.id}">
                     <div class="warning ui-corner-all">
                         <span class="fa fa-warning warning"></span>
-                        Se moverá esta solicitud de la reunión de ${solicitud.aprobacion.fecha.format("dd-MM-yyyy HH:mm")} a la reunión actual
+                        <g:if test="${solicitud.aprobacion.fecha}">
+                            Se moverá esta solicitud de la reunión del ${solicitud.aprobacion.fecha.format("dd-MM-yyyy HH:mm")} a la reunión actual
+                        </g:if>
+                        <g:else>
+                            Se moverá esta solicitud de una reunión sin fecha establecida a la reunión actual
+                        </g:else>
                         <a class="warning" href="#" id="${solicitud.id}" style="margin-left: 40px; color: #07A; font-weight: bold">No mover</a>
                     </div>
                 </g:if>

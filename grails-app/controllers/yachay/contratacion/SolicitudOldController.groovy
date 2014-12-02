@@ -1,20 +1,16 @@
 package yachay.contratacion
 
 import yachay.alertas.Alerta
-import yachay.contratacion.Aprobacion
+import yachay.parametros.TipoElemento
 import yachay.parametros.UnidadEjecutora
 import yachay.parametros.poaPac.Anio
-import yachay.parametros.TipoElemento
-import yachay.contratacion.Solicitud
 import yachay.poa.Asignacion
+import yachay.proyectos.Categoria
 import yachay.proyectos.MarcoLogico
 import yachay.proyectos.Proyecto
-import yachay.seguridad.Persona
 import yachay.seguridad.Prfl
 import yachay.seguridad.Sesn
 import yachay.seguridad.Usro
-import yachay.proyectos.Categoria
-import yachay.contratacion.DetalleMontoSolicitud
 
 import javax.imageio.ImageIO
 import java.awt.image.BufferedImage
@@ -25,7 +21,7 @@ import static java.awt.RenderingHints.VALUE_INTERPOLATION_BICUBIC
 /**
  * Controlador que muestra las pantallas de manejo de solicitudes de contratación
  */
-class SolicitudController extends yachay.seguridad.Shield {
+class SolicitudOldController extends yachay.seguridad.Shield {
 
     /**
      * Retorna el path para subir los archivos
@@ -358,6 +354,13 @@ class SolicitudController extends yachay.seguridad.Shield {
 
     /**
      * Acción que muestra el listado de solicitudes de contratación. El listado cambia según el perfil:<br/>
+     * - solamente se muestran las solicitudes con estado P (no han sido tratadas en una reunión de aprobación)<br/>
+     * - si es Gerencia de Planificación (GP), Dirección de Planificación (DP), Dirección de Seguimiento (DS), Analista de administración (ASAF),
+     * Analista Jurídico (ASGJ), Gerencia Administrativa (GAF), Gerencia Jurídica (GJ) -> puede ver solicitudes de cualquier unidad; caso contrario
+     * solo las solicitudes de su unidad<br/>
+     * - si es ASAF o ASGJ -> puede ver todas las que no hayan sido ya validadas y que ya hayan sido marcadas para revisión<br/>
+     * - si es GAF o GJ -> puede ver las que ya han sido revisadas por su analista<br/>
+     * - si es Director requirente (DRRQ) puede ver las de su unidad
      */
     def list = {
         def perfil = session.perfil
@@ -366,23 +369,55 @@ class SolicitudController extends yachay.seguridad.Shield {
 
         params.max = Math.min(params.max ? params.int('max') : 25, 100)
 
-        def todos = ["GP"]
+        println "AQUI::: " + perfil.codigo
+
+        def todos = ["GP", "DP", "DS", "ASAF", "ASGJ", "ASPL", "GAF", "GJ"]
 
         def c = Solicitud.createCriteria()
         def lista = c.list(params) {
-            eq("estado", "P")
             if (!todos.contains(perfil.codigo)) {
                 eq("unidadEjecutora", unidad)
             }
             if (params.search) {
                 ilike("nombreProceso", "%" + params.search + "%")
             }
+            //puede ver todas las no aprobadas aun
+//            if (["ASAF", "ASGJ", ""].contains(perfil.codigo)) {
+            eq("estado", "P")
+//            }
+            //si es Analista admin. o Analista juridico -> puede ver todas las que no hayan sido ya validadas y q ya estén marcadas para revisión
+            if (perfil.codigo == "ASAF") {
+                isNull("validadoAdministrativaFinanciera")
+                isNotNull("fechaParaRevision")
+            }
+            if (perfil.codigo == "ASGJ") {
+                isNull("validadoJuridica")
+                isNotNull("fechaParaRevision")
+            }
+            //si es Gerencia admin o Gerencia juridica -> puede ver las que ya han sido revisadas por su analista
+            if (perfil.codigo == "GAF") {
+                isNotNull("revisadoAdministrativaFinanciera")
+            }
+            if (perfil.codigo == "GJ") {
+                isNotNull("revisadoJuridica")
+            }
+//            //si es Director requirente puede ver las ya validadas
+//            if (perfil.codigo == "DRRQ") {
+//                isNotNull("validadoAdministrativaFinanciera")
+//                isNotNull("validadoJuridica")
+//            }
         }
+//        def list2 = Solicitud.withCriteria {
+////            eq("unidadEjecutora", unidad)
+//            if (params.search) {
+//                ilike("nombreProceso", "%" + params.search + "%")
+//            }
+//        }
 
         def title = g.message(code: "default.list.label", args: ["Solicitud"], default: "Solicitud List")
 //        <g:message code="default.list.label" args="[entityName]" />
 
-        [solicitudInstanceList: lista, title: title, params: params]
+        [solicitudInstanceList: lista, /*solicitudInstanceTotal: list2.size(),*/ title: title, params: params]
     }
 
     /**
@@ -413,6 +448,20 @@ class SolicitudController extends yachay.seguridad.Shield {
             def title = g.message(code: "default.show.label", args: ["Solicitud"], default: "Show Solicitud")
             [solicitud: solicitud, title: title]
         }
+    }
+
+    /**
+     * Acción que marca a una solicitud de contratación como lista para ser revisada
+     */
+    def paraRevision = {
+        def solicitud = Solicitud.get(params.id)
+        solicitud.fechaParaRevision = new Date()
+        if (!solicitud.save(flush: true)) {
+            flash.message = "Ha ocurrido un error: " + renderErrors(bean: solicitud)
+            println solicitud.errors
+        }
+        flash.message = "Solicitud marcada para revisión"
+        redirect(action: "show", id: solicitud.id)
     }
 
     /*Función para guardar una nueva solicitud*/
@@ -497,28 +546,6 @@ class SolicitudController extends yachay.seguridad.Shield {
         if (!solicitud.save(flush: true)) {
             println "error al incluir/excluir reunion " + solicitud.errors
         }
-        /* TODO:
-                 enviar mail
-         */
-
-        def perfilDireccionPlanificacion = Prfl.findByCodigo("DP")
-        def sesiones = Sesn.findAllByPerfil(perfilDireccionPlanificacion)
-
-        if (sesiones.size() > 0) {
-            def persona = Persona.get(session.usuario.personaId)
-            def msg = "El usuario ${persona.nombre} ${persona.apellido} ha ${solicitud.incluirReunion == 'S' ? 'añadido' : 'removido'}"
-            msg += " una solicitud de contratación para que sea tratada en reunión de aprobación."
-
-            println "Se enviaran ${sesiones.size()} mails"
-            sesiones.each { sesn ->
-                Usro usro = sesn.usuario
-                def mail = usro.persona.mail
-                println "ENVIAR MAIL A " + mail
-            }
-        } else {
-            println "No hay nadie registrado con perfil de direccion de planificacion: no se mandan mails"
-        }
-
         redirect(action: "show", id: solicitud.id)
     }
 
@@ -855,6 +882,87 @@ class SolicitudController extends yachay.seguridad.Shield {
                 redirect(action: "list")
             }
         }
+    }
+
+    /**
+     * Acción que muestra la pantalla de revisión de solicitud<br/>
+     * Según el perfil del usuario permite o no editar
+     * @param id id de la solicitud
+     */
+    def revision = {
+        def perfil = Prfl.get(session.perfil.id)
+        def solicitud = Solicitud.get(params.id)
+        if (!solicitud) {
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'solicitud.label', default: 'Solicitud'), params.id])}"
+            redirect(action: "list")
+        } else {
+            def title = "Revisar solicitud"
+            [solicitud: solicitud, title: title, perfil: perfil]
+        }
+    }
+
+    /**
+     * Acción que guarda la revisión realizada y redirecciona a la acción Show
+     * @params los parámetros enviados por el formulario
+     */
+    def saveRevision = {
+        def solicitud = Solicitud.get(params.id)
+        if (solicitud) {
+            uploadFile("revisiongaf", request.getFile('archivogaf'), solicitud)
+            uploadFile("revisiongj", request.getFile('archivogj'), solicitud)
+//            uploadFile("revisiongdp", request.getFile('archivogdp'), solicitud)
+
+            if (params.observacionesgj) {
+                solicitud.observacionesJuridica = params.observacionesgj
+            }
+            if (params.observacionesgaf) {
+                solicitud.observacionesAdministrativaFinanciera = params.observacionesgaf
+            }
+//            if (params.observacionesgdp) {
+//                solicitud.observacionesDireccionProyectos = params.observacionesgdp
+//            }
+            if (params.gj == "on") {
+                solicitud.revisadoJuridica = new Date()
+            } else {
+                if (params["_gj"]) {
+                    solicitud.revisadoJuridica = null
+                }
+            }
+            if (params.gaf == "on") {
+                solicitud.revisadoAdministrativaFinanciera = new Date()
+            } else {
+                if (params["_gaf"]) {
+                    solicitud.revisadoAdministrativaFinanciera = null
+                }
+            }
+            if (params.vgj == "on") {
+                solicitud.validadoJuridica = new Date()
+            } else {
+                if (params["_vgj"]) {
+                    solicitud.validadoJuridica = null
+                }
+            }
+            if (params.vgaf == "on") {
+                solicitud.validadoAdministrativaFinanciera = new Date()
+            } else {
+                if (params["_vgaf"]) {
+                    solicitud.validadoAdministrativaFinanciera = null
+                }
+            }
+//            if (params.gdp == "on") {
+//                solicitud.revisadoDireccionProyectos = new Date()
+//            } else {
+//                if (params["_gdp"]) {
+//                    solicitud.revisadoDireccionProyectos = null
+//                }
+//            }
+
+            if (!solicitud.save(flush: true)) {
+                println "error al guardar revision: " + solicitud.errors
+                flash.message = "Ha ocurrido un error al guardar su revisión."
+            }
+        }
+        redirect(action: "show", id: solicitud.id)
     }
 
     /**

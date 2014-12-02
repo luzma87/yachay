@@ -108,12 +108,20 @@
                                     <td>${solicitudInstance.nombreProceso}</td>
                                     <td><g:formatNumber number="${solicitudInstance.plazoEjecucion}" maxFractionDigits="0"/> días</td>
                                     <td>
-                                        ${solicitudInstance.aprobacion ?
-                                                solicitudInstance.aprobacion.fecha.format("dd-MM-yyyy HH:mm") :
-                                                "No agendado"}
+                                        <g:if test="${solicitudInstance.aprobacion}">
+                                            <g:if test="${solicitudInstance.aprobacion.fecha}">
+                                                ${solicitudInstance.aprobacion.fecha?.format("dd-MM-yyyy HH:mm")}
+                                            </g:if>
+                                            <g:else>
+                                                Reunión sin fecha establecida
+                                            </g:else>
+                                        </g:if>
+                                        <g:else>
+                                            No agendado
+                                        </g:else>
                                     </td>
                                     <td style="text-align: center;">
-                                        <g:set var="checked" value="${solicitudInstance.aprobacionId == reunion?.id}"/>
+                                        <g:set var="checked" value="${solicitudInstance.aprobacionId && solicitudInstance.aprobacionId == reunion?.id}"/>
                                         <div id="${solicitudInstance.id}" class="check ${checked ? 'checked original' : ''} ui-corner-all">
                                             <span class="fa fa-2x ${checked ? 'fa-check-square' : 'fa-square-o'}"></span>
                                         </div>
@@ -246,6 +254,7 @@
                                                     horas   : $("#horaReunion").val(),
                                                     minutos : $("#minutoReunion").val()
                                                 };
+                                                data["id"] = id;
                                                 $(".txtRevision").each(function () {
                                                     data[$(this).attr("name")] = $(this).val();
                                                 });
@@ -256,7 +265,7 @@
                                                     data    : data,
                                                     success : function (msg) {
                                                         //                                    console.log(msg);
-                                                        location.reload(true);
+                                                        location.href = "${createLink(action: 'list')}";
                                                     }
                                                 });
                                             },

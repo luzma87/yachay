@@ -1,5 +1,7 @@
 package yachay.contratacion
 
+import yachay.seguridad.Usro
+
 /**
  * Clase para conectar con la tabla 'aprb' de la base de datos<br/>
  * Reunión de aprobación: puede tener una o varias solicitudes ligadas
@@ -37,6 +39,23 @@ class Aprobacion {
     String aprobada
 
     /**
+     * El usuario logueado al momento de la creación de la aprobación
+     */
+    Usro creadoPor
+    /**
+     * La firma de gerencia de planif
+     */
+    Usro firmaGerenciaPlanificacion
+    /**
+     * La firma de direccion de planif
+     */
+    Usro firmaDireccionPlanificacion
+    /**
+     * La firma de gerencia técnica
+     */
+    Usro firmaGerenciaTecnica
+
+    /**
      * Define las relaciones uno a varios
      */
     static hasMany = [solicitudes: Solicitud]
@@ -58,11 +77,16 @@ class Aprobacion {
         columns {
             id column: 'aprb__id'
             fecha column: 'aprbfcha'
+            fechaRealizacion column: 'aprbfcrl'
             observaciones column: 'aprbobsr'
             pathPdf column: 'aprb_pdf'
             asistentes column: 'aprbasst'
             numero column: 'aprbnmro'
             aprobada column: 'aprbaprb'
+            creadoPor column: 'user__id'
+            firmaDireccionPlanificacion column: 'userfrdp'
+            firmaGerenciaPlanificacion column: 'userfrgp'
+            firmaGerenciaTecnica column: 'userfrgt'
         }
     }
 
@@ -70,11 +94,16 @@ class Aprobacion {
      * Define las restricciones de cada uno de los campos
      */
     static constraints = {
+        fecha(blank: true, nullable: true)
         fechaRealizacion(blank: true, nullable: true)
         observaciones(blank: true, nullable: true, maxSize: 1023)
         asistentes(blank: true, nullable: true, maxSize: 1023)
         pathPdf(blank: true, nullable: true, maxSize: 255)
         numero(blank: true, nullable: true)
         aprobada(blank: true, nullable: true)
+        creadoPor(blank: true, nullable: true)
+        firmaDireccionPlanificacion(blank: true, nullable: true)
+        firmaGerenciaTecnica(blank: true, nullable: true)
+        firmaGerenciaPlanificacion(blank: true, nullable: true)
     }
 }

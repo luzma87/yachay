@@ -91,7 +91,7 @@ function extendRemove(target, props) {
             spanInput.html(input);
             div.append(spanInput);
         } else if (defaults.html) {
-            div.append(defaults.html.clone());
+            div.append(defaults.html.clone().show());
         } else if (defaults.remote) {
             $.ajax({
                 type    : "POST",

@@ -522,28 +522,48 @@ class ReporteSolicitudController {
         def solicitudes = Solicitud.findAllByAprobacion(reunion)
         def firmas = []
         def anios = []
-        if (params.fgp != "null") {
-            def gerentePlanificacion = Usro.get(params.fgp)
+        if (reunion.firmaGerenciaTecnica || reunion.firmaDireccionPlanificacion || reunion.firmaGerenciaPlanificacion) {
+            def gerentePlanificacion = reunion.firmaGerenciaPlanificacion
             if (gerentePlanificacion) {
                 firmas += [cargo: gerentePlanificacion?.cargoPersonal?.descripcion ?: "GERENTE DE PLANIFICACIÓN", usuario: gerentePlanificacion]
-//                firmas += [cargo: "GERENTE DE PLANIFICACIÓN", usuario: gerentePlanificacion]
             }
-        }
-        if (params.fdp != "null") {
-            def directorPlanificacion = Usro.get(params.fdp)
+            def directorPlanificacion = reunion.firmaDireccionPlanificacion
             if (directorPlanificacion) {
-//                firmas += [cargo: "DIRECTOR DE PLANIFICACIÓN", usuario: directorPlanificacion]
                 firmas += [cargo: directorPlanificacion?.cargoPersonal?.descripcion ?: "DIRECTOR DE PLANIFICACIÓN", usuario: directorPlanificacion]
             }
-        }
-        if (params.fgt != "null") {
-            def gerenteTec = Usro.get(params.fgt)
+            def gerenteTec = reunion.firmaGerenciaTecnica
             if (gerenteTec) {
-//                firmas += [cargo: "GERENTE TÉCNICO", usuario: gerenteTec]
                 firmas += [cargo: gerenteTec?.cargoPersonal?.descripcion ?: "GERENTE TÉCNICO", usuario: gerenteTec]
             }
+        } else {
+            if (params.fgp != "null") {
+                def gerentePlanificacion = Usro.get(params.fgp)
+                reunion.firmaGerenciaPlanificacion = gerentePlanificacion
+                if (gerentePlanificacion) {
+                    firmas += [cargo: gerentePlanificacion?.cargoPersonal?.descripcion ?: "GERENTE DE PLANIFICACIÓN", usuario: gerentePlanificacion]
+//                firmas += [cargo: "GERENTE DE PLANIFICACIÓN", usuario: gerentePlanificacion]
+                }
+            }
+            if (params.fdp != "null") {
+                def directorPlanificacion = Usro.get(params.fdp)
+                reunion.firmaDireccionPlanificacion = directorPlanificacion
+                if (directorPlanificacion) {
+//                firmas += [cargo: "DIRECTOR DE PLANIFICACIÓN", usuario: directorPlanificacion]
+                    firmas += [cargo: directorPlanificacion?.cargoPersonal?.descripcion ?: "DIRECTOR DE PLANIFICACIÓN", usuario: directorPlanificacion]
+                }
+            }
+            if (params.fgt != "null") {
+                def gerenteTec = Usro.get(params.fgt)
+                reunion.firmaGerenciaTecnica = gerenteTec
+                if (gerenteTec) {
+//                firmas += [cargo: "GERENTE TÉCNICO", usuario: gerenteTec]
+                    firmas += [cargo: gerenteTec?.cargoPersonal?.descripcion ?: "GERENTE TÉCNICO", usuario: gerenteTec]
+                }
+            }
+            if (!reunion.save(flush: true)) {
+                println "error save reunion firmas: " + reunion.errors
+            }
         }
-
         solicitudes.each { sol ->
             DetalleMontoSolicitud.findAllBySolicitud(sol, [sort: "anio"]).each { d ->
                 if (!anios.contains(d.anio)) {

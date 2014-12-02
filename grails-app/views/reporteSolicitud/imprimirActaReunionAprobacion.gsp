@@ -161,7 +161,17 @@
             </table>
 
             <div class="fecha">
-                Quito, ${reunion.fecha?.format("dd-MM-yyyy")}
+                <table width="100%">
+                    <tr>
+                        <td style="text-align: left">
+                            Elaborado por: ${reunion.creadoPor?.sigla}
+                        </td>
+                        <td>
+                            Quito, ${reunion.fecha?.format("dd-MM-yyyy")}
+                        </td>
+                    </tr>
+                </table>
+
             </div>
             <slc:firmasReporte firmas="${firmas}"/>
         </div>

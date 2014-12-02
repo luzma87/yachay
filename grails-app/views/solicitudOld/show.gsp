@@ -52,16 +52,22 @@
                                         </div>
                                     </g:if>
                                     <g:else>
-                                        <g:if test="${solicitud.incluirReunion == 'S'}">
+                                        <g:if test="${solicitud.fechaParaRevision}">
                                             <div style="padding: 10px 10px 5px 10px; ">
-                                                Se incluirá en la próxima reunión de aprobación
+                                                Solicitud marcada para revisión
                                             </div>
                                         </g:if>
-                                        <g:else>
-                                           <div style="padding: 10px 10px 5px 10px; ">
-                                                No se incluirá en la próxima reunión de aprobación
-                                            </div>
-                                        </g:else>
+                                    </g:else>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" style="padding: 10px 10px 15px 10px; font-size: larger; font-weight: bold;">
+                                    <g:if test="${solicitud.incluirReunion == 'S'}">
+                                        Se incluirá en la próxima reunión de aprobación
+                                        (Solicitado el ${solicitud.fechaPeticionReunion?.format("dd-MM-yyyy HH:mm")})
+                                    </g:if>
+                                    <g:else>
+                                        No se incluirá en la próxima reunión de aprobación
                                     </g:else>
                                 </td>
                             </tr>
@@ -80,8 +86,43 @@
                                         <g:link class="button edit" action="ingreso" id="${solicitud?.id}">
                                             Actualizar
                                         </g:link>
+                                        <g:if test="${session.perfil.codigo == 'DRRQ' && DetalleMontoSolicitud.countBySolicitud(solicitud) > 0 && !solicitud.fechaParaRevision}">
+                                            <g:link class="button paraRevision" action="paraRevision" id="${solicitud?.id}">
+                                                Aprobar para revisión
+                                            </g:link>
+                                        </g:if>
+                                    </g:if>
+                                %{--<g:if test="${session.perfil.codigo == 'GAF' || session.perfil.codigo == 'GJ'/* || session.perfil.codigo == 'GDP'*/}">--}%
+                                    <g:if test="${session.perfil.codigo == 'ASAF' || session.perfil.codigo == 'ASGJ'/* || session.perfil.codigo == 'GDP'*/}">
+                                        <g:link class="button revision" action="revision" id="${solicitud?.id}">
+                                            Revisar
+                                        </g:link>
+                                    </g:if>
+                                    <g:if test="${solicitud.revisadoAdministrativaFinanciera}">
+                                        <g:if test="${session.perfil.codigo == 'GAF'}">
+                                            <g:link class="button revision" action="revision" id="${solicitud?.id}">
+                                                Validar
+                                            </g:link>
+                                        </g:if>
+                                    </g:if>
+                                    <g:if test="${solicitud.revisadoJuridica}">
+                                        <g:if test="${session.perfil.codigo == 'GJ'}">
+                                            <g:link class="button revision" action="revision" id="${solicitud?.id}">
+                                                Validar
+                                            </g:link>
+                                        </g:if>
                                     </g:if>
                                 </g:if>
+                                <g:elseif test="${solicitud.estado == 'A'}">
+                                    <g:if test="${session.perfil.codigo == 'GP'}">
+                                        <g:link class="button aprobacion" action="aprobacion" id="${solicitud?.id}">
+                                            Ver/Modificar aprobación
+                                        </g:link>
+                                    </g:if>
+                                </g:elseif>
+                                %{--<g:link class="button delete" action="delete" id="${politicaInstance?.id}">--}%
+                                %{--<g:message code="default.button.delete.label" default="Delete"/>--}%
+                                %{--</g:link>--}%
                             </td>
                         </tr>
                     </tfoot>
@@ -105,6 +146,18 @@
 
                 $(".edit").button("option", "icons", {primary : 'ui-icon-pencil'});
                 $(".revision").button("option", "icons", {primary : 'ui-icon-check'});
+                $(".paraRevision").button("option", "icons", {primary : 'ui-icon-check'}).click(function () {
+                    if (confirm("Está seguro de querer marcar esta solicitud de contratación para revisión?")) {
+                        return true;
+                    }
+                    return false;
+                });
+                $(".delete").button("option", "icons", {primary : 'ui-icon-trash'}).click(function () {
+                    if (confirm("${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}")) {
+                        return true;
+                    }
+                    return false;
+                });
             });
         </script>
     </body>

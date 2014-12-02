@@ -28,7 +28,25 @@ class AprobacionController extends yachay.seguridad.Shield {
         params.order = "desc"
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 
-        [aprobacionInstanceList: Aprobacion.list(params), aprobacionInstanceTotal: Aprobacion.count(), title: title, params: params]
+        def c = Aprobacion.createCriteria()
+        def lista = c.list(params) {
+            if (params.search) {
+                solicitudes {
+                    ilike("nombreProceso", "%" + params.search + "%")
+                }
+            }
+        }
+        c = Aprobacion.createCriteria()
+        def total = c.list() {
+            if (params.search) {
+                solicitudes {
+                    ilike("nombreProceso", "%" + params.search + "%")
+                }
+            }
+        }.size()
+
+        [aprobacionInstanceList: lista, aprobacionInstanceTotal: total,
+         title                 : title, params: params]
     }
 
     /**
@@ -52,7 +70,7 @@ class AprobacionController extends yachay.seguridad.Shield {
      * Acción llamada con ajax que muestra el diálogo para agendar reunión de contratación: fecha, hora, comentarios para cada solicitud
      */
     def agendarReunion_ajax = {
-        println "Agendar reunion:::: " + params
+        println "AQUI " + params
         def reunion = new Aprobacion()
         if (params.id) {
             reunion = Aprobacion.get(params.id.toLong())
@@ -90,9 +108,13 @@ class AprobacionController extends yachay.seguridad.Shield {
         if (params.id) {
             reunion = Aprobacion.get(params.id.toLong())
             flash.message = "<div class='ui-state-highlight ui-corner-all' style='padding:5px;'>" +
-                    "<span style=\"float: left; margin-right: .3em;\" class=\"ui-icon ui-icon-info\"></span>" +
-                    "Preparar reunión del " + reunion.fecha.format("dd-MM-yyyy HH:mm") +
-                    "</div>"
+                    "<span style=\"float: left; margin-right: .3em;\" class=\"ui-icon ui-icon-info\"></span> Preparar reunión "
+            if (reunion.fecha) {
+                flash.message += "del " + reunion.fecha.format("dd-MM-yyyy HH:mm")
+            } else {
+                flash.message += " sin fecha establecida"
+            }
+            flash.message += "</div>"
         }
 
         [solicitudInstanceList: list, solicitudInstanceTotal: count, title: title, params: params, reunion: reunion]
@@ -103,21 +125,33 @@ class AprobacionController extends yachay.seguridad.Shield {
      */
     def agendarReunion = {
 //        println params
-        def f = params.fecha
-        def h = params.horas.toString().toInteger()
-        def m = params.minutos.toString().toInteger() * 5
-        def fecha = new Date().parse("dd-MM-yyyy HH:mm", f + " " + h + ":" + m)
+//        def f = params.fecha
+//        def h = params.horas.toString().toInteger()
+//        def m = params.minutos.toString().toInteger() * 5
+//        def fecha = new Date().parse("dd-MM-yyyy HH:mm", f + " " + h + ":" + m)
 
         def ok = true
-        def aprobacion = Aprobacion.findByFecha(fecha)
-        if (!aprobacion) {
+//        def aprobacion = Aprobacion.findByFecha(fecha)
+        def aprobacion = null
+        if (params.id) {
+            aprobacion = Aprobacion.get(params.id)
+            if (!aprobacion) {
+                aprobacion = new Aprobacion()
+//            aprobacion.fecha = fecha
+                if (!aprobacion.save(flush: true)) {
+                    ok = false
+                    println "Error al crear reunion de aprobacion: " + aprobacion.errors
+                }
+            }
+        } else {
             aprobacion = new Aprobacion()
-            aprobacion.fecha = fecha
+//            aprobacion.fecha = fecha
             if (!aprobacion.save(flush: true)) {
                 ok = false
                 println "Error al crear reunion de aprobacion: " + aprobacion.errors
             }
         }
+
         if (ok) {
             params.each { k, v ->
                 if (k.toString().startsWith("revision")) {
@@ -144,6 +178,26 @@ class AprobacionController extends yachay.seguridad.Shield {
 //            }
         }
         render(ok ? "OK" : "NO")
+    }
+
+    /**
+     * Acción llamada con ajax que guarda la fecha de una reunión de aprobación
+     */
+    def setFechaReunion_ajax = {
+        println "set fecha " + params
+        def aprobacion = Aprobacion.get(params.id)
+        def f = params.fecha
+        def h = params.horas.toString().toInteger()
+        def m = params.minutos.toString().toInteger() * 5
+        def fecha = new Date().parse("dd-MM-yyyy HH:mm", f + " " + h + ":" + m)
+
+        aprobacion.fecha = fecha
+        if (!aprobacion.save(flush: true)) {
+            println "Error al guardar fecha reunion: " + aprobacion.errors
+            render "NO"
+        } else {
+            render "OK"
+        }
     }
 
     /**
@@ -303,6 +357,10 @@ class AprobacionController extends yachay.seguridad.Shield {
         reunion.observaciones = params.observaciones.trim()
 //        reunion.asistentes = params.asistentes.trim()
         reunion.fechaRealizacion = new Date()
+        if (!reunion.fecha) {
+            reunion.fecha = new Date()
+        }
+        reunion.creadoPor = Usro.get(session.usuario.id)
         reunion.aprobada = params.aprobada
 
         if (!reunion.numero) {
