@@ -187,7 +187,7 @@ grails {
         username = "planificacion@yachay.gob.ec"
         password = "Yachay2014"
         props = ["mail.smtp.starttls.enable":"true",
-                 "mail.smtp.port":"587",
+                 "mail.smtp.port":"25",
                  "mail.debug": "true"]
     }
 }
