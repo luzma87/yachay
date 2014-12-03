@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: gato
+  Date: 01/12/14
+  Time: 12:52 PM
+--%>
+
 <%@ page import="yachay.parametros.UnidadEjecutora" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -29,16 +36,10 @@
 
 <body>
 <div style="margin-left: 10px;">
-    %{--<g:if test="${actual.estado!=0}">--}%
-    %{--<g:link class="btn" controller="modificacionProyecto" action="solicitarModificacionUnidad"--}%
-    %{--params="${[unidad:proyecto.unidadEjecutora.id,anio:actual.id]}">Solicitar modificación</g:link>--}%
-    %{--</g:if>--}%
-    <g:link class="btn" controller="asignacion" action="programacionAsignacionesInversion" id="${proyecto?.id}">Programación</g:link>
-    %{--<g:link class="btn" controller="reportes" action="poaInversionesReporteWeb" id="${proyecto.unidadEjecutora.id}" target="_blank">Reporte</g:link>--}%
-    %{--<g:link class="btn" controller="cronograma" action="verCronograma" id="${proyecto.id}">Cronograma</g:link>--}%
-    %{--<g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades</g:link>--}%
-    <g:link class="btn" controller="asignacion" action="agregarAsignacionInv" id="${proyecto?.id}">Agregar asignaciones</g:link>
-    <a class="btn" id="reporte">Reporte Asignaciones</a>
+    %{--<g:link class="btn" controller="asignacion" action="programacionAsignacionesInversion" id="${proyecto?.id}">Programación</g:link>--}%
+    %{--<g:link class="btn" controller="asignacion" action="agregarAsignacionInv" id="${proyecto?.id}">Agregar asignaciones</g:link>--}%
+    %{--<a class="btn" id="reporte">Reporte Asignaciones</a>--}%
+    <a class="btn" id="reporteUnidad">Reporte Unidad</a>
     <g:if test="${actual?.estado==1}">
         <g:if test="${proyecto.aprobadoPoa=='S'}">
             <g:link class="btn" controller="modificacion" action="poaInversionesMod" id="${proyecto?.id}">Modificaciones</g:link>
@@ -49,12 +50,9 @@
             <a href="#" id="aprobPrio">Aprobar priorización</a>
         </g:if>
     </g:if>
-&nbsp;&nbsp;&nbsp;<b style="font-size: 11px">Año:</b><g:select from="${yachay.parametros.poaPac.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual?.id}" style="font-size: 11px"/>
-&nbsp;&nbsp;&nbsp; <b style="font-size: 11px">Filtro: </b><g:select from="${['Todos','Componente', 'Responsable']}" name="filtro" style="font-size: 11px"/>
+%{--&nbsp;&nbsp;&nbsp;<b style="font-size: 11px">Año:</b><g:select from="${yachay.parametros.poaPac.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual?.id}" style="font-size: 11px"/>--}%
+%{--&nbsp;&nbsp;&nbsp; <b style="font-size: 11px">Filtro: </b><g:select from="${['Todos','Componente', 'Responsable']}" name="filtro" style="font-size: 11px"/>--}%
     <div id="filtrados" style="margin-left: 375px"></div>
-
-    %{--<g:link class="btn" controller="reportes2" action="reporteAsignacionProyecto" id="${proyecto?.id}">Reporte Asignaciones</g:link>--}%
-
 
 </div>
 <fieldset class="ui-corner-all" style="width: 98%;margin-top: 40px;">
@@ -184,6 +182,14 @@
             <b>Año:</b><g:select from="${yachay.parametros.poaPac.Anio.list([sort:'anio'])}" id="anio-asg" name="anio" optionKey="id" optionValue="anio" value="${actual?.id}"/>
         </div>
     </div>
+
+    <div id="reporteUnidadDialogo" style="width: 250px">
+        <div>Seleccione el proyecto para generar el reporte.</div>
+        <div style="margin-left: 100px; margin-top: 30px">
+            <b>Proyecto:</b> <g:select from="${proyecto}" id="pro-asg" name="proye" optionKey="id"/>
+        </div>
+    </div>
+
     <div style="position: absolute;top:5px;right:10px;font-size: 10px;">
         <b>Total invertido proyecto actual:</b>
         <g:formatNumber number="${total?.toFloat()}"                        format="###,##0"
@@ -246,14 +252,6 @@
             location.href = "${createLink(controller:'asignacion',action:'asignacionProyectov2')}?id=${proyecto.id}&anio=" + aniof
         }
     })
-
-    %{--function loadTodos () {--}%
-    %{--var aniof = new Date().format('yyyy')--}%
-    %{--location.href = "${createLink(controller:'asignacion',action:'asignacionProyectov2')}?id=${proyecto.id}&anio=" + aniof--}%
-    %{--}--}%
-
-
-    %{--loadTodos();--}%
 
     $("#aprobPrio").button().click(function(){
         if(confirm("Esta seguro?")){
@@ -617,6 +615,45 @@
 
     $("#reporte").button({
 
+        icons: {
+            primary: "ui-icon-print"
+        }
+    });
+
+    $("#reporteUnidadDialogo").dialog({
+        autoOpen:false,
+        resizable:false,
+        title:'Reporte de Asignaciones por Unidad',
+        modal:true,
+        draggable:true,
+        width:350,
+        height:200,
+        position:'center',
+        open:function (event, ui) {
+            $(".ui-dialog-titlebar-close").hide();
+        },
+        buttons:{
+            "Cancelar": function () {
+                $(this).dialog("close");
+            },
+            "Aceptar":function () {
+                var proyec = $("#pro-asg").val();
+                %{--console.log("session " + ${session.unidad.id})--}%
+                var url = "${createLink(controller: 'reportes2', action: 'reporteAsignacionUnidad')}?id=" + ${proyecto?.id} + "Wproy=" + proyec + "Wses=" + ${session.unidad.id};
+                location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url;
+                $(this).dialog("close");
+            }
+        }
+    });
+
+
+
+
+    $("#reporteUnidad").click(function () {
+        $("#reporteUnidadDialogo").dialog("open")
+    });
+
+    $("#reporteUnidad").button({
         icons: {
             primary: "ui-icon-print"
         }
