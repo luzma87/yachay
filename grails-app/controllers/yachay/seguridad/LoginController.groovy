@@ -16,6 +16,7 @@ class LoginController {
     }
 
     def pruebaMail = {
+        println "Mandar mail ----------------------------------------------------------------------         "
         try{
             mailService.sendMail {
                 to "valentinsvt@hotmail.com"
@@ -26,7 +27,7 @@ class LoginController {
         }catch (e){
             render "${e.printStackTrace()}"
         }
-
+        println "fin ----------------------------------------------------------------------         "
 
     }
 
