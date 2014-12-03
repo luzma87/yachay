@@ -189,7 +189,7 @@ grails {
         props = ["mail.smtp.starttls.enable":"false",
                  "mail.smtp.ssl.enable":"false",
                  "mail.smtp.host":"mail.yachay.gob.ec",
-                 "mail.smtp.ssl.trust": "mail.yachay.gob.ec",
+//                 "mail.smtp.ssl.trust": "mail.yachay.gob.ec",
                  "mail.from":"planificacion@yachay.gob.ec",
                  "mail.smtp.port":"25",
                  "mail.smtp.auth":"true",
