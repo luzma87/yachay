@@ -186,7 +186,8 @@ grails {
         port = 25
         username = "planificacion@yachay.gob.ec"
         password = "Yachay2014"
-        props = ["mail.smtp.starttls.enable":"true",
+        props = ["mail.smtp.starttls.enable":"false",
+                 "mail.smtp.ssl.enable":"false",
                  "mail.smtp.host":"mail.yachay.gob.ec",
                  "mail.smtp.ssl.trust": "mail.yachay.gob.ec",
                  "mail.from":"planificacion@yachay.gob.ec",
@@ -195,5 +196,10 @@ grails {
                  "mail.debug": "true"]
     }
 }
-//props.put("mail.smtp.host", "smtp.yourserver.net");
-//props.put("mail.from", "yourusername@youremailaddress.com");
+//props.put("mail.smtp.host", host);
+//props.setProperty("mail.smtp.port", "587");
+//props.put("mail.smtp.auth", true);
+//
+////Bypass the SSL authentication
+//props.put("mail.smtp.ssl.enable", false);
+//props.put("mail.smtp.starttls.enable", false);
