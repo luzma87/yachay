@@ -1,11 +1,11 @@
 <%--
   Created by IntelliJ IDEA.
   User: gato
-  Date: 26/11/14
-  Time: 11:59 AM
+  Date: 01/12/14
+  Time: 12:20 PM
 --%>
 
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="yachay.parametros.UnidadEjecutora" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Reporte de Asignaciones del Proyecto</title>
@@ -63,11 +63,11 @@
     }
 
     /*.odd {*/
-        /*background : none repeat scroll 0 0 #E1F1F7;*/
+    /*background : none repeat scroll 0 0 #E1F1F7;*/
     /*}*/
 
     /*.even {*/
-        /*background : none repeat scroll 0 0 #F5F5F5;*/
+    /*background : none repeat scroll 0 0 #F5F5F5;*/
     /*}*/
 
     ol {
@@ -140,6 +140,7 @@
 <body>
 
 <div class="titulo">Reporte de Asignaciones del Proyecto</div>
+<div class="titulo">Unidad: ${UnidadEjecutora.get(unidad)?.nombre}</div>
 <div class="titulo">Año: ${actual?.anio}</div>
 
 <table>
@@ -178,7 +179,7 @@
                 ${asg.marcoLogico.numero}
             </td>
             <td class="dscr" style="width: 180px;text-align: left" title="${asg.marcoLogico.toStringCompleto()}">
-                 ${asg.marcoLogico}
+                ${asg.marcoLogico}
             </td>
             <td style="text-align: left">
                 ${asg.unidad}
