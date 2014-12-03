@@ -190,6 +190,7 @@ grails {
                  "mail.smtp.ssl.enable":"false",
                  "mail.smtp.host":"mail.yachay.gob.ec",
 //                 "mail.smtp.ssl.trust": "mail.yachay.gob.ec",
+                 "mail.smtp.auth.ntlm.domain":"yachay",
                  "mail.from":"planificacion@yachay.gob.ec",
                  "mail.smtp.port":"25",
                  "mail.smtp.auth":"true",
