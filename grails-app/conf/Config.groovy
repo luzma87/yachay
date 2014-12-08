@@ -195,7 +195,7 @@ grails {
                  "mail.from":"planificacion@yachay.gob.ec",
 //                 "mail.smtp.starttls.enable":"true",
 //                 "mail.smtp.port":"465",
-                 "mail.smtp.auth":"true",
+//                 "mail.smtps.auth":"true",
                  "mail.debug": "true"]
     }
 }
