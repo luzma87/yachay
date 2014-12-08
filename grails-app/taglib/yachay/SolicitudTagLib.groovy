@@ -672,13 +672,13 @@ class SolicitudTagLib {
         }
 
         def html = ""
-        html += "<table width='100%' border='1' style='margin-bottom:10px;'>"
+        html += "<table width='100%' border='0' style='margin-bottom:10px;'>"
         html += "<tr>"
         html += "<td style='width:206px;' rowspan='${rowspan}'><img src='${logoPath}' style='width:${w}px;'/></td>"
         html += "</tr>"
         html += "<tr>"
         html += "<td class='ttl'>YACHAY EP</td>"
-        html += "<td style='width:100px;'> </td>"
+        html += "<td> </td>"
         html += "</tr>"
 //        html += "<tr>"
 //        html += "<td class='ttl'>GERENCIA DE PLANIFICACIÓN</td>"
@@ -689,7 +689,12 @@ class SolicitudTagLib {
         if (title != "") {
             html += "<tr>"
             html += "<td class='ttl'>${title}</td>"
-            html += "<td> </td>"
+            html += "<td style='width:150px; font-size: 9pt; text-align: center;'>"
+            if (attrs.codigo) {
+                html += "CÓDIGO DE FORMATO:<br/>"
+                html += attrs.codigo
+            }
+            html += "</td>"
             html += "</tr>"
         }
         html += "</table>"
