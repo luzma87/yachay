@@ -672,7 +672,7 @@ class SolicitudTagLib {
         }
 
         def html = ""
-        html += "<table width='100%' style='margin-bottom:10px;'>"
+        html += "<table width='100%' border='1' style='margin-bottom:10px;'>"
         html += "<tr>"
         html += "<td style='width:206px;' rowspan='${rowspan}'><img src='${logoPath}' style='width:${w}px;'/></td>"
         html += "</tr>"
