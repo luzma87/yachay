@@ -188,7 +188,7 @@ grails {
         password = "Yachay2014"
         props = [
                 "mail.smtp.starttls.enable":"true",
-//                 "mail.smtp.ssl.enable":"true",
+                 "mail.smtp.ssl.enable":"true",
                  "mail.smtp.host":"mail.yachay.gob.ec",
 //                 "mail.smtp.ssl.trust": "mail.yachay.gob.ec",
 //                 "mail.smtp.auth.ntlm.domain":"yachay",
