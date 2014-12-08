@@ -190,12 +190,12 @@ grails {
 //                "mail.smtp.starttls.enable":"false",
                  "mail.smtp.ssl.enable":"true",
                  "mail.smtp.host":"mail.yachay.gob.ec",
-                 "mail.smtp.ssl.trust": "mail.yachay.gob.ec",
+//                 "mail.smtp.ssl.trust": "mail.yachay.gob.ec",
 //                 "mail.smtp.auth.ntlm.domain":"yachay",
                  "mail.from":"planificacion@yachay.gob.ec",
                  "mail.smtp.starttls.enable":"true",
 //                 "mail.smtp.port":"465",
-//                 "mail.smtp.auth":"true",
+                 "mail.smtp.auth":"true",
                  "mail.debug": "true"]
     }
 }
