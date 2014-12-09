@@ -183,7 +183,7 @@ classDiagram {
 grails {
     mail {
         host = "10.1.0.123"
-        port = 465
+        port = 25
         username = "planificacion@yachay.gob.ec"
         password = "Yachay2014"
         props = [
@@ -193,11 +193,11 @@ grails {
                  "mail.smtp.ssl.trust": "mail.yachay.gob.ec",
                  "mail.smtp.auth.ntlm.domain":"yachay",
                  "mail.from":"planificacion@yachay.gob.ec",
-                 "mail.smtp.port":"465",
+                 "mail.smtp.port":"25",
                  "mail.smtp.user":"planificacion@yachay.gob.ec",
                  "mail.smtp.password":"Yachay2014",
                  "mail.smtp.auth":"false",
-                 "mail.smtp.ehlo":"false",
+                 "mail.smtp.ehlo":"true",
                  "mail.debug": "true"]
     }
 }
