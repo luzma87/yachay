@@ -194,11 +194,17 @@ grails {
 //                 "mail.smtp.auth.ntlm.domain":"yachay",
                  "mail.from":"planificacion@yachay.gob.ec",
 //                 "mail.smtp.port":"465",
-                 "mail.smtp.auth":"false",
+                 "mail.smtp.user":"planificacion@yachay.gob.ec",
+                 "mail.smtp.password":"Yachay2014",
+                 "mail.smtp.auth":"true",
                  "mail.smtp.ehlo":"false",
                  "mail.debug": "true"]
     }
 }
+
+//properties.setProperty("mail.smtp.user", "abc");
+//properties.setProperty("mail.smtp.password", "xyz");
+//properties.setProperty("mail.smtp.auth", "true");
 //props.put("mail.smtp.host", host);
 //props.setProperty("mail.smtp.port", "587");
 //props.put("mail.smtp.auth", true);
