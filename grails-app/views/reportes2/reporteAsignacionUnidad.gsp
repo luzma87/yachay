@@ -40,6 +40,16 @@
         /*border-bottom : solid 1px #000000;*/
     }
 
+    .titulo2 {
+        min-height    : 20px;
+        font-size     : 12pt;
+        /*font-weight   : bold;*/
+        text-align    : left;
+        margin-bottom : 5px;
+        width         : 100%;
+        /*border-bottom : solid 1px #000000;*/
+    }
+
     .totales {
         font-weight : bold;
     }
@@ -139,9 +149,10 @@
 
 <body>
 
-<div class="titulo">Reporte de Asignaciones del Proyecto</div>
-<div class="titulo">Unidad: ${UnidadEjecutora.get(unidad)?.nombre}</div>
-<div class="titulo">Año: ${actual?.anio}</div>
+<slc:headerReporte title="Reporte de Asignaciones del Proyecto por Unidad" codigo="FR-PLA-AVAL-02"/>
+
+<div class="titulo2">Unidad: ${UnidadEjecutora.get(unidad)?.nombre}</div>
+<div class="titulo2">Año: ${actual?.anio}</div>
 
 <table>
     <thead>

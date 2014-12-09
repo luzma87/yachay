@@ -56,7 +56,7 @@
 
 </div>
 <fieldset class="ui-corner-all" style="width: 98%;margin-top: 40px;">
-    <legend>Asignaciones para el año ${actual}</legend>
+    <legend>Asignaciones por unidad para el año ${actual}</legend>
     <table style="width: 1040px;font-size: 10px">
         <thead>
         %{--<th>#</th>--}%
@@ -73,7 +73,7 @@
         <g:if test="${actual?.estado==1}">
             <th>Priorizado</th>
         </g:if>
-        <th></th>
+        %{--<th></th>--}%
         </thead>
         <tbody>
         <g:set var="total" value="${0}"></g:set>
@@ -135,24 +135,22 @@
                     </td>
                 </g:else>
                 </g:if>
-                <td class="agr">
-                    <g:if test="${actual.estado==0}">
-                        <a href="#" class="btn_agregar" asgn="${asg.id}" proy="${proyecto.id}"
-                           anio="${actual.id}">Dividir en dos partidas</a>
-                        <g:if test="${asg.padre != null}">
-                            <a href="#" class="btn_borrar" asgn="${asg.id}">Eliminar la Asignación</a>
-                        </g:if>
-                    </g:if>
-                    <g:else>
-                        <a href="#" class="btn_agregar_prio" asgn="${asg.id}" proy="${proyecto.id}" anio="${actual.id}">Dividir en dos partidas</a>
-                        <g:if test="${asg.padre != null}">
-                            <a href="#" class="btn_borrar_prio" asgn="${asg.id}">Eliminar la Asignación</a>
-                        </g:if>
-                    </g:else>
-                </td>
-                %{--<td>--}%
-                %{--<a href="#" id="env_${i}" class="btn_env" asgn="${asg.id}" proy="${proyecto.id}" anio="${actual.id}" valor="${asg.getValorReal()}">Enviar a unidad ejectura</a>--}%
+                %{--<td class="agr">--}%
+                    %{--<g:if test="${actual.estado==0}">--}%
+                        %{--<a href="#" class="btn_agregar" asgn="${asg.id}" proy="${proyecto.id}"--}%
+                           %{--anio="${actual.id}">Dividir en dos partidas</a>--}%
+                        %{--<g:if test="${asg.padre != null}">--}%
+                            %{--<a href="#" class="btn_borrar" asgn="${asg.id}">Eliminar la Asignación</a>--}%
+                        %{--</g:if>--}%
+                    %{--</g:if>--}%
+                    %{--<g:else>--}%
+                        %{--<a href="#" class="btn_agregar_prio" asgn="${asg.id}" proy="${proyecto.id}" anio="${actual.id}">Dividir en dos partidas</a>--}%
+                        %{--<g:if test="${asg.padre != null}">--}%
+                            %{--<a href="#" class="btn_borrar_prio" asgn="${asg.id}">Eliminar la Asignación</a>--}%
+                        %{--</g:if>--}%
+                    %{--</g:else>--}%
                 %{--</td>--}%
+
             </tr>
         </g:each>
         <tr>
