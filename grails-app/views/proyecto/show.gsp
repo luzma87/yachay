@@ -467,6 +467,15 @@
                             <tr> </tr>
                             <tr>
                                 <td class="labelshow">
+                                    <g:message code="proyecto.justificaion.label" default="Justificación"/>
+                                </td>
+
+                                <td class="" colspan="3" >
+                                    ${fieldValue(bean: proyectoInstance, field: "justificacion")}
+                                </td> <!-- campo -->
+                            </tr>
+                            <tr>
+                                <td class="labelshow">
                                     <g:message code="proyecto.descripcion.label" default="Descripción"/>
                                 </td>
 
@@ -477,7 +486,7 @@
 
                             <tr class="prop">
                                 <td class="labelshow">
-                                    <g:message code="proyecto.problema.label" default="Alcance"/>
+                                    <g:message code="proyecto.problema.label" default="Propósito"/>
                                 </td>
 
                                 <td class="" colspan="3">
