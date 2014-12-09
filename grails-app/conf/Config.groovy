@@ -196,7 +196,7 @@ grails {
                  "mail.smtp.port":"465",
                  "mail.smtp.user":"planificacion@yachay.gob.ec",
                  "mail.smtp.password":"Yachay2014",
-                 "mail.smtp.auth":"true",
+                 "mail.smtp.auth":"false",
                  "mail.smtp.ehlo":"false",
                  "mail.debug": "true"]
     }
