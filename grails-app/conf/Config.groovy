@@ -194,7 +194,7 @@ grails {
 //                 "mail.smtp.auth.ntlm.domain":"yachay",
                  "mail.from":"planificacion@yachay.gob.ec",
 //                 "mail.smtp.port":"465",
-                 "mail.smtp.auth":"true",
+                 "mail.smtp.auth":"false",
                  "mail.debug": "true"]
     }
 }
