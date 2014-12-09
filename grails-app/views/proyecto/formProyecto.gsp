@@ -364,6 +364,24 @@
 
                         <tr>
                             <td class="label " valign="middle">
+                                <g:message code="proyecto.justificacion.label" default="Justificación"/>
+                            </td>
+
+                            <td class="indicator">
+                                &nbsp;
+                            </td>
+
+                            <td colspan="4" valign="middle">
+                                <g:textArea class="field ui-widget-content ui-corner-all" minLenght="1" maxLenght="1023"
+                                            name="justificacion"
+                                            id="justificacion" title="${Proyecto.constraints.justificacion.attributes.mensaje}"
+                                            cols="40" rows="2"
+                                            style="width: 900px;" value="${proyecto?.justificacion}"/>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="label " valign="middle">
                                 <g:message code="proyecto.descripcion.label" default="Descripción"/>
                             </td>
 
@@ -375,7 +393,7 @@
                                 <g:textArea class="field ui-widget-content ui-corner-all" minLenght="1" maxLenght="1024"
                                             name="descripcion"
                                             id="descripcion" title="${Proyecto.constraints.descripcion.attributes.mensaje}"
-                                            cols="40" rows="3"
+                                            cols="40" rows="2"
                                             style="width: 900px;" value="${proyecto?.descripcion}"/>
                             </td>
 
@@ -384,7 +402,7 @@
                         <tr class="prop ${hasErrors(bean: proyecto, field: 'problema', 'error')}">
 
                             <td class="label " valign="middle">
-                                <g:message code="proyecto.problema.label" default="Alcance"/>
+                                <g:message code="proyecto.problema.label" default="Propósito"/>
                             </td>
 
                             <td class="indicator">
@@ -395,7 +413,7 @@
                                 <g:textArea class="field ui-widget-content ui-corner-all" minLenght="1" maxLenght="1024"
                                             name="problema"
                                             id="problema" title="${Proyecto.constraints.problema.attributes.mensaje}"
-                                            cols="40" rows="3"
+                                            cols="40" rows="2"
                                             style="width: 900px;" value="${proyecto?.problema}"/>
                             </td>
                         </tr>

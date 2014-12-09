@@ -175,6 +175,10 @@ class Proyecto  implements Serializable {
      * Estrategia
      */
     Estrategia estrategia
+    /**
+     * Justificación
+     */
+    String justificacion
 
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
@@ -235,6 +239,7 @@ class Proyecto  implements Serializable {
             portafolio column: 'prtf__id'
             codigo column: 'proycdgo'
             estrategia column: 'estr__id'
+            justificacion column: 'proyjust'
 
         }
     }
@@ -286,6 +291,7 @@ class Proyecto  implements Serializable {
         portafolio(blank: true, nullable: true, attributes: [mensaje: 'Portafolio'])
         codigo(blank: true, nullable: true, attributes: [mensaje: 'Código'])
         estrategia(blank: true, nullable: true, attributes: [mensaje: 'Estrategia'])
+        justificacion(size: 0..1023, blank: true, nullable: true, attributes: [mensaje: 'Justificación del Proyecto'])
     }
 
     /**
