@@ -183,7 +183,7 @@ classDiagram {
 grails {
     mail {
         host = "10.1.0.123"
-        port = 465
+        port = 25
         username = "planificacion@yachay.gob.ec"
         password = "Yachay2014"
         props = [
