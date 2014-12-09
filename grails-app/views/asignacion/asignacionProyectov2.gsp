@@ -39,6 +39,7 @@
     %{--<g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades</g:link>--}%
     <g:link class="btn" controller="asignacion" action="agregarAsignacionInv" id="${proyecto?.id}">Agregar asignaciones</g:link>
     <a class="btn" id="reporte">Reporte Asignaciones</a>
+    <g:link class="btn" controller="asignacion" action="asignacionProyectoUnidad" id="${proyecto?.id}">Reporte Unidad</g:link>
     <g:if test="${actual?.estado==1}">
         <g:if test="${proyecto.aprobadoPoa=='S'}">
             <g:link class="btn" controller="modificacion" action="poaInversionesMod" id="${proyecto?.id}">Modificaciones</g:link>
