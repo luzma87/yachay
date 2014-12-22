@@ -12,22 +12,29 @@
 }
 </style>
 
+%{--
 <div style="padding: 5px;" class="ui-widget-content ui-corner-all">
+
     <p>
         <span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-info"></span>
         Si desea modificar el monto solicitado, cambie el valor y presione el botón "Refrescar" a lado derecho.<br/>
         Los cambios efectuados en el detalle no se guardarán hasta no hacer clic en el botón "Guardar".<br/>
     </p>
-</div>
 
+</div>
+--}%
+
+%{--
 <div style="padding: 5px;" class="ui-state-error ui-corner-all ui-helper-hidden" id="divError">
     <p>
         <span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span>
         <span id="spanError"></span>
     </p>
 </div>
+--}%
 
-<table width="100%" style="margin-bottom: 20px; border-bottom: double 1px #000000;">
+<div style="padding: 5px;" class="ui-widget-content ui-corner-all">
+<table width="100%" >
     <tr>
         <th colspan="2">Monto solicitado:</th>
         <td colspan="2">
@@ -37,8 +44,9 @@
         </td>
     </tr>
 </table>
+</div>
 
-<table>
+<table style="margin-top: 25px; margin-bottom: 25px;">
     <tr>
         <th>Año:</th>
         <td>
@@ -62,7 +70,7 @@
 
 <table border="1" class="tablaDetalleMonto" width="100%">
     <thead>
-        <tr>
+        <tr style="background-color: #469DA8">
             <th style="width: 127px;">Año</th>
             <th style="width: 128px;">Monto</th>
             <th style="width: 70px;">Eliminar</th>

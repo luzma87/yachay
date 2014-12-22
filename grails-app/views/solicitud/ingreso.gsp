@@ -195,7 +195,7 @@
                                 <g:textField class="required number2 field wide short ui-widget-content ui-corner-all"
                                              name="montoSolicitado" title="Monto solicitado" autocomplete="off"
                                              value="${solicitud.montoSolicitado}" readonly="readonly"/>
-                                <a href="#" id="btnMontoDetalle">Detalle</a>
+                                <a href="#" class="button boton-color" id="btnMontoDetalle">Detallar valores</a>
                             </g:if>
                             <g:else>
                                 <g:textField class="required number2 field wide short ui-widget-content ui-corner-all"
@@ -526,7 +526,7 @@
                     icons : {
                         primary : "ui-icon-folder-open"
                     },
-                    text  : false
+                    text  : true
                 }).click(function () {
                     editarMonto();
                     return false;
@@ -570,7 +570,7 @@
                     autoOpen  : false,
                     width     : 350,
                     buttons   : {
-                        "Guardar" : function () {
+                        "Guardar y Salir" : function () {
                             var $dlg = $(this);
                             var total = 0;
                             var maximo = parseFloat($("#spanMax").attr("max"));
@@ -610,10 +610,13 @@
                                     }
                                 });
                             }
-                        },
+                        }
+/*                        ,
+
                         "Cerrar"  : function () {
                             $(this).dialog("close");
                         }
+*/
                     }
                 });
 
