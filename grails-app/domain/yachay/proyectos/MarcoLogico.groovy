@@ -205,4 +205,21 @@ class MarcoLogico implements Serializable {
         }
     }
 
+    def getTotalCronograma(){
+        def cronos = Cronograma.findAllByMarcoLogico(this)
+        def total = 0
+        cronos.each {c->
+            total+=c.valor+c.valor2
+        }
+        return total
+    }
+    def getTotalCronogramaAnio(anio){
+        def cronos = Cronograma.findAllByMarcoLogicoAndAnio(this,anio)
+        def total = 0
+        cronos.each {c->
+            total+=c.valor+c.valor2
+        }
+        return total
+    }
+
 }

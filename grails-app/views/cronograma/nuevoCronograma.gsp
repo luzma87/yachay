@@ -107,7 +107,7 @@
     <g:each in="${yachay.parametros.poaPac.Mes.list()}" var="mes">
         <th class="col" style="width: 60px;">${(mes.descripcion.size()>5)?mes.descripcion .substring(0,5)+".":mes.descripcion}</th>
     </g:each>
-    <th style="width: 90px;">Asignado <br>${anio.anio}</th>
+    <th style="width: 90px;">Asignado</th>
     %{--<th style="width: 90px;">Asignado <br> otros años</th>--}%
     <th style="width: 90px;">Sin<br> asignar</th>
     <th style="width: 90px;">Monto</th>
@@ -209,6 +209,7 @@
                     </g:else>
                 </g:each>
             %{--<<----------------<<<<<<<< >>>>>>>>>>>>> <br>--}%
+                <g:set var="tot" value="${act.getTotalCronograma()}"></g:set>
                 <td class="disabled" id="tot_${j}${i}" div="totComp_${j}">
                     <g:formatNumber number="${tot}"
                                     format="###,##0"
@@ -223,7 +224,7 @@
                 %{--<g:set var="totOtroAnioProyecto" value="${totOtroAnioProyecto.toDouble()+totOtrosAnios.toDouble()}"></g:set>--}%
                 %{--<g:set var="totOtroAnioComp" value="${totOtroAnioComp.toDouble()+totOtrosAnios.toDouble()}"></g:set>--}%
                 <td class="disabled" id="tot_${j}${i}a" div="totComp_${j}a">
-                    <g:formatNumber number="${totAct.toDouble() - (tot.toDouble()+0)}"
+                    <g:formatNumber number="${act.monto-tot}"
                                     format="###,##0"
                                     minFractionDigits="2" maxFractionDigits="2"/>
 

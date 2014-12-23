@@ -445,6 +445,8 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
 
         def componente = MarcoLogico.get(params.id)
         def proyecto = componente.proyecto
+        def inicio = proyecto.fechaInicioPlanificada
+        def fin  = proyecto.fechaFinPlanificada
         if (proyecto.aprobado == "a") {
             response.sendError(403)
         } else {
@@ -465,7 +467,7 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
                     }
                 }
             }
-            [componente: componente, actividades: actividades, totComp: totComp, totFin: totFin, totOtros: totOtros]
+            [componente: componente, actividades: actividades, totComp: totComp, totFin: totFin, totOtros: totOtros,inicio:inicio,fin:fin]
         }
 
     }

@@ -443,7 +443,7 @@
         var act = $(this).attr("act")
         var resp = $("#resp_"+act).val()
         var cat = $("#categoria_"+act).val()
-        var aporte = $("#aporte_"+act).val()
+        var aporte = 0
         var inicio = $("#fechaIncio_"+act).val()
         var fin = $("#fechaFin_"+act).val()
         var msg =""
@@ -454,17 +454,17 @@
         if(fin.length<1){
             msg+="<br>Ingrese la Fecha de finalización de la actividad"
         }
-        if(isNaN(aporte)){
-            msg+="<br>Ingrese el porcentaje de aporte de la actividad. Debe ser un numero positivo."
-        }else{
-            aporte = parseFloat(aporte)
-            if(aporte>100){
-                msg+="<br>El aporte no puede ser mayor que 100."
-            }
-            if(aporte<0){
-                msg+="<br>El aporte debe ser un número positivo."
-            }
-        }
+//        if(isNaN(aporte)){
+//            msg+="<br>Ingrese el porcentaje de aporte de la actividad. Debe ser un numero positivo."
+//        }else{
+//            aporte = parseFloat(aporte)
+//            if(aporte>100){
+//                msg+="<br>El aporte no puede ser mayor que 100."
+//            }
+//            if(aporte<0){
+//                msg+="<br>El aporte debe ser un número positivo."
+//            }
+//        }
 
 
         if(msg!=""){
@@ -512,11 +512,36 @@
         }
     });
     $(".back").button({icons:{primary:'ui-icon-arrowreturnthick-1-w'}});
-    $('.datepicker').datepicker({
+
+    $('.fechaInicio').datepicker({
         changeMonth:true,
         changeYear:true,
         dateFormat:'dd-mm-yy',
-
+        minDate: new Date(${inicio.format("yyyy")},${inicio.format("MM").toDouble()-1},${inicio.format("dd")}),
+        onClose:function (dateText, inst) {
+            var date = $(this).datepicker('getDate');
+            var day, month, year;
+            if (date != null) {
+                day = date.getDate();
+                month = parseInt(date.getMonth()) + 1;
+                year = date.getFullYear();
+            } else {
+                day = '';
+                month = '';
+                year = '';
+            }
+            var id = $(this).attr('id');
+            $('#' + id + '_day').val(day);
+            $('#' + id + '_month').val(month);
+            $('#' + id + '_year').val(year);
+        }
+    });
+    $('.fechaFin').datepicker({
+        changeMonth:true,
+        changeYear:true,
+        dateFormat:'dd-mm-yy',
+        minDate: new Date(${inicio.format("yyyy")},${inicio.format("MM").toDouble()-1},${inicio.format("dd")}),
+        maxDate: new Date(${fin.format("yyyy")},${fin.format("MM").toDouble()-1},${fin.format("dd")}),
         onClose:function (dateText, inst) {
             var date = $(this).datepicker('getDate');
             var day, month, year;
