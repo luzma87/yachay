@@ -16,7 +16,8 @@ environments {
             dbCreate = "update"
 //            url = "jdbc:postgresql://127.0.0.1:5432/yachay"
 //            url = "jdbc:postgresql://10.0.0.2:5432/yachay2"
-            url = "jdbc:postgresql://10.0.0.2:5432/yachay_p"
+//            url = "jdbc:postgresql://10.0.0.2:5432/yachay_p"
+            url = "jdbc:postgresql://10.0.0.2:5432/yachay3"
             username = "postgres"
             password = "postgres"
         }
@@ -34,8 +35,17 @@ environments {
             dbCreate = "update"
             url = "jdbc:postgresql://127.0.0.1:5432/yachay2"
             username = "postgres"
-            //password = "postgres"
             password = "steinsgate"
         }
+    }
+
+    produccionYachay {
+        dataSource {
+            dbCreate = "update"
+            url = "jdbc:postgresql://127.0.0.1:5432/plan"
+            username = "postgres"
+            password = "steinsgate"
+        }
+
     }
 }
