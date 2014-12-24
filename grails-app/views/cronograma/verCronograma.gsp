@@ -86,7 +86,7 @@
                 <g:each in="${yachay.parametros.poaPac.Mes.list()}" var="mes">
                     <th class="col">${mes.descripcion}</th>
                 </g:each>
-                <th style="width: 100px;">Total</th>
+                <th style="width: 100px;">Total<br> Asignado</th>
                 <th style="width: 100px;">Sin asignar</th>
                 <th style="width: 100px;">Total</th>
             </tr>
@@ -119,12 +119,12 @@
                                 <g:each in="${crga}" var="c">
                                     <g:if test="${c?.anio==anio}">
                                         <g:set var="crg" value='${c}'></g:set>
-                                        <g:set var="totCompAsig" value="${totCompAsig.toDouble()+crg.valor+crg.valor2}"></g:set>
+                                        %{--<g:set var="totCompAsig" value="${totCompAsig.toDouble()+crg.valor+crg.valor2}"></g:set>--}%
                                     </g:if>
                                 </g:each>
                                 <g:if test="${crg}">
 
-                                    <g:set var="tot" value="${tot.toDouble()+crg?.valor+crg.valor2}"></g:set>
+                                    %{--<g:set var="tot" value="${tot.toDouble()+crg?.valor+crg.valor2}"></g:set>--}%
                                     <g:if test="${true}">
 
                                         <td class="disabled num" id="crg_${crg.id}" actividad="${act.id}"
@@ -155,17 +155,20 @@
                             </g:else>
                         </g:each>
                         <td class="disabled" id="tot_${j}${i}">
+                            <g:set var="tot" value="${act.getTotalCronograma()}"></g:set>
+                            <g:set var="totCompAsig" value="${totCompAsig+act.getTotalCronograma()}"></g:set>
 
                             <g:formatNumber number="${tot}"
                                             format="###,##0"
                                             minFractionDigits="2" maxFractionDigits="2"/>
                         </td>
                         <td class="disabled" id="tot_${j}${i}a">
-                            <g:formatNumber number="${totAct.toDouble() - tot.toDouble()}"
+                            <g:formatNumber number="${act.monto - tot.toDouble()}"
                                             format="###,##0"
                                             minFractionDigits="2" maxFractionDigits="2"/>
                         </td>
                         <td class="disabled" id="tot_${j}${i}a">
+
                             <g:formatNumber number="${monto}"
                                             format="###,##0"
                                             minFractionDigits="2" maxFractionDigits="2"/>
@@ -195,7 +198,7 @@
                             </div>
                         </b>
                     </td>
-                    <td style="text-align: center;background: ${colores[indice.toInteger()]}">
+                    <td style="text-align: center;background: ${colores[indice.toInteger()]};font-weight: bold">
                         <g:formatNumber number="${totalMetas}"
                                         format="###,##0"
                                         minFractionDigits="2" maxFractionDigits="2"/>
@@ -228,7 +231,7 @@
                                     minFractionDigits="2" maxFractionDigits="2"/>
                 </div>
                 </b></td>
-                <td style="text-align: center;background: #E0EEF4">
+                <td style="text-align: center;background: #E0EEF4;font-weight: bold">
                     <g:formatNumber number="${(totalMetasCronograma)}"
                                     format="###,##0"
                                     minFractionDigits="2" maxFractionDigits="2"/>

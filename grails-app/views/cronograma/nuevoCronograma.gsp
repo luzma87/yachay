@@ -148,7 +148,7 @@
 
                             %{--paso ${" "+c.anio+" "+k+" mes "+mes+" mrlg  "+act.id}   <br>--}%
                                 <g:set var="crg" value='${c}'></g:set>
-                                <g:set var="totCompAsig" value="${totCompAsig.toDouble()+crg.valor+crg.valor2}"></g:set>
+                                %{--<g:set var="totCompAsig" value="${totCompAsig.toDouble()+crg.valor+crg.valor2}"></g:set>--}%
                             </g:if>
                         %{--<g:else>--}%
                         %{--<g:if test="${c?.anio!=anio && c?.cronograma == null}">--}%
@@ -159,7 +159,7 @@
                         </g:each>
                         <g:if test="${crg}">
 
-                            <g:set var="tot" value="${tot.toDouble()+crg?.valor+crg?.valor2}"></g:set>
+                            %{--<g:set var="tot" value="${tot.toDouble()+crg?.valor+crg?.valor2}"></g:set>--}%
 
                             <g:if test="${true}">
                                 <td style="width: 60px">
@@ -170,7 +170,7 @@
                                            div="tot_${j}${i}"
                                            mt="${mes.descripcion}" style="width: 60px"
                                            prsp_desc="${crg.presupuesto.descripcion}" prsp="${crg.presupuesto.id}" prsp_num="${crg.presupuesto.numero}"
-                                           fuente="${crg.fuente.id}"
+                                           fuente="${crg.fuente.id}" fuente2="${crg.fuente2?.id}"
                                            prsp2="${crg.presupuesto2?.id}" prsp_num2="${crg.presupuesto2?.numero}" prsp_desc2="${crg.presupuesto2?.descripcion}"
                                            valor1="${formatNumber(number:crg.valor,format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}"
                                            valor2="${formatNumber(number:crg.valor2,format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}" >
@@ -210,6 +210,7 @@
                 </g:each>
             %{--<<----------------<<<<<<<< >>>>>>>>>>>>> <br>--}%
                 <g:set var="tot" value="${act.getTotalCronograma()}"></g:set>
+                <g:set var="totCompAsig" value="${totCompAsig.toDouble()+tot}"></g:set>
                 <td class="disabled" id="tot_${j}${i}" div="totComp_${j}">
                     <g:formatNumber number="${tot}"
                                     format="###,##0"
@@ -450,55 +451,60 @@
 
 
     <div style="width: 100%;float: left;margin-top: 10px;">
-        <div style="width: 110px;float: left;">
+        <div style="width: 140px;float: left;">
             <b>Presupuesto (1):</b>
         </div>
         <input type="text" class="ui-corner-all" id="valor" style="border: 1px solid black;width: 120px;text-align: right">  Formato: 12.563,69
     </div>
 
     <div style="width: 100%;float: left;margin-top: 10px;">
-        <div style="width: 110px;float: left;">
+        <div style="width:  140px;float: left;">
             <b>Partida (1):</b>
         </div>
         <input type="hidden" class="prsp" value="nan" id="prsp">
         <input type="text" id="prsp_desc" desc="desc" style="width: 120px;border: 1px solid black" class="buscar ui-corner-all">
-        <div id="desc" style="width: 340px;margin-left: 110px;font-size: 10px;"></div>
+        <div id="desc" style="width: 340px;margin-left:  140px;font-size: 10px;"></div>
+    </div>
+    <div style="width: 100%;float: left;margin-top: 5px;">
+        <div style="width:  140px;float: left">
+            <b>Fuente (1):</b>
+        </div>
+        <g:select from="${fuentes}" id="fuente" optionKey="id" optionValue="descripcion" style="width: 200px;"/>
     </div>
     <div style="width: 100%;float: left;margin-top: 10px;">
-        <div style="width: 110px;float: left;">
+        <div style="width: 140px;float: left;">
             <b>Presupuesto (2):</b>
         </div>
         <input type="text" class="ui-corner-all" id="valor2" style="border: 1px solid black;width: 120px;text-align: right"> Formato: 12.563,69
     </div>
 
     <div style="width: 100%;float: left;margin-top: 10px;">
-        <div style="width: 110px;float: left;">
+        <div style="width:  140px;float: left;">
             <b>Partida (2):</b>
         </div>
         <input type="hidden" class="prsp" value="nan" id="prsp2">
         <input type="text" id="prsp_desc2" desc="desc2" style="width: 120px;border: 1px solid black" class="buscar ui-corner-all">
         <a href="#" id="reset_prsp2">Borrar</a>
-        <div id="desc2" style="width: 340px;margin-left: 110px;font-size: 10px;"></div>
-
+        <div id="desc2" style="width: 340px;margin-left:  140px;font-size: 10px;"></div>
     </div>
 
 
     <div style="width: 100%;float: left;margin-top: 5px;">
-        <div style="width: 110px;float: left">
-            <b>Fuente:</b>
+        <div style="width:  140px;float: left">
+            <b>Fuente (2):</b>
         </div>
-        <g:select from="${fuentes}" id="fuente" optionKey="id" optionValue="descripcion" style="width: 200px;"/>
+        <g:select from="${fuentes}" id="fuente2" optionKey="id" optionValue="descripcion" style="width: 200px;"/>
     </div>
 
     <div style="width: 100%;float: left;margin-top: 10px;">
-        <div style="width: 110px;float: left">
+        <div style="width:  140px;float: left">
             <b>Año:</b>
         </div>
         ${anio.anio}
     </div>
 
     <div style="width: 100%;float: left;margin-top: 10px;">
-        <div style="width: 110px;float: left">
+        <div style="width:  140px;float: left">
             <b>Mes:</b>
         </div>
 
@@ -506,7 +512,7 @@
     </div>
 
     <div style="width: 100%;float: left;margin-top: 10px;">
-        <div style="width: 110px;float: left">
+        <div style="width:  140px;float: left">
             <b>Monto total:</b>
         </div>
 
@@ -514,7 +520,7 @@
     </div>
 
     <div style="width: 100%;float: left;margin-top: 10px;">
-        <div style="width: 110px;float: left">
+        <div style="width:  140px;float: left">
             <b>Asignado:</b>
         </div>
 
@@ -522,7 +528,7 @@
     </div>
 
     <div style="width: 100%;float: left;margin-top: 10px;">
-        <div style="width: 110px;float: left">
+        <div style="width:  140px;float: left">
             <b>Por asignar:</b>
         </div>
 
@@ -660,6 +666,7 @@
             $("#prsp_desc2").val($(this).attr("prsp_num2"))
             $("#mes_texto").html($(this).attr("mt"))
             $("#fuente").val($(this).attr("fuente"))
+            $("#fuente2").val($(this).attr("fuente2"))
             var mt = $(this).attr("tot")
             var as = $("#" + $(this).attr("div")).html()
             as = str_replace(".","",as)
@@ -677,8 +684,8 @@
         });
 
         $("#dlg_editar").dialog({
-            width:480,
-            height:500,
+            width:500,
+            height:550,
             position:"center",
             modal:true,
             autoOpen:false,
@@ -763,6 +770,10 @@
                             valor=-1
                             alert("Seleccione una fuente")
                         }
+                        if($("#fuente2").val()*1<1){
+                            valor=-1
+                            alert("Seleccione una fuente para la segunda partida")
+                        }
                         if (valor > -1) {
                             $("#" + $("#div").val()).val($("#valor").val()*1+$("#valor2").val()*1)
                             var tot = 0
@@ -802,6 +813,7 @@
                                         act:$("#act").val(),
                                         id: $("#iden").val(),
                                         fuente:$("#fuente").val(),
+                                        fuente2:$("#fuente").val(),
                                         unidad:$("#unidad").val(),
                                         prsp: $("#prsp").val(),
                                         prsp2:$("#prsp2").val(),

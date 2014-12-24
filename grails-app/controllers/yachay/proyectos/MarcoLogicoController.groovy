@@ -500,6 +500,10 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
             act.categoria = Categoria.get(params.cat)
         act.fechaInicio = nuevaFechaInicio
         act.fechaFin = nuevaFechaFin
+        if(act.fechaFin>act.proyecto.fechaFinPlanificada){
+            act.proyecto.fechaFinPlanificada=act.fechaFin
+            act.proyecto.save(flush: true)
+        }
 //        act.aporte = params.aporte.toDouble()
         if (act.save(flush: true))
             render "ok"

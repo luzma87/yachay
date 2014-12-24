@@ -69,6 +69,7 @@ class CronogramaController extends yachay.seguridad.Shield{
             if (params.prsp2 && params.prsp2!=""){
                 crg.valor2=params.valor2.toDouble()
                 crg.presupuesto2=Presupuesto.get(params.prsp2)
+                crg.fuente2=Fuente.get(params.fuente2)
             }else{
                 crg.presupuesto2=null
                 crg.valor2=0
@@ -79,11 +80,12 @@ class CronogramaController extends yachay.seguridad.Shield{
             crg.valor = params.valor.toDouble()
             crg.valor2=params.valor2.toDouble()
             crg.fuente = Fuente.get(params.fuente)
+
             crg.anio=Anio.get(params.anio)
             crg.mes=Mes.get(params.mes)
             crg.presupuesto=Presupuesto.get(params.prsp)
             if (params.prsp2  && params.prsp2!="" && params.valor2.toDouble()>0){
-
+                crg.fuente2 = Fuente.get(params.fuente2)
                 crg.valor2=params.valor2.toDouble()
                 crg.presupuesto2=Presupuesto.get(params.prsp2)
             }
@@ -256,7 +258,7 @@ class CronogramaController extends yachay.seguridad.Shield{
         }else{
             //creo la vista
             def nombreVista = "vista_asg_${session.usuario.id}"
-            def sqlView="CREATE or replace  VIEW ${nombreVista} as (SELECT c.crng__id as crono,c.mrlg__id as mrlg,c.fnte__id as fuente,c.anio__id as anio,c.prsp__id as prsp,c.messvlor as valor from crng c,mrlg m where c.mrlg__id=m.mrlg__id and m.proy__id=${proyecto.id} and m.tpel__id=3 and m.mrlgetdo=0 and c.anio__id = ${anio.id})union(SELECT c.crng__id as crono,c.mrlg__id as mrlg,c.fnte__id as fuente,c.anio__id as anio,c.prsp2_id as prsp,c.mesvlor2 as valor from crng c,mrlg m where c.mrlg__id=m.mrlg__id and m.proy__id=${proyecto.id} and m.tpel__id=3 and m.mrlgetdo=0 and c.anio__id = ${anio.id} and prsp2_id is not null);"
+            def sqlView="CREATE or replace  VIEW ${nombreVista} as (SELECT c.crng__id as crono,c.mrlg__id as mrlg,c.fnte__id as fuente,c.anio__id as anio,c.prsp__id as prsp,c.messvlor as valor from crng c,mrlg m where c.mrlg__id=m.mrlg__id and m.proy__id=${proyecto.id} and m.tpel__id=3 and m.mrlgetdo=0 and c.anio__id = ${anio.id})union(SELECT c.crng__id as crono,c.mrlg__id as mrlg,c.fnte2_id as fuente,c.anio__id as anio,c.prsp2_id as prsp,c.mesvlor2 as valor from crng c,mrlg m where c.mrlg__id=m.mrlg__id and m.proy__id=${proyecto.id} and m.tpel__id=3 and m.mrlgetdo=0 and c.anio__id = ${anio.id} and prsp2_id is not null);"
             //println "sql "+sqlView
             cn.execute(sqlView.toString())
             /*fin del cambio*/
