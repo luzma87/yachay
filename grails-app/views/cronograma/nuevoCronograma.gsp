@@ -259,7 +259,7 @@
 
                                 %{--paso ${" "+c.anio+" "+k+" mes "+mes+" mrlg  "+act.id}   <br>--}%
                                     <g:set var="crg" value='${c}'></g:set>
-                                    <g:set var="totCompAsig" value="${totCompAsig.toDouble()+crg.valor+crg.valor2}"></g:set>
+
                                 </g:if>
                             %{--<g:else>--}%
                             %{--<g:if test="${c?.anio!=anio && c?.cronograma == null}">--}%
@@ -270,7 +270,7 @@
                             </g:each>
                             <g:if test="${crg}">
 
-                                <g:set var="tot" value="${tot.toDouble()+crg?.valor+crg?.valor2}"></g:set>
+                                %{--<g:set var="tot" value="${tot.toDouble()+crg?.valor+crg?.valor2}"></g:set>--}%
 
                                 <g:if test="${true}">
                                     <td style="width: 60px">
@@ -321,6 +321,8 @@
                     </g:each>
                 %{--<<----------------<<<<<<<< >>>>>>>>>>>>> <br>--}%
                     <td class="disabled" id="tot_${j}${i}" div="totComp_${j}">
+                        <g:set var="tot" value="${act.getTotalCronograma()}"></g:set>
+                        <g:set var="totCompAsig" value="${totCompAsig.toDouble()+act.getTotalCronograma()}"></g:set>
                         <g:formatNumber number="${tot}"
                                         format="###,##0"
                                         minFractionDigits="2" maxFractionDigits="2"/>
