@@ -449,8 +449,8 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
         def fin  = proyecto.fechaFinPlanificada
         if(proyecto.fechaInicio)
             inicio=proyecto.fechaInicio
-        if(proyecto.fechaFin)
-            fin=proyecto.fechaFin
+//        if(proyecto.fechaFin)
+//            fin=proyecto.fechaFin
         if (proyecto.aprobado == "a") {
             response.sendError(403)
         } else {
@@ -487,7 +487,7 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
         def nuevaFechaInicio = new Date().parse("dd-MM-yyyy", params.inicio)
         def nuevaFechaFin = new Date().parse("dd-MM-yyyy", params.fin)
 
-        if (act.fechaInicio.format("dd-MM-yyyy") != nuevaFechaInicio.format("dd-MM-yyyy") || act.fechaFin.format("dd-MM-yyyy") != nuevaFechaFin.format("dd-MM-yyyy")) {
+        if (act.fechaInicio?.format("dd-MM-yyyy") != nuevaFechaInicio.format("dd-MM-yyyy") || act.fechaFin?.format("dd-MM-yyyy") != nuevaFechaFin.format("dd-MM-yyyy")) {
             //hace la copia
             def resp = new MarcoLogicoRespaldo()
             resp.properties = act.properties
@@ -504,17 +504,17 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
             act.categoria = Categoria.get(params.cat)
         act.fechaInicio = nuevaFechaInicio
         act.fechaFin = nuevaFechaFin
-        if(act.proyecto.fechaFin){
-            if(act.fechaFin>act.proyecto.fechaFin){
-                act.proyecto.fechaFin=act.fechaFin
-                act.proyecto.save(flush: true)
-            }
-        }else{
-            if(act.fechaFin>act.proyecto.fechaFinPlanificada){
-                act.proyecto.fechaFinPlanificada=act.fechaFin
-                act.proyecto.save(flush: true)
-            }
-        }
+//        if(act.proyecto.fechaFin){
+//            if(act.fechaFin>act.proyecto.fechaFin){
+//                act.proyecto.fechaFin=act.fechaFin
+//                act.proyecto.save(flush: true)
+//            }
+//        }else{
+//            if(act.fechaFin>act.proyecto.fechaFinPlanificada){
+//                act.proyecto.fechaFinPlanificada=act.fechaFin
+//                act.proyecto.save(flush: true)
+//            }
+//        }
 
 //        act.aporte = params.aporte.toDouble()
         if (act.save(flush: true))
