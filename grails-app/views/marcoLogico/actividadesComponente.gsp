@@ -517,7 +517,7 @@
         changeMonth:true,
         changeYear:true,
         dateFormat:'dd-mm-yy',
-        minDate: new Date(${inicio.format("yyyy")},${inicio.format("MM").toDouble()-1},${inicio.format("dd")}),
+        minDate: new Date(${inicio?.format("yyyy")},${inicio?.format("MM").toDouble()-1},${inicio?.format("dd")}),
         onClose:function (dateText, inst) {
             var date = $(this).datepicker('getDate');
             var day, month, year;
@@ -540,8 +540,8 @@
         changeMonth:true,
         changeYear:true,
         dateFormat:'dd-mm-yy',
-        minDate: new Date(${inicio.format("yyyy")},${inicio.format("MM").toDouble()-1},${inicio.format("dd")}),
-        maxDate: new Date(${fin.format("yyyy")},${fin.format("MM").toDouble()-1},${fin.format("dd")}),
+        minDate: new Date(${inicio?.format("yyyy")},${inicio?.format("MM").toDouble()-1},${inicio?.format("dd")}),
+        maxDate: new Date(${fin?.format("yyyy")},${fin?.format("MM").toDouble()-1},${fin?.format("dd")}),
         onClose:function (dateText, inst) {
             var date = $(this).datepicker('getDate');
             var day, month, year;

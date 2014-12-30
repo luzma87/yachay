@@ -449,6 +449,8 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
         def fin  = proyecto.fechaFinPlanificada
         if(proyecto.fechaInicio)
             inicio=proyecto.fechaInicio
+        if(!inicio) inicio = new Date()
+        if(!fin) fin = new Date()
 //        if(proyecto.fechaFin)
 //            fin=proyecto.fechaFin
         if (proyecto.aprobado == "a") {
