@@ -65,23 +65,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="prop ${hasErrors(bean: proyecto, field: 'nombre', 'error')} ${hasErrors(bean: proyecto, field: 'codigoProyecto', 'error')}">
-
-                            <td class="label  mandatory" valign="middle">
-                                <g:message code="proyecto.nombre.label" default="Nombre"/>
-                            </td>
-
-                            <td class="indicator mandatory">
-                                <span class="indicator">*</span>
-                            </td>
-
-                            <td colspan="4" class="mandatory" valign="middle" style="width: 400px;">
-                                <g:textArea class="field required ui-widget-content ui-corner-all" name="nombre" id="nombre"
-                                            title="${Proyecto.constraints.nombre.attributes.mensaje}" cols="2"
-                                            minLenght="1" maxLenght="255" rows="1" style="width: 900px;"
-                                            value="${proyecto?.nombre}"/>
-                            </td>
-                        </tr>
                     <tr>
                         <td class="label" valign="middle">
                             Objetivo Estrat&eacute;gico
@@ -155,6 +138,24 @@
                         </td>
 
                     </tr>
+                    <tr class="prop ${hasErrors(bean: proyecto, field: 'nombre', 'error')} ${hasErrors(bean: proyecto, field: 'codigoProyecto', 'error')}">
+
+                        <td class="label  mandatory" valign="middle">
+                            <g:message code="proyecto.nombre.label" default="Nombre del Proyecto"/>
+                        </td>
+
+                        <td class="indicator mandatory">
+                            <span class="indicator">*</span>
+                        </td>
+
+                        <td colspan="4" class="mandatory" valign="middle" style="width: 400px;">
+                            <g:textArea class="field required ui-widget-content ui-corner-all" name="nombre" id="nombre"
+                                        title="${Proyecto.constraints.nombre.attributes.mensaje}" cols="2"
+                                        minLenght="1" maxLenght="255" rows="1" style="width: 900px;"
+                                        value="${proyecto?.nombre}"/>
+                        </td>
+                    </tr>
+
 
                     <tr class="prop ${hasErrors(bean: proyecto, field: 'unidadEjecutora', 'error')}">
 

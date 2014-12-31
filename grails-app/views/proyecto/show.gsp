@@ -184,14 +184,14 @@
                             <li>
                                 <g:link action="nuevoMarco" controller="marcoLogico" id="${proyectoInstance.id}"
                                         class="button fg-button">
-                                    Crear/Editar Marco Lógico
+                                    Crear/Editar Plan
                                 </g:link>
                             </li>
                         </g:if>
                         <li>
                             <g:link action="verMarcoCompleto" controller="marcoLogico" id="${proyectoInstance.id}"
                                     class="button fg-button">
-                                Ver Marco Lógico
+                                Ver Plan de Proyecto
                             </g:link>
                         </li>
                     </ul>
@@ -289,15 +289,6 @@
                             </td> <!-- campo -->
                         </tr>
 
-                        <tr class="prop">
-                                <td class="labelshow">
-                                    <g:message code="proyecto.nombre.label" default="Nombre"/>
-                                </td>
-
-                                <td class="" colspan="3">
-                                    ${fieldValue(bean: proyectoInstance, field: "nombre")}
-                                </td> <!-- campo -->
-                            </tr>
 
                         <tr class="prop">
                             <td class="labelshow">
@@ -336,6 +327,16 @@
 
                             <td class="" colspan="3">
                                 ${proyectoInstance?.programa?.encodeAsHTML()}
+                            </td> <!-- campo -->
+                        </tr>
+
+                        <tr class="prop">
+                            <td class="labelshow">
+                                <g:message code="proyecto.nombre.label" default="Nombre del Proyecto"/>
+                            </td>
+
+                            <td class="" colspan="3">
+                                ${fieldValue(bean: proyectoInstance, field: "nombre")}
                             </td> <!-- campo -->
                         </tr>
 
