@@ -698,7 +698,6 @@ class ProyectoController extends yachay.seguridad.Shield {
      * Acción
      */
     def loadCombo = {
-        println "aaa " + params
         def str = ""
         switch (params.tipo) {
             case "politica":

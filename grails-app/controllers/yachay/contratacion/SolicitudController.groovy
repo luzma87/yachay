@@ -496,37 +496,38 @@ class SolicitudController extends yachay.seguridad.Shield {
         if (!solicitud.save(flush: true)) {
             println "error al incluir/excluir reunion " + solicitud.errors
         }
+        try {
+            def perfilDireccionPlanificacion = Prfl.findByCodigo("DP")
+            def perfilDireccionComprasPublicas = Prfl.findByCodigo("GJ")
+            def perfiles = [perfilDireccionComprasPublicas, perfilDireccionPlanificacion]
+            def sesiones = Sesn.findAllByPerfilInList(perfiles)
 
-        def perfilDireccionPlanificacion = Prfl.findByCodigo("DP")
-        def perfilDireccionComprasPublicas = Prfl.findByCodigo("GJ")
-        def perfiles = [perfilDireccionComprasPublicas, perfilDireccionPlanificacion]
-        def sesiones = Sesn.findAllByPerfilInList(perfiles)
+            if (sesiones.size() > 0) {
+                def persona = Persona.get(session.usuario.personaId)
+                def msg = "El usuario ${persona.nombre} ${persona.apellido} ha ${solicitud.incluirReunion == 'S' ? 'añadido' : 'removido'}"
+                msg += " una solicitud de contratación para que sea tratada en reunión de aprobación."
 
-        if (sesiones.size() > 0) {
-            def persona = Persona.get(session.usuario.personaId)
-            def msg = "El usuario ${persona.nombre} ${persona.apellido} ha ${solicitud.incluirReunion == 'S' ? 'añadido' : 'removido'}"
-            msg += " una solicitud de contratación para que sea tratada en reunión de aprobación."
+                println "Se enviaran ${sesiones.size()} mails"
+                sesiones.each { sesn ->
+                    Usro usro = sesn.usuario
+                    def mail = usro.persona.mail
+                    if(mail) {
 
-            println "Se enviaran ${sesiones.size()} mails"
-            sesiones.each { sesn ->
-                Usro usro = sesn.usuario
-                def mail = usro.persona.mail
-                if(mail) {
-                    try {
                         mailService.sendMail {
                             to mail
                             subject "Alerta de solicitud de contratación"
                             body msg
                         }
-                    } catch (e) {
-                        println "Error al enviar mail: ${e.printStackTrace()}"
+
+                    } else {
+                        println "El usuario ${usro.usroLogin} no tiene email"
                     }
-                } else {
-                    println "El usuario ${usro.usroLogin} no tiene email"
                 }
+            } else {
+                println "No hay nadie registrado con perfil de direccion de planificacion: no se mandan mails"
             }
-        } else {
-            println "No hay nadie registrado con perfil de direccion de planificacion: no se mandan mails"
+        } catch (e) {
+            println "Error al enviar mail: ${e.printStackTrace()}"
         }
 
         redirect(action: "show", id: solicitud.id)

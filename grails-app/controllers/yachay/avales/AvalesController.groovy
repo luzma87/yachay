@@ -9,12 +9,17 @@ import yachay.proyectos.Proyecto
 import yachay.parametros.UnidadEjecutora
 import yachay.alertas.Alerta
 import yachay.seguridad.Firma
+import yachay.seguridad.Persona
+import yachay.seguridad.Prfl
+import yachay.seguridad.Sesn
 import yachay.seguridad.Usro
 
 /**
  * Controlador que muestra las pantallas de manejo de avales
  */
 class AvalesController extends yachay.seguridad.Shield {
+
+    def mailService
 
     /**
      * Acción que muestra la pantalla de lista de procesos por proyecto
@@ -320,7 +325,7 @@ class AvalesController extends yachay.seguridad.Shield {
      * @param params los parámetros enviados por el submit del formulario
      */
     def guardarSolicitud = {
-       println "solicitud aval " + params
+        //println "solicitud aval " + params
         /*TODO enviar alertas*/
 
         if (params.monto) {
@@ -509,6 +514,37 @@ class AvalesController extends yachay.seguridad.Shield {
             def sol = SolicitudAval.findByFirma(firma)
             sol.estado=EstadoAval.findByCodigo("E01")
             sol.save(flush: true)
+            try {
+                def perfilDireccionPlanificacion = Prfl.findByCodigo("DP")
+//            def perfilDireccionComprasPublicas = Prfl.findByCodigo("GJ")
+                def perfiles = [perfilDireccionPlanificacion]
+                def sesiones = Sesn.findAllByPerfilInList(perfiles)
+
+                if (sesiones.size() > 0) {
+                    def persona = Persona.get(session.usuario.personaId)
+
+                    println "Se enviaran ${sesiones.size()} mails"
+                    sesiones.each { sesn ->
+                        Usro usro = sesn.usuario
+                        def mail = usro.persona.mail
+                        if(mail) {
+
+                            mailService.sendMail {
+                                to mail
+                                subject "Nueve solicitud de aval"
+                                body "Ha recibido una nueva solicitud de aval de la unidad "+sol.unidad
+                            }
+
+                        } else {
+                            println "El usuario ${usro.usroLogin} no tiene email"
+                        }
+                    }
+                } else {
+                    println "No hay nadie registrado con perfil de direccion de planificacion: no se mandan mails"
+                }
+            } catch (e) {
+                println "Error al enviar mail: ${e.printStackTrace()}"
+            }
 //            redirect(controller: "pdf",action: "pdfLink",params: [url:g.createLink(controller: firma.controladorVer,action: firma.accionVer,id: firma.idAccionVer)])
             def url =g.createLink(controller: "pdf",action: "pdfLink",params: [url:g.createLink(controller: firma.controladorVer,action: firma.accionVer,id: firma.idAccionVer)])
             render "${url}"

@@ -3,12 +3,17 @@ package yachay.avales
 import yachay.parametros.poaPac.Anio
 import yachay.parametros.UnidadEjecutora
 import yachay.seguridad.Firma
+import yachay.seguridad.Persona
+import yachay.seguridad.Prfl
+import yachay.seguridad.Sesn
 import yachay.seguridad.Usro
 
 /**
  * Controlador que muestra las pantallas de manejo de revisiones de avales
  */
 class RevisionAvalController {
+
+    def mailService
 
     /**
      * Acción que muestra la lista de solicitudes de aval pendientes (estadoAval código E01)
@@ -378,6 +383,38 @@ class RevisionAvalController {
                 def sol = SolicitudAval.findByAval(aval)
                 sol.estado=aval.estado
                 sol.save(flush: true)
+                try {
+                    def perDir = Prfl.findByCodigo("DRRQ")
+                    def sesiones = []
+                    /*drrq*/
+                    Usro.findAllByUnidad(sol.unidad).each {
+                        def ses = Sesn.findAllByPerfilAndUsuario(perDir,it)
+                        if(ses.size()>0)
+                            sesiones+=ses
+                    }
+                    if (sesiones.size() > 0) {
+                        println "Se enviaran ${sesiones.size()} mails"
+                        sesiones.each { sesn ->
+                            Usro usro = sesn.usuario
+                            def mail = usro.persona.mail
+                            if(mail) {
+
+                                mailService.sendMail {
+                                    to mail
+                                    subject "Nuevo aval emitido"
+                                    body "Se ha emitido el aval #"+aval.numero
+                                }
+
+                            } else {
+                                println "El usuario ${usro.usroLogin} no tiene email"
+                            }
+                        }
+                    } else {
+                        println "No hay nadie registrado con perfil de direccion de planificacion: no se mandan mails"
+                    }
+                } catch (e) {
+                    println "Error al enviar mail: ${e.printStackTrace()}"
+                }
 //            redirect(controller: "pdf",action: "pdfLink",params: [url:g.createLink(controller: firma.controladorVer,action: firma.accionVer,id: firma.idAccionVer)])
 
             }
