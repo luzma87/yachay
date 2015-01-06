@@ -47,7 +47,8 @@
     <fieldset class="ui-corner-all">
         <legend>Inversiones</legend>
 
-        Presupuesto de inversiones: <input type="text" style="width: 120px;;text-align: right;margin-left: 25px" id="maxInv" class="ui-corner-all" value="${formatNumber(number:techo.maxInversion,format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}">
+        Presupuesto de inversiones: <input type="text" style="width: 120px;;text-align: right;margin-left: 25px" id="maxInv" class="ui-corner-all"
+                                           value="${formatNumber(number:techo.maxInversion,format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}">
         <a href="#" id="btn_inv" iden="${techo.id}">Modificar</a>
 
         %{--<g:else>--}%
