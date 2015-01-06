@@ -85,7 +85,7 @@
 
             </g:link>
 
-            <g:link  controller="documento" action="list" title="Seguimiento">
+            <g:link  controller="avales" action="listaProcesos" title="Seguimiento">
                 <div  class="item fuera">
                     <div  class="item" style="background-color: #d0d0d0">
                         <div class="imagen">
