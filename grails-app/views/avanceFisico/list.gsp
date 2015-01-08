@@ -30,7 +30,8 @@
 </g:if>
 <div class="fila">
     <g:link controller="avales" action="listaProcesos" class="btn">Lista de procesos</g:link>
-    <div style="display: inline-block;margin-left: 45px;margin-bottom: 0px">
+    <div style="display: inline-block;margin-left: 45px;margin-bottom: 0px; float: right">
+    Código de colores:
         <div class="semaforo green"></div>100% - 76%
         <div class="semaforo yellow"></div>75% - 51%
         <div class="semaforo orange"></div>50% - 26%
@@ -95,7 +96,7 @@
 
         <div class="semaforo ${dataProceso[2]}" title="Avance esperado al ${new Date().format('dd/MM/yyyy')}: ${dataProceso[0].toDouble().round(2)}%, avance registrado: ${dataProceso[1].toDouble().round(2)}%">
         </div>
-        <b>Gestión:</b> <g:formatNumber number="${dataProceso[1]/dataProceso[0]}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/>% (a/b)
+        <b>Gestión:</b> <g:formatNumber number="${dataProceso[1]/dataProceso[0]*100}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/>% (a/b)
         <div class="fila">
             <b>Último Avance:</b> ${dataProceso[3]}
         %{--${dataProceso}--}%
