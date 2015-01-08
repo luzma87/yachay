@@ -1,3 +1,4 @@
+<%@ page import="yachay.hitos.AvanceAvance" %>
 <table border="1" width="100%" style="font-size: 10px">
     <thead>
         <tr>
@@ -32,7 +33,8 @@
                     </div>
                 </td>
                 <td>
-                    <a href="#" class="btnCompletar" id="${avance.id}">Registrar avance</a>
+                    <a href="#" class="btnCompletar" id="${avance.id}"
+                       data-min="${AvanceAvance.findAllByAvanceFisico(avance, [sort: 'avance', order: "desc"]).first().avance}">Registrar avance</a>
                 </td>
                 <td>
                     <g:if test="${valor == 0}">
@@ -75,6 +77,14 @@
             ${new java.util.Date().format("dd/MM/yyyy")}
         </div>
     </div>
+
+    <div class="fila">
+        <div class="labelSvt">Descripción:</div>
+
+        <div class="fieldSvt-large">
+            <g:textArea name="descripcionAvance" class="ui-widget-content ui-corner-all" rows="2" cols="45"/>
+        </div>
+    </div>
     <fieldset style="width:95%;margin-top: 15px;">
         <legend>Avances registrados</legend>
 
@@ -83,6 +93,7 @@
 
 </div>
 <script type="text/javascript">
+    var min;
     $(".btnDelete").button({
         text  : false,
         icons : {
@@ -113,13 +124,12 @@
         },
         buttons  : {
             "Guardar"  : function () {
-
                 var avance = $.trim($("#avanceAvance").val());
-
-                if (avance == "" || isNaN(avance) || avance * 1 < 0 || avance * 1 > 100) {
+                var descripcion = $.trim($("#descripcionAvance").val());
+                if (avance == "" || isNaN(avance) || avance * 1 <= min || avance * 1 > 100) {
                     $.box({
                         imageClass : "box_info",
-                        text       : "El avance debe ser un número positivo menor a 100",
+                        text       : "El avance debe ser un número positivo mayor a " + min + " y menor a 100",
                         title      : "Error",
                         iconClose  : false,
                         dialog     : {
@@ -133,18 +143,37 @@
                         }
                     });
                 } else {
-                    $.ajax({
-                        type    : "POST",
-                        url     : "${createLink(action:'agregarAvance')}",
-                        data    : {
-                            id     : $("#idAvance").val(),
-                            avance : avance
-                        },
-                        success : function (msg) {
-                            location.reload(true)
+                    if (descripcion == "") {
+                        $.box({
+                            imageClass : "box_info",
+                            text       : "La descripción es obligatoria",
+                            title      : "Error",
+                            iconClose  : false,
+                            dialog     : {
+                                resizable     : false,
+                                draggable     : false,
+                                closeOnEscape : false,
+                                buttons       : {
+                                    "Aceptar" : function () {
+                                    }
+                                }
+                            }
+                        });
+                    } else {
+                        $.ajax({
+                            type    : "POST",
+                            url     : "${createLink(action:'agregarAvance')}",
+                            data    : {
+                                id     : $("#idAvance").val(),
+                                avance : avance,
+                                desc   : descripcion
+                            },
+                            success : function (msg) {
+                                location.reload(true)
 
-                        }
-                    });
+                            }
+                        });
+                    }
                 }
                 $("#dlgNuevo").dialog("close");
             },
@@ -160,7 +189,8 @@
             primary : "ui-icon-check"
         }
     }).click(function () {
-        $("#idAvance").val($(this).attr("id"))
+        $("#idAvance").val($(this).attr("id"));
+        min = $(this).data("min");
         $.ajax({
             type    : "POST",
             url     : "${createLink(action:'detalleAv')}",

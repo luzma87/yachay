@@ -22,9 +22,9 @@ class AvanceFisicoController extends yachay.seguridad.Shield {
         def maxAvance = 100 - minAvance
 
         def totalAvance = AvanceFisico.findAllByProceso(proceso)
-        if(totalAvance.size()>0){
+        if (totalAvance.size() > 0) {
             totalAvance = totalAvance.sum { it.avance }
-        }else{
+        } else {
             totalAvance = 0
         }
         maxAvance = 100 - totalAvance
@@ -46,7 +46,7 @@ class AvanceFisicoController extends yachay.seguridad.Shield {
      */
     def avanceFisicoProceso_ajax = {
         def proceso = ProcesoAval.get(params.id)
-        def avances = AvanceFisico.findAllByProceso(proceso,[sort: "inicio"])
+        def avances = AvanceFisico.findAllByProceso(proceso, [sort: "inicio"])
         return [proceso: proceso, avances: avances]
     }
     /**
@@ -74,15 +74,16 @@ class AvanceFisicoController extends yachay.seguridad.Shield {
     def agregarAvance = {
         def avance = AvanceFisico.get(params.id)
         def av = new AvanceAvance()
-        av.avanceFisico=avance
-        av.avance=params.avance.toDouble()
+        av.avanceFisico = avance
+        av.avance = params.avance.toDouble()
+        av.descripcion = params.desc
         av.save(flush: true)
         render "ok"
     }
 
     def detalleAv = {
         def av = AvanceFisico.get(params.id)
-        [av:av,avances:AvanceAvance.findAllByAvanceFisico(av,[sort:"id"])]
+        [av: av, avances: AvanceAvance.findAllByAvanceFisico(av, [sort: "id"])]
     }
 
     /**

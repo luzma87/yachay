@@ -5,6 +5,9 @@
                 Fecha
             </th>
             <th>
+                Descripción
+            </th>
+            <th>
                 Avance
             </th>
         </tr>
@@ -16,13 +19,16 @@
                 <td style="text-align: center">
                     ${a.fecha.format("dd/MM/yyyy")}
                 </td>
+                <td>
+                    ${a.descripcion}
+                </td>
                 <td style="text-align: right;">
                     <g:formatNumber number="${a.avance}" minFractionDigits="2" maxFractionDigits="2"/>%
                 </td>
             </tr>
         </g:each>
         <tr>
-            <td style="text-align: right;font-weight: bold">Avance total:</td>
+            <td colspan="2" style="text-align: right;font-weight: bold">Avance total:</td>
             <g:if test="${avances.size() > 0}">
                 <td style="text-align: right;font-weight: bold"><g:formatNumber number="${avances.pop().avance}" minFractionDigits="2" maxFractionDigits="2"/>%</td>
             </g:if>
