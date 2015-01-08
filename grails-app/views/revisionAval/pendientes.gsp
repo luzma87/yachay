@@ -113,7 +113,9 @@
 </div>
 <div id="negar">
     <input type="hidden" id="avalId">
-    Esta seguro que desea negar esta solicitud de certificación?
+    Esta seguro que desea negar esta solicitud de aval?<br>
+    Observaciones: <textarea id="sol_obs" style="width: 350px;height: 150px" maxlength="1022"></textarea>
+
 </div>
 <script>
     function cargarHistorial(anio,numero,proceso){
@@ -158,8 +160,8 @@
         title:'Negar solicitud',
         modal:true,
         draggable:true,
-        width:400,
-        height:150,
+        width:500,
+        height:300,
         position:'center',
         open:function (event, ui) {
             $(".ui-dialog-titlebar-close").hide();
@@ -170,7 +172,7 @@
             },"Negar":function(){
                 $.ajax({
                     type:"POST", url:"${createLink(action:'negarAval', controller: 'revisionAval')}",
-                    data:"id=" + $("#avalId").val(),
+                    data:"id=" + $("#avalId").val()+"&obs="+$("#sol_obs").val(),
                     success:function (msg) {
                         if(msg!="no")
                             location.reload(true)

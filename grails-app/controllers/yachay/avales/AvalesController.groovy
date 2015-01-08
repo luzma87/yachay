@@ -334,7 +334,7 @@ class AvalesController extends yachay.seguridad.Shield {
         }
         def referencial = params.referencial?.toDouble()
         def montoProceso = params.monto?.toDouble()
-        println "ref "+referencial+" monto "+montoProceso
+//        println "ref "+referencial+" monto "+montoProceso
         if(montoProceso>referencial){
             def path = servletContext.getRealPath("/") + "pdf/solicitudAval/"
             new File(path).mkdirs()
@@ -429,6 +429,22 @@ class AvalesController extends yachay.seguridad.Shield {
                             println "error alerta: " + alerta.errors
                         }
                     }
+                    try{
+                        def mail = sol.firma.usuario.persona.mail
+                        if(mail) {
+
+                            mailService.sendMail {
+                                to mail
+                                subject "Nueve solicitud de aval"
+                                body "Tiene una solicitud de aval pendiente que requiere su firma para aprobación "
+                            }
+
+                        } else {
+                            println "El usuario ${sol.firma.usuario.usroLogin} no tiene email"
+                        }
+                    }catch (e){
+                        println "eror email "+e.printStackTrace()
+                    }
                     flash.message = "Solicitud enviada"
                     redirect(action: 'avalesProceso', params: [id: params.proceso])
                     //println pathFile
@@ -494,9 +510,27 @@ class AvalesController extends yachay.seguridad.Shield {
                     println "error alerta: " + alerta.errors
                 }
             }
+            try{
+                def mail = sol.firma.usuario.persona.mail
+                if(mail) {
+
+                    mailService.sendMail {
+                        to mail
+                        subject "Nueve solicitud de aval"
+                        body "Tiene una solicitud de aval pendiente que requiere su firma para aprobación "
+                    }
+
+                } else {
+                    println "El usuario ${sol.firma.usuario.usroLogin} no tiene email"
+                }
+            }catch (e){
+                println "eror email "+e.printStackTrace()
+            }
+
             flash.message = "Solicitud enviada"
             redirect(action: 'avalesProceso', params: [id: params.proceso])
         }
+
 
 
 
@@ -523,7 +557,7 @@ class AvalesController extends yachay.seguridad.Shield {
                 if (sesiones.size() > 0) {
                     def persona = Persona.get(session.usuario.personaId)
 
-                    println "Se enviaran ${sesiones.size()} mails"
+//                    println "Se enviaran ${sesiones.size()} mails"
                     sesiones.each { sesn ->
                         Usro usro = sesn.usuario
                         def mail = usro.persona.mail

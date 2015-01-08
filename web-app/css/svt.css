@@ -114,6 +114,7 @@ h3{
 /*Semaforos*/
 .semaforo {
     border-radius: 50%;
+    display: inline-block;
 }
 
 .green {

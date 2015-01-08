@@ -149,15 +149,15 @@ class Aval {
                 esperado = this.monto*(now - fechaInicio)/dias
 //                esperado=esperado*this.monto
                 def verde = esperado * 0.75
-                def naranja = esperado * 0.50
-                def amarillo = esperado * 0.25
+                def naranja = esperado * 0.25
+                def amarillo = esperado * 0.50
                 def avance = this.getAvanceFinanciero()
                 if(avance>=verde)
                     return [esperado,this.getAvanceFinanciero(),"green",this.getUltimoAvance()]
-                if(avance>=naranja)
-                    return [esperado,this.getAvanceFinanciero(),"orange",this.getUltimoAvance()]
                 if(avance>=amarillo)
                     return [esperado,this.getAvanceFinanciero(),"yellow",this.getUltimoAvance()]
+                if(avance>=naranja)
+                    return [esperado,this.getAvanceFinanciero(),"orange",this.getUltimoAvance()]
                 else
                     return [esperado,this.getAvanceFinanciero(),"red",this.getUltimoAvance()]
             }

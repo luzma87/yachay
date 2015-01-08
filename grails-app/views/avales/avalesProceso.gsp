@@ -76,9 +76,9 @@
         </g:if>
     </div>
 
-    <div id="solicitudes" style="width: 960px;">
+    <div id="solicitudes" style="width: 100%">
         <g:if test="${solicitudes.size() > 0}">
-            <table style="width: 95%;margin-top: 10px">
+            <table style="width: 95%;margin-top: 10px;font-size: 11px">
                 <thead>
                 <tr>
                     <th>Fecha</th>
@@ -87,8 +87,9 @@
                     <th>Concepto</th>
                     <th>Monto</th>
                     <th>Estado</th>
-                    <th>Doc. Respaldo</th>
+                    <th>Doc. <br>Respaldo</th>
                     <th>Solicitud</th>
+                    <th>Observaciones</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -110,6 +111,11 @@
                         <td style="text-align: center">
                             <g:if test="${p.tipo != 'A'}">
                                 <a href="#" class="imprimiSolicitud" iden="${p.id}">Imprimir</a>
+                            </g:if>
+                        </td>
+                        <td>
+                            <g:if test="${p.estado?.codigo=='E03'}">
+                                ${p.observaciones}
                             </g:if>
                         </td>
                     </tr>

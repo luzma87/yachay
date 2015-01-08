@@ -96,7 +96,7 @@ class ProcesoAval {
 
     def getColorSemaforo() {
         def dias = fechaFin - fechaInicio
-        println "dias " + dias
+//        println "dias " + dias
         def esperado = 0
         def now = new Date()
         if (now > fechaFin) {
@@ -111,15 +111,15 @@ class ProcesoAval {
             else {
                 esperado = 100 * (now - fechaInicio) / dias
                 def verde = esperado * 0.75
-                def naranja = esperado * 0.50
-                def amarillo = esperado * 0.25
+                def naranja = esperado * 0.25
+                def amarillo = esperado * 0.50
                 def avance = this.getAvanceFisico()
                 if (avance >= verde)
                     return [esperado, this.getAvanceFisico(), "green", this.getUltimoAvance()]
-                if (avance >= naranja)
-                    return [esperado, this.getAvanceFisico(), "orange", this.getUltimoAvance()]
                 if (avance >= amarillo)
                     return [esperado, this.getAvanceFisico(), "yellow", this.getUltimoAvance()]
+                if (avance >= naranja)
+                    return [esperado, this.getAvanceFisico(), "orange", this.getUltimoAvance()]
                 else
                     return [esperado, this.getAvanceFisico(), "red", this.getUltimoAvance()]
             }
@@ -176,15 +176,15 @@ class ProcesoAval {
             else {
                 esperado = 100 * (now - fechaInicio) / dias
                 def verde = esperado * 0.75
-                def naranja = esperado * 0.50
-                def amarillo = esperado * 0.25
+                def naranja = esperado * 0.25
+                def amarillo = esperado * 0.50
                 def avance = this.getAvanceFisicoAl(fecha)
                 if (avance >= verde)
                     return [esperado, this.getAvanceFisicoAl(fecha), "green", this.getAvanceAl(fecha)]
-                if (avance >= naranja)
-                    return [esperado, this.getAvanceFisicoAl(fecha), "orange", this.getAvanceAl(fecha)]
                 if (avance >= amarillo)
                     return [esperado, this.getAvanceFisicoAl(fecha), "yellow", this.getAvanceAl(fecha)]
+                if (avance >= naranja)
+                    return [esperado, this.getAvanceFisicoAl(fecha), "orange", this.getAvanceAl(fecha)]
                 else
                     return [esperado, this.getAvanceFisicoAl(fecha), "red", this.getAvanceAl(fecha)]
             }

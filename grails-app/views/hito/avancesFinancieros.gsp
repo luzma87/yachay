@@ -78,13 +78,14 @@
             <g:set var="dataProceso" value="${aval.getColorSemaforo()}"></g:set>
 
             <div class="fila">
-                <b>Avance al ${new java.util.Date().format("dd/MM/yyyy")}:</b> $<g:formatNumber number="${dataProceso[1]}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/>
+                <b>Avance real al ${new java.util.Date().format("dd/MM/yyyy")}:</b> $<g:formatNumber number="${dataProceso[1]}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/> (a)
             </div>
             <div class="fila">
-                <b>Avance esperado:</b> $<g:formatNumber number="${dataProceso[0]}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/>
+                <b>Avance esperado:</b> $<g:formatNumber number="${dataProceso[0]}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/> (b)
             </div>
             <div class="semaforo ${dataProceso[2]}" title="Avance esperado al ${new Date().format('dd/MM/yyyy')}: ${dataProceso[0].toDouble().round(2)}$, avance registrado: ${dataProceso[1].toDouble().round(2)}$">
             </div>
+
             <div class="fila">
                 <b>Último Avance:</b> ${dataProceso[3]}
             %{--${dataProceso}--}%
@@ -94,37 +95,39 @@
 
 
 </fieldset>
-<fieldset style="width: 95%;height: 120px;" class="ui-corner-all">
-    <legend>Aval</legend>
-    <div style="width: 100%;float: left;height: 95%">
-        <div class="fila">
-            <div class="labelSvt">Número:</div>
+<g:if test="${aval}">
+    <fieldset style="width: 95%;height: 120px;" class="ui-corner-all">
+        <legend>Aval</legend>
+        <div style="width: 100%;float: left;height: 95%">
+            <div class="fila">
+                <div class="labelSvt">Número:</div>
 
-            <div class="fieldSvt-medium">
-                ${aval.fechaAprobacion?.format("yyyy")}-GP No.<tdn:imprimeNumero aval="${aval.id}"/>
+                <div class="fieldSvt-medium">
+                    ${aval.fechaAprobacion?.format("yyyy")}-GP No.<tdn:imprimeNumero aval="${aval.id}"/>
+                </div>
+                <div class="labelSvt">Emisión:</div>
+
+                <div class="fieldSvt-small">
+                    ${aval.fechaAprobacion?.format("dd-MM-yyyy")}
+                </div>
+                <div class="labelSvt">Estado:</div>
+
+                <div class="fieldSvt-small">
+                    ${aval.estado.descripcion}
+                </div>
             </div>
-            <div class="labelSvt">Emisión:</div>
 
-            <div class="fieldSvt-small">
-                ${aval.fechaAprobacion?.format("dd-MM-yyyy")}
-            </div>
-            <div class="labelSvt">Estado:</div>
+            <div class="fila">
 
-            <div class="fieldSvt-small">
-                ${aval.estado.descripcion}
+                <div class="labelSvt">Monto:</div>
+
+                <div class="fieldSvt-small">
+                    <g:formatNumber number="${aval.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>$
+                </div>
             </div>
         </div>
-
-        <div class="fila">
-
-            <div class="labelSvt">Monto:</div>
-
-            <div class="fieldSvt-small">
-                <g:formatNumber number="${aval.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" ></g:formatNumber>$
-            </div>
-        </div>
-    </div>
-</fieldset>
+    </fieldset>
+</g:if>
 <fieldset style="width: 95%;height: 350px;overflow: auto" class="ui-corner-all">
     <legend>Avances financieros</legend>
 

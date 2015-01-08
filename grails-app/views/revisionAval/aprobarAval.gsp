@@ -107,8 +107,8 @@
                 <div class="fieldSvt-xxxl" style="top:-20px;">
                     <g:select from="${personas}" optionKey="id" optionValue="${{
                         it.persona.nombre + ' ' + it.persona.apellido
-                    }}" name="firma2" class="ui-widget-content ui-corner-all"/>
-                    <g:select from="${personas}" optionKey="id" optionValue="${{
+                    }}" name="firma2" class="ui-widget-content ui-corner-all" />
+                    <g:select from="${personasGerente}" optionKey="id" optionValue="${{
                         it.persona.nombre + ' ' + it.persona.apellido
                     }}" name="firma3" style="margin-left:10px" class="ui-widget-content ui-corner-all"/>
                 </div>

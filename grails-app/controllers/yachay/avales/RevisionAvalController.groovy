@@ -43,6 +43,7 @@ class RevisionAvalController {
         if (band) {
 
             sol.estado = EstadoAval.findByCodigo("E03")
+            sol.observaciones=params.obs
             sol.fechaRevision = new Date()
             sol.save(flush: true)
             render "ok"
@@ -230,6 +231,7 @@ class RevisionAvalController {
     def aprobarAval = {
         def unidad = UnidadEjecutora.findByCodigo("DPI") // DIRECCIÓN DE PLANIFICACIÓN E INVERSIÓN
         def personasFirmas = Usro.findAllByUnidad(unidad)
+        def gerentes = Usro.findAllByUnidad(unidad.padre)
         def numero = 0
         def max = Aval.list([sort: "numero", order: "desc", max: 1])
 //        println "max " + max.numero
@@ -242,7 +244,7 @@ class RevisionAvalController {
         band = true
         if (!band)
             response.sendError(403)
-        [solicitud: solicitud, personas: personasFirmas, numero: numero]
+        [solicitud: solicitud, personas: personasFirmas,personasGerente:gerentes, numero: numero]
     }
 
     /**
@@ -349,6 +351,34 @@ class RevisionAvalController {
                     sol.aval = aval;
                     sol.estado = aval.estado
                     sol.save(flush: true)
+                    try{
+                        def mail = aval.firma1.usuario.persona.mail
+                        if(mail) {
+
+                            mailService.sendMail {
+                                to mail
+                                subject "Un nuevo aval requiere aprobación"
+                                body "Tiene un aval pendiente que requiere su firma para aprobación "
+                            }
+
+                        } else {
+                            println "El usuario ${aval.firma1.usuario.usroLogin} no tiene email"
+                        }
+                        mail = aval.firma2.usuario.persona.mail
+                        if(mail) {
+
+                            mailService.sendMail {
+                                to mail
+                                subject "Un nuevo aval requiere aprobación"
+                                body "Tiene un aval pendiente que requiere su firma para aprobación "
+                            }
+
+                        } else {
+                            println "El usuario ${aval.firma2.usuario.usroLogin} no tiene email"
+                        }
+                    }catch (e){
+                        println "eror email "+e.printStackTrace()
+                    }
                     //flash.message = "Solciitud de firmas enviada para aprobación"
                 } else {
                     def msn = "Usted no tiene permisos para aprobar esta solicitud"
