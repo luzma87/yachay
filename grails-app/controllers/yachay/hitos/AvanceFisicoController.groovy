@@ -47,6 +47,7 @@ class AvanceFisicoController extends yachay.seguridad.Shield {
     def avanceFisicoProceso_ajax = {
         def proceso = ProcesoAval.get(params.id)
         def avances = AvanceFisico.findAllByProceso(proceso, [sort: "inicio"])
+        println "AQUI::::: "+avances
         return [proceso: proceso, avances: avances]
     }
     /**

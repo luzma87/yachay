@@ -33,8 +33,11 @@
                     </div>
                 </td>
                 <td>
+                    <g:set var="avance123" value="${AvanceAvance.findAllByAvanceFisico(avance, [sort: 'avance', order: "desc"])}"/>
                     <a href="#" class="btnCompletar" id="${avance.id}"
-                       data-min="${AvanceAvance.findAllByAvanceFisico(avance, [sort: 'avance', order: "desc"]).first().avance}">Registrar avance</a>
+                       data-min="${avance123 && avance123.size() > 0 ? avance123.first().avance : 0}">
+                        Registrar avance
+                    </a>
                 </td>
                 <td>
                     <g:if test="${valor == 0}">
