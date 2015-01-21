@@ -363,7 +363,7 @@ class MarcoLogicoController extends yachay.seguridad.Shield {
                     componente = MarcoLogico.get(params.id)
                     componente.objeto = params.datos
                 } else {
-                    componente = new MarcoLogico([proyecto: proyecto, tipoElemento: TipoElemento.findByDescripcion("Componente"), objeto: params.datos])
+                        componente = new MarcoLogico([proyecto: proyecto, tipoElemento: TipoElemento.findByDescripcion("Componente"), objeto: params.datos])
                 }
                 componente.numeroComp = params.num
                 componente = kerberosService.saveObject(componente, MarcoLogico, session.perfil, session.usuario, "guadarDatosComponentes", "marcoLogico", session)

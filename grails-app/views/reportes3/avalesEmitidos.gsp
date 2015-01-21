@@ -27,7 +27,7 @@
         .hoja {
             /*background  : #e6e6fa;*/
             height      : 17cm; /*29.7-(1.5*2)*/
-            font-family : arial;
+            font-family : arial, sans-serif;
             font-size   : 10pt;
         }
 
@@ -80,7 +80,7 @@
                             <td>${aval.concepto}</td>
                             <td>${aval.fechaAprobacion?.format("dd-MM-yyyy")}</td>
                             <td>${aval.estado.descripcion}</td>
-                            <td class="right semaforo ${info[2]}">
+                            <td class="right ${info[2]}">
                                 <g:formatNumber number="${info[1]}" maxFractionDigits="2" minFractionDigits="2"/>%
                             </td>
                         </tr>
